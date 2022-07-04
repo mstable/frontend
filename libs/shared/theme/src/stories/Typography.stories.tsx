@@ -13,7 +13,7 @@ import {
 import { fontWeights } from '../constants';
 
 export default {
-  title: 'Typography',
+  title: 'Theme/Typography',
 };
 
 const sample = 'The DeFi yield operating system';
@@ -78,7 +78,7 @@ export const Typography = () => {
               <TableCell>
                 {formatFontweight(typography[key].fontWeight)}
               </TableCell>
-              <TableCell>{typography[key].fontSize}</TableCell>
+              <TableCell>{typography[key].fontSize}px</TableCell>
               <TableCell>{typography[key].textTransform ?? ''}</TableCell>
               <TableCell>{typography[key].lineHeight}</TableCell>
               <TableCell>

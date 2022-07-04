@@ -1,7 +1,7 @@
 import { Button as MuiButton, Stack } from '@mui/material';
 
 export default {
-  title: 'Button',
+  title: 'Theme/Button',
 };
 
 const label = 'Button';
