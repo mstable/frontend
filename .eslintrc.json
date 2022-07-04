@@ -1,35 +1,82 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx"],
+  "plugins": [
+    "@nrwl/nx",
+    "formatjs",
+    "unused-imports",
+    "simple-import-sort",
+    "prettier"
+  ],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "extends": [
+        "plugin:react/recommended",
+        "plugin:prettier/recommended",
+        "./.eslintrc.base.json"
+      ],
       "rules": {
+        // Nx rules
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
           {
             "enforceBuildableLibDependency": true,
             "allow": [],
-            "depConstraints": [
-              {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
-              }
+            "depConstraints": []
+          }
+        ],
+
+        // Unused imports rules
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+          "warn",
+          {
+            "varsIgnorePattern": "^_",
+            "args": "none",
+            "argsIgnorePattern": "^_",
+            "ignoreRestSiblings": true
+          }
+        ],
+
+        // Import ordering rules
+        "simple-import-sort/imports": [
+          "warn",
+          {
+            "groups": [
+              // Side effect imports
+              ["^\\u0000"],
+              // React Package(s) comes first as seperate group
+              ["^react(-dom(/client)?)?$"],
+              // All other imports
+              ["^@?\\w"],
+              ["^((?!\\u0000$)|/.*|$)"],
+              ["^\\."],
+              // Type imports: keep these last!
+              ["^@?\\w.*\\u0000$"],
+              ["^.*\\u0000$"],
+              ["^\\..*\\u0000$"]
             ]
           }
-        ]
+        ],
+
+        // FormatJS rules
+        "formatjs/enforce-default-message": ["error", "literal"],
+        "formatjs/no-id": "error",
+        "formatjs/no-multiple-whitespaces": "error",
+        "formatjs/no-offset": "error"
       }
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
+      "extends": ["plugin:@nrwl/nx/typescript", "./.eslintrc.base.json"],
       "rules": {}
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
+      "extends": ["plugin:@nrwl/nx/javascript", "./.eslintrc.base.json"],
       "rules": {}
     }
-  ]
+  ],
+  "settings": { "react": { "version": "detect" } }
 }
