@@ -44,3 +44,4 @@ Thumbs.db
 migrations.json
 ts-jest.log
 .firebase/
+.eslintcache

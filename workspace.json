@@ -2,6 +2,8 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
+    "shared-theme": "libs/shared/theme",
+    "shared-utils": "libs/shared/utils",
     "vaults": "apps/vaults",
     "vaults-e2e": "apps/vaults-e2e"
   }
