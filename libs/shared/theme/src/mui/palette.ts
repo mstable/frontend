@@ -19,9 +19,9 @@ const light: ThemeOptions = {
       contrastText: colors.white,
     },
     secondary: {
-      light: colors.grey01,
-      main: colors.grey02,
-      dark: colors.grey03,
+      light: colors.grey08,
+      main: colors.grey10,
+      dark: colors.offBlack,
       contrastText: colors.white,
     },
     error: {
@@ -94,6 +94,12 @@ const light: ThemeOptions = {
 const dark: ThemeOptions = mergeDeepRight(light, {
   palette: {
     mode: 'dark',
+    secondary: {
+      light: colors.white,
+      main: colors.grey01,
+      dark: colors.grey04,
+      contrastText: colors.offBlack,
+    },
     text: {
       primary: colors.white,
       secondary: colors.grey05,

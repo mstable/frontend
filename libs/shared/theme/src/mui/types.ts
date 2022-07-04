@@ -1,37 +1,24 @@
 import type { TypographyStyle } from '@mui/material';
 
-// declare module '@mui/material/styles/createPalette' {
-//   interface TypeAction {
-//     disabledBorder: string;
-//     disabledFieldBackground: string;
-//   }
-
-//   interface TypeBackground {
-//     overlay: string;
-//   }
-
-//   interface TypeText {
-//     error: string;
-//     link: string;
-//   }
-// }
-
 declare module '@mui/material/styles' {
-  // interface Border {
-  //   default: string;
-  //   heavy: string;
-  // }
-
   interface TypographyVariants {
     fontFamilies: Record<'main' | 'code', string>;
     fontSizes: Record<'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl', number>;
     lineHeights: Record<'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl', number | string>;
     letterSpacings: Record<'short' | 'normal' | 'space', string>;
+    buttonSmall: TypographyStyle;
+    buttonMedium: TypographyStyle;
+    buttonLarge: TypographyStyle;
+    label1: TypographyStyle;
+    label2: TypographyStyle;
+    placeholder: TypographyStyle;
+    hint: TypographyStyle;
     value1: TypographyStyle;
     value2: TypographyStyle;
     value3: TypographyStyle;
     value4: TypographyStyle;
     value5: TypographyStyle;
+    value6: TypographyStyle;
   }
 
   interface TypographyVariantsOptions {
@@ -42,38 +29,50 @@ declare module '@mui/material/styles' {
       number | string
     >;
     letterSpacings?: Record<'short' | 'normal' | 'space', string>;
+    buttonSmall?: TypographyStyle;
+    buttonMedium?: TypographyStyle;
+    buttonLarge?: TypographyStyle;
+    label1?: TypographyStyle;
+    label2?: TypographyStyle;
+    placeholder?: TypographyStyle;
+    hint?: TypographyStyle;
     value1?: TypographyStyle;
     value2?: TypographyStyle;
     value3?: TypographyStyle;
     value4?: TypographyStyle;
     value5?: TypographyStyle;
+    value6?: TypographyStyle;
   }
+}
 
-  //   interface SimplePaletteColorOptions {
-  //     contrastText?: string;
-  //     contrastTextReverse?: string;
-  //     dark?: string;
-  //     light?: string;
-  //     main: string;
-  //   }
-
-  //   interface PaletteColor {
-  //     contrastText: string;
-  //     contrastTextReverse?: string;
-  //     dark: string;
-  //     light: string;
-  //     main: string;
-  //   }
-
-  //   interface Palette {
-  //     border: Border;
-  //     brand: SimplePaletteColorOptions;
-  //   }
-
-  //   interface PaletteOptions {
-  //     border?: Border;
-  //     brand?: SimplePaletteColorOptions;
-  //   }
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    // remove defaults
+    h6: false;
+    subtitle1: false;
+    subtitle2: false;
+    button: false;
+    caption: false;
+    overline: false;
+    // add custom
+    fontFamilies: true;
+    fontSizes: true;
+    lineHeights: true;
+    letterSpacings: true;
+    buttonSmall: true;
+    buttonMedium: true;
+    buttonLarge: true;
+    label1: true;
+    label2: true;
+    placeholder: true;
+    hint: true;
+    value1: true;
+    value2: true;
+    value3: true;
+    value4: true;
+    value5: true;
+    value6: true;
+  }
 }
 
 declare module '@mui/material/styles/createMixins' {
@@ -111,17 +110,6 @@ declare module '@mui/material/styles/createMixins' {
       numbTop: string;
       numbBottom: string;
     };
-  }
-}
-
-declare module '@mui/material/Typography' {
-  interface TypographyPropsVariantOverrides {
-    fontFamilies: true;
-    fontSizes: true;
-    lineHeights: true;
-    letterSpacings: true;
-    code1: true;
-    code2: true;
   }
 }
 

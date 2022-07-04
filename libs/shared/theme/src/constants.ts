@@ -2,7 +2,7 @@ export const colors = {
   black: '#000',
   blue01: '#587ff1',
   blue02: '#2F5FEE',
-  blue03: '#2F5FEE',
+  blue03: '#2042A6',
   green01: '#7effa4',
   green02: '#45D074',
   green03: '#009e47',
@@ -71,10 +71,9 @@ export const colors = {
 };
 
 export const fontWeights = {
-  light: 300,
-  medium: 400,
-  semibold: 500,
-  bold: 600,
+  regular: 400,
+  semibold: 600,
+  bold: 700,
   extrabold: 800,
 };
 

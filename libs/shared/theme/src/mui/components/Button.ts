@@ -1,5 +1,3 @@
-import { alpha } from '@mui/material';
-
 import type { Theme, ThemeOptions } from '@mui/material';
 
 export const getButton = (base: Theme): ThemeOptions => ({
@@ -8,7 +6,6 @@ export const getButton = (base: Theme): ThemeOptions => ({
       defaultProps: {
         disableElevation: true,
         variant: 'contained',
-        color: 'primary',
       },
       styleOverrides: {
         root: {
@@ -16,66 +13,68 @@ export const getButton = (base: Theme): ThemeOptions => ({
         },
 
         containedPrimary: {
-          backgroundSize: '200% 100%',
-          backgroundImage: `linear-gradient(280deg, ${alpha(
-            base.palette.primary.dark,
-            0.8,
-          )} 0%, ${alpha(base.palette.primary.main, 0.5)} 51%, ${alpha(
-            base.palette.primary.light,
-            0.9,
-          )} 100%)`,
-          transition: 'all .2s ease-in-out',
+          backgroundSize: '200% 200%',
+          backgroundImage: `linear-gradient(135deg, ${
+            base.palette.primary.main
+          } 0%, ${base.palette.primary.main} 51%, ${
+            base.palette.mode === 'light'
+              ? base.palette.primary.dark
+              : base.palette.primary.light
+          } 100%)`,
+          transition: 'all .2s ease',
           ':hover': {
             backgroundPosition: '100% 100%',
+          },
+          svg: {
+            color: base.palette.primary.contrastText,
           },
         },
 
         containedSecondary: {
-          backgroundColor: base.palette.grey[300],
+          backgroundSize: '300% 300%',
+          backgroundImage: `linear-gradient(135deg, ${
+            base.palette.secondary.main
+          } 0%, ${base.palette.secondary.main} 51%, ${
+            base.palette.mode === 'light'
+              ? base.palette.secondary.light
+              : base.palette.secondary.dark
+          } 100%)`,
+          transition: 'all .2s ease',
+          ':hover': {
+            backgroundPosition: '100% 100%',
+          },
           svg: {
             color: base.palette.secondary.contrastText,
           },
         },
 
-        textSecondary: {
-          color: base.palette.text.secondary,
-          svg: {
+        text: {
+          color: base.palette.text.primary,
+          ':hover': {
             color: base.palette.text.secondary,
           },
-        },
-
-        outlinedSecondary: {
-          borderColor: base.palette.text.secondary,
-          color: base.palette.text.secondary,
           svg: {
-            color: base.palette.text.secondary,
+            color: base.palette.text.primary,
+            ':hover': {
+              color: base.palette.text.secondary,
+            },
           },
         },
 
         sizeSmall: {
-          fontSize: 12,
-          lineHeight: '12px',
-          padding: base.spacing(1.5, 2),
-          borderRadius: 8,
-        },
-        textSizeSmall: {
-          padding: base.spacing(0.75, 0.5),
+          ...base.typography.buttonSmall,
+          padding: base.spacing(1.75, 1.5),
+          borderRadius: '8px',
         },
         sizeMedium: {
-          padding: base.spacing(2, 2.5),
-          borderRadius: 12,
-        },
-        textSizeMedium: {
-          padding: base.spacing(2),
+          ...base.typography.buttonMedium,
+          padding: base.spacing(2, 1.75),
+          borderRadius: '10px',
         },
         sizeLarge: {
-          fontSize: 21,
-          lineHeight: '21px',
-          padding: base.spacing(2.5, 3),
-          borderRadius: 16,
-        },
-        textSizeLarge: {
-          padding: base.spacing(1, 1),
+          ...base.typography.buttonLarge,
+          padding: base.spacing(2.25, 2),
+          borderRadius: '12px',
         },
       },
     },
