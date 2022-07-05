@@ -1,4 +1,4 @@
-const rootMain = require('../../../../.storybook/main');
+const rootMain = require('../../../.storybook/main');
 
 module.exports = {
   ...rootMain,
@@ -7,8 +7,8 @@ module.exports = {
 
   stories: [
     ...rootMain.stories,
-    '../src/stories/**/*.stories.mdx',
-    '../src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+    '../src/**/*.stories.mdx',
+    '../src/**/*.stories.@(js|jsx|ts|tsx)',
   ],
   addons: [...rootMain.addons, '@nrwl/react/plugins/storybook'],
   webpackFinal: async (config, { configType }) => {

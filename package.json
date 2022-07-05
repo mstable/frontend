@@ -87,6 +87,7 @@
     "@typescript-eslint/parser": "^5.30.4",
     "babel-jest": "27.5.1",
     "babel-loader": "8.1.0",
+    "chromatic": "^6.7.0",
     "commitlint-config-monorepo": "^2.0.2",
     "cypress": "^9.1.0",
     "eslint": "^8.19.0",

@@ -1,0 +1,56 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/storybook/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/storybook:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "uiFramework": "@storybook/react",
+        "outputPath": "dist/storybook",
+        "config": {
+          "configFolder": "apps/storybook/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/storybook:storybook",
+      "options": {
+        "uiFramework": "@storybook/react",
+        "port": 4400,
+        "config": {
+          "configFolder": "apps/storybook/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/storybook/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "chromatic": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "yarn nx run storybook:build",
+          "npx chromatic --project-token=f9be6d953a6c -d dist/apps/storybook"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": []
+}

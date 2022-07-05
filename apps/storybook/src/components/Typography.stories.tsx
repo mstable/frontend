@@ -1,3 +1,4 @@
+import { fontWeights } from '@frontend/shared-theme';
 import {
   capitalize,
   Table,
@@ -9,8 +10,6 @@ import {
   Typography as MuiTypography,
   useTheme,
 } from '@mui/material';
-
-import { fontWeights } from '../constants';
 
 export default {
   title: 'Typography',

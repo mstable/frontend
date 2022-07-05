@@ -1,7 +1,7 @@
 import { addons } from '@storybook/addons';
 
+import { ThemeDecorator } from '../src/utils/ThemeDecorator';
 import theme from './theme';
-import { ThemeDecorator } from './ThemeDecorator';
 
 export const globalTypes = {
   themeMode: {

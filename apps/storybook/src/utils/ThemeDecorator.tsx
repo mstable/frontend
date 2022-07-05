@@ -1,6 +1,5 @@
+import { dark, light } from '@frontend/shared-theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-
-import { dark, light } from '../src';
 
 import type { DecoratorFunction } from '@storybook/addons';
 
@@ -9,7 +8,7 @@ export const ThemeDecorator: DecoratorFunction<JSX.Element> = (
   context,
 ) => {
   const themeMode =
-    context?.args?.themeMode ?? context?.globals?.themeMode ?? 'light';
+    context?.args?.['themeMode'] ?? context?.globals?.['themeMode'] ?? 'light';
 
   return (
     <ThemeProvider theme={themeMode === 'dark' ? dark : light}>

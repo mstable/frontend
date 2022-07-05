@@ -1,4 +1,5 @@
-import { Button as MuiButton, Stack } from '@mui/material';
+import { Button as MuiButton, Stack, Typography } from '@mui/material';
+import { ArrowRight } from 'phosphor-react';
 
 export default {
   title: 'Button',
@@ -41,5 +42,18 @@ export const Button = () => (
         {label}
       </MuiButton>
     </Stack>
+    <MuiButton
+      size="large"
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+      }}
+    >
+      <span>2000.00 USDC</span>
+      <Stack direction="row" alignItems="center" spacing={1}>
+        <Typography>Deposit</Typography>
+        <ArrowRight size={16} />
+      </Stack>
+    </MuiButton>
   </Stack>
 );
