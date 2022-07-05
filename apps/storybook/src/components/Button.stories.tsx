@@ -2,7 +2,7 @@ import { Button as MuiButton, Stack, Typography } from '@mui/material';
 import { ArrowRight } from 'phosphor-react';
 
 export default {
-  title: 'Button',
+  title: 'Theme/Button',
 };
 
 const label = 'Button';
