@@ -46,7 +46,7 @@
       "options": {
         "commands": [
           "yarn nx run storybook:build",
-          "npx chromatic --project-token=f9be6d953a6c -d dist/apps/storybook"
+          "npx chromatic --project-token=f9be6d953a6c -d dist/storybook"
         ],
         "parallel": false
       }
