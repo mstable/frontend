@@ -3,9 +3,10 @@
   "version": 2,
   "projects": {
     "shared-icons": "libs/shared/icons",
+    "shared-storybook": "libs/shared/storybook",
     "shared-theme": "libs/shared/theme",
+    "shared-ui": "libs/shared/ui",
     "shared-utils": "libs/shared/utils",
-    "storybook": "apps/storybook",
     "vaults": "apps/vaults",
     "vaults-e2e": "apps/vaults-e2e"
   }

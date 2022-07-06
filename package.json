@@ -6,7 +6,10 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "storybook": "yarn start-storybook -p 6006",
+    "storybook:build": "yarn build-storybook -o dist/storybook",
+    "chromatic": "yarn storybook:build && npx chromatic --project-token=f9be6d953a6c -d dist/storybook"
   },
   "private": true,
   "lint-staged": {
@@ -64,7 +67,6 @@
     "@nrwl/jest": "14.4.0",
     "@nrwl/linter": "14.4.0",
     "@nrwl/react": "14.4.0",
-    "@nrwl/storybook": "14.4.0",
     "@nrwl/web": "14.4.0",
     "@nrwl/workspace": "14.4.0",
     "@rollup/plugin-url": "^7.0.0",
@@ -101,6 +103,7 @@
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-storybook": "^0.5.13",
     "eslint-plugin-unused-imports": "^2.0.0",
     "file-loader": "^6.2.0",
     "fs-extra": "^10.1.0",

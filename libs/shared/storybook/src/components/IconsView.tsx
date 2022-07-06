@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import * as icons from '@frontend/shared-icons';
 import {
   Box,
   Grid,
@@ -19,7 +18,8 @@ export default {
   title: 'Components/Icons',
 };
 
-export const Icons = () => {
+// eslint-disable-next-line react/prop-types
+export const IconsView = ({ icons, ...args }) => {
   const [search, setSearch] = useState('');
   const [iconList, setIconList] = useState([]);
 
