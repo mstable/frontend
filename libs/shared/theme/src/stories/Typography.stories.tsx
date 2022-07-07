@@ -14,6 +14,7 @@ import { fontWeights } from '../constants';
 
 export default {
   title: 'Theme/Typography',
+  component: MuiTypography,
 };
 
 const sample = 'The DeFi yield operating system';

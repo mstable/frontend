@@ -3,6 +3,7 @@ import { ArrowRight } from 'phosphor-react';
 
 export default {
   title: 'Theme/Button',
+  component: MuiButton,
 };
 
 const label = 'Button';

@@ -14,6 +14,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "strict": false,
     "paths": {
       "@frontend/shared-icons": ["libs/shared/icons/src/index.ts"],
       "@frontend/shared-storybook": ["libs/shared/storybook/src/index.ts"],

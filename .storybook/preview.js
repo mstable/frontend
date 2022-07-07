@@ -1,6 +1,6 @@
 import { addons } from '@storybook/addons';
 
-import { ThemeDecorator } from '@frontend/shared-storybook';
+import { IntlDecorator, ThemeDecorator } from '@frontend/shared-storybook';
 import theme from './theme';
 
 export const globalTypes = {
@@ -27,7 +27,7 @@ export const parameters = {
   },
 };
 
-export const decorators = [ThemeDecorator];
+export const decorators = [ThemeDecorator, IntlDecorator];
 
 addons.setConfig({
   theme,

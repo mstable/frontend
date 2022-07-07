@@ -14,10 +14,6 @@ import { useEffectOnce } from 'react-use';
 
 import type { ChangeEvent } from 'react';
 
-export default {
-  title: 'Components/Icons',
-};
-
 // eslint-disable-next-line react/prop-types
 export const IconsView = ({ icons, ...args }) => {
   const [search, setSearch] = useState('');
@@ -107,7 +103,7 @@ export const IconsView = ({ icons, ...args }) => {
                     },
                   }}
                 >
-                  <icon.component />
+                  <icon.component {...args} />
                 </Box>
                 <Typography
                   noWrap
