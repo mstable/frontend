@@ -1,4 +1,5 @@
 import {
+  Box,
   capitalize,
   Table,
   TableBody,
@@ -60,35 +61,41 @@ export const Typography = () => {
   );
 
   return (
-    <TableContainer sx={{ width: 1, overflow: 'hidden' }}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Font Weight</TableCell>
-            <TableCell>Font Size</TableCell>
-            <TableCell>Text Transform</TableCell>
-            <TableCell>Line Height</TableCell>
-            <TableCell>Sample</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {variantKeys.map((key) => (
-            <TableRow key={key}>
-              <TableCell sx={typography[key]}>{key}</TableCell>
-              <TableCell>
-                {formatFontweight(typography[key].fontWeight)}
-              </TableCell>
-              <TableCell>{typography[key].fontSize}px</TableCell>
-              <TableCell>{typography[key].textTransform ?? ''}</TableCell>
-              <TableCell>{typography[key].lineHeight}</TableCell>
-              <TableCell>
-                <MuiTypography sx={typography[key]}>{sample}</MuiTypography>
-              </TableCell>
+    <Box sx={{ overflowX: 'auto' }}>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Font Family</TableCell>
+              <TableCell>Font Weight</TableCell>
+              <TableCell>Font Size</TableCell>
+              <TableCell>Text Transform</TableCell>
+              <TableCell>Line Height</TableCell>
+              <TableCell>Letter Spacing</TableCell>
+              <TableCell>Sample</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {variantKeys.map((key) => (
+              <TableRow key={key}>
+                <TableCell sx={typography[key]}>{key}</TableCell>
+                <TableCell>{typography[key].fontFamily}</TableCell>
+                <TableCell>
+                  {formatFontweight(typography[key].fontWeight)}
+                </TableCell>
+                <TableCell>{typography[key].fontSize}px</TableCell>
+                <TableCell>{typography[key].textTransform ?? ''}</TableCell>
+                <TableCell>{typography[key].lineHeight}</TableCell>
+                <TableCell>{typography[key].letterSpacing}</TableCell>
+                <TableCell>
+                  <MuiTypography sx={typography[key]}>{sample}</MuiTypography>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 };
