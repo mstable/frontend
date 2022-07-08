@@ -4,22 +4,6 @@ export const getCSSBaseline = (base: Theme): ThemeOptions => ({
   components: {
     MuiCssBaseline: {
       styleOverrides: `
-          @font-face {
-            font-family: 'Plus Jakarta Sans';
-            font-weight: normal;
-            font-style: normal;
-          }
-
-          @font-face {
-            font-family: 'Plus Jakarta SansVariable';            
-          }
-
-          @font-face {
-            font-family: 'PT Mono';
-            font-weight: normal;
-            font-style: normal;
-          }
-
           body {
             font-family: ${base.typography.fontFamily};
             font-weight: ${base.typography.body1.fontWeight};
