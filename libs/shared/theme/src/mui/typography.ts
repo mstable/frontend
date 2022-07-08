@@ -12,13 +12,6 @@ import {
 
 import type { ThemeOptions } from '@mui/material';
 
-// const defaultTypographyVariant = {
-//   fontFamily: fontFamilies.main,
-//   fontSize: 16,
-//   lineHeight: '26px',
-//   fontWeight: fontWeights.regular,
-// };
-
 export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
   typography: {
     fontFamily: fontFamilies.main,

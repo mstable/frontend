@@ -11,6 +11,10 @@ export const getCSSBaseline = (base: Theme): ThemeOptions => ({
           }
 
           @font-face {
+            font-family: 'Plus Jakarta SansVariable';            
+          }
+
+          @font-face {
             font-family: 'PT Mono';
             font-weight: normal;
             font-style: normal;
@@ -26,7 +30,6 @@ export const getCSSBaseline = (base: Theme): ThemeOptions => ({
             background-color: ${base.palette.background.default};
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            font-synthesis: none;
             text-rendering: optimizeLegibility;
           }
         `,

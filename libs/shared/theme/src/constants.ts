@@ -102,6 +102,8 @@ export const letterSpacings = {
 };
 
 export const fontFamilies = {
-  main: ['Plus Jakarta Sans', 'sans-serif'].join(','),
+  main: ['Plus Jakarta SansVariable', 'Plus Jakarta Sans', 'sans-serif'].join(
+    ',',
+  ),
   code: ['PT Mono', 'monospace'].join(','),
 };
