@@ -1,6 +1,7 @@
 import '@fontsource/plus-jakarta-sans';
 import '@fontsource/plus-jakarta-sans/variable.css';
-import '@fontsource/pt-mono';
+import '@fontsource/red-hat-mono';
+import '@fontsource/red-hat-mono/variable.css';
 
 import {
   fontFamilies,
@@ -120,37 +121,37 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
       fontFamily: fontFamilies.code,
       fontSize: 28,
       letterSpacing: '-4%',
-      fontWeight: fontWeights.bold,
+      fontWeight: fontWeights.semibold,
     },
     value2: {
       fontFamily: fontFamilies.code,
       fontSize: 23,
       letterSpacing: '-4%',
-      fontWeight: fontWeights.bold,
+      fontWeight: fontWeights.semibold,
     },
     value3: {
       fontFamily: fontFamilies.code,
       fontSize: 16,
       letterSpacing: '-4%',
-      fontWeight: fontWeights.regular,
+      fontWeight: fontWeights.semibold,
     },
     value4: {
       fontFamily: fontFamilies.code,
       fontSize: 16,
       letterSpacing: '-4%',
-      fontWeight: fontWeights.bold,
+      fontWeight: fontWeights.semibold,
     },
     value5: {
       fontFamily: fontFamilies.code,
       fontSize: 14,
       letterSpacing: '-4%',
-      fontWeight: fontWeights.bold,
+      fontWeight: fontWeights.semibold,
     },
     value6: {
       fontFamily: fontFamilies.code,
       fontSize: 12,
       letterSpacing: '-4%',
-      fontWeight: fontWeights.bold,
+      fontWeight: fontWeights.semibold,
     },
 
     // disabled

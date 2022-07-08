@@ -106,8 +106,8 @@ const dark: ThemeOptions = mergeDeepRight(light, {
       disabled: colors.grey04,
     },
     background: {
-      default: colors.squidInk04,
-      paper: colors.darkBlue09,
+      default: colors.grey10,
+      paper: colors.grey08,
     },
     divider: colors.grey01,
   },

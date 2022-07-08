@@ -19,7 +19,7 @@
     "@emotion/react": "11.9.3",
     "@emotion/styled": "11.9.3",
     "@fontsource/plus-jakarta-sans": "^4.5.8",
-    "@fontsource/pt-mono": "^4.5.9",
+    "@fontsource/red-hat-mono": "^4.5.9",
     "@formkit/auto-animate": "^1.0.0-beta.1",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.8.7",

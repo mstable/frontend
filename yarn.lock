@@ -1911,10 +1911,10 @@
   resolved "https://registry.yarnpkg.com/@fontsource/plus-jakarta-sans/-/plus-jakarta-sans-4.5.8.tgz#8ad38f95953a8a8b23a68c4532a856779f1c8e0f"
   integrity sha512-rkNIWw6q9M3cVpMxIN85IMG/MxePHl7dTSEvr6xngjvvc8FPudZpJF8R7OsFAGhxdOKXZnO3kFnqXni4Jd5Nog==
 
-"@fontsource/pt-mono@^4.5.9":
+"@fontsource/red-hat-mono@^4.5.9":
   version "4.5.9"
-  resolved "https://registry.yarnpkg.com/@fontsource/pt-mono/-/pt-mono-4.5.9.tgz#21a9710584b310aadf9548ce2cad4a2403647e96"
-  integrity sha512-Rvth3aizfIKGeF6CvRbFlGbKeNXT5tWyZVGotLlFSO4ILDzRoa6epDAvH1DlMHR6Az8THwKA/RT3lnnACCNmBQ==
+  resolved "https://registry.yarnpkg.com/@fontsource/red-hat-mono/-/red-hat-mono-4.5.9.tgz#c046e6beb44c0da153e903d2438412bc27b9d560"
+  integrity sha512-dDhnknF6PC7H1UMmwd+/lJOuvCaMhaGKmswBgLqK/holTtiq8+BdC6g9fNfOMqp6LAqffM2O7GqzTVzb++hUKA==
 
 "@formatjs/cli@^5.0.2":
   version "5.0.2"

@@ -105,5 +105,5 @@ export const fontFamilies = {
   main: ['Plus Jakarta SansVariable', 'Plus Jakarta Sans', 'sans-serif'].join(
     ',',
   ),
-  code: ['PT Mono', 'monospace'].join(','),
+  code: ['Red Hat MonoVariable', 'Red Hat Mono', 'monospace'].join(','),
 };
