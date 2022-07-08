@@ -1,5 +1,5 @@
 import { dark, light } from '@frontend/shared-theme';
-import { CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import type { DecoratorFunction } from '@storybook/addons';
 
@@ -13,12 +13,6 @@ export const ThemeDecorator: DecoratorFunction<JSX.Element> = (
   return (
     <ThemeProvider theme={themeMode === 'dark' ? dark : light}>
       <CssBaseline />
-      <GlobalStyles
-        styles={`
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-      `}
-      />
       <Story {...context} />
     </ThemeProvider>
   );

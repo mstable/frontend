@@ -6,10 +6,14 @@ export const getCSSBaseline = (base: Theme): ThemeOptions => ({
       styleOverrides: `
           @font-face {
             font-family: 'Plus Jakarta Sans';
+            font-weight: normal;
+            font-style: normal;
           }
 
           @font-face {
             font-family: 'PT Mono';
+            font-weight: normal;
+            font-style: normal;
           }
 
           body {
@@ -19,7 +23,11 @@ export const getCSSBaseline = (base: Theme): ThemeOptions => ({
             line-height: ${base.typography.body1.lineHeight};
             letter-spacing: ${base.typography.body1.letterSpacing};
             color: ${base.palette.text.primary};
-            background-color: ${base.palette.background.default}
+            background-color: ${base.palette.background.default};
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
           }
         `,
     },
