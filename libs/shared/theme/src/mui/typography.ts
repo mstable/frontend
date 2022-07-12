@@ -18,9 +18,9 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
     fontFamily: fontFamilies.main,
 
     fontWeightLight: fontWeights.regular,
-    fontWeightRegular: fontWeights.semibold,
-    fontWeightMedium: fontWeights.bold,
-    fontWeightBold: fontWeights.extrabold,
+    fontWeightRegular: fontWeights.medium,
+    fontWeightMedium: fontWeights.semibold,
+    fontWeightBold: fontWeights.bold,
 
     fontSizes,
     fontFamilies,
@@ -61,13 +61,13 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
       fontFamily: fontFamilies.main,
       fontSize: 16,
       lineHeight: '26px',
-      fontWeight: fontWeights.regular,
+      fontWeight: fontWeights.medium,
     },
     body2: {
       fontFamily: fontFamilies.main,
       fontSize: 14,
       lineHeight: '22px',
-      fontWeight: fontWeights.regular,
+      fontWeight: fontWeights.medium,
     },
     buttonSmall: {
       fontFamily: fontFamilies.main,
