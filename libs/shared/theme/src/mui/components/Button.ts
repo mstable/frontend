@@ -28,6 +28,13 @@ export const getButton = (base: Theme): ThemeOptions => ({
           svg: {
             color: base.palette.primary.contrastText,
           },
+          '&.Mui-disabled': {
+            color: '#2042A6',
+            backgroundColor: '#577EF1',
+            svg: {
+              color: '#2042A6',
+            },
+          },
         },
 
         containedSecondary: {
@@ -45,6 +52,14 @@ export const getButton = (base: Theme): ThemeOptions => ({
           },
           svg: {
             color: base.palette.secondary.contrastText,
+          },
+          '&.Mui-disabled': {
+            color: base.palette.mode === 'light' ? '#4B4E6E' : '#A7A9CE',
+            backgroundColor:
+              base.palette.mode === 'light' ? '#8688AC' : '#DEDFFF',
+            svg: {
+              color: base.palette.mode === 'light' ? '#4B4E6E' : '#A7A9CE',
+            },
           },
         },
 

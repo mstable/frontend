@@ -6,7 +6,6 @@ export const getInputBase = (base: Theme): ThemeOptions => ({
       defaultProps: {
         size: 'medium',
         maxRows: 12,
-        minRows: 3,
       },
       styleOverrides: {
         root: {
@@ -55,8 +54,8 @@ export const getInputBase = (base: Theme): ThemeOptions => ({
         },
 
         sizeSmall: {
-          fontSize: base.typography.fontSizes.s,
-          lineHeight: base.typography.lineHeights.s,
+          fontSize: 14,
+          lineHeight: 14,
           '&:not(.MuiInputBase-multiline):not(.MuiAutocomplete-inputRoot)': {
             height: 32,
           },

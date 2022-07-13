@@ -22,6 +22,17 @@ export const Button = () => (
       </MuiButton>
     </Stack>
     <Stack direction="row" spacing={2} alignItems="center">
+      <MuiButton variant="contained" size="small" disabled>
+        {label}
+      </MuiButton>
+      <MuiButton variant="contained" size="medium" disabled>
+        {label}
+      </MuiButton>
+      <MuiButton variant="contained" size="large" disabled>
+        {label}
+      </MuiButton>
+    </Stack>
+    <Stack direction="row" spacing={2} alignItems="center">
       <MuiButton variant="contained" color="secondary" size="small">
         {label}
       </MuiButton>
@@ -29,6 +40,17 @@ export const Button = () => (
         {label}
       </MuiButton>
       <MuiButton variant="contained" color="secondary" size="large">
+        {label}
+      </MuiButton>
+    </Stack>
+    <Stack direction="row" spacing={2} alignItems="center">
+      <MuiButton variant="contained" color="secondary" size="small" disabled>
+        {label}
+      </MuiButton>
+      <MuiButton variant="contained" color="secondary" size="medium" disabled>
+        {label}
+      </MuiButton>
+      <MuiButton variant="contained" color="secondary" size="large" disabled>
         {label}
       </MuiButton>
     </Stack>
