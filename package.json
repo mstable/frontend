@@ -7,6 +7,8 @@
     "build": "nx build",
     "test": "nx test",
     "prepare": "husky install",
+    "i18n:extract": "nx run-many --target=i18n-extract --all",
+    "i18n:compile": "nx run my-app:i18n-compile",
     "storybook": "yarn start-storybook -p 6006",
     "storybook:build": "yarn build-storybook -o dist/storybook",
     "chromatic": "yarn storybook:build && npx chromatic --project-token=f9be6d953a6c -d dist/storybook"

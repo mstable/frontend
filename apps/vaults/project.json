@@ -74,6 +74,25 @@
         "jestConfig": "apps/vaults/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "i18n-extract": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "yarn run formatjs extract 'apps/vaults/**/*.{ts,tsx}' --out-file i18n-extractions/apps-vaults.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+        ]
+      }
+    },
+    "i18n-compile": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "jq -rs 'reduce .[] as $item ({}; . * $item)' i18n-extractions/* > i18n-aggregated-extractions/en.json",
+          "yarn run formatjs compile i18n-aggregated-extractions/en.json --ast --out-file apps/vaults/src/assets/lang/en.json",
+          "yarn run nx format:write --files libs/vaults/shared/i18n/src/lang/*.json"
+        ],
+        "parallel": false
+      }
     }
   },
   "tags": []

@@ -1,0 +1,70 @@
+{
+  "+vVZ/G": [
+    {
+      "type": 0,
+      "value": "Connect"
+    }
+  ],
+  "DkD2I2": [
+    {
+      "type": 0,
+      "value": "Reset to Ethereum mainnet"
+    }
+  ],
+  "IklGvq": [
+    {
+      "type": 0,
+      "value": "The selected network ("
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": ") is not supported by the application. You can either switch your wallet or reset to Ethereum mainnet."
+    }
+  ],
+  "PmkP1H": [
+    {
+      "type": 0,
+      "value": "Unsupported Network"
+    }
+  ],
+  "X0zKZO": [
+    {
+      "type": 0,
+      "value": "Connected User"
+    }
+  ],
+  "defaultCancel": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "defaultConfirm": [
+    {
+      "type": 0,
+      "value": "Confirm"
+    }
+  ],
+  "defaultConfirmation": [
+    {
+      "type": 0,
+      "value": "Please confirm to proceed"
+    }
+  ],
+  "qj1uhz": [
+    {
+      "type": 0,
+      "value": "Disconnect"
+    }
+  ],
+  "wqlXwW": [
+    {
+      "type": 0,
+      "value": "Wrong Network"
+    }
+  ]
+}

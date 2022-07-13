@@ -31,12 +31,12 @@
         "lintFilePatterns": ["libs/shared/ui/**/*.{ts,tsx,js,jsx}"]
       }
     },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/shared/ui"],
+    "i18n-extract": {
+      "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "jestConfig": "libs/shared/ui/jest.config.ts",
-        "passWithNoTests": true
+        "commands": [
+          "yarn run formatjs extract 'libs/shared/ui/**/*.{ts,tsx}' --out-file i18n-extractions/libs-shared-ui.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+        ]
       }
     }
   }

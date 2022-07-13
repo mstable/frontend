@@ -1,0 +1,11 @@
+{
+  "defaultCancel": {
+    "defaultMessage": "Cancel"
+  },
+  "defaultConfirm": {
+    "defaultMessage": "Confirm"
+  },
+  "defaultConfirmation": {
+    "defaultMessage": "Please confirm to proceed"
+  }
+}
