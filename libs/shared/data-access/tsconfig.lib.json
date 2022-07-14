@@ -10,6 +10,7 @@
   ],
   "exclude": [
     "jest.config.ts",
+    "eth-sdk.config.ts",
     "**/*.spec.ts",
     "**/*.test.ts",
     "**/*.spec.tsx",

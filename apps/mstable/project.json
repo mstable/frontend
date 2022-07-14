@@ -15,7 +15,13 @@
         "main": "apps/mstable/src/main.tsx",
         "polyfills": "apps/mstable/src/polyfills.ts",
         "tsConfig": "apps/mstable/tsconfig.app.json",
-        "assets": ["apps/mstable/src/favicon.ico", "apps/mstable/src/assets"],
+        "assets": [
+          "apps/mstable/src/favicon.ico",
+          "apps/mstable/src/ipfs-404.html",
+          "apps/mstable/src/manifest.json",
+          "apps/mstable/src/robots.txt",
+          "apps/mstable/src/assets"
+        ],
         "styles": ["node_modules/@rainbow-me/rainbowkit/dist/index.css"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
