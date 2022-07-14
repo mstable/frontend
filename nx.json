@@ -39,6 +39,5 @@
         "linter": "eslint"
       }
     }
-  },
-  "defaultProject": "vaults"
+  }
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/vaults/src",
+  "sourceRoot": "apps/mstable/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -9,14 +9,14 @@
       "defaultConfiguration": "production",
       "options": {
         "compiler": "babel",
-        "outputPath": "dist/apps/vaults",
-        "index": "apps/vaults/src/index.html",
+        "outputPath": "dist/apps/mstable",
+        "index": "apps/mstable/src/index.html",
         "baseHref": "/",
-        "main": "apps/vaults/src/main.tsx",
-        "polyfills": "apps/vaults/src/polyfills.ts",
-        "tsConfig": "apps/vaults/tsconfig.app.json",
-        "assets": ["apps/vaults/src/favicon.ico", "apps/vaults/src/assets"],
-        "styles": [],
+        "main": "apps/mstable/src/main.tsx",
+        "polyfills": "apps/mstable/src/polyfills.ts",
+        "tsConfig": "apps/mstable/tsconfig.app.json",
+        "assets": ["apps/mstable/src/favicon.ico", "apps/mstable/src/assets"],
+        "styles": ["node_modules/@rainbow-me/rainbowkit/dist/index.css"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
       },
@@ -30,8 +30,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "apps/vaults/src/environments/environment.ts",
-              "with": "apps/vaults/src/environments/environment.prod.ts"
+              "replace": "apps/mstable/src/environments/environment.ts",
+              "with": "apps/mstable/src/environments/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -47,15 +47,15 @@
       "executor": "@nrwl/web:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "vaults:build",
+        "buildTarget": "mstable:build",
         "hmr": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "vaults:build:development"
+          "buildTarget": "mstable:build:development"
         },
         "production": {
-          "buildTarget": "vaults:build:production",
+          "buildTarget": "mstable:build:production",
           "hmr": false
         }
       }
@@ -64,22 +64,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/vaults/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/vaults"],
-      "options": {
-        "jestConfig": "apps/vaults/jest.config.ts",
-        "passWithNoTests": true
+        "lintFilePatterns": ["apps/mstable/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "i18n-extract": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": [
-          "yarn run formatjs extract 'apps/vaults/**/*.{ts,tsx}' --out-file i18n-extractions/apps-vaults.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+          "yarn run formatjs extract 'apps/mstable/**/*.{ts,tsx}' --out-file i18n-extractions/apps-mstable.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
         ]
       }
     },
@@ -88,8 +80,8 @@
       "options": {
         "commands": [
           "jq -rs 'reduce .[] as $item ({}; . * $item)' i18n-extractions/* > i18n-aggregated-extractions/en.json",
-          "yarn run formatjs compile i18n-aggregated-extractions/en.json --ast --out-file apps/vaults/src/assets/lang/en.json",
-          "yarn run nx format:write --files libs/vaults/shared/i18n/src/lang/*.json"
+          "yarn run formatjs compile i18n-aggregated-extractions/en.json --ast --out-file apps/mstable/src/assets/lang/en.json",
+          "yarn run nx format:write --files libs/mstable/shared/i18n/src/lang/*.json"
         ],
         "parallel": false
       }
