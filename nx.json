@@ -39,5 +39,6 @@
         "linter": "eslint"
       }
     }
-  }
+  },
+  "defaultProject": "mstable"
 }
