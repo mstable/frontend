@@ -1,0 +1,48 @@
+name: Chromatic
+
+on:
+  pull_request:
+    branches:
+      - "main"
+      - "!dependabot/**"
+    paths:
+      - ".github/workflows/chromatic.yml"
+      - ".storybook/**"
+      - "libs/shared/storybook/**"
+      - "(apps|libs)/**/*.stories.@(mdx|js|jsx|ts|tsx)"
+      - "(apps|libs)/**/stories.@(mdx|js|jsx|ts|tsx)"
+    types: ["opened", "ready_for_review", "reopened", "synchronize"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "yarn"
+      - run: yarn install
+      - run: yarn storybook:build
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        id: chromatic
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          exitZeroOnChanges: true
+          storybookBuildDir: dist/storybook
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          CHROMATIC_URL: ${{ steps.chromatic.outputs.buildUrl }}
+          PR_NAME: ${{  github.head_ref }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "🎨 Chromatic build for PR **{{ PR_NAME }}** 🚀 Deploy url {{ CHROMATIC_URL }}"
