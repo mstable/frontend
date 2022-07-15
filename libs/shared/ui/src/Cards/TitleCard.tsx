@@ -1,13 +1,15 @@
 import { Box, Divider, Stack, Typography } from '@mui/material';
 
-import type { BoxProps, TypographyProps } from '@mui/material';
+import type { BoxProps, StackProps, TypographyProps } from '@mui/material';
 import type { ReactNode } from 'react';
 
 export type TitleCardProps = {
-  title?: string;
+  title: string;
+  titleAction?: ReactNode;
   components?: {
     container?: BoxProps;
     title?: TypographyProps;
+    titleContainer?: StackProps;
     footerContainer?: BoxProps;
   };
   children?: ReactNode;
@@ -16,6 +18,7 @@ export type TitleCardProps = {
 
 export const TitleCard = ({
   title,
+  titleAction,
   components,
   children,
   footer,
@@ -31,11 +34,16 @@ export const TitleCard = ({
     {...components?.container}
   >
     <Stack direction="column" px={3} flexGrow={1}>
-      {title && (
-        <Typography variant="h4" mb={3} {...components?.title}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        {...components?.titleContainer}
+      >
+        <Typography variant="h4" mb={3} flexGrow={1} {...components?.title}>
           {title}
         </Typography>
-      )}
+        {titleAction}
+      </Stack>
       {children}
     </Stack>
     {footer && (
