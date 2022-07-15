@@ -1,5 +1,5 @@
-import { ToggleView } from '@frontend/shared-storybook';
-import { Button, Typography } from '@mui/material';
+import { LoremIpsum, loremIpsum, ToggleView } from '@frontend/shared-storybook';
+import { Button } from '@mui/material';
 
 import {
   ConfirmationDialog as CComp,
@@ -16,7 +16,7 @@ export const Modal = ToggleView.bind({});
 Modal.args = {
   componentFn: (anchorEl, open, toggle) => (
     <MComp open={open} onClose={toggle}>
-      <Typography sx={{ padding: 4 }}>Modal content</Typography>
+      <LoremIpsum p={2} />
     </MComp>
   ),
 };
@@ -28,7 +28,7 @@ Dialog.args = {
       open={open}
       onClose={toggle}
       title="Dialog title"
-      content="Dialog content"
+      content={loremIpsum}
       actions={
         <>
           <Button onClick={toggle}>Cancel</Button>

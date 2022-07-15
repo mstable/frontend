@@ -79,7 +79,7 @@ const light: ThemeOptions = {
     action: {
       active: alpha(colors.blue02, 0.5),
       activatedOpacity: 0.5,
-      hover: alpha(colors.grey02, 0.06),
+      hover: alpha(colors.grey08, 0.1),
       hoverOpacity: 0.06,
       selected: alpha(colors.blue01, 0.1),
       selectedOpacity: 0.1,

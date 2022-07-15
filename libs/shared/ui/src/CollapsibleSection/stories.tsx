@@ -1,4 +1,5 @@
-import { Stack, Typography } from '@mui/material';
+import { LoremIpsum } from '@frontend/shared-storybook';
+import { Stack } from '@mui/material';
 
 import { CollapsibleSection as Comp } from './index';
 
@@ -7,12 +8,10 @@ export default {
   component: Comp,
 };
 
-const Content = () => <Typography>This is section content</Typography>;
-
 export const CollapsibleSection = () => (
-  <Stack direction="column" spacing={2} p={2} width={400}>
+  <Stack width={400} border="1px dashed">
     <Comp title="Section title">
-      <Content />
+      <LoremIpsum />
     </Comp>
   </Stack>
 );

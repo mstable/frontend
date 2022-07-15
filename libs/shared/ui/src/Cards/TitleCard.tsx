@@ -30,7 +30,7 @@ export const TitleCard = ({
     bgcolor="background.paper"
     {...components?.container}
   >
-    <Stack direction="column" px={3}>
+    <Stack direction="column" px={3} flexGrow={1}>
       {title && (
         <Typography variant="h4" mb={3} {...components?.title}>
           {title}
