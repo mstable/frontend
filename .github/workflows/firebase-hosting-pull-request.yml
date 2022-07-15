@@ -16,6 +16,7 @@ jobs:
           cache: 'yarn'
       - run: yarn install            
       - run: yarn nx affected --target=build --parallel=3
+      - run: yarn run chromatic
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
