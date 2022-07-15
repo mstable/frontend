@@ -1,0 +1,50 @@
+import { CollapsibleSection, TitleCard, ValueLabel } from '@frontend/shared-ui';
+import { Stack, Typography } from '@mui/material';
+import { useIntl } from 'react-intl';
+
+export const Position = () => {
+  const intl = useIntl();
+
+  return (
+    <TitleCard
+      title={intl.formatMessage({ defaultMessage: 'My Position' })}
+      footer={
+        <CollapsibleSection
+          iconPosition="end"
+          title={intl.formatMessage({ defaultMessage: 'History' })}
+          components={{
+            titleLabel: { variant: 'body2' },
+          }}
+        >
+          <Typography py={3}>Content</Typography>
+        </CollapsibleSection>
+      }
+    >
+      <Stack
+        direction="row"
+        width={1}
+        justifyContent="space-between"
+        py={2}
+        flexWrap="wrap"
+      >
+        <ValueLabel
+          label={intl.formatMessage({ defaultMessage: 'Deposited' })}
+          value="11k"
+          subvalue="0%"
+        />
+        <ValueLabel
+          label={intl.formatMessage({ defaultMessage: 'Av. APY' })}
+          value="47.55%"
+          subvalue="+2.54%"
+          components={{ subvalue: { color: 'success.main' } }}
+        />
+        <ValueLabel
+          label={intl.formatMessage({ defaultMessage: 'Yields' })}
+          value="$10.4"
+          subvalue="-0.2%"
+          components={{ subvalue: { color: 'error.main' } }}
+        />
+      </Stack>
+    </TitleCard>
+  );
+};

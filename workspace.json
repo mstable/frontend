@@ -4,6 +4,9 @@
   "projects": {
     "mstable": "apps/mstable",
     "mstable-e2e": "apps/mstable-e2e",
+    "mstable-landing": "libs/mstable/landing",
+    "mstable-meta-vault": "libs/mstable/meta-vault",
+    "mstable-topnav": "libs/mstable/topnav",
     "shared-data-access": "libs/shared/data-access",
     "shared-i18n": "libs/shared/i18n",
     "shared-icons": "libs/shared/icons",

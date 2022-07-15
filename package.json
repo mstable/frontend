@@ -8,7 +8,7 @@
     "test": "nx test",
     "prepare": "husky install",
     "i18n:extract": "nx run-many --target=i18n-extract --all",
-    "i18n:compile": "nx run my-app:i18n-compile",
+    "i18n:compile": "nx run mstable:i18n-compile",
     "storybook": "yarn start-storybook -p 6006",
     "storybook:build": "yarn build-storybook -o dist/storybook",
     "chromatic": "yarn storybook:build && npx chromatic --project-token=f9be6d953a6c -d dist/storybook"
@@ -58,6 +58,7 @@
     "@dethcrypto/eth-sdk-client": "^0.1.6",
     "@emotion/babel-plugin": "11.9.2",
     "@formatjs/cli": "^5.0.2",
+    "@formatjs/ts-transformer": "^3.9.9",
     "@graphql-codegen/add": "^3.1.1",
     "@graphql-codegen/cli": "^2.7.0",
     "@graphql-codegen/near-operation-file-preset": "^2.2.15",

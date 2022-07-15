@@ -11,6 +11,8 @@ const Content = () => <Typography>This is section content</Typography>;
 
 export const CollapsibleSection = () => (
   <Stack direction="column" spacing={2} p={2} width={400}>
-    <Comp title="Section title" content={<Content />} />
+    <Comp title="Section title">
+      <Content />
+    </Comp>
   </Stack>
 );

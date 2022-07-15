@@ -9,11 +9,12 @@ export const ThemeModeIcon = (props: TypographyProps) => {
   } = useTheme();
 
   return (
-    <Typography
-      {...props}
-      sx={{ fontSize: 24, width: 24, height: 24, ...props?.sx }}
-    >
-      {mode === 'dark' ? <Moon /> : <SunDim />}
+    <Typography {...props} sx={{ fontSize: 24, ...props?.sx }}>
+      {mode === 'dark' ? (
+        <Moon fontSize="inherit" />
+      ) : (
+        <SunDim fontSize="inherit" />
+      )}
     </Typography>
   );
 };

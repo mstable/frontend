@@ -14,6 +14,10 @@ export const getInputBase = (base: Theme): ThemeOptions => ({
             height: 48,
           },
 
+          '.placeholder': {
+            color: 'red',
+          },
+
           '.MuiInputBase-input': {
             height: '100%',
             boxSizing: 'border-box',

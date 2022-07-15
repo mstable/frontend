@@ -76,7 +76,7 @@ const RbkStylesProvider = (props: BoxProps) => (
   />
 );
 
-export const AccountProvider = ({ children }: Children) => {
+export const WagmiProvider = ({ children }: Children) => {
   const {
     palette: { mode },
   } = useTheme();

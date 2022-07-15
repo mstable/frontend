@@ -78,17 +78,17 @@ export const getButton = (base: Theme): ThemeOptions => ({
 
         sizeSmall: {
           ...base.typography.buttonSmall,
-          padding: base.spacing(1.75, 1.5),
+          padding: base.spacing(1, 1.5),
           borderRadius: '8px',
         },
         sizeMedium: {
           ...base.typography.buttonMedium,
-          padding: base.spacing(2, 1.75),
+          padding: base.spacing(1.5, 2),
           borderRadius: '10px',
         },
         sizeLarge: {
           ...base.typography.buttonLarge,
-          padding: base.spacing(2.25, 2),
+          padding: base.spacing(2, 2.5),
           borderRadius: '12px',
         },
       },

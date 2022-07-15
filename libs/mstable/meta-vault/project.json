@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mstable/meta-vault/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/mstable/meta-vault",
+        "tsConfig": "libs/mstable/meta-vault/tsconfig.lib.json",
+        "project": "libs/mstable/meta-vault/package.json",
+        "entryFile": "libs/mstable/meta-vault/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "libs/mstable/meta-vault/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/mstable/meta-vault/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "i18n-extract": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "yarn run formatjs extract 'libs/mstable/meta-vault/**/*.{ts,tsx}' --out-file i18n-extractions/libs-mstable-metavault.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+        ]
+      }
+    }
+  }
+}

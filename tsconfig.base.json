@@ -16,6 +16,9 @@
     "baseUrl": ".",
     "strict": false,
     "paths": {
+      "@frontend/mstable-landing": ["libs/mstable/landing/src/index.ts"],
+      "@frontend/mstable-metavault": ["libs/mstable/meta-vault/src/index.ts"],
+      "@frontend/mstable-topnav": ["libs/mstable/topnav/src/index.ts"],
       "@frontend/shared-data-access": ["libs/shared/data-access/src/index.ts"],
       "@frontend/shared-i18n": ["libs/shared/i18n/src/index.ts"],
       "@frontend/shared-icons": ["libs/shared/icons/src/index.ts"],

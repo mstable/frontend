@@ -73,12 +73,13 @@ const light: ThemeOptions = {
     background: {
       default: colors.white,
       paper: colors.white,
+      highlight: colors.grey01,
     },
     divider: colors.grey03,
     action: {
       active: alpha(colors.blue02, 0.5),
       activatedOpacity: 0.5,
-      hover: alpha(colors.grey09, 0.06),
+      hover: alpha(colors.grey02, 0.06),
       hoverOpacity: 0.06,
       selected: alpha(colors.blue01, 0.1),
       selectedOpacity: 0.1,
@@ -108,6 +109,7 @@ const dark: ThemeOptions = mergeDeepRight(light, {
     background: {
       default: colors.grey10,
       paper: colors.grey08,
+      highlight: colors.grey07,
     },
     divider: colors.grey01,
   },

@@ -13,27 +13,26 @@ export type CollapsibleSectionProps = {
   title:
     | ReactNode
     | ((open: boolean, onToggle: (event?: MouseEvent) => void) => ReactNode);
-  content:
+  children:
     | ReactNode
     | ((open: boolean, onToggle: (event?: MouseEvent) => void) => ReactNode);
   defaultOpen?: boolean;
-  titleProps?: BoxProps;
-  titleLabelProps?: TypographyProps;
-  contentProps?: BoxProps;
-  iconProps?: SvgIconProps;
   iconPosition?: 'start' | 'end' | 'none';
-} & Omit<StackProps, 'title'>;
+  components?: {
+    container?: StackProps;
+    titleContainer?: BoxProps;
+    titleLabel?: TypographyProps;
+    childrenContainer?: BoxProps;
+    icon?: SvgIconProps;
+  };
+};
 
 export const CollapsibleSection = ({
   title,
-  content,
-  titleProps,
-  titleLabelProps,
-  contentProps,
-  iconProps,
+  children,
   iconPosition = 'start',
   defaultOpen = false,
-  ...rest
+  components,
 }: CollapsibleSectionProps) => {
   const [open, setOpen] = useState(defaultOpen);
 
@@ -46,15 +45,15 @@ export const CollapsibleSection = ({
     };
 
   return (
-    <Stack direction="column" {...rest}>
+    <Stack direction="column" {...components?.container}>
       {typeof title === 'function' ? (
         title(open, handleToggle())
       ) : ['string', 'number'].includes(typeof title) ? (
         <Box
-          {...titleProps}
+          {...components?.titleContainer}
           role="button"
           tabIndex={0}
-          onClick={handleToggle(titleProps?.onClick)}
+          onClick={handleToggle(components?.titleContainer?.onClick)}
           sx={{
             display: 'flex',
             flexDirection: 'row',
@@ -64,7 +63,7 @@ export const CollapsibleSection = ({
             ':hover': {
               backgroundColor: 'action.hover',
             },
-            ...titleProps?.sx,
+            ...components?.titleContainer?.sx,
           }}
         >
           {iconPosition === 'start' && (
@@ -72,11 +71,11 @@ export const CollapsibleSection = ({
               expanded={open}
               sx={{
                 marginRight: 1,
-                ...iconProps?.sx,
+                ...components?.icon?.sx,
               }}
             />
           )}
-          <Typography variant="h5" {...titleLabelProps} flexGrow={1}>
+          <Typography variant="h5" {...components?.titleLabel} flexGrow={1}>
             {title}
           </Typography>
           {iconPosition === 'end' && (
@@ -84,22 +83,22 @@ export const CollapsibleSection = ({
               expanded={open}
               sx={{
                 marginLeft: 1,
-                ...iconProps?.sx,
+                ...components?.icon?.sx,
               }}
             />
           )}
         </Box>
       ) : isValidElement(title) ? (
         cloneElement(title, {
-          ...titleProps,
+          ...components?.titleContainer,
           onClick: handleToggle(title?.props?.onClick),
         })
       ) : (
         <Box
-          {...titleProps}
+          {...components?.titleContainer}
           role="button"
           tabIndex={0}
-          onClick={handleToggle(titleProps?.onClick)}
+          onClick={handleToggle(components?.titleContainer?.onClick)}
           sx={{
             display: 'flex',
             flexDirection: 'row',
@@ -108,7 +107,7 @@ export const CollapsibleSection = ({
             ':hover': {
               backgroundColor: 'action.hover',
             },
-            ...titleProps?.sx,
+            ...components?.titleContainer?.sx,
           }}
         >
           {iconPosition === 'start' && (
@@ -116,28 +115,31 @@ export const CollapsibleSection = ({
               expanded={open}
               sx={{
                 marginRight: 1,
-                ...iconProps?.sx,
+                ...components?.icon?.sx,
               }}
             />
           )}
-          <Box {...titleLabelProps} flexGrow={1} />
+          <Box {...components?.titleLabel} flexGrow={1} />
           {iconPosition === 'end' && (
             <ExpandIcon
               expanded={open}
               sx={{
                 marginLeft: 1,
-                ...iconProps?.sx,
+                ...components?.icon?.sx,
               }}
             />
           )}
         </Box>
       )}
       <Collapse in={open}>
-        {typeof content === 'function' ? (
-          content(open, handleToggle())
+        {typeof children === 'function' ? (
+          children(open, handleToggle())
         ) : (
-          <Box {...contentProps} sx={{ padding: 1, ...contentProps?.sx }}>
-            {content}
+          <Box
+            {...components?.childrenContainer}
+            sx={{ padding: 1, ...components?.childrenContainer?.sx }}
+          >
+            {children}
           </Box>
         )}
       </Collapse>

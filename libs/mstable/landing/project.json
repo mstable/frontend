@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/mstable/landing/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/mstable/landing",
+        "tsConfig": "libs/mstable/landing/tsconfig.lib.json",
+        "project": "libs/mstable/landing/package.json",
+        "entryFile": "libs/mstable/landing/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "libs/mstable/landing/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/mstable/landing/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "i18n-extract": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "yarn run formatjs extract 'libs/mstable/landing/**/*.{ts,tsx}' --out-file i18n-extractions/libs-mstable-landing.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+        ]
+      }
+    }
+  }
+}

@@ -2067,7 +2067,7 @@
     intl-messageformat "10.1.1"
     tslib "2.4.0"
 
-"@formatjs/ts-transformer@3.9.9":
+"@formatjs/ts-transformer@3.9.9", "@formatjs/ts-transformer@^3.9.9":
   version "3.9.9"
   resolved "https://registry.yarnpkg.com/@formatjs/ts-transformer/-/ts-transformer-3.9.9.tgz#4804e0560e1944407e9dc5f5ae568a329d5668e4"
   integrity sha512-V5BDpn5XW1wWBkpDn5SFHRH4Ndf3oyjxmuqWMxe2EwOKkV4XJvzZI73k3p/Hut3Xg55AxBQQmkFK9hyeBJPyIg==

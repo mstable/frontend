@@ -1,5 +1,11 @@
 import type { TypographyStyle } from '@mui/material';
 
+declare module '@mui/material/styles/createPalette' {
+  interface TypeBackground {
+    highlight: string;
+  }
+}
+
 declare module '@mui/material/styles' {
   interface TypographyVariants {
     fontFamilies: Record<'main' | 'code', string>;
@@ -99,11 +105,6 @@ declare module '@mui/material/styles/createMixins' {
       display: string;
       justifyContent: string;
       alignItems: string;
-    };
-    drawerY: {
-      sm: VerticalDrawerMixin;
-      md: VerticalDrawerMixin;
-      lg: VerticalDrawerMixin;
     };
     gradients: {
       colorCloud: string;

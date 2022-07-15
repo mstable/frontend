@@ -9,66 +9,66 @@ import { AccountLabel } from './AccountLabel';
 import { ProfileDialog } from './ProfileDialog';
 
 import type { ButtonProps } from '@mui/material';
+import type { MouseEvent } from 'react';
 
-const buttonProps: ButtonProps = {
-  variant: 'text',
-  color: 'inherit',
-  sx: { maxWidth: 150 },
-};
-
-export const OpenAccountModalButton = () => {
+export const OpenAccountModalButton = (props: ButtonProps) => {
   const intl = useIntl();
   const buttonRef = useRef(null);
   const showDialog = useShowDialog();
 
+  const buttonProps: ButtonProps = {
+    variant: 'text',
+    color: 'inherit',
+    sx: { maxWidth: 220 },
+    ...props,
+  };
+
+  const handleClick =
+    (handler: () => void) => (evt: MouseEvent<HTMLButtonElement>) => {
+      if (props?.onClick) {
+        props.onClick(evt);
+      }
+      handler();
+    };
+
   return (
     <ConnectButton.Custom>
-      {({ account, chain, openChainModal, openConnectModal, mounted }) => (
-        <div
-          {...(!mounted && {
-            'aria-hidden': true,
-            style: {
-              opacity: 0,
-              pointerEvents: 'none',
-              userSelect: 'none',
-            },
-          })}
-        >
-          {(() => {
-            if (!mounted || !account || !chain) {
-              return (
-                <Button {...buttonProps} onClick={openConnectModal}>
-                  {intl.formatMessage({ defaultMessage: 'Connect' })}
-                </Button>
-              );
-            }
+      {({ account, chain, openChainModal, openConnectModal, mounted }) => {
+        if (!mounted || !account || !chain) {
+          return (
+            <Button {...buttonProps} onClick={handleClick(openConnectModal)}>
+              {intl.formatMessage({ defaultMessage: 'Connect' })}
+            </Button>
+          );
+        }
 
-            if (chain.unsupported) {
-              return (
-                <Button
-                  {...buttonProps}
-                  onClick={openChainModal}
-                  color="warning"
-                >
-                  {intl.formatMessage({ defaultMessage: 'Wrong Network' })}
-                </Button>
-              );
-            }
+        if (chain.unsupported) {
+          return (
+            <Button
+              {...buttonProps}
+              onClick={handleClick(openChainModal)}
+              color="warning"
+            >
+              {intl.formatMessage({ defaultMessage: 'Wrong Network' })}
+            </Button>
+          );
+        }
 
-            return (
-              <Button
-                ref={buttonRef}
-                onClick={() => {
-                  showDialog(ProfileDialog);
-                }}
-                {...buttonProps}
-              >
-                <AccountLabel />
-              </Button>
-            );
-          })()}
-        </div>
-      )}
+        return (
+          <Button
+            {...buttonProps}
+            ref={buttonRef}
+            onClick={(evt: MouseEvent<HTMLButtonElement>) => {
+              if (props?.onClick) {
+                props.onClick(evt);
+              }
+              showDialog(ProfileDialog);
+            }}
+          >
+            <AccountLabel />
+          </Button>
+        );
+      }}
     </ConnectButton.Custom>
   );
 };
