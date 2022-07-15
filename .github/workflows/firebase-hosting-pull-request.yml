@@ -21,13 +21,24 @@ jobs:
       - run: yarn storybook:build
       - name: Publish to Chromatic
         uses: chromaui/action@v1
+        id: chromatic
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitZeroOnChanges: true
           storybookBuildDir: dist/storybook
           skip: 'dependabot/**'
       - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: deploy
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FRONTEND_7E17F }}'
           projectId: frontend-7e17f
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          CHROMATIC_URL: ${{ steps.chromatic.outputs.buildUrl }}
+          PR_NAME: ${{  github.head_ref }}
+          DEPLOY_URL: ${{ steps.deploy.outputs.details_url }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: '✨ New PR opened frontend **{{ PR_NAME }}** \nDeploy url {{ DEPLOY_URL }} \nChromatic build {{ CHROMATIC_URL }}'

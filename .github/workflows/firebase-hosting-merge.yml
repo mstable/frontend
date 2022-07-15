@@ -18,8 +18,16 @@ jobs:
       - run: yarn install            
       - run: yarn build
       - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: deploy
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FRONTEND_7E17F }}'
           channelId: live
           projectId: frontend-7e17f
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DEPLOY_URL: ${{ steps.deploy.outputs.details_url }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: '🚀 New version of frontend has been deployed \nDeploy url: ${{ DEPLOY_URL }}'
