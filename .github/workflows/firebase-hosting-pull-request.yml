@@ -15,7 +15,13 @@ jobs:
           cache: 'yarn'
       - run: yarn install            
       - run: yarn build
-      - run: yarn run chromatic
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          exitZeroOnChanges: true
+          storybookBuildDir: dist/storybook
+          skip: 'dependabot/**'
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

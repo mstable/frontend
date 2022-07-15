@@ -11,7 +11,7 @@
     "i18n:compile": "nx run mstable:i18n-compile",
     "storybook": "yarn start-storybook -p 6006",
     "storybook:build": "yarn build-storybook -o dist/storybook",
-    "chromatic": "yarn storybook:build && yarn chromatic --exit-zero-on-changes -d dist/storybook",
+    "chromatic": "yarn chromatic --exit-zero-on-changes -d dist/storybook --skip 'dependabot/**'",
     "firebase:emulate": "nx build mstable && firebase emulators:start",
     "firebase:deploy:test": "nx build mstable && firebase hosting:channel:deploy test"
   },
