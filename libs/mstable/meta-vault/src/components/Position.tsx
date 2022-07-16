@@ -1,5 +1,5 @@
 import { CollapsibleSection, TitleCard, ValueLabel } from '@frontend/shared-ui';
-import { Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 export const Position = () => {
@@ -16,7 +16,14 @@ export const Position = () => {
             titleLabel: { variant: 'body2' },
           }}
         >
-          <Typography py={3}>Content</Typography>
+          <Box
+            sx={(theme) => ({
+              ...theme.mixins.centered,
+              height: 60,
+            })}
+          >
+            <Typography fontWeight="bold">🚧 WIP</Typography>
+          </Box>
         </CollapsibleSection>
       }
     >
@@ -25,7 +32,8 @@ export const Position = () => {
         width={1}
         justifyContent="space-between"
         py={2}
-        flexWrap="wrap"
+        spacing={2}
+        sx={{ overflowX: 'auto', maxWidth: 1 }}
       >
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'Deposited' })}

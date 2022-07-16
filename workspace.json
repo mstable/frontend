@@ -4,7 +4,7 @@
   "projects": {
     "mstable": "apps/mstable",
     "mstable-e2e": "apps/mstable-e2e",
-    "mstable-landing": "libs/mstable/landing",
+    "mstable-footer": "libs/mstable/footer",
     "mstable-meta-vault": "libs/mstable/meta-vault",
     "mstable-topnav": "libs/mstable/topnav",
     "shared-data-access": "libs/shared/data-access",

@@ -73,7 +73,7 @@ const light: ThemeOptions = {
     background: {
       default: colors.white,
       paper: colors.white,
-      highlight: colors.grey01,
+      highlight: colors.grey02,
     },
     divider: colors.grey03,
     action: {

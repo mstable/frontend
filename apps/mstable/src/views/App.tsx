@@ -21,7 +21,19 @@ const AppWrapped = () => {
   useUnsupportedNetworks();
 
   return (
-    <Stack width={1} height={1} direction="column">
+    <Stack
+      direction="column"
+      sx={{
+        width: '100%',
+        height: '100%',
+        background: (theme) =>
+          [
+            `linear-gradient(transparent 42%, ${theme.palette.background.default} 42%)`,
+            theme.mixins.gradients.numbTop,
+            theme.mixins.gradients.colorCloud,
+          ].join(','),
+      }}
+    >
       <Topnav />
       <Outlet />
     </Stack>
