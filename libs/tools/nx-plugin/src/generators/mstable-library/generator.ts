@@ -1,13 +1,13 @@
 import {
   formatFiles,
+  getWorkspaceLayout,
   installPackagesTask,
   joinPathFragments,
+  names,
   offsetFromRoot,
   readProjectConfiguration,
   updateJson,
   updateProjectConfiguration,
-  getWorkspaceLayout,
-  names,
 } from '@nrwl/devkit';
 import { Linter } from '@nrwl/linter';
 import { libraryGenerator } from '@nrwl/react/src/generators/library/library';

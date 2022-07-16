@@ -2,7 +2,6 @@ import {
   formatFiles,
   installPackagesTask,
   joinPathFragments,
-  names,
   offsetFromRoot,
   readProjectConfiguration,
   updateJson,
