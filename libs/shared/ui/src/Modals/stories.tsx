@@ -1,4 +1,4 @@
-import { LoremIpsum, loremIpsum, ToggleView } from '@frontend/shared-storybook';
+import { LoremIpsum, loremIpsum, ToggleView } from '@frontend/tools-storybook';
 import { Button } from '@mui/material';
 
 import {

@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "tools-nx-plugin",
+  "version": "0.0.1",
+  "generators": {
+    "mstable-application": {
+      "factory": "./src/generators/mstable-application/generator",
+      "schema": "./src/generators/mstable-application/schema.json",
+      "description": "Create a React application for mStable workspace"
+    },
+    "mstable-library": {
+      "factory": "./src/generators/mstable-library/generator",
+      "schema": "./src/generators/mstable-library/schema.json",
+      "description": "Create a React library for mStable workspace"
+    }
+  }
+}

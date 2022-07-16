@@ -1,12 +1,19 @@
 import { TitleCard } from '@frontend/shared-ui';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 export const Strategy = () => {
   const intl = useIntl();
 
   return (
-    <TitleCard title={intl.formatMessage({ defaultMessage: 'Strategy' })}>
+    <TitleCard
+      title={intl.formatMessage({ defaultMessage: 'Strategy' })}
+      titleAction={
+        <Button color="secondary">
+          {intl.formatMessage({ defaultMessage: 'Visualize Strategy' })}
+        </Button>
+      }
+    >
       <Typography>
         This Stablecoin Meta Vault is a market-neutral strategy that has little
         susceptibility to volatility.

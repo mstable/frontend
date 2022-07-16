@@ -37,9 +37,10 @@ export const TitleCard = ({
       <Stack
         direction="row"
         alignItems="center"
+        mb={3}
         {...components?.titleContainer}
       >
-        <Typography variant="h4" mb={3} flexGrow={1} {...components?.title}>
+        <Typography variant="h4" flexGrow={1} {...components?.title}>
           {title}
         </Typography>
         {titleAction}

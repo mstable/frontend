@@ -1,6 +1,6 @@
 {
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/shared/storybook/src",
+  "sourceRoot": "libs/tools/storybook/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -8,16 +8,16 @@
       "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/shared/storybook",
-        "tsConfig": "libs/shared/storybook/tsconfig.lib.json",
-        "project": "libs/shared/storybook/package.json",
-        "entryFile": "libs/shared/storybook/src/index.ts",
+        "outputPath": "dist/libs/tools/storybook",
+        "tsConfig": "libs/tools/storybook/tsconfig.lib.json",
+        "project": "libs/tools/storybook/package.json",
+        "entryFile": "libs/tools/storybook/src/index.ts",
         "external": ["react/jsx-runtime"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
         "compiler": "babel",
         "assets": [
           {
-            "glob": "libs/shared/storybook/README.md",
+            "glob": "libs/tools/storybook/README.md",
             "input": ".",
             "output": "."
           }
@@ -28,7 +28,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/shared/storybook/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/tools/storybook/**/*.{ts,tsx,js,jsx}"]
       }
     }
   }
