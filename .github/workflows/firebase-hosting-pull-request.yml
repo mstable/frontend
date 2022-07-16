@@ -15,9 +15,8 @@ jobs:
         with:
           node-version: 16
           cache: "yarn"
-      - uses: nrwl/nx-set-shas@v2
       - run: yarn install
-      - run: yarn nx affected --target=build --parallel=3
+      - run: yarn nx build mstable
       - uses: FirebaseExtended/action-hosting-deploy@v0
         id: deploy
         with:

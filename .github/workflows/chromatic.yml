@@ -8,7 +8,9 @@ on:
     paths:
       - ".github/workflows/chromatic.yml"
       - ".storybook/**"
-      - "libs/shared/storybook/**"
+      - "libs/tools/storybook/**"
+      - "libs/shared/ui/**"
+      - "libs/shared/icons/**"
       - "(apps|libs)/**/*.stories.@(mdx|js|jsx|ts|tsx)"
       - "(apps|libs)/**/stories.@(mdx|js|jsx|ts|tsx)"
     types: ["opened", "ready_for_review", "reopened", "synchronize"]
