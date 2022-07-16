@@ -47,4 +47,4 @@ jobs:
           PR_NAME: ${{  github.head_ref }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "🎨 Chromatic build for PR **{{ PR_NAME }}** 🚀 Deploy url {{ CHROMATIC_URL }}"
+          args: "🎨 Chromatic build for PR **${{ PR_NAME }}** 🚀 Deploy url ${{ CHROMATIC_URL }}"
