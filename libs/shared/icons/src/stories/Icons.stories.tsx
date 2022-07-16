@@ -1,4 +1,4 @@
-import { IconsView } from '@frontend/shared-storybook';
+import { IconsView } from '@frontend/tools-storybook';
 
 import * as chainIcons from '../components/chains';
 import * as mstableIcons from '../components/mstable';

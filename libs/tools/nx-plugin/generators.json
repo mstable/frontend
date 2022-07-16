@@ -6,12 +6,12 @@
     "mstable-application": {
       "factory": "./src/generators/mstable-application/generator",
       "schema": "./src/generators/mstable-application/schema.json",
-      "description": "mstable-application generator"
+      "description": "Create a React application for mStable workspace"
     },
     "mstable-library": {
       "factory": "./src/generators/mstable-library/generator",
       "schema": "./src/generators/mstable-library/schema.json",
-      "description": "mstable-library generator"
+      "description": "Create a React library for mStable workspace"
     }
   }
 }

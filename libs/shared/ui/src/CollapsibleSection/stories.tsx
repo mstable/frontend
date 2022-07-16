@@ -1,4 +1,4 @@
-import { LoremIpsum } from '@frontend/shared-storybook';
+import { LoremIpsum } from '@frontend/tools-storybook';
 import { Stack } from '@mui/material';
 
 import { CollapsibleSection as Comp } from './index';

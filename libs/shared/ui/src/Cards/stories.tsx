@@ -1,4 +1,4 @@
-import { LoremIpsum } from '@frontend/shared-storybook';
+import { LoremIpsum } from '@frontend/tools-storybook';
 import { Grid } from '@mui/material';
 
 import { TitleCard as TCard } from './TitleCard';

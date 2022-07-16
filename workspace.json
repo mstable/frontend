@@ -7,16 +7,18 @@
     "mstable-landing": "libs/mstable/landing",
     "mstable-meta-vault": "libs/mstable/meta-vault",
     "mstable-topnav": "libs/mstable/topnav",
-    "nx-plugin": "libs/tools/nx-plugin",
+
     "shared-data-access": "libs/shared/data-access",
     "shared-i18n": "libs/shared/i18n",
     "shared-icons": "libs/shared/icons",
     "shared-modals": "libs/shared/modals",
     "shared-notifications": "libs/shared/notifications",
-    "shared-storybook": "libs/shared/storybook",
+
     "shared-theme": "libs/shared/theme",
     "shared-ui": "libs/shared/ui",
     "shared-utils": "libs/shared/utils",
-    "shared-wagmi": "libs/shared/wagmi"
+    "shared-wagmi": "libs/shared/wagmi",
+    "tools-nx-plugin": "libs/tools/nx-plugin",
+    "tools-storybook": "libs/tools/storybook"
   }
 }
