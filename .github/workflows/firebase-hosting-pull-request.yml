@@ -26,8 +26,6 @@ jobs:
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          PR_NAME: ${{  github.head_ref }}
-          DEPLOY_URL: ${{ steps.deploy.outputs.details_url }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "✨ PR **${{ PR_NAME }}** created/updated 🚀 Deploy url ${{ DEPLOY_URL }}"
+          args: "✨ PR **{{ github.head_ref }}** created/updated 🚀 Deploy url {{ steps.deploy.outputs.details_url }}"
