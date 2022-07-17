@@ -45,6 +45,7 @@ export const Settings = () => {
         onClose={() => {
           setOpen(false);
         }}
+        PaperProps={{ sx: { mt: 2 } }}
       >
         <Stack alignItems="center" sx={{ minWidth: { xs: '94vw', sm: 300 } }}>
           <Button
