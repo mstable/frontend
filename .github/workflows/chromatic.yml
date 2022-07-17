@@ -44,6 +44,8 @@ jobs:
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          PR_NAME: ${{ github.head_ref }}
+          DEPLOY_URL: ${{ steps.chromatic.outputs.buildUrl }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "🎨 Chromatic build for PR **{{ github.head_ref }}** 🚀 Deploy url {{ steps.chromatic.outputs.buildUrl }}"
+          args: "🎨 Chromatic build for PR **{{ github.head_ref }}** 🚀 Deploy url {{ DEPLOY_URL }}"
