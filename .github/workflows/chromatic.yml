@@ -9,6 +9,7 @@ on:
       - ".github/workflows/chromatic.yml"
       - ".storybook/**"
       - "libs/tools/storybook/**"
+      - "libs/shared/theme/**"
       - "libs/shared/ui/**"
       - "libs/shared/icons/**"
       - "(apps|libs)/**/*.stories.@(mdx|js|jsx|ts|tsx)"
