@@ -32,11 +32,11 @@ jobs:
   deploy-pr:
     if: github.event_name == 'pull_request'
     needs: ["main"]
-    uses: "mstable/frontend/.github/workflows/deploy-pr.yml@chore/nxcloud"
+    uses: "mstable/frontend/.github/workflows/deploy-pr.yml@main"
     secrets: inherit
 
   deploy-merge:
     if: github.event_name == 'push'
     needs: ["main"]
-    uses: "mstable/frontend/.github/workflows/deploy-merge.yml@chore/nxcloud"
+    uses: "mstable/frontend/.github/workflows/deploy-merge.yml@main"
     secrets: inherit
