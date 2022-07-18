@@ -12,13 +12,13 @@ export const Metavault = () => {
       <Grid item xs={12}>
         <VaultJumbo />
       </Grid>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={8} order={{ xs: 3, md: 2 }}>
         <Stack direction="column" p={1} spacing={2}>
           <VaultPerformance />
           <Strategy />
         </Stack>
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={4} order={{ xs: 2, md: 3 }}>
         <Stack direction="column" p={1} spacing={2}>
           <Position />
           <Operations />

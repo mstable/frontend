@@ -4,7 +4,8 @@ export const getInputLabel = (base: Theme): ThemeOptions => ({
   components: {
     MuiInputLabel: {
       defaultProps: {
-        shrink: false,
+        shrink: true,
+        disableAnimation: true,
       },
       styleOverrides: {
         root: {
