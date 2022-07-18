@@ -1,4 +1,3 @@
-import { LoremIpsum } from '@frontend/tools-storybook';
 import {
   Button,
   Card as MuiCard,
@@ -6,6 +5,7 @@ import {
   CardContent,
   CardHeader,
   Divider,
+  Typography,
 } from '@mui/material';
 
 export default {
@@ -17,11 +17,11 @@ export const TitleCard = () => (
   <MuiCard sx={{ width: 600 }}>
     <CardHeader title="Card Title" action={<Button>Click me</Button>} />
     <CardContent>
-      <LoremIpsum />
+      <Typography>Card content</Typography>
     </CardContent>
     <Divider />
     <CardContent>
-      <LoremIpsum />
+      <Typography>Card other content</Typography>
     </CardContent>
   </MuiCard>
 );
