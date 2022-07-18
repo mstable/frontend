@@ -50,8 +50,9 @@ export const VaultJumbo = () => {
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'Asset' })}
           subvalue="USDC"
+          components={{ valueContainer: { pl: 0.5, pb: 0.3 } }}
         >
-          <USDC sx={{ width: 26, height: 26 }} />
+          <USDC />
         </ValueLabel>
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'TVL' })}

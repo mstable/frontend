@@ -2,7 +2,7 @@ import { Metamask, USDC } from '@frontend/shared-icons';
 import { Button, Stack, TextField, Typography } from '@mui/material';
 import { range } from 'ramda';
 
-import type { ButtonProps, StandardTextFieldProps } from '@mui/material';
+import type { ButtonProps, StandardTextFieldProps, Theme } from '@mui/material';
 import type { ChangeEvent } from 'react';
 
 export type TokenInputProps = {
@@ -13,7 +13,22 @@ export type TokenInputProps = {
 
 const PERCENTAGE_STEPS = 4; // 100 / 4 = 25%
 
-const PercentageButton = (props: ButtonProps) => (
+const greyBkg = (theme: Theme) => ({
+  color: theme.palette.grey['800'],
+  backgroundColor:
+    theme.palette.mode === 'light'
+      ? theme.palette.grey['100']
+      : theme.palette.grey['300'],
+  ':hover': {
+    color: theme.palette.grey['800'],
+    backgroundColor:
+      theme.palette.mode === 'light'
+        ? theme.palette.grey['200']
+        : theme.palette.grey['400'],
+  },
+});
+
+const SmallButton = (props: ButtonProps) => (
   <Button
     variant="text"
     {...props}
@@ -22,10 +37,7 @@ const PercentageButton = (props: ButtonProps) => (
       borderRadius: '4px',
       minWidth: 0,
       minHeight: 0,
-      backgroundColor: 'grey.100',
-      ':hover': {
-        backgroundColor: 'grey.200',
-      },
+      ...greyBkg(theme),
       ...theme.typography.value6,
       ...props?.sx,
     })}
@@ -36,17 +48,14 @@ const SymbolButton = (props: ButtonProps) => (
   <Button
     variant="text"
     {...props}
-    sx={{
+    sx={(theme) => ({
       py: 0.5,
       px: 1.5,
       borderRadius: '4px',
       minWidth: 48,
-      backgroundColor: 'grey.100',
-      ':hover': {
-        backgroundColor: 'grey.200',
-      },
+      ...greyBkg(theme),
       ...props?.sx,
-    }}
+    })}
   />
 );
 
@@ -99,19 +108,19 @@ export const TokenInput = ({
       >
         <Stack direction="row" spacing={0.5}>
           {range(1, PERCENTAGE_STEPS + 1).map((n) => (
-            <PercentageButton
+            <SmallButton
               key={`percent-${n}`}
               onClick={handlePercentageClick(n)}
               disabled={balance === 0}
             >
               {n * (100 / PERCENTAGE_STEPS)}%
-            </PercentageButton>
+            </SmallButton>
           ))}
         </Stack>
-        <PercentageButton>
+        <SmallButton>
           <Metamask sx={{ width: 12, height: 12, mr: 1 }} />
           <Typography variant="value6">54,567.23 USDC</Typography>
-        </PercentageButton>
+        </SmallButton>
       </Stack>
     </Stack>
   );

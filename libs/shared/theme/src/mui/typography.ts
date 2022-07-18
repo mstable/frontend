@@ -126,7 +126,7 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
     },
     value2: {
       fontFamily: fontFamilies.code,
-      fontSize: 23,
+      fontSize: 24,
       lineHeight: 1,
       letterSpacing: '-4%',
       fontWeight: fontWeights.semibold,

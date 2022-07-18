@@ -12,6 +12,7 @@ export type ValueLabelProps = {
     container?: StackProps;
     label?: TypographyProps;
     value?: TypographyProps;
+    valueContainer?: StackProps;
     subvalue?: TypographyProps;
   };
 };
@@ -27,7 +28,13 @@ export const ValueLabel = ({
     <Typography variant="label2" mb={2} noWrap {...components?.label}>
       {label}
     </Typography>
-    <Stack mb={0.5} maxHeight={26} direction="row" alignItems="center">
+    <Stack
+      mb={0.5}
+      height={24}
+      direction="row"
+      alignItems="center"
+      {...components?.valueContainer}
+    >
       {value && (
         <Typography variant="value2" noWrap {...components?.value}>
           {value}

@@ -1,6 +1,6 @@
 import { TokenInput } from '@frontend/shared-ui';
-import { Divider, Stack, TextField, Typography } from '@mui/material';
-import { ArrowDown } from 'phosphor-react';
+import { Button, Divider, Stack, TextField, Typography } from '@mui/material';
+import { ArrowDown, ArrowRight } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
 import type { StackProps } from '@mui/material';
@@ -79,6 +79,19 @@ export const Deposit = () => {
         }}
       />
       <Recap />
+      <Button
+        size="large"
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <span>200.00 USDC</span>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Typography>Deposit</Typography>
+          <ArrowRight />
+        </Stack>
+      </Button>
     </Stack>
   );
 };
