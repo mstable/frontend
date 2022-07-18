@@ -31,10 +31,10 @@ jobs:
 
   deploy-pr:
     if: github.event == 'pull_request'
-    uses: '.github/workflows/deploy-pr.yml'
+    uses: '.github/workflows/deploy-pr.yml@main'
     secrets: inherit
 
   deploy-merge:
     if: github.event == 'push'
-    uses: '.github/workflows/deploy-merge.yml'
+    uses: '.github/workflows/deploy-merge.yml@main'
     secrets: inherit
