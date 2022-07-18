@@ -21,3 +21,23 @@ jobs:
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.6
     with:
       number-of-agents: 3
+
+  firebase:
+    needs: [main, agents]
+    if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: deploy
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_FRONTEND_7E17F }}"
+          projectId: frontend-7e17f
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          PR_NAME: ${{ github.head_ref }}
+          DEPLOY_URL: ${{ steps.deploy.outputs.details_url }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "✨ PR **{{ PR_NAME }}** created/updated 🚀 Deploy url: {{ DEPLOY_URL }}"
