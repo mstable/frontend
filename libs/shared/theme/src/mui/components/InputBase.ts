@@ -15,13 +15,12 @@ export const getInputBase = (base: Theme): ThemeOptions => ({
           },
 
           '.placeholder': {
-            color: 'red',
+            ...base.typography.placeholder,
           },
 
           '.MuiInputBase-input': {
             height: '100%',
             boxSizing: 'border-box',
-            padding: base.spacing(1.5, 2),
           },
 
           '.MuiInputBase-inputMultiline': {
@@ -62,10 +61,6 @@ export const getInputBase = (base: Theme): ThemeOptions => ({
           lineHeight: 14,
           '&:not(.MuiInputBase-multiline):not(.MuiAutocomplete-inputRoot)': {
             height: 32,
-          },
-
-          '.MuiInputBase-input': {
-            padding: base.spacing(0.75, 1.5),
           },
 
           '.MuiInputBase-inputMultiline': {

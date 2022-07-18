@@ -21,7 +21,7 @@
           "error",
           {
             "enforceBuildableLibDependency": true,
-            "allow": [],
+            "allow": ["@frontend/tools-storybook"],
             "depConstraints": []
           }
         ],
