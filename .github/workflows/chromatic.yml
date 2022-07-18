@@ -48,4 +48,4 @@ jobs:
           DEPLOY_URL: ${{ steps.chromatic.outputs.buildUrl }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "🎨 Chromatic build for PR **{{ github.head_ref }}** 🚀 Deploy url {{ DEPLOY_URL }}"
+          args: "🎨 Chromatic build for PR **{{ PR_NAME }}** 🚀 Deploy url {{ DEPLOY_URL }}"
