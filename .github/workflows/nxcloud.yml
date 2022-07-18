@@ -30,11 +30,11 @@ jobs:
       number-of-agents: 3
 
   deploy-pr:
-    if: github.event == 'pull_request'
+    if: github.event_name == 'pull_request'
     uses: 'mstable/frontend/.github/workflows/deploy-pr.yml@chore/nxcloud'
     secrets: inherit
 
   deploy-merge:
-    if: github.event == 'push'
+    if: github.event_name == 'push'
     uses: 'mstable/frontend/.github/workflows/deploy-merge.yml@chore/nxcloud'
     secrets: inherit
