@@ -61,7 +61,7 @@ export const CollapsibleSection = ({
             py: 1,
             cursor: 'pointer',
             ':hover': {
-              backgroundColor: 'action.hover',
+              color: 'primary.main',
             },
             ...components?.titleContainer?.sx,
           }}
@@ -105,7 +105,7 @@ export const CollapsibleSection = ({
             alignItems: 'center',
             cursor: 'pointer',
             ':hover': {
-              backgroundColor: 'action.hover',
+              color: 'primary.main',
             },
             ...components?.titleContainer?.sx,
           }}

@@ -1,4 +1,4 @@
-import { ToggleView } from '@frontend/shared-storybook';
+import { ToggleView } from '@frontend/tools-storybook';
 import { MenuItem } from '@mui/material';
 
 import { ClickAwayMenu as Comp } from './index';

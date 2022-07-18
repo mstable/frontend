@@ -1,6 +1,6 @@
 import { addons } from '@storybook/addons';
 
-import { IntlDecorator, ThemeDecorator } from '@frontend/shared-storybook';
+import { IntlDecorator, ThemeDecorator } from '@frontend/tools-storybook';
 import theme from './theme';
 
 export const globalTypes = {

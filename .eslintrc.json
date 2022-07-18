@@ -17,7 +17,6 @@
         "./.eslintrc.base.json"
       ],
       "rules": {
-        // Nx rules
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
           {
@@ -26,8 +25,6 @@
             "depConstraints": []
           }
         ],
-
-        // Unused imports rules
         "unused-imports/no-unused-imports": "error",
         "unused-imports/no-unused-vars": [
           "warn",
@@ -38,29 +35,21 @@
             "ignoreRestSiblings": true
           }
         ],
-
-        // Import ordering rules
         "simple-import-sort/imports": [
           "warn",
           {
             "groups": [
-              // Side effect imports
               ["^\\u0000"],
-              // React Package(s) comes first as seperate group
               ["^react(-dom(/client)?)?$"],
-              // All other imports
               ["^@?\\w"],
               ["^((?!\\u0000$)|/.*|$)"],
               ["^\\."],
-              // Type imports: keep these last!
               ["^@?\\w.*\\u0000$"],
               ["^.*\\u0000$"],
               ["^\\..*\\u0000$"]
             ]
           }
         ],
-
-        // FormatJS rules
         "formatjs/enforce-default-message": ["error", "literal"],
         "formatjs/no-id": "error",
         "formatjs/no-multiple-whitespaces": "error",
@@ -76,7 +65,16 @@
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nrwl/nx/javascript", "./.eslintrc.base.json"],
       "rules": {}
+    },
+    {
+      "files": "*.json",
+      "parser": "jsonc-eslint-parser",
+      "rules": {}
     }
   ],
-  "settings": { "react": { "version": "detect" } }
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
 }

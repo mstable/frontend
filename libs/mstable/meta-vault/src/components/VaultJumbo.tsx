@@ -41,7 +41,12 @@ export const VaultJumbo = () => {
           {intl.formatMessage({ defaultMessage: 'Uniswap' })}
         </Button>
       </Stack>
-      <Stack direction="row" mt={{ xs: 4, md: 6 }} spacing={{ xs: 3, md: 4 }}>
+      <Stack
+        direction="row"
+        mt={{ xs: 4, md: 6 }}
+        spacing={{ xs: 3, md: 4 }}
+        sx={{ overflowX: 'auto', maxWidth: 1 }}
+      >
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'Asset' })}
           subvalue="USDC"

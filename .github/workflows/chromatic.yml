@@ -8,7 +8,10 @@ on:
     paths:
       - ".github/workflows/chromatic.yml"
       - ".storybook/**"
-      - "libs/shared/storybook/**"
+      - "libs/tools/storybook/**"
+      - "libs/shared/theme/**"
+      - "libs/shared/ui/**"
+      - "libs/shared/icons/**"
       - "(apps|libs)/**/*.stories.@(mdx|js|jsx|ts|tsx)"
       - "(apps|libs)/**/stories.@(mdx|js|jsx|ts|tsx)"
     types: ["opened", "ready_for_review", "reopened", "synchronize"]
@@ -41,8 +44,8 @@ jobs:
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          CHROMATIC_URL: ${{ steps.chromatic.outputs.buildUrl }}
-          PR_NAME: ${{  github.head_ref }}
+          PR_NAME: ${{ github.head_ref }}
+          DEPLOY_URL: ${{ steps.chromatic.outputs.buildUrl }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "🎨 Chromatic build for PR **{{ PR_NAME }}** 🚀 Deploy url {{ CHROMATIC_URL }}"
+          args: "🎨 Chromatic build for PR **{{ PR_NAME }}** 🚀 Deploy url: {{ DEPLOY_URL }}"
