@@ -14,9 +14,8 @@ jobs:
         with:
           node-version: 16
           cache: "yarn"
-      - uses: nrwl/nx-set-shas@v2
       - run: yarn install
-      - run: yarn nx affected --target=build --parallel=3
+      - run: yarn nx build mstable
       - uses: FirebaseExtended/action-hosting-deploy@v0
         id: deploy
         with:
@@ -26,7 +25,7 @@ jobs:
           projectId: frontend-7e17f
       - name: Discord notification
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}          
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
           args: "✨ New version of mStable frontend 🚀 Deploy url: https://frontend-7e17f.web.app/"
