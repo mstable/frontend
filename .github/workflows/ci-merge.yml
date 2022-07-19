@@ -14,6 +14,9 @@ env:
   NX_BRANCH: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   NX_RUN_GROUP: ${{ github.run_id }}
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+  PARALLEL_COMMANDS_ON_AGENTS: |
+    yarn nx affected --target=lint --parallel=3              
+    yarn nx affected --target=build --parallel=3
 
 jobs:
   main:
@@ -88,12 +91,11 @@ jobs:
       - name: Process parallel commands configuration
         uses: actions/github-script@v6
         id: parallel_commands_config
+        env:
+          PARALLEL_COMMANDS_ON_AGENTS: ${{ PARALLEL_COMMANDS_ON_AGENTS }}
         with:
           script: |
-            const parallelCommandsOnAgentsStr = '
-              npx nx affected --target=lint --parallel=3              
-              npx nx affected --target=build --parallel=3
-            ';
+            const parallelCommandsOnAgentsStr = process.env.PARALLEL_COMMANDS_ON_AGENTS || '';
 
             const parallelCommandsOnAgents = parallelCommandsOnAgentsStr
               .split('\n')
