@@ -14,9 +14,6 @@ env:
   NX_BRANCH: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   NX_RUN_GROUP: ${{ github.run_id }}
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
-  PARALLEL_BUILD_COMMANDS: |
-    yarn nx affected --target=lint --parallel=3              
-    yarn nx affected --target=build --parallel=3
 
 jobs:
   main:
@@ -92,14 +89,15 @@ jobs:
         uses: actions/github-script@v6
         id: parallel_commands_config
         env:
-          PARALLEL_COMMANDS_ON_AGENTS: ${{ PARALLEL_BUILD_COMMANDS }}
+          PARALLEL_COMMANDS_ON_AGENTS: |
+            yarn nx affected --target=lint --parallel=3              
+            yarn nx affected --target=build --parallel=3
         with:
           script: |
-            const parallelCommandsOnAgentsStr = process.env.PARALLEL_COMMANDS_ON_AGENTS || '';
-
-            const parallelCommandsOnAgents = parallelCommandsOnAgentsStr
-              .split('\n')
-              .map(command => command.trim())
+            const parallelCommandsOnAgents = [
+              'yarn nx affected --target=lint --parallel=3',
+              'yarn nx affected --target=build --parallel=3'
+              ].map(command => command.trim())
               .filter(command => command.length > 0)
               .map(s => s.replace(/'/g, '%27'));
 
