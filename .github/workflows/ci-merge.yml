@@ -1,4 +1,4 @@
-name: CI deploy after merge
+name: CI-merge
 
 on:
   push:
@@ -17,133 +17,32 @@ env:
 
 jobs:
   main:
+    name: Nx Cloud - Main Job
+    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.6
+    with:
+      number-of-agents: 3
+      parallel-commands: |
+        yarn nx-cloud record -- yarn nx workspace-lint
+      parallel-commands-on-agents: |
+        yarn nx affected --target=lint --parallel=3
+        yarn nx affected --target=build --parallel=3
+      final-commands: |
+        yarn nx-cloud record -- yarn firebase hosting:channel:deploy {{ NX_BRANCH }}
+
+  agents:
+    name: Nx Cloud - Agents
+    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.6
+    with:
+      number-of-agents: 3
+
+  notify:
+    name: Discord notification
+    needs: ["main"]
     runs-on: ubuntu-latest
-    name: Run
-    defaults:
-      run:
-        working-directory: ${{ github.workspace }}
-        shell: bash
     steps:
-      - uses: actions/checkout@v2
-        name: Checkout [Default Branch]
-        with:
-          fetch-depth: 0
-
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
-        with:
-          main-branch-name: main
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Use the node_modules cache if available [yarn]
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-16-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-16-yarn-
-
-      - name: Install dependencies
-        run: |
-          echo "Running yarn install --frozen-lockfile"
-          yarn install --frozen-lockfile
-
-      - name: Create command utils
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const { writeFileSync } = require('fs');
-            const runCommandsInParallelScript = `
-              # Extract the provided commands from the stringified JSON array.
-              IFS=$'\n' read -d '' -a userCommands < <((jq -c -r '.[]') <<<"$1")
-
-              # Invoke the provided commands in parallel and collect their exit codes.
-              pids=()
-              for userCommand in "\${userCommands[@]}"; do
-                eval "$userCommand" & pids+=($!)
-              done
-
-              # If any one of the invoked commands exited with a non-zero exit code, exit the whole thing with code 1.
-              for pid in \${pids[*]}; do
-                if ! wait $pid; then
-                  exit 1
-                fi
-              done
-
-              # All the invoked commands must have exited with code zero.
-              exit 0
-            `;
-            writeFileSync('./.github/workflows/run-commands-in-parallel.sh', runCommandsInParallelScript);
-
-      - name: Prepare command utils
-        # We need to escape the workspace path to be consistent cross-platform: https://github.com/actions/runner/issues/1066
-        run: chmod +x ${GITHUB_WORKSPACE//\\//}/.github/workflows/run-commands-in-parallel.sh
-
-      - name: Initialize the Nx Cloud distributed CI run
-        run: npx nx-cloud start-ci-run
-
-      - name: Process parallel commands configuration
-        uses: actions/github-script@v6
-        id: parallel_commands_config
-        env:
-          PARALLEL_COMMANDS_ON_AGENTS: |
-            yarn nx affected --target=lint --parallel=3              
-            yarn nx affected --target=build --parallel=3
-        with:
-          script: |
-            const parallelCommandsOnAgents = [
-              'yarn nx affected --target=lint --parallel=3',
-              'yarn nx affected --target=build --parallel=3'
-              ].map(command => command.trim())
-              .filter(command => command.length > 0)
-              .map(s => s.replace(/'/g, '%27'));
-
-            const stringifiedEncodedArrayOfCommands = JSON.stringify(parallelCommandsOnAgents)
-              .replace(/%27/g, "'\\''");
-
-            return stringifiedEncodedArrayOfCommands
-          result-encoding: string
-
-      - name: Run any configured parallel commands on main and agent jobs
-        # We need to escape the workspace path to be consistent cross-platform: https://github.com/actions/runner/issues/1066
-        run: ${GITHUB_WORKSPACE//\\//}/.github/workflows/run-commands-in-parallel.sh '${{ steps.parallel_commands_config.outputs.result }}'
-
-      - name: Run any configured final-commands sequentially
-        if: ${{ inputs.final-commands != '' }}
-        run: |
-          ${{ inputs.final-commands }}
-
-      - name: Stop all running agents for this CI run
-        # It's important that we always run this step, otherwise in the case of any failures in preceding non-Nx steps, the agents will keep running and waste billable minutes
-        if: ${{ always() }}
-        run: npx nx-cloud stop-all-agents
-
-      - name: Firebase deploy
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        id: deploy
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_FRONTEND_7E17F }}"
-          channelId: live
-          projectId: frontend-7e17f
-
-      - name: Discord notification
+      - name: Notify discord
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
           args: "✨ New version of mStable frontend 🚀 Deploy url: https://frontend-7e17f.web.app/"
-
-  agents:
-    name: Nx Cloud - Agents
-    uses: ./.github/workflows/agents.yml
-    with:
-      number-of-agents: 3
-      install-commands: |
-        echo "Installing dependencies with custom install-commands"
-        yarn install --frozen-lockfile
-        touch ./install-commands-success
-        echo "install commands end"
