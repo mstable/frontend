@@ -16,6 +16,11 @@ export const getCSSBaseline = (base: Theme): ThemeOptions => ({
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
           }
+
+          input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
         `,
     },
   },

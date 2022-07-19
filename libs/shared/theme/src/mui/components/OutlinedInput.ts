@@ -37,7 +37,7 @@ export const getOutlinedInput = (base: Theme): ThemeOptions => ({
           },
 
           '.MuiOutlinedInput-input::placeholder': {
-            color: base.palette.text.secondary,
+            ...base.typography.placeholder,
             opacity: 1,
           },
 

@@ -51,8 +51,8 @@ export const Settings = () => {
           <Button
             {...itemButtonProps}
             onClick={() => {
-              switchTheme();
               setOpen(false);
+              switchTheme();
             }}
           >
             <ThemeModeIcon sx={{ mr: 2 }} />

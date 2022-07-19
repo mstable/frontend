@@ -16,7 +16,7 @@ export const getMixinsOptions = (base: Theme): ThemeOptions => ({
     paddings: {
       page: {
         paddingY: { xs: 1, sm: 2, md: 2.5 },
-        paddingX: { xs: 2, sm: 6, md: 8, lg: 14, xl: 36 },
+        paddingX: { xs: 2, sm: 6, md: 8, lg: 10, xl: 20 },
       },
       section: {
         paddingY: { xs: 0.5, sm: 1, md: 1.2 },
