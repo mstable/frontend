@@ -5,6 +5,8 @@ import { getAvatar } from './components/Avatar';
 import { getButton } from './components/Button';
 import { getButtonBase } from './components/ButtonBase';
 import { getButtonGroup } from './components/ButtonGroup';
+import { getCard } from './components/Card';
+import { getCardHeader } from './components/CardHeader';
 import { getCheckbox } from './components/Checkbox';
 import { getCSSBaseline } from './components/CSSBaseline';
 import { getDialog } from './components/Dialog';
@@ -22,12 +24,14 @@ import { getInputLabel } from './components/InputLabel';
 import { getMenu } from './components/Menu';
 import { getMenuItem } from './components/MenuItem';
 import { getOutlinedInput } from './components/OutlinedInput';
+import { getPaper } from './components/Paper';
 import { getRadio } from './components/Radio';
 import { getSelect } from './components/Select';
 import { getTextField } from './components/TextField';
 import { getTypography } from './components/Typography';
 import { getMixinsOptions } from './mixins';
 import { getPaletteOptions } from './palette';
+import { getShadowsOptions } from './shadows';
 import { shapeOptions } from './shape';
 import { getTypographyOptions } from './typography';
 
@@ -39,6 +43,7 @@ export const getTheme = (mode: PaletteMode) => {
     paletteOptions,
     shapeOptions,
     getTypographyOptions(paletteOptions),
+    getShadowsOptions(mode),
   );
 
   return createTheme(
@@ -49,6 +54,8 @@ export const getTheme = (mode: PaletteMode) => {
     getButtonBase(base),
     getButtonGroup(base),
     getCheckbox(base),
+    getCard(base),
+    getCardHeader(base),
     getCSSBaseline(base),
     getDialog(base),
     getDialogActions(base),
@@ -66,6 +73,7 @@ export const getTheme = (mode: PaletteMode) => {
     getMenuItem(base),
     getMixinsOptions(base),
     getOutlinedInput(base),
+    getPaper(base),
     getRadio(base),
     getSelect(base),
     getTextField(base),

@@ -1,11 +1,6 @@
-import {
-  Discord,
-  Email,
-  Github,
-  Medium,
-  Twitter,
-} from '@frontend/shared-icons';
+import { Discord, Email, Github, Twitter } from '@frontend/shared-icons';
 import { IconButton, Stack, Typography } from '@mui/material';
+import { MediumLogo } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
 export const Footer = () => {
@@ -29,7 +24,7 @@ export const Footer = () => {
     },
     {
       title: intl.formatMessage({ defaultMessage: 'Medium' }),
-      icon: <Medium />,
+      icon: <MediumLogo size={32} weight="fill" />,
       href: 'https://medium.com/mstable',
     },
     {
