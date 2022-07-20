@@ -10,7 +10,9 @@
     "i18n:extract": "nx run-many --target=i18n-extract --all",
     "i18n:compile": "nx run mstable:i18n-compile",
     "storybook": "yarn start-storybook -p 6006",
-    "storybook:build": "yarn build-storybook -o dist/storybook"
+    "storybook:build": "yarn build-storybook -o dist/storybook",
+    "lint": "nx lint",
+    "lint:fix": "nx lint --fix"
   },
   "private": true,
   "lint-staged": {
