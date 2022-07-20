@@ -11,14 +11,20 @@ import {
   useTheme,
 } from '@mui/material';
 
-import { fontWeights } from '../constants';
-
 export default {
   title: 'Theme/Typography',
   component: MuiTypography,
 };
 
 const sample = 'The DeFi yield operating system';
+
+const fontWeights = {
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+  extrabold: 800,
+};
 
 const formatFontweight = (w: number) =>
   capitalize(
