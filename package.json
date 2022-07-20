@@ -43,6 +43,7 @@
     "react-hook-form": "^7.33.1",
     "react-intl": "^6.0.5",
     "react-jazzicon": "^1.0.4",
+    "react-json-view": "^1.21.3",
     "react-query": "^3.39.2",
     "react-tracked": "^1.7.9",
     "react-use": "^17.4.0",
