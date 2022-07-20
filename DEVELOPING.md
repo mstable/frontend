@@ -7,6 +7,32 @@ This project was generated using [Nx](https://nx.dev). We strongly recomend the 
 > - [NxConsole plugin](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console) for VsCode
 > - [NxConsole Idea](https://plugins.jetbrains.com/plugin/15101-nx-console-idea) for Jetbrains
 
+## Environment setup
+
+It is recommended to develop on UNIX-based system or WSL for Windows.
+
+You need `node16` and `yarn` to run this project.
+
+You can install Nx cli globally to avoid to have to run all commands through yarn
+
+```bash
+npm i -g nx
+```
+
+The `i18n:compile` script relies on external dependency `jq` that you need to install on your OS
+
+```bash
+# on Ubuntu 
+sudo apt-get update
+sudo apt-get install jq
+```
+
+## Build configuration
+
+This project uses Nx's specific `project.json` files to expose applications or libraries build scripts. That allows for a smooth integration with Nx tooling such as dependency graph and distributed computing. You can find [here](https://nx.dev/configuration/projectjson) documentation on the full file schema. All builds are handled with executors/builders, usually webpack for applications and rollup for libraries. You can find more information on how to use them [here](https://nx.dev/executors/using-builders).
+
+Build artifacts are emmitted into the `/dist` folder at the root of the repo, the file structure reflects the monorepo stricture.  
+
 ## Monorepo structure
 
 ### Two primary folders
