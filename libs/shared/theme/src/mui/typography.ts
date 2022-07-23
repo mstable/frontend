@@ -35,7 +35,7 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
     },
     h2: {
       fontFamily: fontFamilies.main,
-      fontSize: 33,
+      fontSize: 32,
       lineHeight: 1.25,
       fontWeight: fontWeights.extrabold,
     },
@@ -47,26 +47,26 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
     },
     h4: {
       fontFamily: fontFamilies.main,
-      fontSize: 23,
+      fontSize: 24,
       lineHeight: 1.25,
       fontWeight: fontWeights.bold,
     },
     h5: {
       fontFamily: fontFamilies.main,
-      fontSize: 19,
+      fontSize: 18,
       lineHeight: 1.25,
       fontWeight: fontWeights.bold,
     },
     body1: {
       fontFamily: fontFamilies.main,
       fontSize: 16,
-      lineHeight: 1.5,
+      lineHeight: 1.625,
       fontWeight: fontWeights.medium,
     },
     body2: {
       fontFamily: fontFamilies.main,
       fontSize: 14,
-      lineHeight: 1.5,
+      lineHeight: 1.625,
       fontWeight: fontWeights.medium,
     },
     buttonSmall: {
@@ -133,7 +133,7 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
     },
     value3: {
       fontFamily: fontFamilies.code,
-      fontSize: 16,
+      fontSize: 18,
       lineHeight: 1,
       letterSpacing: '-4%',
       fontWeight: fontWeights.semibold,
