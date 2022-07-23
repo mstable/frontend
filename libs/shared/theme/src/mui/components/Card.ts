@@ -5,7 +5,11 @@ export const getCard = (base: Theme): ThemeOptions => ({
     MuiCard: {
       defaultProps: {
         variant: 'outlined',
-        elevation: 1,
+      },
+      styleOverrides: {
+        root: {
+          boxShadow: base.shadows[1],
+        },
       },
     },
   },
