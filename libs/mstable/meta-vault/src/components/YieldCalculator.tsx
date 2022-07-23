@@ -1,7 +1,6 @@
 import { CollapsibleSection, TokenInput } from '@frontend/shared-ui';
 import {
   Card,
-  CardHeader,
   Checkbox,
   Divider,
   FormControlLabel,
@@ -25,13 +24,12 @@ export const YieldCalculator = () => {
   return (
     <Card>
       <CollapsibleSection
-        title={
-          <CardHeader
-            title={intl.formatMessage({ defaultMessage: 'Yield Calculator' })}
-          />
-        }
+        title={intl.formatMessage({ defaultMessage: 'Yield Calculator' })}
+        iconPosition="end"
         components={{
-          childrenContainer: { sx: { p: 2 } },
+          titleContainer: { py: 3, px: 2 },
+          titleTypography: { sx: (theme) => theme.typography.h4 },
+          childrenContainer: { sx: { px: 2 } },
         }}
       >
         <Stack direction="column">
@@ -59,12 +57,12 @@ export const YieldCalculator = () => {
               sx={{ width: 1 }}
             />
           </Stack>
-          <Divider />
-          <Typography variant="buttonLarge" sx={{ my: 2 }}>
+          <Divider sx={{ my: 1 }} />
+          <Typography variant="buttonLarge" sx={{ mt: 1, mb: 3 }}>
             {intl.formatMessage({ defaultMessage: 'Return Projection' })}
           </Typography>
-          <Stack {...splitRow} mb={1}>
-            <Typography>
+          <Stack {...splitRow} mb={2}>
+            <Typography variant="body2">
               {intl.formatMessage({ defaultMessage: 'Accrued Interest' })}
             </Typography>
             <Typography variant="value3">250 USDC</Typography>
@@ -84,10 +82,11 @@ export const YieldCalculator = () => {
               }
               label={intl.formatMessage({ defaultMessage: 'Include Gas Fees' })}
               sx={{ ml: '-3px', alignItems: 'baseline' }}
+              componentsProps={{ typography: { variant: 'body2' } }}
             />
             <Typography variant="value3">-$40.23</Typography>
           </Stack>
-          <Divider />
+          <Divider sx={{ my: 1 }} />
           <Stack {...splitRow} my={1}>
             <Typography variant="h4">
               {intl.formatMessage({ defaultMessage: 'Total' })}

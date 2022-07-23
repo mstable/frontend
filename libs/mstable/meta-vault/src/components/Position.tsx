@@ -52,7 +52,7 @@ export const Position = () => {
           iconPosition="end"
           title={intl.formatMessage({ defaultMessage: 'History' })}
           components={{
-            titleLabel: { variant: 'body2' },
+            titleTypography: { variant: 'body2' },
           }}
         >
           <Box
