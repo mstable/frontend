@@ -41,8 +41,8 @@ yarn storybook
 - **build**: builds default application (mStable)
 - **test**: run unit tests
 - **prepare**: setup husky for git hooks
-- **i18n:extract**": extract all translation strings to `i18n-extractions` folder
-- **i18n:compile**": compiles all translation for mStable application
+- **i18n:extract**: extract all translation strings to `i18n-extractions` folder
+- **i18n:compile**: compiles all translation for mStable application
 - **storybook**: serves storybook
 - **storybook:build**: builds storybook
 - **lint**: runs lint over the repo

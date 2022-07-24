@@ -31,16 +31,15 @@ sudo apt-get install jq
 
 This project uses Nx's specific `project.json` files to expose applications or libraries build scripts. That allows for a smooth integration with Nx tooling such as dependency graph and distributed computing. You can find [here](https://nx.dev/configuration/projectjson) documentation on the full file schema. All builds are handled with executors/builders, usually webpack for applications and rollup for libraries. You can find more information on how to use them [here](https://nx.dev/executors/using-builders).
 
-Build artifacts are emmitted into the `/dist` folder at the root of the repo, the file structure reflects the monorepo stricture.  
+Build artifacts are emmitted into the `/dist` folder at the root of the repo, the file structure reflects the monorepo structure.  
 
 ## Monorepo structure
 
 ### Two primary folders
 
 - `apps`: configure dependency injection and wire up libraries. They should not contain any
-  components, services, or business logic. The best way to consider if something is an app is to ask if project can be deployed standalone.
-- `libs`: contain services, components, utilities, etc. They have well-defined public API that lives in in
-  dex.ts barrel file. When organizing libraries you should think about your business domains.
+  components, services, or business logic. Conceptually, an app is the container that can be deployed as standalone.
+- `libs`: contain services, components, utilities, etc. They have well-defined public API that lives in `index.ts` barrel file. When organizing libraries you should think about your business domains.
 
 The apps folder contains:
 
@@ -50,14 +49,15 @@ The apps folder contains:
 The libs folder contains:
 
 - 1 sub-folder per application containing application specific modules and optionally an app-scoped shared folder
-- 1 shared folder to contain all common libraries. Shared libs should not call any product-specific api
+- 1 `shared` folder to contain all common libraries. Shared libs should not call any product-specific api
+- 1 `tools` folder that contains repository support libraries
 
 ### How to split code between apps and libs
 
 👍 Rule of the thumb
 
-- place 80% of your logic into the `libs/` folder
-- and 20% into `apps/`
+- 80% of your logic goes into the `libs/` folder
+- 20% into `apps/`
 
 ### Library types
 
@@ -122,7 +122,7 @@ We propose this convention of file naming and organization within a feature libr
       - <ModuleView> // additional views
 ```
 
-Try to stick as much as possible to this naming so it becomes easy to navigate in the repo and now where to find which elements.
+Try to stick as much as possible to this naming so it becomes easy to navigate in the repo and know where to find elements.
 
 The rationale for the components/views split is regarding whether or not the components is accessible through routing. All components instantiated by routes should be placed in views, others should be placed in components. Usually, views are only present at the root folder, they are not nested.
 
@@ -136,6 +136,8 @@ yarn nx generate @frontend/tools-nx-plugin:mstable-aplication my-app
 # creates a new lib in the libs/shared folder
 yarn nx generate @frontend/tools-nx-plugin:mstable-library my-lib --directory=shared
 ```
+
+or use the NX plugin in your IDE. They are under `generate > @frontend/tools-nx-plugin`
 
 They will take care of creating a ready-to-use folder containing all necessary configuration files and integrate with typescript monorepo aliases.
 

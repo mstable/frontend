@@ -1,0 +1,63 @@
+import type { PaletteMode, ThemeOptions } from '@mui/material';
+
+export const light: ThemeOptions = {
+  shadows: [
+    'none',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+  ],
+};
+export const dark: ThemeOptions = {
+  shadows: [
+    'none',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+  ],
+};
+
+export const getShadowsOptions = (mode: PaletteMode) =>
+  mode === 'light' ? light : dark;

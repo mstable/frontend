@@ -2,13 +2,22 @@ import { Metamask, USDC } from '@frontend/shared-icons';
 import { Button, Stack, TextField, Typography } from '@mui/material';
 import { range } from 'ramda';
 
-import type { ButtonProps, StandardTextFieldProps, Theme } from '@mui/material';
+import type {
+  ButtonProps,
+  StackProps,
+  StandardTextFieldProps,
+  Theme,
+} from '@mui/material';
 import type { ChangeEvent } from 'react';
 
 export type TokenInputProps = {
   symbol: string;
   balance?: number;
   onChange?: (newValue: number) => void;
+  hidePercentage?: boolean;
+  components?: {
+    container?: StackProps;
+  };
 } & Omit<StandardTextFieldProps, 'onChange'>;
 
 const PERCENTAGE_STEPS = 4; // 100 / 4 = 25%
@@ -63,6 +72,8 @@ export const TokenInput = ({
   symbol,
   balance = 0,
   onChange,
+  hidePercentage = false,
+  components,
   ...rest
 }: TokenInputProps) => {
   const handlePercentageClick = (n: number) => () => {
@@ -79,7 +90,7 @@ export const TokenInput = ({
   };
 
   return (
-    <Stack>
+    <Stack {...components?.container}>
       <TextField
         {...rest}
         variant="standard"
@@ -100,28 +111,30 @@ export const TokenInput = ({
           }),
         }}
       />
-      <Stack
-        direction="row"
-        mt={1}
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Stack direction="row" spacing={0.5}>
-          {range(1, PERCENTAGE_STEPS + 1).map((n) => (
-            <SmallButton
-              key={`percent-${n}`}
-              onClick={handlePercentageClick(n)}
-              disabled={balance === 0}
-            >
-              {n * (100 / PERCENTAGE_STEPS)}%
-            </SmallButton>
-          ))}
+      {!hidePercentage && (
+        <Stack
+          direction="row"
+          mt={1}
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Stack direction="row" spacing={0.5}>
+            {range(1, PERCENTAGE_STEPS + 1).map((n) => (
+              <SmallButton
+                key={`percent-${n}`}
+                onClick={handlePercentageClick(n)}
+                disabled={balance === 0}
+              >
+                {n * (100 / PERCENTAGE_STEPS)}%
+              </SmallButton>
+            ))}
+          </Stack>
+          <SmallButton>
+            <Metamask sx={{ width: 12, height: 12, mr: 1 }} />
+            <Typography variant="value6">54,567.23 USDC</Typography>
+          </SmallButton>
         </Stack>
-        <SmallButton>
-          <Metamask sx={{ width: 12, height: 12, mr: 1 }} />
-          <Typography variant="value6">54,567.23 USDC</Typography>
-        </SmallButton>
-      </Stack>
+      )}
     </Stack>
   );
 };

@@ -22,49 +22,55 @@ export const Position = () => {
         <Stack
           direction="row"
           width={1}
-          justifyContent="space-between"
           py={2}
           spacing={2}
           sx={{ overflowX: 'auto', maxWidth: 1 }}
+          divider={<Divider orientation="vertical" flexItem variant="inset" />}
         >
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'Deposited' })}
             value="11k"
             subvalue="0%"
+            components={{ container: { width: 1 } }}
           />
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'Av. APY' })}
             value="47.55%"
             subvalue="+2.54%"
-            components={{ subvalue: { color: 'success.main' } }}
+            components={{
+              container: { width: 1 },
+              subvalue: { color: 'success.main' },
+            }}
           />
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'Yields' })}
             value="$10.4"
             subvalue="-0.2%"
-            components={{ subvalue: { color: 'error.main' } }}
+            components={{
+              container: { width: 1 },
+              subvalue: { color: 'error.main' },
+            }}
           />
         </Stack>
       </CardContent>
       <Divider />
-      <CardContent>
-        <CollapsibleSection
-          iconPosition="end"
-          title={intl.formatMessage({ defaultMessage: 'History' })}
-          components={{
-            titleLabel: { variant: 'body2' },
-          }}
+      <CollapsibleSection
+        iconPosition="end"
+        title={intl.formatMessage({ defaultMessage: 'History' })}
+        components={{
+          container: { p: 2 },
+          titleTypography: { variant: 'body2', fontWeight: 'bold' },
+        }}
+      >
+        <Box
+          sx={(theme) => ({
+            ...theme.mixins.centered,
+            height: 60,
+          })}
         >
-          <Box
-            sx={(theme) => ({
-              ...theme.mixins.centered,
-              height: 60,
-            })}
-          >
-            <Typography fontWeight="bold">🚧 WIP</Typography>
-          </Box>
-        </CollapsibleSection>
-      </CardContent>
+          <Typography fontWeight="bold">🚧 WIP</Typography>
+        </Box>
+      </CollapsibleSection>
     </Card>
   );
 };

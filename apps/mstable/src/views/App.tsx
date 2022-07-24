@@ -24,14 +24,15 @@ const AppWrapped = () => {
     <Stack
       direction="column"
       sx={{
-        width: '100%',
-        height: '100%',
+        width: 1,
+        height: 1,
         background: (theme) =>
           [
             `linear-gradient(transparent 42%, ${theme.palette.background.default} 42%)`,
             theme.mixins.gradients.numbTop,
             theme.mixins.gradients.colorCloud,
           ].join(','),
+        backgroundAttachment: 'fixed',
       }}
     >
       <Topnav />

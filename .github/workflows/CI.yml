@@ -56,7 +56,7 @@ jobs:
 
       - name: Clean Agents
         if: ${{ always() }}
-        run: pnpm exec nx-cloud stop-all-agents
+        run: yarn nx-cloud stop-all-agents
 
   pr:
     runs-on: ubuntu-latest
@@ -88,7 +88,7 @@ jobs:
 
       - name: Clean Agents
         if: ${{ always() }}
-        run: pnpm exec nx-cloud stop-all-agents
+        run: yarn nx-cloud stop-all-agents
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         name: Firebase deploy
@@ -108,23 +108,7 @@ jobs:
           args: "✨ PR **{{ PR_NAME }}** created/updated 🚀 Deploy url: {{ DEPLOY_URL }}"
 
   agents:
-    runs-on: ubuntu-latest
-    name: Agent - General
-    timeout-minutes: 15
-    strategy:
-      matrix:
-        agent: [1, 2, 3]
-    steps:
-      - uses: actions/checkout@v2'
-
-      - uses: actions/setup-node@v3
-        name: Setup node
-        with:
-          node-version: 16
-          cache: "yarn"
-
-      - run: yarn install
-        name: Install dependencies
-
-      - name: Start Nx Agent ${{ matrix.agent }}
-        run: npx nx-cloud start-agent
+    name: Nx Cloud - Agents
+    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.6
+    with:
+      number-of-agents: 3
