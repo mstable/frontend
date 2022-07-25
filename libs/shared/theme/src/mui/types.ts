@@ -214,23 +214,17 @@ declare module '@mui/material/AvatarGroup' {
 //   }
 // }
 
-// declare module '@mui/material/Chip' {
-//   interface ChipPropsVariantOverrides {
-//     // remove defaults
-//     filled: false;
-//     outlined: false;
-//     // add customs
-//     default: true;
-//     noSpace: true;
-//     status: true;
-//   }
+declare module '@mui/material/Chip' {
+  interface ChipPropsVariantOverrides {
+    active: true;
+  }
 
-//   interface ChipPropsColorOverrides {
-//     brand: true;
-//     default: false;
-//     primary: false;
-//   }
-// }
+  // interface ChipPropsColorOverrides {
+  //   brand: true;
+  //   default: false;
+  //   primary: false;
+  // }
+}
 
 // declare module '@mui/material/IconButton' {
 //   interface IconButtonPropsColorOverrides {
