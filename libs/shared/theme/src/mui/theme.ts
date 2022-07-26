@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material';
 
+import { getAlert } from './components/Alert';
 import { getAppBar } from './components/AppBar';
 import { getAvatar } from './components/Avatar';
 import { getButton } from './components/Button';
@@ -8,6 +9,7 @@ import { getButtonGroup } from './components/ButtonGroup';
 import { getCard } from './components/Card';
 import { getCardHeader } from './components/CardHeader';
 import { getCheckbox } from './components/Checkbox';
+import { getChip } from './components/Chip';
 import { getCSSBaseline } from './components/CSSBaseline';
 import { getDialog } from './components/Dialog';
 import { getDialogActions } from './components/DialogActions';
@@ -48,12 +50,14 @@ export const getTheme = (mode: PaletteMode) => {
 
   return createTheme(
     base,
+    getAlert(base),
     getAppBar(base),
     getAvatar(base),
     getButton(base),
     getButtonBase(base),
     getButtonGroup(base),
     getCheckbox(base),
+    getChip(base),
     getCard(base),
     getCardHeader(base),
     getCSSBaseline(base),

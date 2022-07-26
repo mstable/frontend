@@ -124,12 +124,11 @@ declare module '@mui/material/styles/createMixins' {
 //   }
 // }
 
-// declare module '@mui/material/Alert' {
-//   interface AlertPropsVariantOverrides {
-//     filled: false;
-//     outlined: false;
-//   }
-// }
+declare module '@mui/material/Alert' {
+  interface AlertPropsVariantOverrides {
+    outlined: false;
+  }
+}
 
 declare module '@mui/material/Avatar' {
   interface AvatarPropsVariantOverrides {
@@ -214,23 +213,15 @@ declare module '@mui/material/AvatarGroup' {
 //   }
 // }
 
-// declare module '@mui/material/Chip' {
-//   interface ChipPropsVariantOverrides {
-//     // remove defaults
-//     filled: false;
-//     outlined: false;
-//     // add customs
-//     default: true;
-//     noSpace: true;
-//     status: true;
-//   }
+declare module '@mui/material/Chip' {
+  interface ChipPropsVariantOverrides {
+    active: true;
+  }
 
-//   interface ChipPropsColorOverrides {
-//     brand: true;
-//     default: false;
-//     primary: false;
-//   }
-// }
+  interface ChipPropsSizeOverrides {
+    large: true;
+  }
+}
 
 // declare module '@mui/material/IconButton' {
 //   interface IconButtonPropsColorOverrides {
