@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material';
 
+import { getAlert } from './components/Alert';
 import { getAppBar } from './components/AppBar';
 import { getAvatar } from './components/Avatar';
 import { getButton } from './components/Button';
@@ -49,6 +50,7 @@ export const getTheme = (mode: PaletteMode) => {
 
   return createTheme(
     base,
+    getAlert(base),
     getAppBar(base),
     getAvatar(base),
     getButton(base),

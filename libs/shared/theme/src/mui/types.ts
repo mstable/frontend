@@ -124,12 +124,11 @@ declare module '@mui/material/styles/createMixins' {
 //   }
 // }
 
-// declare module '@mui/material/Alert' {
-//   interface AlertPropsVariantOverrides {
-//     filled: false;
-//     outlined: false;
-//   }
-// }
+declare module '@mui/material/Alert' {
+  interface AlertPropsVariantOverrides {
+    outlined: false;
+  }
+}
 
 declare module '@mui/material/Avatar' {
   interface AvatarPropsVariantOverrides {
