@@ -219,11 +219,9 @@ declare module '@mui/material/Chip' {
     active: true;
   }
 
-  // interface ChipPropsColorOverrides {
-  //   brand: true;
-  //   default: false;
-  //   primary: false;
-  // }
+  interface ChipPropsSizeOverrides {
+    large: true;
+  }
 }
 
 // declare module '@mui/material/IconButton' {

@@ -9,6 +9,26 @@ export const getChip = (base: Theme): ThemeOptions => ({
         size: 'small',
       },
       styleOverrides: {
+        root: {
+          '.MuiChip-icon': {
+            marginLeft: 0,
+            marginRight: base.spacing(0.5),
+          },
+          '.MuiChip-label': {
+            paddingLeft: 0,
+            paddingRight: 0,
+          },
+          '&.MuiChip-sizeLarge': {
+            padding: base.spacing(1.25),
+            fontSize: base.typography.buttonLarge.fontSize,
+            fontWeight: base.typography.fontWeightMedium,
+            height: base.spacing(4.5),
+            borderRadius: base.spacing(2.25),
+            '.MuiChip-icon': {
+              fontSize: base.typography.buttonLarge.fontSize,
+            },
+          },
+        },
         colorPrimary: {
           background:
             base.palette.mode === 'light'
@@ -36,6 +56,7 @@ export const getChip = (base: Theme): ThemeOptions => ({
           '&.MuiChip-clickable': {
             ':hover': {
               backgroundColor: base.palette.primary.dark,
+              color: base.palette.common.white + ' !important',
             },
           },
           '&.Mui-active': {
@@ -66,11 +87,19 @@ export const getChip = (base: Theme): ThemeOptions => ({
           padding: base.spacing(1),
           fontSize: base.typography.buttonMedium.fontSize,
           fontWeight: base.typography.fontWeightMedium,
+          height: base.spacing(3.75),
+          '.MuiChip-icon': {
+            fontSize: base.typography.buttonMedium.fontSize,
+          },
         },
         sizeSmall: {
           padding: base.spacing(0.5),
           fontSize: base.typography.buttonSmall.fontSize,
           fontWeight: base.typography.fontWeightMedium,
+          height: base.spacing(2.5),
+          '.MuiChip-icon': {
+            fontSize: base.typography.buttonSmall.fontSize,
+          },
         },
       },
     },
