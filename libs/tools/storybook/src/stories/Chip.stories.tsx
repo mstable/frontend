@@ -1,4 +1,4 @@
-import { USDT } from '@frontend/shared-icons';
+import InfoIcon from '@mui/icons-material/InfoRounded';
 import { Chip as MuiChip, Stack } from '@mui/material';
 
 export default {
@@ -21,9 +21,9 @@ export const Chip = () => (
       <MuiChip variant="active" label={label} clickable />
     </Stack>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiChip icon={<USDT />} label={label} clickable />
-      <MuiChip icon={<USDT />} color="secondary" label={label} clickable />
-      <MuiChip icon={<USDT />} variant="outlined" label={label} clickable />
+      <MuiChip icon={<InfoIcon />} label={label} clickable />
+      <MuiChip icon={<InfoIcon />} color="secondary" label={label} clickable />
+      <MuiChip icon={<InfoIcon />} variant="outlined" label={label} clickable />
     </Stack>
     <br />
     <Stack direction="row" spacing={2} alignItems="center">
@@ -43,16 +43,16 @@ export const Chip = () => (
       <MuiChip variant="active" label={label} clickable size="medium" />
     </Stack>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiChip icon={<USDT />} label={label} clickable size="medium" />
+      <MuiChip icon={<InfoIcon />} label={label} clickable size="medium" />
       <MuiChip
-        icon={<USDT />}
+        icon={<InfoIcon />}
         color="secondary"
         label={label}
         clickable
         size="medium"
       />
       <MuiChip
-        icon={<USDT />}
+        icon={<InfoIcon />}
         variant="outlined"
         label={label}
         clickable
@@ -77,16 +77,16 @@ export const Chip = () => (
       <MuiChip variant="active" label={label} clickable size="large" />
     </Stack>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiChip icon={<USDT />} label={label} clickable size="large" />
+      <MuiChip icon={<InfoIcon />} label={label} clickable size="large" />
       <MuiChip
-        icon={<USDT />}
+        icon={<InfoIcon />}
         color="secondary"
         label={label}
         clickable
         size="large"
       />
       <MuiChip
-        icon={<USDT />}
+        icon={<InfoIcon />}
         variant="outlined"
         label={label}
         clickable
