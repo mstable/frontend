@@ -64,6 +64,7 @@ export const OpenAccountModalButton = (props: ButtonProps) => {
               }
               showDialog(ProfileDialog);
             }}
+            sx={{ borderRadius: '32px', ...buttonProps?.sx }}
           >
             <AccountLabel />
           </Button>

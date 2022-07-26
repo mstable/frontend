@@ -3,14 +3,7 @@ import {
   OpenAccountModalButton,
   OpenNetworkModalButton,
 } from '@frontend/shared-wagmi';
-import {
-  AppBar,
-  Button,
-  Stack,
-  Toolbar,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { AppBar, Button, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 
 import { Settings } from './Settings';
@@ -21,13 +14,17 @@ export const Topnav = () => {
   const wide = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <AppBar position="sticky" color="default">
-      <Toolbar
+    <AppBar position="sticky" color="transparent">
+      <Stack
+        direction="row"
         sx={{
+          width: 1,
           display: 'flex',
           alignItems: 'stretch',
-          pt: 1,
+          py: 1,
+          px: (theme) => theme.mixins.paddings.page.paddingX,
           borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+          backgroundColor: 'background.default',
         }}
       >
         <Button
@@ -49,7 +46,7 @@ export const Topnav = () => {
           <OpenNetworkModalButton />
           <Settings />
         </Stack>
-      </Toolbar>
+      </Stack>
     </AppBar>
   );
 };
