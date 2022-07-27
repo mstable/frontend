@@ -1,8 +1,6 @@
 import { isNilOrEmpty } from '@frontend/shared-utils';
-import { Alert, AlertTitle, Typography } from '@mui/material';
+import { Alert, AlertTitle } from '@mui/material';
 import { useInterval } from 'react-use';
-
-import { SeverityIcon } from '../SeverityIcon';
 
 import type { AlertProps, AlertTitleProps } from '@mui/material';
 import type { Dispatch } from 'react';
@@ -42,10 +40,7 @@ export const NotificationSnack = ({
     <Alert
       {...AlertProps}
       severity={severity}
-      icon={<SeverityIcon severity={severity} />}
       sx={{
-        border: 1,
-        borderRadius: 1,
         minWidth: { sm: 300, md: 400, lg: 500, xl: 600 },
         maxWidth: { sm: 400, md: 500, lg: 600, xl: 700 },
         ...AlertProps?.sx,
@@ -55,7 +50,7 @@ export const NotificationSnack = ({
       {!isNilOrEmpty(title) && (
         <AlertTitle {...AlertTitleProps}>{title}</AlertTitle>
       )}
-      {!isNilOrEmpty(message) && <Typography>{message}</Typography>}
+      {!isNilOrEmpty(message) && message}
       {!isNilOrEmpty(content) && content}
     </Alert>
   );
