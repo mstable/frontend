@@ -8,7 +8,7 @@ import { composeContexts } from '@frontend/shared-utils';
 import { useUnsupportedNetworks, WagmiProvider } from '@frontend/shared-wagmi';
 import { Stack } from '@mui/material';
 import { Outlet, ReactLocation, Router } from '@tanstack/react-location';
-import { QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 import en from '../assets/lang/en.json';
 import { routes } from '../routes';
