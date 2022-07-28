@@ -1,3 +1,4 @@
+export * from './BigDecimal';
 export * from './composeContext';
 export * from './createDefaultsContainer';
 export * from './createFlagsContainer';
