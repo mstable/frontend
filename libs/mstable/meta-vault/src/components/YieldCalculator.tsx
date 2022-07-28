@@ -1,11 +1,10 @@
-import { CollapsibleSection, TokenInput } from '@frontend/shared-ui';
+import { CollapsibleSection } from '@frontend/shared-ui';
 import {
   Card,
   Checkbox,
   Divider,
   FormControlLabel,
   Stack,
-  TextField,
   Typography,
 } from '@mui/material';
 import { useIntl } from 'react-intl';
@@ -34,7 +33,7 @@ export const YieldCalculator = () => {
       >
         <Stack direction="column">
           <Stack direction="row">
-            <TokenInput
+            {/* <TokenInput
               value={200}
               hidePercentage
               symbol="USDC"
@@ -55,7 +54,7 @@ export const YieldCalculator = () => {
                 sx: (theme) => theme.typography.value1,
               }}
               sx={{ width: 1 }}
-            />
+            /> */}
           </Stack>
           <Divider sx={{ my: 1 }} />
           <Typography variant="buttonLarge" sx={{ mt: 1, mb: 3 }}>

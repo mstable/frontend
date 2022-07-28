@@ -1,7 +1,26 @@
-import { TokenInput } from '@frontend/shared-ui';
-import { Button, Divider, Stack, TextField, Typography } from '@mui/material';
+import { useState } from 'react';
+
+import { getGoerliSdk } from '@dethcrypto/eth-sdk-client';
+import { BigDecimalInput, TokenInput } from '@frontend/shared-ui';
+import { BigDecimal } from '@frontend/shared-utils';
+import {
+  Button,
+  Divider,
+  FormControl,
+  InputLabel,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { ArrowDown, ArrowRight } from 'phosphor-react';
 import { useIntl } from 'react-intl';
+import { useDebounce } from 'react-use';
+import {
+  useAccount,
+  useBalance,
+  useContractRead,
+  useSigner,
+  useToken,
+} from 'wagmi';
 
 import type { StackProps } from '@mui/material';
 
@@ -50,6 +69,39 @@ const Recap = () => {
 
 export const Deposit = () => {
   const intl = useIntl();
+  const { address } = useAccount();
+  const { data: signer } = useSigner();
+  const { data: token } = useToken({
+    address: '0x5A036AFae87e6AEBf4eBc01bbEfb3F009eB01772',
+  });
+  const { data: balance } = useBalance({
+    addressOrName: address,
+    token: '0x5A036AFae87e6AEBf4eBc01bbEfb3F009eB01772',
+  });
+  const [amount, setAmout] = useState<BigDecimal | null>(null);
+  const [previewShares, setPreviewShares] = useState<BigDecimal | null>(null);
+
+  const sdk = getGoerliSdk(signer);
+  const { refetch: refetchPreviewShares } = useContractRead({
+    addressOrName: sdk.ERC4626.TVG.address,
+    contractInterface: sdk.ERC4626.TVG.interface,
+    functionName: 'previewDeposit',
+    args: [amount?.exact],
+    enabled: false,
+    onSettled: (data) => {
+      setPreviewShares(data ? new BigDecimal(data) : null);
+    },
+  });
+
+  useDebounce(
+    () => {
+      if (amount) {
+        refetchPreviewShares();
+      }
+    },
+    300,
+    [amount],
+  );
 
   return (
     <Stack
@@ -61,23 +113,21 @@ export const Deposit = () => {
     >
       <TokenInput
         label={intl.formatMessage({ defaultMessage: 'Tokens' })}
-        symbol="USDC"
-        balance={100}
+        amount={amount}
+        token={token}
+        balance={balance}
+        onChange={setAmout}
         placeholder="0.00"
       />
       <Divider>
         <ArrowDown weight="bold" />
       </Divider>
-      <TextField
-        variant="standard"
-        placeholder="0.00"
-        label={intl.formatMessage({ defaultMessage: 'Shares' })}
-        InputProps={{
-          type: 'number',
-          disableUnderline: true,
-          sx: (theme) => theme.typography.value1,
-        }}
-      />
+      <FormControl>
+        <InputLabel>
+          {intl.formatMessage({ defaultMessage: 'Shares' })}
+        </InputLabel>
+        <BigDecimalInput readOnly value={previewShares} placeholder="0.00" />
+      </FormControl>
       <Recap />
       <Button
         size="large"
@@ -86,7 +136,8 @@ export const Deposit = () => {
           justifyContent: 'space-between',
         }}
       >
-        <span>200.00 USDC</span>
+        {amount && <span>{`${amount?.format()} ${token?.symbol}`}</span>}
+
         <Stack direction="row" alignItems="center" spacing={1}>
           <Typography>Deposit</Typography>
           <ArrowRight />

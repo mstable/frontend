@@ -34,7 +34,29 @@
     "codegen": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": ["yarn eth-sdk -p 'libs/shared/data-access'"]
+        "commands": [
+          "yarn nx run shared-data-access:codegen-graphql",
+          "yarn nx run shared-data-access:codegen-abis"
+        ],
+        "parallel": false
+      }
+    },
+    "codegen-graphql": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "yarn graphql-codegen --config 'libs/shared/data-access/codegen.js'",
+          "yarn lint:fix"
+        ]
+      }
+    },
+    "codegen-abis": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "yarn eth-sdk -p 'libs/shared/data-access'",
+          "yarn lint:fix"
+        ]
       }
     }
   }

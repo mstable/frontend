@@ -1,138 +1,143 @@
+import { useState } from 'react';
+
 import { Metamask, USDC } from '@frontend/shared-icons';
-import { Button, Stack, TextField, Typography } from '@mui/material';
+import { BigDecimal } from '@frontend/shared-utils';
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  Stack,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from '@mui/material';
 import { range } from 'ramda';
 
-import type {
-  ButtonProps,
-  StackProps,
-  StandardTextFieldProps,
-  Theme,
-} from '@mui/material';
-import type { ChangeEvent } from 'react';
+import { BigDecimalInput } from './BigDecimalInput';
+
+import type { StackProps, Theme } from '@mui/material';
+import type { FetchBalanceResult, FetchTokenResult } from '@wagmi/core';
 
 export type TokenInputProps = {
-  symbol: string;
-  balance?: number;
-  onChange?: (newValue: number) => void;
-  hidePercentage?: boolean;
+  label?: string;
+  placeholder?: string;
+  amount: BigDecimal;
+  token: FetchTokenResult;
+  balance: FetchBalanceResult;
+  onChange?: (newValue: BigDecimal) => void;
+  hideBottomRow?: boolean;
   components?: {
     container?: StackProps;
   };
-} & Omit<StandardTextFieldProps, 'onChange'>;
+};
 
 const PERCENTAGE_STEPS = 4; // 100 / 4 = 25%
 
-const greyBkg = (theme: Theme) => ({
-  color: theme.palette.grey['800'],
-  backgroundColor:
-    theme.palette.mode === 'light'
-      ? theme.palette.grey['100']
-      : theme.palette.grey['300'],
-  ':hover': {
-    color: theme.palette.grey['800'],
-    backgroundColor:
-      theme.palette.mode === 'light'
-        ? theme.palette.grey['200']
-        : theme.palette.grey['400'],
+const balanceButton = (theme: Theme) => ({
+  p: 0.5,
+  borderRadius: '4px',
+  minWidth: 0,
+  minHeight: 0,
+  ...theme.typography.value6,
+});
+
+const symbolButton = (theme: Theme) => ({
+  py: 0.5,
+  px: 1.5,
+  borderRadius: '4px',
+  minWidth: 48,
+});
+
+const percentageButtonGroup = (theme: Theme) => ({
+  '& .MuiToggleButtonGroup-grouped': {
+    margin: theme.spacing(0.2, 0),
+    border: 0,
+    '&.Mui-disabled': {
+      border: 0,
+    },
+    '&:not(:first-of-type)': {
+      borderRadius: '4px',
+    },
+    '&:first-of-type': {
+      borderRadius: '4px',
+    },
   },
 });
 
-const SmallButton = (props: ButtonProps) => (
-  <Button
-    variant="text"
-    {...props}
-    sx={(theme) => ({
-      p: 0.5,
-      borderRadius: '4px',
-      minWidth: 0,
-      minHeight: 0,
-      ...greyBkg(theme),
-      ...theme.typography.value6,
-      ...props?.sx,
-    })}
-  />
-);
-
-const SymbolButton = (props: ButtonProps) => (
-  <Button
-    variant="text"
-    {...props}
-    sx={(theme) => ({
-      py: 0.5,
-      px: 1.5,
-      borderRadius: '4px',
-      minWidth: 48,
-      ...greyBkg(theme),
-      ...props?.sx,
-    })}
-  />
-);
-
 export const TokenInput = ({
-  symbol,
-  balance = 0,
+  label,
+  placeholder,
+  amount,
+  token,
+  balance,
   onChange,
-  hidePercentage = false,
+  hideBottomRow = false,
   components,
-  ...rest
 }: TokenInputProps) => {
-  const handlePercentageClick = (n: number) => () => {
+  const bal = balance?.value
+    ? new BigDecimal(balance.value, token?.decimals)
+    : BigDecimal.ZERO;
+  const [percentage, setPercentage] = useState(0);
+
+  const handlePercentageChange = (_, newValue: number | null) => {
+    setPercentage(newValue);
     if (onChange) {
-      const res = balance ?? 0 * n * (1 / PERCENTAGE_STEPS);
-      onChange(res);
+      onChange(
+        BigDecimal.fromSimple(bal.simple * newValue * (1 / PERCENTAGE_STEPS)),
+      );
     }
   };
 
-  const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (value: BigDecimal) => {
+    setPercentage(0);
     if (onChange) {
-      onChange(parseInt(evt.currentTarget.value));
+      onChange(value);
     }
   };
 
   return (
     <Stack {...components?.container}>
-      <TextField
-        {...rest}
-        variant="standard"
-        onChange={handleChange}
-        InputProps={{
-          type: 'number',
-          disableUnderline: true,
-          endAdornment: (
-            <SymbolButton>
+      <FormControl>
+        <InputLabel>{label}</InputLabel>
+        <BigDecimalInput
+          placeholder={placeholder}
+          value={amount}
+          max={bal}
+          onChange={handleChange}
+          endAdornment={
+            <Button variant="text" color="secondary" sx={symbolButton}>
               <USDC sx={{ width: 12, height: 12, mr: 0.5 }} />
-              <Typography variant="buttonMedium">{symbol}</Typography>
-            </SymbolButton>
-          ),
-          sx: (theme) => ({
-            margin: 0,
-            padding: 0,
-            ...theme.typography.value1,
-          }),
-        }}
-      />
-      {!hidePercentage && (
+              <Typography variant="buttonMedium">{token?.symbol}</Typography>
+            </Button>
+          }
+        />
+      </FormControl>
+      {!hideBottomRow && (
         <Stack
           direction="row"
           mt={1}
           justifyContent="space-between"
           alignItems="center"
         >
-          <Stack direction="row" spacing={0.5}>
+          <ToggleButtonGroup
+            value={percentage}
+            onChange={handlePercentageChange}
+            exclusive
+            size="small"
+            sx={percentageButtonGroup}
+          >
             {range(1, PERCENTAGE_STEPS + 1).map((n) => (
-              <SmallButton
-                key={`percent-${n}`}
-                onClick={handlePercentageClick(n)}
-                disabled={balance === 0}
-              >
+              <ToggleButton value={n} key={`percent-${n}`}>
                 {n * (100 / PERCENTAGE_STEPS)}%
-              </SmallButton>
+              </ToggleButton>
             ))}
-          </Stack>
-          <SmallButton>
+          </ToggleButtonGroup>
+          <Button variant="text" color="secondary" sx={balanceButton}>
             <Metamask sx={{ width: 12, height: 12, mr: 1 }} />
-            <Typography variant="value6">54,567.23 USDC</Typography>
-          </SmallButton>
+            <Typography variant="value6">
+              {bal.format()} {balance?.symbol}
+            </Typography>
+          </Button>
         </Stack>
       )}
     </Stack>
