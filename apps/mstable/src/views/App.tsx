@@ -51,7 +51,6 @@ export const App = () =>
       [
         NotificationsProvider,
         {
-          autoHideDuration: 2000,
           containerProps: {
             sx: {
               top: (theme: Theme) => theme.spacing(8),

@@ -1,5 +1,6 @@
 import { BigDecimal } from '@frontend/shared-utils';
 import { InputBase } from '@mui/material';
+import { constants } from 'ethers';
 
 import type { InputBaseProps } from '@mui/material';
 import type { ChangeEvent } from 'react';
@@ -23,7 +24,7 @@ export const BigDecimalInput = ({
   value,
   onChange,
   min = BigDecimal.ZERO,
-  max = BigDecimal.fromSimple(Number.MAX_SAFE_INTEGER),
+  max = new BigDecimal(constants.MaxUint256),
   ...rest
 }: BigDecimalInputProps) => {
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +45,7 @@ export const BigDecimalInput = ({
       inputMode="numeric"
       componentsProps={{
         input: {
-          pattern: '[0-9]*',
+          pattern: '[0-9]*(.[0-9]*)?',
         },
       }}
       sx={(theme) => ({

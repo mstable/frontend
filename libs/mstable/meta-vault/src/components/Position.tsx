@@ -1,3 +1,4 @@
+import { getGoerliSdk } from '@dethcrypto/eth-sdk-client';
 import { CollapsibleSection, ValueLabel } from '@frontend/shared-ui';
 import {
   Box,
@@ -9,9 +10,19 @@ import {
   Typography,
 } from '@mui/material';
 import { useIntl } from 'react-intl';
+import { useAccount, useBalance, useSigner } from 'wagmi';
 
 export const Position = () => {
   const intl = useIntl();
+  const { address } = useAccount();
+  const { data: signer } = useSigner();
+  const sdk = getGoerliSdk(signer);
+  const { data: balance } = useBalance({
+    addressOrName: address,
+    token: sdk.ERC4626.TVG.address,
+    watch: true,
+    enabled: !!address,
+  });
 
   return (
     <Card>
@@ -29,7 +40,7 @@ export const Position = () => {
         >
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'Deposited' })}
-            value="11k"
+            value={`${balance?.formatted ?? '0.00'} Shares`}
             subvalue="0%"
             components={{ container: { width: 1 } }}
           />

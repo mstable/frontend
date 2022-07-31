@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { getGoerliSdk } from '@dethcrypto/eth-sdk-client';
+import { usePushNotification } from '@frontend/shared-notifications';
 import { BigDecimalInput, TokenInput } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
@@ -8,80 +9,40 @@ import {
   Divider,
   FormControl,
   InputLabel,
+  Link,
   Stack,
-  Typography,
 } from '@mui/material';
+import { BigNumber, constants } from 'ethers';
 import { ArrowDown, ArrowRight } from 'phosphor-react';
 import { useIntl } from 'react-intl';
-import { useDebounce } from 'react-use';
 import {
+  erc20ABI,
   useAccount,
   useBalance,
   useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
   useSigner,
   useToken,
+  useWaitForTransaction,
 } from 'wagmi';
 
-import type { StackProps } from '@mui/material';
-
-const splitRow: StackProps = {
-  direction: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'baseline',
-};
-
-const Recap = () => {
-  const intl = useIntl();
-  return (
-    <Stack
-      sx={{ backgroundColor: 'background.highlight', p: 2, borderRadius: 1 }}
-    >
-      <Typography variant="buttonLarge" mb={3}>
-        {intl.formatMessage({ defaultMessage: 'Recap' })}
-      </Typography>
-      <Stack {...splitRow} mb={1}>
-        <Typography>
-          {intl.formatMessage({ defaultMessage: 'Your Deposit' })}
-        </Typography>
-        <Typography variant="value4">200.00 USDC</Typography>
-      </Stack>
-      <Stack {...splitRow} mb={0.5}>
-        <Typography>
-          {intl.formatMessage({ defaultMessage: 'Gas Fees' })}
-        </Typography>
-        <Typography variant="value4">$40.23</Typography>
-      </Stack>
-      <Stack direction="row" justifyContent="flex-end" mb={1}>
-        <Typography variant="value4" fontWeight="fontWeightLight">
-          0.003 ETH
-        </Typography>
-      </Stack>
-      <Divider flexItem sx={{ my: 2, backgroundColor: 'grey.800' }} />
-      <Stack {...splitRow}>
-        <Typography>
-          {intl.formatMessage({ defaultMessage: 'You Get' })}
-        </Typography>
-        <Typography variant="value4">4.5 Shares</Typography>
-      </Stack>
-    </Stack>
-  );
-};
-
+import { Recap } from './Recap';
 export const Deposit = () => {
   const intl = useIntl();
   const { address } = useAccount();
   const { data: signer } = useSigner();
-  const { data: token } = useToken({
-    address: '0x5A036AFae87e6AEBf4eBc01bbEfb3F009eB01772',
-  });
-  const { data: balance } = useBalance({
-    addressOrName: address,
-    token: '0x5A036AFae87e6AEBf4eBc01bbEfb3F009eB01772',
-  });
   const [amount, setAmout] = useState<BigDecimal | null>(null);
   const [previewShares, setPreviewShares] = useState<BigDecimal | null>(null);
+  const pushNotification = usePushNotification();
 
   const sdk = getGoerliSdk(signer);
+  const { data: asset } = useContractRead({
+    addressOrName: sdk.ERC4626.TVG.address,
+    contractInterface: sdk.ERC4626.TVG.interface,
+    functionName: 'asset',
+    enabled: !!signer,
+  });
   const { refetch: refetchPreviewShares } = useContractRead({
     addressOrName: sdk.ERC4626.TVG.address,
     contractInterface: sdk.ERC4626.TVG.interface,
@@ -92,16 +53,102 @@ export const Deposit = () => {
       setPreviewShares(data ? new BigDecimal(data) : null);
     },
   });
+  const { data: token } = useToken({
+    address: asset as unknown as string,
+    enabled: !!asset,
+  });
+  const { data: balance } = useBalance({
+    addressOrName: address,
+    token: token?.address,
+    enabled: !!token?.address && !!asset,
+  });
+  const { data: allowance } = useContractRead({
+    addressOrName: token?.address,
+    contractInterface: erc20ABI,
+    functionName: 'allowance',
+    args: [address, sdk.ERC4626.TVG.address],
+    enabled: !!token?.address && !!address,
+    watch: true,
+    cacheTime: 0,
+  });
 
-  useDebounce(
-    () => {
-      if (amount) {
-        refetchPreviewShares();
-      }
+  const { config: approveConfig } = usePrepareContractWrite({
+    addressOrName: token?.address,
+    contractInterface: erc20ABI,
+    functionName: 'approve',
+    args: [sdk.ERC4626.TVG.address, constants.MaxUint256],
+    enabled: !!token?.address,
+  });
+  const {
+    data: approveData,
+    write: approve,
+    isLoading: isApproveLoading,
+    isSuccess: isApproveStarted,
+  } = useContractWrite(approveConfig);
+  const { isSuccess: isApproveSuccess } = useWaitForTransaction({
+    hash: approveData?.hash,
+    onSuccess: (data) => {
+      prepareDeposit();
+      pushNotification({
+        title: intl.formatMessage({ defaultMessage: 'Token approved' }),
+        content: (
+          <Link
+            href={`https://goerli.etherscan.io/tx/${data?.transactionHash}`}
+            target="_blank"
+          >
+            {intl.formatMessage({
+              defaultMessage: 'View your transaction on etherscan',
+            })}
+          </Link>
+        ),
+        severity: 'success',
+      });
     },
-    300,
-    [amount],
-  );
+  });
+
+  const { config: depositConfig, refetch: prepareDeposit } =
+    usePrepareContractWrite({
+      addressOrName: sdk.ERC4626.TVG.address,
+      contractInterface: sdk.ERC4626.TVG.interface,
+      functionName: 'deposit',
+      args: [amount?.exact, address],
+      enabled: !!amount?.exact && !!address,
+    });
+  const {
+    data: depositData,
+    write: deposit,
+    isLoading: isDepositLoading,
+    isSuccess: isDepositStarted,
+  } = useContractWrite(depositConfig);
+  const { isSuccess: isDepositSuccess } = useWaitForTransaction({
+    hash: depositData?.hash,
+    onSuccess: (data) => {
+      setAmout(null);
+      setPreviewShares(null);
+      pushNotification({
+        title: intl.formatMessage({ defaultMessage: 'Deposit completed' }),
+        content: (
+          <Link
+            href={`https://goerli.etherscan.io/tx/${data?.transactionHash}`}
+            target="_blank"
+          >
+            {intl.formatMessage({
+              defaultMessage: 'View your transaction on etherscan',
+            })}
+          </Link>
+        ),
+        severity: 'success',
+      });
+    },
+  });
+
+  useEffect(() => {
+    if (amount) {
+      refetchPreviewShares();
+    } else {
+      setPreviewShares(null);
+    }
+  }, [amount, refetchPreviewShares]);
 
   return (
     <Stack
@@ -128,21 +175,110 @@ export const Deposit = () => {
         </InputLabel>
         <BigDecimalInput readOnly value={previewShares} placeholder="0.00" />
       </FormControl>
-      <Recap />
-      <Button
-        size="large"
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        {amount && <span>{`${amount?.format()} ${token?.symbol}`}</span>}
+      <Recap amount={amount} token={token} previewShares={previewShares} />
+      {(() => {
+        if (!address) {
+          return (
+            <Button size="large" disabled>
+              {intl.formatMessage({
+                defaultMessage: 'Connect your wallet to deposit',
+              })}
+            </Button>
+          );
+        }
 
-        <Stack direction="row" alignItems="center" spacing={1}>
-          <Typography>Deposit</Typography>
-          <ArrowRight />
-        </Stack>
-      </Button>
+        if (!amount) {
+          return (
+            <Button size="large" disabled>
+              {intl.formatMessage({ defaultMessage: 'Deposit' })}
+              &nbsp;
+              <ArrowRight weight="bold" />
+            </Button>
+          );
+        }
+
+        if (isApproveLoading) {
+          return (
+            <Button size="large" disabled>
+              {intl.formatMessage({ defaultMessage: 'Waiting for approval' })}
+            </Button>
+          );
+        }
+
+        if (isApproveStarted && !isApproveSuccess) {
+          return (
+            <Button size="large" disabled>
+              {intl.formatMessage({ defaultMessage: 'Approving' })}
+            </Button>
+          );
+        }
+
+        if (allowance && amount.exact.gt(BigNumber.from(allowance))) {
+          return (
+            <Stack direction="row" spacing={1}>
+              <Button
+                fullWidth
+                size="large"
+                onClick={() => {
+                  approve({
+                    recklesslySetUnpreparedArgs: [
+                      sdk.ERC4626.TVG.address,
+                      amount.exact,
+                    ],
+                  });
+                }}
+              >
+                {intl.formatMessage({ defaultMessage: 'Approve exact' })}
+              </Button>
+              <Button
+                fullWidth
+                size="large"
+                onClick={() => {
+                  approve();
+                }}
+              >
+                {intl.formatMessage({ defaultMessage: 'Approve ∞' })}
+              </Button>
+            </Stack>
+          );
+        }
+
+        if (isDepositLoading) {
+          return (
+            <Button size="large" disabled>
+              {intl.formatMessage({ defaultMessage: 'Waiting for approval' })}
+            </Button>
+          );
+        }
+
+        if (isDepositStarted && !isDepositSuccess) {
+          return (
+            <Button size="large" disabled>
+              {intl.formatMessage({ defaultMessage: 'Depositing' })}
+            </Button>
+          );
+        }
+
+        return (
+          <Button
+            size="large"
+            onClick={() => {
+              deposit();
+            }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            {amount && <span>{`${amount?.format()} ${token?.symbol}`}</span>}
+            <span>
+              {intl.formatMessage({ defaultMessage: 'Deposit' })}
+              &nbsp;
+              <ArrowRight weight="bold" />
+            </span>
+          </Button>
+        );
+      })()}
     </Stack>
   );
 };
