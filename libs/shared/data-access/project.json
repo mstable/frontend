@@ -35,7 +35,6 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": [
-          "yarn nx run shared-data-access:codegen-graphql",
           "yarn nx run shared-data-access:codegen-abis"
         ],
         "parallel": false
