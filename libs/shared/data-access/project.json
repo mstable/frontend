@@ -22,7 +22,8 @@
             "output": "."
           }
         ]
-      }
+      },
+      "dependsOn": ["codegen"]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
