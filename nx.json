@@ -19,8 +19,7 @@
           "build",
           "lint",
           "test",
-          "e2e",
-          "codegen"
+          "e2e"
         ],
         "accessToken": "OTc4ODQwMGQtZmNlMS00Y2ZlLThiMmItMzFmYjFiNTNiZTFmfHJlYWQ="
       }

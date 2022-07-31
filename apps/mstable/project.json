@@ -7,7 +7,7 @@
       "executor": "@nrwl/web:webpack",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
-      "dependsOn": ["^codegen", "^build"],
+      "dependsOn": ["^build"],
       "options": {
         "compiler": "babel",
         "outputPath": "dist/apps/mstable",
