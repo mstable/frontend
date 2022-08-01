@@ -6,8 +6,7 @@
   },
   "files": [
     "../../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
-    "../../../node_modules/@nrwl/react/typings/image.d.ts",
-    "../../../dist/libs/shared/theme/mui/types.d.ts"
+    "../../../node_modules/@nrwl/react/typings/image.d.ts"
   ],
   "exclude": [
     "jest.config.ts",
