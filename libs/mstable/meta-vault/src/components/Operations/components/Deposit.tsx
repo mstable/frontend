@@ -12,15 +12,18 @@ import {
   Link,
   Stack,
 } from '@mui/material';
-import { BigNumber, constants } from 'ethers';
+import { constants } from 'ethers';
 import { ArrowDown, ArrowRight } from 'phosphor-react';
+import { pathOr } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
   erc20ABI,
+  etherscanBlockExplorers,
   useAccount,
   useBalance,
   useContractRead,
   useContractWrite,
+  useFeeData,
   usePrepareContractWrite,
   useSigner,
   useToken,
@@ -37,7 +40,7 @@ export const Deposit = () => {
   const pushNotification = usePushNotification();
 
   const sdk = getGoerliSdk(signer);
-  const { data: asset } = useContractRead({
+  const { data: asset, isLoading: assetLoading } = useContractRead({
     addressOrName: sdk.ERC4626.TVG.address,
     contractInterface: sdk.ERC4626.TVG.interface,
     functionName: 'asset',
@@ -53,6 +56,7 @@ export const Deposit = () => {
       setPreviewShares(data ? new BigDecimal(data) : null);
     },
   });
+  const { data: feeData } = useFeeData({ formatUnits: 'gwei' });
   const { data: token } = useToken({
     address: asset as unknown as string,
     enabled: !!asset,
@@ -60,7 +64,9 @@ export const Deposit = () => {
   const { data: balance } = useBalance({
     addressOrName: address,
     token: token?.address,
-    enabled: !!token?.address && !!asset,
+    enabled: !!token && !!asset && !assetLoading,
+    cacheTime: 0,
+    staleTime: 0,
   });
   const { data: allowance } = useContractRead({
     addressOrName: token?.address,
@@ -72,12 +78,14 @@ export const Deposit = () => {
     cacheTime: 0,
   });
 
+  const needsApproval = amount && allowance && amount.exact.gt(allowance);
+
   const { config: approveConfig } = usePrepareContractWrite({
     addressOrName: token?.address,
     contractInterface: erc20ABI,
     functionName: 'approve',
     args: [sdk.ERC4626.TVG.address, constants.MaxUint256],
-    enabled: !!token?.address,
+    enabled: !!token?.address && needsApproval,
   });
   const {
     data: approveData,
@@ -93,7 +101,7 @@ export const Deposit = () => {
         title: intl.formatMessage({ defaultMessage: 'Token approved' }),
         content: (
           <Link
-            href={`https://goerli.etherscan.io/tx/${data?.transactionHash}`}
+            href={`${etherscanBlockExplorers.goerli.url}/tx/${data?.transactionHash}`}
             target="_blank"
           >
             {intl.formatMessage({
@@ -112,7 +120,7 @@ export const Deposit = () => {
       contractInterface: sdk.ERC4626.TVG.interface,
       functionName: 'deposit',
       args: [amount?.exact, address],
-      enabled: !!amount?.exact && !!address,
+      enabled: !!address && !!amount && !needsApproval,
     });
   const {
     data: depositData,
@@ -129,7 +137,7 @@ export const Deposit = () => {
         title: intl.formatMessage({ defaultMessage: 'Deposit completed' }),
         content: (
           <Link
-            href={`https://goerli.etherscan.io/tx/${data?.transactionHash}`}
+            href={`${etherscanBlockExplorers.goerli.url}/tx/${data?.transactionHash}`}
             target="_blank"
           >
             {intl.formatMessage({
@@ -149,6 +157,15 @@ export const Deposit = () => {
       setPreviewShares(null);
     }
   }, [amount, refetchPreviewShares]);
+
+  const estimatedGas =
+    amount && feeData
+      ? pathOr(
+          constants.Zero,
+          ['request', 'gasLimit'],
+          needsApproval ? approveConfig : depositConfig,
+        ).mul(feeData.gasPrice)
+      : null;
 
   return (
     <Stack
@@ -175,7 +192,12 @@ export const Deposit = () => {
         </InputLabel>
         <BigDecimalInput readOnly value={previewShares} placeholder="0.00" />
       </FormControl>
-      <Recap amount={amount} token={token} previewShares={previewShares} />
+      <Recap
+        amount={amount}
+        token={token}
+        previewShares={previewShares}
+        estimatedGas={estimatedGas}
+      />
       {(() => {
         if (!address) {
           return (
@@ -213,7 +235,7 @@ export const Deposit = () => {
           );
         }
 
-        if (allowance && amount.exact.gt(BigNumber.from(allowance))) {
+        if (needsApproval) {
           return (
             <Stack direction="row" spacing={1}>
               <Button

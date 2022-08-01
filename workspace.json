@@ -12,6 +12,7 @@
     "shared-icons": "libs/shared/icons",
     "shared-modals": "libs/shared/modals",
     "shared-notifications": "libs/shared/notifications",
+    "shared-prices": "libs/shared/prices",
     "shared-theme": "libs/shared/theme",
     "shared-ui": "libs/shared/ui",
     "shared-utils": "libs/shared/utils",
