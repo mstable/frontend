@@ -18977,15 +18977,6 @@ react-query@4.0.0-beta.23:
     match-sorter "^6.0.2"
     use-sync-external-store "^1.1.0"
 
-react-query@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/react-query/-/react-query-4.0.0.tgz#d8a5347503d0aedebc957e35b408c4aa3f726580"
-  integrity sha512-qiW+Yvbl+EK8iwPDJAj4qWAKceh+g8Up8jxoNxJbzhV3bNheeyHF3EyynnkDO3S+CYgSwtCUFaP8vOjB62j7xQ==
-  dependencies:
-    "@tanstack/query-core" "^4.0.0-beta.1"
-    "@types/use-sync-external-store" "^0.0.3"
-    use-sync-external-store "^1.2.0"
-
 react-refresh@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.10.0.tgz#2f536c9660c0b9b1d500684d9e52a65e7404f7e3"

@@ -15,6 +15,7 @@ export type TokenInputProps = {
   balance?: number;
   onChange?: (newValue: number) => void;
   hidePercentage?: boolean;
+  hideSymbolButton?: boolean;
   components?: {
     container?: StackProps;
   };
@@ -73,6 +74,7 @@ export const TokenInput = ({
   balance = 0,
   onChange,
   hidePercentage = false,
+  hideSymbolButton = false,
   components,
   ...rest
 }: TokenInputProps) => {
@@ -98,7 +100,7 @@ export const TokenInput = ({
         InputProps={{
           type: 'number',
           disableUnderline: true,
-          endAdornment: (
+          endAdornment: !hideSymbolButton && (
             <SymbolButton>
               <USDC sx={{ width: 12, height: 12, mr: 0.5 }} />
               <Typography variant="buttonMedium">{symbol}</Typography>
@@ -131,7 +133,7 @@ export const TokenInput = ({
           </Stack>
           <SmallButton>
             <Metamask sx={{ width: 12, height: 12, mr: 1 }} />
-            <Typography variant="value6">54,567.23 USDC</Typography>
+            <Typography variant="value6">54,567.23 {symbol}</Typography>
           </SmallButton>
         </Stack>
       )}

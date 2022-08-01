@@ -1,5 +1,5 @@
 import { TokenInput } from '@frontend/shared-ui';
-import { Button, Divider, Stack, TextField, Typography } from '@mui/material';
+import { Button, Divider, Stack, Typography } from '@mui/material';
 import { ArrowDown, ArrowRight } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
@@ -68,15 +68,13 @@ export const Deposit = () => {
       <Divider>
         <ArrowDown weight="bold" />
       </Divider>
-      <TextField
-        variant="standard"
-        placeholder="0.00"
+      <TokenInput
         label={intl.formatMessage({ defaultMessage: 'Shares' })}
-        InputProps={{
-          type: 'number',
-          disableUnderline: true,
-          sx: (theme) => theme.typography.value1,
-        }}
+        symbol="Shares"
+        balance={100}
+        placeholder="0.00"
+        hideSymbolButton
+        hidePercentage
       />
       <Recap />
       <Button
