@@ -1,4 +1,4 @@
-import { getGoerliSdk } from '@dethcrypto/eth-sdk-client';
+import { addresses } from '@frontend/shared-constants';
 import { CollapsibleSection, ValueLabel } from '@frontend/shared-ui';
 import {
   Box,
@@ -9,19 +9,19 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { path } from 'ramda';
 import { useIntl } from 'react-intl';
-import { useAccount, useBalance, useSigner } from 'wagmi';
+import { useAccount, useBalance, useNetwork } from 'wagmi';
 
 export const Position = () => {
   const intl = useIntl();
   const { address } = useAccount();
-  const { data: signer } = useSigner();
-  const sdk = getGoerliSdk(signer);
+  const { chain } = useNetwork();
   const { data: balance } = useBalance({
     addressOrName: address,
-    token: sdk.ERC4626.TVG.address,
+    token: path([chain?.id, 'ERC4626', 'TVG'], addresses),
     watch: true,
-    enabled: !!address,
+    enabled: !!address && !!chain?.id,
   });
 
   return (

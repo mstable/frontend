@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getGoerliSdk } from '@dethcrypto/eth-sdk-client';
+import { addresses, erc4626ABI } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-notifications';
 import { BigDecimalInput, TokenInput } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { constants } from 'ethers';
 import { ArrowDown, ArrowRight } from 'phosphor-react';
-import { pathOr } from 'ramda';
+import { path, pathOr } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
   erc20ABI,
@@ -24,6 +24,7 @@ import {
   useContractRead,
   useContractWrite,
   useFeeData,
+  useNetwork,
   usePrepareContractWrite,
   useSigner,
   useToken,
@@ -38,17 +39,17 @@ export const Deposit = () => {
   const [amount, setAmout] = useState<BigDecimal | null>(null);
   const [previewShares, setPreviewShares] = useState<BigDecimal | null>(null);
   const pushNotification = usePushNotification();
+  const { chain } = useNetwork();
 
-  const sdk = getGoerliSdk(signer);
   const { data: asset, isLoading: assetLoading } = useContractRead({
-    addressOrName: sdk.ERC4626.TVG.address,
-    contractInterface: sdk.ERC4626.TVG.interface,
+    addressOrName: path([chain?.id, 'ERC4626', 'TVG'], addresses),
+    contractInterface: erc4626ABI,
     functionName: 'asset',
-    enabled: !!signer,
+    enabled: !!signer && !!chain?.id,
   });
   const { refetch: refetchPreviewShares } = useContractRead({
-    addressOrName: sdk.ERC4626.TVG.address,
-    contractInterface: sdk.ERC4626.TVG.interface,
+    addressOrName: path([chain?.id, 'ERC4626', 'TVG'], addresses),
+    contractInterface: erc4626ABI,
     functionName: 'previewDeposit',
     args: [amount?.exact],
     enabled: false,
@@ -64,7 +65,7 @@ export const Deposit = () => {
   const { data: balance } = useBalance({
     addressOrName: address,
     token: token?.address,
-    enabled: !!token && !!asset && !assetLoading,
+    enabled: !!token?.address && !!asset && !assetLoading,
     cacheTime: 0,
     staleTime: 0,
   });
@@ -72,7 +73,7 @@ export const Deposit = () => {
     addressOrName: token?.address,
     contractInterface: erc20ABI,
     functionName: 'allowance',
-    args: [address, sdk.ERC4626.TVG.address],
+    args: [address, path([chain?.id, 'ERC4626', 'TVG'], addresses)],
     enabled: !!token?.address && !!address,
     watch: true,
     cacheTime: 0,
@@ -84,8 +85,11 @@ export const Deposit = () => {
     addressOrName: token?.address,
     contractInterface: erc20ABI,
     functionName: 'approve',
-    args: [sdk.ERC4626.TVG.address, constants.MaxUint256],
-    enabled: !!token?.address && needsApproval,
+    args: [
+      path([chain?.id, 'ERC4626', 'TVG'], addresses),
+      constants.MaxUint256,
+    ],
+    enabled: !!token?.address && needsApproval && !!chain?.id,
   });
   const {
     data: approveData,
@@ -116,11 +120,11 @@ export const Deposit = () => {
 
   const { config: depositConfig, refetch: prepareDeposit } =
     usePrepareContractWrite({
-      addressOrName: sdk.ERC4626.TVG.address,
-      contractInterface: sdk.ERC4626.TVG.interface,
+      addressOrName: path([chain?.id, 'ERC4626', 'TVG'], addresses),
+      contractInterface: erc4626ABI,
       functionName: 'deposit',
       args: [amount?.exact, address],
-      enabled: !!address && !!amount && !needsApproval,
+      enabled: !!address && !!amount && !needsApproval && !!chain.id,
     });
   const {
     data: depositData,
@@ -244,7 +248,7 @@ export const Deposit = () => {
                 onClick={() => {
                   approve({
                     recklesslySetUnpreparedArgs: [
-                      sdk.ERC4626.TVG.address,
+                      path([chain?.id, 'ERC4626', 'TVG'], addresses),
                       amount.exact,
                     ],
                   });
