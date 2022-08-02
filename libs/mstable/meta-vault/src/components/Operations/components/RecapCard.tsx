@@ -1,19 +1,11 @@
 import { usePrices } from '@frontend/shared-prices';
-import { BigDecimal } from '@frontend/shared-utils';
 import { Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useNetwork } from 'wagmi';
 
-import type { StackProps } from '@mui/material';
-import type { FetchTokenResult } from '@wagmi/core';
-import type { BigNumber } from 'ethers';
+import { useEstimateGas, useOperations, usePreview } from '../hooks';
 
-export type RecapProps = {
-  amount: BigDecimal | null;
-  token: FetchTokenResult | null;
-  previewShares: BigDecimal | null;
-  estimatedGas: BigNumber | null;
-} & StackProps;
+import type { StackProps } from '@mui/material';
 
 const splitRow: StackProps = {
   direction: 'row',
@@ -21,32 +13,22 @@ const splitRow: StackProps = {
   alignItems: 'baseline',
 };
 
-export const Recap = ({
-  amount,
-  token,
-  previewShares,
-  estimatedGas,
-  ...rest
-}: RecapProps) => {
+export const RecapCard = (props: StackProps) => {
   const intl = useIntl();
-  const { price, symbol } = usePrices();
   const { chain } = useNetwork();
-
-  const nativeTokenGasPrice =
-    estimatedGas && chain?.nativeCurrency?.decimals
-      ? new BigDecimal(estimatedGas, chain.nativeCurrency.decimals)
-      : null;
-  const fiatGasPrice =
-    nativeTokenGasPrice && price ? price * nativeTokenGasPrice.simple : null;
+  const { symbol } = usePrices();
+  const { amount, token } = useOperations();
+  const { preview } = usePreview();
+  const { fiatGasPrice, nativeTokenGasPrice } = useEstimateGas();
 
   return (
     <Stack
-      {...rest}
+      {...props}
       sx={{
         backgroundColor: 'background.highlight',
         p: 2,
         borderRadius: 1,
-        ...rest?.sx,
+        ...props?.sx,
       }}
     >
       <Typography variant="buttonLarge" mb={3}>
@@ -80,7 +62,7 @@ export const Recap = ({
           {intl.formatMessage({ defaultMessage: 'You Get' })}
         </Typography>
         <Typography variant="value4">
-          {previewShares?.format() ?? '-'}&nbsp;
+          {preview?.format() ?? '-'}&nbsp;
           {intl.formatMessage({ defaultMessage: 'Shares' })}
         </Typography>
       </Stack>
