@@ -6,6 +6,7 @@ import { BigDecimal } from '@frontend/shared-utils';
 import { constants } from 'ethers';
 import produce from 'immer';
 import { pathOr } from 'ramda';
+import { useIntl } from 'react-intl';
 import {
   erc20ABI,
   useAccount,
@@ -17,6 +18,8 @@ import {
 
 import { useMetaVault } from '../../hooks';
 import { useTrackedState, useUpdate } from './state';
+
+import type { SupportedOperation } from './state';
 
 export const useOperations = () => useTrackedState();
 
@@ -33,6 +36,60 @@ export const useSetAmount = () => {
     },
     [update],
   );
+};
+
+export const useChangeOperation = () => {
+  const update = useUpdate();
+  const { assetToken, mvToken } = useMetaVault();
+
+  return useCallback(
+    (operation: SupportedOperation) => {
+      update(
+        produce((state) => {
+          state.operation = operation;
+          state.amount = null;
+          state.token = {
+            deposit: assetToken,
+            mint: mvToken,
+            redeem: mvToken,
+            withdraw: assetToken,
+          }[operation];
+        }),
+      );
+    },
+    [assetToken, mvToken, update],
+  );
+};
+
+export const useChangeTab = () => {
+  const update = useUpdate();
+  const { assetToken, mvToken } = useMetaVault();
+
+  return useCallback(
+    (tab: 0 | 1) => {
+      update(
+        produce((state) => {
+          state.tab = tab;
+          state.operation = tab === 0 ? 'deposit' : 'redeem';
+          state.amount = null;
+          state.token = tab === 0 ? assetToken : mvToken;
+        }),
+      );
+    },
+    [assetToken, mvToken, update],
+  );
+};
+
+export const useReset = () => {
+  const update = useUpdate();
+
+  return useCallback(() => {
+    update(
+      produce((state) => {
+        state.amount = null;
+      }),
+    );
+  }, [update]);
 };
 
 export const usePreview = () => {
@@ -107,6 +164,57 @@ export const useOperationConfig = () => {
     args,
     enabled: !!amount?.exact && !!walletAddress && !needApproval,
   });
+};
+
+export const useOperationLabel = () => {
+  const intl = useIntl();
+  const { operation } = useTrackedState();
+
+  return useMemo(
+    () =>
+      ({
+        deposit: intl.formatMessage({ defaultMessage: 'Deposit' }),
+        mint: intl.formatMessage({ defaultMessage: 'Mint' }),
+        withdraw: intl.formatMessage({ defaultMessage: 'Withdraw' }),
+        redeem: intl.formatMessage({ defaultMessage: 'Redeem' }),
+      }[operation]),
+    [intl, operation],
+  );
+};
+
+export const useOperationResultLabel = () => {
+  const intl = useIntl();
+  const { operation, amount } = useTrackedState();
+  const { preview } = usePreview();
+
+  return useMemo(
+    () =>
+      ({
+        deposit: intl.formatMessage(
+          {
+            defaultMessage:
+              'You deposit {amount} tokens and receive {preview} shares',
+          },
+          { amount: amount?.format(), preview: preview?.format() },
+        ),
+        mint: intl.formatMessage(
+          { defaultMessage: 'You mint {amount} shares for {preview} tokens' },
+          { amount: amount?.format(), preview: preview?.format() },
+        ),
+        withdraw: intl.formatMessage(
+          {
+            defaultMessage:
+              'You withdraw {amount} tokens by burning {preview} shares',
+          },
+          { amount: amount?.format(), preview: preview?.format() },
+        ),
+        redeem: intl.formatMessage(
+          { defaultMessage: 'You redeem {amount} shares for {preview} tokens' },
+          { amount: amount?.format(), preview: preview?.format() },
+        ),
+      }[operation]),
+    [amount, intl, operation, preview],
+  );
 };
 
 export const useEstimateGas = () => {

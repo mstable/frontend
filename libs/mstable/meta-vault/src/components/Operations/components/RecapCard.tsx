@@ -3,7 +3,13 @@ import { Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useNetwork } from 'wagmi';
 
-import { useEstimateGas, useOperations, usePreview } from '../hooks';
+import {
+  useEstimateGas,
+  useOperationLabel,
+  useOperationResultLabel,
+  useOperations,
+  usePreview,
+} from '../hooks';
 
 import type { StackProps } from '@mui/material';
 
@@ -20,6 +26,8 @@ export const RecapCard = (props: StackProps) => {
   const { amount, token } = useOperations();
   const { preview } = usePreview();
   const { fiatGasPrice, nativeTokenGasPrice } = useEstimateGas();
+  const operationLabel = useOperationLabel();
+  const operationResultLabel = useOperationResultLabel();
 
   return (
     <Stack
@@ -36,7 +44,10 @@ export const RecapCard = (props: StackProps) => {
       </Typography>
       <Stack {...splitRow} mb={1}>
         <Typography>
-          {intl.formatMessage({ defaultMessage: 'Your Deposit' })}
+          {intl.formatMessage(
+            { defaultMessage: 'Your {operationLabel}' },
+            { operationLabel },
+          )}
         </Typography>
         <Typography variant="value4">
           {amount?.format() ?? '-'}&nbsp;{token?.symbol}
@@ -57,14 +68,8 @@ export const RecapCard = (props: StackProps) => {
         </Typography>
       </Stack>
       <Divider flexItem sx={{ my: 2, backgroundColor: 'grey.800' }} />
-      <Stack {...splitRow}>
-        <Typography>
-          {intl.formatMessage({ defaultMessage: 'You Get' })}
-        </Typography>
-        <Typography variant="value4">
-          {preview?.format() ?? '-'}&nbsp;
-          {intl.formatMessage({ defaultMessage: 'Shares' })}
-        </Typography>
+      <Stack>
+        <Typography>{operationResultLabel}</Typography>
       </Stack>
     </Stack>
   );

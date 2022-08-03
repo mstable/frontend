@@ -13,6 +13,7 @@ import {
   useApprovalConfig,
   useNeedApproval,
   useOperationConfig,
+  useOperationLabel,
   useOperations,
 } from '../hooks';
 
@@ -35,6 +36,7 @@ export const SubmitButton = () => {
   const { address } = useMetaVault();
   const { amount, token } = useOperations();
   const needApproval = useNeedApproval();
+  const operationLabel = useOperationLabel();
 
   const { config: approveConfig } = useApprovalConfig();
   const {
@@ -95,9 +97,12 @@ export const SubmitButton = () => {
   if (!address) {
     return (
       <Button {...buttonProps} disabled>
-        {intl.formatMessage({
-          defaultMessage: 'Connect your wallet to deposit',
-        })}
+        {intl.formatMessage(
+          {
+            defaultMessage: 'Connect your wallet to {operationLabel}',
+          },
+          { operationLabel },
+        )}
       </Button>
     );
   }
@@ -105,7 +110,7 @@ export const SubmitButton = () => {
   if (!amount) {
     return (
       <Button {...buttonProps} disabled>
-        {intl.formatMessage({ defaultMessage: 'Deposit' })}
+        {operationLabel}
         <ArrowRight weight="bold" />
       </Button>
     );
@@ -166,7 +171,7 @@ export const SubmitButton = () => {
   if (isDepositStarted && !isDepositSuccess) {
     return (
       <Button {...buttonProps} disabled>
-        {intl.formatMessage({ defaultMessage: 'Depositing' })}
+        {intl.formatMessage({ defaultMessage: 'Loading...' })}
       </Button>
     );
   }
@@ -185,7 +190,7 @@ export const SubmitButton = () => {
     >
       {amount && <span>{`${amount?.format()} ${token?.symbol}`}</span>}
       <Stack direction="row" alignItems="center">
-        {intl.formatMessage({ defaultMessage: 'Deposit' })}
+        {operationLabel}
         <ArrowRight weight="bold" />
       </Stack>
     </Button>

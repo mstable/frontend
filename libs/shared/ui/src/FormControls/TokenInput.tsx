@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Metamask, USDC } from '@frontend/shared-icons';
 import { BigDecimal } from '@frontend/shared-utils';
@@ -78,6 +78,12 @@ export const TokenInput = ({
     ? new BigDecimal(balance.value, token?.decimals)
     : BigDecimal.ZERO;
   const [percentage, setPercentage] = useState(0);
+
+  useEffect(() => {
+    if (!amount) {
+      setPercentage(0);
+    }
+  }, [amount]);
 
   const handlePercentageChange = (_, newValue: number | null) => {
     setPercentage(newValue);

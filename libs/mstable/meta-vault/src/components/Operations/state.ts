@@ -11,12 +11,16 @@ import type { FetchTokenResult } from '@wagmi/core';
 import type { BigNumber } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
 
+export type SupportedOperation = 'deposit' | 'mint' | 'withdraw' | 'redeem';
+
 type OperationsState = {
   amount: BigDecimal | null;
   token: FetchTokenResult | null;
-  operation: 'deposit' | 'mint' | 'withdraw' | 'redeem';
+  operation: SupportedOperation;
   allowance: BigNumber | null;
+  balance: BigDecimal | null;
   max: BigNumber | null;
+  tab: 0 | 1;
 };
 
 export const { Provider, useUpdate, useTrackedState } = createContainer<
@@ -30,7 +34,9 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     token: assetToken,
     operation: 'deposit',
     allowance: null,
+    balance: null,
     max: null,
+    tab: 0,
   });
   const { address: walletAddress } = useAccount();
 

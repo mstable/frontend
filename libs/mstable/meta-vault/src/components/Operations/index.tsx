@@ -1,32 +1,26 @@
-import { useState } from 'react';
-
 import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import { OperationsForm } from './components/OperationsForm';
 import { RecapCard } from './components/RecapCard';
 import { SubmitButton } from './components/SubmitButton';
-import { useOperations } from './hooks';
+import { useChangeTab, useOperations } from './hooks';
 import { Provider } from './state';
-
-import type { SyntheticEvent } from 'react';
 
 const OperationsWrapped = () => {
   const intl = useIntl();
-  const [tabIdx, setTabIdx] = useState(0);
-  const { amount } = useOperations();
-
-  const handleTabChange = (event: SyntheticEvent, newValue: number) => {
-    setTabIdx(newValue);
-  };
+  const changeTab = useChangeTab();
+  const { amount, tab } = useOperations();
 
   return (
     <Card>
       <CardContent>
         <Stack>
           <Tabs
-            value={tabIdx}
-            onChange={handleTabChange}
+            value={tab}
+            onChange={(_, tab: 0 | 1) => {
+              changeTab(tab);
+            }}
             textColor="inherit"
             variant="fullWidth"
           >
