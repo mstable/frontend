@@ -8,7 +8,6 @@ import {
   useOperationLabel,
   useOperationResultLabel,
   useOperations,
-  usePreview,
 } from '../hooks';
 
 import type { StackProps } from '@mui/material';
@@ -24,7 +23,6 @@ export const RecapCard = (props: StackProps) => {
   const { chain } = useNetwork();
   const { symbol } = usePrices();
   const { amount, token } = useOperations();
-  const { preview } = usePreview();
   const { fiatGasPrice, nativeTokenGasPrice } = useEstimateGas();
   const operationLabel = useOperationLabel();
   const operationResultLabel = useOperationResultLabel();

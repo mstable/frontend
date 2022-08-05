@@ -1,9 +1,11 @@
 import { usePushNotification } from '@frontend/shared-notifications';
+import { OpenAccountModalButton } from '@frontend/shared-wagmi';
 import { Button, Link, Stack } from '@mui/material';
 import { ArrowRight, Infinity } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 import {
   etherscanBlockExplorers,
+  useAccount,
   useContractWrite,
   useWaitForTransaction,
 } from 'wagmi';
@@ -33,6 +35,7 @@ const buttonProps: ButtonProps = {
 export const SubmitButton = () => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
+  const { address: walletAddress } = useAccount();
   const { address } = useMetaVault();
   const { amount, token } = useOperations();
   const needApproval = useNeedApproval();
@@ -94,16 +97,9 @@ export const SubmitButton = () => {
     },
   });
 
-  if (!address) {
+  if (!walletAddress) {
     return (
-      <Button {...buttonProps} disabled>
-        {intl.formatMessage(
-          {
-            defaultMessage: 'Connect your wallet to {operationLabel}',
-          },
-          { operationLabel },
-        )}
-      </Button>
+      <OpenAccountModalButton variant="contained" color="primary" fullWidth />
     );
   }
 

@@ -6,7 +6,8 @@ import { erc20ABI, useAccount, useContractRead } from 'wagmi';
 
 import { useMetaVault } from '../../hooks';
 
-import type { BigDecimal, Children } from '@frontend/shared-utils';
+import type { BigDecimal } from '@frontend/shared-utils';
+import type { Children } from '@frontend/shared-utils';
 import type { FetchTokenResult } from '@wagmi/core';
 import type { BigNumber } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
@@ -19,7 +20,6 @@ type OperationsState = {
   operation: SupportedOperation;
   allowance: BigNumber | null;
   balance: BigDecimal | null;
-  max: BigNumber | null;
   tab: 0 | 1;
 };
 
@@ -28,6 +28,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   Dispatch<SetStateAction<OperationsState>>,
   Children
 >(() => {
+  const { address: walletAddress } = useAccount();
   const { address, asset, assetToken } = useMetaVault();
   const [state, setState] = useState<OperationsState>({
     amount: null,
@@ -35,10 +36,8 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     operation: 'deposit',
     allowance: null,
     balance: null,
-    max: null,
     tab: 0,
   });
-  const { address: walletAddress } = useAccount();
 
   useContractRead({
     addressOrName: asset,

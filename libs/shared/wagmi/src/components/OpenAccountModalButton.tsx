@@ -19,7 +19,6 @@ export const OpenAccountModalButton = (props: ButtonProps) => {
   const buttonProps: ButtonProps = {
     variant: 'text',
     color: 'inherit',
-    sx: { maxWidth: 220 },
     ...props,
   };
 

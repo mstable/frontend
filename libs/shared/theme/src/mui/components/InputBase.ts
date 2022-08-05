@@ -18,6 +18,8 @@ export const getInputBase = (base: Theme): ThemeOptions => ({
             ...base.typography.placeholder,
           },
 
+          '&.Mui-error': { color: base.palette.error.main },
+
           '.MuiInputBase-input': {
             height: '100%',
             boxSizing: 'border-box',

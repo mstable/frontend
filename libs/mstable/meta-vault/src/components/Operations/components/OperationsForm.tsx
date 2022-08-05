@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { TokenInput } from '@frontend/shared-ui';
-import { Divider, FormControl, Stack } from '@mui/material';
+import { Divider, Stack } from '@mui/material';
 import { ArrowDown } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 import { useAccount, useBalance } from 'wagmi';
@@ -38,52 +38,101 @@ export const OperationsForm = (props: StackProps) => {
     watch: true,
   });
 
-  const upAmount = useMemo(
-    () => (['deposit', 'redeem'].includes(operation) ? amount : preview),
-    [amount, operation, preview],
-  );
-  const upToken = useMemo(
-    () => (tab === 0 ? assetToken : mvToken),
-    [assetToken, mvToken, tab],
-  );
-  const upBalance = useMemo(
-    () => (tab === 0 ? assetBalance : mvBalance),
-    [assetBalance, mvBalance, tab],
-  );
-  const upLabel = useMemo(
+  const primaryInput = useMemo(
     () =>
-      tab === 0
-        ? intl.formatMessage({ defaultMessage: 'Tokens' })
-        : intl.formatMessage({ defaultMessage: 'Shares' }),
-
-    [intl, tab],
+      ({
+        deposit: {
+          label: intl.formatMessage({ defaultMessage: 'Tokens' }),
+          amount: amount,
+          token: assetToken,
+          balance: assetBalance,
+        },
+        mint: {
+          label: intl.formatMessage({ defaultMessage: 'Tokens' }),
+          amount: preview,
+          token: assetToken,
+          // TODO fetch max preview
+          balance: assetBalance,
+        },
+        redeem: {
+          label: intl.formatMessage({ defaultMessage: 'Shares' }),
+          amount: amount,
+          token: mvToken,
+          balance: mvBalance,
+        },
+        withdraw: {
+          label: intl.formatMessage({ defaultMessage: 'Shares' }),
+          amount: preview,
+          token: mvToken,
+          balance: mvBalance,
+        },
+      }[operation]),
+    [
+      amount,
+      assetBalance,
+      assetToken,
+      intl,
+      mvBalance,
+      mvToken,
+      operation,
+      preview,
+    ],
   );
-  const handleUpChange = (newValue: BigDecimal) => {
-    changeOperation(tab === 0 ? 'deposit' : 'redeem');
+
+  const secondaryInput = useMemo(
+    () =>
+      ({
+        deposit: {
+          label: intl.formatMessage({ defaultMessage: 'Shares' }),
+          amount: preview,
+          token: mvToken,
+          balance: mvBalance,
+        },
+        mint: {
+          label: intl.formatMessage({ defaultMessage: 'Shares' }),
+          amount: amount,
+          token: mvToken,
+          balance: mvBalance,
+        },
+        redeem: {
+          label: intl.formatMessage({ defaultMessage: 'Tokens' }),
+          amount: preview,
+          token: assetToken,
+          balance: assetBalance,
+        },
+        withdraw: {
+          label: intl.formatMessage({ defaultMessage: 'Tokens' }),
+          amount: amount,
+          token: assetToken,
+          // TODO fetch max preview
+          balance: mvBalance,
+        },
+      }[operation]),
+    [
+      amount,
+      assetBalance,
+      assetToken,
+      intl,
+      mvBalance,
+      mvToken,
+      operation,
+      preview,
+    ],
+  );
+
+  const handlePrimaryChange = (newValue: BigDecimal) => {
+    const newOp = tab === 0 ? 'deposit' : 'redeem';
+    if (newOp !== operation) {
+      changeOperation(newOp);
+    }
     setAmount(newValue);
   };
 
-  const downAmount = useMemo(
-    () => (['deposit', 'redeem'].includes(operation) ? preview : amount),
-    [amount, operation, preview],
-  );
-  const downToken = useMemo(
-    () => (tab === 0 ? mvToken : assetToken),
-    [assetToken, mvToken, tab],
-  );
-  const downBalance = useMemo(
-    () => (tab === 0 ? assetBalance : mvBalance),
-    [assetBalance, mvBalance, tab],
-  );
-  const downLabel = useMemo(
-    () =>
-      tab === 0
-        ? intl.formatMessage({ defaultMessage: 'Shares' })
-        : intl.formatMessage({ defaultMessage: 'Tokens' }),
-    [intl, tab],
-  );
   const handleDownChange = (newValue: BigDecimal) => {
-    changeOperation(tab === 0 ? 'mint' : 'withdraw');
+    const newOp = tab === 0 ? 'mint' : 'withdraw';
+    if (newOp !== operation) {
+      changeOperation(newOp);
+    }
     setAmount(newValue);
   };
 
@@ -96,27 +145,21 @@ export const OperationsForm = (props: StackProps) => {
       {...props}
     >
       <TokenInput
-        label={upLabel}
-        amount={upAmount}
-        token={upToken}
-        balance={upBalance}
-        onChange={handleUpChange}
+        {...primaryInput}
+        onChange={handlePrimaryChange}
         placeholder="0.00"
+        disabled={!walletAddress}
       />
       <Divider>
         <ArrowDown fontWeight="bold" />
       </Divider>
-      <FormControl>
-        <TokenInput
-          label={downLabel}
-          amount={downAmount}
-          token={downToken}
-          balance={downBalance}
-          onChange={handleDownChange}
-          placeholder="0.00"
-          hideBottomRow
-        />
-      </FormControl>
+      <TokenInput
+        {...secondaryInput}
+        onChange={handleDownChange}
+        placeholder="0.00"
+        disabled={!walletAddress}
+        hideBottomRow
+      />
     </Stack>
   );
 };

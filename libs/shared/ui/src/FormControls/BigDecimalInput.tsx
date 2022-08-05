@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { BigDecimal } from '@frontend/shared-utils';
 import { InputBase } from '@mui/material';
 import { constants } from 'ethers';
@@ -27,20 +29,29 @@ export const BigDecimalInput = ({
   max = new BigDecimal(constants.MaxUint256),
   ...rest
 }: BigDecimalInputProps) => {
+  const [val, setVal] = useState(value?.simple.toString() ?? '');
+
+  useEffect(() => {
+    if (value) {
+      setVal(value?.simple.toString());
+    } else {
+      setVal('');
+    }
+  }, [value]);
+
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    if (
-      evt.target.validity.valid &&
-      onChange &&
-      inRange(evt.target.value, min, max)
-    ) {
-      onChange(BigDecimal.maybeParse(evt.target.value));
+    if (evt.target.validity.valid && inRange(evt.target.value, min, max)) {
+      setVal(evt.target.value);
+      if (onChange && !evt.target.value.endsWith('.')) {
+        onChange(BigDecimal.maybeParse(evt.target.value));
+      }
     }
   };
 
   return (
     <InputBase
       {...rest}
-      value={value?.simple ?? ''}
+      value={val}
       onChange={handleChange}
       inputMode="numeric"
       componentsProps={{

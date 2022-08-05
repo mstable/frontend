@@ -42,7 +42,7 @@ export const Topnav = () => {
           justifyContent="flex-end"
           alignItems="stretch"
         >
-          <OpenAccountModalButton />
+          <OpenAccountModalButton sx={{ maxWidth: 220 }} />
           <OpenNetworkModalButton />
           <Settings />
         </Stack>

@@ -118,12 +118,15 @@ export const usePreview = () => {
 
 export const useNeedApproval = () => {
   const { amount, operation, allowance } = useTrackedState();
+  const { preview } = usePreview();
+
+  const amt = operation === 'deposit' ? amount : preview;
 
   return (
     ['deposit', 'mint'].includes(operation) &&
-    amount &&
+    amt &&
     allowance &&
-    amount.exact.gt(allowance)
+    amt.exact.gt(allowance)
   );
 };
 

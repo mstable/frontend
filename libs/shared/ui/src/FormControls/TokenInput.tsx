@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Metamask, USDC } from '@frontend/shared-icons';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
-  Button,
   FormControl,
   InputLabel,
   Stack,
@@ -11,6 +10,7 @@ import {
   ToggleButtonGroup,
   Typography,
 } from '@mui/material';
+import { constants } from 'ethers';
 import { range } from 'ramda';
 
 import { BigDecimalInput } from './BigDecimalInput';
@@ -21,9 +21,10 @@ import type { FetchBalanceResult, FetchTokenResult } from '@wagmi/core';
 export type TokenInputProps = {
   label?: string;
   placeholder?: string;
+  disabled?: boolean;
   amount: BigDecimal;
   token: FetchTokenResult;
-  balance: FetchBalanceResult;
+  balance?: Partial<FetchBalanceResult>;
   onChange?: (newValue: BigDecimal) => void;
   hideBottomRow?: boolean;
   components?: {
@@ -31,22 +32,7 @@ export type TokenInputProps = {
   };
 };
 
-const PERCENTAGE_STEPS = 4; // 100 / 4 = 25%
-
-const balanceButton = (theme: Theme) => ({
-  p: 0.5,
-  borderRadius: '4px',
-  minWidth: 0,
-  minHeight: 0,
-  ...theme.typography.value6,
-});
-
-const symbolButton = (theme: Theme) => ({
-  py: 0.5,
-  px: 1.5,
-  borderRadius: '4px',
-  minWidth: 48,
-});
+const PERCENTAGE_STEPS = 4; // 25%
 
 const percentageButtonGroup = (theme: Theme) => ({
   '& .MuiToggleButtonGroup-grouped': {
@@ -67,6 +53,7 @@ const percentageButtonGroup = (theme: Theme) => ({
 export const TokenInput = ({
   label,
   placeholder,
+  disabled,
   amount,
   token,
   balance,
@@ -74,10 +61,16 @@ export const TokenInput = ({
   hideBottomRow = false,
   components,
 }: TokenInputProps) => {
-  const bal = balance?.value
-    ? new BigDecimal(balance.value, token?.decimals)
-    : BigDecimal.ZERO;
   const [percentage, setPercentage] = useState(0);
+  const bal = useMemo(
+    () =>
+      balance?.value ? new BigDecimal(balance.value, token?.decimals) : null,
+    [balance?.value, token?.decimals],
+  );
+  const isError = useMemo(
+    () => bal && amount?.exact?.gt(bal.exact),
+    [amount?.exact, bal],
+  );
 
   useEffect(() => {
     if (!amount) {
@@ -103,18 +96,30 @@ export const TokenInput = ({
 
   return (
     <Stack {...components?.container}>
-      <FormControl>
-        <InputLabel>{label}</InputLabel>
+      <FormControl error={isError}>
+        <InputLabel error={isError}>{label}</InputLabel>
         <BigDecimalInput
           placeholder={placeholder}
           value={amount}
-          max={bal}
+          error={isError}
           onChange={handleChange}
+          disabled={disabled}
           endAdornment={
-            <Button variant="text" color="secondary" sx={symbolButton}>
-              <USDC sx={{ width: 12, height: 12, mr: 0.5 }} />
-              <Typography variant="buttonMedium">{token?.symbol}</Typography>
-            </Button>
+            <Stack
+              direction="row"
+              spacing={1}
+              alignItems="center"
+              sx={{
+                p: 1,
+                borderRadius: '4px',
+                backgroundColor: 'background.highlight',
+              }}
+            >
+              <USDC sx={{ width: 14, height: 14 }} />
+              <Typography variant="buttonMedium" sx={{ color: 'text.primary' }}>
+                {token?.symbol}
+              </Typography>
+            </Stack>
           }
         />
       </FormControl>
@@ -130,20 +135,35 @@ export const TokenInput = ({
             onChange={handlePercentageChange}
             exclusive
             size="small"
+            disabled={bal?.exact?.eq(constants.Zero) || disabled}
             sx={percentageButtonGroup}
           >
             {range(1, PERCENTAGE_STEPS + 1).map((n) => (
               <ToggleButton value={n} key={`percent-${n}`}>
-                {n * (100 / PERCENTAGE_STEPS)}%
+                {`${
+                  n === PERCENTAGE_STEPS
+                    ? 'MAX'
+                    : `${n * (100 / PERCENTAGE_STEPS)}%`
+                }`}
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
-          <Button variant="text" color="secondary" sx={balanceButton}>
-            <Metamask sx={{ width: 12, height: 12, mr: 1 }} />
-            <Typography variant="value6">
-              {bal.format()} {balance?.symbol}
-            </Typography>
-          </Button>
+          {bal && (
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{
+                p: 0.5,
+                borderRadius: '4px',
+                backgroundColor: 'background.highlight',
+              }}
+            >
+              <Metamask sx={{ width: 12, height: 12 }} />
+              <Typography variant="value6">
+                {bal.format()} <strong>{token?.symbol}</strong>
+              </Typography>
+            </Stack>
+          )}
         </Stack>
       )}
     </Stack>
