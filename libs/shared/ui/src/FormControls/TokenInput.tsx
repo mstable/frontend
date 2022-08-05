@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Metamask, USDC } from '@frontend/shared-icons';
+import { USDC } from '@frontend/shared-icons';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
   FormControl,
@@ -12,19 +12,21 @@ import {
 } from '@mui/material';
 import { constants } from 'ethers';
 import { range } from 'ramda';
+import { useIntl } from 'react-intl';
 
 import { BigDecimalInput } from './BigDecimalInput';
 
 import type { StackProps, Theme } from '@mui/material';
-import type { FetchBalanceResult, FetchTokenResult } from '@wagmi/core';
+import type { FetchTokenResult } from '@wagmi/core';
 
 export type TokenInputProps = {
   label?: string;
   placeholder?: string;
   disabled?: boolean;
+  error?: boolean;
   amount: BigDecimal;
   token: FetchTokenResult;
-  balance?: Partial<FetchBalanceResult>;
+  balance?: BigDecimal;
   onChange?: (newValue: BigDecimal) => void;
   hideBottomRow?: boolean;
   components?: {
@@ -54,6 +56,7 @@ export const TokenInput = ({
   label,
   placeholder,
   disabled,
+  error,
   amount,
   token,
   balance,
@@ -62,15 +65,7 @@ export const TokenInput = ({
   components,
 }: TokenInputProps) => {
   const [percentage, setPercentage] = useState(0);
-  const bal = useMemo(
-    () =>
-      balance?.value ? new BigDecimal(balance.value, token?.decimals) : null,
-    [balance?.value, token?.decimals],
-  );
-  const isError = useMemo(
-    () => bal && amount?.exact?.gt(bal.exact),
-    [amount?.exact, bal],
-  );
+  const intl = useIntl();
 
   useEffect(() => {
     if (!amount) {
@@ -82,7 +77,9 @@ export const TokenInput = ({
     setPercentage(newValue);
     if (onChange) {
       onChange(
-        BigDecimal.fromSimple(bal.simple * newValue * (1 / PERCENTAGE_STEPS)),
+        BigDecimal.fromSimple(
+          balance?.simple ?? 0 * newValue * (1 / PERCENTAGE_STEPS),
+        ),
       );
     }
   };
@@ -96,12 +93,12 @@ export const TokenInput = ({
 
   return (
     <Stack {...components?.container}>
-      <FormControl error={isError}>
-        <InputLabel error={isError}>{label}</InputLabel>
+      <FormControl disabled={disabled} error={error}>
+        <InputLabel error={error}>{label}</InputLabel>
         <BigDecimalInput
           placeholder={placeholder}
           value={amount}
-          error={isError}
+          error={error}
           onChange={handleChange}
           disabled={disabled}
           endAdornment={
@@ -135,7 +132,7 @@ export const TokenInput = ({
             onChange={handlePercentageChange}
             exclusive
             size="small"
-            disabled={bal?.exact?.eq(constants.Zero) || disabled}
+            disabled={balance?.exact?.eq(constants.Zero) || disabled}
             sx={percentageButtonGroup}
           >
             {range(1, PERCENTAGE_STEPS + 1).map((n) => (
@@ -148,21 +145,11 @@ export const TokenInput = ({
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
-          {bal && (
-            <Stack
-              direction="row"
-              spacing={1}
-              sx={{
-                p: 0.5,
-                borderRadius: '4px',
-                backgroundColor: 'background.highlight',
-              }}
-            >
-              <Metamask sx={{ width: 12, height: 12 }} />
-              <Typography variant="value6">
-                {bal.format()} <strong>{token?.symbol}</strong>
-              </Typography>
-            </Stack>
+          {balance && (
+            <Typography variant="value6">
+              {intl.formatMessage({ defaultMessage: 'Balance' })}:&nbsp;
+              {balance.format()}
+            </Typography>
           )}
         </Stack>
       )}

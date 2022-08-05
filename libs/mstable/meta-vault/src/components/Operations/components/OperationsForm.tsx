@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 
 import { TokenInput } from '@frontend/shared-ui';
-import { Divider, Stack } from '@mui/material';
-import { ArrowDown } from 'phosphor-react';
+import { BigDecimal } from '@frontend/shared-utils';
+import { Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
-import { useAccount, useBalance } from 'wagmi';
+import { useAccount } from 'wagmi';
 
 import { useMetaVault } from '../../../hooks';
 import {
@@ -14,29 +14,23 @@ import {
   useSetAmount,
 } from '../hooks';
 
-import type { BigDecimal } from '@frontend/shared-utils';
 import type { StackProps } from '@mui/material';
 
 export const OperationsForm = (props: StackProps) => {
   const intl = useIntl();
   const { address: walletAddress } = useAccount();
-  const { address, asset, assetToken, mvToken } = useMetaVault();
+  const {
+    assetToken,
+    mvToken,
+    assetBalance,
+    mvBalance,
+    assetsPerShare,
+    sharesPerAsset,
+  } = useMetaVault();
   const { amount, operation, tab } = useOperations();
   const { preview } = usePreview();
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
-  const { data: assetBalance } = useBalance({
-    addressOrName: walletAddress,
-    token: asset,
-    enabled: !!asset,
-    watch: true,
-  });
-  const { data: mvBalance } = useBalance({
-    addressOrName: walletAddress,
-    token: address,
-    enabled: !!walletAddress,
-    watch: true,
-  });
 
   const primaryInput = useMemo(
     () =>
@@ -51,7 +45,6 @@ export const OperationsForm = (props: StackProps) => {
           label: intl.formatMessage({ defaultMessage: 'Tokens' }),
           amount: preview,
           token: assetToken,
-          // TODO fetch max preview
           balance: assetBalance,
         },
         redeem: {
@@ -86,37 +79,50 @@ export const OperationsForm = (props: StackProps) => {
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
           amount: preview,
           token: mvToken,
-          balance: mvBalance,
+          balance:
+            assetBalance && sharesPerAsset
+              ? new BigDecimal(assetBalance.exact.mul(sharesPerAsset.exact))
+              : BigDecimal.ZERO,
         },
         mint: {
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
           amount: amount,
           token: mvToken,
-          balance: mvBalance,
+          balance:
+            assetBalance && sharesPerAsset
+              ? new BigDecimal(assetBalance.exact.mul(sharesPerAsset.exact))
+              : BigDecimal.ZERO,
         },
         redeem: {
           label: intl.formatMessage({ defaultMessage: 'Tokens' }),
           amount: preview,
           token: assetToken,
-          balance: assetBalance,
+          balance:
+            mvBalance && assetsPerShare
+              ? new BigDecimal(mvBalance.exact.mul(assetsPerShare.exact))
+              : BigDecimal.ZERO,
         },
         withdraw: {
           label: intl.formatMessage({ defaultMessage: 'Tokens' }),
           amount: amount,
           token: assetToken,
-          // TODO fetch max preview
-          balance: mvBalance,
+          balance:
+            mvBalance && assetsPerShare
+              ? new BigDecimal(mvBalance.exact.mul(sharesPerAsset.exact))
+              : BigDecimal.ZERO,
         },
       }[operation]),
     [
       amount,
       assetBalance,
       assetToken,
+      assetsPerShare,
       intl,
       mvBalance,
       mvToken,
       operation,
       preview,
+      sharesPerAsset,
     ],
   );
 
@@ -136,12 +142,36 @@ export const OperationsForm = (props: StackProps) => {
     setAmount(newValue);
   };
 
+  const ratioLabel = useMemo(
+    () =>
+      tab === 0
+        ? intl.formatMessage(
+            { defaultMessage: '1 {asset} = {ratio} Shares' },
+            { ratio: sharesPerAsset?.simple ?? '-', asset: assetToken?.symbol },
+          )
+        : intl.formatMessage(
+            { defaultMessage: '1 Share = {ratio} {asset}' },
+            { ratio: assetsPerShare?.simple ?? '-', asset: assetToken?.symbol },
+          ),
+    [
+      assetToken?.symbol,
+      assetsPerShare?.simple,
+      intl,
+      sharesPerAsset?.simple,
+      tab,
+    ],
+  );
+
   return (
     <Stack
       borderRadius={1}
       p={2}
       direction="column"
-      sx={{ border: (theme) => `1px solid ${theme.palette.divider}` }}
+      spacing={1}
+      sx={{
+        border: (theme) => `1px solid ${theme.palette.divider}`,
+        ...props?.sx,
+      }}
       {...props}
     >
       <TokenInput
@@ -149,15 +179,34 @@ export const OperationsForm = (props: StackProps) => {
         onChange={handlePrimaryChange}
         placeholder="0.00"
         disabled={!walletAddress}
+        error={
+          primaryInput.amount &&
+          primaryInput.balance &&
+          primaryInput.amount.exact.gt(primaryInput.balance.exact)
+        }
       />
       <Divider>
-        <ArrowDown fontWeight="bold" />
+        <Typography
+          variant="value6"
+          sx={{
+            p: 0.5,
+            backgroundColor: 'background.highlight',
+            borderRadius: '4px',
+          }}
+        >
+          {ratioLabel}
+        </Typography>
       </Divider>
       <TokenInput
         {...secondaryInput}
         onChange={handleDownChange}
         placeholder="0.00"
         disabled={!walletAddress}
+        error={
+          secondaryInput.amount &&
+          secondaryInput.balance &&
+          secondaryInput.amount.exact.gt(secondaryInput.balance.exact)
+        }
         hideBottomRow
       />
     </Stack>
