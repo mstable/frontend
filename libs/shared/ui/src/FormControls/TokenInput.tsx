@@ -149,7 +149,8 @@ export const TokenInput = ({
           </ToggleButtonGroup>
           {balance && (
             <Typography variant="value6">
-              {intl.formatMessage({ defaultMessage: 'Balance' })}:&nbsp;
+              {intl.formatMessage({ defaultMessage: 'Balance' })}
+              :&nbsp;
               {balance.format()}
             </Typography>
           )}
