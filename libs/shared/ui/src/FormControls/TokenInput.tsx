@@ -1,3 +1,4 @@
+/* eslint-disable formatjs/no-id */
 import { useEffect, useState } from 'react';
 
 import { USDC } from '@frontend/shared-icons';
@@ -149,7 +150,7 @@ export const TokenInput = ({
           </ToggleButtonGroup>
           {balance && (
             <Typography variant="value6">
-              {intl.formatMessage({ defaultMessage: 'Balance' })}
+              {intl.formatMessage({ defaultMessage: 'Balance', id: 'balance' })}
               :&nbsp;
               {balance.format()}
             </Typography>
