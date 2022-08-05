@@ -78,7 +78,7 @@ export const TokenInput = ({
     if (onChange) {
       onChange(
         BigDecimal.fromSimple(
-          balance?.simple ?? 0 * newValue * (1 / PERCENTAGE_STEPS),
+          balance?.simple * newValue * (1 / PERCENTAGE_STEPS),
         ),
       );
     }
@@ -132,7 +132,9 @@ export const TokenInput = ({
             onChange={handlePercentageChange}
             exclusive
             size="small"
-            disabled={balance?.exact?.eq(constants.Zero) || disabled}
+            disabled={
+              !balance || balance?.exact?.eq(constants.Zero) || disabled
+            }
             sx={percentageButtonGroup}
           >
             {range(1, PERCENTAGE_STEPS + 1).map((n) => (
