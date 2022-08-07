@@ -144,21 +144,30 @@ export const OperationsForm = (props: StackProps) => {
 
   const ratioLabel = useMemo(
     () =>
-      tab === 0
-        ? intl.formatMessage(
-            { defaultMessage: '1 {asset} = {ratio} Shares' },
-            { ratio: sharesPerAsset?.simple ?? '-', asset: assetToken?.symbol },
-          )
-        : intl.formatMessage(
-            { defaultMessage: '1 Share = {ratio} {asset}' },
-            { ratio: assetsPerShare?.simple ?? '-', asset: assetToken?.symbol },
-          ),
+      walletAddress
+        ? tab === 0
+          ? intl.formatMessage(
+              { defaultMessage: '1 {asset} = {ratio} Shares' },
+              {
+                ratio: sharesPerAsset?.simple ?? '-',
+                asset: assetToken?.symbol,
+              },
+            )
+          : intl.formatMessage(
+              { defaultMessage: '1 Share = {ratio} {asset}' },
+              {
+                ratio: assetsPerShare?.simple ?? '-',
+                asset: assetToken?.symbol,
+              },
+            )
+        : intl.formatMessage({ defaultMessage: 'Rate' }),
     [
       assetToken?.symbol,
       assetsPerShare?.simple,
       intl,
       sharesPerAsset?.simple,
       tab,
+      walletAddress,
     ],
   );
 
@@ -185,13 +194,15 @@ export const OperationsForm = (props: StackProps) => {
           primaryInput.amount.exact.gt(primaryInput.balance.exact)
         }
       />
-      <Divider>
+      <Divider role="presentation">
         <Typography
           variant="value6"
           sx={{
             p: 0.5,
             backgroundColor: 'background.highlight',
             borderRadius: '4px',
+            color: walletAddress ? 'text.primary' : 'action.disabled',
+            minWidth: 120,
           }}
         >
           {ratioLabel}

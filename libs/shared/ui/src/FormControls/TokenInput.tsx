@@ -103,21 +103,26 @@ export const TokenInput = ({
           onChange={handleChange}
           disabled={disabled}
           endAdornment={
-            <Stack
-              direction="row"
-              spacing={1}
-              alignItems="center"
-              sx={{
-                p: 1,
-                borderRadius: '4px',
-                backgroundColor: 'background.highlight',
-              }}
-            >
-              <USDC sx={{ width: 14, height: 14 }} />
-              <Typography variant="buttonMedium" sx={{ color: 'text.primary' }}>
-                {token?.symbol}
-              </Typography>
-            </Stack>
+            !disabled && (
+              <Stack
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                sx={{
+                  p: 1,
+                  borderRadius: '4px',
+                  backgroundColor: 'background.highlight',
+                }}
+              >
+                <USDC sx={{ width: 14, height: 14 }} />
+                <Typography
+                  variant="buttonMedium"
+                  sx={{ color: 'text.primary' }}
+                >
+                  {token?.symbol}
+                </Typography>
+              </Stack>
+            )
           }
         />
       </FormControl>
@@ -148,7 +153,7 @@ export const TokenInput = ({
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
-          {balance && (
+          {balance && !disabled && (
             <Typography variant="value6">
               {intl.formatMessage({ defaultMessage: 'Balance', id: 'balance' })}
               :&nbsp;
