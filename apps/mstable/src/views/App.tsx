@@ -3,6 +3,7 @@ import { queryClient } from '@frontend/shared-data-access';
 import { I18nProvider } from '@frontend/shared-i18n';
 import { ModalsProvider } from '@frontend/shared-modals';
 import { NotificationsProvider } from '@frontend/shared-notifications';
+import { PricesProvider } from '@frontend/shared-prices';
 import { ThemeProvider } from '@frontend/shared-theme';
 import { composeContexts } from '@frontend/shared-utils';
 import { useUnsupportedNetworks, WagmiProvider } from '@frontend/shared-wagmi';
@@ -51,7 +52,6 @@ export const App = () =>
       [
         NotificationsProvider,
         {
-          autoHideDuration: 2000,
           containerProps: {
             sx: {
               top: (theme: Theme) => theme.spacing(8),
@@ -63,6 +63,7 @@ export const App = () =>
         },
       ],
       [WagmiProvider],
+      [PricesProvider],
       [ModalsProvider],
     ],
     <AppWrapped />,

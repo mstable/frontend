@@ -1,0 +1,194 @@
+import { usePushNotification } from '@frontend/shared-notifications';
+import { OpenAccountModalButton } from '@frontend/shared-wagmi';
+import { Button, Link, Stack } from '@mui/material';
+import { ArrowRight, Infinity } from 'phosphor-react';
+import { useIntl } from 'react-intl';
+import {
+  etherscanBlockExplorers,
+  useAccount,
+  useContractWrite,
+  useWaitForTransaction,
+} from 'wagmi';
+
+import { useMetaVault } from '../../../hooks';
+import {
+  useApprovalConfig,
+  useNeedApproval,
+  useOperationConfig,
+  useOperationLabel,
+  useOperations,
+} from '../hooks';
+
+import type { ButtonProps } from '@mui/material';
+
+const buttonProps: ButtonProps = {
+  size: 'large',
+  sx: {
+    display: 'flex',
+    flexDirection: 'row',
+    svg: {
+      ml: 0.75,
+    },
+  },
+};
+
+export const SubmitButton = () => {
+  const intl = useIntl();
+  const pushNotification = usePushNotification();
+  const { address: walletAddress } = useAccount();
+  const { address } = useMetaVault();
+  const { amount, token } = useOperations();
+  const needApproval = useNeedApproval();
+  const operationLabel = useOperationLabel();
+
+  const { config: approveConfig } = useApprovalConfig();
+  const {
+    data: approveData,
+    write: approve,
+    isLoading: isApproveLoading,
+    isSuccess: isApproveStarted,
+  } = useContractWrite(approveConfig);
+  const { isSuccess: isApproveSuccess } = useWaitForTransaction({
+    hash: approveData?.hash,
+    onSuccess: (data) => {
+      prepareDeposit();
+      pushNotification({
+        title: intl.formatMessage({ defaultMessage: 'Token approved' }),
+        content: (
+          <Link
+            href={`${etherscanBlockExplorers.goerli.url}/tx/${data?.transactionHash}`}
+            target="_blank"
+          >
+            {intl.formatMessage({
+              defaultMessage: 'View your transaction on etherscan',
+            })}
+          </Link>
+        ),
+        severity: 'success',
+      });
+    },
+  });
+
+  const { config: depositConfig, refetch: prepareDeposit } =
+    useOperationConfig();
+  const {
+    data: depositData,
+    write: deposit,
+    isLoading: isDepositLoading,
+    isSuccess: isDepositStarted,
+  } = useContractWrite(depositConfig);
+  const { isSuccess: isDepositSuccess } = useWaitForTransaction({
+    hash: depositData?.hash,
+    onSuccess: (data) => {
+      pushNotification({
+        title: intl.formatMessage({ defaultMessage: 'Deposit completed' }),
+        content: (
+          <Link
+            href={`${etherscanBlockExplorers.goerli.url}/tx/${data?.transactionHash}`}
+            target="_blank"
+          >
+            {intl.formatMessage({
+              defaultMessage: 'View your transaction on etherscan',
+            })}
+          </Link>
+        ),
+        severity: 'success',
+      });
+    },
+  });
+
+  if (!walletAddress) {
+    return (
+      <OpenAccountModalButton variant="contained" color="primary" fullWidth />
+    );
+  }
+
+  if (!amount) {
+    return (
+      <Button {...buttonProps} disabled>
+        {operationLabel}
+        <ArrowRight weight="bold" />
+      </Button>
+    );
+  }
+
+  if (isApproveLoading) {
+    return (
+      <Button {...buttonProps} disabled>
+        {intl.formatMessage({ defaultMessage: 'Waiting for approval' })}
+      </Button>
+    );
+  }
+
+  if (isApproveStarted && !isApproveSuccess) {
+    return (
+      <Button {...buttonProps} disabled>
+        {intl.formatMessage({ defaultMessage: 'Approving' })}
+      </Button>
+    );
+  }
+
+  if (needApproval) {
+    return (
+      <Stack direction="row" spacing={1}>
+        <Button
+          fullWidth
+          {...buttonProps}
+          onClick={() => {
+            approve({
+              recklesslySetUnpreparedArgs: [address, amount.exact],
+            });
+          }}
+        >
+          {intl.formatMessage({ defaultMessage: 'Approve exact' })}
+        </Button>
+        <Button
+          fullWidth
+          {...buttonProps}
+          onClick={() => {
+            approve();
+          }}
+        >
+          {intl.formatMessage({ defaultMessage: 'Approve' })}
+          <Infinity fontWeight="bold" />
+        </Button>
+      </Stack>
+    );
+  }
+
+  if (isDepositLoading) {
+    return (
+      <Button {...buttonProps} disabled>
+        {intl.formatMessage({ defaultMessage: 'Waiting for approval' })}
+      </Button>
+    );
+  }
+
+  if (isDepositStarted && !isDepositSuccess) {
+    return (
+      <Button {...buttonProps} disabled>
+        {intl.formatMessage({ defaultMessage: 'Loading...' })}
+      </Button>
+    );
+  }
+
+  return (
+    <Button
+      {...buttonProps}
+      onClick={() => {
+        deposit();
+      }}
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        ...buttonProps?.sx,
+      }}
+    >
+      {amount && <span>{`${amount?.format()} ${token?.symbol}`}</span>}
+      <Stack direction="row" alignItems="center">
+        {operationLabel}
+        <ArrowRight weight="bold" />
+      </Stack>
+    </Button>
+  );
+};

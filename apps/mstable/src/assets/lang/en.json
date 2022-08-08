@@ -5,10 +5,64 @@
       "value": "Connect"
     }
   ],
+  "/+9/FO": [
+    {
+      "type": 0,
+      "value": "Accrued Interest"
+    }
+  ],
+  "0NMLMN": [
+    {
+      "type": 0,
+      "value": "My Position"
+    }
+  ],
+  "3QSP9N": [
+    {
+      "type": 0,
+      "value": "Visualize Strategy"
+    }
+  ],
+  "6N9V2n": [
+    {
+      "type": 0,
+      "value": "Gas Fees"
+    }
+  ],
+  "8ywLSf": [
+    {
+      "type": 0,
+      "value": "Twitter"
+    }
+  ],
+  "CGcoFj": [
+    {
+      "type": 0,
+      "value": "Yield Calculator"
+    }
+  ],
+  "D0TVwO": [
+    {
+      "type": 0,
+      "value": "Stablecoin Meta Vault"
+    }
+  ],
   "DkD2I2": [
     {
       "type": 0,
       "value": "Reset to Ethereum mainnet"
+    }
+  ],
+  "FvmV6q": [
+    {
+      "type": 0,
+      "value": "Discord"
+    }
+  ],
+  "HwugaQ": [
+    {
+      "type": 0,
+      "value": "Switch theme"
     }
   ],
   "IklGvq": [
@@ -25,16 +79,124 @@
       "value": ") is not supported by the application. You can either switch your wallet or reset to Ethereum mainnet."
     }
   ],
+  "JGIzwR": [
+    {
+      "type": 0,
+      "value": "See what assets and protocols are exposed to this strategy."
+    }
+  ],
+  "KE0cl6": [
+    {
+      "type": 0,
+      "value": "Curve"
+    }
+  ],
+  "KYgRAc": [
+    {
+      "type": 0,
+      "value": "DEPOSIT"
+    }
+  ],
+  "LETDMp": [
+    {
+      "type": 0,
+      "value": "Include Gas Fees"
+    }
+  ],
+  "LjNvmm": [
+    {
+      "type": 0,
+      "value": "Deposited"
+    }
+  ],
+  "M2L4zx": [
+    {
+      "type": 0,
+      "value": "Interest Rate (%)"
+    }
+  ],
+  "MJ2jZQ": [
+    {
+      "type": 0,
+      "value": "Total"
+    }
+  ],
+  "MqZGhr": [
+    {
+      "type": 0,
+      "value": "Vault Performance"
+    }
+  ],
+  "Nf6oxb": [
+    {
+      "type": 0,
+      "value": "Your Deposit"
+    }
+  ],
+  "OxqNA7": [
+    {
+      "type": 0,
+      "value": "Av. APY"
+    }
+  ],
+  "P6EE/a": [
+    {
+      "type": 0,
+      "value": "Tokens"
+    }
+  ],
   "PmkP1H": [
     {
       "type": 0,
       "value": "Unsupported Network"
     }
   ],
+  "SKB/G9": [
+    {
+      "type": 0,
+      "value": "TVL"
+    }
+  ],
+  "SjJIHe": [
+    {
+      "type": 0,
+      "value": "You Get"
+    }
+  ],
+  "Vn76qV": [
+    {
+      "type": 0,
+      "value": "Github"
+    }
+  ],
+  "Vqr2OI": [
+    {
+      "type": 0,
+      "value": "AV. APY"
+    }
+  ],
+  "WKCp0D": [
+    {
+      "type": 0,
+      "value": "Asset"
+    }
+  ],
   "X0zKZO": [
     {
       "type": 0,
       "value": "Connected User"
+    }
+  ],
+  "byXXyV": [
+    {
+      "type": 0,
+      "value": "Enter Amount"
+    }
+  ],
+  "cyasTx": [
+    {
+      "type": 0,
+      "value": "mStable"
     }
   ],
   "defaultCancel": [
@@ -55,16 +217,88 @@
       "value": "Please confirm to proceed"
     }
   ],
+  "djJp6c": [
+    {
+      "type": 0,
+      "value": "History"
+    }
+  ],
+  "hincAk": [
+    {
+      "type": 0,
+      "value": "Uniswap"
+    }
+  ],
+  "kPBTut": [
+    {
+      "type": 0,
+      "value": "low risk"
+    }
+  ],
+  "kUNPyt": [
+    {
+      "type": 0,
+      "value": "What are the risks?"
+    }
+  ],
+  "l4+7bo": [
+    {
+      "type": 0,
+      "value": "Yields"
+    }
+  ],
+  "lyG3ez": [
+    {
+      "type": 0,
+      "value": "Recap"
+    }
+  ],
+  "mrwfXX": [
+    {
+      "type": 0,
+      "value": "Shares"
+    }
+  ],
+  "ovJ26C": [
+    {
+      "type": 0,
+      "value": "Medium"
+    }
+  ],
   "qj1uhz": [
     {
       "type": 0,
       "value": "Disconnect"
     }
   ],
+  "sy+pv5": [
+    {
+      "type": 0,
+      "value": "Email"
+    }
+  ],
+  "tH0obk": [
+    {
+      "type": 0,
+      "value": "Return Projection"
+    }
+  ],
   "wqlXwW": [
     {
       "type": 0,
       "value": "Wrong Network"
+    }
+  ],
+  "zGHadw": [
+    {
+      "type": 0,
+      "value": "Strategy"
+    }
+  ],
+  "zRbVmO": [
+    {
+      "type": 0,
+      "value": "WITHDRAW"
     }
   ]
 }

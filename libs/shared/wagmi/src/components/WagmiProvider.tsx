@@ -17,12 +17,12 @@ import type { BoxProps } from '@mui/material';
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
-    chain.mainnet,
-    chain.ropsten,
+    // chain.mainnet,
+    // chain.ropsten,
     chain.goerli,
-    chain.kovan,
-    chain.polygon,
-    chain.polygonMumbai,
+    // chain.kovan,
+    // chain.polygon,
+    // chain.polygonMumbai,
   ],
   [infuraProvider(), publicProvider()],
 );

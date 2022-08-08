@@ -11,18 +11,6 @@ export const getFormLabel = (base: Theme): ThemeOptions => ({
           '&.Mui-disabled': {
             color: base.palette.text.disabled,
           },
-
-          '&.Mui-error': {
-            color: 'inherit',
-
-            '.MuiFormLabel-asterisk': {
-              color: base.palette.error.main,
-            },
-          },
-
-          '.MuiFormLabel-asterisk': {
-            color: 'inherit',
-          },
         },
       },
     },

@@ -1,3 +1,4 @@
+import { addresses } from '@frontend/shared-constants';
 import { CollapsibleSection, ValueLabel } from '@frontend/shared-ui';
 import {
   Box,
@@ -8,10 +9,20 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { path } from 'ramda';
 import { useIntl } from 'react-intl';
+import { useAccount, useBalance, useNetwork } from 'wagmi';
 
 export const Position = () => {
   const intl = useIntl();
+  const { address } = useAccount();
+  const { chain } = useNetwork();
+  const { data: balance } = useBalance({
+    addressOrName: address,
+    token: path([chain?.id, 'ERC4626', 'TVG'], addresses),
+    watch: true,
+    enabled: !!address && !!chain?.id,
+  });
 
   return (
     <Card>
@@ -29,7 +40,7 @@ export const Position = () => {
         >
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'Deposited' })}
-            value="11k"
+            value={`${balance?.formatted ?? '0.00'} Shares`}
             subvalue="0%"
             components={{ container: { width: 1 } }}
           />
