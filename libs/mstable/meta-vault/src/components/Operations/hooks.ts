@@ -27,6 +27,19 @@ export const useSetAmount = () => {
   );
 };
 
+export const useReset = () => {
+  const update = useUpdate();
+
+  return useCallback(() => {
+    update(
+      produce((state) => {
+        state.amount = null;
+        state.preview = null;
+      }),
+    );
+  }, [update]);
+};
+
 export const useChangeOperation = () => {
   const update = useUpdate();
   const { assetToken, mvToken, assetBalance, mvBalance } = useMetaVault();

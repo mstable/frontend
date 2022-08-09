@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { usePushNotification } from '@frontend/shared-notifications';
 import { usePrices } from '@frontend/shared-prices';
@@ -34,34 +34,31 @@ import { useOperations } from '../../../hooks';
 import type { StackProps, StepProps } from '@mui/material';
 import type { ChangeEvent } from 'react';
 
-type ApproveStepProps = {
-  handleNext: () => void;
-} & StepProps;
-
 const splitRow: StackProps = {
   direction: 'row',
   justifyContent: 'space-between',
   alignItems: 'baseline',
 };
 
-export const ApproveStep = ({ handleNext, ...rest }: ApproveStepProps) => {
+export const ApproveStep = (props: StepProps) => {
   const intl = useIntl();
   const { chain } = useNetwork();
   const { symbol } = usePrices();
   const pushNotification = usePushNotification();
   const [approveInfinite, setApproveInfinite] = useState(false);
   const { address, asset } = useMetaVault();
-  const { amount } = useOperations();
+  const { amount, needsApproval } = useOperations();
   const { price } = usePrices();
   const { data: feeData } = useFeeData({ formatUnits: 'gwei' });
 
-  const { config: approveConfig } = usePrepareContractWrite({
-    addressOrName: asset,
-    contractInterface: erc20ABI,
-    functionName: 'approve',
-    args: [address, constants.MaxUint256],
-    enabled: !!asset,
-  });
+  const { config: approveConfig, refetch: fetchApprovalConfig } =
+    usePrepareContractWrite({
+      addressOrName: asset,
+      contractInterface: erc20ABI,
+      functionName: 'approve',
+      args: [address, constants.MaxUint256],
+      enabled: false,
+    });
   const {
     data: approveData,
     write: approve,
@@ -71,7 +68,6 @@ export const ApproveStep = ({ handleNext, ...rest }: ApproveStepProps) => {
   const { isSuccess: isApproveSuccess } = useWaitForTransaction({
     hash: approveData?.hash,
     onSuccess: (data) => {
-      handleNext();
       pushNotification({
         title: intl.formatMessage({ defaultMessage: 'Token approved' }),
         content: (
@@ -88,6 +84,12 @@ export const ApproveStep = ({ handleNext, ...rest }: ApproveStepProps) => {
       });
     },
   });
+
+  useEffect(() => {
+    if (!!asset && needsApproval) {
+      fetchApprovalConfig();
+    }
+  }, [asset, fetchApprovalConfig, needsApproval]);
 
   const estimatedGasAmount = pathOr(
     constants.Zero,
@@ -115,7 +117,7 @@ export const ApproveStep = ({ handleNext, ...rest }: ApproveStepProps) => {
   };
 
   return (
-    <Step {...rest}>
+    <Step {...props}>
       <StepLabel>
         <Stack direction="row" alignItems="center" spacing={1}>
           <Typography>
@@ -147,7 +149,7 @@ export const ApproveStep = ({ handleNext, ...rest }: ApproveStepProps) => {
           <Stack direction="row" alignItems="center" spacing={1}>
             <InfoTooltip
               label={intl.formatMessage({
-                defaultMessage: 'Increase allowance for this token',
+                defaultMessage: 'Set allowance to maximum value',
               })}
             />
             <Typography>
@@ -161,11 +163,14 @@ export const ApproveStep = ({ handleNext, ...rest }: ApproveStepProps) => {
           />
         </Stack>
         <Stack direction="row" justifyContent="flex-end">
-          <Button onClick={handleApprove}>
+          <Button
+            onClick={handleApprove}
+            disabled={isApproveLoading || isApproveStarted}
+          >
             {isApproveLoading ? (
               intl.formatMessage({ defaultMessage: 'Waiting for approval' })
             ) : isApproveStarted && !isApproveSuccess ? (
-              <CircularProgress />
+              <CircularProgress size={20} />
             ) : (
               intl.formatMessage({ defaultMessage: 'Approve' })
             )}

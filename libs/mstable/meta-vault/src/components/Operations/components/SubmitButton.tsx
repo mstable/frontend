@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { erc4626ABI } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-notifications';
@@ -15,7 +15,7 @@ import {
 } from 'wagmi';
 
 import { useMetaVault } from '../../../hooks';
-import { useOperationLabel, useOperations } from '../hooks';
+import { useOperationLabel, useOperations, useReset } from '../hooks';
 
 import type { ButtonProps } from '@mui/material';
 
@@ -37,6 +37,7 @@ export const SubmitButton = () => {
   const { address } = useMetaVault();
   const { amount, token, operation, needsApproval } = useOperations();
   const operationLabel = useOperationLabel();
+  const reset = useReset();
 
   const args = useMemo(
     () =>
@@ -49,13 +50,14 @@ export const SubmitButton = () => {
     [amount?.exact, operation, walletAddress],
   );
 
-  const { config: submitConfig } = usePrepareContractWrite({
-    addressOrName: address,
-    contractInterface: erc4626ABI,
-    functionName: operation,
-    args,
-    enabled: !!amount?.exact && !!walletAddress,
-  });
+  const { config: submitConfig, refetch: fetchSubmitConfig } =
+    usePrepareContractWrite({
+      addressOrName: address,
+      contractInterface: erc4626ABI,
+      functionName: operation,
+      args,
+      enabled: false,
+    });
   const {
     data: submitData,
     write: submit,
@@ -65,6 +67,7 @@ export const SubmitButton = () => {
   const { isSuccess: isSubmitSuccess } = useWaitForTransaction({
     hash: submitData?.hash,
     onSuccess: (data) => {
+      reset();
       pushNotification({
         title: intl.formatMessage({ defaultMessage: 'Deposit completed' }),
         content: (
@@ -81,6 +84,12 @@ export const SubmitButton = () => {
       });
     },
   });
+
+  useEffect(() => {
+    if (!!amount?.exact && !!walletAddress && !needsApproval) {
+      fetchSubmitConfig();
+    }
+  }, [amount?.exact, fetchSubmitConfig, needsApproval, walletAddress]);
 
   if (!walletAddress) {
     return (
@@ -108,7 +117,7 @@ export const SubmitButton = () => {
   if (isSubmitStarted && !isSubmitSuccess) {
     return (
       <Button {...buttonProps} disabled>
-        <CircularProgress />
+        <CircularProgress size={20} />
       </Button>
     );
   }

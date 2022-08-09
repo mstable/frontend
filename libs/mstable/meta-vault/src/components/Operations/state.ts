@@ -4,6 +4,7 @@ import { erc4626ABI } from '@frontend/shared-constants';
 import { BigDecimal } from '@frontend/shared-utils';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
+import { useDebounce } from 'react-use';
 import { erc20ABI, useAccount, useContractRead } from 'wagmi';
 
 import { useMetaVault } from '../../hooks';
@@ -24,6 +25,7 @@ type OperationsState = {
   balance: BigDecimal | null;
   tab: 0 | 1;
   needsApproval: boolean;
+  isLoading: boolean;
 };
 
 export const { Provider, useUpdate, useTrackedState } = createContainer<
@@ -42,6 +44,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     balance: null,
     tab: 0,
     needsApproval: false,
+    isLoading: false,
   });
 
   const { amount, operation, allowance, preview } = state;
@@ -63,7 +66,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     },
   });
 
-  useContractRead({
+  const { refetch: fetchPreview } = useContractRead({
     addressOrName: address,
     contractInterface: erc4626ABI,
     functionName: {
@@ -73,11 +76,12 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
       redeem: 'previewRedeem',
     }[operation],
     args: [amount?.exact],
-    enabled: !!amount?.exact && !!operation,
+    enabled: false,
     onSuccess: (data) => {
       setState(
         produce((draft) => {
           draft.preview = data ? new BigDecimal(data) : null;
+          draft.isLoading = false;
         }),
       );
     },
@@ -89,9 +93,9 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     setState(
       produce((draft) => {
         draft.needsApproval =
-          ['deposit', 'mint'].includes(operation) &&
-          amt &&
-          allowance &&
+          !!['deposit', 'mint'].includes(operation) &&
+          !!amt &&
+          !!allowance &&
           amt.exact.gt(allowance);
       }),
     );
@@ -112,8 +116,24 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
           draft.preview = null;
         }),
       );
+    } else {
+      setState(
+        produce((draft) => {
+          draft.isLoading = true;
+        }),
+      );
     }
-  }, [amount]);
+  }, [amount, fetchPreview, operation]);
+
+  useDebounce(
+    () => {
+      if (!!amount && !!operation) {
+        fetchPreview();
+      }
+    },
+    500,
+    [amount, operation, fetchPreview],
+  );
 
   return [state, setState];
 });

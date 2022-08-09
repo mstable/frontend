@@ -22,7 +22,7 @@ export const OperationsForm = (props: StackProps) => {
     assetsPerShare,
     sharesPerAsset,
   } = useMetaVault();
-  const { amount, operation, preview, tab } = useOperations();
+  const { amount, operation, preview, tab, isLoading } = useOperations();
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
 
@@ -40,6 +40,7 @@ export const OperationsForm = (props: StackProps) => {
           amount: preview,
           token: assetToken,
           balance: assetBalance,
+          isLoading,
         },
         redeem: {
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
@@ -52,6 +53,7 @@ export const OperationsForm = (props: StackProps) => {
           amount: preview,
           token: mvToken,
           balance: mvBalance,
+          isLoading,
         },
       }[operation]),
     [
@@ -59,6 +61,7 @@ export const OperationsForm = (props: StackProps) => {
       assetBalance,
       assetToken,
       intl,
+      isLoading,
       mvBalance,
       mvToken,
       operation,
@@ -77,6 +80,7 @@ export const OperationsForm = (props: StackProps) => {
             assetBalance && sharesPerAsset
               ? new BigDecimal(assetBalance.exact.mul(sharesPerAsset.exact))
               : BigDecimal.ZERO,
+          isLoading,
         },
         mint: {
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
@@ -95,6 +99,7 @@ export const OperationsForm = (props: StackProps) => {
             mvBalance && assetsPerShare
               ? new BigDecimal(mvBalance.exact.mul(assetsPerShare.exact))
               : BigDecimal.ZERO,
+          isLoading,
         },
         withdraw: {
           label: intl.formatMessage({ defaultMessage: 'Tokens' }),
@@ -112,6 +117,7 @@ export const OperationsForm = (props: StackProps) => {
       assetToken,
       assetsPerShare,
       intl,
+      isLoading,
       mvBalance,
       mvToken,
       operation,

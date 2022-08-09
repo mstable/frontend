@@ -16,17 +16,10 @@ export const RecapStepper = (props: StackProps) => {
     setActiveStep(needsApproval ? 0 : 1);
   }, [needsApproval]);
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
   return (
     <Stack direction="column" {...props}>
       <Stepper activeStep={activeStep} orientation="vertical">
-        {[
-          <ApproveStep key="approve" handleNext={handleNext} />,
-          <OperationStep key="operation" />,
-        ]}
+        {[<ApproveStep key="approve" />, <OperationStep key="operation" />]}
       </Stepper>
     </Stack>
   );

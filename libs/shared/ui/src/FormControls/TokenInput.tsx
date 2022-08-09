@@ -6,6 +6,7 @@ import { BigDecimal } from '@frontend/shared-utils';
 import {
   FormControl,
   InputLabel,
+  Skeleton,
   Stack,
   ToggleButton,
   ToggleButtonGroup,
@@ -25,6 +26,7 @@ export type TokenInputProps = {
   placeholder?: string;
   disabled?: boolean;
   error?: boolean;
+  isLoading?: boolean;
   amount: BigDecimal;
   token: FetchTokenResult;
   balance?: BigDecimal;
@@ -58,6 +60,7 @@ export const TokenInput = ({
   placeholder,
   disabled,
   error,
+  isLoading,
   amount,
   token,
   balance,
@@ -96,35 +99,42 @@ export const TokenInput = ({
     <Stack {...components?.container}>
       <FormControl disabled={disabled} error={error}>
         <InputLabel error={error}>{label}</InputLabel>
-        <BigDecimalInput
-          placeholder={placeholder}
-          value={amount}
-          error={error}
-          onChange={handleChange}
-          disabled={disabled}
-          endAdornment={
-            !disabled && (
-              <Stack
-                direction="row"
-                spacing={1}
-                alignItems="center"
-                sx={{
-                  p: 1,
-                  borderRadius: '4px',
-                  backgroundColor: 'background.highlight',
-                }}
-              >
-                <USDC sx={{ width: 14, height: 14 }} />
-                <Typography
-                  variant="buttonMedium"
-                  sx={{ color: 'text.primary' }}
+        {isLoading ? (
+          <Skeleton
+            variant="text"
+            sx={{ fontSize: (theme) => theme.typography.value1.fontSize }}
+          />
+        ) : (
+          <BigDecimalInput
+            placeholder={placeholder}
+            value={amount}
+            error={error}
+            onChange={handleChange}
+            disabled={disabled}
+            endAdornment={
+              !disabled && (
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  alignItems="center"
+                  sx={{
+                    p: 1,
+                    borderRadius: '4px',
+                    backgroundColor: 'background.highlight',
+                  }}
                 >
-                  {token?.symbol}
-                </Typography>
-              </Stack>
-            )
-          }
-        />
+                  <USDC sx={{ width: 14, height: 14 }} />
+                  <Typography
+                    variant="buttonMedium"
+                    sx={{ color: 'text.primary' }}
+                  >
+                    {token?.symbol}
+                  </Typography>
+                </Stack>
+              )
+            }
+          />
+        )}
       </FormControl>
       {!hideBottomRow && (
         <Stack
@@ -133,26 +143,30 @@ export const TokenInput = ({
           justifyContent="space-between"
           alignItems="center"
         >
-          <ToggleButtonGroup
-            value={percentage}
-            onChange={handlePercentageChange}
-            exclusive
-            size="small"
-            disabled={
-              !balance || balance?.exact?.eq(constants.Zero) || disabled
-            }
-            sx={percentageButtonGroup}
-          >
-            {range(1, PERCENTAGE_STEPS + 1).map((n) => (
-              <ToggleButton value={n} key={`percent-${n}`}>
-                {`${
-                  n === PERCENTAGE_STEPS
-                    ? 'MAX'
-                    : `${n * (100 / PERCENTAGE_STEPS)}%`
-                }`}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
+          {isLoading ? (
+            <Skeleton variant="rectangular" width={160} height={40} />
+          ) : (
+            <ToggleButtonGroup
+              value={percentage}
+              onChange={handlePercentageChange}
+              exclusive
+              size="small"
+              disabled={
+                !balance || balance?.exact?.eq(constants.Zero) || disabled
+              }
+              sx={percentageButtonGroup}
+            >
+              {range(1, PERCENTAGE_STEPS + 1).map((n) => (
+                <ToggleButton value={n} key={`percent-${n}`}>
+                  {`${
+                    n === PERCENTAGE_STEPS
+                      ? 'MAX'
+                      : `${n * (100 / PERCENTAGE_STEPS)}%`
+                  }`}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+          )}
           {balance && !disabled && (
             <Typography variant="value6">
               {intl.formatMessage({ defaultMessage: 'Balance', id: 'balance' })}
