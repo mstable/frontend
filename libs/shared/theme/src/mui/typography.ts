@@ -159,13 +159,5 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
       letterSpacing: '-4%',
       fontWeight: fontWeights.semibold,
     },
-
-    // disabled
-    h6: undefined,
-    subtitle1: undefined,
-    subtitle2: undefined,
-    button: undefined,
-    caption: undefined,
-    overline: undefined,
   },
 });
