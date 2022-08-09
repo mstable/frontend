@@ -3,6 +3,7 @@ export * from './CollapsibleSection';
 export * from './ErrorBoundary';
 export * from './ExpandIcon';
 export * from './FormControls';
+export * from './InfoTooltip';
 export * from './Loaders';
 export * from './HoverDeleteButton';
 export * from './Menus';
