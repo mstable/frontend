@@ -2,7 +2,7 @@ import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import { OperationsForm } from './components/OperationsForm';
-import { RecapCard } from './components/RecapCard';
+import { RecapStepper } from './components/RecapStepper';
 import { SubmitButton } from './components/SubmitButton';
 import { useChangeTab, useOperations } from './hooks';
 import { Provider } from './state';
@@ -29,7 +29,7 @@ const OperationsWrapped = () => {
           </Tabs>
           <Stack pt={2} spacing={2}>
             <OperationsForm />
-            {amount && <RecapCard />}
+            {amount && <RecapStepper />}
             <SubmitButton />
           </Stack>
         </Stack>

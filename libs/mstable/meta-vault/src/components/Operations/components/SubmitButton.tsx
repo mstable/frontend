@@ -1,23 +1,21 @@
+import { useMemo } from 'react';
+
+import { erc4626ABI } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-notifications';
 import { OpenAccountModalButton } from '@frontend/shared-wagmi';
-import { Button, Link, Stack } from '@mui/material';
-import { ArrowRight, Infinity } from 'phosphor-react';
+import { Button, CircularProgress, Link, Stack } from '@mui/material';
+import { ArrowRight } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 import {
   etherscanBlockExplorers,
   useAccount,
   useContractWrite,
+  usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi';
 
 import { useMetaVault } from '../../../hooks';
-import {
-  useApprovalConfig,
-  useNeedApproval,
-  useOperationConfig,
-  useOperationLabel,
-  useOperations,
-} from '../hooks';
+import { useOperationLabel, useOperations } from '../hooks';
 
 import type { ButtonProps } from '@mui/material';
 
@@ -37,48 +35,35 @@ export const SubmitButton = () => {
   const pushNotification = usePushNotification();
   const { address: walletAddress } = useAccount();
   const { address } = useMetaVault();
-  const { amount, token } = useOperations();
-  const needApproval = useNeedApproval();
+  const { amount, token, operation, needsApproval } = useOperations();
   const operationLabel = useOperationLabel();
 
-  const { config: approveConfig } = useApprovalConfig();
-  const {
-    data: approveData,
-    write: approve,
-    isLoading: isApproveLoading,
-    isSuccess: isApproveStarted,
-  } = useContractWrite(approveConfig);
-  const { isSuccess: isApproveSuccess } = useWaitForTransaction({
-    hash: approveData?.hash,
-    onSuccess: (data) => {
-      prepareDeposit();
-      pushNotification({
-        title: intl.formatMessage({ defaultMessage: 'Token approved' }),
-        content: (
-          <Link
-            href={`${etherscanBlockExplorers.goerli.url}/tx/${data?.transactionHash}`}
-            target="_blank"
-          >
-            {intl.formatMessage({
-              defaultMessage: 'View your transaction on etherscan',
-            })}
-          </Link>
-        ),
-        severity: 'success',
-      });
-    },
-  });
+  const args = useMemo(
+    () =>
+      ({
+        deposit: [amount?.exact, walletAddress],
+        mint: [amount?.exact, walletAddress],
+        withdraw: [amount?.exact, walletAddress, walletAddress],
+        redeem: [amount?.exact, walletAddress, walletAddress],
+      }[operation] || []),
+    [amount?.exact, operation, walletAddress],
+  );
 
-  const { config: depositConfig, refetch: prepareDeposit } =
-    useOperationConfig();
+  const { config: submitConfig } = usePrepareContractWrite({
+    addressOrName: address,
+    contractInterface: erc4626ABI,
+    functionName: operation,
+    args,
+    enabled: !!amount?.exact && !!walletAddress,
+  });
   const {
-    data: depositData,
-    write: deposit,
-    isLoading: isDepositLoading,
-    isSuccess: isDepositStarted,
-  } = useContractWrite(depositConfig);
-  const { isSuccess: isDepositSuccess } = useWaitForTransaction({
-    hash: depositData?.hash,
+    data: submitData,
+    write: submit,
+    isLoading: isSubmitLoading,
+    isSuccess: isSubmitStarted,
+  } = useContractWrite(submitConfig);
+  const { isSuccess: isSubmitSuccess } = useWaitForTransaction({
+    hash: submitData?.hash,
     onSuccess: (data) => {
       pushNotification({
         title: intl.formatMessage({ defaultMessage: 'Deposit completed' }),
@@ -103,7 +88,7 @@ export const SubmitButton = () => {
     );
   }
 
-  if (!amount) {
+  if (!amount || needsApproval) {
     return (
       <Button {...buttonProps} disabled>
         {operationLabel}
@@ -112,7 +97,7 @@ export const SubmitButton = () => {
     );
   }
 
-  if (isApproveLoading) {
+  if (isSubmitLoading) {
     return (
       <Button {...buttonProps} disabled>
         {intl.formatMessage({ defaultMessage: 'Waiting for approval' })}
@@ -120,54 +105,10 @@ export const SubmitButton = () => {
     );
   }
 
-  if (isApproveStarted && !isApproveSuccess) {
+  if (isSubmitStarted && !isSubmitSuccess) {
     return (
       <Button {...buttonProps} disabled>
-        {intl.formatMessage({ defaultMessage: 'Approving' })}
-      </Button>
-    );
-  }
-
-  if (needApproval) {
-    return (
-      <Stack direction="row" spacing={1}>
-        <Button
-          fullWidth
-          {...buttonProps}
-          onClick={() => {
-            approve({
-              recklesslySetUnpreparedArgs: [address, amount.exact],
-            });
-          }}
-        >
-          {intl.formatMessage({ defaultMessage: 'Approve exact' })}
-        </Button>
-        <Button
-          fullWidth
-          {...buttonProps}
-          onClick={() => {
-            approve();
-          }}
-        >
-          {intl.formatMessage({ defaultMessage: 'Approve' })}
-          <Infinity fontWeight="bold" />
-        </Button>
-      </Stack>
-    );
-  }
-
-  if (isDepositLoading) {
-    return (
-      <Button {...buttonProps} disabled>
-        {intl.formatMessage({ defaultMessage: 'Waiting for approval' })}
-      </Button>
-    );
-  }
-
-  if (isDepositStarted && !isDepositSuccess) {
-    return (
-      <Button {...buttonProps} disabled>
-        {intl.formatMessage({ defaultMessage: 'Loading...' })}
+        <CircularProgress />
       </Button>
     );
   }
@@ -176,7 +117,7 @@ export const SubmitButton = () => {
     <Button
       {...buttonProps}
       onClick={() => {
-        deposit();
+        submit();
       }}
       sx={{
         display: 'flex',

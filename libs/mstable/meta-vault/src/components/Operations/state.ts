@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 
+import { erc4626ABI } from '@frontend/shared-constants';
+import { BigDecimal } from '@frontend/shared-utils';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { erc20ABI, useAccount, useContractRead } from 'wagmi';
 
 import { useMetaVault } from '../../hooks';
 
-import type { BigDecimal } from '@frontend/shared-utils';
 import type { Children } from '@frontend/shared-utils';
 import type { FetchTokenResult } from '@wagmi/core';
 import type { BigNumber } from 'ethers';
@@ -18,9 +19,11 @@ type OperationsState = {
   amount: BigDecimal | null;
   token: FetchTokenResult | null;
   operation: SupportedOperation;
+  preview: BigDecimal | null;
   allowance: BigNumber | null;
   balance: BigDecimal | null;
   tab: 0 | 1;
+  needsApproval: boolean;
 };
 
 export const { Provider, useUpdate, useTrackedState } = createContainer<
@@ -34,10 +37,14 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     amount: null,
     token: assetToken,
     operation: 'deposit',
+    preview: null,
     allowance: null,
     balance: null,
     tab: 0,
+    needsApproval: false,
   });
+
+  const { amount, operation, allowance, preview } = state;
 
   useContractRead({
     addressOrName: asset,
@@ -56,6 +63,40 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     },
   });
 
+  useContractRead({
+    addressOrName: address,
+    contractInterface: erc4626ABI,
+    functionName: {
+      deposit: 'previewDeposit',
+      mint: 'previewMint',
+      withdraw: 'previewWithdraw',
+      redeem: 'previewRedeem',
+    }[operation],
+    args: [amount?.exact],
+    enabled: !!amount?.exact && !!operation,
+    onSuccess: (data) => {
+      setState(
+        produce((draft) => {
+          draft.preview = data ? new BigDecimal(data) : null;
+        }),
+      );
+    },
+  });
+
+  useEffect(() => {
+    const amt = operation === 'deposit' ? amount : preview;
+
+    setState(
+      produce((draft) => {
+        draft.needsApproval =
+          ['deposit', 'mint'].includes(operation) &&
+          amt &&
+          allowance &&
+          amt.exact.gt(allowance);
+      }),
+    );
+  }, [allowance, amount, operation, preview]);
+
   useEffect(() => {
     setState(
       produce((draft) => {
@@ -63,6 +104,16 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
       }),
     );
   }, [assetToken]);
+
+  useEffect(() => {
+    if (!amount) {
+      setState(
+        produce((draft) => {
+          draft.preview = null;
+        }),
+      );
+    }
+  }, [amount]);
 
   return [state, setState];
 });

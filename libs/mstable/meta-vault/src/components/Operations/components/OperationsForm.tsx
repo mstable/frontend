@@ -7,12 +7,7 @@ import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
 
 import { useMetaVault } from '../../../hooks';
-import {
-  useChangeOperation,
-  useOperations,
-  usePreview,
-  useSetAmount,
-} from '../hooks';
+import { useChangeOperation, useOperations, useSetAmount } from '../hooks';
 
 import type { StackProps } from '@mui/material';
 
@@ -27,8 +22,7 @@ export const OperationsForm = (props: StackProps) => {
     assetsPerShare,
     sharesPerAsset,
   } = useMetaVault();
-  const { amount, operation, tab } = useOperations();
-  const { preview } = usePreview();
+  const { amount, operation, preview, tab } = useOperations();
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
 
