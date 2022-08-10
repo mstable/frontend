@@ -99,42 +99,36 @@ export const TokenInput = ({
     <Stack {...components?.container}>
       <FormControl disabled={disabled} error={error}>
         <InputLabel error={error}>{label}</InputLabel>
-        {isLoading ? (
-          <Skeleton
-            variant="text"
-            sx={{ fontSize: (theme) => theme.typography.value1.fontSize }}
-          />
-        ) : (
-          <BigDecimalInput
-            placeholder={placeholder}
-            value={amount}
-            error={error}
-            onChange={handleChange}
-            disabled={disabled}
-            endAdornment={
-              !disabled && (
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  alignItems="center"
-                  sx={{
-                    p: 1,
-                    borderRadius: '4px',
-                    backgroundColor: 'background.highlight',
-                  }}
+        <BigDecimalInput
+          placeholder={placeholder}
+          value={amount}
+          error={error}
+          onChange={handleChange}
+          disabled={disabled}
+          isLoading={isLoading}
+          endAdornment={
+            !disabled && (
+              <Stack
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                sx={{
+                  p: 1,
+                  borderRadius: '4px',
+                  backgroundColor: 'background.highlight',
+                }}
+              >
+                <USDC sx={{ width: 14, height: 14 }} />
+                <Typography
+                  variant="buttonMedium"
+                  sx={{ color: 'text.primary' }}
                 >
-                  <USDC sx={{ width: 14, height: 14 }} />
-                  <Typography
-                    variant="buttonMedium"
-                    sx={{ color: 'text.primary' }}
-                  >
-                    {token?.symbol}
-                  </Typography>
-                </Stack>
-              )
-            }
-          />
-        )}
+                  {token?.symbol}
+                </Typography>
+              </Stack>
+            )
+          }
+        />
       </FormControl>
       {!hideBottomRow && (
         <Stack
@@ -144,7 +138,7 @@ export const TokenInput = ({
           alignItems="center"
         >
           {isLoading ? (
-            <Skeleton variant="rectangular" width={160} height={40} />
+            <Skeleton variant="text" width={160} height={40} />
           ) : (
             <ToggleButtonGroup
               value={percentage}

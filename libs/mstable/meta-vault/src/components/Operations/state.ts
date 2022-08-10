@@ -90,6 +90,14 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   });
 
   useEffect(() => {
+    setState(
+      produce((draft) => {
+        draft.token = assetToken;
+      }),
+    );
+  }, [assetToken]);
+
+  useEffect(() => {
     const amt = operation === 'deposit' ? amount : preview;
 
     setState(
@@ -108,6 +116,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
       setState(
         produce((draft) => {
           draft.preview = null;
+          draft.isLoading = false;
         }),
       );
     } else {

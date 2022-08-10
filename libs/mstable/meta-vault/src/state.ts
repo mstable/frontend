@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { erc4626ABI } from '@frontend/shared-constants';
 import { BigDecimal } from '@frontend/shared-utils';
@@ -60,10 +60,11 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     },
   });
 
-  useToken({
+  const { refetch: fetchMvToken } = useToken({
     address: address,
-    enabled: !!address,
+    enabled: false,
     onSuccess: (data) => {
+      console.log('mv token ', data);
       setState(
         produce((draft) => {
           draft.mvToken = data;
@@ -72,10 +73,11 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     },
   });
 
-  useToken({
+  const { refetch: fetchAssetToken } = useToken({
     address: asset,
-    enabled: !!asset,
+    enabled: false,
     onSuccess: (data) => {
+      console.log('asset token ', data);
       setState(
         produce((draft) => {
           draft.assetToken = data;
@@ -148,6 +150,18 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
       );
     },
   });
+
+  useEffect(() => {
+    if (address) {
+      fetchMvToken();
+    }
+  }, [address, fetchMvToken]);
+
+  useEffect(() => {
+    if (asset) {
+      fetchAssetToken();
+    }
+  }, [asset, fetchAssetToken]);
 
   return [state, setState];
 });
