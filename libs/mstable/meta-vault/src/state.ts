@@ -64,7 +64,6 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     address: address,
     enabled: false,
     onSuccess: (data) => {
-      console.log('mv token ', data);
       setState(
         produce((draft) => {
           draft.mvToken = data;
@@ -77,7 +76,6 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     address: asset,
     enabled: false,
     onSuccess: (data) => {
-      console.log('asset token ', data);
       setState(
         produce((draft) => {
           draft.assetToken = data;

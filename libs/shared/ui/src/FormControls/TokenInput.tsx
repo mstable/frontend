@@ -72,10 +72,20 @@ export const TokenInput = ({
   const intl = useIntl();
 
   useEffect(() => {
-    if (!amount) {
+    if (balance && amount) {
+      const ranges = range(1, PERCENTAGE_STEPS + 1).map(
+        (n) => balance.simple * n * (1 / PERCENTAGE_STEPS),
+      );
+      const idx = ranges.findIndex((r) => r === amount.simple);
+      if (idx > -1) {
+        setPercentage(idx + 1);
+      } else {
+        setPercentage(0);
+      }
+    } else {
       setPercentage(0);
     }
-  }, [amount]);
+  }, [amount, balance]);
 
   const handlePercentageChange = (_, newValue: number | null) => {
     setPercentage(newValue);
@@ -138,7 +148,12 @@ export const TokenInput = ({
           alignItems="center"
         >
           {isLoading ? (
-            <Skeleton variant="text" width={160} height={40} />
+            <Skeleton
+              variant="rectangular"
+              width={160}
+              height={24}
+              sx={{ my: 1 }}
+            />
           ) : (
             <ToggleButtonGroup
               value={percentage}
