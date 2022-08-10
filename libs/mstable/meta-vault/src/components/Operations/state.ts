@@ -16,6 +16,8 @@ import type { Dispatch, SetStateAction } from 'react';
 
 export type SupportedOperation = 'deposit' | 'mint' | 'withdraw' | 'redeem';
 
+const DEBOUNCE_TIME = 500; // ms
+
 type OperationsState = {
   amount: BigDecimal | null;
   token: FetchTokenResult | null;
@@ -102,14 +104,6 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   }, [allowance, amount, operation, preview]);
 
   useEffect(() => {
-    setState(
-      produce((draft) => {
-        draft.token = assetToken;
-      }),
-    );
-  }, [assetToken]);
-
-  useEffect(() => {
     if (!amount) {
       setState(
         produce((draft) => {
@@ -127,11 +121,11 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
 
   useDebounce(
     () => {
-      if (!!amount && !!operation) {
+      if (amount && operation) {
         fetchPreview();
       }
     },
-    500,
+    DEBOUNCE_TIME,
     [amount, operation, fetchPreview],
   );
 

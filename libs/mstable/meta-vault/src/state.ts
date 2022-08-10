@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { erc4626ABI } from '@frontend/shared-constants';
 import { BigDecimal } from '@frontend/shared-utils';
@@ -6,8 +6,8 @@ import { constants } from 'ethers';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import {
-  erc20ABI,
   useAccount,
+  useBalance,
   useContractRead,
   useContractReads,
   useToken,
@@ -25,7 +25,6 @@ type MetaVaultState = {
   assetBalance: BigDecimal | null;
   assetsPerShare: BigDecimal | null;
   sharesPerAsset: BigDecimal | null;
-  isLoading: boolean;
 };
 
 export const { Provider, useUpdate, useTrackedState } = createContainer<
@@ -43,15 +42,15 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     assetBalance: null,
     assetsPerShare: null,
     sharesPerAsset: null,
-    isLoading: true,
   });
 
-  const { address, mvToken, asset, assetToken } = state;
+  const { address, asset } = state;
 
-  const { isLoading: assetLoading, refetch: fetchAsset } = useContractRead({
+  useContractRead({
     addressOrName: address,
     contractInterface: erc4626ABI,
     functionName: 'asset',
+    enabled: !!address,
     onSuccess: (data) => {
       setState(
         produce((draft) => {
@@ -61,8 +60,9 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     },
   });
 
-  const { isLoading: mvTokenLoading, refetch: fetchMvToken } = useToken({
+  useToken({
     address: address,
+    enabled: !!address,
     onSuccess: (data) => {
       setState(
         produce((draft) => {
@@ -72,12 +72,45 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     },
   });
 
-  const { isLoading: tokenLoading, refetch: fetchAssetToken } = useToken({
+  useToken({
     address: asset,
+    enabled: !!asset,
     onSuccess: (data) => {
       setState(
         produce((draft) => {
           draft.assetToken = data;
+        }),
+      );
+    },
+  });
+
+  useBalance({
+    addressOrName: walletAddress,
+    token: address,
+    watch: true,
+    enabled: !!walletAddress && !!address,
+    onSuccess: (data) => {
+      setState(
+        produce((draft) => {
+          draft.mvBalance = data
+            ? new BigDecimal(data.value, data.decimals)
+            : BigDecimal.ZERO;
+        }),
+      );
+    },
+  });
+
+  useBalance({
+    addressOrName: walletAddress,
+    token: asset,
+    watch: true,
+    enabled: !!walletAddress && !!asset,
+    onSuccess: (data) => {
+      setState(
+        produce((draft) => {
+          draft.assetBalance = data
+            ? new BigDecimal(data.value, data.decimals)
+            : BigDecimal.ZERO;
         }),
       );
     },
@@ -97,23 +130,11 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
         functionName: 'convertToShares',
         args: [constants.One],
       },
-      {
-        addressOrName: address,
-        contractInterface: erc4626ABI,
-        functionName: 'balanceOf',
-        args: [walletAddress],
-      },
-      {
-        addressOrName: asset,
-        contractInterface: erc20ABI,
-        functionName: 'balanceOf',
-        args: [walletAddress],
-      },
     ],
     allowFailure: true,
     cacheOnBlock: true,
     watch: true,
-    enabled: !!asset && !!assetToken?.decimals && !!mvToken?.decimals,
+    enabled: !!address,
     onSettled: (data) => {
       setState(
         produce((draft) => {
@@ -123,48 +144,10 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
           draft.sharesPerAsset = data?.[1]
             ? new BigDecimal(data[1], 0)
             : BigDecimal.ONE;
-          draft.mvBalance = data?.[2]
-            ? new BigDecimal(data[2], mvToken.decimals)
-            : BigDecimal.ZERO;
-          draft.assetBalance = data?.[3]
-            ? new BigDecimal(data[3], assetToken.decimals)
-            : BigDecimal.ZERO;
         }),
       );
     },
   });
-
-  useEffect(() => {
-    if (address) {
-      fetchMvToken();
-    }
-  }, [address, fetchMvToken]);
-
-  useEffect(() => {
-    if (address) {
-      fetchAsset();
-    }
-  }, [address, fetchAsset]);
-
-  useEffect(() => {
-    if (asset) {
-      fetchAssetToken();
-    }
-  }, [asset, fetchAssetToken]);
-
-  useEffect(() => {
-    setState(
-      produce((draft) => {
-        draft.isLoading =
-          !asset ||
-          !mvToken ||
-          !assetToken ||
-          assetLoading ||
-          tokenLoading ||
-          mvTokenLoading;
-      }),
-    );
-  }, [asset, assetLoading, assetToken, mvToken, mvTokenLoading, tokenLoading]);
 
   return [state, setState];
 });
