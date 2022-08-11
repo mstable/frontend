@@ -28,6 +28,7 @@ type OperationsState = {
   tab: 0 | 1;
   needsApproval: boolean;
   isLoading: boolean;
+  isError: boolean;
 };
 
 export const { Provider, useUpdate, useTrackedState } = createContainer<
@@ -36,7 +37,15 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   Children
 >(() => {
   const { address: walletAddress } = useAccount();
-  const { address, asset, assetToken } = useMetaVault();
+  const {
+    address,
+    asset,
+    assetToken,
+    assetBalance,
+    mvBalance,
+    assetsPerShare,
+    sharesPerAsset,
+  } = useMetaVault();
   const [state, setState] = useState<OperationsState>({
     amount: null,
     token: assetToken,
@@ -47,6 +56,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     tab: 0,
     needsApproval: false,
     isLoading: false,
+    isError: false,
   });
 
   const { amount, operation, allowance, preview } = state;
@@ -127,6 +137,47 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
       );
     }
   }, [amount, fetchPreview, operation]);
+
+  useEffect(() => {
+    setState(
+      produce((draft) => {
+        draft.isError = {
+          deposit:
+            (amount && assetBalance && amount.exact.gt(assetBalance.exact)) ||
+            (preview &&
+              assetBalance &&
+              sharesPerAsset &&
+              preview.exact.gt(assetBalance.exact.mul(sharesPerAsset.exact))),
+          mint:
+            (preview && assetBalance && preview.exact.gt(assetBalance.exact)) ||
+            (amount &&
+              assetBalance &&
+              sharesPerAsset &&
+              amount.exact.gt(assetBalance.exact.mul(sharesPerAsset.exact))),
+          redeem:
+            (amount && mvBalance && amount.exact.gt(mvBalance.exact)) ||
+            (preview &&
+              mvBalance &&
+              assetsPerShare &&
+              preview.exact.gt(mvBalance.exact.mul(assetsPerShare.exact))),
+          withdraw:
+            (preview && mvBalance && preview.exact.gt(mvBalance.exact)) ||
+            (amount &&
+              mvBalance &&
+              assetsPerShare &&
+              amount.exact.gt(mvBalance.exact.mul(assetsPerShare.exact))),
+        }[operation];
+      }),
+    );
+  }, [
+    amount,
+    assetBalance,
+    assetsPerShare,
+    mvBalance,
+    operation,
+    preview,
+    sharesPerAsset,
+  ]);
 
   useDebounce(
     () => {

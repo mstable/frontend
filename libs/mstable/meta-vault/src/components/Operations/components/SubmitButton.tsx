@@ -35,7 +35,7 @@ export const SubmitButton = () => {
   const pushNotification = usePushNotification();
   const { address: walletAddress } = useAccount();
   const { address } = useMetaVault();
-  const { amount, token, operation, needsApproval } = useOperations();
+  const { amount, token, operation, needsApproval, isError } = useOperations();
   const operationLabel = useOperationLabel();
   const reset = useReset();
 
@@ -118,6 +118,14 @@ export const SubmitButton = () => {
     return (
       <Button {...buttonProps} disabled>
         <CircularProgress size={20} />
+      </Button>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Button {...buttonProps} disabled>
+        {intl.formatMessage({ defaultMessage: 'Insufficient balance' })}
       </Button>
     );
   }

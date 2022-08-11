@@ -10,7 +10,7 @@ import { Provider } from './state';
 const OperationsWrapped = () => {
   const intl = useIntl();
   const changeTab = useChangeTab();
-  const { amount, tab } = useOperations();
+  const { amount, tab, isError } = useOperations();
 
   return (
     <Card>
@@ -29,7 +29,7 @@ const OperationsWrapped = () => {
           </Tabs>
           <Stack pt={2} spacing={2}>
             <OperationsForm />
-            {amount && <RecapStepper />}
+            {amount && !isError && <RecapStepper />}
             <SubmitButton />
           </Stack>
         </Stack>

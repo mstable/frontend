@@ -126,16 +126,14 @@ export const TokenInput = ({
                   p: 1,
                   borderRadius: '4px',
                   backgroundColor: 'background.highlight',
+                  color: 'text.primary',
                 }}
               >
                 <TokenIcon
                   symbol={token?.symbol}
                   sx={{ width: 14, height: 14 }}
                 />
-                <Typography
-                  variant="buttonMedium"
-                  sx={{ color: 'text.primary' }}
-                >
+                <Typography variant="buttonMedium" color="inherit">
                   {token?.symbol}
                 </Typography>
               </Stack>

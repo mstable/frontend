@@ -22,7 +22,8 @@ export const OperationsForm = (props: StackProps) => {
     assetsPerShare,
     sharesPerAsset,
   } = useMetaVault();
-  const { amount, operation, preview, tab, isLoading } = useOperations();
+  const { amount, operation, preview, tab, isLoading, isError } =
+    useOperations();
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
 
@@ -188,11 +189,7 @@ export const OperationsForm = (props: StackProps) => {
         onChange={handlePrimaryChange}
         placeholder="0.00"
         disabled={!walletAddress}
-        error={
-          primaryInput.amount &&
-          primaryInput.balance &&
-          primaryInput.amount.exact.gt(primaryInput.balance.exact)
-        }
+        error={isError}
       />
       <Divider role="presentation">
         <Typography
@@ -213,11 +210,7 @@ export const OperationsForm = (props: StackProps) => {
         onChange={handleDownChange}
         placeholder="0.00"
         disabled={!walletAddress}
-        error={
-          secondaryInput.amount &&
-          secondaryInput.balance &&
-          secondaryInput.amount.exact.gt(secondaryInput.balance.exact)
-        }
+        error={isError}
         hideBottomRow
       />
     </Stack>
