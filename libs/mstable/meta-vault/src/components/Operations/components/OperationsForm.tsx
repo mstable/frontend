@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 
 import { TokenInput } from '@frontend/shared-ui';
-import { BigDecimal } from '@frontend/shared-utils';
 import { Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
@@ -9,6 +8,7 @@ import { useAccount } from 'wagmi';
 import { useMetaVault } from '../../../hooks';
 import { useChangeOperation, useOperations, useSetAmount } from '../hooks';
 
+import type { BigDecimal } from '@frontend/shared-utils';
 import type { StackProps } from '@mui/material';
 
 export const OperationsForm = (props: StackProps) => {
@@ -77,54 +77,27 @@ export const OperationsForm = (props: StackProps) => {
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
           amount: preview,
           token: mvToken,
-          balance:
-            assetBalance && sharesPerAsset
-              ? new BigDecimal(assetBalance.exact.mul(sharesPerAsset.exact))
-              : BigDecimal.ZERO,
           isLoading,
         },
         mint: {
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
           amount: amount,
           token: mvToken,
-          balance:
-            assetBalance && sharesPerAsset
-              ? new BigDecimal(assetBalance.exact.mul(sharesPerAsset.exact))
-              : BigDecimal.ZERO,
         },
         redeem: {
           label: intl.formatMessage({ defaultMessage: 'Tokens' }),
           amount: preview,
           token: assetToken,
-          balance:
-            mvBalance && assetsPerShare
-              ? new BigDecimal(mvBalance.exact.mul(assetsPerShare.exact))
-              : BigDecimal.ZERO,
+
           isLoading,
         },
         withdraw: {
           label: intl.formatMessage({ defaultMessage: 'Tokens' }),
           amount: amount,
           token: assetToken,
-          balance:
-            mvBalance && assetsPerShare
-              ? new BigDecimal(mvBalance.exact.mul(sharesPerAsset.exact))
-              : BigDecimal.ZERO,
         },
       }[operation]),
-    [
-      amount,
-      assetBalance,
-      assetToken,
-      assetsPerShare,
-      intl,
-      isLoading,
-      mvBalance,
-      mvToken,
-      operation,
-      preview,
-      sharesPerAsset,
-    ],
+    [amount, assetToken, intl, isLoading, mvToken, operation, preview],
   );
 
   const handlePrimaryChange = (newValue: BigDecimal) => {

@@ -116,7 +116,7 @@ export const SubmitButton = () => {
 
   if (isSubmitStarted && !isSubmitSuccess) {
     return (
-      <Button {...buttonProps} disabled>
+      <Button size="large" disabled>
         <CircularProgress size={20} />
       </Button>
     );
