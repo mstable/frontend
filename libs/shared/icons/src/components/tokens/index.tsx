@@ -135,10 +135,10 @@ export const RenBTC = (props: SvgIconProps) => (
   <SvgIcon {...props} component={renBTCSvg} viewBox="0 0 70.4 70.4" />
 );
 export const SBTC = (props: SvgIconProps) => (
-  <SvgIcon {...props} component={sBTCSvg} viewBox="0 0 480 480" />
+  <SvgIcon {...props} component={sBTCSvg} viewBox="56 56 368 368" />
 );
 export const SUSD = (props: SvgIconProps) => (
-  <SvgIcon {...props} component={sUSDSvg} viewBox="0 0 480 480" />
+  <SvgIcon {...props} component={sUSDSvg} viewBox="56 56 368 368" />
 );
 export const Sushi = (props: SvgIconProps) => (
   <SvgIcon {...props} component={SushiSvg} viewBox="0 0 512 512" />

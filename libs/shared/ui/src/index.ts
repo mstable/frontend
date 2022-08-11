@@ -10,5 +10,6 @@ export * from './Menus';
 export * from './Modals';
 export * from './Notifications';
 export * from './SeverityIcon';
+export * from './TokenIcon';
 export * from './Typography';
 export * from './ValueLabel';

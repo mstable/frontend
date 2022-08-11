@@ -1,7 +1,6 @@
 /* eslint-disable formatjs/no-id */
 import { useEffect, useState } from 'react';
 
-import { USDC } from '@frontend/shared-icons';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
   FormControl,
@@ -16,6 +15,7 @@ import { constants } from 'ethers';
 import { range } from 'ramda';
 import { useIntl } from 'react-intl';
 
+import { TokenIcon } from '../TokenIcon';
 import { BigDecimalInput } from './BigDecimalInput';
 
 import type { StackProps, Theme } from '@mui/material';
@@ -128,7 +128,10 @@ export const TokenInput = ({
                   backgroundColor: 'background.highlight',
                 }}
               >
-                <USDC sx={{ width: 14, height: 14 }} />
+                <TokenIcon
+                  symbol={token?.symbol}
+                  sx={{ width: 14, height: 14 }}
+                />
                 <Typography
                   variant="buttonMedium"
                   sx={{ color: 'text.primary' }}
