@@ -1,6 +1,6 @@
 import { Button, DialogTitle, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
-import { chainId, useDisconnect, useNetwork, useSwitchNetwork } from 'wagmi';
+import { useDisconnect, useNetwork, useSwitchNetwork } from 'wagmi';
 
 import type { DialogOptions } from '@frontend/shared-modals';
 
@@ -16,16 +16,16 @@ const Title = () => {
 
 const Content = () => {
   const intl = useIntl();
-  const { chain } = useNetwork();
+  const { chains } = useNetwork();
 
   return (
     <Typography>
       {intl.formatMessage(
         {
           defaultMessage:
-            'The selected network ({name}) is not supported by the application. You can either switch your wallet or reset to Ethereum mainnet.',
+            'The selected network is not supported by the application. You can either switch your wallet or reset to {defaultChain}.',
         },
-        { name: chain?.name },
+        { defaultChain: chains[0].name },
       )}
     </Typography>
   );
@@ -37,6 +37,7 @@ const Actions = ({ onClose }: ActionsProps) => {
   const intl = useIntl();
   const { switchNetwork } = useSwitchNetwork();
   const { disconnect } = useDisconnect();
+  const { chains } = useNetwork();
 
   return (
     <>
@@ -44,11 +45,14 @@ const Actions = ({ onClose }: ActionsProps) => {
         onClick={() => {
           if (switchNetwork) {
             onClose();
-            switchNetwork(chainId.mainnet);
+            switchNetwork(chains[0].id);
           }
         }}
       >
-        {intl.formatMessage({ defaultMessage: 'Reset to Ethereum mainnet' })}
+        {intl.formatMessage(
+          { defaultMessage: 'Switch to {defaultChain}' },
+          { defaultChain: chains[0].name },
+        )}
       </Button>
       <Button
         onClick={() => {
