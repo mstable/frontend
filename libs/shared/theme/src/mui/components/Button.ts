@@ -29,11 +29,11 @@ export const getButton = (base: Theme): ThemeOptions => ({
             color: base.palette.primary.contrastText,
           },
           '&.Mui-disabled': {
-            color: base.palette.primary.dark,
+            color: base.palette.grey[400],
             backgroundImage: 'none',
-            backgroundColor: base.palette.primary.light,
+            backgroundColor: base.palette.grey[100],
             svg: {
-              color: base.palette.primary.dark,
+              color: base.palette.grey[400],
             },
           },
         },

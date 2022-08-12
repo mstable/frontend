@@ -1,11 +1,11 @@
 /* eslint-disable formatjs/no-id */
 import { useEffect, useState } from 'react';
 
-import { USDC } from '@frontend/shared-icons';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
   FormControl,
   InputLabel,
+  Skeleton,
   Stack,
   ToggleButton,
   ToggleButtonGroup,
@@ -15,6 +15,7 @@ import { constants } from 'ethers';
 import { range } from 'ramda';
 import { useIntl } from 'react-intl';
 
+import { TokenIcon } from '../TokenIcon';
 import { BigDecimalInput } from './BigDecimalInput';
 
 import type { StackProps, Theme } from '@mui/material';
@@ -25,6 +26,7 @@ export type TokenInputProps = {
   placeholder?: string;
   disabled?: boolean;
   error?: boolean;
+  isLoading?: boolean;
   amount: BigDecimal;
   token: FetchTokenResult;
   balance?: BigDecimal;
@@ -58,6 +60,7 @@ export const TokenInput = ({
   placeholder,
   disabled,
   error,
+  isLoading,
   amount,
   token,
   balance,
@@ -69,10 +72,20 @@ export const TokenInput = ({
   const intl = useIntl();
 
   useEffect(() => {
-    if (!amount) {
+    if (balance && amount) {
+      const ranges = range(1, PERCENTAGE_STEPS + 1).map(
+        (n) => balance.simple * n * (1 / PERCENTAGE_STEPS),
+      );
+      const idx = ranges.findIndex((r) => r === amount.simple);
+      if (idx > -1) {
+        setPercentage(idx + 1);
+      } else {
+        setPercentage(0);
+      }
+    } else {
       setPercentage(0);
     }
-  }, [amount]);
+  }, [amount, balance]);
 
   const handlePercentageChange = (_, newValue: number | null) => {
     setPercentage(newValue);
@@ -102,6 +115,7 @@ export const TokenInput = ({
           error={error}
           onChange={handleChange}
           disabled={disabled}
+          isLoading={isLoading}
           endAdornment={
             !disabled && (
               <Stack
@@ -112,13 +126,14 @@ export const TokenInput = ({
                   p: 1,
                   borderRadius: '4px',
                   backgroundColor: 'background.highlight',
+                  color: 'text.primary',
                 }}
               >
-                <USDC sx={{ width: 14, height: 14 }} />
-                <Typography
-                  variant="buttonMedium"
-                  sx={{ color: 'text.primary' }}
-                >
+                <TokenIcon
+                  symbol={token?.symbol}
+                  sx={{ width: 14, height: 14 }}
+                />
+                <Typography variant="buttonMedium" color="inherit">
                   {token?.symbol}
                 </Typography>
               </Stack>
@@ -133,26 +148,35 @@ export const TokenInput = ({
           justifyContent="space-between"
           alignItems="center"
         >
-          <ToggleButtonGroup
-            value={percentage}
-            onChange={handlePercentageChange}
-            exclusive
-            size="small"
-            disabled={
-              !balance || balance?.exact?.eq(constants.Zero) || disabled
-            }
-            sx={percentageButtonGroup}
-          >
-            {range(1, PERCENTAGE_STEPS + 1).map((n) => (
-              <ToggleButton value={n} key={`percent-${n}`}>
-                {`${
-                  n === PERCENTAGE_STEPS
-                    ? 'MAX'
-                    : `${n * (100 / PERCENTAGE_STEPS)}%`
-                }`}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
+          {isLoading ? (
+            <Skeleton
+              variant="rectangular"
+              width={160}
+              height={24}
+              sx={{ my: 1 }}
+            />
+          ) : (
+            <ToggleButtonGroup
+              value={percentage}
+              onChange={handlePercentageChange}
+              exclusive
+              size="small"
+              disabled={
+                !balance || balance?.exact?.eq(constants.Zero) || disabled
+              }
+              sx={percentageButtonGroup}
+            >
+              {range(1, PERCENTAGE_STEPS + 1).map((n) => (
+                <ToggleButton value={n} key={`percent-${n}`}>
+                  {`${
+                    n === PERCENTAGE_STEPS
+                      ? 'MAX'
+                      : `${n * (100 / PERCENTAGE_STEPS)}%`
+                  }`}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+          )}
           {balance && !disabled && (
             <Typography variant="value6">
               {intl.formatMessage({ defaultMessage: 'Balance', id: 'balance' })}

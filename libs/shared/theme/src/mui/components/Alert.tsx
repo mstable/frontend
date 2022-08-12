@@ -2,8 +2,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import InfoIcon from '@mui/icons-material/InfoRounded';
 import ReportIcon from '@mui/icons-material/ReportRounded';
 import WarningIcon from '@mui/icons-material/WarningRounded';
-
-import { colors } from '../../constants';
+import { lighten } from '@mui/material';
 
 import type { Theme, ThemeOptions } from '@mui/material';
 
@@ -36,7 +35,6 @@ export const getAlert = (base: Theme): ThemeOptions => ({
             width: base.spacing(2.5),
             height: base.spacing(2.5),
             padding: 0,
-            opacity: 1,
             marginRight: base.spacing(2),
           },
         },
@@ -53,55 +51,46 @@ export const getAlert = (base: Theme): ThemeOptions => ({
           },
         },
         standardInfo: {
-          backgroundColor: 'rgba(209, 198, 255, 0.2)',
+          backgroundColor: lighten(base.palette.info.main, 0.8),
           '.MuiAlert-icon': {
-            color: colors.purple03,
+            color: base.palette.info.main,
           },
         },
         standardError: {
-          backgroundColor: 'rgba(255, 141, 134, 0.2)',
+          backgroundColor: lighten(base.palette.error.main, 0.8),
           '.MuiAlert-icon': {
-            color: colors.red03,
+            color: base.palette.error.main,
           },
         },
         standardSuccess: {
-          backgroundColor: 'rgba(126, 255, 164, 0.2)',
+          backgroundColor: lighten(base.palette.success.main, 0.8),
           '.MuiAlert-icon': {
-            color: colors.green03,
+            color: base.palette.success.main,
           },
         },
         standardWarning: {
-          backgroundColor: 'rgba(255, 246, 161, 0.2)',
+          backgroundColor: lighten(base.palette.warning.main, 0.8),
           '.MuiAlert-icon': {
-            color: colors.yellow03,
+            color: base.palette.warning.main,
           },
         },
         filled: {
           color: base.palette.common.white,
+          '.MuiAlert-icon': {
+            color: base.palette.common.white,
+          },
         },
         filledInfo: {
-          backgroundColor: colors.purple02,
-          '.MuiAlert-icon': {
-            color: base.palette.common.white,
-          },
+          backgroundColor: base.palette.info.main,
         },
         filledError: {
-          backgroundColor: colors.red02,
-          '.MuiAlert-icon': {
-            color: base.palette.common.white,
-          },
+          backgroundColor: base.palette.error.main,
         },
         filledSuccess: {
-          backgroundColor: colors.green02,
-          '.MuiAlert-icon': {
-            color: base.palette.common.white,
-          },
+          backgroundColor: base.palette.success.main,
         },
         filledWarning: {
-          backgroundColor: colors.yellow02,
-          '.MuiAlert-icon': {
-            color: base.palette.common.white,
-          },
+          backgroundColor: base.palette.warning.main,
         },
       },
     },

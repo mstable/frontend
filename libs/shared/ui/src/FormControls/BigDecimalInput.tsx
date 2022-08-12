@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { BigDecimal } from '@frontend/shared-utils';
-import { InputBase } from '@mui/material';
+import { InputBase, Skeleton } from '@mui/material';
 import { constants } from 'ethers';
 
 import type { InputBaseProps } from '@mui/material';
@@ -12,6 +12,7 @@ export type BigDecimalInputProps = {
   onChange?: (value: BigDecimal) => void;
   min?: BigDecimal;
   max?: BigDecimal;
+  isLoading?: boolean;
 } & Omit<InputBaseProps, 'value' | 'onChange'>;
 
 const inRange = (val: string, min: BigDecimal, max: BigDecimal) => {
@@ -27,6 +28,7 @@ export const BigDecimalInput = ({
   onChange,
   min = BigDecimal.ZERO,
   max = new BigDecimal(constants.MaxUint256),
+  isLoading,
   ...rest
 }: BigDecimalInputProps) => {
   const [val, setVal] = useState(value?.simple.toString() ?? '');
@@ -48,7 +50,9 @@ export const BigDecimalInput = ({
     }
   };
 
-  return (
+  return isLoading ? (
+    <Skeleton variant="rectangular" height={40} sx={{ mt: 2 }} />
+  ) : (
     <InputBase
       {...rest}
       value={val}

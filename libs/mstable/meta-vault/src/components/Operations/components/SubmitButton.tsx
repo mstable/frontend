@@ -1,23 +1,21 @@
+import { useEffect, useMemo } from 'react';
+
+import { erc4626ABI } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-notifications';
 import { OpenAccountModalButton } from '@frontend/shared-wagmi';
-import { Button, Link, Stack } from '@mui/material';
-import { ArrowRight, Infinity } from 'phosphor-react';
+import { Button, CircularProgress, Link, Stack } from '@mui/material';
+import { ArrowRight } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 import {
   etherscanBlockExplorers,
   useAccount,
   useContractWrite,
+  usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi';
 
 import { useMetaVault } from '../../../hooks';
-import {
-  useApprovalConfig,
-  useNeedApproval,
-  useOperationConfig,
-  useOperationLabel,
-  useOperations,
-} from '../hooks';
+import { useOperationLabel, useOperations, useReset } from '../hooks';
 
 import type { ButtonProps } from '@mui/material';
 
@@ -37,49 +35,39 @@ export const SubmitButton = () => {
   const pushNotification = usePushNotification();
   const { address: walletAddress } = useAccount();
   const { address } = useMetaVault();
-  const { amount, token } = useOperations();
-  const needApproval = useNeedApproval();
+  const { amount, token, operation, needsApproval, isError } = useOperations();
   const operationLabel = useOperationLabel();
+  const reset = useReset();
 
-  const { config: approveConfig } = useApprovalConfig();
-  const {
-    data: approveData,
-    write: approve,
-    isLoading: isApproveLoading,
-    isSuccess: isApproveStarted,
-  } = useContractWrite(approveConfig);
-  const { isSuccess: isApproveSuccess } = useWaitForTransaction({
-    hash: approveData?.hash,
-    onSuccess: (data) => {
-      prepareDeposit();
-      pushNotification({
-        title: intl.formatMessage({ defaultMessage: 'Token approved' }),
-        content: (
-          <Link
-            href={`${etherscanBlockExplorers.goerli.url}/tx/${data?.transactionHash}`}
-            target="_blank"
-          >
-            {intl.formatMessage({
-              defaultMessage: 'View your transaction on etherscan',
-            })}
-          </Link>
-        ),
-        severity: 'success',
-      });
-    },
-  });
+  const args = useMemo(
+    () =>
+      ({
+        deposit: [amount?.exact, walletAddress],
+        mint: [amount?.exact, walletAddress],
+        withdraw: [amount?.exact, walletAddress, walletAddress],
+        redeem: [amount?.exact, walletAddress, walletAddress],
+      }[operation] || []),
+    [amount?.exact, operation, walletAddress],
+  );
 
-  const { config: depositConfig, refetch: prepareDeposit } =
-    useOperationConfig();
+  const { config: submitConfig, refetch: fetchSubmitConfig } =
+    usePrepareContractWrite({
+      addressOrName: address,
+      contractInterface: erc4626ABI,
+      functionName: operation,
+      args,
+      enabled: false,
+    });
   const {
-    data: depositData,
-    write: deposit,
-    isLoading: isDepositLoading,
-    isSuccess: isDepositStarted,
-  } = useContractWrite(depositConfig);
-  const { isSuccess: isDepositSuccess } = useWaitForTransaction({
-    hash: depositData?.hash,
+    data: submitData,
+    write: submit,
+    isLoading: isSubmitLoading,
+    isSuccess: isSubmitStarted,
+  } = useContractWrite(submitConfig);
+  const { isSuccess: isSubmitSuccess } = useWaitForTransaction({
+    hash: submitData?.hash,
     onSuccess: (data) => {
+      reset();
       pushNotification({
         title: intl.formatMessage({ defaultMessage: 'Deposit completed' }),
         content: (
@@ -97,13 +85,19 @@ export const SubmitButton = () => {
     },
   });
 
+  useEffect(() => {
+    if (!!amount?.exact && !!walletAddress && !needsApproval) {
+      fetchSubmitConfig();
+    }
+  }, [amount?.exact, fetchSubmitConfig, needsApproval, walletAddress]);
+
   if (!walletAddress) {
     return (
       <OpenAccountModalButton variant="contained" color="primary" fullWidth />
     );
   }
 
-  if (!amount) {
+  if (!amount || needsApproval) {
     return (
       <Button {...buttonProps} disabled>
         {operationLabel}
@@ -112,7 +106,7 @@ export const SubmitButton = () => {
     );
   }
 
-  if (isApproveLoading) {
+  if (isSubmitLoading) {
     return (
       <Button {...buttonProps} disabled>
         {intl.formatMessage({ defaultMessage: 'Waiting for approval' })}
@@ -120,54 +114,18 @@ export const SubmitButton = () => {
     );
   }
 
-  if (isApproveStarted && !isApproveSuccess) {
+  if (isSubmitStarted && !isSubmitSuccess) {
     return (
-      <Button {...buttonProps} disabled>
-        {intl.formatMessage({ defaultMessage: 'Approving' })}
+      <Button size="large" disabled>
+        <CircularProgress size={20} />
       </Button>
     );
   }
 
-  if (needApproval) {
-    return (
-      <Stack direction="row" spacing={1}>
-        <Button
-          fullWidth
-          {...buttonProps}
-          onClick={() => {
-            approve({
-              recklesslySetUnpreparedArgs: [address, amount.exact],
-            });
-          }}
-        >
-          {intl.formatMessage({ defaultMessage: 'Approve exact' })}
-        </Button>
-        <Button
-          fullWidth
-          {...buttonProps}
-          onClick={() => {
-            approve();
-          }}
-        >
-          {intl.formatMessage({ defaultMessage: 'Approve' })}
-          <Infinity fontWeight="bold" />
-        </Button>
-      </Stack>
-    );
-  }
-
-  if (isDepositLoading) {
+  if (isError) {
     return (
       <Button {...buttonProps} disabled>
-        {intl.formatMessage({ defaultMessage: 'Waiting for approval' })}
-      </Button>
-    );
-  }
-
-  if (isDepositStarted && !isDepositSuccess) {
-    return (
-      <Button {...buttonProps} disabled>
-        {intl.formatMessage({ defaultMessage: 'Loading...' })}
+        {intl.formatMessage({ defaultMessage: 'Insufficient balance' })}
       </Button>
     );
   }
@@ -176,7 +134,7 @@ export const SubmitButton = () => {
     <Button
       {...buttonProps}
       onClick={() => {
-        deposit();
+        submit();
       }}
       sx={{
         display: 'flex',

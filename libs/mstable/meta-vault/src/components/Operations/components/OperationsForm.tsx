@@ -1,19 +1,14 @@
 import { useMemo } from 'react';
 
 import { TokenInput } from '@frontend/shared-ui';
-import { BigDecimal } from '@frontend/shared-utils';
 import { Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
 
 import { useMetaVault } from '../../../hooks';
-import {
-  useChangeOperation,
-  useOperations,
-  usePreview,
-  useSetAmount,
-} from '../hooks';
+import { useChangeOperation, useOperations, useSetAmount } from '../hooks';
 
+import type { BigDecimal } from '@frontend/shared-utils';
 import type { StackProps } from '@mui/material';
 
 export const OperationsForm = (props: StackProps) => {
@@ -27,8 +22,8 @@ export const OperationsForm = (props: StackProps) => {
     assetsPerShare,
     sharesPerAsset,
   } = useMetaVault();
-  const { amount, operation, tab } = useOperations();
-  const { preview } = usePreview();
+  const { amount, operation, preview, tab, isLoading, isError } =
+    useOperations();
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
 
@@ -46,6 +41,7 @@ export const OperationsForm = (props: StackProps) => {
           amount: preview,
           token: assetToken,
           balance: assetBalance,
+          isLoading,
         },
         redeem: {
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
@@ -58,6 +54,7 @@ export const OperationsForm = (props: StackProps) => {
           amount: preview,
           token: mvToken,
           balance: mvBalance,
+          isLoading,
         },
       }[operation]),
     [
@@ -65,6 +62,7 @@ export const OperationsForm = (props: StackProps) => {
       assetBalance,
       assetToken,
       intl,
+      isLoading,
       mvBalance,
       mvToken,
       operation,
@@ -79,51 +77,27 @@ export const OperationsForm = (props: StackProps) => {
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
           amount: preview,
           token: mvToken,
-          balance:
-            assetBalance && sharesPerAsset
-              ? new BigDecimal(assetBalance.exact.mul(sharesPerAsset.exact))
-              : BigDecimal.ZERO,
+          isLoading,
         },
         mint: {
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
           amount: amount,
           token: mvToken,
-          balance:
-            assetBalance && sharesPerAsset
-              ? new BigDecimal(assetBalance.exact.mul(sharesPerAsset.exact))
-              : BigDecimal.ZERO,
         },
         redeem: {
           label: intl.formatMessage({ defaultMessage: 'Tokens' }),
           amount: preview,
           token: assetToken,
-          balance:
-            mvBalance && assetsPerShare
-              ? new BigDecimal(mvBalance.exact.mul(assetsPerShare.exact))
-              : BigDecimal.ZERO,
+
+          isLoading,
         },
         withdraw: {
           label: intl.formatMessage({ defaultMessage: 'Tokens' }),
           amount: amount,
           token: assetToken,
-          balance:
-            mvBalance && assetsPerShare
-              ? new BigDecimal(mvBalance.exact.mul(sharesPerAsset.exact))
-              : BigDecimal.ZERO,
         },
       }[operation]),
-    [
-      amount,
-      assetBalance,
-      assetToken,
-      assetsPerShare,
-      intl,
-      mvBalance,
-      mvToken,
-      operation,
-      preview,
-      sharesPerAsset,
-    ],
+    [amount, assetToken, intl, isLoading, mvToken, operation, preview],
   );
 
   const handlePrimaryChange = (newValue: BigDecimal) => {
@@ -188,11 +162,7 @@ export const OperationsForm = (props: StackProps) => {
         onChange={handlePrimaryChange}
         placeholder="0.00"
         disabled={!walletAddress}
-        error={
-          primaryInput.amount &&
-          primaryInput.balance &&
-          primaryInput.amount.exact.gt(primaryInput.balance.exact)
-        }
+        error={isError}
       />
       <Divider role="presentation">
         <Typography
@@ -213,11 +183,7 @@ export const OperationsForm = (props: StackProps) => {
         onChange={handleDownChange}
         placeholder="0.00"
         disabled={!walletAddress}
-        error={
-          secondaryInput.amount &&
-          secondaryInput.balance &&
-          secondaryInput.amount.exact.gt(secondaryInput.balance.exact)
-        }
+        error={isError}
         hideBottomRow
       />
     </Stack>
