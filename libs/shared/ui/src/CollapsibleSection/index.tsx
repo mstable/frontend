@@ -94,7 +94,7 @@ export const CollapsibleSection = ({
         </Box>
       ) : (
         isValidElement(title) &&
-        cloneElement(title, {
+        cloneElement<{ onClick?: (event?: MouseEvent) => void }>(title, {
           ...components?.titleContainer,
           onClick: handleToggle(title?.props?.onClick),
         })
