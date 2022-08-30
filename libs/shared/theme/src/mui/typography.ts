@@ -93,7 +93,7 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
     label1: {
       fontFamily: fontFamilies.main,
       fontSize: 14,
-      lineHeight: 1,
+      lineHeight: 1.25,
       fontWeight: fontWeights.bold,
       textTransform: 'uppercase',
       letterSpacing: '5%',
@@ -101,20 +101,20 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
     label2: {
       fontFamily: fontFamilies.main,
       fontSize: 14,
-      lineHeight: 1,
+      lineHeight: 1.25,
       fontWeight: fontWeights.bold,
       letterSpacing: '5%',
     },
     placeholder: {
       fontFamily: fontFamilies.main,
       fontSize: 14,
-      lineHeight: 1,
+      lineHeight: 1.25,
       fontWeight: fontWeights.regular,
     },
     hint: {
       fontFamily: fontFamilies.main,
       fontSize: 12,
-      lineHeight: 1,
+      lineHeight: 1.25,
       fontWeight: fontWeights.semibold,
     },
     value1: {
