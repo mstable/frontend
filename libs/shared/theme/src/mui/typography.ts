@@ -76,6 +76,13 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
       textTransform: 'none',
       fontWeight: fontWeights.bold,
     },
+    button: {
+      fontFamily: fontFamilies.main,
+      fontSize: 14,
+      lineHeight: 1,
+      textTransform: 'none',
+      fontWeight: fontWeights.bold,
+    },
     buttonMedium: {
       fontFamily: fontFamilies.main,
       fontSize: 14,

@@ -7,12 +7,12 @@ export default {
 
 export const ButtonGroup = () => (
   <Stack direction="column" spacing={2} p={2}>
-    <MuiButtonGroup>
+    <MuiButtonGroup variant="outlined">
       <Button>One</Button>
       <Button>Two</Button>
       <Button>Three</Button>
     </MuiButtonGroup>
-    <MuiButtonGroup color="secondary">
+    <MuiButtonGroup variant="outlined" color="secondary">
       <Button>One</Button>
       <Button>Two</Button>
       <Button>Three</Button>

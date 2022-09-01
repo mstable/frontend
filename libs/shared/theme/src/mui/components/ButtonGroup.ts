@@ -11,9 +11,9 @@ export const getButtonGroup = (base: Theme): ThemeOptions => ({
       },
       styleOverrides: {
         root: {
-          border: 'none',
+          borderWidth: 2,
         },
-        grouped: {
+        groupedOutlined: {
           '&.Mui-disabled': {
             color: base.palette.action.disabled,
             backgroundColor: base.palette.action.disabledBackground,

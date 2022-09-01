@@ -1,3 +1,5 @@
+import { focusFrame } from '../utils';
+
 import type { Theme, ThemeOptions } from '@mui/material';
 
 export const getButton = (base: Theme): ThemeOptions => ({
@@ -10,6 +12,9 @@ export const getButton = (base: Theme): ThemeOptions => ({
       styleOverrides: {
         root: {
           textTransform: 'none',
+          '&.Mui-focusVisible::before': focusFrame({
+            borderColor: base.palette.primary.light,
+          }),
         },
 
         containedPrimary: {
@@ -81,22 +86,22 @@ export const getButton = (base: Theme): ThemeOptions => ({
           ...base.typography.buttonSmall,
           padding: base.spacing(1, 1.5),
           borderRadius: '8px',
-          minHeight: 36,
-          minWidth: 36,
+          minHeight: 34,
+          minWidth: 34,
         },
         sizeMedium: {
           ...base.typography.buttonMedium,
           padding: base.spacing(1.5, 2),
           borderRadius: '10px',
-          minHeight: 42,
-          minWidth: 42,
+          minHeight: 40,
+          minWidth: 40,
         },
         sizeLarge: {
           ...base.typography.buttonLarge,
           padding: base.spacing(2, 2.5),
           borderRadius: '12px',
-          minHeight: 48,
-          minWidth: 48,
+          minHeight: 46,
+          minWidth: 46,
         },
       },
     },
