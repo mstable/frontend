@@ -40,9 +40,11 @@ export const Topnav = () => {
           flexGrow={1}
           direction="row"
           justifyContent="flex-end"
-          alignItems="stretch"
+          alignItems="center"
         >
-          <OpenAccountModalButton sx={{ maxWidth: 220 }} />
+          <OpenAccountModalButton
+            sx={{ maxWidth: 180, maxHeight: 36, px: 1 }}
+          />
           <OpenNetworkModalButton />
           <Settings />
         </Stack>

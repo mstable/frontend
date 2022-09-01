@@ -17,7 +17,7 @@ import type { BoxProps } from '@mui/material';
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
-    // chain.mainnet,
+    chain.mainnet,
     // chain.ropsten,
     chain.goerli,
     // chain.kovan,

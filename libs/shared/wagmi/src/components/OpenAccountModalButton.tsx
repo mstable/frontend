@@ -17,8 +17,8 @@ export const OpenAccountModalButton = (props: ButtonProps) => {
   const showDialog = useShowDialog();
 
   const buttonProps: ButtonProps = {
-    variant: 'text',
-    color: 'inherit',
+    variant: 'contained',
+    color: 'secondary',
     ...props,
   };
 

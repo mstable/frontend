@@ -1,5 +1,3 @@
-import { focusFrame } from '../utils';
-
 import type { Theme, ThemeOptions } from '@mui/material';
 
 export const getButton = (base: Theme): ThemeOptions => ({
@@ -12,9 +10,6 @@ export const getButton = (base: Theme): ThemeOptions => ({
       styleOverrides: {
         root: {
           textTransform: 'none',
-          '&.Mui-focusVisible::before': focusFrame({
-            borderColor: base.palette.primary.light,
-          }),
         },
 
         containedPrimary: {
@@ -44,20 +39,13 @@ export const getButton = (base: Theme): ThemeOptions => ({
         },
 
         containedSecondary: {
-          backgroundSize: '300% 300%',
-          backgroundImage: `linear-gradient(135deg, ${
-            base.palette.secondary.main
-          } 0%, ${base.palette.secondary.main} 51%, ${
-            base.palette.mode === 'light'
-              ? base.palette.secondary.light
-              : base.palette.secondary.dark
-          } 100%)`,
-          transition: 'all .2s ease',
+          color: base.palette.text.primary,
+          backgroundColor: base.palette.grey[100],
           ':hover': {
-            backgroundPosition: '100% 100%',
+            backgroundColor: base.palette.grey[200],
           },
           svg: {
-            color: base.palette.secondary.contrastText,
+            color: base.palette.text.primary,
           },
           '&.Mui-disabled': {
             color: base.palette.mode === 'light' ? '#4B4E6E' : '#A7A9CE',

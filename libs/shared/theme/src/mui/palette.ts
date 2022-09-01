@@ -84,7 +84,7 @@ const light: ThemeOptions = {
       selected: alpha(colors.blue01, 0.1),
       selectedOpacity: 0.1,
       disabled: colors.black200,
-      disabledBackground: alpha(colors.lightGrey04, 0.12),
+      disabledBackground: colors.black100,
       disabledOpacity: 0.25,
       focus: alpha(colors.blue02, 0.06),
       focusOpacity: 0.06,

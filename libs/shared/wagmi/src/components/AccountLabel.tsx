@@ -40,7 +40,7 @@ export const AccountLabel = ({
     <Stack
       direction="row"
       alignItems="center"
-      spacing={1}
+      spacing={0.5}
       width={1}
       maxWidth={1}
       {...components?.container}

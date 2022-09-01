@@ -13,7 +13,7 @@ import type { StackProps } from '@mui/material';
 
 export const OperationsForm = (props: StackProps) => {
   const intl = useIntl();
-  const { address: walletAddress } = useAccount();
+  const { address: walletAddress, isConnected } = useAccount();
   const {
     assetToken,
     mvToken,
@@ -153,6 +153,9 @@ export const OperationsForm = (props: StackProps) => {
       spacing={1}
       sx={{
         border: (theme) => `1px solid ${theme.palette.divider}`,
+        ...((!walletAddress || !isConnected) && {
+          backgroundColor: 'grey.100',
+        }),
         ...props?.sx,
       }}
       {...props}
@@ -163,15 +166,25 @@ export const OperationsForm = (props: StackProps) => {
         placeholder="0.00"
         disabled={!walletAddress}
         error={isError}
+        connected={isConnected}
       />
-      <Divider role="presentation">
+      <Divider
+        role="presentation"
+        sx={{
+          '&::before, &::after': {
+            borderColor:
+              !walletAddress || !isConnected ? 'grey.200' : 'grey.100',
+          },
+        }}
+      >
         <Typography
           variant="value6"
           sx={{
             p: 0.5,
-            backgroundColor: 'background.highlight',
+            backgroundColor:
+              !walletAddress || !isConnected ? 'grey.200' : 'grey.100',
             borderRadius: '4px',
-            color: walletAddress ? 'text.primary' : 'action.disabled',
+            color: !walletAddress || !isConnected ? 'grey.400' : 'text.primary',
             minWidth: 120,
           }}
         >
@@ -184,6 +197,7 @@ export const OperationsForm = (props: StackProps) => {
         placeholder="0.00"
         disabled={!walletAddress}
         error={isError}
+        connected={isConnected}
         hideBottomRow
       />
     </Stack>

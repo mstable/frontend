@@ -32,6 +32,7 @@ export type TokenInputProps = {
   balance?: BigDecimal;
   onChange?: (newValue: BigDecimal) => void;
   hideBottomRow?: boolean;
+  connected: boolean;
   components?: {
     container?: StackProps;
   };
@@ -66,6 +67,7 @@ export const TokenInput = ({
   balance,
   onChange,
   hideBottomRow = false,
+  connected = false,
   components,
 }: TokenInputProps) => {
   const [percentage, setPercentage] = useState(0);
@@ -177,11 +179,26 @@ export const TokenInput = ({
               ))}
             </ToggleButtonGroup>
           )}
-          {balance && !disabled && (
-            <Typography variant="value6">
+          {connected && balance ? (
+            <Typography variant="value6" noWrap>
               {intl.formatMessage({ defaultMessage: 'Balance', id: 'balance' })}
               :&nbsp;
               {balance.format()}
+            </Typography>
+          ) : (
+            <Typography
+              variant="value6"
+              p={0.5}
+              color="grey.400"
+              bgcolor="grey.200"
+              borderRadius="4px"
+              height={22}
+              noWrap
+            >
+              {intl.formatMessage({
+                defaultMessage: 'Not Connected',
+                id: 'not_connected',
+              })}
             </Typography>
           )}
         </Stack>

@@ -29,8 +29,8 @@ const AppWrapped = () => {
         height: 1,
         background: (theme) =>
           [
-            `linear-gradient(transparent 42%, ${theme.palette.background.default} 42%)`,
             theme.mixins.gradients.numbTop,
+            theme.mixins.gradients.numbBottom,
             theme.mixins.gradients.colorCloud,
           ].join(','),
         backgroundAttachment: 'fixed',
