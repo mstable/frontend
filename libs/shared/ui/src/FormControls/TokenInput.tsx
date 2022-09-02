@@ -160,10 +160,10 @@ export const TokenInput = ({
                     letterSpacing: '-0.04em',
                     textTransform: 'uppercase',
                     ':hover': {
+                      color: 'primary.main',
                       borderColor: 'grey.100',
                     },
                     ...(n === percentage && {
-                      backgroundColor: 'grey.100',
                       color: 'primary.main',
                       borderColor: 'primary.main',
                       ':hover': {
