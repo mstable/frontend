@@ -3,22 +3,20 @@ import { useEffect, useState } from 'react';
 
 import { BigDecimal } from '@frontend/shared-utils';
 import {
+  Button,
   FormControl,
   InputLabel,
   Skeleton,
   Stack,
-  ToggleButton,
-  ToggleButtonGroup,
   Typography,
 } from '@mui/material';
-import { constants } from 'ethers';
 import { range } from 'ramda';
 import { useIntl } from 'react-intl';
 
 import { TokenIcon } from '../TokenIcon';
 import { BigDecimalInput } from './BigDecimalInput';
 
-import type { StackProps, Theme } from '@mui/material';
+import type { StackProps } from '@mui/material';
 import type { FetchTokenResult } from '@wagmi/core';
 
 export type TokenInputProps = {
@@ -32,29 +30,13 @@ export type TokenInputProps = {
   balance?: BigDecimal;
   onChange?: (newValue: BigDecimal) => void;
   hideBottomRow?: boolean;
-  connected: boolean;
+  hideTokenBadge?: boolean;
   components?: {
     container?: StackProps;
   };
 };
 
 const PERCENTAGE_STEPS = 4; // 25%
-
-const percentageButtonGroup = (theme: Theme) => ({
-  '& .MuiToggleButtonGroup-grouped': {
-    margin: theme.spacing(0.2, 0),
-    border: 0,
-    '&.Mui-disabled': {
-      border: 0,
-    },
-    '&:not(:first-of-type)': {
-      borderRadius: '4px',
-    },
-    '&:first-of-type': {
-      borderRadius: '4px',
-    },
-  },
-});
 
 export const TokenInput = ({
   label,
@@ -67,7 +49,7 @@ export const TokenInput = ({
   balance,
   onChange,
   hideBottomRow = false,
-  connected = false,
+  hideTokenBadge = false,
   components,
 }: TokenInputProps) => {
   const [percentage, setPercentage] = useState(0);
@@ -89,7 +71,7 @@ export const TokenInput = ({
     }
   }, [amount, balance]);
 
-  const handlePercentageChange = (_, newValue: number | null) => {
+  const handlePercentageChange = (newValue: number) => () => {
     setPercentage(newValue);
     if (onChange) {
       onChange(
@@ -119,7 +101,8 @@ export const TokenInput = ({
           disabled={disabled}
           isLoading={isLoading}
           endAdornment={
-            !disabled && (
+            !disabled &&
+            !hideTokenBadge && (
               <Stack
                 direction="row"
                 spacing={1}
@@ -158,28 +141,47 @@ export const TokenInput = ({
               sx={{ my: 1 }}
             />
           ) : (
-            <ToggleButtonGroup
-              value={percentage}
-              onChange={handlePercentageChange}
-              exclusive
-              size="small"
-              disabled={
-                !balance || balance?.exact?.eq(constants.Zero) || disabled
-              }
-              sx={percentageButtonGroup}
-            >
+            <Stack direction="row" spacing={1}>
               {range(1, PERCENTAGE_STEPS + 1).map((n) => (
-                <ToggleButton value={n} key={`percent-${n}`}>
+                <Button
+                  onClick={handlePercentageChange(n)}
+                  value={n}
+                  key={`percent-${n}`}
+                  variant="outlined"
+                  disabled={disabled}
+                  sx={{
+                    padding: 0.5,
+                    margin: 0,
+                    minWidth: 28,
+                    minHeight: 16,
+                    borderRadius: '4px',
+                    color: 'grey.500',
+                    borderColor: 'grey.100',
+                    letterSpacing: '-0.04em',
+                    textTransform: 'uppercase',
+                    ':hover': {
+                      borderColor: 'grey.100',
+                    },
+                    ...(n === percentage && {
+                      backgroundColor: 'grey.100',
+                      color: 'primary.main',
+                      borderColor: 'primary.main',
+                      ':hover': {
+                        borderColor: 'primary.main',
+                      },
+                    }),
+                  }}
+                >
                   {`${
                     n === PERCENTAGE_STEPS
                       ? 'MAX'
                       : `${n * (100 / PERCENTAGE_STEPS)}%`
                   }`}
-                </ToggleButton>
+                </Button>
               ))}
-            </ToggleButtonGroup>
+            </Stack>
           )}
-          {connected && balance ? (
+          {!disabled && balance ? (
             <Typography variant="value6" noWrap>
               {intl.formatMessage({ defaultMessage: 'Balance', id: 'balance' })}
               :&nbsp;

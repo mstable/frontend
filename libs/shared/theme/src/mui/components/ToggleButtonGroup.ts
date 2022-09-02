@@ -1,14 +1,13 @@
+import { toggleButtonClasses } from '@mui/material';
+
 import type { Theme, ThemeOptions } from '@mui/material';
 
 export const getToggleButtonGroup = (base: Theme): ThemeOptions => ({
   components: {
     MuiToggleButtonGroup: {
-      defaultProps: {
-        color: 'standard',
-      },
       styleOverrides: {
         root: {
-          '.MuiToggleButton-standard': {
+          [`.${toggleButtonClasses.standard}`]: {
             color: base.palette.text.primary,
             borderColor: base.palette.grey[100],
             ':hover': { backgroundColor: base.palette.grey[200] },
@@ -17,7 +16,7 @@ export const getToggleButtonGroup = (base: Theme): ThemeOptions => ({
               ':hover': { backgroundColor: base.palette.grey[200] },
             },
           },
-          '.MuiToggleButton-secondary': {
+          [`.${toggleButtonClasses.secondary}`]: {
             color: base.palette.grey[50],
             borderColor: base.palette.grey[800],
             backgroundColor: base.palette.grey[900],
@@ -28,7 +27,7 @@ export const getToggleButtonGroup = (base: Theme): ThemeOptions => ({
               ':hover': { backgroundColor: base.palette.grey[700] },
             },
           },
-          '.MuiToggleButton-sizeSmall': {
+          [`.${toggleButtonClasses.sizeSmall}`]: {
             '&:first-of-type': {
               borderTopLeftRadius: '8px',
               borderBottomLeftRadius: '8px',
@@ -38,7 +37,7 @@ export const getToggleButtonGroup = (base: Theme): ThemeOptions => ({
               borderBottomRightRadius: '8px',
             },
           },
-          '.MuiToggleButton-sizeMedium': {
+          [`.${toggleButtonClasses.sizeMedium}`]: {
             '&:first-of-type': {
               borderTopLeftRadius: '10px',
               borderBottomLeftRadius: '10px',
@@ -48,7 +47,7 @@ export const getToggleButtonGroup = (base: Theme): ThemeOptions => ({
               borderBottomRightRadius: '10px',
             },
           },
-          '.MuiToggleButton-sizeLarge': {
+          [`.${toggleButtonClasses.sizeLarge}`]: {
             '&:first-of-type': {
               borderTopLeftRadius: '12px',
               borderBottomLeftRadius: '12px',

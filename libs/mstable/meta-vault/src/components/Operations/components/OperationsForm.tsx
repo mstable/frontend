@@ -13,7 +13,7 @@ import type { StackProps } from '@mui/material';
 
 export const OperationsForm = (props: StackProps) => {
   const intl = useIntl();
-  const { address: walletAddress, isConnected } = useAccount();
+  const { address: walletAddress } = useAccount();
   const {
     assetToken,
     mvToken,
@@ -48,6 +48,7 @@ export const OperationsForm = (props: StackProps) => {
           amount: amount,
           token: mvToken,
           balance: mvBalance,
+          hideTokenBadge: true,
         },
         withdraw: {
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
@@ -55,6 +56,7 @@ export const OperationsForm = (props: StackProps) => {
           token: mvToken,
           balance: mvBalance,
           isLoading,
+          hideTokenBadge: true,
         },
       }[operation]),
     [
@@ -78,11 +80,13 @@ export const OperationsForm = (props: StackProps) => {
           amount: preview,
           token: mvToken,
           isLoading,
+          hideTokenBadge: true,
         },
         mint: {
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
           amount: amount,
           token: mvToken,
+          hideTokenBadge: true,
         },
         redeem: {
           label: intl.formatMessage({ defaultMessage: 'Tokens' }),
@@ -153,7 +157,7 @@ export const OperationsForm = (props: StackProps) => {
       spacing={1}
       sx={{
         border: (theme) => `1px solid ${theme.palette.divider}`,
-        ...((!walletAddress || !isConnected) && {
+        ...(!walletAddress && {
           backgroundColor: 'grey.100',
         }),
         ...props?.sx,
@@ -166,14 +170,12 @@ export const OperationsForm = (props: StackProps) => {
         placeholder="0.00"
         disabled={!walletAddress}
         error={isError}
-        connected={isConnected}
       />
       <Divider
         role="presentation"
         sx={{
           '&::before, &::after': {
-            borderColor:
-              !walletAddress || !isConnected ? 'grey.200' : 'grey.100',
+            borderColor: !walletAddress ? 'grey.200' : 'grey.100',
           },
         }}
       >
@@ -181,10 +183,9 @@ export const OperationsForm = (props: StackProps) => {
           variant="value6"
           sx={{
             p: 0.5,
-            backgroundColor:
-              !walletAddress || !isConnected ? 'grey.200' : 'grey.100',
+            backgroundColor: !walletAddress ? 'grey.200' : 'grey.100',
             borderRadius: '4px',
-            color: !walletAddress || !isConnected ? 'grey.400' : 'text.primary',
+            color: !walletAddress ? 'grey.400' : 'text.primary',
             minWidth: 120,
           }}
         >
@@ -197,7 +198,6 @@ export const OperationsForm = (props: StackProps) => {
         placeholder="0.00"
         disabled={!walletAddress}
         error={isError}
-        connected={isConnected}
         hideBottomRow
       />
     </Stack>
