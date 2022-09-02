@@ -3,7 +3,14 @@ import {
   OpenAccountModalButton,
   OpenNetworkModalButton,
 } from '@frontend/shared-wagmi';
-import { AppBar, Button, Stack, useMediaQuery, useTheme } from '@mui/material';
+import {
+  alpha,
+  AppBar,
+  Button,
+  Stack,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 
 import { Settings } from './Settings';
@@ -24,7 +31,9 @@ export const Topnav = () => {
           py: 1,
           px: (theme) => theme.mixins.paddings.page.paddingX,
           borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
-          backgroundColor: 'background.default',
+          backgroundColor: (theme) =>
+            alpha(theme.palette.background.default, 0.5),
+          backdropFilter: 'blur(20px)',
         }}
       >
         <Button
