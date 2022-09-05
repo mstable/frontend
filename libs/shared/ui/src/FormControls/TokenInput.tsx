@@ -182,7 +182,7 @@ export const TokenInput = ({
             </Stack>
           )}
           {!disabled && balance ? (
-            <Typography variant="value6" noWrap>
+            <Typography variant="value6" sx={{ color: 'grey.600' }} noWrap>
               {intl.formatMessage({ defaultMessage: 'Balance', id: 'balance' })}
               :&nbsp;
               {balance.format()}

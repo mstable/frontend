@@ -185,7 +185,7 @@ export const OperationsForm = (props: StackProps) => {
             p: 0.5,
             backgroundColor: !walletAddress ? 'grey.200' : 'grey.100',
             borderRadius: '4px',
-            color: !walletAddress ? 'grey.400' : 'text.primary',
+            color: !walletAddress ? 'grey.400' : 'grey.600',
             minWidth: 120,
           }}
         >
