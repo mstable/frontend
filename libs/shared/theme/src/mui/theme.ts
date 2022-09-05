@@ -32,6 +32,7 @@ import { getSelect } from './components/Select';
 import { getTextField } from './components/TextField';
 import { getToggleButton } from './components/ToggleButton';
 import { getToggleButtonGroup } from './components/ToggleButtonGroup';
+import { getTooltip } from './components/Tooltip';
 import { getTypography } from './components/Typography';
 import { getMixinsOptions } from './mixins';
 import { getPaletteOptions } from './palette';
@@ -85,6 +86,7 @@ export const getTheme = (mode: PaletteMode) => {
     getTextField(base),
     getToggleButton(base),
     getToggleButtonGroup(base),
+    getTooltip(base),
     getTypography(base),
   );
 };
