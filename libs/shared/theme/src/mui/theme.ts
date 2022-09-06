@@ -29,6 +29,7 @@ import { getOutlinedInput } from './components/OutlinedInput';
 import { getPaper } from './components/Paper';
 import { getRadio } from './components/Radio';
 import { getSelect } from './components/Select';
+import { getTab } from './components/Tab';
 import { getTextField } from './components/TextField';
 import { getToggleButton } from './components/ToggleButton';
 import { getToggleButtonGroup } from './components/ToggleButtonGroup';
@@ -83,6 +84,7 @@ export const getTheme = (mode: PaletteMode) => {
     getPaper(base),
     getRadio(base),
     getSelect(base),
+    getTab(base),
     getTextField(base),
     getToggleButton(base),
     getToggleButtonGroup(base),

@@ -112,7 +112,7 @@ export const OperationsForm = (props: StackProps) => {
     setAmount(newValue);
   };
 
-  const handleDownChange = (newValue: BigDecimal) => {
+  const handleSecondaryChange = (newValue: BigDecimal) => {
     const newOp = tab === 0 ? 'mint' : 'withdraw';
     if (newOp !== operation) {
       changeOperation(newOp);
@@ -158,7 +158,7 @@ export const OperationsForm = (props: StackProps) => {
       sx={{
         border: (theme) => `1px solid ${theme.palette.divider}`,
         ...(!walletAddress && {
-          backgroundColor: 'grey.100',
+          backgroundColor: 'background.highlight',
         }),
         ...props?.sx,
       }}
@@ -175,7 +175,9 @@ export const OperationsForm = (props: StackProps) => {
         role="presentation"
         sx={{
           '&::before, &::after': {
-            borderColor: !walletAddress ? 'grey.200' : 'grey.100',
+            borderColor: !walletAddress
+              ? 'action.disabledBackground'
+              : 'background.highlight',
           },
         }}
       >
@@ -183,9 +185,11 @@ export const OperationsForm = (props: StackProps) => {
           variant="value6"
           sx={{
             p: 0.5,
-            backgroundColor: !walletAddress ? 'grey.200' : 'grey.100',
+            backgroundColor: !walletAddress
+              ? 'action.disabledBackground'
+              : 'background.highlight',
             borderRadius: '4px',
-            color: !walletAddress ? 'grey.400' : 'grey.600',
+            color: !walletAddress ? 'text.disabled' : 'text.secondary',
             minWidth: 120,
           }}
         >
@@ -194,7 +198,7 @@ export const OperationsForm = (props: StackProps) => {
       </Divider>
       <TokenInput
         {...secondaryInput}
-        onChange={handleDownChange}
+        onChange={handleSecondaryChange}
         placeholder="0.00"
         disabled={!walletAddress}
         error={isError}

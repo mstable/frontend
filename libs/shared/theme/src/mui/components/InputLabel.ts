@@ -14,10 +14,7 @@ export const getInputLabel = (base: Theme): ThemeOptions => ({
           transition: 'none',
           zIndex: 'auto',
           pointerEvents: 'auto',
-          color:
-            base.palette.mode === 'light'
-              ? base.palette.grey[600]
-              : base.palette.grey[300],
+          color: base.palette.text.secondary,
         },
       },
     },

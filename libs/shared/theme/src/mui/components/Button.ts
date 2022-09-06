@@ -40,19 +40,24 @@ export const getButton = (base: Theme): ThemeOptions => ({
 
         containedSecondary: {
           color: base.palette.text.primary,
-          backgroundColor: base.palette.grey[100],
+          backgroundColor:
+            base.palette.mode === 'light'
+              ? base.palette.grey[100]
+              : base.palette.grey[800],
           ':hover': {
-            backgroundColor: base.palette.grey[200],
+            backgroundColor:
+              base.palette.mode === 'light'
+                ? base.palette.grey[200]
+                : base.palette.grey[700],
           },
           svg: {
             color: base.palette.text.primary,
           },
           '&.Mui-disabled': {
-            color: base.palette.mode === 'light' ? '#4B4E6E' : '#A7A9CE',
-            backgroundColor:
-              base.palette.mode === 'light' ? '#8688AC' : '#DEDFFF',
+            color: base.palette.text.disabled,
+            backgroundColor: base.palette.action.disabledBackground,
             svg: {
-              color: base.palette.mode === 'light' ? '#4B4E6E' : '#A7A9CE',
+              color: base.palette.text.disabled,
             },
           },
         },
