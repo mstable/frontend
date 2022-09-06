@@ -10,9 +10,9 @@ export const getDivider = (base: Theme): ThemeOptions => ({
         light: {
           borderColor: base.palette.action.disabledBackground,
         },
-        withChildren: (ownerState) => ({
+        withChildren: ({ ownerState }) => ({
           '::before, ::after': {
-            borderColor: ownerState.ownerState.light
+            borderColor: ownerState.light
               ? base.palette.action.disabledBackground
               : base.palette.divider,
           },
@@ -22,7 +22,7 @@ export const getDivider = (base: Theme): ThemeOptions => ({
             backgroundColor: base.palette.divider,
             color: base.palette.text.secondary,
             minWidth: 120,
-            ...(ownerState.ownerState.light && {
+            ...(ownerState.light && {
               backgroundColor: base.palette.action.disabledBackground,
               color: base.palette.text.disabled,
             }),

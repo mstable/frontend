@@ -29,11 +29,11 @@ export const getButton = (base: Theme): ThemeOptions => ({
             color: base.palette.primary.contrastText,
           },
           '&.Mui-disabled': {
-            color: base.palette.grey[400],
             backgroundImage: 'none',
-            backgroundColor: base.palette.grey[100],
+            color: base.palette.text.disabled,
+            backgroundColor: base.palette.action.disabledBackground,
             svg: {
-              color: base.palette.grey[400],
+              color: base.palette.text.disabled,
             },
           },
         },
@@ -71,6 +71,12 @@ export const getButton = (base: Theme): ThemeOptions => ({
             color: base.palette.text.primary,
             ':hover': {
               color: base.palette.text.secondary,
+            },
+          },
+          '&.Mui-disabled': {
+            color: base.palette.text.disabled,
+            svg: {
+              color: base.palette.text.disabled,
             },
           },
         },
