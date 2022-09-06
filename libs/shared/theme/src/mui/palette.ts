@@ -104,7 +104,7 @@ const dark: ThemeOptions = mergeDeepRight(light, {
     text: {
       primary: colors.black50,
       secondary: colors.black500,
-      disabled: colors.black700,
+      disabled: colors.black400,
     },
     background: {
       default: colors.black900,
@@ -112,22 +112,6 @@ const dark: ThemeOptions = mergeDeepRight(light, {
       highlight: colors.black800,
     },
     divider: colors.black800,
-    grey: {
-      '50': colors.black900,
-      '100': colors.black800,
-      '200': colors.black700,
-      '300': colors.black600,
-      '400': colors.black500,
-      '500': colors.black400,
-      '600': colors.black300,
-      '700': colors.black200,
-      '800': colors.black100,
-      '900': colors.black50,
-      A100: colors.lightGrey04,
-      A200: colors.lightGrey03,
-      A400: colors.lightGrey02,
-      A700: colors.lightGrey01,
-    },
   },
 });
 
