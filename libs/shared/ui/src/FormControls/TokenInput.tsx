@@ -16,7 +16,7 @@ import { useIntl } from 'react-intl';
 import { TokenIcon } from '../TokenIcon';
 import { BigDecimalInput } from './BigDecimalInput';
 
-import type { StackProps, SxProps } from '@mui/material';
+import type { ButtonProps, StackProps, SxProps } from '@mui/material';
 import type { FetchTokenResult } from '@wagmi/core';
 
 export type TokenInputProps = {
@@ -39,12 +39,54 @@ export type TokenInputProps = {
 const PERCENTAGE_STEPS = 4; // 25%
 
 const balanceStyles: SxProps = {
-  color: 'text.secondary',
-  backgroundColor: 'background.highlight',
   paddingX: 0.5,
   paddingY: 0.75,
   borderRadius: '4px',
 };
+
+const PercentageButton = (props: ButtonProps) => (
+  <Button
+    {...props}
+    variant="outlined"
+    size="small"
+    sx={(theme) => ({
+      padding: 0.5,
+      margin: 0,
+      minWidth: 28,
+      minHeight: 16,
+      borderRadius: '4px',
+      color:
+        theme.palette.mode === 'light'
+          ? theme.palette.grey[600]
+          : theme.palette.grey[500],
+      borderColor:
+        theme.palette.mode === 'light'
+          ? theme.palette.grey[100]
+          : theme.palette.grey[800],
+      letterSpacing: '-0.04em',
+      textTransform: 'uppercase',
+      ':hover': {
+        color: 'primary.main',
+        borderColor:
+          theme.palette.mode === 'light'
+            ? theme.palette.grey[100]
+            : theme.palette.grey[800],
+        backgroundColor:
+          theme.palette.mode === 'light'
+            ? theme.palette.grey[100]
+            : theme.palette.grey[800],
+      },
+      '&.Mui-disabled': {
+        color: 'text.disabled',
+        borderColor: 'action.disabledBackground',
+        ':hover': {
+          borderColor: 'text.disabled',
+        },
+      },
+      ...props?.sx,
+    })}
+  />
+);
 
 export const TokenInput = ({
   label,
@@ -150,28 +192,14 @@ export const TokenInput = ({
               sx={{ my: 1 }}
             />
           ) : (
-            <Stack direction="row" spacing={1}>
+            <Stack direction="row" spacing={0.5}>
               {range(1, PERCENTAGE_STEPS + 1).map((n) => (
-                <Button
+                <PercentageButton
                   onClick={handlePercentageChange(n)}
                   value={n}
                   key={`percent-${n}`}
-                  variant="outlined"
                   disabled={disabled}
                   sx={{
-                    padding: 0.5,
-                    margin: 0,
-                    minWidth: 28,
-                    minHeight: 16,
-                    borderRadius: '4px',
-                    color: 'grey.500',
-                    borderColor: 'text.secondary',
-                    letterSpacing: '-0.04em',
-                    textTransform: 'uppercase',
-                    ':hover': {
-                      color: 'primary.main',
-                      borderColor: 'text.secondary',
-                    },
                     ...(n === percentage && {
                       color: 'primary.main',
                       borderColor: 'primary.main',
@@ -186,18 +214,34 @@ export const TokenInput = ({
                       ? 'MAX'
                       : `${n * (100 / PERCENTAGE_STEPS)}%`
                   }`}
-                </Button>
+                </PercentageButton>
               ))}
             </Stack>
           )}
           {!disabled && balance ? (
-            <Typography variant="value6" sx={balanceStyles} noWrap>
+            <Typography
+              variant="value6"
+              sx={{
+                ...balanceStyles,
+                color: 'text.secondary',
+                backgroundColor: 'background.highlight',
+              }}
+              noWrap
+            >
               {intl.formatMessage({ defaultMessage: 'Balance', id: 'balance' })}
               :&nbsp;
               {balance.format()}
             </Typography>
           ) : (
-            <Typography variant="value6" noWrap sx={balanceStyles}>
+            <Typography
+              variant="value6"
+              noWrap
+              sx={{
+                ...balanceStyles,
+                color: 'text.disabled',
+                backgroundColor: 'action.disabledBackground',
+              }}
+            >
               {intl.formatMessage({
                 defaultMessage: 'Not Connected',
                 id: 'not_connected',
