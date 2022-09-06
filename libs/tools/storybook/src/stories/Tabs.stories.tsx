@@ -1,15 +1,15 @@
 import { useState } from 'react';
 
-import { Stack, Tab, Tabs as MuiTabs, Typography } from '@mui/material';
+import { Stack, Tab, Tabs, Typography } from '@mui/material';
 
 import type { SyntheticEvent } from 'react';
 
 export default {
   title: 'Theme/Tabs',
-  component: MuiTabs,
+  component: Tabs,
 };
 
-export const Tabs = () => {
+const Template = () => {
   const [idx, setIdx] = useState(0);
 
   const handleChange = (_: SyntheticEvent, newValue: number) => {
@@ -18,14 +18,20 @@ export const Tabs = () => {
 
   return (
     <Stack direction="column" spacing={2} p={2}>
-      <MuiTabs value={idx} onChange={handleChange}>
+      <Tabs value={idx} onChange={handleChange}>
         <Tab label="One" />
         <Tab label="Two" />
         <Tab label="Three" />
-      </MuiTabs>
+      </Tabs>
       <Stack pt={2}>
         <Typography>Content tab {idx}</Typography>
       </Stack>
     </Stack>
   );
 };
+
+export const Light = Template.bind({});
+Light.args = { themeMode: 'light' };
+
+export const Dark = Template.bind({});
+Dark.args = { themeMode: 'dark' };

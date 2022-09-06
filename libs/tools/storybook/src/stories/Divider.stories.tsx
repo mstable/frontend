@@ -1,14 +1,14 @@
-import { Divider as MuiDivider, Stack, Typography } from '@mui/material';
+import { Divider, Stack, Typography } from '@mui/material';
 
 import { LoremIpsum } from '../components/LoremIpsum';
 
 export default {
   title: 'Theme/Divider',
-  component: MuiDivider,
+  component: Divider,
 };
 
 const CustomDivider = () => (
-  <MuiDivider
+  <Divider
     role="presentation"
     sx={{
       '&::before, &::after': {
@@ -28,15 +28,21 @@ const CustomDivider = () => (
     >
       Divider text
     </Typography>
-  </MuiDivider>
+  </Divider>
 );
 
-export const Divider = () => (
+const Template = () => (
   <Stack direction="column" spacing={2} p={2}>
     <LoremIpsum />
-    <MuiDivider />
+    <Divider />
     <LoremIpsum />
     <CustomDivider />
     <LoremIpsum />
   </Stack>
 );
+
+export const Light = Template.bind({});
+Light.args = { themeMode: 'light' };
+
+export const Dark = Template.bind({});
+Dark.args = { themeMode: 'dark' };

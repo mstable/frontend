@@ -3,13 +3,14 @@ import { useState } from 'react';
 import {
   Checkbox as MuiCheckbox,
   FormControl,
-  FormControlLabel as MuiFormControlLabel,
+  FormControlLabel,
   FormGroup,
   InputLabel,
   MenuItem,
   Radio as MuiRadio,
   RadioGroup,
   Select as MuiSelect,
+  Stack,
 } from '@mui/material';
 
 import type { SelectChangeEvent } from '@mui/material';
@@ -18,46 +19,14 @@ export default {
   title: 'Theme/FormControls',
   subcomponents: {
     FormControl,
-    FormControlLabel: MuiFormControlLabel,
+    FormControlLabel,
     FormGroup,
     RadioGroup,
     InputLabel,
   },
 };
 
-export const Checkbox = () => (
-  <FormGroup>
-    <MuiFormControlLabel control={<MuiCheckbox />} label="Label" />
-    <MuiFormControlLabel
-      control={<MuiCheckbox defaultChecked />}
-      label="Label"
-    />
-    <MuiFormControlLabel disabled control={<MuiCheckbox />} label="Disabled" />
-  </FormGroup>
-);
-
-export const Radio = () => (
-  <RadioGroup defaultValue={1}>
-    <MuiFormControlLabel
-      value={1}
-      control={<MuiRadio defaultChecked />}
-      label="Label 1"
-    />
-    <MuiFormControlLabel
-      value={2}
-      control={<MuiRadio defaultChecked />}
-      label="Label 2"
-    />
-    <MuiFormControlLabel
-      value={3}
-      control={<MuiRadio defaultChecked />}
-      label="Label 3"
-    />
-    <MuiFormControlLabel disabled control={<MuiRadio />} label="Disabled" />
-  </RadioGroup>
-);
-
-export const Select = () => {
+const Template = () => {
   const [selected, setSelected] = useState('0');
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -65,41 +34,75 @@ export const Select = () => {
   };
 
   return (
-    <FormGroup>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="label">Label</InputLabel>
-        <MuiSelect
-          labelId="label"
-          id="select"
-          value={selected}
+    <Stack direction="column" spacing={2} p={2}>
+      <FormGroup>
+        <FormControlLabel control={<MuiCheckbox />} label="Label" />
+        <FormControlLabel
+          control={<MuiCheckbox defaultChecked />}
           label="Label"
-          onChange={handleChange}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value="1">Ten</MenuItem>
-          <MenuItem value="2">Twenty</MenuItem>
-          <MenuItem value="3">Thirty</MenuItem>
-        </MuiSelect>
-      </FormControl>
-      <FormControl disabled sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="label">Label</InputLabel>
-        <MuiSelect
-          labelId="label"
-          id="select"
-          value={selected}
-          label="Label"
-          onChange={handleChange}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value="1">Ten</MenuItem>
-          <MenuItem value="2">Twenty</MenuItem>
-          <MenuItem value="3">Thirty</MenuItem>
-        </MuiSelect>
-      </FormControl>
-    </FormGroup>
+        />
+        <FormControlLabel disabled control={<MuiCheckbox />} label="Disabled" />
+      </FormGroup>
+      <RadioGroup defaultValue={1}>
+        <FormControlLabel
+          value={1}
+          control={<MuiRadio defaultChecked />}
+          label="Label 1"
+        />
+        <FormControlLabel
+          value={2}
+          control={<MuiRadio defaultChecked />}
+          label="Label 2"
+        />
+        <FormControlLabel
+          value={3}
+          control={<MuiRadio defaultChecked />}
+          label="Label 3"
+        />
+        <FormControlLabel disabled control={<MuiRadio />} label="Disabled" />
+      </RadioGroup>
+      <FormGroup>
+        <FormControl sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="label">Label</InputLabel>
+          <MuiSelect
+            labelId="label"
+            id="select"
+            value={selected}
+            label="Label"
+            onChange={handleChange}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value="1">Ten</MenuItem>
+            <MenuItem value="2">Twenty</MenuItem>
+            <MenuItem value="3">Thirty</MenuItem>
+          </MuiSelect>
+        </FormControl>
+        <FormControl disabled sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="label">Label</InputLabel>
+          <MuiSelect
+            labelId="label"
+            id="select"
+            value={selected}
+            label="Label"
+            onChange={handleChange}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value="1">Ten</MenuItem>
+            <MenuItem value="2">Twenty</MenuItem>
+            <MenuItem value="3">Thirty</MenuItem>
+          </MuiSelect>
+        </FormControl>
+      </FormGroup>
+    </Stack>
   );
 };
+
+export const Light = Template.bind({});
+Light.args = { themeMode: 'light' };
+
+export const Dark = Template.bind({});
+Dark.args = { themeMode: 'dark' };

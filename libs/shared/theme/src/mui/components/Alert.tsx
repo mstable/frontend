@@ -50,6 +50,12 @@ export const getAlert = (base: Theme): ThemeOptions => ({
             margin: base.spacing(-0.5),
           },
         },
+        standard: {
+          color:
+            base.palette.mode === 'light'
+              ? base.palette.text.primary
+              : base.palette.grey[900],
+        },
         standardInfo: {
           backgroundColor: lighten(base.palette.info.main, 0.8),
           '.MuiAlert-icon': {

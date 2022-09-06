@@ -1,76 +1,82 @@
-import { Alert as MuiAlert, AlertTitle, Stack } from '@mui/material';
+import { Alert, AlertTitle, Stack } from '@mui/material';
 
 export default {
   title: 'Theme/Alert',
-  component: MuiAlert,
+  component: Alert,
 };
 
-export const Alert = () => (
+const Template = () => (
   <Stack direction="column" spacing={2} p={2}>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiAlert severity="info" onClose={() => {}}>
+      <Alert severity="info" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
-      </MuiAlert>
-      <MuiAlert severity="error" onClose={() => {}}>
+      </Alert>
+      <Alert severity="error" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
-      </MuiAlert>
-      <MuiAlert severity="success" onClose={() => {}}>
+      </Alert>
+      <Alert severity="success" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
-      </MuiAlert>
-      <MuiAlert severity="warning" onClose={() => {}}>
+      </Alert>
+      <Alert severity="warning" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
-      </MuiAlert>
+      </Alert>
     </Stack>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiAlert severity="info" onClose={() => {}}>
+      <Alert severity="info" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
         Content
-      </MuiAlert>
-      <MuiAlert severity="error" onClose={() => {}}>
+      </Alert>
+      <Alert severity="error" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
         Content
-      </MuiAlert>
-      <MuiAlert severity="success" onClose={() => {}}>
+      </Alert>
+      <Alert severity="success" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
         Content
-      </MuiAlert>
-      <MuiAlert severity="warning" onClose={() => {}}>
+      </Alert>
+      <Alert severity="warning" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
         Content
-      </MuiAlert>
+      </Alert>
     </Stack>
     <br />
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiAlert variant="filled" severity="info" onClose={() => {}}>
+      <Alert variant="filled" severity="info" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
-      </MuiAlert>
-      <MuiAlert variant="filled" severity="error" onClose={() => {}}>
+      </Alert>
+      <Alert variant="filled" severity="error" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
-      </MuiAlert>
-      <MuiAlert variant="filled" severity="success" onClose={() => {}}>
+      </Alert>
+      <Alert variant="filled" severity="success" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
-      </MuiAlert>
-      <MuiAlert variant="filled" severity="warning" onClose={() => {}}>
+      </Alert>
+      <Alert variant="filled" severity="warning" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
-      </MuiAlert>
+      </Alert>
     </Stack>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiAlert variant="filled" severity="info" onClose={() => {}}>
+      <Alert variant="filled" severity="info" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
         Content
-      </MuiAlert>
-      <MuiAlert variant="filled" severity="error" onClose={() => {}}>
+      </Alert>
+      <Alert variant="filled" severity="error" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
         Content
-      </MuiAlert>
-      <MuiAlert variant="filled" severity="success" onClose={() => {}}>
+      </Alert>
+      <Alert variant="filled" severity="success" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
         Content
-      </MuiAlert>
-      <MuiAlert variant="filled" severity="warning" onClose={() => {}}>
+      </Alert>
+      <Alert variant="filled" severity="warning" onClose={() => {}}>
         <AlertTitle>Title</AlertTitle>
         Content
-      </MuiAlert>
+      </Alert>
     </Stack>
   </Stack>
 );
+
+export const Light = Template.bind({});
+Light.args = { themeMode: 'light' };
+
+export const Dark = Template.bind({});
+Dark.args = { themeMode: 'dark' };

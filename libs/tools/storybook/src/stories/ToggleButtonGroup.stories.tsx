@@ -1,19 +1,15 @@
 import { useState } from 'react';
 
-import {
-  Stack,
-  ToggleButton,
-  ToggleButtonGroup as MuiToggleButtonGroup,
-} from '@mui/material';
+import { Stack, ToggleButton, ToggleButtonGroup } from '@mui/material';
 
 export default {
   title: 'Theme/ToggleButtonGroup',
-  component: MuiToggleButtonGroup,
+  component: ToggleButtonGroup,
 };
 
 type Val = 'USDT' | 'DAI' | 'USDC';
 
-export const ToggleButtonGroup = () => {
+const Template = () => {
   const [val, setVal] = useState<Val>('USDC');
 
   const handleClick = (_, newVal: Val) => {
@@ -23,7 +19,7 @@ export const ToggleButtonGroup = () => {
   return (
     <Stack direction="column" spacing={2} p={2}>
       <Stack direction="row" spacing={2}>
-        <MuiToggleButtonGroup
+        <ToggleButtonGroup
           size="small"
           value={val}
           exclusive
@@ -32,9 +28,9 @@ export const ToggleButtonGroup = () => {
           <ToggleButton value="USDT">USDT</ToggleButton>
           <ToggleButton value="DAI">DAI</ToggleButton>
           <ToggleButton value="USDC">USDC</ToggleButton>
-        </MuiToggleButtonGroup>
+        </ToggleButtonGroup>
 
-        <MuiToggleButtonGroup
+        <ToggleButtonGroup
           size="small"
           value={val}
           exclusive
@@ -44,17 +40,17 @@ export const ToggleButtonGroup = () => {
           <ToggleButton value="USDT">USDT</ToggleButton>
           <ToggleButton value="DAI">DAI</ToggleButton>
           <ToggleButton value="USDC">USDC</ToggleButton>
-        </MuiToggleButtonGroup>
+        </ToggleButtonGroup>
       </Stack>
 
       <Stack direction="row" spacing={2}>
-        <MuiToggleButtonGroup value={val} exclusive onChange={handleClick}>
+        <ToggleButtonGroup value={val} exclusive onChange={handleClick}>
           <ToggleButton value="USDT">USDT</ToggleButton>
           <ToggleButton value="DAI">DAI</ToggleButton>
           <ToggleButton value="USDC">USDC</ToggleButton>
-        </MuiToggleButtonGroup>
+        </ToggleButtonGroup>
 
-        <MuiToggleButtonGroup
+        <ToggleButtonGroup
           value={val}
           exclusive
           onChange={handleClick}
@@ -63,11 +59,11 @@ export const ToggleButtonGroup = () => {
           <ToggleButton value="USDT">USDT</ToggleButton>
           <ToggleButton value="DAI">DAI</ToggleButton>
           <ToggleButton value="USDC">USDC</ToggleButton>
-        </MuiToggleButtonGroup>
+        </ToggleButtonGroup>
       </Stack>
 
       <Stack direction="row" spacing={2}>
-        <MuiToggleButtonGroup
+        <ToggleButtonGroup
           size="large"
           value={val}
           exclusive
@@ -76,9 +72,9 @@ export const ToggleButtonGroup = () => {
           <ToggleButton value="USDT">USDT</ToggleButton>
           <ToggleButton value="DAI">DAI</ToggleButton>
           <ToggleButton value="USDC">USDC</ToggleButton>
-        </MuiToggleButtonGroup>
+        </ToggleButtonGroup>
 
-        <MuiToggleButtonGroup
+        <ToggleButtonGroup
           size="large"
           value={val}
           exclusive
@@ -88,8 +84,14 @@ export const ToggleButtonGroup = () => {
           <ToggleButton value="USDT">USDT</ToggleButton>
           <ToggleButton value="DAI">DAI</ToggleButton>
           <ToggleButton value="USDC">USDC</ToggleButton>
-        </MuiToggleButtonGroup>
+        </ToggleButtonGroup>
       </Stack>
     </Stack>
   );
 };
+
+export const Light = Template.bind({});
+Light.args = { themeMode: 'light' };
+
+export const Dark = Template.bind({});
+Dark.args = { themeMode: 'dark' };

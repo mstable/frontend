@@ -1,12 +1,12 @@
 import { forwardRef } from 'react';
 
-import { Stack, Tooltip as MuiTooltip, Typography } from '@mui/material';
+import { Stack, Tooltip, Typography } from '@mui/material';
 
 import type { TypographyProps } from '@mui/material';
 
 export default {
   title: 'Theme/Tooltip',
-  component: MuiTooltip,
+  component: Tooltip,
 };
 
 const tooltipLabel =
@@ -28,14 +28,20 @@ const Trigger = forwardRef<HTMLSpanElement, TypographyProps>((props, ref) => (
 ));
 Trigger.displayName = 'trigger';
 
-export const Tooltip = () => (
+const Template = () => (
   <Stack direction="row" spacing={2} p={2} alignItems="center">
-    <MuiTooltip title={tooltipLabel}>
+    <Tooltip title={tooltipLabel}>
       <Trigger>Hover no arrow</Trigger>
-    </MuiTooltip>
+    </Tooltip>
 
-    <MuiTooltip title={tooltipLabel} arrow>
+    <Tooltip title={tooltipLabel} arrow>
       <Trigger>Hover with arrow</Trigger>
-    </MuiTooltip>
+    </Tooltip>
   </Stack>
 );
+
+export const Light = Template.bind({});
+Light.args = { themeMode: 'light' };
+
+export const Dark = Template.bind({});
+Dark.args = { themeMode: 'dark' };

@@ -1,35 +1,41 @@
-import { Radio as MuiRadio, Stack } from '@mui/material';
+import { Radio, Stack } from '@mui/material';
 
 export default {
   title: 'Theme/Radio',
-  component: MuiRadio,
+  component: Radio,
 };
 
-export const Radio = () => (
+const Template = () => (
   <Stack direction="column" spacing={2} p={2}>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiRadio defaultChecked />
-      <MuiRadio />
-      <MuiRadio disabled />
-      <MuiRadio disabled checked />
+      <Radio defaultChecked />
+      <Radio />
+      <Radio disabled />
+      <Radio disabled checked />
     </Stack>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiRadio size="small" defaultChecked />
-      <MuiRadio size="small" />
-      <MuiRadio size="small" disabled />
-      <MuiRadio size="small" disabled checked />
+      <Radio size="small" defaultChecked />
+      <Radio size="small" />
+      <Radio size="small" disabled />
+      <Radio size="small" disabled checked />
     </Stack>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiRadio color="secondary" defaultChecked />
-      <MuiRadio color="secondary" />
-      <MuiRadio color="secondary" disabled />
-      <MuiRadio color="secondary" disabled checked />
+      <Radio color="secondary" defaultChecked />
+      <Radio color="secondary" />
+      <Radio color="secondary" disabled />
+      <Radio color="secondary" disabled checked />
     </Stack>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiRadio color="secondary" size="small" defaultChecked />
-      <MuiRadio color="secondary" size="small" />
-      <MuiRadio color="secondary" size="small" disabled />
-      <MuiRadio color="secondary" size="small" disabled checked />
+      <Radio color="secondary" size="small" defaultChecked />
+      <Radio color="secondary" size="small" />
+      <Radio color="secondary" size="small" disabled />
+      <Radio color="secondary" size="small" disabled checked />
     </Stack>
   </Stack>
 );
+
+export const Light = Template.bind({});
+Light.args = { themeMode: 'light' };
+
+export const Dark = Template.bind({});
+Dark.args = { themeMode: 'dark' };
