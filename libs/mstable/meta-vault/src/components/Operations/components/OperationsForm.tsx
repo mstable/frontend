@@ -171,30 +171,8 @@ export const OperationsForm = (props: StackProps) => {
         disabled={!walletAddress}
         error={isError}
       />
-      <Divider
-        role="presentation"
-        sx={{
-          '&::before, &::after': {
-            borderColor: !walletAddress
-              ? 'action.disabledBackground'
-              : 'background.highlight',
-          },
-        }}
-      >
-        <Typography
-          variant="value6"
-          sx={{
-            p: 0.5,
-            backgroundColor: !walletAddress
-              ? 'action.disabledBackground'
-              : 'background.highlight',
-            borderRadius: '4px',
-            color: !walletAddress ? 'text.disabled' : 'text.secondary',
-            minWidth: 120,
-          }}
-        >
-          {ratioLabel}
-        </Typography>
+      <Divider role="presentation" light={!walletAddress}>
+        <Typography variant="value6">{ratioLabel}</Typography>
       </Divider>
       <TokenInput
         {...secondaryInput}

@@ -42,7 +42,7 @@ export const getOutlinedInput = (base: Theme): ThemeOptions => ({
           },
 
           '&.Mui-disabled': {
-            backgroundColor: base.palette.action.disabled,
+            backgroundColor: base.palette.action.disabledBackground,
             color: base.palette.text.disabled,
 
             '.MuiOutlinedInput-input::placeholder': {

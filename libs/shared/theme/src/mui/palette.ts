@@ -104,7 +104,7 @@ const dark: ThemeOptions = mergeDeepRight(light, {
     text: {
       primary: colors.black50,
       secondary: colors.black500,
-      disabled: colors.black400,
+      disabled: colors.black600,
     },
     background: {
       default: colors.black900,
@@ -112,6 +112,10 @@ const dark: ThemeOptions = mergeDeepRight(light, {
       highlight: colors.black800,
     },
     divider: colors.black800,
+    action: {
+      disabled: colors.black700,
+      disabledBackground: colors.black700,
+    },
   },
 });
 

@@ -29,39 +29,35 @@ const Template = () => {
           <ToggleButton value="DAI">DAI</ToggleButton>
           <ToggleButton value="USDC">USDC</ToggleButton>
         </ToggleButtonGroup>
-
         <ToggleButtonGroup
           size="small"
           value={val}
           exclusive
           onChange={handleClick}
-          color="secondary"
+          disabled
         >
           <ToggleButton value="USDT">USDT</ToggleButton>
           <ToggleButton value="DAI">DAI</ToggleButton>
           <ToggleButton value="USDC">USDC</ToggleButton>
         </ToggleButtonGroup>
       </Stack>
-
       <Stack direction="row" spacing={2}>
         <ToggleButtonGroup value={val} exclusive onChange={handleClick}>
           <ToggleButton value="USDT">USDT</ToggleButton>
           <ToggleButton value="DAI">DAI</ToggleButton>
           <ToggleButton value="USDC">USDC</ToggleButton>
         </ToggleButtonGroup>
-
         <ToggleButtonGroup
           value={val}
           exclusive
           onChange={handleClick}
-          color="secondary"
+          disabled
         >
           <ToggleButton value="USDT">USDT</ToggleButton>
           <ToggleButton value="DAI">DAI</ToggleButton>
           <ToggleButton value="USDC">USDC</ToggleButton>
         </ToggleButtonGroup>
       </Stack>
-
       <Stack direction="row" spacing={2}>
         <ToggleButtonGroup
           size="large"
@@ -73,13 +69,12 @@ const Template = () => {
           <ToggleButton value="DAI">DAI</ToggleButton>
           <ToggleButton value="USDC">USDC</ToggleButton>
         </ToggleButtonGroup>
-
         <ToggleButtonGroup
           size="large"
           value={val}
           exclusive
           onChange={handleClick}
-          color="secondary"
+          disabled
         >
           <ToggleButton value="USDT">USDT</ToggleButton>
           <ToggleButton value="DAI">DAI</ToggleButton>

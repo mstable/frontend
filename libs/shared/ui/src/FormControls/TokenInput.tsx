@@ -16,7 +16,7 @@ import { useIntl } from 'react-intl';
 import { TokenIcon } from '../TokenIcon';
 import { BigDecimalInput } from './BigDecimalInput';
 
-import type { StackProps } from '@mui/material';
+import type { StackProps, SxProps } from '@mui/material';
 import type { FetchTokenResult } from '@wagmi/core';
 
 export type TokenInputProps = {
@@ -37,6 +37,14 @@ export type TokenInputProps = {
 };
 
 const PERCENTAGE_STEPS = 4; // 25%
+
+const balanceStyles: SxProps = {
+  color: 'text.secondary',
+  backgroundColor: 'background.highlight',
+  paddingX: 0.5,
+  paddingY: 0.75,
+  borderRadius: '4px',
+};
 
 export const TokenInput = ({
   label,
@@ -130,6 +138,7 @@ export const TokenInput = ({
         <Stack
           direction="row"
           mt={1}
+          spacing={1}
           justifyContent="space-between"
           alignItems="center"
         >
@@ -182,21 +191,13 @@ export const TokenInput = ({
             </Stack>
           )}
           {!disabled && balance ? (
-            <Typography variant="value6" sx={{ color: 'grey.600' }} noWrap>
+            <Typography variant="value6" sx={balanceStyles} noWrap>
               {intl.formatMessage({ defaultMessage: 'Balance', id: 'balance' })}
               :&nbsp;
               {balance.format()}
             </Typography>
           ) : (
-            <Typography
-              variant="value6"
-              p={0.5}
-              color="grey.400"
-              bgcolor="grey.200"
-              borderRadius="4px"
-              height={22}
-              noWrap
-            >
+            <Typography variant="value6" noWrap sx={balanceStyles}>
               {intl.formatMessage({
                 defaultMessage: 'Not Connected',
                 id: 'not_connected',

@@ -20,7 +20,7 @@ const Trigger = forwardRef<HTMLSpanElement, TypographyProps>((props, ref) => (
     ref={ref}
     sx={{
       padding: 2,
-      backgroundColor: 'grey.100',
+      backgroundColor: 'background.highlight',
       cursor: 'pointer',
       ...props?.sx,
     }}

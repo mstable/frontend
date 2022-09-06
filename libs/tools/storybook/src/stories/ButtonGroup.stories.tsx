@@ -7,12 +7,12 @@ export default {
 
 const Template = () => (
   <Stack direction="column" spacing={2} p={2}>
-    <ButtonGroup variant="outlined">
+    <ButtonGroup>
       <Button>One</Button>
       <Button>Two</Button>
-      <Button>Three</Button>
+      <Button className="Mui-selected">Three</Button>
     </ButtonGroup>
-    <ButtonGroup variant="outlined" color="secondary">
+    <ButtonGroup disabled>
       <Button>One</Button>
       <Button>Two</Button>
       <Button>Three</Button>

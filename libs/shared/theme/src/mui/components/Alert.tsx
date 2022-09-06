@@ -30,6 +30,7 @@ export const getAlert = (base: Theme): ThemeOptions => ({
       styleOverrides: {
         root: {
           flex: 1,
+          borderRadius: '8px',
           padding: base.spacing(2),
           '.MuiAlert-icon': {
             width: base.spacing(2.5),
