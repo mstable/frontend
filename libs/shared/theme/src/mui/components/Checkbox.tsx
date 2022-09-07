@@ -1,5 +1,4 @@
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { Check, Indeterminate, Uncheck } from '@frontend/shared-icons';
+import { Check, Indeterminate, Uncheck } from '../icons';
 
 import type { Theme, ThemeOptions } from '@mui/material';
 

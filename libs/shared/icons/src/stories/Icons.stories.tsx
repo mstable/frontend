@@ -4,7 +4,6 @@ import * as chainIcons from '../components/chains';
 import * as mstableIcons from '../components/mstable';
 import * as socialIcons from '../components/social';
 import * as tokenIcons from '../components/tokens';
-import * as uiIcons from '../components/ui';
 import * as walletIcons from '../components/wallets';
 
 export default {
@@ -22,9 +21,6 @@ SocialIcons.args = { icons: socialIcons };
 
 export const TokenIcons = IconsView.bind({});
 TokenIcons.args = { icons: tokenIcons };
-
-export const UiIcons = IconsView.bind({});
-UiIcons.args = { icons: uiIcons };
 
 export const WalletIcons = IconsView.bind({});
 WalletIcons.args = { icons: walletIcons };
