@@ -224,7 +224,6 @@ export const TokenInput = ({
               sx={{
                 ...balanceStyles,
                 color: 'text.secondary',
-                backgroundColor: 'background.highlight',
               }}
               noWrap
             >

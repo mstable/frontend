@@ -65,12 +65,12 @@ export const getButton = (base: Theme): ThemeOptions => ({
         text: {
           color: base.palette.text.primary,
           ':hover': {
-            color: base.palette.text.secondary,
+            color: base.palette.text.primary,
           },
           svg: {
             color: base.palette.text.primary,
             ':hover': {
-              color: base.palette.text.secondary,
+              color: base.palette.text.primary,
             },
           },
           '&.Mui-disabled': {

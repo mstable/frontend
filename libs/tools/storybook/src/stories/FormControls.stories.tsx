@@ -1,19 +1,13 @@
-import { useState } from 'react';
-
 import {
   Checkbox as MuiCheckbox,
   FormControl,
   FormControlLabel,
   FormGroup,
   InputLabel,
-  MenuItem,
   Radio as MuiRadio,
   RadioGroup,
-  Select as MuiSelect,
   Stack,
 } from '@mui/material';
-
-import type { SelectChangeEvent } from '@mui/material';
 
 export default {
   title: 'Theme/FormControls',
@@ -27,11 +21,11 @@ export default {
 };
 
 const Template = () => {
-  const [selected, setSelected] = useState('0');
+  // const [selected, setSelected] = useState('0');
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setSelected(event.target.value as string);
-  };
+  // const handleChange = (event: SelectChangeEvent) => {
+  //   setSelected(event.target.value as string);
+  // };
 
   return (
     <Stack direction="column" spacing={2} p={2}>
@@ -61,7 +55,7 @@ const Template = () => {
         />
         <FormControlLabel disabled control={<MuiRadio />} label="Disabled" />
       </RadioGroup>
-      <FormGroup>
+      {/* <FormGroup>
         <FormControl sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id="label">Label</InputLabel>
           <MuiSelect
@@ -96,7 +90,7 @@ const Template = () => {
             <MenuItem value="3">Thirty</MenuItem>
           </MuiSelect>
         </FormControl>
-      </FormGroup>
+      </FormGroup> */}
     </Stack>
   );
 };
