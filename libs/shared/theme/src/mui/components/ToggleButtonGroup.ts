@@ -41,14 +41,8 @@ export const getToggleButtonGroup = (base: Theme): ThemeOptions => ({
               },
             },
             '&.Mui-disabled': {
-              color:
-                base.palette.mode === 'light'
-                  ? base.palette.grey[300]
-                  : base.palette.grey[700],
-              borderColor:
-                base.palette.mode === 'light'
-                  ? base.palette.grey[300]
-                  : base.palette.grey[700],
+              color: base.palette.action.disabled,
+              borderColor: base.palette.action.disabled,
             },
           },
           [`.${toggleButtonClasses.sizeSmall}`]: {

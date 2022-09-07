@@ -27,24 +27,16 @@ export const getButtonGroup = (base: Theme): ThemeOptions => ({
                 : base.palette.grey[500],
           },
           '&:hover': {
-            color:
-              base.palette.mode === 'light'
-                ? base.palette.primary.main
-                : base.palette.grey[50],
             backgroundColor:
               base.palette.mode === 'light'
-                ? base.palette.grey[100]
-                : base.palette.grey[800],
+                ? base.palette.grey[200]
+                : base.palette.grey[700],
             borderColor:
               base.palette.mode === 'light'
                 ? base.palette.grey[100]
                 : base.palette.grey[800],
           },
           '&.Mui-selected': {
-            color:
-              base.palette.mode === 'light'
-                ? base.palette.primary.main
-                : base.palette.grey[50],
             backgroundColor:
               base.palette.mode === 'light'
                 ? base.palette.grey[100]
@@ -53,25 +45,23 @@ export const getButtonGroup = (base: Theme): ThemeOptions => ({
               base.palette.mode === 'light'
                 ? base.palette.grey[100]
                 : base.palette.grey[800],
+            '&:hover': {
+              backgroundColor:
+                base.palette.mode === 'light'
+                  ? base.palette.grey[200]
+                  : base.palette.grey[700],
+              borderColor:
+                base.palette.mode === 'light'
+                  ? base.palette.grey[100]
+                  : base.palette.grey[800],
+            },
           },
           '&.Mui-disabled': {
-            color:
-              base.palette.mode === 'light'
-                ? base.palette.grey[400]
-                : base.palette.grey[800],
-            backgroundColor:
-              base.palette.mode === 'light'
-                ? base.palette.grey[300]
-                : base.palette.grey[600],
-            borderColor:
-              base.palette.mode === 'light'
-                ? base.palette.grey[300]
-                : base.palette.grey[600],
+            color: base.palette.text.disabled,
+            backgroundColor: base.palette.action.disabledBackground,
+            borderColor: base.palette.action.disabledBackground,
             svg: {
-              color:
-                base.palette.mode === 'light'
-                  ? base.palette.grey[400]
-                  : base.palette.grey[800],
+              color: base.palette.text.disabled,
             },
           },
         },

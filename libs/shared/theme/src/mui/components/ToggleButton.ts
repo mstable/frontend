@@ -6,15 +6,27 @@ export const getToggleButton = (base: Theme): ThemeOptions => ({
       styleOverrides: {
         sizeSmall: {
           ...base.typography.buttonSmall,
-          padding: base.spacing('11px', '7px'),
+          padding: '3px',
+          svg: {
+            width: '14px',
+            height: '14px',
+          },
         },
         sizeMedium: {
           ...base.typography.buttonMedium,
-          padding: base.spacing('13px', '9px'),
+          padding: '5px',
+          svg: {
+            width: '14px',
+            height: '14px',
+          },
         },
         sizeLarge: {
           ...base.typography.buttonLarge,
-          padding: base.spacing('15px', '11px'),
+          padding: '7px',
+          svg: {
+            width: '16px',
+            height: '16px',
+          },
         },
       },
     },

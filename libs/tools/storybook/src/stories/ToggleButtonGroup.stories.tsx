@@ -1,18 +1,17 @@
 import { useState } from 'react';
 
 import { Stack, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { ArrowsDownUp } from 'phosphor-react';
 
 export default {
   title: 'Theme/ToggleButtonGroup',
   component: ToggleButtonGroup,
 };
 
-type Val = 'USDT' | 'DAI' | 'USDC';
-
 const Template = () => {
-  const [val, setVal] = useState<Val>('USDC');
+  const [val, setVal] = useState<number>(0);
 
-  const handleClick = (_, newVal: Val) => {
+  const handleClick = (_, newVal: number) => {
     setVal(newVal);
   };
 
@@ -25,9 +24,15 @@ const Template = () => {
           exclusive
           onChange={handleClick}
         >
-          <ToggleButton value="USDT">USDT</ToggleButton>
-          <ToggleButton value="DAI">DAI</ToggleButton>
-          <ToggleButton value="USDC">USDC</ToggleButton>
+          <ToggleButton value={0}>
+            <ArrowsDownUp />
+          </ToggleButton>
+          <ToggleButton value={1}>
+            <ArrowsDownUp />
+          </ToggleButton>
+          <ToggleButton value={2}>
+            <ArrowsDownUp />
+          </ToggleButton>
         </ToggleButtonGroup>
         <ToggleButtonGroup
           size="small"
@@ -36,16 +41,28 @@ const Template = () => {
           onChange={handleClick}
           disabled
         >
-          <ToggleButton value="USDT">USDT</ToggleButton>
-          <ToggleButton value="DAI">DAI</ToggleButton>
-          <ToggleButton value="USDC">USDC</ToggleButton>
+          <ToggleButton value={0}>
+            <ArrowsDownUp />
+          </ToggleButton>
+          <ToggleButton value={1}>
+            <ArrowsDownUp />
+          </ToggleButton>
+          <ToggleButton value={2}>
+            <ArrowsDownUp />
+          </ToggleButton>
         </ToggleButtonGroup>
       </Stack>
       <Stack direction="row" spacing={2}>
         <ToggleButtonGroup value={val} exclusive onChange={handleClick}>
-          <ToggleButton value="USDT">USDT</ToggleButton>
-          <ToggleButton value="DAI">DAI</ToggleButton>
-          <ToggleButton value="USDC">USDC</ToggleButton>
+          <ToggleButton value={0}>
+            <ArrowsDownUp />
+          </ToggleButton>
+          <ToggleButton value={1}>
+            <ArrowsDownUp />
+          </ToggleButton>
+          <ToggleButton value={2}>
+            <ArrowsDownUp />
+          </ToggleButton>
         </ToggleButtonGroup>
         <ToggleButtonGroup
           value={val}
@@ -53,9 +70,15 @@ const Template = () => {
           onChange={handleClick}
           disabled
         >
-          <ToggleButton value="USDT">USDT</ToggleButton>
-          <ToggleButton value="DAI">DAI</ToggleButton>
-          <ToggleButton value="USDC">USDC</ToggleButton>
+          <ToggleButton value={0}>
+            <ArrowsDownUp />
+          </ToggleButton>
+          <ToggleButton value={1}>
+            <ArrowsDownUp />
+          </ToggleButton>
+          <ToggleButton value={2}>
+            <ArrowsDownUp />
+          </ToggleButton>
         </ToggleButtonGroup>
       </Stack>
       <Stack direction="row" spacing={2}>
@@ -65,9 +88,15 @@ const Template = () => {
           exclusive
           onChange={handleClick}
         >
-          <ToggleButton value="USDT">USDT</ToggleButton>
-          <ToggleButton value="DAI">DAI</ToggleButton>
-          <ToggleButton value="USDC">USDC</ToggleButton>
+          <ToggleButton value={0}>
+            <ArrowsDownUp />
+          </ToggleButton>
+          <ToggleButton value={1}>
+            <ArrowsDownUp />
+          </ToggleButton>
+          <ToggleButton value={2}>
+            <ArrowsDownUp />
+          </ToggleButton>
         </ToggleButtonGroup>
         <ToggleButtonGroup
           size="large"
@@ -76,9 +105,15 @@ const Template = () => {
           onChange={handleClick}
           disabled
         >
-          <ToggleButton value="USDT">USDT</ToggleButton>
-          <ToggleButton value="DAI">DAI</ToggleButton>
-          <ToggleButton value="USDC">USDC</ToggleButton>
+          <ToggleButton value={0}>
+            <ArrowsDownUp />
+          </ToggleButton>
+          <ToggleButton value={1}>
+            <ArrowsDownUp />
+          </ToggleButton>
+          <ToggleButton value={2}>
+            <ArrowsDownUp />
+          </ToggleButton>
         </ToggleButtonGroup>
       </Stack>
     </Stack>
