@@ -4,7 +4,7 @@ export const graphqlClient =
   <_TData, TVariables>(query: string, variables?: TVariables) =>
   async () => {
     const res = await axiosInstance({
-      url: '/graphql',
+      url: 'https://api.studio.thegraph.com/query/32034/mstable-metavault-goerli/v0.1.0',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
