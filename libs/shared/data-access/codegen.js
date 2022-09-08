@@ -1,6 +1,4 @@
-import type { CodegenConfig } from '@graphql-codegen/cli';
-
-const config: CodegenConfig = {
+module.exports = {
   schema:
     'https://api.studio.thegraph.com/query/32034/mstable-metavault-goerli/v0.1.0',
   documents: ['**/src/**/*.graphql'],
@@ -23,5 +21,3 @@ const config: CodegenConfig = {
     },
   },
 };
-
-export default config;
