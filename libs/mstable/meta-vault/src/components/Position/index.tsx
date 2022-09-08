@@ -1,4 +1,5 @@
 import { addresses } from '@frontend/shared-constants';
+import { useDataSource } from '@frontend/shared-data-access';
 import { CollapsibleSection, ValueLabel } from '@frontend/shared-ui';
 import {
   Box,
@@ -25,10 +26,10 @@ export const Position = () => {
     watch: true,
     enabled: !!address && !!chain?.id,
   });
+  const dataSource = useDataSource();
+  const { data } = usePositionQuery(dataSource);
 
-  const { data } = usePositionQuery();
-
-  console.log(data);
+  console.log(data, dataSource);
 
   return (
     <Card>
