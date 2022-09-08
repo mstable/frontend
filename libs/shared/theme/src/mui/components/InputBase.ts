@@ -14,8 +14,9 @@ export const getInputBase = (base: Theme): ThemeOptions => ({
             height: 48,
           },
 
-          '.placeholder': {
-            ...base.typography.placeholder,
+          '.MuiInputBase-input::placeholder': {
+            ...base.typography.value1,
+            color: base.palette.grey[300],
           },
 
           '&.Mui-error': { color: base.palette.error.main },

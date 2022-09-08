@@ -1,21 +1,27 @@
-import { Button, ButtonGroup as MuiButtonGroup, Stack } from '@mui/material';
+import { Button, ButtonGroup, Stack } from '@mui/material';
 
 export default {
   title: 'Theme/ButtonGroup',
-  component: MuiButtonGroup,
+  component: ButtonGroup,
 };
 
-export const ButtonGroup = () => (
+const Template = () => (
   <Stack direction="column" spacing={2} p={2}>
-    <MuiButtonGroup>
+    <ButtonGroup>
+      <Button>One</Button>
+      <Button>Two</Button>
+      <Button className="Mui-selected">Three</Button>
+    </ButtonGroup>
+    <ButtonGroup disabled>
       <Button>One</Button>
       <Button>Two</Button>
       <Button>Three</Button>
-    </MuiButtonGroup>
-    <MuiButtonGroup color="secondary">
-      <Button>One</Button>
-      <Button>Two</Button>
-      <Button>Three</Button>
-    </MuiButtonGroup>
+    </ButtonGroup>
   </Stack>
 );
+
+export const Light = Template.bind({});
+Light.args = { themeMode: 'light' };
+
+export const Dark = Template.bind({});
+Dark.args = { themeMode: 'dark' };

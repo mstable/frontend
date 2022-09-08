@@ -7,9 +7,6 @@ on:
   pull_request:
   workflow_dispatch:
 
-env:
-  NX_CLOUD_DISTRIBUTED_EXECUTION: true
-
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -20,22 +17,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
-
       - uses: actions/setup-node@v3
         name: Setup node
         with:
           node-version: 16
           cache: "yarn"
 
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
         name: Install dependencies
 
-      - run: yarn nx-cloud start-ci-run
-        name: Start Nx Cloud CI
-
-      - run: yarn nx affected --target=build --parallel --max-parallel=3
+      - run: yarn build
         name: Build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
@@ -54,10 +45,6 @@ jobs:
         with:
           args: "✨ New version of mStable frontend 🚀 Deploy url: https://frontend-7e17f.web.app/"
 
-      - name: Clean Agents
-        if: ${{ always() }}
-        run: yarn nx-cloud stop-all-agents
-
   pr:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
@@ -68,27 +55,17 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
 
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
-
       - uses: actions/setup-node@v3
         name: Setup node
         with:
           node-version: 16
           cache: "yarn"
 
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
         name: Install dependencies
 
-      - run: yarn nx-cloud start-ci-run
-        name: Start Nx Cloud CI
-
-      - run: yarn nx affected --target=build --parallel --max-parallel=3
+      - run: yarn build
         name: Build
-
-      - name: Clean Agents
-        if: ${{ always() }}
-        run: yarn nx-cloud stop-all-agents
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         name: Firebase deploy
@@ -106,9 +83,3 @@ jobs:
         uses: Ilshidur/action-discord@0.3.2
         with:
           args: "✨ PR **{{ PR_NAME }}** created/updated 🚀 Deploy url: {{ DEPLOY_URL }}"
-
-  agents:
-    name: Nx Cloud - Agents
-    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.6
-    with:
-      number-of-agents: 3

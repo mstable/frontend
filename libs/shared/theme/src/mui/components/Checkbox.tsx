@@ -1,6 +1,7 @@
+import { Check, Indeterminate, Uncheck } from '../icons';
+
 import type { Theme, ThemeOptions } from '@mui/material';
 
-// TODO update icons to match figma
 export const getCheckbox = (base: Theme): ThemeOptions => ({
   components: {
     MuiCheckbox: {
@@ -8,10 +9,13 @@ export const getCheckbox = (base: Theme): ThemeOptions => ({
         inputProps: {
           'aria-label': 'checkbox',
         },
+        icon: <Uncheck />,
+        checkedIcon: <Check />,
+        indeterminateIcon: <Indeterminate />,
       },
       styleOverrides: {
         root: {
-          padding: '6px',
+          padding: '8px',
         },
       },
     },

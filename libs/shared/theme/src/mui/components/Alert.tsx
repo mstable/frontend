@@ -30,6 +30,7 @@ export const getAlert = (base: Theme): ThemeOptions => ({
       styleOverrides: {
         root: {
           flex: 1,
+          borderRadius: '8px',
           padding: base.spacing(2),
           '.MuiAlert-icon': {
             width: base.spacing(2.5),
@@ -49,6 +50,12 @@ export const getAlert = (base: Theme): ThemeOptions => ({
           '.MuiIconButton-root': {
             margin: base.spacing(-0.5),
           },
+        },
+        standard: {
+          color:
+            base.palette.mode === 'light'
+              ? base.palette.text.primary
+              : base.palette.grey[900],
         },
         standardInfo: {
           backgroundColor: lighten(base.palette.info.main, 0.8),

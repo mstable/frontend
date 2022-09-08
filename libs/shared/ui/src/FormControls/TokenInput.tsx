@@ -3,22 +3,20 @@ import { useEffect, useState } from 'react';
 
 import { BigDecimal } from '@frontend/shared-utils';
 import {
+  Button,
   FormControl,
   InputLabel,
   Skeleton,
   Stack,
-  ToggleButton,
-  ToggleButtonGroup,
   Typography,
 } from '@mui/material';
-import { constants } from 'ethers';
 import { range } from 'ramda';
 import { useIntl } from 'react-intl';
 
 import { TokenIcon } from '../TokenIcon';
 import { BigDecimalInput } from './BigDecimalInput';
 
-import type { StackProps, Theme } from '@mui/material';
+import type { ButtonProps, StackProps, SxProps } from '@mui/material';
 import type { FetchTokenResult } from '@wagmi/core';
 
 export type TokenInputProps = {
@@ -32,6 +30,7 @@ export type TokenInputProps = {
   balance?: BigDecimal;
   onChange?: (newValue: BigDecimal) => void;
   hideBottomRow?: boolean;
+  hideTokenBadge?: boolean;
   components?: {
     container?: StackProps;
   };
@@ -39,21 +38,55 @@ export type TokenInputProps = {
 
 const PERCENTAGE_STEPS = 4; // 25%
 
-const percentageButtonGroup = (theme: Theme) => ({
-  '& .MuiToggleButtonGroup-grouped': {
-    margin: theme.spacing(0.2, 0),
-    border: 0,
-    '&.Mui-disabled': {
-      border: 0,
-    },
-    '&:not(:first-of-type)': {
+const balanceStyles: SxProps = {
+  paddingX: 0.5,
+  paddingY: 0.75,
+  borderRadius: '4px',
+};
+
+const PercentageButton = (props: ButtonProps) => (
+  <Button
+    {...props}
+    variant="outlined"
+    size="small"
+    sx={(theme) => ({
+      padding: 0.5,
+      margin: 0,
+      minWidth: 28,
+      minHeight: 16,
       borderRadius: '4px',
-    },
-    '&:first-of-type': {
-      borderRadius: '4px',
-    },
-  },
-});
+      color:
+        theme.palette.mode === 'light'
+          ? theme.palette.grey[600]
+          : theme.palette.grey[500],
+      borderColor:
+        theme.palette.mode === 'light'
+          ? theme.palette.grey[100]
+          : theme.palette.grey[800],
+      letterSpacing: '-0.04em',
+      textTransform: 'uppercase',
+      ':hover': {
+        color: 'primary.main',
+        borderColor:
+          theme.palette.mode === 'light'
+            ? theme.palette.grey[100]
+            : theme.palette.grey[800],
+        backgroundColor:
+          theme.palette.mode === 'light'
+            ? theme.palette.grey[100]
+            : theme.palette.grey[800],
+      },
+      '&.Mui-disabled': {
+        color: 'text.disabled',
+        borderColor: 'action.disabledBackground',
+        ':hover': {
+          borderColor: 'text.disabled',
+        },
+      },
+      ...props?.sx,
+    })}
+  />
+);
 
 export const TokenInput = ({
   label,
@@ -66,6 +99,7 @@ export const TokenInput = ({
   balance,
   onChange,
   hideBottomRow = false,
+  hideTokenBadge = false,
   components,
 }: TokenInputProps) => {
   const [percentage, setPercentage] = useState(0);
@@ -87,7 +121,7 @@ export const TokenInput = ({
     }
   }, [amount, balance]);
 
-  const handlePercentageChange = (_, newValue: number | null) => {
+  const handlePercentageChange = (newValue: number) => () => {
     setPercentage(newValue);
     if (onChange) {
       onChange(
@@ -117,7 +151,8 @@ export const TokenInput = ({
           disabled={disabled}
           isLoading={isLoading}
           endAdornment={
-            !disabled && (
+            !disabled &&
+            !hideTokenBadge && (
               <Stack
                 direction="row"
                 spacing={1}
@@ -145,6 +180,7 @@ export const TokenInput = ({
         <Stack
           direction="row"
           mt={1}
+          spacing={1}
           justifyContent="space-between"
           alignItems="center"
         >
@@ -156,32 +192,59 @@ export const TokenInput = ({
               sx={{ my: 1 }}
             />
           ) : (
-            <ToggleButtonGroup
-              value={percentage}
-              onChange={handlePercentageChange}
-              exclusive
-              size="small"
-              disabled={
-                !balance || balance?.exact?.eq(constants.Zero) || disabled
-              }
-              sx={percentageButtonGroup}
-            >
+            <Stack direction="row" spacing={0.5}>
               {range(1, PERCENTAGE_STEPS + 1).map((n) => (
-                <ToggleButton value={n} key={`percent-${n}`}>
+                <PercentageButton
+                  onClick={handlePercentageChange(n)}
+                  value={n}
+                  key={`percent-${n}`}
+                  disabled={disabled}
+                  sx={{
+                    ...(n === percentage && {
+                      color: 'primary.main',
+                      borderColor: 'primary.main',
+                      ':hover': {
+                        borderColor: 'primary.main',
+                      },
+                    }),
+                  }}
+                >
                   {`${
                     n === PERCENTAGE_STEPS
                       ? 'MAX'
                       : `${n * (100 / PERCENTAGE_STEPS)}%`
                   }`}
-                </ToggleButton>
+                </PercentageButton>
               ))}
-            </ToggleButtonGroup>
+            </Stack>
           )}
-          {balance && !disabled && (
-            <Typography variant="value6">
+          {!disabled && balance ? (
+            <Typography
+              variant="value6"
+              sx={{
+                ...balanceStyles,
+                color: 'text.secondary',
+              }}
+              noWrap
+            >
               {intl.formatMessage({ defaultMessage: 'Balance', id: 'balance' })}
               :&nbsp;
               {balance.format()}
+            </Typography>
+          ) : (
+            <Typography
+              variant="value6"
+              noWrap
+              sx={{
+                ...balanceStyles,
+                color: 'text.disabled',
+                backgroundColor: 'action.disabledBackground',
+              }}
+            >
+              {intl.formatMessage({
+                defaultMessage: 'Not Connected',
+                id: 'not_connected',
+              })}
             </Typography>
           )}
         </Stack>

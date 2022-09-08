@@ -48,6 +48,7 @@ export const OperationsForm = (props: StackProps) => {
           amount: amount,
           token: mvToken,
           balance: mvBalance,
+          hideTokenBadge: true,
         },
         withdraw: {
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
@@ -55,6 +56,7 @@ export const OperationsForm = (props: StackProps) => {
           token: mvToken,
           balance: mvBalance,
           isLoading,
+          hideTokenBadge: true,
         },
       }[operation]),
     [
@@ -78,11 +80,13 @@ export const OperationsForm = (props: StackProps) => {
           amount: preview,
           token: mvToken,
           isLoading,
+          hideTokenBadge: true,
         },
         mint: {
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
           amount: amount,
           token: mvToken,
+          hideTokenBadge: true,
         },
         redeem: {
           label: intl.formatMessage({ defaultMessage: 'Tokens' }),
@@ -108,7 +112,7 @@ export const OperationsForm = (props: StackProps) => {
     setAmount(newValue);
   };
 
-  const handleDownChange = (newValue: BigDecimal) => {
+  const handleSecondaryChange = (newValue: BigDecimal) => {
     const newOp = tab === 0 ? 'mint' : 'withdraw';
     if (newOp !== operation) {
       changeOperation(newOp);
@@ -153,6 +157,9 @@ export const OperationsForm = (props: StackProps) => {
       spacing={1}
       sx={{
         border: (theme) => `1px solid ${theme.palette.divider}`,
+        ...(!walletAddress && {
+          backgroundColor: 'background.highlight',
+        }),
         ...props?.sx,
       }}
       {...props}
@@ -164,23 +171,12 @@ export const OperationsForm = (props: StackProps) => {
         disabled={!walletAddress}
         error={isError}
       />
-      <Divider role="presentation">
-        <Typography
-          variant="value6"
-          sx={{
-            p: 0.5,
-            backgroundColor: 'background.highlight',
-            borderRadius: '4px',
-            color: walletAddress ? 'text.primary' : 'action.disabled',
-            minWidth: 120,
-          }}
-        >
-          {ratioLabel}
-        </Typography>
+      <Divider role="presentation" light={!walletAddress}>
+        <Typography variant="value6">{ratioLabel}</Typography>
       </Divider>
       <TokenInput
         {...secondaryInput}
-        onChange={handleDownChange}
+        onChange={handleSecondaryChange}
         placeholder="0.00"
         disabled={!walletAddress}
         error={isError}

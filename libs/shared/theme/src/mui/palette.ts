@@ -68,7 +68,7 @@ const light: ThemeOptions = {
     text: {
       primary: colors.black900,
       secondary: colors.black600,
-      disabled: colors.black300,
+      disabled: colors.black400,
     },
     background: {
       default: colors.black50,
@@ -79,12 +79,12 @@ const light: ThemeOptions = {
     action: {
       active: alpha(colors.blue02, 0.5),
       activatedOpacity: 0.5,
-      hover: alpha(colors.black700, 0.1),
+      hover: alpha(colors.black800, 0.1),
       hoverOpacity: 0.06,
       selected: alpha(colors.blue01, 0.1),
       selectedOpacity: 0.1,
       disabled: colors.black200,
-      disabledBackground: alpha(colors.lightGrey04, 0.12),
+      disabledBackground: colors.black200,
       disabledOpacity: 0.25,
       focus: alpha(colors.blue02, 0.06),
       focusOpacity: 0.06,
@@ -103,8 +103,8 @@ const dark: ThemeOptions = mergeDeepRight(light, {
     },
     text: {
       primary: colors.black50,
-      secondary: colors.black600,
-      disabled: colors.black700,
+      secondary: colors.black500,
+      disabled: colors.black600,
     },
     background: {
       default: colors.black900,
@@ -112,21 +112,9 @@ const dark: ThemeOptions = mergeDeepRight(light, {
       highlight: colors.black800,
     },
     divider: colors.black800,
-    grey: {
-      '50': colors.black900,
-      '100': colors.black800,
-      '200': colors.black700,
-      '300': colors.black600,
-      '400': colors.black500,
-      '500': colors.black400,
-      '600': colors.black300,
-      '700': colors.black200,
-      '800': colors.black100,
-      '900': colors.black50,
-      A100: colors.lightGrey04,
-      A200: colors.lightGrey03,
-      A400: colors.lightGrey02,
-      A700: colors.lightGrey01,
+    action: {
+      disabled: colors.black700,
+      disabledBackground: colors.black700,
     },
   },
 });

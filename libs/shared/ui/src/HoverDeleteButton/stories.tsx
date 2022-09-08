@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Button, Stack, Typography } from '@mui/material';
 import produce from 'immer';
 
@@ -13,7 +12,6 @@ export default {
 
 export const HoverDeleteButton = () => {
   const [items, setItems] = useState([0, 1, 2, 3, 4]);
-  const [parent] = useAutoAnimate();
 
   const handleDelete = (idx: number) => () => {
     setItems(
@@ -31,7 +29,7 @@ export const HoverDeleteButton = () => {
       alignItems="flex-start"
       height={450}
     >
-      <Stack direction="column" spacing={2} p={2} ref={parent}>
+      <Stack direction="column" spacing={2} p={2}>
         {items.map((item, idx) => (
           <Comp
             key={`${item}-item`}

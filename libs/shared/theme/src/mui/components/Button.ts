@@ -29,37 +29,35 @@ export const getButton = (base: Theme): ThemeOptions => ({
             color: base.palette.primary.contrastText,
           },
           '&.Mui-disabled': {
-            color: base.palette.grey[400],
             backgroundImage: 'none',
-            backgroundColor: base.palette.grey[100],
+            color: base.palette.text.disabled,
+            backgroundColor: base.palette.action.disabledBackground,
             svg: {
-              color: base.palette.grey[400],
+              color: base.palette.text.disabled,
             },
           },
         },
 
         containedSecondary: {
-          backgroundSize: '300% 300%',
-          backgroundImage: `linear-gradient(135deg, ${
-            base.palette.secondary.main
-          } 0%, ${base.palette.secondary.main} 51%, ${
+          color: base.palette.text.primary,
+          backgroundColor:
             base.palette.mode === 'light'
-              ? base.palette.secondary.light
-              : base.palette.secondary.dark
-          } 100%)`,
-          transition: 'all .2s ease',
+              ? base.palette.grey[100]
+              : base.palette.grey[800],
           ':hover': {
-            backgroundPosition: '100% 100%',
+            backgroundColor:
+              base.palette.mode === 'light'
+                ? base.palette.grey[200]
+                : base.palette.grey[700],
           },
           svg: {
-            color: base.palette.secondary.contrastText,
+            color: base.palette.text.primary,
           },
           '&.Mui-disabled': {
-            color: base.palette.mode === 'light' ? '#4B4E6E' : '#A7A9CE',
-            backgroundColor:
-              base.palette.mode === 'light' ? '#8688AC' : '#DEDFFF',
+            color: base.palette.text.disabled,
+            backgroundColor: base.palette.action.disabledBackground,
             svg: {
-              color: base.palette.mode === 'light' ? '#4B4E6E' : '#A7A9CE',
+              color: base.palette.text.disabled,
             },
           },
         },
@@ -67,12 +65,18 @@ export const getButton = (base: Theme): ThemeOptions => ({
         text: {
           color: base.palette.text.primary,
           ':hover': {
-            color: base.palette.text.secondary,
+            color: base.palette.text.primary,
           },
           svg: {
             color: base.palette.text.primary,
             ':hover': {
-              color: base.palette.text.secondary,
+              color: base.palette.text.primary,
+            },
+          },
+          '&.Mui-disabled': {
+            color: base.palette.text.disabled,
+            svg: {
+              color: base.palette.text.disabled,
             },
           },
         },
@@ -81,22 +85,22 @@ export const getButton = (base: Theme): ThemeOptions => ({
           ...base.typography.buttonSmall,
           padding: base.spacing(1, 1.5),
           borderRadius: '8px',
-          minHeight: 36,
-          minWidth: 36,
+          minHeight: 34,
+          minWidth: 34,
         },
         sizeMedium: {
           ...base.typography.buttonMedium,
           padding: base.spacing(1.5, 2),
           borderRadius: '10px',
-          minHeight: 42,
-          minWidth: 42,
+          minHeight: 40,
+          minWidth: 40,
         },
         sizeLarge: {
           ...base.typography.buttonLarge,
           padding: base.spacing(2, 2.5),
           borderRadius: '12px',
-          minHeight: 48,
-          minWidth: 48,
+          minHeight: 46,
+          minWidth: 46,
         },
       },
     },

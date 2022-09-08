@@ -1,82 +1,85 @@
-import { Button as MuiButton, Stack, Typography } from '@mui/material';
-import { ArrowRight } from 'phosphor-react';
+import { Button, Stack } from '@mui/material';
 
 export default {
   title: 'Theme/Button',
-  component: MuiButton,
+  component: Button,
 };
 
 const label = 'Button';
 
-export const Button = () => (
+const Template = () => (
   <Stack direction="column" spacing={2} p={2}>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiButton variant="contained" size="small">
+      <Button variant="contained" size="small">
         {label}
-      </MuiButton>
-      <MuiButton variant="contained" size="medium">
+      </Button>
+      <Button variant="contained" size="medium">
         {label}
-      </MuiButton>
-      <MuiButton variant="contained" size="large">
+      </Button>
+      <Button variant="contained" size="large">
         {label}
-      </MuiButton>
+      </Button>
     </Stack>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiButton variant="contained" size="small" disabled>
+      <Button variant="contained" size="small" disabled>
         {label}
-      </MuiButton>
-      <MuiButton variant="contained" size="medium" disabled>
+      </Button>
+      <Button variant="contained" size="medium" disabled>
         {label}
-      </MuiButton>
-      <MuiButton variant="contained" size="large" disabled>
+      </Button>
+      <Button variant="contained" size="large" disabled>
         {label}
-      </MuiButton>
+      </Button>
     </Stack>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiButton variant="contained" color="secondary" size="small">
+      <Button variant="contained" color="secondary" size="small">
         {label}
-      </MuiButton>
-      <MuiButton variant="contained" color="secondary" size="medium">
+      </Button>
+      <Button variant="contained" color="secondary" size="medium">
         {label}
-      </MuiButton>
-      <MuiButton variant="contained" color="secondary" size="large">
+      </Button>
+      <Button variant="contained" color="secondary" size="large">
         {label}
-      </MuiButton>
+      </Button>
     </Stack>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiButton variant="contained" color="secondary" size="small" disabled>
+      <Button variant="contained" color="secondary" size="small" disabled>
         {label}
-      </MuiButton>
-      <MuiButton variant="contained" color="secondary" size="medium" disabled>
+      </Button>
+      <Button variant="contained" color="secondary" size="medium" disabled>
         {label}
-      </MuiButton>
-      <MuiButton variant="contained" color="secondary" size="large" disabled>
+      </Button>
+      <Button variant="contained" color="secondary" size="large" disabled>
         {label}
-      </MuiButton>
+      </Button>
     </Stack>
     <Stack direction="row" spacing={2} alignItems="center">
-      <MuiButton variant="text" size="small">
+      <Button variant="text" size="small">
         {label}
-      </MuiButton>
-      <MuiButton variant="text" size="medium">
+      </Button>
+      <Button variant="text" size="medium">
         {label}
-      </MuiButton>
-      <MuiButton variant="text" size="large">
+      </Button>
+      <Button variant="text" size="large">
         {label}
-      </MuiButton>
+      </Button>
     </Stack>
-    <MuiButton
-      size="large"
-      sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
-      }}
-    >
-      <span>2000.00 USDC</span>
-      <Stack direction="row" alignItems="center" spacing={1}>
-        <Typography>Deposit</Typography>
-        <ArrowRight size={16} />
-      </Stack>
-    </MuiButton>
+    <Stack direction="row" spacing={2} alignItems="center">
+      <Button variant="text" size="small" disabled>
+        {label}
+      </Button>
+      <Button variant="text" size="medium" disabled>
+        {label}
+      </Button>
+      <Button variant="text" size="large" disabled>
+        {label}
+      </Button>
+    </Stack>
   </Stack>
 );
+
+export const Light = Template.bind({});
+Light.args = { themeMode: 'light' };
+
+export const Dark = Template.bind({});
+Dark.args = { themeMode: 'dark' };

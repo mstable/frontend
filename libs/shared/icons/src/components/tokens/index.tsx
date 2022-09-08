@@ -21,6 +21,7 @@ import { ReactComponent as imBTCSvg } from './imBTC.svg';
 import { ReactComponent as imbtcMtaSvg } from './imbtc-mta.svg';
 import { ReactComponent as imUSDSvg } from './imUSD.svg';
 import { ReactComponent as imusdMtaSvg } from './imusd-mta.svg';
+import { ReactComponent as LUSDSvg } from './LUSD.svg';
 import { ReactComponent as mBTCSvg } from './mBTC.svg';
 import { ReactComponent as MTASvg } from './MTA.svg';
 import { ReactComponent as mUSDSvg } from './mUSD.svg';
@@ -108,6 +109,9 @@ export const ImusdMta = (props: SvgIconProps) => (
 );
 export const ImUSD = (props: SvgIconProps) => (
   <SvgIcon {...props} component={imUSDSvg} viewBox="0 0 330 330" />
+);
+export const LUSD = (props: SvgIconProps) => (
+  <SvgIcon {...props} component={LUSDSvg} viewBox="0 0 250 249" />
 );
 export const MBTC = (props: SvgIconProps) => (
   <SvgIcon {...props} component={mBTCSvg} viewBox="0 0 332 330" />

@@ -7,13 +7,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography as MuiTypography,
+  Typography,
   useTheme,
 } from '@mui/material';
 
 export default {
   title: 'Theme/Typography',
-  component: MuiTypography,
+  component: Typography,
 };
 
 const sample = 'The DeFi yield operating system';
@@ -34,7 +34,7 @@ const formatFontweight = (w: number) =>
     ),
   );
 
-export const Typography = () => {
+const Template = () => {
   const { typography } = useTheme();
 
   if (!typography || Object.keys(typography).length === 0) {
@@ -95,7 +95,7 @@ export const Typography = () => {
                 <TableCell>{typography[key].lineHeight}</TableCell>
                 <TableCell>{typography[key].letterSpacing}</TableCell>
                 <TableCell>
-                  <MuiTypography sx={typography[key]}>{sample}</MuiTypography>
+                  <Typography sx={typography[key]}>{sample}</Typography>
                 </TableCell>
               </TableRow>
             ))}
@@ -105,3 +105,9 @@ export const Typography = () => {
     </Box>
   );
 };
+
+export const Light = Template.bind({});
+Light.args = { themeMode: 'light' };
+
+export const Dark = Template.bind({});
+Dark.args = { themeMode: 'dark' };
