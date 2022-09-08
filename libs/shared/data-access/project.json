@@ -42,8 +42,7 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "commands": [
-          "yarn graphql-codegen --config 'libs/shared/data-access/codegen.js'",
-          "yarn lint:fix"
+          "yarn graphql-codegen --config 'libs/shared/data-access/codegen.ts'"
         ]
       }
     }

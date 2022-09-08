@@ -13,6 +13,8 @@ import { path } from 'ramda';
 import { useIntl } from 'react-intl';
 import { useAccount, useBalance, useNetwork } from 'wagmi';
 
+import { usePositionQuery } from './queries.generated';
+
 export const Position = () => {
   const intl = useIntl();
   const { address } = useAccount();
@@ -23,6 +25,10 @@ export const Position = () => {
     watch: true,
     enabled: !!address && !!chain?.id,
   });
+
+  const { data } = usePositionQuery();
+
+  console.log(data);
 
   return (
     <Card>
