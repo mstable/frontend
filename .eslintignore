@@ -1,6 +1,7 @@
 **/dist
 **/coverage
 **/generated/*/*
+**/*.generated.tsx
 **/i18n-extractions
 **/node_modules
 **/abis
