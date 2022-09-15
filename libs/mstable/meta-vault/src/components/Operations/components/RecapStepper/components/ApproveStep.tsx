@@ -28,7 +28,7 @@ import {
   useWaitForTransaction,
 } from 'wagmi';
 
-import { useMetaVault } from '../../../../../hooks';
+import { useMetavault } from '../../../../../state';
 import { useOperations } from '../../../hooks';
 
 import type { StackProps, StepProps } from '@mui/material';
@@ -46,7 +46,10 @@ export const ApproveStep = (props: StepProps) => {
   const { symbol } = usePrices();
   const pushNotification = usePushNotification();
   const [approveInfinite, setApproveInfinite] = useState(false);
-  const { address, asset } = useMetaVault();
+  const {
+    metavault: { address },
+    asset,
+  } = useMetavault();
   const { amount, needsApproval } = useOperations();
   const { price } = usePrices();
   const { data: feeData } = useFeeData({ formatUnits: 'gwei' });

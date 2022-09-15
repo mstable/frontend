@@ -2,11 +2,17 @@
   "/+9/FO": {
     "defaultMessage": "Accrued Interest"
   },
+  "/e4KBT": {
+    "defaultMessage": "1 Share = {ratio} {asset}"
+  },
   "0NMLMN": {
     "defaultMessage": "My Position"
   },
   "3QSP9N": {
     "defaultMessage": "Visualize Strategy"
+  },
+  "52EAoy": {
+    "defaultMessage": "Set allowance to maximum value"
   },
   "6N9V2n": {
     "defaultMessage": "Gas Fees"
@@ -14,8 +20,14 @@
   "CGcoFj": {
     "defaultMessage": "Yield Calculator"
   },
+  "CjmGfs": {
+    "defaultMessage": "View your transaction on etherscan"
+  },
   "D0TVwO": {
     "defaultMessage": "Stablecoin Meta Vault"
+  },
+  "EzjaGz": {
+    "defaultMessage": "Token approval"
   },
   "JGIzwR": {
     "defaultMessage": "See what assets and protocols are exposed to this strategy."
@@ -32,8 +44,8 @@
   "LjNvmm": {
     "defaultMessage": "Deposited"
   },
-  "M2L4zx": {
-    "defaultMessage": "Interest Rate (%)"
+  "MEfsyo": {
+    "defaultMessage": "Increase allowance for this token"
   },
   "MJ2jZQ": {
     "defaultMessage": "Total"
@@ -41,8 +53,8 @@
   "MqZGhr": {
     "defaultMessage": "Vault Performance"
   },
-  "Nf6oxb": {
-    "defaultMessage": "Your Deposit"
+  "OwO+Nr": {
+    "defaultMessage": "Mint"
   },
   "OxqNA7": {
     "defaultMessage": "Av. APY"
@@ -50,20 +62,35 @@
   "P6EE/a": {
     "defaultMessage": "Tokens"
   },
+  "PXAur5": {
+    "defaultMessage": "Withdraw"
+  },
+  "RBK8Rq": {
+    "defaultMessage": "Deposit completed"
+  },
   "SKB/G9": {
     "defaultMessage": "TVL"
   },
-  "SjJIHe": {
-    "defaultMessage": "You Get"
+  "VOo/kE": {
+    "defaultMessage": "Token approved"
   },
   "Vqr2OI": {
     "defaultMessage": "AV. APY"
   },
+  "WCaf5C": {
+    "defaultMessage": "Approve"
+  },
   "WKCp0D": {
     "defaultMessage": "Asset"
   },
-  "byXXyV": {
-    "defaultMessage": "Enter Amount"
+  "XSdWHA": {
+    "defaultMessage": "Redeem"
+  },
+  "c0b5XV": {
+    "defaultMessage": "Rate"
+  },
+  "dIgBOz": {
+    "defaultMessage": "Deposit"
   },
   "djJp6c": {
     "defaultMessage": "History"
@@ -71,23 +98,41 @@
   "hincAk": {
     "defaultMessage": "Uniswap"
   },
+  "i8dYu2": {
+    "defaultMessage": "GWEI"
+  },
   "kPBTut": {
     "defaultMessage": "low risk"
   },
   "kUNPyt": {
     "defaultMessage": "What are the risks?"
   },
+  "kZQLFm": {
+    "defaultMessage": "1 {asset} = {ratio} Shares"
+  },
+  "kaPKOB": {
+    "defaultMessage": "Insufficient balance"
+  },
+  "kjUNOW": {
+    "defaultMessage": "Waiting for approval"
+  },
   "l4+7bo": {
     "defaultMessage": "Yields"
-  },
-  "lyG3ez": {
-    "defaultMessage": "Recap"
   },
   "mrwfXX": {
     "defaultMessage": "Shares"
   },
+  "rDh2BB": {
+    "defaultMessage": "Set as infinite"
+  },
+  "rFZhzG": {
+    "defaultMessage": "Current Gas"
+  },
   "tH0obk": {
     "defaultMessage": "Return Projection"
+  },
+  "z4YSCO": {
+    "defaultMessage": "{operationLabel} cost"
   },
   "zGHadw": {
     "defaultMessage": "Strategy"

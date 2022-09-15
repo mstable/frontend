@@ -1,7 +1,10 @@
 import {
+  BUSD,
   DAI,
   Ether,
   FEI,
+  FRAX,
+  LUSD,
   MBTC,
   MTA,
   MUSD,
@@ -12,13 +15,17 @@ import {
 import { SvgIcon } from '@mui/material';
 import { CurrencyCircleDollar } from 'phosphor-react';
 
+import type { SupportedToken } from '@frontend/shared-constants';
 import type { SvgIconProps } from '@mui/material';
 
 export type TokenIconProps = {
   symbol: string;
 } & SvgIconProps;
 
-const SupportedTokens = {
+const SupportedTokens: Record<
+  SupportedToken,
+  (props: SvgIconProps) => JSX.Element
+> = {
   dai: DAI,
   eth: Ether,
   fei: FEI,
@@ -28,6 +35,9 @@ const SupportedTokens = {
   rai: RAI,
   usdc: USDC,
   usdt: USDT,
+  lusd: LUSD,
+  frax: FRAX,
+  busd: BUSD,
 };
 
 export const TokenIcon = ({ symbol, ...rest }: TokenIconProps) => {

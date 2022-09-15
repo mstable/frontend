@@ -2,14 +2,14 @@
   "+vVZ/G": {
     "defaultMessage": "Connect"
   },
-  "DkD2I2": {
-    "defaultMessage": "Reset to Ethereum mainnet"
-  },
-  "IklGvq": {
-    "defaultMessage": "The selected network ({name}) is not supported by the application. You can either switch your wallet or reset to Ethereum mainnet."
+  "1XVJUl": {
+    "defaultMessage": "Switch to {defaultChain}"
   },
   "PmkP1H": {
     "defaultMessage": "Unsupported Network"
+  },
+  "R5x4Vk": {
+    "defaultMessage": "The selected network is not supported by the application. You can either switch your wallet or reset to {defaultChain}."
   },
   "X0zKZO": {
     "defaultMessage": "Connected User"

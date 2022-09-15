@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 
 import { Footer } from '@frontend/mstable-footer';
-import { addresses } from '@frontend/shared-constants';
+import { usdc3crv } from '@frontend/shared-constants';
 import { getMixins } from '@frontend/shared-utils';
 import { Stack } from '@mui/material';
 import { Outlet } from '@tanstack/react-location';
-import { pathOr } from 'ramda';
 import { useAccount, useNetwork } from 'wagmi';
 
-import { Provider } from '../state';
+import { MetavaultProvider } from '../state';
+
+import type { Metavault } from '@frontend/shared-constants';
 
 const MainWrapped = () => {
   return (
@@ -22,17 +23,17 @@ const MainWrapped = () => {
 export const Main = () => {
   const { chain } = useNetwork();
   const { address: walletAddress } = useAccount();
-  const [address, setAddress] = useState<string | null>(null);
+  const [metavault, setMetavault] = useState<Metavault | null>(null);
 
   useEffect(() => {
     if (walletAddress && chain?.id) {
-      setAddress(pathOr(null, [chain?.id, 'ERC4626', 'TVG'], addresses));
+      setMetavault(usdc3crv[chain.id]);
     }
   }, [chain?.id, walletAddress]);
 
   return (
-    <Provider key={address} initialState={{ address }}>
+    <MetavaultProvider key={metavault?.address} initialState={{ metavault }}>
       <MainWrapped />
-    </Provider>
+    </MetavaultProvider>
   );
 };

@@ -1,4 +1,7 @@
 {
+  "balance": {
+    "defaultMessage": "Balance"
+  },
   "defaultCancel": {
     "defaultMessage": "Cancel"
   },
@@ -7,5 +10,8 @@
   },
   "defaultConfirmation": {
     "defaultMessage": "Please confirm to proceed"
+  },
+  "not_connected": {
+    "defaultMessage": "Not Connected"
   }
 }

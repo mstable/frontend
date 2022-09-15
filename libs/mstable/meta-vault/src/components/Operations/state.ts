@@ -7,7 +7,7 @@ import { createContainer } from 'react-tracked';
 import { useDebounce } from 'react-use';
 import { erc20ABI, useAccount, useContractRead } from 'wagmi';
 
-import { useMetaVault } from '../../hooks';
+import { useMetavault } from '../../state';
 
 import type { Children } from '@frontend/shared-utils';
 import type { FetchTokenResult } from '@wagmi/core';
@@ -38,14 +38,14 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
 >(() => {
   const { address: walletAddress } = useAccount();
   const {
-    address,
+    metavault: { address },
     asset,
     assetToken,
     assetBalance,
     mvBalance,
     assetsPerShare,
     sharesPerAsset,
-  } = useMetaVault();
+  } = useMetavault();
   const [state, setState] = useState<OperationsState>({
     amount: null,
     token: assetToken,
