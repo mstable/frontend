@@ -1,3 +1,4 @@
+/* eslint-disable formatjs/no-id */
 import { defineMessage } from 'react-intl';
 import { chainId } from 'wagmi';
 
@@ -10,6 +11,10 @@ import type { Metavault } from './types';
 const mainnet: Metavault = {
   address: '',
   name: 'ourVeryFirstMetaVault',
+  strategyDescription: defineMessage({
+    defaultMessage:
+      'This Strategy uses USDC to deposit into the 3CRV-Pool on Curve. The 3CRV token is then deposited in various Curve meta pools and staked in Convex. The earned CVX and CRV tokens are periodically claimed, swapped, and compounded.',
+  }),
   strategies: [
     {
       protocol: protocols.mstable,
@@ -48,6 +53,10 @@ const mainnet: Metavault = {
     tokens[chainId.mainnet].usdc,
     tokens[chainId.mainnet].usdt,
   ],
+  fees: {
+    liquidation: 0.07,
+    performance: 0.05,
+  },
 };
 
 const goerli: Metavault = {

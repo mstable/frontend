@@ -4,10 +4,15 @@ import type { MessageDescriptor } from 'react-intl';
 
 export type SupportedProtocol = 'mstable' | 'curve' | 'convex';
 
-export type Protocol = { name: string; description: MessageDescriptor };
+export type Protocol = {
+  id: string;
+  name: string;
+  description: MessageDescriptor;
+};
 
 export const protocols: Record<SupportedProtocol, Protocol> = {
   mstable: {
+    id: 'mstable',
     name: 'mStable',
     description: defineMessage({
       defaultMessage:
@@ -15,14 +20,16 @@ export const protocols: Record<SupportedProtocol, Protocol> = {
     }),
   },
   curve: {
-    name: 'curve',
+    id: 'curve',
+    name: 'Curve',
     description: defineMessage({
       defaultMessage:
         'Curve is an exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers, without an opportunity cost.',
     }),
   },
   convex: {
-    name: 'convex',
+    id: 'convex',
+    name: 'Convex',
     description: defineMessage({
       defaultMessage:
         'Convex is a platform that boosts rewards for CRV stakers and liquidity providers alike, all in a simple and easy to use interface.',
