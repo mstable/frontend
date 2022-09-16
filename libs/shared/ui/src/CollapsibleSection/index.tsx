@@ -1,5 +1,6 @@
-import { cloneElement, isValidElement, useState } from 'react';
+import { useState } from 'react';
 
+import { isNilOrEmpty } from '@frontend/shared-utils';
 import { Box, Collapse, Stack, Typography } from '@mui/material';
 import { not } from 'ramda';
 
@@ -10,29 +11,30 @@ import type { BoxProps } from '@mui/system';
 import type { MouseEvent, ReactNode } from 'react';
 
 export type CollapsibleSectionProps = {
-  title:
-    | ReactNode
-    | ((open: boolean, onToggle: (event?: MouseEvent) => void) => ReactNode);
+  title: string;
+  subtitle?: string;
   children:
     | ReactNode
     | ((open: boolean, onToggle: (event?: MouseEvent) => void) => ReactNode);
   defaultOpen?: boolean;
   iconPosition?: 'start' | 'end' | 'none';
   components?: {
-    container?: StackProps;
-    titleContainer?: BoxProps;
-    titleTypography?: TypographyProps;
-    childrenContainer?: BoxProps;
+    titleContainer?: StackProps;
+    title?: TypographyProps;
+    subtitle?: TypographyProps;
     icon?: SvgIconProps;
+    childrenContainer?: BoxProps;
   };
-};
+} & Omit<StackProps, 'title'>;
 
 export const CollapsibleSection = ({
   title,
+  subtitle,
   children,
   iconPosition = 'start',
   defaultOpen = false,
   components,
+  ...rest
 }: CollapsibleSectionProps) => {
   const [open, setOpen] = useState(defaultOpen);
 
@@ -45,60 +47,65 @@ export const CollapsibleSection = ({
     };
 
   return (
-    <Stack direction="column" {...components?.container}>
-      {typeof title === 'function' ? (
-        title(open, handleToggle())
-      ) : ['string', 'number'].includes(typeof title) ? (
-        <Box
-          py={1}
-          display="flex"
-          flexDirection="row"
-          alignItems="center"
-          {...components?.titleContainer}
-          role="button"
-          tabIndex={0}
-          onClick={handleToggle(components?.titleContainer?.onClick)}
-          sx={{
-            cursor: 'pointer',
-            ':hover': {
-              color: 'primary.main',
-            },
-            ...components?.titleContainer?.sx,
-          }}
-        >
-          {iconPosition === 'start' && (
-            <ExpandIcon
-              expanded={open}
-              sx={{
-                marginRight: 1,
-                ...components?.icon?.sx,
-              }}
-            />
-          )}
+    <Stack direction="column" {...rest}>
+      <Stack
+        direction="row"
+        py={1}
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        {...components?.titleContainer}
+        role="button"
+        tabIndex={0}
+        onClick={handleToggle(components?.titleContainer?.onClick)}
+        sx={{
+          cursor: 'pointer',
+          ':hover': {
+            color: 'primary.main',
+          },
+          ...components?.titleContainer?.sx,
+        }}
+      >
+        {iconPosition === 'start' && (
+          <ExpandIcon
+            expanded={open}
+            sx={{
+              marginRight: 1,
+              ...components?.icon?.sx,
+            }}
+          />
+        )}
+        <Stack direction="column" flexGrow={1}>
           <Typography
-            variant="h5"
-            {...components?.titleTypography}
-            flexGrow={1}
+            className="title"
+            {...components?.title}
+            sx={{
+              typography: 'h5',
+              marginBottom: isNilOrEmpty(subtitle) ? 0 : 0.5,
+              ...components?.title?.sx,
+            }}
           >
             {title}
           </Typography>
-          {iconPosition === 'end' && (
-            <ExpandIcon
-              expanded={open}
-              sx={{
-                marginLeft: 1,
-                ...components?.icon?.sx,
-              }}
-            />
+          {!isNilOrEmpty(subtitle) && (
+            <Typography
+              {...components?.subtitle}
+              sx={{ typography: 'subtitle1', ...components?.subtitle?.sx }}
+            >
+              {subtitle}
+            </Typography>
           )}
-        </Box>
-      ) : (
-        isValidElement(title) &&
-        cloneElement<{ onClick?: (event?: MouseEvent) => void }>(title, {
-          ...components?.titleContainer,
-          onClick: handleToggle(title?.props?.onClick),
-        })
-      )}
+        </Stack>
+        {iconPosition === 'end' && (
+          <ExpandIcon
+            expanded={open}
+            sx={{
+              marginLeft: 1,
+              ...components?.icon?.sx,
+            }}
+          />
+        )}
+      </Stack>
       <Collapse in={open}>
         {typeof children === 'function' ? (
           children(open, handleToggle())

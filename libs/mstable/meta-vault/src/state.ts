@@ -45,6 +45,7 @@ export const {
       strategies: [],
       vaults: [],
       assets: [],
+      fees: { liquidation: 0, performance: 0 },
       ...initialState.metavault,
     },
     mvToken: null,

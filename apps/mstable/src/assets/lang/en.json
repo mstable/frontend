@@ -1,4 +1,10 @@
 {
+  "+1GGs7": [
+    {
+      "type": 0,
+      "value": "Claim CVX & CRV"
+    }
+  ],
   "+vVZ/G": [
     {
       "type": 0,
@@ -9,6 +15,12 @@
     {
       "type": 0,
       "value": "Accrued Interest"
+    }
+  ],
+  "/LEAtw": [
+    {
+      "type": 0,
+      "value": "Underlying Vaults that are used by this vault."
     }
   ],
   "/e4KBT": [
@@ -51,10 +63,40 @@
       "value": "Visualize Strategy"
     }
   ],
+  "4/JAsV": [
+    {
+      "type": 0,
+      "value": "The underlying vaults charge a "
+    },
+    {
+      "type": 1,
+      "value": "fee"
+    },
+    {
+      "type": 0,
+      "value": "% fee upon liquidation of the earned rewards."
+    }
+  ],
   "52EAoy": [
     {
       "type": 0,
       "value": "Set allowance to maximum value"
+    }
+  ],
+  "5ZxAiY": [
+    {
+      "type": 0,
+      "value": "Token"
+    }
+  ],
+  "5fjd4K": [
+    {
+      "type": 1,
+      "value": "fee"
+    },
+    {
+      "type": 0,
+      "value": "%"
     }
   ],
   "6N9V2n": [
@@ -69,10 +111,28 @@
       "value": "mStable is a protocol for yield aggregation and diversification."
     }
   ],
+  "7jeKkk": [
+    {
+      "type": 0,
+      "value": "Protocols that are used by this vault."
+    }
+  ],
   "8ywLSf": [
     {
       "type": 0,
       "value": "Twitter"
+    }
+  ],
+  "9RAHhM": [
+    {
+      "type": 0,
+      "value": "Strategy & Risks"
+    }
+  ],
+  "BwwISd": [
+    {
+      "type": 0,
+      "value": "Vault"
     }
   ],
   "CGcoFj": [
@@ -99,6 +159,12 @@
       "value": "Stablecoin Meta Vault"
     }
   ],
+  "EibIVS": [
+    {
+      "type": 0,
+      "value": "This Strategy uses USDC to deposit into the 3CRV-Pool on Curve. The 3CRV token is then deposited in various Curve meta pools and staked in Convex. The earned CVX and CRV tokens are periodically claimed, swapped, and compounded."
+    }
+  ],
   "EzjaGz": [
     {
       "type": 0,
@@ -111,16 +177,16 @@
       "value": "Discord"
     }
   ],
+  "GC970B": [
+    {
+      "type": 0,
+      "value": "Collect swap fees"
+    }
+  ],
   "HwugaQ": [
     {
       "type": 0,
       "value": "Switch theme"
-    }
-  ],
-  "JGIzwR": [
-    {
-      "type": 0,
-      "value": "See what assets and protocols are exposed to this strategy."
     }
   ],
   "KE0cl6": [
@@ -133,6 +199,12 @@
     {
       "type": 0,
       "value": "DEPOSIT"
+    }
+  ],
+  "LDz7xI": [
+    {
+      "type": 0,
+      "value": "Assets that are used by this vault."
     }
   ],
   "LETDMp": [
@@ -195,6 +267,12 @@
       "value": "Withdraw"
     }
   ],
+  "Pk6qK4": [
+    {
+      "type": 0,
+      "value": "Fees that are charged by this vault."
+    }
+  ],
   "PmkP1H": [
     {
       "type": 0,
@@ -225,6 +303,16 @@
     {
       "type": 0,
       "value": "TVL"
+    }
+  ],
+  "THS5K4": [
+    {
+      "type": 1,
+      "value": "fee"
+    },
+    {
+      "type": 0,
+      "value": "% of USDC"
     }
   ],
   "VOo/kE": [
@@ -275,6 +363,12 @@
       "value": "Balance"
     }
   ],
+  "bvmoAt": [
+    {
+      "type": 0,
+      "value": "The following protocols are used in the strategies and are therefore exposed to their risk:"
+    }
+  ],
   "c0b5XV": [
     {
       "type": 0,
@@ -285,6 +379,12 @@
     {
       "type": 0,
       "value": "mStable"
+    }
+  ],
+  "d1uESJ": [
+    {
+      "type": 0,
+      "value": "Assets"
     }
   ],
   "dIgBOz": [
@@ -323,10 +423,28 @@
       "value": "The Strategy uses Convex to stake liquidity tokens from Curve to earn additional rewards. The strategy is exposed to the risk of the Convex smart contracts."
     }
   ],
+  "fJjSsb": [
+    {
+      "type": 0,
+      "value": "Performance Fee"
+    }
+  ],
+  "gKTtPo": [
+    {
+      "type": 0,
+      "value": "Vault Contracts"
+    }
+  ],
   "hY+w99": [
     {
       "type": 0,
       "value": "Error fetching prices"
+    }
+  ],
+  "heM61T": [
+    {
+      "type": 0,
+      "value": "Swap to USDC"
     }
   ],
   "hincAk": [
@@ -345,12 +463,6 @@
     {
       "type": 0,
       "value": "low risk"
-    }
-  ],
-  "kUNPyt": [
-    {
-      "type": 0,
-      "value": "What are the risks?"
     }
   ],
   "kZQLFm": [
@@ -387,10 +499,22 @@
       "value": "Waiting for approval"
     }
   ],
+  "korbaG": [
+    {
+      "type": 0,
+      "value": "The following assets are used in this strategy and therefore are exposed (partially) to their risk:"
+    }
+  ],
   "l4+7bo": [
     {
       "type": 0,
       "value": "Yields"
+    }
+  ],
+  "lLuyem": [
+    {
+      "type": 0,
+      "value": "DAO"
     }
   ],
   "meocUp": [
@@ -415,6 +539,12 @@
     {
       "type": 0,
       "value": "Medium"
+    }
+  ],
+  "qZbedW": [
+    {
+      "type": 0,
+      "value": "Fees"
     }
   ],
   "qj1uhz": [
@@ -447,6 +577,26 @@
       "value": "Return Projection"
     }
   ],
+  "tTCSmN": [
+    {
+      "type": 0,
+      "value": "Liquidation Fee"
+    }
+  ],
+  "tvpAhG": [
+    {
+      "type": 0,
+      "value": "The Meta Vault charges a "
+    },
+    {
+      "type": 1,
+      "value": "fee"
+    },
+    {
+      "type": 0,
+      "value": "% performance upon underlying asset appreciation."
+    }
+  ],
   "vS/YSY": [
     {
       "type": 0,
@@ -469,10 +619,10 @@
       "value": " cost"
     }
   ],
-  "zGHadw": [
+  "zFNxtv": [
     {
       "type": 0,
-      "value": "Strategy"
+      "value": "Protocols"
     }
   ],
   "zRbVmO": [

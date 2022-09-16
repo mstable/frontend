@@ -5,7 +5,7 @@ import { usdc3crv } from '@frontend/shared-constants';
 import { getMixins } from '@frontend/shared-utils';
 import { Stack } from '@mui/material';
 import { Outlet } from '@tanstack/react-location';
-import { useAccount, useNetwork } from 'wagmi';
+import { chainId, useAccount, useNetwork } from 'wagmi';
 
 import { MetavaultProvider } from '../state';
 
@@ -26,9 +26,7 @@ export const Main = () => {
   const [metavault, setMetavault] = useState<Metavault | null>(null);
 
   useEffect(() => {
-    if (walletAddress && chain?.id) {
-      setMetavault(usdc3crv[chain.id]);
-    }
+    setMetavault(usdc3crv[chain?.id ?? chainId.mainnet]);
   }, [chain?.id, walletAddress]);
 
   return (

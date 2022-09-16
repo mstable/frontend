@@ -27,13 +27,14 @@ const AppWrapped = () => {
       sx={{
         width: 1,
         height: 1,
-        background: (theme) =>
-          [
-            theme.mixins.gradients.numbTop,
-            theme.mixins.gradients.numbBottom,
-            theme.mixins.gradients.colorCloud,
-          ].join(','),
-        backgroundAttachment: 'fixed',
+        // background: (theme) =>
+        //   [
+        //     theme.mixins.gradients.numbTop,
+        //     theme.mixins.gradients.numbBottom,
+        //     theme.mixins.gradients.colorCloud,
+        //   ].join(','),
+        // backgroundAttachment: 'fixed',
+        // backgroundRepeat: 'no-repeat',
       }}
     >
       <Topnav />

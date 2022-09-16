@@ -27,7 +27,7 @@ export const YieldCalculator = () => {
         iconPosition="end"
         components={{
           titleContainer: { py: 3, px: 2 },
-          titleTypography: { sx: (theme) => theme.typography.h4 },
+          title: { variant: 'h4' },
           childrenContainer: { sx: { px: 2 } },
         }}
       >

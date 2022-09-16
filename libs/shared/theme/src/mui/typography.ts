@@ -57,6 +57,22 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
       lineHeight: 1.25,
       fontWeight: fontWeights.bold,
     },
+    subtitle1: {
+      fontFamily: fontFamilies.main,
+      fontSize: 14,
+      lineHeight: 1.2,
+      fontWeight: fontWeights.medium,
+    },
+    subtitle2: {
+      fontFamily: fontFamilies.main,
+      fontSize: 12,
+      lineHeight: 1.2,
+      fontWeight: fontWeights.medium,
+      color:
+        base.palette.mode === 'light'
+          ? base.palette.grey[600]
+          : base.palette.grey[500],
+    },
     body1: {
       fontFamily: fontFamilies.main,
       fontSize: 16,

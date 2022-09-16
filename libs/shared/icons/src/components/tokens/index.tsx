@@ -111,7 +111,7 @@ export const ImUSD = (props: SvgIconProps) => (
   <SvgIcon {...props} component={imUSDSvg} viewBox="0 0 330 330" />
 );
 export const LUSD = (props: SvgIconProps) => (
-  <SvgIcon {...props} component={LUSDSvg} viewBox="0 0 250 249" />
+  <SvgIcon {...props} component={LUSDSvg} viewBox="0 0 400 398.4" />
 );
 export const MBTC = (props: SvgIconProps) => (
   <SvgIcon {...props} component={mBTCSvg} viewBox="0 0 332 330" />

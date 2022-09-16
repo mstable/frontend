@@ -60,10 +60,8 @@ export const Position = () => {
       <CollapsibleSection
         iconPosition="end"
         title={intl.formatMessage({ defaultMessage: 'History' })}
-        components={{
-          container: { p: 2 },
-          titleTypography: { variant: 'body2', fontWeight: 'bold' },
-        }}
+        p={2}
+        components={{ title: { variant: 'body2', fontWeight: 'bold' } }}
       >
         <Box
           sx={(theme) => ({
