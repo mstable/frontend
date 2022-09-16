@@ -4,13 +4,14 @@ import { chainId } from 'wagmi';
 
 import { protocols } from '../protocols';
 import { tokens } from '../tokens';
+import { DEAD_ADDRESS } from '../utils';
 import { vaults } from '../vaults';
 
 import type { Metavault } from './types';
 
 const mainnet: Metavault = {
-  address: '',
-  name: 'ourVeryFirstMetaVault',
+  address: DEAD_ADDRESS,
+  name: 'The Sexy Metavault',
   strategyDescription: defineMessage({
     defaultMessage:
       'This Strategy uses USDC to deposit into the 3CRV-Pool on Curve. The 3CRV token is then deposited in various Curve meta pools and staked in Convex. The earned CVX and CRV tokens are periodically claimed, swapped, and compounded.',
