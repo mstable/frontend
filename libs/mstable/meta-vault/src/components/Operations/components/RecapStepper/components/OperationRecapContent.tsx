@@ -14,7 +14,7 @@ import {
   usePrepareContractWrite,
 } from 'wagmi';
 
-import { useMetaVault } from '../../../../../hooks';
+import { useMetavault } from '../../../../../state';
 import { useOperationLabel, useOperations } from '../../../hooks';
 
 import type { StackProps } from '@mui/material';
@@ -31,7 +31,9 @@ export const OperationRecapContent = (props: StackProps) => {
   const { data: feeData } = useFeeData({ formatUnits: 'gwei' });
   const operationLabel = useOperationLabel();
   const { amount, operation, needsApproval } = useOperations();
-  const { address } = useMetaVault();
+  const {
+    metavault: { address },
+  } = useMetavault();
   const { address: walletAddress } = useAccount();
   const { price, symbol } = usePrices();
 

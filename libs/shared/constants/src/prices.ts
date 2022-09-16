@@ -1,8 +1,8 @@
-import type { ChainName } from '@wagmi/core/dist/declarations/src/constants/chains';
+import { chainId } from 'wagmi';
 
 export const coingeckoEndpoint = 'https://api.coingecko.com/api/v3';
 
-export const coingeckoCoinIds: Partial<Record<ChainName, string>> = {
-  polygon: 'matic-network',
-  mainnet: 'ethereum',
+export const coingeckoCoinIds: Record<number, string> = {
+  [chainId.polygon]: 'matic-network',
+  [chainId.mainnet]: 'ethereum',
 };

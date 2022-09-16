@@ -13,11 +13,12 @@ import {
   useToken,
 } from 'wagmi';
 
+import type { Metavault } from '@frontend/shared-constants';
 import type { FetchTokenResult } from '@wagmi/core';
 import type { Dispatch, SetStateAction } from 'react';
 
 type MetaVaultState = {
-  address: string | null;
+  metavault: Metavault | null;
   mvToken: FetchTokenResult | null;
   asset: string | null;
   assetToken: FetchTokenResult | null;
@@ -27,14 +28,25 @@ type MetaVaultState = {
   sharesPerAsset: BigDecimal | null;
 };
 
-export const { Provider, useUpdate, useTrackedState } = createContainer<
+export const {
+  Provider: MetavaultProvider,
+  useUpdate: useUpdateMetavault,
+  useTrackedState: useMetavault,
+} = createContainer<
   MetaVaultState,
   Dispatch<SetStateAction<MetaVaultState>>,
-  { initialState: { address: string } }
+  { initialState: { metavault: Metavault } }
 >(({ initialState }) => {
   const { address: walletAddress } = useAccount();
   const [state, setState] = useState<MetaVaultState>({
-    ...initialState,
+    metavault: {
+      address: '',
+      name: '',
+      strategies: [],
+      vaults: [],
+      assets: [],
+      ...initialState.metavault,
+    },
     mvToken: null,
     asset: null,
     assetToken: null,
@@ -44,7 +56,10 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     sharesPerAsset: null,
   });
 
-  const { address, asset } = state;
+  const {
+    metavault: { address },
+    asset,
+  } = state;
 
   useContractRead({
     addressOrName: address,

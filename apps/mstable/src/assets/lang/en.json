@@ -11,10 +11,38 @@
       "value": "Accrued Interest"
     }
   ],
+  "/e4KBT": [
+    {
+      "type": 0,
+      "value": "1 Share = "
+    },
+    {
+      "type": 1,
+      "value": "ratio"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "asset"
+    }
+  ],
   "0NMLMN": [
     {
       "type": 0,
       "value": "My Position"
+    }
+  ],
+  "1XVJUl": [
+    {
+      "type": 0,
+      "value": "Switch to "
+    },
+    {
+      "type": 1,
+      "value": "defaultChain"
     }
   ],
   "3QSP9N": [
@@ -23,10 +51,22 @@
       "value": "Visualize Strategy"
     }
   ],
+  "52EAoy": [
+    {
+      "type": 0,
+      "value": "Set allowance to maximum value"
+    }
+  ],
   "6N9V2n": [
     {
       "type": 0,
       "value": "Gas Fees"
+    }
+  ],
+  "7CAm2s": [
+    {
+      "type": 0,
+      "value": "mStable is a protocol for yield aggregation and diversification."
     }
   ],
   "8ywLSf": [
@@ -41,16 +81,28 @@
       "value": "Yield Calculator"
     }
   ],
+  "CjmGfs": [
+    {
+      "type": 0,
+      "value": "View your transaction on etherscan"
+    }
+  ],
+  "D/hLNw": [
+    {
+      "type": 0,
+      "value": "The Strategy uses Curves 3CRV Pools and Factory pools. The strategy is exposed to the risk of the Curve smart contracts."
+    }
+  ],
   "D0TVwO": [
     {
       "type": 0,
       "value": "Stablecoin Meta Vault"
     }
   ],
-  "DkD2I2": [
+  "EzjaGz": [
     {
       "type": 0,
-      "value": "Reset to Ethereum mainnet"
+      "value": "Token approval"
     }
   ],
   "FvmV6q": [
@@ -63,20 +115,6 @@
     {
       "type": 0,
       "value": "Switch theme"
-    }
-  ],
-  "IklGvq": [
-    {
-      "type": 0,
-      "value": "The selected network ("
-    },
-    {
-      "type": 1,
-      "value": "name"
-    },
-    {
-      "type": 0,
-      "value": ") is not supported by the application. You can either switch your wallet or reset to Ethereum mainnet."
     }
   ],
   "JGIzwR": [
@@ -109,10 +147,10 @@
       "value": "Deposited"
     }
   ],
-  "M2L4zx": [
+  "MEfsyo": [
     {
       "type": 0,
-      "value": "Interest Rate (%)"
+      "value": "Increase allowance for this token"
     }
   ],
   "MJ2jZQ": [
@@ -121,16 +159,22 @@
       "value": "Total"
     }
   ],
+  "MPUuRK": [
+    {
+      "type": 0,
+      "value": "The Strategy uses Meta Vault and Vault contracts and combines and wraps the underlying strategies into one contract."
+    }
+  ],
   "MqZGhr": [
     {
       "type": 0,
       "value": "Vault Performance"
     }
   ],
-  "Nf6oxb": [
+  "OwO+Nr": [
     {
       "type": 0,
-      "value": "Your Deposit"
+      "value": "Mint"
     }
   ],
   "OxqNA7": [
@@ -145,10 +189,36 @@
       "value": "Tokens"
     }
   ],
+  "PXAur5": [
+    {
+      "type": 0,
+      "value": "Withdraw"
+    }
+  ],
   "PmkP1H": [
     {
       "type": 0,
       "value": "Unsupported Network"
+    }
+  ],
+  "R5x4Vk": [
+    {
+      "type": 0,
+      "value": "The selected network is not supported by the application. You can either switch your wallet or reset to "
+    },
+    {
+      "type": 1,
+      "value": "defaultChain"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "RBK8Rq": [
+    {
+      "type": 0,
+      "value": "Deposit completed"
     }
   ],
   "SKB/G9": [
@@ -157,10 +227,10 @@
       "value": "TVL"
     }
   ],
-  "SjJIHe": [
+  "VOo/kE": [
     {
       "type": 0,
-      "value": "You Get"
+      "value": "Token approved"
     }
   ],
   "Vn76qV": [
@@ -175,6 +245,12 @@
       "value": "AV. APY"
     }
   ],
+  "WCaf5C": [
+    {
+      "type": 0,
+      "value": "Approve"
+    }
+  ],
   "WKCp0D": [
     {
       "type": 0,
@@ -187,16 +263,34 @@
       "value": "Connected User"
     }
   ],
-  "byXXyV": [
+  "XSdWHA": [
     {
       "type": 0,
-      "value": "Enter Amount"
+      "value": "Redeem"
+    }
+  ],
+  "balance": [
+    {
+      "type": 0,
+      "value": "Balance"
+    }
+  ],
+  "c0b5XV": [
+    {
+      "type": 0,
+      "value": "Rate"
     }
   ],
   "cyasTx": [
     {
       "type": 0,
       "value": "mStable"
+    }
+  ],
+  "dIgBOz": [
+    {
+      "type": 0,
+      "value": "Deposit"
     }
   ],
   "defaultCancel": [
@@ -223,10 +317,28 @@
       "value": "History"
     }
   ],
+  "f4vYF8": [
+    {
+      "type": 0,
+      "value": "The Strategy uses Convex to stake liquidity tokens from Curve to earn additional rewards. The strategy is exposed to the risk of the Convex smart contracts."
+    }
+  ],
+  "hY+w99": [
+    {
+      "type": 0,
+      "value": "Error fetching prices"
+    }
+  ],
   "hincAk": [
     {
       "type": 0,
       "value": "Uniswap"
+    }
+  ],
+  "i8dYu2": [
+    {
+      "type": 0,
+      "value": "GWEI"
     }
   ],
   "kPBTut": [
@@ -241,22 +353,62 @@
       "value": "What are the risks?"
     }
   ],
+  "kZQLFm": [
+    {
+      "type": 0,
+      "value": "1 "
+    },
+    {
+      "type": 1,
+      "value": "asset"
+    },
+    {
+      "type": 0,
+      "value": " = "
+    },
+    {
+      "type": 1,
+      "value": "ratio"
+    },
+    {
+      "type": 0,
+      "value": " Shares"
+    }
+  ],
+  "kaPKOB": [
+    {
+      "type": 0,
+      "value": "Insufficient balance"
+    }
+  ],
+  "kjUNOW": [
+    {
+      "type": 0,
+      "value": "Waiting for approval"
+    }
+  ],
   "l4+7bo": [
     {
       "type": 0,
       "value": "Yields"
     }
   ],
-  "lyG3ez": [
+  "meocUp": [
     {
       "type": 0,
-      "value": "Recap"
+      "value": "Convex is a platform that boosts rewards for CRV stakers and liquidity providers alike, all in a simple and easy to use interface."
     }
   ],
   "mrwfXX": [
     {
       "type": 0,
       "value": "Shares"
+    }
+  ],
+  "not_connected": [
+    {
+      "type": 0,
+      "value": "Not Connected"
     }
   ],
   "ovJ26C": [
@@ -271,6 +423,18 @@
       "value": "Disconnect"
     }
   ],
+  "rDh2BB": [
+    {
+      "type": 0,
+      "value": "Set as infinite"
+    }
+  ],
+  "rFZhzG": [
+    {
+      "type": 0,
+      "value": "Current Gas"
+    }
+  ],
   "sy+pv5": [
     {
       "type": 0,
@@ -283,10 +447,26 @@
       "value": "Return Projection"
     }
   ],
+  "vS/YSY": [
+    {
+      "type": 0,
+      "value": "Curve is an exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers, without an opportunity cost."
+    }
+  ],
   "wqlXwW": [
     {
       "type": 0,
       "value": "Wrong Network"
+    }
+  ],
+  "z4YSCO": [
+    {
+      "type": 1,
+      "value": "operationLabel"
+    },
+    {
+      "type": 0,
+      "value": " cost"
     }
   ],
   "zGHadw": [

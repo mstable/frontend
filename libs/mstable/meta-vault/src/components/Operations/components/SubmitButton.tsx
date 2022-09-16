@@ -14,7 +14,7 @@ import {
   useWaitForTransaction,
 } from 'wagmi';
 
-import { useMetaVault } from '../../../hooks';
+import { useMetavault } from '../../../state';
 import { useOperationLabel, useOperations, useReset } from '../hooks';
 
 import type { ButtonProps } from '@mui/material';
@@ -34,7 +34,9 @@ export const SubmitButton = () => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
   const { address: walletAddress } = useAccount();
-  const { address } = useMetaVault();
+  const {
+    metavault: { address },
+  } = useMetavault();
   const { amount, token, operation, needsApproval, isError } = useOperations();
   const operationLabel = useOperationLabel();
   const reset = useReset();

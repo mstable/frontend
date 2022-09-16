@@ -1,0 +1,20 @@
+{
+  "7CAm2s": {
+    "defaultMessage": "mStable is a protocol for yield aggregation and diversification."
+  },
+  "D/hLNw": {
+    "defaultMessage": "The Strategy uses Curves 3CRV Pools and Factory pools. The strategy is exposed to the risk of the Curve smart contracts."
+  },
+  "MPUuRK": {
+    "defaultMessage": "The Strategy uses Meta Vault and Vault contracts and combines and wraps the underlying strategies into one contract."
+  },
+  "f4vYF8": {
+    "defaultMessage": "The Strategy uses Convex to stake liquidity tokens from Curve to earn additional rewards. The strategy is exposed to the risk of the Convex smart contracts."
+  },
+  "meocUp": {
+    "defaultMessage": "Convex is a platform that boosts rewards for CRV stakers and liquidity providers alike, all in a simple and easy to use interface."
+  },
+  "vS/YSY": {
+    "defaultMessage": "Curve is an exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers, without an opportunity cost."
+  }
+}

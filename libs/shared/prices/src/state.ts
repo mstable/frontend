@@ -11,7 +11,7 @@ import produce from 'immer';
 import { path } from 'ramda';
 import { useIntl } from 'react-intl';
 import { createContainer } from 'react-tracked';
-import { useBlockNumber, useNetwork } from 'wagmi';
+import { chainId, useBlockNumber, useNetwork } from 'wagmi';
 
 import type { Children } from '@frontend/shared-utils';
 import type { Dispatch, SetStateAction } from 'react';
@@ -39,7 +39,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   const pushNotification = usePushNotification();
   const { chain } = useNetwork();
   const coingeckoCoinId = useMemo(
-    () => coingeckoCoinIds[chain?.id] || 'ethereum',
+    () => coingeckoCoinIds[chain?.id ?? chainId.mainnet],
     [chain?.id],
   );
   useQuery(

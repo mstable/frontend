@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react';
 import produce from 'immer';
 import { useIntl } from 'react-intl';
 
-import { useMetaVault } from '../../hooks';
+import { useMetavault } from '../../state';
 import { useTrackedState, useUpdate } from './state';
 
 import type { BigDecimal } from '@frontend/shared-utils';
@@ -42,7 +42,7 @@ export const useReset = () => {
 
 export const useChangeOperation = () => {
   const update = useUpdate();
-  const { assetToken, mvToken, assetBalance, mvBalance } = useMetaVault();
+  const { assetToken, mvToken, assetBalance, mvBalance } = useMetavault();
 
   return useCallback(
     (operation: SupportedOperation) => {
@@ -71,7 +71,7 @@ export const useChangeOperation = () => {
 
 export const useChangeTab = () => {
   const update = useUpdate();
-  const { assetToken, mvToken, assetBalance, mvBalance } = useMetaVault();
+  const { assetToken, mvToken, assetBalance, mvBalance } = useMetavault();
 
   return useCallback(
     (tab: 0 | 1) => {

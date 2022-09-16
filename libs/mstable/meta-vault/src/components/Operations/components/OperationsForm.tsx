@@ -5,7 +5,7 @@ import { Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
 
-import { useMetaVault } from '../../../hooks';
+import { useMetavault } from '../../../state';
 import { useChangeOperation, useOperations, useSetAmount } from '../hooks';
 
 import type { BigDecimal } from '@frontend/shared-utils';
@@ -21,7 +21,7 @@ export const OperationsForm = (props: StackProps) => {
     mvBalance,
     assetsPerShare,
     sharesPerAsset,
-  } = useMetaVault();
+  } = useMetavault();
   const { amount, operation, preview, tab, isLoading, isError } =
     useOperations();
   const setAmount = useSetAmount();
