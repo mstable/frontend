@@ -1,3 +1,4 @@
+import { ProtocolIcon } from '@frontend/shared-ui';
 import { Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
@@ -30,9 +31,11 @@ export const Protocols = (props: StackProps) => {
               padding: 2,
             }}
           >
-            <Typography variant="h5" gutterBottom pt={2}>
-              {protocol.name}
-            </Typography>
+            <Stack direction="row" spacing={1} mb={2} alignItems="center">
+              <ProtocolIcon name={protocol.id} />
+              <Typography variant="h5">{protocol.name}</Typography>
+            </Stack>
+
             <Typography sx={{ typography: 'subtitle2', paddingBottom: 2 }}>
               {intl.formatMessage(protocol.description)}
             </Typography>
