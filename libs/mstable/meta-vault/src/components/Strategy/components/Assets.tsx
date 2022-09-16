@@ -20,7 +20,7 @@ export const Assets = (props: StackProps) => {
             'The following assets are used in this strategy and therefore are exposed (partially) to their risk:',
         })}
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container rowGap={2} columnGap={2}>
         {assets.map(({ address, name, symbol }) => (
           <Grid
             item
