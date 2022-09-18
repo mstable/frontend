@@ -1,3 +1,4 @@
+import { useShowDialog } from '@frontend/shared-modals';
 import { CollapsibleSection } from '@frontend/shared-ui';
 import {
   Button,
@@ -14,6 +15,7 @@ import { Assets } from './components/Assets';
 import { Fees } from './components/Fees';
 import { Protocols } from './components/Protocols';
 import { Vaults } from './components/Vaults';
+import { VisualizeStrategyDialog } from './components/VisualizeStrategyDialog';
 
 import type { CollapsibleSectionProps } from '@frontend/shared-ui';
 
@@ -39,6 +41,11 @@ const collapsibleProps: Partial<CollapsibleSectionProps> = {
 export const Strategy = () => {
   const intl = useIntl();
   const { metavault } = useMetavault();
+  const showDialog = useShowDialog();
+
+  const handleVisualizeStrategyClick = () => {
+    showDialog(VisualizeStrategyDialog);
+  };
 
   return (
     <Card
@@ -48,7 +55,7 @@ export const Strategy = () => {
       <CardHeader
         title={intl.formatMessage({ defaultMessage: 'Strategy & Risks' })}
         action={
-          <Button color="secondary">
+          <Button color="secondary" onClick={handleVisualizeStrategyClick}>
             {intl.formatMessage({ defaultMessage: 'Visualize Strategy' })}
           </Button>
         }
