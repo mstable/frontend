@@ -7,7 +7,7 @@ export default {
   component: Comp,
 };
 
-export const TokenIcon = () => (
+export const ProtocolIcon = () => (
   <Stack direction="column" spacing={2} p={2}>
     <Comp name="mstable" />
     <Comp name="curve" />
