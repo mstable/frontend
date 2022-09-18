@@ -36,7 +36,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   Dispatch<SetStateAction<OperationsState>>,
   Children
 >(() => {
-  const { address: walletAddress } = useAccount();
+  const { address: walletAddress, isConnected } = useAccount();
   const {
     metavault: { address },
     asset,
@@ -66,7 +66,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     contractInterface: erc20ABI,
     functionName: 'allowance',
     args: [walletAddress, address],
-    enabled: !!asset && !!walletAddress,
+    enabled: !!asset && isConnected,
     watch: true,
     cacheOnBlock: true,
     onSuccess: (data) => {

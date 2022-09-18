@@ -37,7 +37,7 @@ export const {
   Dispatch<SetStateAction<MetaVaultState>>,
   { initialState: { metavault: Metavault } }
 >(({ initialState }) => {
-  const { address: walletAddress } = useAccount();
+  const { address: walletAddress, isConnected } = useAccount();
   const [state, setState] = useState<MetaVaultState>({
     metavault: {
       address: '',
@@ -150,7 +150,7 @@ export const {
     allowFailure: true,
     cacheOnBlock: true,
     watch: true,
-    enabled: !!address,
+    enabled: !!address && isConnected,
     onSettled: (data) => {
       setState(
         produce((draft) => {
