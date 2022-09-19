@@ -33,22 +33,24 @@ export const getMixinsOptions = (base: Theme): ThemeOptions => ({
       numbBottom: [
         `linear-gradient(1deg, ${base.palette.background.default} 0%, ${alpha(
           base.palette.background.default,
-          0,
-        )} 81%, ${alpha(base.palette.background.default, 0)} 100%)`,
+          0.2,
+        )} 30%, transparent 100%)`,
         `linear-gradient(358deg, ${base.palette.background.default} 0%, ${alpha(
           base.palette.background.default,
-          0,
-        )} 80%, ${alpha(base.palette.background.default, 0)} 100%)`,
+          0.2,
+        )} 30%, transparent 100%)`,
       ].join(', '),
       numbTop: [
-        `linear-gradient(182deg, ${base.palette.background.default} 0%, ${alpha(
+        `linear-gradient(181deg, ${
+          base.palette.background.default
+        } 0px, ${alpha(
           base.palette.background.default,
-          0,
-        )} 44%, ${alpha(base.palette.background.default, 0)} 100%)`,
+          0.3,
+        )} 20%, transparent 100%)`,
         `linear-gradient(179deg, ${base.palette.background.default} 0%, ${alpha(
           base.palette.background.default,
-          0,
-        )} 41%, ${alpha(base.palette.background.default, 0)} 100%)`,
+          0.3,
+        )} 20%, transparent 100%)`,
       ].join(', '),
     },
   },
