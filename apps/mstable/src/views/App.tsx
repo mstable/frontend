@@ -1,3 +1,4 @@
+import { SettingsProvider } from '@frontend/mstable-settings';
 import { Topnav } from '@frontend/mstable-topnav';
 import { queryClient } from '@frontend/shared-data-access';
 import { I18nProvider } from '@frontend/shared-i18n';
@@ -74,6 +75,7 @@ export const App = () =>
       [WagmiProvider],
       [PricesProvider],
       [ModalsProvider],
+      [SettingsProvider],
     ],
     <AppWrapped />,
   );

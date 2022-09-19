@@ -1,8 +1,6 @@
+import { SettingsButton } from '@frontend/mstable-settings';
 import { MStable, MStableShort } from '@frontend/shared-icons';
-import {
-  OpenAccountModalButton,
-  OpenNetworkModalButton,
-} from '@frontend/shared-wagmi';
+import { OpenAccountModalButton } from '@frontend/shared-wagmi';
 import {
   alpha,
   AppBar,
@@ -12,8 +10,6 @@ import {
   useTheme,
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
-
-import { Settings } from './Settings';
 
 export const Topnav = () => {
   const navigate = useNavigate();
@@ -50,12 +46,12 @@ export const Topnav = () => {
           direction="row"
           justifyContent="flex-end"
           alignItems="center"
+          spacing={2}
         >
           <OpenAccountModalButton
             sx={{ maxWidth: 180, maxHeight: 36, px: 1 }}
           />
-          <OpenNetworkModalButton />
-          <Settings />
+          <SettingsButton sx={{ height: 36, width: 36 }} />
         </Stack>
       </Stack>
     </AppBar>
