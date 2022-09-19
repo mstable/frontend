@@ -27,12 +27,6 @@ const { chains, provider, webSocketProvider } = configureChains(
   [infuraProvider(), publicProvider()],
 );
 
-const needsInjectedWalletFallback =
-  typeof window !== 'undefined' &&
-  window.ethereum &&
-  !window.ethereum.isMetaMask &&
-  !window.ethereum.isCoinbaseWallet;
-
 const connectors = connectorsForWallets([
   {
     groupName: 'Recommended',
@@ -46,13 +40,11 @@ const connectors = connectorsForWallets([
   {
     groupName: 'Others',
     wallets: [
+      wallet.injected({ chains, shimDisconnect: true }),
       wallet.rainbow({ chains }),
       wallet.brave({ chains, shimDisconnect: true }),
       wallet.argent({ chains }),
       wallet.imToken({ chains }),
-      ...(needsInjectedWalletFallback
-        ? [wallet.injected({ chains, shimDisconnect: true })]
-        : []),
     ],
   },
 ]);

@@ -1,6 +1,6 @@
 import { CRV, Uniswap, USDC } from '@frontend/shared-icons';
 import { ValueLabel } from '@frontend/shared-ui';
-import { alpha, Button, Stack, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 export const VaultJumbo = () => {
@@ -15,20 +15,7 @@ export const VaultJumbo = () => {
       px={1}
       pb={2}
     >
-      <Typography
-        sx={(theme) => ({
-          backgroundColor: alpha(theme.palette.success.main, 0.06),
-          border: `1px solid ${theme.palette.success.dark}`,
-          borderRadius: 1,
-          padding: 1,
-          ...theme.typography.label1,
-          textTransform: 'uppercase',
-          color: 'success.dark',
-        })}
-      >
-        {intl.formatMessage({ defaultMessage: 'low risk' })}
-      </Typography>
-      <Typography variant="h1" py={2}>
+      <Typography variant="h1" pt={14} pb={2}>
         {intl.formatMessage({ defaultMessage: 'Stablecoin Meta Vault' })}
       </Typography>
       <Stack direction="row" spacing={2}>

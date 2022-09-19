@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Check, ContentCopy, Error, OpenInNew } from '@mui/icons-material';
-import { Button, Divider, Stack } from '@mui/material';
+import { Divider, IconButton, Stack } from '@mui/material';
 
 import { MiddleTruncated } from '../Typography';
 
@@ -11,12 +11,14 @@ export type AddressLabelProps = {
   address: string;
   hideCopyToClipboard?: boolean;
   hideEtherscan?: boolean;
+  small?: boolean;
 };
 
 export const AddressLabel = ({
   address,
   hideCopyToClipboard = false,
   hideEtherscan = false,
+  small = false,
 }: AddressLabelProps) => {
   const [copied, setCopied] = useState('idle');
 
@@ -49,6 +51,7 @@ export const AddressLabel = ({
           fontWeight: 'medium',
           letterSpacing: 1.1,
           sx: {
+            fontSize: small ? 14 : 16,
             userSelect: 'none',
             fontFamily: ['PT Mono', 'monospace'].join(','),
           },
@@ -59,30 +62,29 @@ export const AddressLabel = ({
         {address}
       </MiddleTruncated>
       {!hideEtherscan && (
-        <Button
+        <IconButton
           href={`${ETHERSCAN_URL}${address}`}
           target="_blank"
-          variant="text"
-          size="small"
+          color="inherit"
+          size={small ? 'small' : 'medium'}
         >
-          <OpenInNew fontSize="small" />
-        </Button>
+          <OpenInNew sx={{ fontSize: small ? 14 : 16 }} />
+        </IconButton>
       )}
       {!hideCopyToClipboard && (
-        <Button
+        <IconButton
           onClick={handleCopyToClipboard}
-          variant="text"
-          size="small"
           disabled={['copied', 'error'].includes(copied)}
+          color="inherit"
         >
           {copied === 'idle' ? (
-            <ContentCopy fontSize="small" />
+            <ContentCopy sx={{ fontSize: small ? 14 : 16 }} />
           ) : copied === 'copied' ? (
-            <Check color="success" fontSize="small" />
+            <Check color="success" sx={{ fontSize: small ? 14 : 16 }} />
           ) : (
-            <Error color="error" fontSize="small" />
+            <Error color="error" sx={{ fontSize: small ? 14 : 16 }} />
           )}
-        </Button>
+        </IconButton>
       )}
     </Stack>
   );

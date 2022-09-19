@@ -55,8 +55,6 @@ declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     // remove defaults
     h6: false;
-    subtitle1: false;
-    subtitle2: false;
     button: false;
     caption: false;
     overline: false;

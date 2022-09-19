@@ -10,6 +10,10 @@ on:
 env:
   NX_THE_GRAPH_MV_GOERLI_URL: ${{ secrets.NX_THE_GRAPH_MV_GOERLI_URL }}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   main:
     runs-on: ubuntu-latest

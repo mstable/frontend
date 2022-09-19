@@ -100,7 +100,7 @@ export const VaultPerformance = () => {
   const theme = useTheme();
 
   return (
-    <Card>
+    <Card sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}>
       <CardHeader
         title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
       />
