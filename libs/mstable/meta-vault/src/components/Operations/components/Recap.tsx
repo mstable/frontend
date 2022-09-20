@@ -3,7 +3,14 @@ import { useEffect, useMemo } from 'react';
 import { erc4626ABI } from '@frontend/shared-constants';
 import { usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
-import { Box, Divider, Stack, Typography, useTheme } from '@mui/material';
+import {
+  Box,
+  Divider,
+  Skeleton,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { constants } from 'ethers';
 import { ArrowsClockwise, Fire, Ticket, Vault, Wallet } from 'phosphor-react';
 import { pathOr } from 'ramda';
@@ -59,7 +66,7 @@ const logoBoxProps: BoxProps = {
 
 const DepositRecap = (props: StackProps) => {
   const intl = useIntl();
-  const { amount, preview } = useOperations();
+  const { amount, preview, isLoading, operation } = useOperations();
   const { assetToken } = useMetavault();
 
   return (
@@ -85,12 +92,20 @@ const DepositRecap = (props: StackProps) => {
       </Stack>
       <Stack {...rowProps}>
         <Typography variant="value4">
-          {amount?.format(2) ?? '0.00'}&nbsp;{assetToken?.symbol}
+          {operation === 'mint' && isLoading ? (
+            <Skeleton width={100} height={16} />
+          ) : (
+            `${amount?.format(2) ?? '0.00'} ${assetToken?.symbol}`
+          )}
         </Typography>
         <Typography variant="value4">
-          {intl.formatMessage(
-            { defaultMessage: '{value} Shares' },
-            { value: preview?.format(2) ?? '0.00' },
+          {operation === 'deposit' && isLoading ? (
+            <Skeleton width={100} height={16} />
+          ) : (
+            intl.formatMessage(
+              { defaultMessage: '{value} Shares' },
+              { value: preview?.format(2) ?? '0.00' },
+            )
           )}
         </Typography>
       </Stack>
@@ -101,7 +116,7 @@ const DepositRecap = (props: StackProps) => {
 const WithdrawRecap = (props: StackProps) => {
   const intl = useIntl();
   const theme = useTheme();
-  const { amount, preview } = useOperations();
+  const { amount, preview, isLoading, operation } = useOperations();
   const { assetToken } = useMetavault();
 
   return (
@@ -127,13 +142,21 @@ const WithdrawRecap = (props: StackProps) => {
       </Stack>
       <Stack {...rowProps}>
         <Typography variant="value4">
-          {intl.formatMessage(
-            { defaultMessage: '{value} Shares' },
-            { value: amount?.format(2) ?? '0.00' },
+          {operation === 'redeem' && isLoading ? (
+            <Skeleton width={100} height={16} />
+          ) : (
+            intl.formatMessage(
+              { defaultMessage: '{value} Shares' },
+              { value: amount?.format(2) ?? '0.00' },
+            )
           )}
         </Typography>
         <Typography variant="value4">
-          {preview?.format(2) ?? '0.00'}&nbsp;{assetToken?.symbol}
+          {operation === 'withdraw' && isLoading ? (
+            <Skeleton width={100} height={16} />
+          ) : (
+            `${preview?.format(2) ?? '0.00'} ${assetToken?.symbol}`
+          )}
         </Typography>
       </Stack>
     </Stack>
