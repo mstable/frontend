@@ -185,13 +185,18 @@ const GasFeesRecap = (props: StackProps) => {
       constants.Zero,
       ['request', 'gasLimit'],
       needsApproval ? approveConfig : submitConfig,
-    ).mul(feeData?.gasPrice ?? constants.Zero);
+    ).mul(
+      (feeData?.gasPrice ?? constants.Zero).add(
+        feeData?.maxPriorityFeePerGas ?? constants.Zero,
+      ),
+    );
 
     return new BigDecimal(estimatedGas, chain?.nativeCurrency?.decimals);
   }, [
     approveConfig,
     chain?.nativeCurrency?.decimals,
     feeData?.gasPrice,
+    feeData?.maxPriorityFeePerGas,
     needsApproval,
     submitConfig,
   ]);
@@ -233,13 +238,13 @@ const GasFeesRecap = (props: StackProps) => {
               )}
         </Typography>
         <Typography variant="value5">
-          {nativeTokenGasPrice?.format(10) ?? '-'}&nbsp;
+          {nativeTokenGasPrice?.format(8) ?? '-'}&nbsp;
           {chain?.nativeCurrency?.symbol}
         </Typography>
       </Stack>
       <Stack {...rowProps} justifyContent="flex-end">
         <Typography variant="value5">
-          {fiatGasPrice?.format(8) ?? '-'}&nbsp;{symbol}
+          {fiatGasPrice?.format(2) ?? '-'}&nbsp;{symbol}
         </Typography>
       </Stack>
     </Stack>
