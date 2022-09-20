@@ -21,7 +21,7 @@ export const TokenInput = () => (
         totalSupply: constants.One,
       }}
       placeholder="0.00"
-      balance={BigDecimal.fromSimple(200)}
+      max={BigDecimal.fromSimple(200)}
     />
   </Stack>
 );

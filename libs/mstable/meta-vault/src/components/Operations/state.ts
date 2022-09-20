@@ -113,7 +113,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     setState(
       produce((draft) => {
         draft.needsApproval =
-          !!['deposit', 'mint'].includes(operation) &&
+          ['deposit', 'mint'].includes(operation) &&
           !!amt &&
           !!allowance &&
           amt.exact.gt(allowance);

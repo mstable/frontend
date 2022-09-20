@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { TokenInput } from '@frontend/shared-ui';
+import { BigDecimal } from '@frontend/shared-utils';
 import { Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
@@ -8,20 +9,13 @@ import { useAccount } from 'wagmi';
 import { useMetavault } from '../../../state';
 import { useChangeOperation, useOperations, useSetAmount } from '../hooks';
 
-import type { BigDecimal } from '@frontend/shared-utils';
 import type { StackProps } from '@mui/material';
 
 export const OperationsForm = (props: StackProps) => {
   const intl = useIntl();
-  const { address: walletAddress } = useAccount();
-  const {
-    assetToken,
-    mvToken,
-    assetBalance,
-    mvBalance,
-    assetsPerShare,
-    sharesPerAsset,
-  } = useMetavault();
+  const { isConnected } = useAccount();
+  const { assetToken, mvToken, assetBalance, mvBalance, assetsPerShare } =
+    useMetavault();
   const { amount, operation, preview, tab, isLoading, isError } =
     useOperations();
   const setAmount = useSetAmount();
@@ -31,81 +25,62 @@ export const OperationsForm = (props: StackProps) => {
     () =>
       ({
         deposit: {
-          label: intl.formatMessage({ defaultMessage: 'Tokens' }),
           amount: amount,
-          token: assetToken,
-          balance: assetBalance,
         },
         mint: {
-          label: intl.formatMessage({ defaultMessage: 'Tokens' }),
           amount: preview,
-          token: assetToken,
-          balance: assetBalance,
           isLoading,
-        },
-        redeem: {
-          label: intl.formatMessage({ defaultMessage: 'Shares' }),
-          amount: amount,
-          token: mvToken,
-          balance: mvBalance,
-          hideTokenBadge: true,
         },
         withdraw: {
-          label: intl.formatMessage({ defaultMessage: 'Shares' }),
+          amount: amount,
+        },
+        redeem: {
           amount: preview,
-          token: mvToken,
-          balance: mvBalance,
           isLoading,
-          hideTokenBadge: true,
         },
       }[operation]),
-    [
-      amount,
-      assetBalance,
-      assetToken,
-      intl,
-      isLoading,
-      mvBalance,
-      mvToken,
-      operation,
-      preview,
-    ],
+    [amount, isLoading, operation, preview],
   );
 
   const secondaryInput = useMemo(
     () =>
       ({
         deposit: {
-          label: intl.formatMessage({ defaultMessage: 'Shares' }),
           amount: preview,
-          token: mvToken,
           isLoading,
-          hideTokenBadge: true,
         },
         mint: {
-          label: intl.formatMessage({ defaultMessage: 'Shares' }),
           amount: amount,
-          token: mvToken,
-          hideTokenBadge: true,
-        },
-        redeem: {
-          label: intl.formatMessage({ defaultMessage: 'Tokens' }),
-          amount: preview,
-          token: assetToken,
-
-          isLoading,
         },
         withdraw: {
-          label: intl.formatMessage({ defaultMessage: 'Tokens' }),
+          amount: preview,
+          isLoading,
+        },
+        redeem: {
           amount: amount,
-          token: assetToken,
         },
       }[operation]),
-    [amount, assetToken, intl, isLoading, mvToken, operation, preview],
+    [amount, isLoading, operation, preview],
+  );
+
+  const primaryBalance = useMemo(
+    () =>
+      tab === 0
+        ? assetBalance
+        : new BigDecimal(mvBalance.exact.mul(assetsPerShare.exact)),
+    [assetBalance, assetsPerShare, mvBalance, tab],
+  );
+
+  const primaryMaxLabel = useMemo(
+    () =>
+      tab === 0
+        ? intl.formatMessage({ defaultMessage: 'Balance' })
+        : intl.formatMessage({ defaultMessage: 'My Position' }),
+    [intl, tab],
   );
 
   const handlePrimaryChange = (newValue: BigDecimal) => {
-    const newOp = tab === 0 ? 'deposit' : 'redeem';
+    const newOp = tab === 0 ? 'deposit' : 'withdraw';
     if (newOp !== operation) {
       changeOperation(newOp);
     }
@@ -113,41 +88,12 @@ export const OperationsForm = (props: StackProps) => {
   };
 
   const handleSecondaryChange = (newValue: BigDecimal) => {
-    const newOp = tab === 0 ? 'mint' : 'withdraw';
+    const newOp = tab === 0 ? 'mint' : 'redeem';
     if (newOp !== operation) {
       changeOperation(newOp);
     }
     setAmount(newValue);
   };
-
-  const ratioLabel = useMemo(
-    () =>
-      walletAddress
-        ? tab === 0
-          ? intl.formatMessage(
-              { defaultMessage: '1 {asset} = {ratio} Shares' },
-              {
-                ratio: sharesPerAsset?.simple ?? '-',
-                asset: assetToken?.symbol,
-              },
-            )
-          : intl.formatMessage(
-              { defaultMessage: '1 Share = {ratio} {asset}' },
-              {
-                ratio: assetsPerShare?.simple ?? '-',
-                asset: assetToken?.symbol,
-              },
-            )
-        : intl.formatMessage({ defaultMessage: 'Rate' }),
-    [
-      assetToken?.symbol,
-      assetsPerShare?.simple,
-      intl,
-      sharesPerAsset?.simple,
-      tab,
-      walletAddress,
-    ],
-  );
 
   return (
     <Stack
@@ -157,7 +103,7 @@ export const OperationsForm = (props: StackProps) => {
       spacing={1}
       sx={{
         border: (theme) => `1px solid ${theme.palette.divider}`,
-        ...(!walletAddress && {
+        ...(!isConnected && {
           backgroundColor: 'background.highlight',
         }),
         ...props?.sx,
@@ -166,21 +112,36 @@ export const OperationsForm = (props: StackProps) => {
     >
       <TokenInput
         {...primaryInput}
+        token={assetToken}
+        max={primaryBalance}
+        maxLabel={primaryMaxLabel}
+        label={intl.formatMessage({ defaultMessage: 'Asset' })}
         onChange={handlePrimaryChange}
         placeholder="0.00"
-        disabled={!walletAddress}
+        disabled={!isConnected}
         error={isError}
       />
-      <Divider role="presentation" light={!walletAddress}>
-        <Typography variant="value6">{ratioLabel}</Typography>
+      <Divider role="presentation" light={!isConnected}>
+        <Typography variant="value6">
+          {intl.formatMessage(
+            { defaultMessage: '1 Share = {ratio} {asset}' },
+            {
+              ratio: assetsPerShare?.simple ?? '-',
+              asset: assetToken?.symbol,
+            },
+          )}
+        </Typography>
       </Divider>
       <TokenInput
         {...secondaryInput}
+        hideTokenBadge
+        hideBottomRow
+        token={mvToken}
+        label={intl.formatMessage({ defaultMessage: 'Shares' })}
         onChange={handleSecondaryChange}
         placeholder="0.00"
-        disabled={!walletAddress}
+        disabled={!isConnected}
         error={isError}
-        hideBottomRow
       />
     </Stack>
   );

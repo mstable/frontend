@@ -43,7 +43,7 @@ export const SettingsButton = (props: ButtonProps) => {
         color={chain?.unsupported ? 'warning' : 'inherit'}
         sx={{ p: 0, ...props?.sx }}
       >
-        <Gear />
+        <Gear size={20} />
       </Button>
       <ClickAwayMenu
         open={open}
@@ -63,7 +63,7 @@ export const SettingsButton = (props: ButtonProps) => {
           </Typography>
           <FormControlLabel
             value={mode === 'dark'}
-            control={<Switch />}
+            control={<Switch checked={mode === 'dark'} />}
             label={
               <Stack direction="row" spacing={1} flexGrow={1}>
                 <Typography variant="label2">
@@ -84,7 +84,7 @@ export const SettingsButton = (props: ButtonProps) => {
           </Typography>
           <FormControlLabel
             value={exactApproval}
-            control={<Switch />}
+            control={<Switch checked={exactApproval} />}
             label={
               <Stack
                 direction="row"

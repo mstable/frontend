@@ -1,8 +1,9 @@
 import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
 import { useIntl } from 'react-intl';
 
+import { ApprovalButton } from './components/ApprovalButton';
 import { OperationsForm } from './components/OperationsForm';
-import { RecapStepper } from './components/RecapStepper';
+import { Recap } from './components/Recap';
 import { SubmitButton } from './components/SubmitButton';
 import { useChangeTab, useOperations } from './hooks';
 import { Provider } from './state';
@@ -10,7 +11,7 @@ import { Provider } from './state';
 const OperationsWrapped = () => {
   const intl = useIntl();
   const changeTab = useChangeTab();
-  const { amount, tab, isError } = useOperations();
+  const { tab, needsApproval } = useOperations();
 
   return (
     <Card>
@@ -29,8 +30,20 @@ const OperationsWrapped = () => {
           </Tabs>
           <Stack pt={2} spacing={2}>
             <OperationsForm />
-            {amount && !isError && <RecapStepper />}
-            <SubmitButton />
+
+            <Stack
+              direction="column"
+              spacing={1}
+              sx={{
+                p: 2,
+                borderRadius: 1,
+                border: (theme) => `1px solid ${theme.palette.divider}`,
+              }}
+            >
+              <Recap pb={2} />
+              {needsApproval && <ApprovalButton />}
+              <SubmitButton />
+            </Stack>
           </Stack>
         </Stack>
       </CardContent>
