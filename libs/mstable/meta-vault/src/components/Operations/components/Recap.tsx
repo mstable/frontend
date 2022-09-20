@@ -223,7 +223,7 @@ const GasFeesRecap = (props: StackProps) => {
         <Typography variant="value5">
           {intl.formatMessage(
             { defaultMessage: 'Average - {value} GWEI' },
-            { value: data?.formatted?.gasPrice },
+            { value: feeData?.formatted?.gasPrice },
           )}
         </Typography>
       </Stack>
