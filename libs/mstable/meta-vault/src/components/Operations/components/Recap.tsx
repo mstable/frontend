@@ -143,7 +143,6 @@ const WithdrawRecap = (props: StackProps) => {
 const GasFeesRecap = (props: StackProps) => {
   const intl = useIntl();
   const { address: walletAddress } = useAccount();
-  const { data } = useFeeData({ formatUnits: 'gwei' });
   const operationLabel = useOperationLabel();
   const { chain } = useNetwork();
   const { symbol } = usePrices();
