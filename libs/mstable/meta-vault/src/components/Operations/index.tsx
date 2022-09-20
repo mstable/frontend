@@ -30,7 +30,6 @@ const OperationsWrapped = () => {
           </Tabs>
           <Stack pt={2} spacing={2}>
             <OperationsForm />
-
             <Stack
               direction="column"
               spacing={1}

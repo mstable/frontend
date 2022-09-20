@@ -67,8 +67,10 @@ export const OperationsForm = (props: StackProps) => {
     () =>
       tab === 0
         ? assetBalance
-        : new BigDecimal(mvBalance.exact.mul(assetsPerShare.exact)),
-    [assetBalance, assetsPerShare, mvBalance, tab],
+        : mvBalance?.exact && assetsPerShare?.exact
+        ? new BigDecimal(mvBalance?.exact.mul(assetsPerShare?.exact))
+        : BigDecimal.ZERO,
+    [assetBalance, assetsPerShare?.exact, mvBalance?.exact, tab],
   );
 
   const primaryMaxLabel = useMemo(
