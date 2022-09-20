@@ -95,7 +95,10 @@ const DepositRecap = (props: StackProps) => {
           {operation === 'mint' && isLoading ? (
             <Skeleton width={100} height={16} />
           ) : (
-            `${amount?.format(2) ?? '0.00'} ${assetToken?.symbol}`
+            `${amount?.format(2) ?? '0.00'} ${
+              assetToken?.symbol ??
+              intl.formatMessage({ defaultMessage: 'Assets' })
+            }`
           )}
         </Typography>
         <Typography variant="value4">
@@ -155,7 +158,10 @@ const WithdrawRecap = (props: StackProps) => {
           {operation === 'withdraw' && isLoading ? (
             <Skeleton width={100} height={16} />
           ) : (
-            `${preview?.format(2) ?? '0.00'} ${assetToken?.symbol}`
+            `${preview?.format(2) ?? '0.00'} ${
+              assetToken?.symbol ??
+              intl.formatMessage({ defaultMessage: 'Assets' })
+            }`
           )}
         </Typography>
       </Stack>
