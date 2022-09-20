@@ -53,14 +53,14 @@ export const useChangeOperation = () => {
           state.token = {
             deposit: assetToken,
             mint: mvToken,
-            redeem: mvToken,
             withdraw: assetToken,
+            redeem: mvToken,
           }[operation];
           state.balance = {
             deposit: assetBalance,
             mint: mvBalance,
-            redeem: mvBalance,
             withdraw: assetBalance,
+            redeem: mvBalance,
           }[operation];
         }),
       );
@@ -78,7 +78,7 @@ export const useChangeTab = () => {
       update(
         produce((state) => {
           state.tab = tab;
-          state.operation = tab === 0 ? 'deposit' : 'redeem';
+          state.operation = tab === 0 ? 'deposit' : 'withdraw';
           state.amount = null;
           state.token = tab === 0 ? assetToken : mvToken;
           state.balance = tab === 0 ? assetBalance : mvBalance;
