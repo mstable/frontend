@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useDataSource } from '@frontend/shared-data-access';
 import { ProtocolIcon, TokenIcon, ValueLabel } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
-import { Box, Skeleton, Stack, Typography } from '@mui/material';
+import { Box, Skeleton, Stack, Typography, useTheme } from '@mui/material';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
 
@@ -44,6 +44,7 @@ const protocolProps: BoxProps = {
 
 export const VaultJumbo = () => {
   const intl = useIntl();
+  const theme = useTheme();
   const {
     metavault: { address, name, tags, strategies },
     assetToken,
@@ -51,17 +52,32 @@ export const VaultJumbo = () => {
   const dataSource = useDataSource();
   const { data, isLoading } = useMetavaultQuery(dataSource, { id: address });
   const apyTrend = useMemo(() => {
+    if (data?.vault?.DailyVaultStats?.length <= 0) {
+      return { label: '-', color: theme.palette.text.primary };
+    }
     const last = new BigDecimal(
-      data?.vault?.DailyVaultStats?.[-1]?.totalSupply ?? constants.Zero,
+      data?.vault?.DailyVaultStats?.[6]?.totalSupply ?? constants.One,
     );
     const first = new BigDecimal(
-      data?.vault?.DailyVaultStats?.[0]?.totalSupply ?? constants.Zero,
+      data?.vault?.DailyVaultStats?.[0]?.totalSupply ?? constants.One,
     );
 
-    return last.sub(first);
-  }, [data?.vault?.DailyVaultStats]);
-
-  console.log(apyTrend.simple);
+    const diff = 100 - (last.simple / first.simple) * 100;
+    return {
+      label: `${diff >= 0 ? '+' : '-'}${diff.toFixed(2)}%(1W)`,
+      color:
+        diff > 0
+          ? theme.palette.success.main
+          : diff < 0
+          ? theme.palette.error.main
+          : theme.palette.text.primary,
+    };
+  }, [
+    data?.vault?.DailyVaultStats,
+    theme.palette.error.main,
+    theme.palette.success.main,
+    theme.palette.text.primary,
+  ]);
 
   return (
     <Stack
@@ -120,13 +136,18 @@ export const VaultJumbo = () => {
           {isLoading ? (
             <Skeleton height={24} width={60} />
           ) : (
-            <Typography variant="value2">
-              {intl.formatNumber(
-                new BigDecimal(data?.vault?.totalSupply ?? constants.Zero)
-                  .simple,
-                { notation: 'compact' },
-              )}
-            </Typography>
+            <Stack direction="row" spacing={1} alignItems="baseline">
+              <Typography variant="value2">
+                {intl.formatNumber(
+                  new BigDecimal(data?.vault?.totalSupply ?? constants.Zero)
+                    .simple,
+                  { notation: 'compact' },
+                )}
+              </Typography>
+              <Typography variant="value5" sx={{ color: apyTrend.color }}>
+                {apyTrend.label}
+              </Typography>
+            </Stack>
           )}
         </ValueLabel>
         <ValueLabel
