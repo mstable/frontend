@@ -281,12 +281,17 @@ const GasFeesRecap = (props: StackProps) => {
 
 export const Recap = (props: StackProps) => {
   const { tab } = useOperations();
+  const { isConnected } = useAccount();
 
   return (
     <Stack {...props} spacing={3}>
       {tab === 0 ? <DepositRecap /> : <WithdrawRecap />}
-      <Divider flexItem />
-      <GasFeesRecap />
+      {isConnected && (
+        <>
+          <Divider flexItem />
+          <GasFeesRecap />
+        </>
+      )}
     </Stack>
   );
 };
