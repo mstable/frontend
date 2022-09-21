@@ -23,18 +23,20 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
 }
 export type MetavaultQueryVariables = Types.Exact<{
   id: Types.Scalars['ID'];
+  days?: Types.InputMaybe<Types.Scalars['Int']>;
 }>;
 
 
-export type MetavaultQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', totalSupply: any, apy: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', totalSupply: any }> } | null };
+export type MetavaultQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', totalSupply: any, apy: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, totalSupply: any }> } | null };
 
 
 export const MetavaultDocument = `
-    query metavault($id: ID!) {
+    query metavault($id: ID!, $days: Int = 7) {
   vault(id: $id) {
     totalSupply
     apy
-    DailyVaultStats(first: 7, orderBy: timestamp, orderDirection: desc) {
+    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
+      apy
       totalSupply
     }
   }
