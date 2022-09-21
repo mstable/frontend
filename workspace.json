@@ -6,6 +6,7 @@
     "mstable-e2e": "apps/mstable-e2e",
     "mstable-footer": "libs/mstable/footer",
     "mstable-meta-vault": "libs/mstable/meta-vault",
+    "mstable-settings": "libs/mstable/settings",
     "mstable-topnav": "libs/mstable/topnav",
     "shared-constants": "libs/shared/constants",
     "shared-data-access": "libs/shared/data-access",

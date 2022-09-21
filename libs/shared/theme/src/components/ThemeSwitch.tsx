@@ -1,6 +1,6 @@
 import { Switch } from '@mui/material';
 
-import { useSwitchThemeMode } from '../hooks';
+import { useToggleThemeMode } from '../hooks';
 import { useTrackedState } from '../state';
 
 import type { SwitchProps } from '@mui/material';
@@ -15,11 +15,11 @@ export const ThemeSwitch = ({
   ...rest
 }: ThemeSwitchProps) => {
   const { mode } = useTrackedState();
-  const switchThemeMode = useSwitchThemeMode();
+  const toggleThemeMode = useToggleThemeMode();
 
   const handleChange = () => {
     if (!disableClick) {
-      switchThemeMode();
+      toggleThemeMode();
     }
   };
 

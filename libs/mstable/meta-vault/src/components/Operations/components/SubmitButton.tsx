@@ -3,8 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { erc4626ABI } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-notifications';
 import { OpenAccountModalButton } from '@frontend/shared-wagmi';
-import { Button, CircularProgress, Link, Stack } from '@mui/material';
-import { ArrowRight } from 'phosphor-react';
+import { Button, CircularProgress, Link } from '@mui/material';
 import { useIntl } from 'react-intl';
 import {
   etherscanBlockExplorers,
@@ -15,19 +14,12 @@ import {
 } from 'wagmi';
 
 import { useMetavault } from '../../../state';
-import { useOperationLabel, useOperations, useReset } from '../hooks';
+import { useOperations, useReset } from '../hooks';
 
 import type { ButtonProps } from '@mui/material';
 
 const buttonProps: ButtonProps = {
   size: 'large',
-  sx: {
-    display: 'flex',
-    flexDirection: 'row',
-    svg: {
-      ml: 0.75,
-    },
-  },
 };
 
 export const SubmitButton = () => {
@@ -37,9 +29,16 @@ export const SubmitButton = () => {
   const {
     metavault: { address },
   } = useMetavault();
-  const { amount, token, operation, needsApproval, isError } = useOperations();
-  const operationLabel = useOperationLabel();
+  const { amount, operation, needsApproval, isError, tab } = useOperations();
   const reset = useReset();
+
+  const operationLabel = useMemo(
+    () =>
+      tab === 0
+        ? intl.formatMessage({ defaultMessage: 'Deposit' })
+        : intl.formatMessage({ defaultMessage: 'Withdraw' }),
+    [intl, tab],
+  );
 
   const args = useMemo(
     () =>
@@ -103,7 +102,6 @@ export const SubmitButton = () => {
     return (
       <Button {...buttonProps} disabled>
         {operationLabel}
-        <ArrowRight weight="bold" />
       </Button>
     );
   }
@@ -118,7 +116,7 @@ export const SubmitButton = () => {
 
   if (isSubmitStarted && !isSubmitSuccess) {
     return (
-      <Button size="large" disabled>
+      <Button {...buttonProps} disabled>
         <CircularProgress size={20} />
       </Button>
     );
@@ -138,17 +136,8 @@ export const SubmitButton = () => {
       onClick={() => {
         submit();
       }}
-      sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        ...buttonProps?.sx,
-      }}
     >
-      {amount && <span>{`${amount?.format()} ${token?.symbol}`}</span>}
-      <Stack direction="row" alignItems="center">
-        {operationLabel}
-        <ArrowRight weight="bold" />
-      </Stack>
+      {operationLabel}
     </Button>
   );
 };
