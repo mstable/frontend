@@ -3,6 +3,7 @@ import React from 'react';
 import { InfoTooltip } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
+  Box,
   Button,
   Card,
   CardContent,
@@ -10,6 +11,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { constants } from 'ethers';
 import { Receipt } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
@@ -26,29 +28,31 @@ const ValueRow: React.FC<{
 }> = ({ title, tooltip, value, valueProps = {}, subValue }) => {
   const theme = useTheme();
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginBottom: theme.spacing(3),
-      }}
+    <Box
+      mb={3}
+      display="flex"
+      justifyContent="space-between"
+      alignItems="flex-start"
     >
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Typography variant="body2" color="GrayText">
+      <Box display="flex" alignItems="center">
+        <Typography variant="body2" color={theme.palette.text.secondary}>
           {title}
         </Typography>
-        <InfoTooltip sx={{ ml: 1 }} label={tooltip} color="GrayText" />
-      </div>
-      <div style={{ textAlign: 'right' }}>
+        <InfoTooltip
+          sx={{ ml: 1 }}
+          label={tooltip}
+          color={theme.palette.text.secondary}
+        />
+      </Box>
+      <Box textAlign="right">
         <Typography variant="body2" {...valueProps}>
           {value}
         </Typography>
-        <Typography variant="body2" color="GrayText">
+        <Typography variant="body2" color={theme.palette.text.secondary}>
           {subValue}
         </Typography>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
@@ -57,40 +61,34 @@ export const Position = () => {
   const intl = useIntl();
   const { mvBalance, assetsPerShare, assetToken, mvDeposited } = useMetavault();
   const mvBalanceInAsset =
-    mvBalance?.mulTruncate(assetsPerShare?.exact || '0') || BigDecimal.ZERO;
+    mvBalance?.mulTruncate(assetsPerShare?.exact || constants.Zero) ||
+    BigDecimal.ZERO;
   const profitOrLoss =
     mvBalanceInAsset?.sub(mvDeposited || BigDecimal.ZERO) || BigDecimal.ZERO;
-  const roi = mvBalanceInAsset.exact.eq(0)
+  const roi = mvBalanceInAsset.exact.eq(constants.Zero)
     ? BigDecimal.ZERO
     : profitOrLoss.divPrecisely(mvBalanceInAsset).mulTruncate(100);
 
   return (
     <Card>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: theme.spacing(2),
-          paddingBottom: theme.spacing(1),
-        }}
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        p={2}
+        pb={1}
       >
         <Typography variant="h5">
           {intl.formatMessage({ defaultMessage: 'My Position' })}
         </Typography>
         <Button
-          sx={{
-            '& .MuiButton-startIcon>*:nth-of-type(1)': {
-              fontSize: 12,
-            },
-          }}
           size="small"
           variant="text"
-          startIcon={<Receipt weight="fill" />}
+          startIcon={<Receipt weight="fill" size={12} />}
         >
           {intl.formatMessage({ defaultMessage: 'History' })}
         </Button>
-      </div>
+      </Box>
       <CardContent>
         <ValueRow
           title={intl.formatMessage({ defaultMessage: 'Position Value' })}

@@ -70,22 +70,27 @@ export const {
   } = state;
 
   const dataSource = useDataSource();
-  const { data: userVaultBalanceData } = useUserVaultBalanceQuery(dataSource, {
-    owner: walletAddress,
-    vault: address,
-  });
-  useEffect(() => {
-    if (userVaultBalanceData && mvToken?.decimals) {
-      setState(
-        produce((draft) => {
-          draft.mvDeposited = new BigDecimal(
-            userVaultBalanceData.vaultBalances[0]?.assetDeposited || '0',
-            mvToken.decimals,
+  useUserVaultBalanceQuery(
+    dataSource,
+    {
+      owner: walletAddress,
+      vault: address,
+    },
+    {
+      onSuccess: (userVaultBalanceData) => {
+        if (userVaultBalanceData && mvToken?.decimals) {
+          setState(
+            produce((draft) => {
+              draft.mvDeposited = new BigDecimal(
+                userVaultBalanceData.vaultBalances[0]?.assetDeposited ||
+                  constants.Zero,
+              );
+            }),
           );
-        }),
-      );
-    }
-  }, [userVaultBalanceData, mvToken?.decimals]);
+        }
+      },
+    },
+  );
 
   useContractRead({
     addressOrName: address,
