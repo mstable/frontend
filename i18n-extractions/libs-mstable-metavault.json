@@ -17,11 +17,11 @@
   "3QSP9N": {
     "defaultMessage": "Visualize Strategy"
   },
+  "3wMm/H": {
+    "defaultMessage": "You Deposit"
+  },
   "4/JAsV": {
     "defaultMessage": "The underlying vaults charge a {fee}% fee upon liquidation of the earned rewards."
-  },
-  "52EAoy": {
-    "defaultMessage": "Set allowance to maximum value"
   },
   "5ZxAiY": {
     "defaultMessage": "Token"
@@ -29,11 +29,17 @@
   "5fjd4K": {
     "defaultMessage": "{fee}%"
   },
-  "6N9V2n": {
-    "defaultMessage": "Gas Fees"
+  "65ThHj": {
+    "defaultMessage": "Protocols Involved"
+  },
+  "7d2ri8": {
+    "defaultMessage": "{value} Shares"
   },
   "7jeKkk": {
     "defaultMessage": "Protocols that are used by this vault."
+  },
+  "9ALsvc": {
+    "defaultMessage": "Approval Cost"
   },
   "9RAHhM": {
     "defaultMessage": "Strategy & Risks"
@@ -47,17 +53,17 @@
   "CjmGfs": {
     "defaultMessage": "View your transaction on etherscan"
   },
-  "D0TVwO": {
-    "defaultMessage": "Stablecoin Meta Vault"
-  },
-  "EzjaGz": {
-    "defaultMessage": "Token approval"
+  "FaoPNm": {
+    "defaultMessage": "You Burn"
   },
   "GC970B": {
     "defaultMessage": "Collect swap fees"
   },
-  "KE0cl6": {
-    "defaultMessage": "Curve"
+  "Gh1Vm9": {
+    "defaultMessage": "You Receive"
+  },
+  "H5+NAX": {
+    "defaultMessage": "Balance"
   },
   "KYgRAc": {
     "defaultMessage": "DEPOSIT"
@@ -71,23 +77,17 @@
   "LjNvmm": {
     "defaultMessage": "Deposited"
   },
-  "MEfsyo": {
-    "defaultMessage": "Increase allowance for this token"
-  },
   "MJ2jZQ": {
     "defaultMessage": "Total"
+  },
+  "MLTKb6": {
+    "defaultMessage": "APY"
   },
   "MqZGhr": {
     "defaultMessage": "Vault Performance"
   },
   "OwO+Nr": {
     "defaultMessage": "Mint"
-  },
-  "OxqNA7": {
-    "defaultMessage": "Av. APY"
-  },
-  "P6EE/a": {
-    "defaultMessage": "Tokens"
   },
   "PXAur5": {
     "defaultMessage": "Withdraw"
@@ -107,9 +107,6 @@
   "VOo/kE": {
     "defaultMessage": "Token approved"
   },
-  "Vqr2OI": {
-    "defaultMessage": "AV. APY"
-  },
   "WCaf5C": {
     "defaultMessage": "Approve"
   },
@@ -119,11 +116,11 @@
   "XSdWHA": {
     "defaultMessage": "Redeem"
   },
+  "ZefNbE": {
+    "defaultMessage": "Average - {value} GWEI"
+  },
   "bvmoAt": {
     "defaultMessage": "The following protocols are used in the strategies and are therefore exposed to their risk:"
-  },
-  "c0b5XV": {
-    "defaultMessage": "Rate"
   },
   "d1uESJ": {
     "defaultMessage": "Assets"
@@ -131,29 +128,17 @@
   "dIgBOz": {
     "defaultMessage": "Deposit"
   },
-  "djJp6c": {
-    "defaultMessage": "History"
-  },
   "fJjSsb": {
     "defaultMessage": "Performance Fee"
+  },
+  "fcBYFp": {
+    "defaultMessage": "{operationLabel} Cost"
   },
   "gKTtPo": {
     "defaultMessage": "Vault Contracts"
   },
   "heM61T": {
     "defaultMessage": "Swap to USDC"
-  },
-  "hincAk": {
-    "defaultMessage": "Uniswap"
-  },
-  "i8dYu2": {
-    "defaultMessage": "GWEI"
-  },
-  "kPBTut": {
-    "defaultMessage": "low risk"
-  },
-  "kZQLFm": {
-    "defaultMessage": "1 {asset} = {ratio} Shares"
   },
   "kaPKOB": {
     "defaultMessage": "Insufficient balance"
@@ -164,9 +149,6 @@
   "korbaG": {
     "defaultMessage": "The following assets are used in this strategy and therefore are exposed (partially) to their risk:"
   },
-  "l4+7bo": {
-    "defaultMessage": "Yields"
-  },
   "lLuyem": {
     "defaultMessage": "DAO"
   },
@@ -176,11 +158,11 @@
   "qZbedW": {
     "defaultMessage": "Fees"
   },
-  "rDh2BB": {
-    "defaultMessage": "Set as infinite"
-  },
   "rFZhzG": {
     "defaultMessage": "Current Gas"
+  },
+  "sHlvMe": {
+    "defaultMessage": "Total Supply"
   },
   "tH0obk": {
     "defaultMessage": "Return Projection"
@@ -190,9 +172,6 @@
   },
   "tvpAhG": {
     "defaultMessage": "The Meta Vault charges a {fee}% performance upon underlying asset appreciation."
-  },
-  "z4YSCO": {
-    "defaultMessage": "{operationLabel} cost"
   },
   "zFNxtv": {
     "defaultMessage": "Protocols"

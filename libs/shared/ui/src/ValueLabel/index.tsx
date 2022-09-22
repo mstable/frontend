@@ -1,5 +1,7 @@
 import { Stack, Typography } from '@mui/material';
 
+import { InfoTooltip } from '../InfoTooltip';
+
 import type { StackProps, TypographyProps } from '@mui/material';
 import type { ReactNode } from 'react';
 
@@ -7,6 +9,8 @@ export type ValueLabelProps = {
   label: string;
   value?: string;
   subvalue?: string;
+  hint?: string;
+  subhint?: string;
   children?: ReactNode;
   components?: {
     container?: StackProps;
@@ -22,12 +26,31 @@ export const ValueLabel = ({
   value,
   children,
   subvalue,
+  hint,
+  subhint,
   components,
 }: ValueLabelProps) => (
-  <Stack direction="column" {...components?.container}>
-    <Typography variant="label2" mb={2} noWrap {...components?.label}>
+  <Stack direction="column" alignItems="flex-start" {...components?.container}>
+    <Typography
+      variant="label2"
+      noWrap
+      position="relative"
+      mb={2}
+      {...(hint && { pr: 1.75 })}
+      {...components?.label}
+    >
       {label}
+      {hint && (
+        <InfoTooltip
+          label={hint}
+          variant="exclamation"
+          position="absolute"
+          top={0}
+          right={0}
+        />
+      )}
     </Typography>
+
     <Stack
       mb={0.5}
       height={24}
@@ -43,8 +66,23 @@ export const ValueLabel = ({
       {children}
     </Stack>
     {subvalue && (
-      <Typography variant="value5" noWrap {...components?.subvalue}>
+      <Typography
+        variant="value5"
+        noWrap
+        position="relative"
+        {...(subhint && { pr: 1.75 })}
+        {...components?.subvalue}
+      >
         {subvalue}
+        {subhint && (
+          <InfoTooltip
+            label={subhint}
+            variant="exclamation"
+            position="absolute"
+            top={0}
+            right={0}
+          />
+        )}
       </Typography>
     )}
   </Stack>
