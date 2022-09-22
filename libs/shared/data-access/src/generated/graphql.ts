@@ -495,6 +495,7 @@ export type Token = {
   id: Scalars['ID'];
   name: Scalars['String'];
   symbol: Scalars['String'];
+  totalSupply: Scalars['BigInt'];
 };
 
 export type TokenBalance = {
@@ -629,6 +630,14 @@ export type Token_Filter = {
   symbol_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
   symbol_starts_with?: InputMaybe<Scalars['String']>;
   symbol_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  totalSupply?: InputMaybe<Scalars['BigInt']>;
+  totalSupply_gt?: InputMaybe<Scalars['BigInt']>;
+  totalSupply_gte?: InputMaybe<Scalars['BigInt']>;
+  totalSupply_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  totalSupply_lt?: InputMaybe<Scalars['BigInt']>;
+  totalSupply_lte?: InputMaybe<Scalars['BigInt']>;
+  totalSupply_not?: InputMaybe<Scalars['BigInt']>;
+  totalSupply_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
 };
 
 export enum Token_OrderBy {
@@ -636,6 +645,7 @@ export enum Token_OrderBy {
   Id = 'id',
   Name = 'name',
   Symbol = 'symbol',
+  TotalSupply = 'totalSupply',
 }
 
 export type Transaction = {

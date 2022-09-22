@@ -46,6 +46,7 @@ export const {
     metavault: {
       address: '',
       name: '',
+      tags: [],
       strategies: [],
       vaults: [],
       assets: [],

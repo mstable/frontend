@@ -4,14 +4,25 @@ import { chainId } from 'wagmi';
 
 import { protocols } from '../protocols';
 import { tokens } from '../tokens';
-import { DEAD_ADDRESS } from '../utils';
 import { vaults } from '../vaults';
 
 import type { Metavault } from './types';
 
+// TODO update address when available
 const mainnet: Metavault = {
-  address: DEAD_ADDRESS,
-  name: 'The Sexy Metavault',
+  address: '0x0145a7fb49402b29be7c52d38aeacb5e1acae11b', // goerli address for now
+  name: 'Stablecoin Meta Vault',
+  tags: [
+    defineMessage({
+      defaultMessage: 'Stablecoin Strategy',
+    }),
+    defineMessage({
+      defaultMessage: 'Market Neutral',
+    }),
+    defineMessage({
+      defaultMessage: 'Metavault',
+    }),
+  ],
   strategyDescription: defineMessage({
     defaultMessage:
       'This Strategy uses USDC to deposit into the 3CRV-Pool on Curve. The 3CRV token is then deposited in various Curve meta pools and staked in Convex. The earned CVX and CRV tokens are periodically claimed, swapped, and compounded.',
@@ -62,8 +73,7 @@ const mainnet: Metavault = {
 
 const goerli: Metavault = {
   ...mainnet,
-  address: '0x0145A7fB49402b29BE7C52D38aeACB5e1aCAe11b',
-  name: 'Test Vault',
+  address: '0x0145a7fb49402b29be7c52d38aeacb5e1acae11b',
   vaults: [
     vaults[chainId.goerli].musdConvex3CrvLiquidatorVault,
     vaults[chainId.goerli].busdConvex3CrvLiquidatorVault,

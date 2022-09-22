@@ -102,13 +102,14 @@ export const ClickAwayMenu = ({
           <Paper
             elevation={1}
             {...PaperProps}
-            sx={{ padding: 1, ...PaperProps?.sx }}
+            sx={{ padding: 2, ...PaperProps?.sx }}
           >
             <ClickAwayListener onClickAway={handleClose}>
               <MenuList
                 autoFocusItem={open}
                 {...MenuListProps}
                 onKeyDown={handleListKeyDown}
+                sx={{ py: 0, ...MenuListProps?.sx }}
               >
                 {typeof children === 'function'
                   ? children(handleClose)
