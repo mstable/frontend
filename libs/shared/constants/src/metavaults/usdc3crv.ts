@@ -4,13 +4,13 @@ import { chainId } from 'wagmi';
 
 import { protocols } from '../protocols';
 import { tokens } from '../tokens';
-import { DEAD_ADDRESS } from '../utils';
 import { vaults } from '../vaults';
 
 import type { Metavault } from './types';
 
+// TODO update address when available
 const mainnet: Metavault = {
-  address: DEAD_ADDRESS,
+  address: '0x0145a7fb49402b29be7c52d38aeacb5e1acae11b', // goerli address for now
   name: 'Stablecoin Meta Vault',
   tags: [
     defineMessage({

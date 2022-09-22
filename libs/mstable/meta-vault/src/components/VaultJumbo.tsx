@@ -50,7 +50,11 @@ export const VaultJumbo = () => {
     assetToken,
   } = useMetavault();
   const dataSource = useDataSource();
-  const { data, isLoading } = useMetavaultQuery(dataSource, { id: address });
+  const { data, isLoading } = useMetavaultQuery(
+    dataSource,
+    { id: address },
+    { enabled: !!address },
+  );
   const apyTrend = useMemo(() => {
     if (data?.vault?.DailyVaultStats?.length <= 0) {
       return { label: '-', color: theme.palette.text.primary };

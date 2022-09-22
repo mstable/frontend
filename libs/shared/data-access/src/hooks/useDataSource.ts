@@ -1,5 +1,5 @@
 import { metaVaultEndpoints } from '@frontend/shared-constants';
-import { useNetwork } from 'wagmi';
+import { chainId, useNetwork } from 'wagmi';
 
 export const useDataSource = (): {
   endpoint: string;
@@ -8,7 +8,7 @@ export const useDataSource = (): {
   const { chain } = useNetwork();
 
   return {
-    endpoint: metaVaultEndpoints[chain?.id] || window.location.origin,
+    endpoint: metaVaultEndpoints[chain?.id ?? chainId.mainnet],
     fetchParams: {
       headers: {
         'Content-Type': 'application/json',
