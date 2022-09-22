@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { erc4626ABI } from '@frontend/shared-constants';
+import { useDataSource } from '@frontend/shared-data-access';
 import { BigDecimal } from '@frontend/shared-utils';
 import { constants } from 'ethers';
 import produce from 'immer';
@@ -13,6 +14,8 @@ import {
   useToken,
 } from 'wagmi';
 
+import { useUserVaultBalanceQuery } from './queries.generated';
+
 import type { Metavault } from '@frontend/shared-constants';
 import type { FetchTokenResult } from '@wagmi/core';
 import type { Dispatch, SetStateAction } from 'react';
@@ -23,6 +26,7 @@ type MetaVaultState = {
   asset: string | null;
   assetToken: FetchTokenResult | null;
   mvBalance: BigDecimal | null;
+  mvDeposited: BigDecimal | null;
   assetBalance: BigDecimal | null;
   assetsPerShare: BigDecimal | null;
   sharesPerAsset: BigDecimal | null;
@@ -52,6 +56,7 @@ export const {
     asset: null,
     assetToken: null,
     mvBalance: null,
+    mvDeposited: null,
     assetBalance: null,
     assetsPerShare: null,
     sharesPerAsset: null,
@@ -60,7 +65,27 @@ export const {
   const {
     metavault: { address },
     asset,
+    mvToken,
   } = state;
+
+  const dataSource = useDataSource();
+  const { data: userVaultBalanceData } = useUserVaultBalanceQuery(dataSource, {
+    owner: walletAddress,
+    vault: address,
+  });
+  // TODO: use graphql for balance, assetsPerShare, etc
+  useEffect(() => {
+    if (userVaultBalanceData && mvToken?.decimals) {
+      setState(
+        produce((draft) => {
+          draft.mvDeposited = new BigDecimal(
+            userVaultBalanceData.vaultBalances[0]?.assetDeposited || '0',
+            mvToken.decimals,
+          );
+        }),
+      );
+    }
+  }, [userVaultBalanceData, mvToken?.decimals]);
 
   useContractRead({
     addressOrName: address,

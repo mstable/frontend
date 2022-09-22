@@ -213,12 +213,6 @@
       "value": "Include Gas Fees"
     }
   ],
-  "LjNvmm": [
-    {
-      "type": 0,
-      "value": "Deposited"
-    }
-  ],
   "MEfsyo": [
     {
       "type": 0,
@@ -247,12 +241,6 @@
     {
       "type": 0,
       "value": "Mint"
-    }
-  ],
-  "OxqNA7": [
-    {
-      "type": 0,
-      "value": "Av. APY"
     }
   ],
   "P6EE/a": [
@@ -313,6 +301,12 @@
     {
       "type": 0,
       "value": "% of USDC"
+    }
+  ],
+  "TL3yAY": [
+    {
+      "type": 0,
+      "value": "Position Value"
     }
   ],
   "VOo/kE": [
@@ -459,12 +453,6 @@
       "value": "GWEI"
     }
   ],
-  "kPBTut": [
-    {
-      "type": 0,
-      "value": "low risk"
-    }
-  ],
   "kZQLFm": [
     {
       "type": 0,
@@ -503,12 +491,6 @@
     {
       "type": 0,
       "value": "The following assets are used in this strategy and therefore are exposed (partially) to their risk:"
-    }
-  ],
-  "l4+7bo": [
-    {
-      "type": 0,
-      "value": "Yields"
     }
   ],
   "lLuyem": [
@@ -563,6 +545,12 @@
     {
       "type": 0,
       "value": "Current Gas"
+    }
+  ],
+  "rfzzi6": [
+    {
+      "type": 0,
+      "value": "Profit/Loss"
     }
   ],
   "sy+pv5": [

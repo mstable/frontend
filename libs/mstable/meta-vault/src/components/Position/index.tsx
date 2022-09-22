@@ -2,6 +2,7 @@ import React from 'react';
 
 import { History as HistoryIcon } from '@frontend/shared-icons';
 import { InfoTooltip } from '@frontend/shared-ui';
+import { BigDecimal } from '@frontend/shared-utils';
 import {
   Button,
   Card,
@@ -54,7 +55,14 @@ const ValueRow: React.FC<{
 export const Position = () => {
   const theme = useTheme();
   const intl = useIntl();
-  const { mvBalance, assetBalance, assetToken } = useMetavault();
+  const { mvBalance, assetsPerShare, assetToken, mvDeposited } = useMetavault();
+  const mvBalanceInAsset =
+    mvBalance?.mulTruncate(assetsPerShare?.exact || '0') || BigDecimal.ZERO;
+  const profitOrLoss =
+    mvBalanceInAsset?.sub(mvDeposited || BigDecimal.ZERO) || BigDecimal.ZERO;
+  const roi = mvBalanceInAsset.exact.eq(0)
+    ? BigDecimal.ZERO
+    : profitOrLoss.divPrecisely(mvBalanceInAsset).mulTruncate(100);
 
   return (
     <Card>
@@ -87,18 +95,22 @@ export const Position = () => {
         <ValueRow
           title={intl.formatMessage({ defaultMessage: 'Position Value' })}
           tooltip={'tooltip'}
-          value={`${assetBalance?.format() ?? '0.00'} ${assetToken?.symbol}`}
+          value={`${mvBalanceInAsset.format() ?? '0.00'} ${assetToken?.symbol}`}
           subValue={`${mvBalance?.format() ?? '0.00'} Shares`}
         />
         <ValueRow
           title={intl.formatMessage({ defaultMessage: 'Profit/Loss' })}
           tooltip={'tooltip'}
-          // TODO
-          value={`${assetBalance?.format() ?? '0.00'} ${assetToken?.symbol}`}
+          value={`${profitOrLoss.format() ?? '0.00'} ${assetToken?.symbol}`}
           valueProps={{
             color: theme.palette.success.main,
           }}
-          subValue={`7.55% ROI`}
+          subValue={intl.formatMessage(
+            { defaultMessage: '{roi}% ROI' },
+            {
+              roi: roi.format() ?? '0.00',
+            },
+          )}
         />
         <Button sx={{ width: '100%' }} color="secondary" size="large">
           {intl.formatMessage({ defaultMessage: 'Yield Calculator' })}

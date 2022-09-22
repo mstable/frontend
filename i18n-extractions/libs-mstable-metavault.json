@@ -68,9 +68,6 @@
   "LETDMp": {
     "defaultMessage": "Include Gas Fees"
   },
-  "LjNvmm": {
-    "defaultMessage": "Deposited"
-  },
   "MEfsyo": {
     "defaultMessage": "Increase allowance for this token"
   },
@@ -82,9 +79,6 @@
   },
   "OwO+Nr": {
     "defaultMessage": "Mint"
-  },
-  "OxqNA7": {
-    "defaultMessage": "Av. APY"
   },
   "P6EE/a": {
     "defaultMessage": "Tokens"
@@ -103,6 +97,9 @@
   },
   "THS5K4": {
     "defaultMessage": "{fee}% of USDC"
+  },
+  "TL3yAY": {
+    "defaultMessage": "Position Value"
   },
   "VOo/kE": {
     "defaultMessage": "Token approved"
@@ -149,9 +146,6 @@
   "i8dYu2": {
     "defaultMessage": "GWEI"
   },
-  "kPBTut": {
-    "defaultMessage": "low risk"
-  },
   "kZQLFm": {
     "defaultMessage": "1 {asset} = {ratio} Shares"
   },
@@ -163,9 +157,6 @@
   },
   "korbaG": {
     "defaultMessage": "The following assets are used in this strategy and therefore are exposed (partially) to their risk:"
-  },
-  "l4+7bo": {
-    "defaultMessage": "Yields"
   },
   "lLuyem": {
     "defaultMessage": "DAO"
@@ -181,6 +172,9 @@
   },
   "rFZhzG": {
     "defaultMessage": "Current Gas"
+  },
+  "rfzzi6": {
+    "defaultMessage": "Profit/Loss"
   },
   "tH0obk": {
     "defaultMessage": "Return Projection"
