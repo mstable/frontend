@@ -3,14 +3,21 @@ import { useMemo } from 'react';
 import { useDataSource } from '@frontend/shared-data-access';
 import { ProtocolIcon, TokenIcon, ValueLabel } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
-import { Box, Skeleton, Stack, Typography, useTheme } from '@mui/material';
+import {
+  Avatar,
+  AvatarGroup,
+  Skeleton,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
 
 import { useMetavaultQuery } from '../queries.generated';
 import { useMetavault } from '../state';
 
-import type { BoxProps, TypographyProps } from '@mui/material';
+import type { BoxProps, StackProps, TypographyProps } from '@mui/material';
 
 const tagProps: TypographyProps = {
   display: 'flex',
@@ -20,6 +27,7 @@ const tagProps: TypographyProps = {
   fontSize: 14,
   px: 1,
   height: 30,
+  noWrap: true,
   bgcolor: (theme) =>
     theme.palette.mode === 'light'
       ? theme.palette.grey[50]
@@ -42,7 +50,7 @@ const protocolProps: BoxProps = {
   borderRadius: '50%',
 };
 
-export const VaultJumbo = () => {
+export const VaultJumbo = (props: StackProps) => {
   const intl = useIntl();
   const theme = useTheme();
   const {
@@ -65,8 +73,8 @@ export const VaultJumbo = () => {
     const first = new BigDecimal(
       data?.vault?.DailyVaultStats?.[0]?.totalSupply ?? constants.One,
     );
-
     const diff = 100 - (last.simple / first.simple) * 100;
+
     return {
       label: `${diff >= 0 ? '+' : '-'}${diff.toFixed(2)}%(1W)`,
       color:
@@ -89,23 +97,24 @@ export const VaultJumbo = () => {
       alignItems="flex-start"
       width={1}
       height={1}
-      px={1}
-      pb={2}
+      {...props}
     >
-      <Typography variant="h1" pt={14} pb={2}>
+      <Typography variant="h1" pb={2}>
         {name}
       </Typography>
-      <Stack direction="row" spacing={1.5}>
-        {tags?.length &&
-          tags.map((tag, idx) => (
-            <Typography key={`tag-${idx}`} {...tagProps}>
-              {intl.formatMessage(tag)}
-            </Typography>
-          ))}
+      <Stack
+        direction="row"
+        spacing={1.5}
+        sx={{ overflowX: 'auto', maxWidth: 1, pb: 7.5 }}
+      >
+        {tags.map((tag, idx) => (
+          <Typography key={`tag-${idx}`} {...tagProps}>
+            {intl.formatMessage(tag)}
+          </Typography>
+        ))}
       </Stack>
       <Stack
         direction="row"
-        mt={{ xs: 4, md: 6 }}
         spacing={{ xs: 3, md: 4 }}
         sx={{ overflowX: 'auto', maxWidth: 1 }}
       >
@@ -122,16 +131,16 @@ export const VaultJumbo = () => {
           label={intl.formatMessage({ defaultMessage: 'Protocols Involved' })}
           components={{ valueContainer: { pb: 0.3 } }}
         >
-          <Stack direction="row" alignItems="center" spacing={-0.5}>
-            {strategies.map((strat, idx) => (
-              <Box key={strat.protocol.id} {...protocolProps} zIndex={idx}>
+          <AvatarGroup max={6}>
+            {strategies.map((strat) => (
+              <Avatar key={strat.protocol.id}>
                 <ProtocolIcon
                   name={strat.protocol.id}
                   sx={{ height: 20, width: 20 }}
                 />
-              </Box>
+              </Avatar>
             ))}
-          </Stack>
+          </AvatarGroup>
         </ValueLabel>
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'TVL' })}

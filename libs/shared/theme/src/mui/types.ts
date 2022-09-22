@@ -98,6 +98,11 @@ declare module '@mui/material/styles/createMixins' {
         paddingX: CSSProperties;
         paddingY: CSSProperties;
       };
+      jumbo: {
+        paddingX: CSSProperties;
+        paddingTop: CSSProperties;
+        paddingBottom: CSSProperties;
+      };
     };
     centered: {
       display: string;
@@ -106,8 +111,6 @@ declare module '@mui/material/styles/createMixins' {
     };
     gradients: {
       colorCloud: string;
-      numbTop: string;
-      numbBottom: string;
     };
   }
 }

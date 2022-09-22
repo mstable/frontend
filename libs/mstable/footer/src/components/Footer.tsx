@@ -3,7 +3,9 @@ import { IconButton, Stack, Typography } from '@mui/material';
 import { MediumLogo } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
-export const Footer = () => {
+import type { StackProps } from '@mui/material';
+
+export const Footer = (props: StackProps) => {
   const intl = useIntl();
 
   const socialIcons = [
@@ -40,6 +42,7 @@ export const Footer = () => {
       py={4}
       alignItems="center"
       spacing={1.5}
+      {...props}
     >
       <Typography>
         <strong>{intl.formatMessage({ defaultMessage: 'mStable' })}</strong>
