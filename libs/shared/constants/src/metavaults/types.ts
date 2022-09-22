@@ -12,6 +12,7 @@ export type Strategy = {
 export type Metavault = {
   address: string;
   name: string;
+  tags: MessageDescriptor[];
   strategyDescription?: MessageDescriptor;
   strategies: Strategy[];
   vaults: Vault[];

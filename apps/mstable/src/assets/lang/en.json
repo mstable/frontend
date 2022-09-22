@@ -57,10 +57,22 @@
       "value": "defaultChain"
     }
   ],
+  "2JVe1j": [
+    {
+      "type": 0,
+      "value": "Market Neutral"
+    }
+  ],
   "3QSP9N": [
     {
       "type": 0,
       "value": "Visualize Strategy"
+    }
+  ],
+  "3wMm/H": [
+    {
+      "type": 0,
+      "value": "You Deposit"
     }
   ],
   "4/JAsV": [
@@ -77,10 +89,10 @@
       "value": "% fee upon liquidation of the earned rewards."
     }
   ],
-  "52EAoy": [
+  "5ObBlW": [
     {
       "type": 0,
-      "value": "Set allowance to maximum value"
+      "value": "Dark Mode"
     }
   ],
   "5ZxAiY": [
@@ -99,16 +111,26 @@
       "value": "%"
     }
   ],
-  "6N9V2n": [
+  "65ThHj": [
     {
       "type": 0,
-      "value": "Gas Fees"
+      "value": "Protocols Involved"
     }
   ],
   "7CAm2s": [
     {
       "type": 0,
       "value": "mStable is a protocol for yield aggregation and diversification."
+    }
+  ],
+  "7d2ri8": [
+    {
+      "type": 1,
+      "value": "value"
+    },
+    {
+      "type": 0,
+      "value": " Shares"
     }
   ],
   "7jeKkk": [
@@ -121,6 +143,12 @@
     {
       "type": 0,
       "value": "Twitter"
+    }
+  ],
+  "9ALsvc": [
+    {
+      "type": 0,
+      "value": "Approval Cost"
     }
   ],
   "9RAHhM": [
@@ -153,22 +181,16 @@
       "value": "The Strategy uses Curves 3CRV Pools and Factory pools. The strategy is exposed to the risk of the Curve smart contracts."
     }
   ],
-  "D0TVwO": [
-    {
-      "type": 0,
-      "value": "Stablecoin Meta Vault"
-    }
-  ],
   "EibIVS": [
     {
       "type": 0,
       "value": "This Strategy uses USDC to deposit into the 3CRV-Pool on Curve. The 3CRV token is then deposited in various Curve meta pools and staked in Convex. The earned CVX and CRV tokens are periodically claimed, swapped, and compounded."
     }
   ],
-  "EzjaGz": [
+  "FaoPNm": [
     {
       "type": 0,
-      "value": "Token approval"
+      "value": "You Burn"
     }
   ],
   "FvmV6q": [
@@ -183,16 +205,22 @@
       "value": "Collect swap fees"
     }
   ],
-  "HwugaQ": [
+  "Gh1Vm9": [
     {
       "type": 0,
-      "value": "Switch theme"
+      "value": "You Receive"
     }
   ],
-  "KE0cl6": [
+  "H5+NAX": [
     {
       "type": 0,
-      "value": "Curve"
+      "value": "Balance"
+    }
+  ],
+  "H7XA1G": [
+    {
+      "type": 0,
+      "value": "Approve the exact amount of the transaction"
     }
   ],
   "KYgRAc": [
@@ -219,16 +247,16 @@
       "value": "Deposited"
     }
   ],
-  "MEfsyo": [
-    {
-      "type": 0,
-      "value": "Increase allowance for this token"
-    }
-  ],
   "MJ2jZQ": [
     {
       "type": 0,
       "value": "Total"
+    }
+  ],
+  "MLTKb6": [
+    {
+      "type": 0,
+      "value": "APY"
     }
   ],
   "MPUuRK": [
@@ -247,18 +275,6 @@
     {
       "type": 0,
       "value": "Mint"
-    }
-  ],
-  "OxqNA7": [
-    {
-      "type": 0,
-      "value": "Av. APY"
-    }
-  ],
-  "P6EE/a": [
-    {
-      "type": 0,
-      "value": "Tokens"
     }
   ],
   "PXAur5": [
@@ -321,16 +337,16 @@
       "value": "Token approved"
     }
   ],
+  "VlABxn": [
+    {
+      "type": 0,
+      "value": "Stablecoin Strategy"
+    }
+  ],
   "Vn76qV": [
     {
       "type": 0,
       "value": "Github"
-    }
-  ],
-  "Vqr2OI": [
-    {
-      "type": 0,
-      "value": "AV. APY"
     }
   ],
   "WCaf5C": [
@@ -357,6 +373,20 @@
       "value": "Redeem"
     }
   ],
+  "ZefNbE": [
+    {
+      "type": 0,
+      "value": "Average - "
+    },
+    {
+      "type": 1,
+      "value": "value"
+    },
+    {
+      "type": 0,
+      "value": " GWEI"
+    }
+  ],
   "balance": [
     {
       "type": 0,
@@ -367,12 +397,6 @@
     {
       "type": 0,
       "value": "The following protocols are used in the strategies and are therefore exposed to their risk:"
-    }
-  ],
-  "c0b5XV": [
-    {
-      "type": 0,
-      "value": "Rate"
     }
   ],
   "cyasTx": [
@@ -411,12 +435,6 @@
       "value": "Please confirm to proceed"
     }
   ],
-  "djJp6c": [
-    {
-      "type": 0,
-      "value": "History"
-    }
-  ],
   "f4vYF8": [
     {
       "type": 0,
@@ -427,6 +445,16 @@
     {
       "type": 0,
       "value": "Performance Fee"
+    }
+  ],
+  "fcBYFp": [
+    {
+      "type": 1,
+      "value": "operationLabel"
+    },
+    {
+      "type": 0,
+      "value": " Cost"
     }
   ],
   "gKTtPo": [
@@ -447,44 +475,10 @@
       "value": "Swap to USDC"
     }
   ],
-  "hincAk": [
+  "jsDfqU": [
     {
       "type": 0,
-      "value": "Uniswap"
-    }
-  ],
-  "i8dYu2": [
-    {
-      "type": 0,
-      "value": "GWEI"
-    }
-  ],
-  "kPBTut": [
-    {
-      "type": 0,
-      "value": "low risk"
-    }
-  ],
-  "kZQLFm": [
-    {
-      "type": 0,
-      "value": "1 "
-    },
-    {
-      "type": 1,
-      "value": "asset"
-    },
-    {
-      "type": 0,
-      "value": " = "
-    },
-    {
-      "type": 1,
-      "value": "ratio"
-    },
-    {
-      "type": 0,
-      "value": " Shares"
+      "value": "Set As Exact"
     }
   ],
   "kaPKOB": [
@@ -505,12 +499,6 @@
       "value": "The following assets are used in this strategy and therefore are exposed (partially) to their risk:"
     }
   ],
-  "l4+7bo": [
-    {
-      "type": 0,
-      "value": "Yields"
-    }
-  ],
   "lLuyem": [
     {
       "type": 0,
@@ -529,10 +517,22 @@
       "value": "Shares"
     }
   ],
+  "n9CFUs": [
+    {
+      "type": 0,
+      "value": "Token Approval"
+    }
+  ],
   "not_connected": [
     {
       "type": 0,
       "value": "Not Connected"
+    }
+  ],
+  "nvv26d": [
+    {
+      "type": 0,
+      "value": "Metavault"
     }
   ],
   "ovJ26C": [
@@ -553,16 +553,16 @@
       "value": "Disconnect"
     }
   ],
-  "rDh2BB": [
-    {
-      "type": 0,
-      "value": "Set as infinite"
-    }
-  ],
   "rFZhzG": [
     {
       "type": 0,
       "value": "Current Gas"
+    }
+  ],
+  "sHlvMe": [
+    {
+      "type": 0,
+      "value": "Total Supply"
     }
   ],
   "sy+pv5": [
@@ -609,14 +609,10 @@
       "value": "Wrong Network"
     }
   ],
-  "z4YSCO": [
-    {
-      "type": 1,
-      "value": "operationLabel"
-    },
+  "yuiyES": [
     {
       "type": 0,
-      "value": " cost"
+      "value": "General Settings"
     }
   ],
   "zFNxtv": [

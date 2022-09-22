@@ -1,0 +1,10 @@
+query metavault($id: ID!, $days: Int = 7) {
+  vault(id: $id) {
+    totalSupply
+    apy
+    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
+      apy
+      totalSupply
+    }
+  }
+}
