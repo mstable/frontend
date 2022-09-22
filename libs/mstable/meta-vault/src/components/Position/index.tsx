@@ -95,13 +95,17 @@ export const Position = () => {
         <ValueRow
           title={intl.formatMessage({ defaultMessage: 'Position Value' })}
           tooltip={'tooltip'}
-          value={`${mvBalanceInAsset.format() ?? '0.00'} ${assetToken?.symbol}`}
+          value={`${mvBalanceInAsset.format() ?? '0.00'} ${
+            assetToken?.symbol || ''
+          }`}
           subValue={`${mvBalance?.format() ?? '0.00'} Shares`}
         />
         <ValueRow
           title={intl.formatMessage({ defaultMessage: 'Profit/Loss' })}
           tooltip={'tooltip'}
-          value={`${profitOrLoss.format() ?? '0.00'} ${assetToken?.symbol}`}
+          value={`${profitOrLoss.format() ?? '0.00'} ${
+            assetToken?.symbol || ''
+          }`}
           valueProps={{
             color: theme.palette.success.main,
           }}

@@ -6,7 +6,7 @@ import { useUpdate } from './state';
 
 import type { PaletteMode } from '@mui/material';
 
-export const useSwitchThemeMode = () => {
+export const useToggleThemeMode = () => {
   const update = useUpdate();
 
   return useCallback(
