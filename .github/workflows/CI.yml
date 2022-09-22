@@ -7,9 +7,6 @@ on:
   pull_request:
   workflow_dispatch:
 
-env:
-  NX_THE_GRAPH_MV_GOERLI_URL: ${{ secrets.NX_THE_GRAPH_MV_GOERLI_URL }}
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -18,6 +15,8 @@ jobs:
   main:
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'pull_request' }}
+    env:
+      NX_THE_GRAPH_MV_GOERLI_URL: ${{ secrets.NX_THE_GRAPH_MV_GOERLI_URL }}
     steps:
       - uses: actions/checkout@v2
         name: Checkout [main]
@@ -33,8 +32,10 @@ jobs:
       - run: yarn install --frozen-lockfile
         name: Install dependencies
 
-      - run: yarn build
-        name: Build
+      - name: Build
+        env:
+          goerli: ${{ secrets.NX_THE_GRAPH_MV_GOERLI_URL }}
+        run: NX_THE_GRAPH_MV_GOERLI_URL=$goerli yarn build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         name: Firebase deploy
@@ -71,8 +72,10 @@ jobs:
       - run: yarn install --frozen-lockfile
         name: Install dependencies
 
-      - run: yarn build
-        name: Build
+      - name: Build
+        env:
+          goerli: ${{ secrets.NX_THE_GRAPH_MV_GOERLI_URL }}
+        run: NX_THE_GRAPH_MV_GOERLI_URL=$goerli yarn build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         name: Firebase deploy
