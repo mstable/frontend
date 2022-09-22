@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { History as HistoryIcon } from '@frontend/shared-icons';
 import { InfoTooltip } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
@@ -11,6 +10,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { Receipt } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
 import { useMetavault } from '../../state';
@@ -86,7 +86,7 @@ export const Position = () => {
           }}
           size="small"
           variant="text"
-          startIcon={<HistoryIcon />}
+          startIcon={<Receipt weight="fill" />}
         >
           {intl.formatMessage({ defaultMessage: 'History' })}
         </Button>
