@@ -73,7 +73,6 @@ export const {
     owner: walletAddress,
     vault: address,
   });
-  // TODO: use graphql for balance, assetsPerShare, etc
   useEffect(() => {
     if (userVaultBalanceData && mvToken?.decimals) {
       setState(
