@@ -53,14 +53,16 @@ const ValueRow: React.FC<{
 export const Position = () => {
   const intl = useIntl();
   const { mvBalance, assetsPerShare, assetToken, mvDeposited } = useMetavault();
-  const mvBalanceInAsset =
-    mvBalance?.mulTruncate(assetsPerShare?.exact || constants.Zero) ||
-    BigDecimal.ZERO;
+  const mvBalanceInAsset = new BigDecimal(
+    mvBalance?.exact.mul(assetsPerShare?.exact || constants.Zero) ||
+      constants.Zero,
+  );
   const profitOrLoss =
     mvBalanceInAsset?.sub(mvDeposited || BigDecimal.ZERO) || BigDecimal.ZERO;
-  const roi = mvBalanceInAsset.exact.eq(constants.Zero)
-    ? BigDecimal.ZERO
-    : profitOrLoss.divPrecisely(mvBalanceInAsset).mulTruncate(100);
+  const roi =
+    mvBalanceInAsset.exact.eq(constants.Zero) || !mvDeposited
+      ? BigDecimal.ZERO
+      : new BigDecimal(profitOrLoss.divPrecisely(mvDeposited).exact.mul(100));
 
   return (
     <Card>

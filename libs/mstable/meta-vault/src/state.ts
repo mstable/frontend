@@ -66,11 +66,10 @@ export const {
   const {
     metavault: { address },
     asset,
-    mvToken,
   } = state;
 
   const dataSource = useDataSource();
-  useUserVaultBalanceQuery(
+  const { refetch: refetchUserVaultBalance } = useUserVaultBalanceQuery(
     dataSource,
     {
       owner: walletAddress,
@@ -78,7 +77,7 @@ export const {
     },
     {
       onSuccess: (userVaultBalanceData) => {
-        if (userVaultBalanceData && mvToken?.decimals) {
+        if (userVaultBalanceData) {
           setState(
             produce((draft) => {
               draft.mvDeposited = new BigDecimal(
@@ -206,6 +205,20 @@ export const {
       fetchAssetToken();
     }
   }, [asset, fetchAssetToken]);
+
+  useEffect(() => {
+    if (!walletAddress) {
+      setState(
+        produce((draft) => {
+          draft.mvBalance = null;
+          draft.assetBalance = null;
+          draft.mvDeposited = null;
+        }),
+      );
+    } else {
+      refetchUserVaultBalance();
+    }
+  }, [walletAddress, refetchUserVaultBalance]);
 
   return [state, setState];
 });
