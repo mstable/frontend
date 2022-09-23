@@ -9,7 +9,6 @@ import {
   CardContent,
   Divider,
   Typography,
-  useTheme,
 } from '@mui/material';
 import { constants } from 'ethers';
 import { Receipt } from 'phosphor-react';
@@ -26,7 +25,6 @@ const ValueRow: React.FC<{
   valueProps?: TypographyProps;
   subValue: string;
 }> = ({ title, tooltip, value, valueProps = {}, subValue }) => {
-  const theme = useTheme();
   return (
     <Box
       mb={3}
@@ -35,20 +33,16 @@ const ValueRow: React.FC<{
       alignItems="flex-start"
     >
       <Box display="flex" alignItems="center">
-        <Typography variant="body2" color={theme.palette.text.secondary}>
+        <Typography variant="body2" color="text.secondary">
           {title}
         </Typography>
-        <InfoTooltip
-          sx={{ ml: 1 }}
-          label={tooltip}
-          color={theme.palette.text.secondary}
-        />
+        <InfoTooltip sx={{ ml: 1 }} label={tooltip} color="text.secondary" />
       </Box>
       <Box textAlign="right">
         <Typography variant="body2" {...valueProps}>
           {value}
         </Typography>
-        <Typography variant="body2" color={theme.palette.text.secondary}>
+        <Typography variant="body2" color="text.secondary">
           {subValue}
         </Typography>
       </Box>
@@ -57,7 +51,6 @@ const ValueRow: React.FC<{
 };
 
 export const Position = () => {
-  const theme = useTheme();
   const intl = useIntl();
   const { mvBalance, assetsPerShare, assetToken, mvDeposited } = useMetavault();
   const mvBalanceInAsset =
@@ -105,7 +98,7 @@ export const Position = () => {
             assetToken?.symbol || ''
           }`}
           valueProps={{
-            color: theme.palette.success.main,
+            color: (theme) => theme.palette.success.main,
           }}
           subValue={intl.formatMessage(
             { defaultMessage: '{roi}% ROI' },
