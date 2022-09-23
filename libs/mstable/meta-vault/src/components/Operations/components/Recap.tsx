@@ -3,14 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { erc4626ABI } from '@frontend/shared-constants';
 import { usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
-import {
-  Box,
-  Divider,
-  Skeleton,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Box, Divider, Skeleton, Stack, Typography } from '@mui/material';
 import { constants } from 'ethers';
 import { ArrowsClockwise, Fire, Ticket, Vault, Wallet } from 'phosphor-react';
 import { pathOr } from 'ramda';
@@ -72,14 +65,34 @@ const DepositRecap = (props: StackProps) => {
   return (
     <Stack {...props} direction="column" spacing={2}>
       <Stack {...logoContainerProps}>
-        <Box {...logoBoxProps} bgcolor="info.main">
-          <Vault weight="fill" color="#fff" />
+        <Box
+          {...logoBoxProps}
+          bgcolor={
+            amount?.exact.gt(constants.Zero)
+              ? 'info.main'
+              : 'background.highlight'
+          }
+        >
+          <Vault
+            weight="fill"
+            color={amount?.exact.gt(constants.Zero) ? '#fff' : 'text.primary'}
+          />
         </Box>
         <Box {...logoBoxProps} bgcolor="background.paper">
           <ArrowsClockwise />
         </Box>
-        <Box {...logoBoxProps} bgcolor="success.main">
-          <Ticket weight="fill" color="#fff" />
+        <Box
+          {...logoBoxProps}
+          bgcolor={
+            amount?.exact.gt(constants.Zero)
+              ? 'success.main'
+              : 'background.highlight'
+          }
+        >
+          <Ticket
+            weight="fill"
+            color={amount?.exact.gt(constants.Zero) ? '#fff' : 'text.primary'}
+          />
         </Box>
       </Stack>
       <Stack {...rowProps}>
@@ -118,21 +131,40 @@ const DepositRecap = (props: StackProps) => {
 
 const WithdrawRecap = (props: StackProps) => {
   const intl = useIntl();
-  const theme = useTheme();
   const { amount, preview, isLoading, operation } = useOperations();
   const { assetToken } = useMetavault();
 
   return (
     <Stack {...props} direction="column" spacing={2}>
       <Stack {...logoContainerProps}>
-        <Box {...logoBoxProps} bgcolor="background.highlight">
-          <Fire weight="fill" color={theme.palette.grey['600']} />
+        <Box
+          {...logoBoxProps}
+          bgcolor={
+            amount?.exact.gt(constants.Zero)
+              ? 'error.main'
+              : 'background.highlight'
+          }
+        >
+          <Fire
+            weight="fill"
+            color={amount?.exact.gt(constants.Zero) ? '#fff' : 'text.primary'}
+          />
         </Box>
         <Box {...logoBoxProps} bgcolor="background.paper">
           <ArrowsClockwise />
         </Box>
-        <Box {...logoBoxProps} bgcolor="background.highlight">
-          <Wallet weight="fill" color={theme.palette.grey['600']} />
+        <Box
+          {...logoBoxProps}
+          bgcolor={
+            amount?.exact.gt(constants.Zero)
+              ? 'success.main'
+              : 'background.highlight'
+          }
+        >
+          <Wallet
+            weight="fill"
+            color={amount?.exact.gt(constants.Zero) ? '#fff' : 'text.primary'}
+          />
         </Box>
       </Stack>
       <Stack {...rowProps}>
