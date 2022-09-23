@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { erc4626ABI } from '@frontend/shared-constants';
+import { useDataSource } from '@frontend/shared-data-access';
 import { BigDecimal } from '@frontend/shared-utils';
 import { constants } from 'ethers';
 import produce from 'immer';
@@ -13,6 +14,8 @@ import {
   useToken,
 } from 'wagmi';
 
+import { useUserVaultBalanceQuery } from './queries.generated';
+
 import type { Metavault } from '@frontend/shared-constants';
 import type { FetchTokenResult } from '@wagmi/core';
 import type { Dispatch, SetStateAction } from 'react';
@@ -23,6 +26,7 @@ type MetaVaultState = {
   asset: string | null;
   assetToken: FetchTokenResult | null;
   mvBalance: BigDecimal | null;
+  mvDeposited: BigDecimal | null;
   assetBalance: BigDecimal | null;
   assetsPerShare: BigDecimal | null;
   sharesPerAsset: BigDecimal | null;
@@ -53,6 +57,7 @@ export const {
     asset: null,
     assetToken: null,
     mvBalance: null,
+    mvDeposited: null,
     assetBalance: null,
     assetsPerShare: null,
     sharesPerAsset: null,
@@ -62,6 +67,29 @@ export const {
     metavault: { address },
     asset,
   } = state;
+
+  const dataSource = useDataSource();
+  const { refetch: refetchUserVaultBalance } = useUserVaultBalanceQuery(
+    dataSource,
+    {
+      owner: walletAddress,
+      vault: address,
+    },
+    {
+      onSuccess: (userVaultBalanceData) => {
+        if (userVaultBalanceData) {
+          setState(
+            produce((draft) => {
+              draft.mvDeposited = new BigDecimal(
+                userVaultBalanceData.vaultBalances[0]?.assetDeposited ||
+                  constants.Zero,
+              );
+            }),
+          );
+        }
+      },
+    },
+  );
 
   useContractRead({
     addressOrName: address,
@@ -177,6 +205,20 @@ export const {
       fetchAssetToken();
     }
   }, [asset, fetchAssetToken]);
+
+  useEffect(() => {
+    if (!walletAddress) {
+      setState(
+        produce((draft) => {
+          draft.mvBalance = null;
+          draft.assetBalance = null;
+          draft.mvDeposited = null;
+        }),
+      );
+    } else {
+      refetchUserVaultBalance();
+    }
+  }, [walletAddress, refetchUserVaultBalance]);
 
   return [state, setState];
 });

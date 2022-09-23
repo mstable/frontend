@@ -277,6 +277,12 @@
       "value": "Mint"
     }
   ],
+  "P6EE/a": [
+    {
+      "type": 0,
+      "value": "Tokens"
+    }
+  ],
   "PXAur5": [
     {
       "type": 0,
@@ -329,6 +335,12 @@
     {
       "type": 0,
       "value": "% of USDC"
+    }
+  ],
+  "TL3yAY": [
+    {
+      "type": 0,
+      "value": "Position Value"
     }
   ],
   "VOo/kE": [
@@ -475,6 +487,40 @@
       "value": "Swap to USDC"
     }
   ],
+  "hincAk": [
+    {
+      "type": 0,
+      "value": "Uniswap"
+    }
+  ],
+  "i8dYu2": [
+    {
+      "type": 0,
+      "value": "GWEI"
+    }
+  ],
+  "kZQLFm": [
+    {
+      "type": 0,
+      "value": "1 "
+    },
+    {
+      "type": 1,
+      "value": "asset"
+    },
+    {
+      "type": 0,
+      "value": " = "
+    },
+    {
+      "type": 1,
+      "value": "ratio"
+    },
+    {
+      "type": 0,
+      "value": " Shares"
+    }
+  ],
   "jsDfqU": [
     {
       "type": 0,
@@ -563,6 +609,12 @@
     {
       "type": 0,
       "value": "Total Supply"
+    }
+  ],
+  "rfzzi6": [
+    {
+      "type": 0,
+      "value": "Profit/Loss"
     }
   ],
   "sy+pv5": [
