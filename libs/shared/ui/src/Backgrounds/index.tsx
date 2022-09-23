@@ -7,12 +7,20 @@ export const MstableBackground = styled(Box)(({ theme }) => ({
   background: [
     getGradient('0deg', [
       `${theme.palette.background.default} 0%`,
-      `${alpha(theme.palette.background.default, 0.4)} 25%`,
+      `${
+        theme.palette.mode === 'light'
+          ? `${alpha(theme.palette.background.default, 0.4)} 40%`
+          : `${alpha(theme.palette.background.default, 0.3)} 50%`
+      }`,
       'transparent 100%',
     ]),
     getGradient('180deg', [
       `${theme.palette.background.default} 0%`,
-      `${alpha(theme.palette.background.default, 0.4)} 25%`,
+      `${
+        theme.palette.mode === 'light'
+          ? `${alpha(theme.palette.background.default, 0.4)} 40%`
+          : `${alpha(theme.palette.background.default, 0.3)} 50%`
+      }`,
       'transparent 100%',
     ]),
     theme.mixins.gradients.colorCloud,

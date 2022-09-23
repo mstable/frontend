@@ -32,7 +32,10 @@ export const getMixinsOptions = (base: Theme): ThemeOptions => ({
       alignItems: 'center',
     },
     gradients: {
-      colorCloud: `linear-gradient(96.91deg, rgba(157, 149, 255, 0.54) 14.29%, rgba(250, 195, 113, 0.71) 38.84%, rgba(85, 213, 255, 0.53) 69.2%, rgba(251, 136, 215, 0.5) 100%)`,
+      colorCloud:
+        base.palette.mode === 'light'
+          ? `linear-gradient(96.91deg, rgba(157, 149, 255, 0.54) 14.29%, rgba(250, 195, 113, 0.71) 38.84%, rgba(85, 213, 255, 0.53) 69.2%, rgba(251, 136, 215, 0.5) 100%)`
+          : `linear-gradient(96.91deg, rgba(157, 149, 255, 0.3) 14.29%, rgba(250, 195, 113, 0.5) 38.84%, rgba(85, 213, 255, 0.3) 69.2%, rgba(251, 136, 215, 0.3) 100%)`,
     },
   },
 });
