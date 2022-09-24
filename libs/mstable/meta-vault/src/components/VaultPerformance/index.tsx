@@ -71,10 +71,14 @@ export const VaultPerformance = () => {
     metavault: { address },
   } = useMetavault();
   const dataSource = useDataSource();
-  const { data } = useMetavaultQuery(dataSource, {
-    id: address,
-    days: chartTimeframes[chartTimeframe].days,
-  });
+  const { data } = useMetavaultQuery(
+    dataSource,
+    {
+      id: address,
+      days: chartTimeframes[chartTimeframe].days,
+    },
+    { enabled: !!address },
+  );
   const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
     useMemo(() => {
       const sortedData = sort(
