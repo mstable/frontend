@@ -131,8 +131,6 @@ export const VaultPerformance = () => {
     };
   }, [data, theme, chartTypes, chartType]);
 
-  console.log(data, chartData);
-
   return (
     <Card sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}>
       <CardHeader
