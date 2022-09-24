@@ -6,14 +6,14 @@ import { CaretDown } from 'phosphor-react';
 
 import { useChartConfig } from './hooks';
 
-interface Props {
+export interface ControlsProps {
   chartType: string;
   setChartType: (c: string) => void;
   chartTimeframe: string;
   setChartTimeframe: (c: string) => void;
 }
 
-const Controls: React.FC<Props> = ({
+const Controls: React.FC<ControlsProps> = ({
   chartType,
   setChartType,
   chartTimeframe,

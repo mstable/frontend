@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useMemo, useState } from 'react';
 
 import { useDataSource } from '@frontend/shared-data-access';
@@ -7,6 +8,10 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   useTheme,
 } from '@mui/material';
 import {
@@ -31,7 +36,7 @@ import { useMetavault } from '../../state';
 import Controls from './Controls';
 import { useChartConfig } from './hooks';
 
-import type { ScriptableContext } from 'chart.js';
+import type { ChartData, ChartOptions, ScriptableContext } from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
@@ -58,6 +63,7 @@ const getBackgroundColor =
 export const VaultPerformance = () => {
   const intl = useIntl();
   const theme = useTheme();
+  const [chartExpanded, setChartExpanded] = useState(false);
   const { chartTypes, chartTimeframes } = useChartConfig();
   const [chartType, setChartType] = useState('APY');
   const [chartTimeframe, setChartTimeframe] = useState('1W');
@@ -69,87 +75,122 @@ export const VaultPerformance = () => {
     id: address,
     days: chartTimeframes[chartTimeframe].days,
   });
-  const chartData = useMemo(() => {
-    const sortedData = sort(
-      (a, b) => Number(a.timestamp) - Number(b.timestamp),
-      data?.vault?.DailyVaultStats || [],
-    );
+  const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
+    useMemo(() => {
+      const sortedData = sort(
+        (a, b) => Number(a.timestamp) - Number(b.timestamp),
+        data?.vault?.DailyVaultStats || [],
+      );
 
-    return {
-      data: {
-        labels: sortedData.map((d) =>
-          intlFormat(Number(d.timestamp) * 1000, {
-            timeZone: 'UTC',
-            month: 'numeric',
-            day: 'numeric',
-          }),
-        ),
-        datasets: [
-          {
-            label: 'data1',
-            data: sortedData.map(chartTypes[chartType].getValue),
-            borderColor: theme.palette.info.main,
-            backgroundColor: getBackgroundColor(theme.palette.info.light),
-            fill: true,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        datasets: {
-          line: {
-            tension: 0.5,
-            pointRadius: 0,
-          },
+      return {
+        data: {
+          labels: sortedData.map((d) =>
+            intlFormat(Number(d.timestamp) * 1000, {
+              timeZone: 'UTC',
+              month: 'numeric',
+              day: 'numeric',
+            }),
+          ),
+          datasets: [
+            {
+              label: 'data1',
+              data: sortedData.map(chartTypes[chartType].getValue),
+              borderColor: theme.palette.info.main,
+              backgroundColor: getBackgroundColor(theme.palette.info.light),
+              fill: true,
+            },
+          ],
         },
-        scales: {
-          y: {
-            grid: {
+        options: {
+          responsive: true,
+          datasets: {
+            line: {
+              tension: 0.5,
+              pointRadius: 0,
+            },
+          },
+          scales: {
+            y: {
+              grid: {
+                display: false,
+              },
+              min: 0,
+              ticks: {
+                callback: chartTypes[chartType].getLabel,
+              },
+            },
+            x: {
+              grid: {
+                display: false,
+              },
+            },
+          },
+          plugins: {
+            legend: {
               display: false,
             },
-            min: 0,
-            ticks: {
-              // Include a dollar sign in the ticks
-              callback: chartTypes[chartType].getLabel,
-            },
-          },
-          x: {
-            grid: {
+            title: {
               display: false,
             },
           },
         },
-        plugins: {
-          legend: {
-            display: false,
-          },
-          title: {
-            display: false,
-          },
-        },
-      },
-    };
-  }, [data, theme, chartTypes, chartType]);
+      };
+    }, [data, theme, chartTypes, chartType]);
 
   return (
-    <Card sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}>
-      <CardHeader
-        title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
-        action={
-          <Button color="secondary" startIcon={<FrameCorners />} size="small">
-            {intl.formatMessage({ defaultMessage: 'Expand' })}
-          </Button>
-        }
-      />
-      <CardContent>
-        <Controls
-          chartType={chartType}
-          setChartType={setChartType}
-          chartTimeframe={chartTimeframe}
-          setChartTimeframe={setChartTimeframe}
+    <>
+      <Card
+        sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}
+      >
+        <CardHeader
+          title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
+          action={
+            setChartExpanded ? (
+              <Button
+                onClick={() => setChartExpanded(true)}
+                color="secondary"
+                startIcon={<FrameCorners />}
+                size="small"
+              >
+                {intl.formatMessage({ defaultMessage: 'Expand' })}
+              </Button>
+            ) : null
+          }
         />
-        <Line key="chart" options={chartData.options} data={chartData.data} />
-      </CardContent>
-    </Card>
+        <CardContent>
+          <Controls
+            chartType={chartType}
+            setChartType={setChartType}
+            chartTimeframe={chartTimeframe}
+            setChartTimeframe={setChartTimeframe}
+          />
+          <Line key="chart" options={chartData.options} data={chartData.data} />
+        </CardContent>
+      </Card>
+      <Dialog
+        open={chartExpanded}
+        onClose={() => setChartExpanded(false)}
+        maxWidth="lg"
+        fullWidth
+      >
+        <DialogTitle>
+          {intl.formatMessage({ defaultMessage: 'Vault Performance' })}
+        </DialogTitle>
+        <DialogContent>
+          <Controls
+            chartType={chartType}
+            setChartType={setChartType}
+            chartTimeframe={chartTimeframe}
+            setChartTimeframe={setChartTimeframe}
+          />
+          <Line key="chart" options={chartData.options} data={chartData.data} />
+        </DialogContent>
+        <DialogActions>
+          <Button color="secondary" onClick={() => setChartExpanded(false)}>
+            {intl.formatMessage({ defaultMessage: 'Close' })}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
