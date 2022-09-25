@@ -1,3 +1,21 @@
+query userVaultBalance($owner: Bytes!, $vault: String!) {
+  vaultBalances(where: { owner: $owner, vault: $vault }, first: 1) {
+    owner
+    vault {
+      id
+      asset {
+        id
+        name
+        symbol
+        decimals
+      }
+    }
+    timestamp
+    shareBalance
+    assetBalance
+    assetDeposited
+  }
+}
 query metavault($id: ID!, $days: Int = 7) {
   vault(id: $id) {
     totalSupply

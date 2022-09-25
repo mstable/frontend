@@ -1,7 +1,0 @@
-query position {
-  vaults {
-    id
-    address
-    timestamp
-  }
-}

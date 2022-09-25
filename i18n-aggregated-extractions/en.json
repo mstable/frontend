@@ -92,6 +92,9 @@
   "LETDMp": {
     "defaultMessage": "Include Gas Fees"
   },
+  "MEfsyo": {
+    "defaultMessage": "Increase allowance for this token"
+  },
   "LjNvmm": {
     "defaultMessage": "Deposited"
   },
@@ -107,6 +110,9 @@
   "OwO+Nr": {
     "defaultMessage": "Mint"
   },
+  "P6EE/a": {
+    "defaultMessage": "Tokens"
+  },
   "PXAur5": {
     "defaultMessage": "Withdraw"
   },
@@ -121,6 +127,9 @@
   },
   "THS5K4": {
     "defaultMessage": "{fee}% of USDC"
+  },
+  "TL3yAY": {
+    "defaultMessage": "Position Value"
   },
   "VOo/kE": {
     "defaultMessage": "Token approved"
@@ -158,6 +167,15 @@
   "heM61T": {
     "defaultMessage": "Swap to USDC"
   },
+  "hincAk": {
+    "defaultMessage": "Uniswap"
+  },
+  "i8dYu2": {
+    "defaultMessage": "GWEI"
+  },
+  "kZQLFm": {
+    "defaultMessage": "1 {asset} = {ratio} Shares"
+  },
   "kaPKOB": {
     "defaultMessage": "Insufficient balance"
   },
@@ -178,6 +196,9 @@
   },
   "rFZhzG": {
     "defaultMessage": "Current Gas"
+  },
+  "rfzzi6": {
+    "defaultMessage": "Profit/Loss"
   },
   "sHlvMe": {
     "defaultMessage": "Total Supply"
