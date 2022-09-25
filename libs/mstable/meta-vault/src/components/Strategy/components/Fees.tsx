@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import {
   ArrowsClockwise,
   Bank,
@@ -60,19 +60,13 @@ type LogoProps = {
 } & StackProps;
 
 const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
-  const theme = useTheme();
-
   return (
     <Stack direction="column" alignItems="center" {...rest}>
       <Box
         sx={{
           backgroundColor: revertColors
-            ? theme.palette.mode === 'light'
-              ? theme.palette.grey[900]
-              : theme.palette.grey[50]
-            : theme.palette.mode === 'light'
-            ? theme.palette.grey[100]
-            : theme.palette.grey[800],
+            ? 'icons.revertedBackground'
+            : 'icons.background',
           borderRadius: '50%',
           width: 30,
           height: 30,
@@ -81,13 +75,7 @@ const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
           alignItems: 'center',
           mb: 1,
           svg: {
-            color: revertColors
-              ? theme.palette.mode === 'light'
-                ? theme.palette.grey[50]
-                : theme.palette.grey[900]
-              : theme.palette.mode === 'light'
-              ? theme.palette.grey[900]
-              : theme.palette.grey[600],
+            color: revertColors ? 'icons.revertedColor' : 'icons.color',
           },
         }}
       >

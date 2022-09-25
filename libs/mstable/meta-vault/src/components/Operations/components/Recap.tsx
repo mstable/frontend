@@ -46,15 +46,13 @@ const logoContainerProps: StackProps = {
 };
 
 const logoBoxProps: BoxProps = {
-  sx: {
-    borderRadius: '50%',
-    width: 30,
-    height: 30,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 2,
-  },
+  borderRadius: '50%',
+  width: 30,
+  height: 30,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 2,
 };
 
 const DepositRecap = (props: StackProps) => {
@@ -68,15 +66,17 @@ const DepositRecap = (props: StackProps) => {
         <Box
           {...logoBoxProps}
           bgcolor={
-            amount?.exact.gt(constants.Zero)
-              ? 'info.main'
-              : 'background.highlight'
+            amount?.exact.gt(constants.Zero) ? 'info.main' : 'icons.background'
           }
+          sx={{
+            svg: {
+              color: amount?.exact.gt(constants.Zero)
+                ? 'common.white'
+                : 'icons.color',
+            },
+          }}
         >
-          <Vault
-            weight="fill"
-            color={amount?.exact.gt(constants.Zero) ? '#fff' : 'text.primary'}
-          />
+          <Vault weight="fill" />
         </Box>
         <Box {...logoBoxProps} bgcolor="background.paper">
           <ArrowsClockwise />
@@ -86,13 +86,17 @@ const DepositRecap = (props: StackProps) => {
           bgcolor={
             amount?.exact.gt(constants.Zero)
               ? 'success.main'
-              : 'background.highlight'
+              : 'icons.background'
           }
+          sx={{
+            svg: {
+              color: amount?.exact.gt(constants.Zero)
+                ? 'common.white'
+                : 'icons.color',
+            },
+          }}
         >
-          <Ticket
-            weight="fill"
-            color={amount?.exact.gt(constants.Zero) ? '#fff' : 'text.primary'}
-          />
+          <Ticket weight="fill" />
         </Box>
       </Stack>
       <Stack {...rowProps}>
@@ -140,15 +144,17 @@ const WithdrawRecap = (props: StackProps) => {
         <Box
           {...logoBoxProps}
           bgcolor={
-            amount?.exact.gt(constants.Zero)
-              ? 'error.main'
-              : 'background.highlight'
+            amount?.exact.gt(constants.Zero) ? 'error.main' : 'icons.background'
           }
+          sx={{
+            svg: {
+              color: amount?.exact.gt(constants.Zero)
+                ? 'common.white'
+                : 'icons.color',
+            },
+          }}
         >
-          <Fire
-            weight="fill"
-            color={amount?.exact.gt(constants.Zero) ? '#fff' : 'text.primary'}
-          />
+          <Fire weight="fill" />
         </Box>
         <Box {...logoBoxProps} bgcolor="background.paper">
           <ArrowsClockwise />
@@ -158,13 +164,17 @@ const WithdrawRecap = (props: StackProps) => {
           bgcolor={
             amount?.exact.gt(constants.Zero)
               ? 'success.main'
-              : 'background.highlight'
+              : 'icons.background'
           }
+          sx={{
+            svg: {
+              color: amount?.exact.gt(constants.Zero)
+                ? 'common.white'
+                : 'icons.color',
+            },
+          }}
         >
-          <Wallet
-            weight="fill"
-            color={amount?.exact.gt(constants.Zero) ? '#fff' : 'text.primary'}
-          />
+          <Wallet weight="fill" />
         </Box>
       </Stack>
       <Stack {...rowProps}>
@@ -314,11 +324,12 @@ const GasFeesRecap = (props: StackProps) => {
 export const Recap = (props: StackProps) => {
   const { tab } = useOperations();
   const { isConnected } = useAccount();
+  const { amount } = useOperations();
 
   return (
     <Stack {...props} spacing={3}>
       {tab === 0 ? <DepositRecap /> : <WithdrawRecap />}
-      {isConnected && (
+      {isConnected && !!amount && (
         <>
           <Divider flexItem />
           <GasFeesRecap />
