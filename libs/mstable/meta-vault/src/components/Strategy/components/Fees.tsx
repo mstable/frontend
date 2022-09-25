@@ -69,7 +69,7 @@ const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
           backgroundColor: revertColors
             ? theme.palette.mode === 'light'
               ? theme.palette.grey[900]
-              : theme.palette.grey[600]
+              : theme.palette.grey[50]
             : theme.palette.mode === 'light'
             ? theme.palette.grey[100]
             : theme.palette.grey[800],
@@ -82,8 +82,12 @@ const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
           mb: 1,
           svg: {
             color: revertColors
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
+              ? theme.palette.mode === 'light'
+                ? theme.palette.grey[50]
+                : theme.palette.grey[900]
+              : theme.palette.mode === 'light'
+              ? theme.palette.grey[900]
+              : theme.palette.grey[600],
           },
         }}
       >
