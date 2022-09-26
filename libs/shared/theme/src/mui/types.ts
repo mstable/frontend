@@ -118,8 +118,7 @@ declare module '@mui/material/styles/createMixins' {
       };
       jumbo: {
         paddingX: CSSProperties;
-        paddingTop: CSSProperties;
-        paddingBottom: CSSProperties;
+        paddingY: CSSProperties;
       };
     };
     centered: {

@@ -17,7 +17,7 @@ import { useIntl } from 'react-intl';
 import { useMetavaultQuery } from '../queries.generated';
 import { useMetavault } from '../state';
 
-import type { BoxProps, StackProps, TypographyProps } from '@mui/material';
+import type { StackProps, TypographyProps } from '@mui/material';
 
 const tagProps: TypographyProps = {
   display: 'flex',
@@ -34,20 +34,6 @@ const tagProps: TypographyProps = {
       : theme.palette.grey[900],
   border: (theme) => `1px solid ${theme.palette.divider}`,
   borderRadius: 2,
-};
-
-const protocolProps: BoxProps = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  p: 1,
-  height: 24,
-  width: 24,
-  bgcolor: (theme) =>
-    theme.palette.mode === 'light'
-      ? theme.palette.grey[50]
-      : theme.palette.grey[900],
-  borderRadius: '50%',
 };
 
 export const VaultJumbo = (props: StackProps) => {
@@ -114,9 +100,9 @@ export const VaultJumbo = (props: StackProps) => {
         ))}
       </Stack>
       <Stack
-        direction="row"
+        direction={{ xs: 'column', md: 'row' }}
         spacing={{ xs: 3, md: 4 }}
-        sx={{ overflowX: 'auto', maxWidth: 1 }}
+        sx={{ overflowX: 'auto', maxWidth: 1, width: 1 }}
       >
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'Asset' })}

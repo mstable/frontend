@@ -14,16 +14,15 @@ export const getMixinsOptions = (base: Theme): ThemeOptions => ({
     paddings: {
       page: {
         paddingY: { xs: 1, sm: 2, md: 2.5 },
-        paddingX: { xs: 2, sm: 6, md: 8, lg: 20, xl: 45 },
+        paddingX: { xs: 1.5, sm: 3, md: 5, lg: 20, xl: 36 },
       },
       section: {
         paddingY: { xs: 0.5, sm: 1, md: 1.2 },
         paddingX: { xs: 1, sm: 1.5, md: 2, lg: 3, xl: 4 },
       },
       jumbo: {
-        paddingTop: { xs: 6, sm: 10, md: 15 },
-        paddingBottom: { xs: 4, sm: 6, md: 8 },
-        paddingX: { xs: 4, sm: 8, md: 10, lg: 22, xl: 47 },
+        paddingY: { xs: 4, sm: 6, md: 8 },
+        paddingX: { xs: 3.5, sm: 5, md: 7, lg: 22, xl: 38 },
       },
     },
     centered: {

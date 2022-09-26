@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material';
+import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 import { InfoTooltip } from '../InfoTooltip';
 
@@ -29,54 +29,29 @@ export const ValueLabel = ({
   hint,
   subhint,
   components,
-}: ValueLabelProps) => (
-  <Stack direction="column" alignItems="flex-start" {...components?.container}>
-    <Typography
-      variant="label2"
-      noWrap
-      position="relative"
-      mb={2}
-      {...(hint && { pr: 1.75 })}
-      {...components?.label}
-    >
-      {label}
-      {hint && (
-        <InfoTooltip
-          label={hint}
-          variant="exclamation"
-          position="absolute"
-          top={0}
-          right={0}
-        />
-      )}
-    </Typography>
+}: ValueLabelProps) => {
+  const theme = useTheme();
+  const wide = useMediaQuery(theme.breakpoints.up('sm'));
 
+  return (
     <Stack
-      mb={0.5}
-      height={24}
-      direction="row"
-      alignItems="center"
-      {...components?.valueContainer}
+      direction={{ xs: 'row', md: 'column' }}
+      alignItems={{ xs: 'center', md: 'flex-start' }}
+      justifyContent="space-between"
+      {...components?.container}
     >
-      {value && (
-        <Typography variant="value2" noWrap {...components?.value}>
-          {value}
-        </Typography>
-      )}
-      {children}
-    </Stack>
-    {subvalue && (
       <Typography
-        variant="value5"
+        variant="label2"
         noWrap
         position="relative"
-        {...(subhint && { pr: 1.75 })}
-        {...components?.subvalue}
+        mb={{ xs: 0, md: 2 }}
+        {...(hint && { pr: 1.75 })}
+        {...components?.label}
       >
-        {subvalue}
-        {subhint && (
+        {label}
+        {hint && (
           <InfoTooltip
-            label={subhint}
+            label={hint}
             variant="exclamation"
             position="absolute"
             top={0}
@@ -84,6 +59,41 @@ export const ValueLabel = ({
           />
         )}
       </Typography>
-    )}
-  </Stack>
-);
+
+      <Stack
+        my={0.5}
+        height={24}
+        direction="row"
+        alignItems="center"
+        {...components?.valueContainer}
+      >
+        {value && (
+          <Typography variant="value2" noWrap {...components?.value}>
+            {value}
+          </Typography>
+        )}
+        {children}
+      </Stack>
+      {subvalue && (
+        <Typography
+          variant="value5"
+          noWrap
+          position="relative"
+          {...(subhint && { pr: 1.75 })}
+          {...components?.subvalue}
+        >
+          {subvalue}
+          {subhint && (
+            <InfoTooltip
+              label={subhint}
+              variant="exclamation"
+              position="absolute"
+              top={0}
+              right={0}
+            />
+          )}
+        </Typography>
+      )}
+    </Stack>
+  );
+};
