@@ -7,7 +7,7 @@
 	.st1{fill:#60D8A4;}
 	.st2{fill:#F4BB3B;}
 	.st3{fill:#FF5A5A;}
-	.st4{fill:#3A3A3A;}
+	.st4{fill:currentColor;}
   </style>
   <rect x="71.8" y="28" class="st0" width="10" height="15.1"/>
   <rect x="43.1" class="st0" width="10" height="15.1"/>

@@ -102,7 +102,7 @@ export const OperationsForm = (props: StackProps) => {
       borderRadius={1}
       p={2}
       direction="column"
-      spacing={1}
+      spacing={3}
       sx={{
         border: (theme) => `1px solid ${theme.palette.divider}`,
         ...(!isConnected && {
