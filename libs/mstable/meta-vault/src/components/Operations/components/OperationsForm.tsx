@@ -128,7 +128,7 @@ export const OperationsForm = (props: StackProps) => {
         onChange={handlePrimaryChange}
         placeholder="0.00"
         disabled={!isConnected || isSubmitLoading}
-        isCconnected={isConnected}
+        isConnected={isConnected}
         error={isError}
       />
       <Divider role="presentation" light={!isConnected}>
@@ -151,7 +151,7 @@ export const OperationsForm = (props: StackProps) => {
         onChange={handleSecondaryChange}
         placeholder="0.00"
         disabled={!isConnected || isSubmitLoading}
-        isCconnected={isConnected}
+        isConnected={isConnected}
         error={isError}
       />
     </Stack>
