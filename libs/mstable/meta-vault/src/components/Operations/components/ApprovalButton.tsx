@@ -9,6 +9,7 @@ import {
   erc20ABI,
   etherscanBlockExplorers,
   useContractWrite,
+  useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi';
@@ -20,6 +21,7 @@ import type { ButtonProps } from '@mui/material';
 
 export const ApprovalButton = (props: ButtonProps) => {
   const intl = useIntl();
+  const { chain } = useNetwork();
   const pushNotification = usePushNotification();
   const { exactApproval } = useSettings();
   const {
@@ -46,15 +48,21 @@ export const ApprovalButton = (props: ButtonProps) => {
     hash: approveData?.hash,
     onSuccess: (data) => {
       pushNotification({
-        title: intl.formatMessage({ defaultMessage: 'Token approved' }),
+        title: intl.formatMessage({ defaultMessage: 'Transaction Confirmed' }),
         content: (
           <Link
-            href={`${etherscanBlockExplorers.goerli.url}/tx/${data?.transactionHash}`}
+            href={`${
+              chain?.blockExplorers?.etherscan?.url ??
+              etherscanBlockExplorers.mainnet.url
+            }/tx/${data?.transactionHash}`}
             target="_blank"
           >
-            {intl.formatMessage({
-              defaultMessage: 'View your transaction on etherscan',
-            })}
+            {intl.formatMessage(
+              {
+                defaultMessage: 'View on {name}',
+              },
+              { name: chain?.blockExplorers?.etherscan?.name ?? 'Etherscan' },
+            )}
           </Link>
         ),
         severity: 'success',
@@ -67,6 +75,43 @@ export const ApprovalButton = (props: ButtonProps) => {
       fetchApprovalConfig();
     }
   }, [asset, fetchApprovalConfig, needsApproval]);
+
+  useEffect(() => {
+    if (isApproveStarted && !isApproveSuccess) {
+      pushNotification({
+        title: intl.formatMessage(
+          { defaultMessage: 'Approving Token{exact}' },
+          { exact: exactApproval ? ' - exact' : '' },
+        ),
+        content: (
+          <Link
+            href={`${
+              chain?.blockExplorers?.etherscan?.url ??
+              etherscanBlockExplorers.mainnet.url
+            }/tx/${approveData?.hash}`}
+            target="_blank"
+          >
+            {intl.formatMessage(
+              {
+                defaultMessage: 'View on {name}',
+              },
+              { name: chain?.blockExplorers?.etherscan?.name ?? 'Etherscan' },
+            )}
+          </Link>
+        ),
+        severity: 'info',
+      });
+    }
+  }, [
+    approveData?.hash,
+    chain?.blockExplorers?.etherscan?.name,
+    chain?.blockExplorers?.etherscan?.url,
+    exactApproval,
+    intl,
+    isApproveStarted,
+    isApproveSuccess,
+    pushNotification,
+  ]);
 
   const handleApprove = () => {
     if (exactApproval) {
