@@ -57,7 +57,7 @@ const logoBoxProps: BoxProps = {
 
 const DepositRecap = (props: StackProps) => {
   const intl = useIntl();
-  const { amount, preview, isLoading, operation } = useOperations();
+  const { amount, preview, isInputLoading, operation } = useOperations();
   const { assetToken } = useMetavault();
 
   return (
@@ -109,7 +109,7 @@ const DepositRecap = (props: StackProps) => {
       </Stack>
       <Stack {...rowProps}>
         <Typography variant="value4">
-          {operation === 'mint' && isLoading ? (
+          {operation === 'mint' && isInputLoading ? (
             <Skeleton width={100} height={16} />
           ) : (
             `${amount?.format(2) ?? '0.00'} ${
@@ -119,7 +119,7 @@ const DepositRecap = (props: StackProps) => {
           )}
         </Typography>
         <Typography variant="value4">
-          {operation === 'deposit' && isLoading ? (
+          {operation === 'deposit' && isInputLoading ? (
             <Skeleton width={100} height={16} />
           ) : (
             intl.formatMessage(
@@ -135,7 +135,7 @@ const DepositRecap = (props: StackProps) => {
 
 const WithdrawRecap = (props: StackProps) => {
   const intl = useIntl();
-  const { amount, preview, isLoading, operation } = useOperations();
+  const { amount, preview, isInputLoading, operation } = useOperations();
   const { assetToken } = useMetavault();
 
   return (
@@ -187,7 +187,7 @@ const WithdrawRecap = (props: StackProps) => {
       </Stack>
       <Stack {...rowProps}>
         <Typography variant="value4">
-          {operation === 'redeem' && isLoading ? (
+          {operation === 'redeem' && isInputLoading ? (
             <Skeleton width={100} height={16} />
           ) : (
             intl.formatMessage(
@@ -197,7 +197,7 @@ const WithdrawRecap = (props: StackProps) => {
           )}
         </Typography>
         <Typography variant="value4">
-          {operation === 'withdraw' && isLoading ? (
+          {operation === 'withdraw' && isInputLoading ? (
             <Skeleton width={100} height={16} />
           ) : (
             `${preview?.format(2) ?? '0.00'} ${

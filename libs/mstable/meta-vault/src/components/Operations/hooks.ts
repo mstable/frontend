@@ -104,3 +104,18 @@ export const useOperationLabel = () => {
     [intl, operation],
   );
 };
+
+export const useSetIsSubmitLoading = () => {
+  const update = useUpdate();
+
+  return useCallback(
+    (val?: boolean) => {
+      update(
+        produce((state) => {
+          state.isSubmitLoading = val ?? !state.isSubmitLoading;
+        }),
+      );
+    },
+    [update],
+  );
+};

@@ -25,6 +25,7 @@ export type TokenInputProps = {
   disabled?: boolean;
   error?: boolean;
   isLoading?: boolean;
+  isCconnected?: boolean;
   amount: BigDecimal;
   token: FetchTokenResult;
   max?: BigDecimal;
@@ -97,6 +98,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
       disabled,
       error,
       isLoading,
+      isCconnected,
       amount,
       token,
       max,
@@ -223,7 +225,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
                 ))}
               </Stack>
             )}
-            {!disabled && max ? (
+            {isCconnected && max ? (
               <Typography
                 variant="value6"
                 sx={{

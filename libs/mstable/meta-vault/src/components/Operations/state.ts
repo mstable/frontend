@@ -27,7 +27,8 @@ type OperationsState = {
   balance: BigDecimal | null;
   tab: 0 | 1;
   needsApproval: boolean;
-  isLoading: boolean;
+  isInputLoading: boolean;
+  isSubmitLoading: boolean;
   isError: boolean;
 };
 
@@ -55,7 +56,8 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     balance: null,
     tab: 0,
     needsApproval: false,
-    isLoading: false,
+    isInputLoading: false,
+    isSubmitLoading: false,
     isError: false,
   });
 
@@ -93,7 +95,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
       setState(
         produce((draft) => {
           draft.preview = data ? new BigDecimal(data) : null;
-          draft.isLoading = false;
+          draft.isInputLoading = false;
         }),
       );
     },
@@ -126,13 +128,13 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
       setState(
         produce((draft) => {
           draft.preview = null;
-          draft.isLoading = false;
+          draft.isInputLoading = false;
         }),
       );
     } else {
       setState(
         produce((draft) => {
-          draft.isLoading = true;
+          draft.isInputLoading = true;
         }),
       );
     }

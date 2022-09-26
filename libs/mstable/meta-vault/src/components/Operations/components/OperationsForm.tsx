@@ -16,8 +16,15 @@ export const OperationsForm = (props: StackProps) => {
   const { isConnected } = useAccount();
   const { assetToken, mvToken, assetBalance, mvBalance, assetsPerShare } =
     useMetavault();
-  const { amount, operation, preview, tab, isLoading, isError } =
-    useOperations();
+  const {
+    amount,
+    operation,
+    preview,
+    tab,
+    isInputLoading,
+    isSubmitLoading,
+    isError,
+  } = useOperations();
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
 
@@ -29,17 +36,17 @@ export const OperationsForm = (props: StackProps) => {
         },
         mint: {
           amount: preview,
-          isLoading,
+          isLoading: isInputLoading,
         },
         withdraw: {
           amount: amount,
         },
         redeem: {
           amount: preview,
-          isLoading,
+          isLoading: isInputLoading,
         },
       }[operation]),
-    [amount, isLoading, operation, preview],
+    [amount, isInputLoading, operation, preview],
   );
 
   const secondaryInput = useMemo(
@@ -47,20 +54,20 @@ export const OperationsForm = (props: StackProps) => {
       ({
         deposit: {
           amount: preview,
-          isLoading,
+          isLoading: isInputLoading,
         },
         mint: {
           amount: amount,
         },
         withdraw: {
           amount: preview,
-          isLoading,
+          isLoading: isInputLoading,
         },
         redeem: {
           amount: amount,
         },
       }[operation]),
-    [amount, isLoading, operation, preview],
+    [amount, isInputLoading, operation, preview],
   );
 
   const primaryBalance = useMemo(
@@ -120,7 +127,8 @@ export const OperationsForm = (props: StackProps) => {
         label={intl.formatMessage({ defaultMessage: 'Asset' })}
         onChange={handlePrimaryChange}
         placeholder="0.00"
-        disabled={!isConnected}
+        disabled={!isConnected || isSubmitLoading}
+        isCconnected={isConnected}
         error={isError}
       />
       <Divider role="presentation" light={!isConnected}>
@@ -142,7 +150,8 @@ export const OperationsForm = (props: StackProps) => {
         label={intl.formatMessage({ defaultMessage: 'Shares' })}
         onChange={handleSecondaryChange}
         placeholder="0.00"
-        disabled={!isConnected}
+        disabled={!isConnected || isSubmitLoading}
+        isCconnected={isConnected}
         error={isError}
       />
     </Stack>

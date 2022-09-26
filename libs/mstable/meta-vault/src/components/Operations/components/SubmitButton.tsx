@@ -2,11 +2,11 @@ import { useEffect, useMemo } from 'react';
 
 import { erc4626ABI } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-notifications';
+import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { OpenAccountModalButton } from '@frontend/shared-wagmi';
-import { Button, CircularProgress, Link } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import { useIntl } from 'react-intl';
 import {
-  etherscanBlockExplorers,
   useAccount,
   useContractWrite,
   useNetwork,
@@ -15,7 +15,7 @@ import {
 } from 'wagmi';
 
 import { useMetavault } from '../../../state';
-import { useOperations, useReset } from '../hooks';
+import { useOperations, useReset, useSetIsSubmitLoading } from '../hooks';
 
 import type { ButtonProps } from '@mui/material';
 
@@ -34,6 +34,7 @@ export const SubmitButton = () => {
   const { amount, operation, needsApproval, isError, tab, token } =
     useOperations();
   const reset = useReset();
+  const setIsSubmitLoading = useSetIsSubmitLoading();
 
   const operationLabel = useMemo(
     () =>
@@ -67,31 +68,33 @@ export const SubmitButton = () => {
     write: submit,
     isLoading: isSubmitLoading,
     isSuccess: isSubmitStarted,
-  } = useContractWrite(submitConfig);
+  } = useContractWrite({
+    ...submitConfig,
+    onError: () => {
+      pushNotification({
+        title: intl.formatMessage({ defaultMessage: 'Transaction Cancelled' }),
+        severity: 'info',
+      });
+      setIsSubmitLoading(false);
+    },
+  });
   const { isSuccess: isSubmitSuccess } = useWaitForTransaction({
     hash: submitData?.hash,
-    onSuccess: (data) => {
-      reset();
+    onSettled: (data, error) => {
       pushNotification({
-        title: intl.formatMessage({ defaultMessage: 'Transaction Confirmed' }),
+        title: error
+          ? intl.formatMessage({ defaultMessage: 'Transaction Error' })
+          : intl.formatMessage({ defaultMessage: 'Transaction Confirmed' }),
         content: (
-          <Link
-            href={`${
-              chain?.blockExplorers?.etherscan?.url ??
-              etherscanBlockExplorers.mainnet.url
-            }/tx/${data?.transactionHash}`}
-            target="_blank"
-          >
-            {intl.formatMessage(
-              {
-                defaultMessage: 'View on {name}',
-              },
-              { name: chain?.blockExplorers?.etherscan?.name ?? 'Etherscan' },
-            )}
-          </Link>
+          <ViewEtherscanLink
+            hash={error ? submitData?.hash : data?.transactionHash}
+            blockExplorer={chain?.blockExplorers?.etherscan}
+          />
         ),
-        severity: 'success',
+        severity: error ? 'error' : 'success',
       });
+      reset();
+      setIsSubmitLoading(false);
     },
   });
 
@@ -112,27 +115,16 @@ export const SubmitButton = () => {
           },
         ),
         content: (
-          <Link
-            href={`${
-              chain?.blockExplorers?.etherscan?.url ??
-              etherscanBlockExplorers.mainnet.url
-            }/tx/${submitData?.hash}`}
-            target="_blank"
-          >
-            {intl.formatMessage(
-              {
-                defaultMessage: 'View on {name}',
-              },
-              { name: chain?.blockExplorers?.etherscan?.name ?? 'Etherscan' },
-            )}
-          </Link>
+          <ViewEtherscanLink
+            hash={submitData?.hash}
+            blockExplorer={chain?.blockExplorers?.etherscan}
+          />
         ),
         severity: 'info',
       });
     }
   }, [
-    chain?.blockExplorers?.etherscan?.name,
-    chain?.blockExplorers?.etherscan?.url,
+    chain?.blockExplorers?.etherscan,
     intl,
     isSubmitStarted,
     isSubmitSuccess,
@@ -144,6 +136,7 @@ export const SubmitButton = () => {
 
   const handleSubmit = () => {
     submit();
+    setIsSubmitLoading(true);
   };
 
   if (!walletAddress) {
