@@ -43,7 +43,7 @@ export const SettingsButton = (props: ButtonProps) => {
         color={chain?.unsupported ? 'warning' : 'inherit'}
         sx={{ p: 0, ...props?.sx }}
       >
-        <Gear size={20} />
+        <Gear size={20} weight="fill" />
       </Button>
       <ClickAwayMenu
         open={open}

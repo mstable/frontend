@@ -11,12 +11,21 @@ export const getAvatar = (base: Theme): ThemeOptions => ({
           '.MuiSvgIcon-root': {
             width: 16,
             height: 16,
-            color: base.palette.primary.contrastText,
+            color:
+              base.palette.mode === 'light'
+                ? base.palette.grey[900]
+                : base.palette.grey[50],
           },
         },
         colorDefault: {
-          color: base.palette.primary.contrastText,
-          backgroundColor: base.palette.primary.main,
+          color:
+            base.palette.mode === 'light'
+              ? base.palette.grey[900]
+              : base.palette.grey[50],
+          backgroundColor:
+            base.palette.mode === 'light'
+              ? base.palette.grey[50]
+              : base.palette.grey[900],
         },
       },
     },

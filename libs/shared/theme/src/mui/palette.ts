@@ -48,7 +48,12 @@ const light: ThemeOptions = {
       dark: colors.green03,
       contrastText: colors.white,
     },
-
+    icons: {
+      color: colors.black600,
+      background: colors.black100,
+      revertedColor: colors.black50,
+      revertedBackground: colors.black900,
+    },
     grey: {
       '50': colors.black50,
       '100': colors.black100,
@@ -100,6 +105,12 @@ const dark: ThemeOptions = mergeDeepRight(light, {
       main: colors.black50,
       dark: colors.black300,
       contrastText: colors.offBlack,
+    },
+    icons: {
+      color: colors.black600,
+      background: colors.black800,
+      revertedColor: colors.black900,
+      revertedBackground: colors.black50,
     },
     text: {
       primary: colors.black50,

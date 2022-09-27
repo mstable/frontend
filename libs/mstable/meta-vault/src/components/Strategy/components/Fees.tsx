@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, useTheme } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import {
   ArrowsClockwise,
   Bank,
@@ -43,9 +43,10 @@ const logoContainerProps: StackProps = {
   sx: (theme) => ({
     '::after': {
       content: '""',
-      width: '100%',
       height: '2px',
       top: '25%',
+      left: 8,
+      right: 8,
       background: theme.palette.background.highlight,
       position: 'absolute',
       zIndex: -1,
@@ -59,15 +60,13 @@ type LogoProps = {
 } & StackProps;
 
 const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
-  const theme = useTheme();
-
   return (
     <Stack direction="column" alignItems="center" {...rest}>
       <Box
         sx={{
           backgroundColor: revertColors
-            ? theme.palette.grey[900]
-            : theme.palette.grey[100],
+            ? 'icons.revertedBackground'
+            : 'icons.background',
           borderRadius: '50%',
           width: 30,
           height: 30,
@@ -75,6 +74,9 @@ const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
           justifyContent: 'center',
           alignItems: 'center',
           mb: 1,
+          svg: {
+            color: revertColors ? 'icons.revertedColor' : 'icons.color',
+          },
         }}
       >
         {children}
@@ -88,7 +90,6 @@ const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
 
 export const Fees = (props: StackProps) => {
   const intl = useIntl();
-  const theme = useTheme();
   const {
     metavault: {
       fees: { liquidation, performance },
@@ -120,15 +121,15 @@ export const Fees = (props: StackProps) => {
             label={intl.formatMessage({ defaultMessage: 'Vault' })}
             revertColors
           >
-            <Vault color={theme.palette.grey[100]} width={16} height={16} />
+            <Vault weight="fill" width={16} height={16} />
           </Logo>
           <Logo
             label={intl.formatMessage({ defaultMessage: 'Claim CVX & CRV' })}
           >
-            <Coins width={16} height={16} />
+            <Coins weight="fill" width={16} height={16} />
           </Logo>
           <Logo label={intl.formatMessage({ defaultMessage: 'Swap to USDC' })}>
-            <ArrowsClockwise width={16} height={16} />
+            <ArrowsClockwise weight="fill" width={16} height={16} />
           </Logo>
           <Logo
             label={intl.formatMessage(
@@ -136,13 +137,13 @@ export const Fees = (props: StackProps) => {
               { fee: Math.round(liquidation * 100) },
             )}
           >
-            <ChartPieSlice width={16} height={16} />
+            <ChartPieSlice weight="fill" width={16} height={16} />
           </Logo>
           <Logo
             revertColors
             label={intl.formatMessage({ defaultMessage: 'DAO' })}
           >
-            <Bank color={theme.palette.grey[100]} width={16} height={16} />
+            <Bank weight="fill" width={16} height={16} />
           </Logo>
         </Stack>
       </Stack>
@@ -169,12 +170,12 @@ export const Fees = (props: StackProps) => {
             label={intl.formatMessage({ defaultMessage: 'Token' })}
             revertColors
           >
-            <Coin color={theme.palette.grey[100]} width={16} height={16} />
+            <Coin weight="fill" width={16} height={16} />
           </Logo>
           <Logo
             label={intl.formatMessage({ defaultMessage: 'Collect swap fees' })}
           >
-            <Coins width={16} height={16} />
+            <Coins weight="fill" width={16} height={16} />
           </Logo>
           <Logo
             label={intl.formatMessage(
@@ -182,13 +183,13 @@ export const Fees = (props: StackProps) => {
               { fee: Math.round(performance * 100) },
             )}
           >
-            <ChartPieSlice width={16} height={16} />
+            <ChartPieSlice weight="fill" width={16} height={16} />
           </Logo>
           <Logo
             revertColors
             label={intl.formatMessage({ defaultMessage: 'DAO' })}
           >
-            <Bank color={theme.palette.grey[100]} width={16} height={16} />
+            <Bank weight="fill" width={16} height={16} />
           </Logo>
         </Stack>
       </Stack>

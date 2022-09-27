@@ -7,6 +7,24 @@ declare module '@mui/material/styles/createPalette' {
 }
 
 declare module '@mui/material/styles' {
+  interface Palette {
+    icons: {
+      color: string;
+      background: string;
+      revertedColor: string;
+      revertedBackground: string;
+    };
+  }
+
+  interface PaletteOptions {
+    icons?: {
+      color?: string;
+      background?: string;
+      revertedColor?: string;
+      revertedBackground?: string;
+    };
+  }
+
   interface TypographyVariants {
     fontFamilies: Record<'main' | 'code', string>;
     fontSizes: Record<'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl', number>;
@@ -98,6 +116,10 @@ declare module '@mui/material/styles/createMixins' {
         paddingX: CSSProperties;
         paddingY: CSSProperties;
       };
+      jumbo: {
+        paddingX: CSSProperties;
+        paddingY: CSSProperties;
+      };
     };
     centered: {
       display: string;
@@ -106,8 +128,6 @@ declare module '@mui/material/styles/createMixins' {
     };
     gradients: {
       colorCloud: string;
-      numbTop: string;
-      numbBottom: string;
     };
   }
 }
