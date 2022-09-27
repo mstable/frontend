@@ -44,8 +44,8 @@ export const Controls = ({
         {Object.values(chartTimeframes).map((c) => (
           <Button
             key={c.id}
-            variant={c.id === chartTimeframe ? 'contained' : 'outlined'}
             onClick={() => setChartTimeframe(c.id)}
+            className={c.id === chartTimeframe ? 'Mui-selected' : undefined}
           >
             {c.label}
           </Button>
