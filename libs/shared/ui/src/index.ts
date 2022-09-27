@@ -15,3 +15,4 @@ export * from './SeverityIcon';
 export * from './TokenIcon';
 export * from './Typography';
 export * from './ValueLabel';
+export * from './ViewEtherscanLink';

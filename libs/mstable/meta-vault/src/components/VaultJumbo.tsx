@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { useDataSource } from '@frontend/shared-data-access';
 import { ProtocolIcon, TokenIcon, ValueLabel } from '@frontend/shared-ui';
-import { BigDecimal } from '@frontend/shared-utils';
+import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import {
   Avatar,
   AvatarGroup,
@@ -50,7 +50,7 @@ export const VaultJumbo = (props: StackProps) => {
     { enabled: !!address },
   );
   const apyTrend = useMemo(() => {
-    if (data?.vault?.DailyVaultStats?.length <= 0) {
+    if (isNilOrEmpty(data?.vault?.DailyVaultStats)) {
       return { label: '-', color: theme.palette.text.primary };
     }
     const last = new BigDecimal(
@@ -62,7 +62,7 @@ export const VaultJumbo = (props: StackProps) => {
     const diff = 100 - (last.simple / first.simple) * 100;
 
     return {
-      label: `${diff >= 0 ? '+' : '-'}${diff.toFixed(2)}%(1W)`,
+      label: `${diff >= 0 ? '+' : ''}${diff.toFixed(2)}%(1W)`,
       color:
         diff > 0
           ? theme.palette.success.main

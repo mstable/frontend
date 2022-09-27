@@ -2,19 +2,20 @@ import { useEffect, useMemo } from 'react';
 
 import { erc4626ABI } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-notifications';
+import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { OpenAccountModalButton } from '@frontend/shared-wagmi';
-import { Button, CircularProgress, Link } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import { useIntl } from 'react-intl';
 import {
-  etherscanBlockExplorers,
   useAccount,
   useContractWrite,
+  useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi';
 
 import { useMetavault } from '../../../state';
-import { useOperations, useReset } from '../hooks';
+import { useOperations, useReset, useSetIsSubmitLoading } from '../hooks';
 
 import type { ButtonProps } from '@mui/material';
 
@@ -24,13 +25,16 @@ const buttonProps: ButtonProps = {
 
 export const SubmitButton = () => {
   const intl = useIntl();
+  const { chain } = useNetwork();
   const pushNotification = usePushNotification();
   const { address: walletAddress } = useAccount();
   const {
     metavault: { address },
   } = useMetavault();
-  const { amount, operation, needsApproval, isError, tab } = useOperations();
+  const { amount, operation, needsApproval, isError, tab, token } =
+    useOperations();
   const reset = useReset();
+  const setIsSubmitLoading = useSetIsSubmitLoading();
 
   const operationLabel = useMemo(
     () =>
@@ -64,25 +68,33 @@ export const SubmitButton = () => {
     write: submit,
     isLoading: isSubmitLoading,
     isSuccess: isSubmitStarted,
-  } = useContractWrite(submitConfig);
+  } = useContractWrite({
+    ...submitConfig,
+    onError: () => {
+      pushNotification({
+        title: intl.formatMessage({ defaultMessage: 'Transaction Cancelled' }),
+        severity: 'info',
+      });
+      setIsSubmitLoading(false);
+    },
+  });
   const { isSuccess: isSubmitSuccess } = useWaitForTransaction({
     hash: submitData?.hash,
-    onSuccess: (data) => {
-      reset();
+    onSettled: (data, error) => {
       pushNotification({
-        title: intl.formatMessage({ defaultMessage: 'Deposit completed' }),
+        title: error
+          ? intl.formatMessage({ defaultMessage: 'Transaction Error' })
+          : intl.formatMessage({ defaultMessage: 'Transaction Confirmed' }),
         content: (
-          <Link
-            href={`${etherscanBlockExplorers.goerli.url}/tx/${data?.transactionHash}`}
-            target="_blank"
-          >
-            {intl.formatMessage({
-              defaultMessage: 'View your transaction on etherscan',
-            })}
-          </Link>
+          <ViewEtherscanLink
+            hash={error ? submitData?.hash : data?.transactionHash}
+            blockExplorer={chain?.blockExplorers?.etherscan}
+          />
         ),
-        severity: 'success',
+        severity: error ? 'error' : 'success',
       });
+      reset();
+      setIsSubmitLoading(false);
     },
   });
 
@@ -91,6 +103,41 @@ export const SubmitButton = () => {
       fetchSubmitConfig();
     }
   }, [amount?.exact, fetchSubmitConfig, needsApproval, walletAddress]);
+
+  useEffect(() => {
+    if (isSubmitStarted && !isSubmitSuccess) {
+      pushNotification({
+        title: intl.formatMessage(
+          { defaultMessage: '{operation}ing {currency}' },
+          {
+            operation: operationLabel,
+            currency: token?.symbol,
+          },
+        ),
+        content: (
+          <ViewEtherscanLink
+            hash={submitData?.hash}
+            blockExplorer={chain?.blockExplorers?.etherscan}
+          />
+        ),
+        severity: 'info',
+      });
+    }
+  }, [
+    chain?.blockExplorers?.etherscan,
+    intl,
+    isSubmitStarted,
+    isSubmitSuccess,
+    operationLabel,
+    pushNotification,
+    submitData?.hash,
+    token?.symbol,
+  ]);
+
+  const handleSubmit = () => {
+    submit();
+    setIsSubmitLoading(true);
+  };
 
   if (!walletAddress) {
     return (
@@ -131,12 +178,7 @@ export const SubmitButton = () => {
   }
 
   return (
-    <Button
-      {...buttonProps}
-      onClick={() => {
-        submit();
-      }}
-    >
+    <Button {...buttonProps} onClick={handleSubmit}>
       {operationLabel}
     </Button>
   );

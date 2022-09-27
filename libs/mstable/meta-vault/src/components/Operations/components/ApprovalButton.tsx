@@ -2,24 +2,26 @@ import { useEffect } from 'react';
 
 import { useSettings } from '@frontend/mstable-settings';
 import { usePushNotification } from '@frontend/shared-notifications';
-import { Button, CircularProgress, Link } from '@mui/material';
+import { ViewEtherscanLink } from '@frontend/shared-ui';
+import { Button, CircularProgress } from '@mui/material';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
 import {
   erc20ABI,
-  etherscanBlockExplorers,
   useContractWrite,
+  useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi';
 
 import { useMetavault } from '../../../state';
-import { useOperations } from '../hooks';
+import { useOperations, useSetIsSubmitLoading } from '../hooks';
 
 import type { ButtonProps } from '@mui/material';
 
 export const ApprovalButton = (props: ButtonProps) => {
   const intl = useIntl();
+  const { chain } = useNetwork();
   const pushNotification = usePushNotification();
   const { exactApproval } = useSettings();
   const {
@@ -27,6 +29,7 @@ export const ApprovalButton = (props: ButtonProps) => {
     asset,
   } = useMetavault();
   const { amount, needsApproval } = useOperations();
+  const setIsSubmitLoading = useSetIsSubmitLoading();
 
   const { config: approveConfig, refetch: fetchApprovalConfig } =
     usePrepareContractWrite({
@@ -41,24 +44,32 @@ export const ApprovalButton = (props: ButtonProps) => {
     write: approve,
     isLoading: isApproveLoading,
     isSuccess: isApproveStarted,
-  } = useContractWrite(approveConfig);
+  } = useContractWrite({
+    ...approveConfig,
+    onError: () => {
+      pushNotification({
+        title: intl.formatMessage({ defaultMessage: 'Transaction Cancelled' }),
+        severity: 'info',
+      });
+      setIsSubmitLoading(false);
+    },
+  });
   const { isSuccess: isApproveSuccess } = useWaitForTransaction({
     hash: approveData?.hash,
-    onSuccess: (data) => {
+    onSettled: (data, error) => {
       pushNotification({
-        title: intl.formatMessage({ defaultMessage: 'Token approved' }),
+        title: error
+          ? intl.formatMessage({ defaultMessage: 'Transaction Error' })
+          : intl.formatMessage({ defaultMessage: 'Transaction Confirmed' }),
         content: (
-          <Link
-            href={`${etherscanBlockExplorers.goerli.url}/tx/${data?.transactionHash}`}
-            target="_blank"
-          >
-            {intl.formatMessage({
-              defaultMessage: 'View your transaction on etherscan',
-            })}
-          </Link>
+          <ViewEtherscanLink
+            hash={error ? approveData?.hash : data?.transactionHash}
+            blockExplorer={chain?.blockExplorers?.etherscan}
+          />
         ),
-        severity: 'success',
+        severity: error ? 'error' : 'success',
       });
+      setIsSubmitLoading(false);
     },
   });
 
@@ -68,6 +79,29 @@ export const ApprovalButton = (props: ButtonProps) => {
     }
   }, [asset, fetchApprovalConfig, needsApproval]);
 
+  useEffect(() => {
+    if (isApproveStarted && !isApproveSuccess) {
+      pushNotification({
+        title: intl.formatMessage({ defaultMessage: 'Approving Token' }),
+        content: (
+          <ViewEtherscanLink
+            hash={approveData?.hash}
+            blockExplorer={chain?.blockExplorers?.etherscan}
+          />
+        ),
+        severity: 'info',
+      });
+    }
+  }, [
+    approveData?.hash,
+    chain?.blockExplorers?.etherscan,
+    exactApproval,
+    intl,
+    isApproveStarted,
+    isApproveSuccess,
+    pushNotification,
+  ]);
+
   const handleApprove = () => {
     if (exactApproval) {
       approve({
@@ -76,6 +110,7 @@ export const ApprovalButton = (props: ButtonProps) => {
     } else {
       approve();
     }
+    setIsSubmitLoading(true);
   };
 
   return (

@@ -1,4 +1,4 @@
-import { Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 import { InfoTooltip } from '../InfoTooltip';
 
@@ -30,9 +30,6 @@ export const ValueLabel = ({
   subhint,
   components,
 }: ValueLabelProps) => {
-  const theme = useTheme();
-  const wide = useMediaQuery(theme.breakpoints.up('sm'));
-
   return (
     <Stack
       direction={{ xs: 'row', md: 'column' }}

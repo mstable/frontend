@@ -11,7 +11,7 @@ import { Provider } from './state';
 const OperationsWrapped = () => {
   const intl = useIntl();
   const changeTab = useChangeTab();
-  const { tab, needsApproval } = useOperations();
+  const { tab, needsApproval, isSubmitLoading } = useOperations();
 
   return (
     <Card>
@@ -25,8 +25,14 @@ const OperationsWrapped = () => {
             textColor="inherit"
             variant="fullWidth"
           >
-            <Tab label={intl.formatMessage({ defaultMessage: 'DEPOSIT' })} />
-            <Tab label={intl.formatMessage({ defaultMessage: 'WITHDRAW' })} />
+            <Tab
+              label={intl.formatMessage({ defaultMessage: 'DEPOSIT' })}
+              disabled={isSubmitLoading}
+            />
+            <Tab
+              label={intl.formatMessage({ defaultMessage: 'WITHDRAW' })}
+              disabled={isSubmitLoading}
+            />
           </Tabs>
           <Stack pt={2} spacing={2}>
             <OperationsForm />

@@ -32,18 +32,20 @@ export const getAlert = (base: Theme): ThemeOptions => ({
           flex: 1,
           borderRadius: '8px',
           padding: base.spacing(2),
+
           '.MuiAlert-icon': {
             width: base.spacing(2.5),
             height: base.spacing(2.5),
             padding: 0,
             marginRight: base.spacing(2),
           },
-        },
-        message: {
-          padding: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
+          '.MuiAlert-message': {
+            overflow: 'hidden',
+            padding: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+          },
         },
         action: {
           paddingTop: 0,
