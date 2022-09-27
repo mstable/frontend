@@ -2,16 +2,13 @@
 import { useMemo, useState } from 'react';
 
 import { useDataSource } from '@frontend/shared-data-access';
+import { useShowDialog } from '@frontend/shared-modals';
 import {
   alpha,
   Button,
   Card,
   CardContent,
   CardHeader,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   useTheme,
 } from '@mui/material';
 import {
@@ -33,9 +30,10 @@ import { useIntl } from 'react-intl';
 
 import { useMetavaultQuery } from '../../queries.generated';
 import { useMetavault } from '../../state';
-import Controls from './Controls';
+import { Controls } from './components/Controls';
 import { useChartConfig } from './hooks';
 
+import type { DialogOptions } from '@frontend/shared-modals';
 import type { ChartData, ChartOptions, ScriptableContext } from 'chart.js';
 
 ChartJS.register(
@@ -63,7 +61,7 @@ const getBackgroundColor =
 export const VaultPerformance = () => {
   const intl = useIntl();
   const theme = useTheme();
-  const [chartExpanded, setChartExpanded] = useState(false);
+  const showDialog = useShowDialog();
   const { chartTypes, chartTimeframes } = useChartConfig();
   const [chartType, setChartType] = useState('APY');
   const [chartTimeframe, setChartTimeframe] = useState('1W');
@@ -141,60 +139,52 @@ export const VaultPerformance = () => {
       };
     }, [data, theme, chartTypes, chartType]);
 
-  return (
-    <>
-      <Card
-        sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}
-      >
-        <CardHeader
-          title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
-          action={
-            setChartExpanded ? (
-              <Button
-                onClick={() => setChartExpanded(true)}
-                color="secondary"
-                startIcon={<FrameCorners />}
-                size="small"
-              >
-                {intl.formatMessage({ defaultMessage: 'Expand' })}
-              </Button>
-            ) : null
-          }
+  const VaultPerformanceDialog: DialogOptions = {
+    maxWidth: 'lg',
+    fullWidth: true,
+    title: intl.formatMessage({ defaultMessage: 'Vault Performance' }),
+    content: () => (
+      <>
+        <Controls
+          chartType={chartType}
+          setChartType={setChartType}
+          chartTimeframe={chartTimeframe}
+          setChartTimeframe={setChartTimeframe}
         />
-        <CardContent>
-          <Controls
-            chartType={chartType}
-            setChartType={setChartType}
-            chartTimeframe={chartTimeframe}
-            setChartTimeframe={setChartTimeframe}
-          />
-          <Line key="chart" options={chartData.options} data={chartData.data} />
-        </CardContent>
-      </Card>
-      <Dialog
-        open={chartExpanded}
-        onClose={() => setChartExpanded(false)}
-        maxWidth="lg"
-        fullWidth
-      >
-        <DialogTitle>
-          {intl.formatMessage({ defaultMessage: 'Vault Performance' })}
-        </DialogTitle>
-        <DialogContent>
-          <Controls
-            chartType={chartType}
-            setChartType={setChartType}
-            chartTimeframe={chartTimeframe}
-            setChartTimeframe={setChartTimeframe}
-          />
-          <Line key="chart" options={chartData.options} data={chartData.data} />
-        </DialogContent>
-        <DialogActions>
-          <Button color="secondary" onClick={() => setChartExpanded(false)}>
-            {intl.formatMessage({ defaultMessage: 'Close' })}
+        <Line key="chart" options={chartData.options} data={chartData.data} />
+      </>
+    ),
+    actions: (onClose) => (
+      <Button color="secondary" onClick={onClose}>
+        {intl.formatMessage({ defaultMessage: 'Close' })}
+      </Button>
+    ),
+  };
+
+  return (
+    <Card sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}>
+      <CardHeader
+        title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
+        action={
+          <Button
+            onClick={() => showDialog(VaultPerformanceDialog)}
+            color="secondary"
+            startIcon={<FrameCorners />}
+            size="small"
+          >
+            {intl.formatMessage({ defaultMessage: 'Expand' })}
           </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+        }
+      />
+      <CardContent>
+        <Controls
+          chartType={chartType}
+          setChartType={setChartType}
+          chartTimeframe={chartTimeframe}
+          setChartTimeframe={setChartTimeframe}
+        />
+        <Line key="chart" options={chartData.options} data={chartData.data} />
+      </CardContent>
+    </Card>
   );
 };

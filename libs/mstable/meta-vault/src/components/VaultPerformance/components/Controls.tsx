@@ -1,10 +1,7 @@
-/* eslint-disable react/prop-types */
-import { useState } from 'react';
-
-import { Box, Button, ButtonGroup, Menu, MenuItem } from '@mui/material';
+import { Box, Button, ButtonGroup, MenuItem, Select } from '@mui/material';
 import { CaretDown } from 'phosphor-react';
 
-import { useChartConfig } from './hooks';
+import { useChartConfig } from '../hooks';
 
 export interface ControlsProps {
   chartType: string;
@@ -13,31 +10,22 @@ export interface ControlsProps {
   setChartTimeframe: (c: string) => void;
 }
 
-const Controls: React.FC<ControlsProps> = ({
+export const Controls = ({
   chartType,
   setChartType,
   chartTimeframe,
   setChartTimeframe,
-}) => {
-  const [chartTypeSelectAnchorEl, setChartTypeSelectAnchorEl] =
-    useState<HTMLButtonElement>();
-
+}: ControlsProps) => {
   const { chartTypes, chartTimeframes } = useChartConfig();
 
   return (
     <Box display="flex" justifyContent="space-between" mb={3}>
-      <Button
-        color="secondary"
-        endIcon={<CaretDown />}
-        onClick={(e) => setChartTypeSelectAnchorEl(e.currentTarget)}
+      <Select
+        value={chartType}
+        IconComponent={CaretDown}
         size="small"
-      >
-        {chartTypes[chartType]?.label}
-      </Button>
-      <Menu
-        anchorEl={chartTypeSelectAnchorEl}
-        open={!!chartTypeSelectAnchorEl}
-        onClose={() => setChartTypeSelectAnchorEl(undefined)}
+        variant="filled"
+        disableUnderline
       >
         {Object.values(chartTypes).map((c) => (
           <MenuItem
@@ -46,13 +34,12 @@ const Controls: React.FC<ControlsProps> = ({
             sx={{ px: 2 }}
             onClick={() => {
               setChartType(c.id);
-              setChartTypeSelectAnchorEl(undefined);
             }}
           >
             {c.label}
           </MenuItem>
         ))}
-      </Menu>
+      </Select>
       <ButtonGroup color="secondary" size="small">
         {Object.values(chartTimeframes).map((c) => (
           <Button
@@ -67,5 +54,3 @@ const Controls: React.FC<ControlsProps> = ({
     </Box>
   );
 };
-
-export default Controls;

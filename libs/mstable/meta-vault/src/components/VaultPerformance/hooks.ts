@@ -5,7 +5,7 @@ import { useMetavault } from '../../state';
 
 export const useChartConfig = () => {
   const intl = useIntl();
-  const { assetToken } = useMetavault();
+  const mv = useMetavault();
 
   const chartTypes = {
     APY: {
@@ -18,11 +18,8 @@ export const useChartConfig = () => {
       id: 'TVL',
       label: intl.formatMessage({ defaultMessage: 'TVL' }),
       getValue: (v) =>
-        new BigDecimal(v.totalAssets, assetToken?.decimals).simple,
-      getLabel: (v) =>
-        Intl.NumberFormat(undefined, {
-          notation: 'compact',
-        }).format(v),
+        new BigDecimal(v.totalAssets, mv?.assetToken?.decimals).simple,
+      getLabel: (v) => intl.formatNumber(v, { notation: 'compact' }),
     },
   };
 
