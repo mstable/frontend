@@ -22,7 +22,9 @@ query metavault($id: ID!, $days: Int = 7) {
     apy
     DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
       apy
+      totalAssets
       totalSupply
+      timestamp
     }
   }
 }

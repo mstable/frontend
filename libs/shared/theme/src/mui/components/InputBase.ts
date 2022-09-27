@@ -35,6 +35,9 @@ export const getInputBase = (base: Theme): ThemeOptions => ({
             paddingLeft: base.spacing(2),
             paddingRight: `${base.spacing(5)} !important`,
           },
+          '&:has(.MuiSelect-select)': {
+            backgroundColor: 'transparent !important',
+          },
 
           '&.MuiInputBase-adornedStart': {
             '.MuiOutlinedInput-input:not(.MuiSelect-select):not(.MuiAutocomplete-input)':

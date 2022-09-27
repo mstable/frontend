@@ -35,7 +35,7 @@ export type MetavaultQueryVariables = Types.Exact<{
 }>;
 
 
-export type MetavaultQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', totalSupply: any, apy: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, totalSupply: any }> } | null };
+export type MetavaultQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', totalSupply: any, apy: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, totalAssets: any, totalSupply: any, timestamp: any }> } | null };
 
 
 export const UserVaultBalanceDocument = `
@@ -78,7 +78,9 @@ export const MetavaultDocument = `
     apy
     DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
       apy
+      totalAssets
       totalSupply
+      timestamp
     }
   }
 }
