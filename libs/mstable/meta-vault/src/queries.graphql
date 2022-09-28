@@ -16,6 +16,24 @@ query userVaultBalance($owner: Bytes!, $vault: String!) {
     assetDeposited
   }
 }
+query userTxHistory($owner: Bytes!, $vault: String!) {
+  transactions(
+    where: { to: $owner, vault: $vault }
+    orderBy: timestamp
+    orderDirection: desc
+  ) {
+    vault {
+      id
+    }
+    timestamp
+    type
+    shareAmount
+    assetAmount
+    hash
+    to
+    from
+  }
+}
 query metavault($id: ID!, $days: Int = 7) {
   vault(id: $id) {
     totalSupply
