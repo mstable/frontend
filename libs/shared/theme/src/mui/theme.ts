@@ -23,6 +23,7 @@ import { getFormHelperText } from './components/FormHelperText';
 import { getFormLabel } from './components/FormLabel';
 import { getInputBase } from './components/InputBase';
 import { getInputLabel } from './components/InputLabel';
+import { getLink } from './components/Link';
 import { getMenu } from './components/Menu';
 import { getMenuItem } from './components/MenuItem';
 import { getOutlinedInput } from './components/OutlinedInput';
@@ -30,6 +31,7 @@ import { getPaper } from './components/Paper';
 import { getRadio } from './components/Radio';
 import { getSelect } from './components/Select';
 import { getTab } from './components/Tab';
+import { getTableCell } from './components/TableCell';
 import { getTextField } from './components/TextField';
 import { getToggleButton } from './components/ToggleButton';
 import { getToggleButtonGroup } from './components/ToggleButtonGroup';
@@ -77,6 +79,7 @@ export const getTheme = (mode: PaletteMode) => {
     getFormLabel(base),
     getInputBase(base),
     getInputLabel(base),
+    getLink(base),
     getMenu(base),
     getMenuItem(base),
     getMixinsOptions(base),
@@ -85,6 +88,7 @@ export const getTheme = (mode: PaletteMode) => {
     getRadio(base),
     getSelect(base),
     getTab(base),
+    getTableCell(base),
     getTextField(base),
     getToggleButton(base),
     getToggleButtonGroup(base),

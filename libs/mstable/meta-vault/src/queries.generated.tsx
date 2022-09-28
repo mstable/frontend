@@ -29,6 +29,14 @@ export type UserVaultBalanceQueryVariables = Types.Exact<{
 
 export type UserVaultBalanceQuery = { __typename?: 'Query', vaultBalances: Array<{ __typename?: 'VaultBalance', owner: any, timestamp: any, shareBalance: any, assetBalance: any, assetDeposited: any, vault: { __typename?: 'Vault', id: string, asset: { __typename?: 'Token', id: string, name: string, symbol: string, decimals: number } } }> };
 
+export type UserTxHistoryQueryVariables = Types.Exact<{
+  owner: Types.Scalars['Bytes'];
+  vault: Types.Scalars['String'];
+}>;
+
+
+export type UserTxHistoryQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'Transaction', timestamp: any, type: Types.TransactionType, shareAmount: any, assetAmount: any, hash: any, to: any, from: any, vault: { __typename?: 'Vault', id: string } }> };
+
 export type MetavaultQueryVariables = Types.Exact<{
   id: Types.Scalars['ID'];
   days?: Types.InputMaybe<Types.Scalars['Int']>;
@@ -69,6 +77,39 @@ export const useUserVaultBalanceQuery = <
     useQuery<UserVaultBalanceQuery, TError, TData>(
       ['userVaultBalance', variables],
       fetcher<UserVaultBalanceQuery, UserVaultBalanceQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, UserVaultBalanceDocument, variables),
+      options
+    );
+export const UserTxHistoryDocument = `
+    query userTxHistory($owner: Bytes!, $vault: String!) {
+  transactions(
+    where: {to: $owner, vault: $vault}
+    orderBy: timestamp
+    orderDirection: desc
+  ) {
+    vault {
+      id
+    }
+    timestamp
+    type
+    shareAmount
+    assetAmount
+    hash
+    to
+    from
+  }
+}
+    `;
+export const useUserTxHistoryQuery = <
+      TData = UserTxHistoryQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables: UserTxHistoryQueryVariables,
+      options?: UseQueryOptions<UserTxHistoryQuery, TError, TData>
+    ) =>
+    useQuery<UserTxHistoryQuery, TError, TData>(
+      ['userTxHistory', variables],
+      fetcher<UserTxHistoryQuery, UserTxHistoryQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, UserTxHistoryDocument, variables),
       options
     );
 export const MetavaultDocument = `
