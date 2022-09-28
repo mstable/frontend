@@ -2,7 +2,7 @@
 import { useMemo, useState } from 'react';
 
 import { useDataSource } from '@frontend/shared-data-access';
-import { useShowDialog } from '@frontend/shared-modals';
+import { Dialog } from '@frontend/shared-ui';
 import {
   alpha,
   Button,
@@ -33,7 +33,6 @@ import { useMetavault } from '../../state';
 import { Controls } from './components/Controls';
 import { useChartConfig } from './hooks';
 
-import type { DialogOptions } from '@frontend/shared-modals';
 import type { ChartData, ChartOptions, ScriptableContext } from 'chart.js';
 
 ChartJS.register(
@@ -61,7 +60,7 @@ const getBackgroundColor =
 export const VaultPerformance = () => {
   const intl = useIntl();
   const theme = useTheme();
-  const showDialog = useShowDialog();
+  const [expand, setExpand] = useState(false);
   const { chartTypes, chartTimeframes } = useChartConfig();
   const [chartType, setChartType] = useState('APY');
   const [chartTimeframe, setChartTimeframe] = useState('1W');
@@ -139,35 +138,13 @@ export const VaultPerformance = () => {
       };
     }, [data, theme, chartTypes, chartType]);
 
-  const VaultPerformanceDialog: DialogOptions = {
-    maxWidth: 'lg',
-    fullWidth: true,
-    title: intl.formatMessage({ defaultMessage: 'Vault Performance' }),
-    content: () => (
-      <>
-        <Controls
-          chartType={chartType}
-          setChartType={setChartType}
-          chartTimeframe={chartTimeframe}
-          setChartTimeframe={setChartTimeframe}
-        />
-        <Line key="chart" options={chartData.options} data={chartData.data} />
-      </>
-    ),
-    actions: (onClose) => (
-      <Button color="secondary" onClick={onClose}>
-        {intl.formatMessage({ defaultMessage: 'Close' })}
-      </Button>
-    ),
-  };
-
   return (
     <Card sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}>
       <CardHeader
         title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
         action={
           <Button
-            onClick={() => showDialog(VaultPerformanceDialog)}
+            onClick={() => setExpand(true)}
             color="secondary"
             startIcon={<FrameCorners />}
             size="small"
@@ -185,6 +162,35 @@ export const VaultPerformance = () => {
         />
         <Line key="chart" options={chartData.options} data={chartData.data} />
       </CardContent>
+      <Dialog
+        maxWidth="lg"
+        fullWidth
+        open={expand}
+        onClose={() => {
+          setExpand(false);
+        }}
+        title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
+        content={
+          <>
+            <Controls
+              chartType={chartType}
+              setChartType={setChartType}
+              chartTimeframe={chartTimeframe}
+              setChartTimeframe={setChartTimeframe}
+            />
+            <Line
+              key="chart"
+              options={chartData.options}
+              data={chartData.data}
+            />
+          </>
+        }
+        actions={(onClose) => (
+          <Button color="secondary" onClick={onClose}>
+            {intl.formatMessage({ defaultMessage: 'Close' })}
+          </Button>
+        )}
+      />
     </Card>
   );
 };
