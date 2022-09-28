@@ -1,5 +1,5 @@
 import { AddressLabel, TokenIcon } from '@frontend/shared-ui';
-import { Grid, Stack, Typography } from '@mui/material';
+import { Box, Grid, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import { useMetavault } from '../../../state';
@@ -13,40 +13,35 @@ export const Assets = (props: StackProps) => {
   } = useMetavault();
 
   return (
-    <Stack {...props} direction="column" spacing={1}>
+    <Stack {...props} direction="column">
       <Typography variant="body2" sx={{ color: 'text.secondary', pb: 2 }}>
         {intl.formatMessage({
           defaultMessage:
             'The following assets are used in this strategy and therefore are exposed (partially) to their risk:',
         })}
       </Typography>
-      <Grid container rowGap={2} columnGap={2}>
-        {assets.map(({ address, name, symbol }) => (
-          <Grid
-            item
-            key={`${address}-${name}`}
-            xs={6}
-            sm={4}
-            md={3}
-            zeroMinWidth
-          >
-            <Stack
-              direction="column"
-              sx={{
-                borderRadius: 1,
-                border: (theme) => `1px solid ${theme.palette.divider}`,
-                padding: 2,
-              }}
-            >
-              <TokenIcon symbol={symbol} sx={{ mb: 2 }} />
-              <Typography variant="h5" gutterBottom noWrap>
-                {symbol}
-              </Typography>
-              <AddressLabel small address={address} hideCopyToClipboard />
-            </Stack>
-          </Grid>
-        ))}
-      </Grid>
+      <Box>
+        <Grid container spacing={2}>
+          {assets.map(({ address, name, symbol }) => (
+            <Grid item key={`${address}-${name}`} xs={6} zeroMinWidth>
+              <Stack
+                direction="column"
+                sx={{
+                  borderRadius: 1,
+                  border: (theme) => `1px solid ${theme.palette.divider}`,
+                  padding: 2,
+                }}
+              >
+                <TokenIcon symbol={symbol} sx={{ mb: 2 }} />
+                <Typography variant="h5" gutterBottom noWrap>
+                  {symbol}
+                </Typography>
+                <AddressLabel small address={address} hideCopyToClipboard />
+              </Stack>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </Stack>
   );
 };
