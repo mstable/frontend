@@ -1,5 +1,4 @@
 import { Box, Button, ButtonGroup, MenuItem, Select } from '@mui/material';
-import { CaretDown } from 'phosphor-react';
 
 import { useChartConfig } from '../hooks';
 
@@ -20,13 +19,7 @@ export const Controls = ({
 
   return (
     <Box display="flex" justifyContent="space-between" mb={3}>
-      <Select
-        value={chartType}
-        IconComponent={CaretDown}
-        size="small"
-        variant="filled"
-        disableUnderline
-      >
+      <Select value={chartType}>
         {Object.values(chartTypes).map((c) => (
           <MenuItem
             key={c.id}

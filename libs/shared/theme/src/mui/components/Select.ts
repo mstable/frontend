@@ -1,9 +1,15 @@
+import { CaretDown } from 'phosphor-react';
+
 import type { Theme, ThemeOptions } from '@mui/material';
 
 export const getSelect = (base: Theme): ThemeOptions => ({
   components: {
     MuiSelect: {
       defaultProps: {
+        disableUnderline: true,
+        IconComponent: CaretDown,
+        size: 'small',
+        variant: 'filled',
         MenuProps: {
           anchorOrigin: {
             vertical: 'bottom',

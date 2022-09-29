@@ -6,7 +6,7 @@ export const getDialogTitle = (base: Theme): ThemeOptions => ({
       styleOverrides: {
         root: {
           padding: base.spacing(4, 4, 2),
-          ...base.typography.h3,
+          ...base.typography.h5,
           textTransform: 'none',
         },
       },
