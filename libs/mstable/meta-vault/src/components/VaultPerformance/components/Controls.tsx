@@ -1,25 +1,29 @@
 import { Box, Button, ButtonGroup, MenuItem, Select } from '@mui/material';
+import { useNavigate, useSearch } from '@tanstack/react-location';
+import produce from 'immer';
 import { CaretDown } from 'phosphor-react';
 
 import { useChartConfig } from '../hooks';
 
-export interface ControlsProps {
-  chartType: string;
-  setChartType: (c: string) => void;
-  chartTimeframe: string;
-  setChartTimeframe: (c: string) => void;
-}
+import type { BoxProps } from '@mui/material';
 
-export const Controls = ({
-  chartType,
-  setChartType,
-  chartTimeframe,
-  setChartTimeframe,
-}: ControlsProps) => {
-  const { chartTypes, chartTimeframes } = useChartConfig();
+import type { MvGenerics } from '../../../types';
+
+export const Controls = (props: BoxProps) => {
+  const {
+    chartTypes,
+    chartTimeframes,
+    defaultChartTimeframe,
+    defaultChartType,
+  } = useChartConfig();
+  const {
+    chartType = defaultChartType,
+    chartTimeframe = defaultChartTimeframe,
+  } = useSearch<MvGenerics>();
+  const navigate = useNavigate<MvGenerics>();
 
   return (
-    <Box display="flex" justifyContent="space-between" mb={3}>
+    <Box {...props} display="flex" justifyContent="space-between" mb={3}>
       <Select
         value={chartType}
         IconComponent={CaretDown}
@@ -33,7 +37,12 @@ export const Controls = ({
             value={c.id}
             sx={{ px: 2 }}
             onClick={() => {
-              setChartType(c.id);
+              navigate({
+                replace: true,
+                search: produce((draft) => {
+                  draft.chartType = c.id;
+                }),
+              });
             }}
           >
             {c.label}
@@ -44,7 +53,14 @@ export const Controls = ({
         {Object.values(chartTimeframes).map((c) => (
           <Button
             key={c.id}
-            onClick={() => setChartTimeframe(c.id)}
+            onClick={() => {
+              navigate({
+                replace: true,
+                search: produce((draft) => {
+                  draft.chartTimeframe = c.id;
+                }),
+              });
+            }}
             className={c.id === chartTimeframe ? 'Mui-selected' : undefined}
           >
             {c.label}
