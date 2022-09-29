@@ -17,6 +17,12 @@
       "value": "Accrued Interest"
     }
   ],
+  "/54G9d": [
+    {
+      "type": 0,
+      "value": "Approving Token"
+    }
+  ],
   "/LEAtw": [
     {
       "type": 0,
@@ -47,6 +53,12 @@
       "value": "My Position"
     }
   ],
+  "0oLj/t": [
+    {
+      "type": 0,
+      "value": "Expand"
+    }
+  ],
   "1XVJUl": [
     {
       "type": 0,
@@ -55,6 +67,18 @@
     {
       "type": 1,
       "value": "defaultChain"
+    }
+  ],
+  "1uz/I3": [
+    {
+      "type": 0,
+      "value": "1M"
+    }
+  ],
+  "20X0BC": [
+    {
+      "type": 0,
+      "value": "Transaction Cancelled"
     }
   ],
   "2JVe1j": [
@@ -117,6 +141,12 @@
       "value": "Protocols Involved"
     }
   ],
+  "6bJGds": [
+    {
+      "type": 0,
+      "value": "1W"
+    }
+  ],
   "7CAm2s": [
     {
       "type": 0,
@@ -139,6 +169,12 @@
       "value": "Protocols that are used by this vault."
     }
   ],
+  "8lLHeh": [
+    {
+      "type": 0,
+      "value": "1Y"
+    }
+  ],
   "8ywLSf": [
     {
       "type": 0,
@@ -157,6 +193,18 @@
       "value": "Strategy & Risks"
     }
   ],
+  "B4cMY/": [
+    {
+      "type": 0,
+      "value": "Super good looking"
+    }
+  ],
+  "Bj2fLF": [
+    {
+      "type": 0,
+      "value": "Hot"
+    }
+  ],
   "BwwISd": [
     {
       "type": 0,
@@ -167,12 +215,6 @@
     {
       "type": 0,
       "value": "Yield Calculator"
-    }
-  ],
-  "CjmGfs": [
-    {
-      "type": 0,
-      "value": "View your transaction on etherscan"
     }
   ],
   "D/hLNw": [
@@ -241,12 +283,6 @@
       "value": "Include Gas Fees"
     }
   ],
-  "LjNvmm": [
-    {
-      "type": 0,
-      "value": "Deposited"
-    }
-  ],
   "MJ2jZQ": [
     {
       "type": 0,
@@ -275,12 +311,6 @@
     {
       "type": 0,
       "value": "Mint"
-    }
-  ],
-  "P6EE/a": [
-    {
-      "type": 0,
-      "value": "Tokens"
     }
   ],
   "PXAur5": [
@@ -315,16 +345,20 @@
       "value": "."
     }
   ],
-  "RBK8Rq": [
-    {
-      "type": 0,
-      "value": "Deposit completed"
-    }
-  ],
   "SKB/G9": [
     {
       "type": 0,
       "value": "TVL"
+    }
+  ],
+  "T3hbuQ": [
+    {
+      "type": 1,
+      "value": "val"
+    },
+    {
+      "type": 0,
+      "value": " Shares"
     }
   ],
   "THS5K4": [
@@ -343,10 +377,14 @@
       "value": "Position Value"
     }
   ],
-  "VOo/kE": [
+  "TVrR/z": [
+    {
+      "type": 1,
+      "value": "roi"
+    },
     {
       "type": 0,
-      "value": "Token approved"
+      "value": "% ROI"
     }
   ],
   "VlABxn": [
@@ -359,6 +397,16 @@
     {
       "type": 0,
       "value": "Github"
+    }
+  ],
+  "W87PYU": [
+    {
+      "type": 0,
+      "value": "View on "
+    },
+    {
+      "type": 1,
+      "value": "name"
     }
   ],
   "WCaf5C": [
@@ -447,10 +495,22 @@
       "value": "Please confirm to proceed"
     }
   ],
+  "djJp6c": [
+    {
+      "type": 0,
+      "value": "History"
+    }
+  ],
   "f4vYF8": [
     {
       "type": 0,
       "value": "The Strategy uses Convex to stake liquidity tokens from Curve to earn additional rewards. The strategy is exposed to the risk of the Convex smart contracts."
+    }
+  ],
+  "fDjDFf": [
+    {
+      "type": 0,
+      "value": "This Strategy is super cool, I would even dare to say, HOT. Stay tune for more awesomeness!"
     }
   ],
   "fJjSsb": [
@@ -487,38 +547,30 @@
       "value": "Swap to USDC"
     }
   ],
-  "hincAk": [
+  "iDM1KQ": [
+    {
+      "type": 1,
+      "value": "operation"
+    },
     {
       "type": 0,
-      "value": "Uniswap"
-    }
-  ],
-  "i8dYu2": [
-    {
-      "type": 0,
-      "value": "GWEI"
-    }
-  ],
-  "kZQLFm": [
-    {
-      "type": 0,
-      "value": "1 "
+      "value": "ing "
     },
     {
       "type": 1,
-      "value": "asset"
-    },
+      "value": "currency"
+    }
+  ],
+  "il6pe+": [
     {
       "type": 0,
-      "value": " = "
-    },
-    {
-      "type": 1,
-      "value": "ratio"
-    },
+      "value": "Yeah only mStable baby!"
+    }
+  ],
+  "jHskc6": [
     {
       "type": 0,
-      "value": " Shares"
+      "value": "Txn hash"
     }
   ],
   "jsDfqU": [
@@ -587,6 +639,12 @@
       "value": "Medium"
     }
   ],
+  "p8bsw4": [
+    {
+      "type": 0,
+      "value": "Transaction Error"
+    }
+  ],
   "qZbedW": [
     {
       "type": 0,
@@ -605,16 +663,34 @@
       "value": "Current Gas"
     }
   ],
-  "sHlvMe": [
+  "rbrahO": [
     {
       "type": 0,
-      "value": "Total Supply"
+      "value": "Close"
     }
   ],
   "rfzzi6": [
     {
       "type": 0,
       "value": "Profit/Loss"
+    }
+  ],
+  "rgdwQX": [
+    {
+      "type": 0,
+      "value": "Transaction Confirmed"
+    }
+  ],
+  "riAanx": [
+    {
+      "type": 0,
+      "value": "Annual Percentage Yield"
+    }
+  ],
+  "sHlvMe": [
+    {
+      "type": 0,
+      "value": "Total Supply"
     }
   ],
   "sy+pv5": [
