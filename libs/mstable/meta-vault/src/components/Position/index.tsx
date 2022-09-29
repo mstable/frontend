@@ -59,6 +59,7 @@ export const Position = () => {
   const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
   const { mvBalance, assetsPerShare, assetToken, mvDeposited, metavault } =
     useMetavault();
+
   const mvBalanceInAsset = new BigDecimal(
     mvBalance?.exact.mul(assetsPerShare?.exact || constants.Zero) ||
       constants.Zero,
