@@ -6,17 +6,29 @@ import { useUpdate } from './state';
 
 import type { PaletteMode } from '@mui/material';
 
-export const useToggleThemeMode = () => {
+export const useSetThemeMode = () => {
   const update = useUpdate();
 
   return useCallback(
-    (mode?: PaletteMode) => {
+    (mode: PaletteMode) => {
       update(
         produce((draft) => {
-          draft.mode = mode ?? draft.mode === 'dark' ? 'light' : 'dark';
+          draft.mode = mode;
         }),
       );
     },
     [update],
   );
+};
+
+export const useToggleThemeMode = () => {
+  const update = useUpdate();
+
+  return useCallback(() => {
+    update(
+      produce((draft) => {
+        draft.mode = draft.mode === 'dark' ? 'light' : 'dark';
+      }),
+    );
+  }, [update]);
 };

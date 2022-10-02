@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react';
 
-import { useToggleThemeMode } from '@frontend/shared-theme';
 import { ClickAwayMenu, InfoTooltip } from '@frontend/shared-ui';
 import {
   Button,
@@ -9,13 +8,13 @@ import {
   Stack,
   Switch,
   Typography,
-  useTheme,
 } from '@mui/material';
 import { Gear } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 import { useNetwork } from 'wagmi';
 
-import { useSettings, useToggleSettings } from '../state';
+import { useToggleSettings } from '../hooks';
+import { useSettings } from '../state';
 
 import type { ButtonProps } from '@mui/material';
 
@@ -24,11 +23,7 @@ export const SettingsButton = (props: ButtonProps) => {
   const anchorEl = useRef(null);
   const { chain } = useNetwork();
   const intl = useIntl();
-  const {
-    palette: { mode },
-  } = useTheme();
-  const toggleThemeMode = useToggleThemeMode();
-  const { exactApproval } = useSettings();
+  const { exactApproval, dark } = useSettings();
   const toggleSettings = useToggleSettings();
 
   return (
@@ -62,8 +57,8 @@ export const SettingsButton = (props: ButtonProps) => {
             {intl.formatMessage({ defaultMessage: 'General Settings' })}
           </Typography>
           <FormControlLabel
-            value={mode === 'dark'}
-            control={<Switch checked={mode === 'dark'} />}
+            value={dark}
+            control={<Switch checked={dark} />}
             label={
               <Stack direction="row" spacing={1} flexGrow={1}>
                 <Typography variant="label2">
@@ -74,7 +69,7 @@ export const SettingsButton = (props: ButtonProps) => {
             labelPlacement="start"
             disableTypography
             onChange={() => {
-              toggleThemeMode();
+              toggleSettings('dark');
             }}
             sx={{ width: 1 }}
           />
