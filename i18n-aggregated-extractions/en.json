@@ -23,6 +23,9 @@
   "/+9/FO": {
     "defaultMessage": "Accrued Interest"
   },
+  "/54G9d": {
+    "defaultMessage": "Approving Token"
+  },
   "/LEAtw": {
     "defaultMessage": "Underlying Vaults that are used by this vault."
   },
@@ -31,6 +34,15 @@
   },
   "0NMLMN": {
     "defaultMessage": "My Position"
+  },
+  "0oLj/t": {
+    "defaultMessage": "Expand"
+  },
+  "1uz/I3": {
+    "defaultMessage": "1M"
+  },
+  "20X0BC": {
+    "defaultMessage": "Transaction Cancelled"
   },
   "3QSP9N": {
     "defaultMessage": "Visualize Strategy"
@@ -50,11 +62,17 @@
   "65ThHj": {
     "defaultMessage": "Protocols Involved"
   },
+  "6bJGds": {
+    "defaultMessage": "1W"
+  },
   "7d2ri8": {
     "defaultMessage": "{value} Shares"
   },
   "7jeKkk": {
     "defaultMessage": "Protocols that are used by this vault."
+  },
+  "8lLHeh": {
+    "defaultMessage": "1Y"
   },
   "9ALsvc": {
     "defaultMessage": "Approval Cost"
@@ -67,9 +85,6 @@
   },
   "CGcoFj": {
     "defaultMessage": "Yield Calculator"
-  },
-  "CjmGfs": {
-    "defaultMessage": "View your transaction on etherscan"
   },
   "FaoPNm": {
     "defaultMessage": "You Burn"
@@ -92,12 +107,6 @@
   "LETDMp": {
     "defaultMessage": "Include Gas Fees"
   },
-  "MEfsyo": {
-    "defaultMessage": "Increase allowance for this token"
-  },
-  "LjNvmm": {
-    "defaultMessage": "Deposited"
-  },
   "MJ2jZQ": {
     "defaultMessage": "Total"
   },
@@ -110,20 +119,17 @@
   "OwO+Nr": {
     "defaultMessage": "Mint"
   },
-  "P6EE/a": {
-    "defaultMessage": "Tokens"
-  },
   "PXAur5": {
     "defaultMessage": "Withdraw"
   },
   "Pk6qK4": {
     "defaultMessage": "Fees that are charged by this vault."
   },
-  "RBK8Rq": {
-    "defaultMessage": "Deposit completed"
-  },
   "SKB/G9": {
     "defaultMessage": "TVL"
+  },
+  "T3hbuQ": {
+    "defaultMessage": "{val} Shares"
   },
   "THS5K4": {
     "defaultMessage": "{fee}% of USDC"
@@ -131,8 +137,8 @@
   "TL3yAY": {
     "defaultMessage": "Position Value"
   },
-  "VOo/kE": {
-    "defaultMessage": "Token approved"
+  "TVrR/z": {
+    "defaultMessage": "{roi}% ROI"
   },
   "WCaf5C": {
     "defaultMessage": "Approve"
@@ -155,6 +161,9 @@
   "dIgBOz": {
     "defaultMessage": "Deposit"
   },
+  "djJp6c": {
+    "defaultMessage": "History"
+  },
   "fJjSsb": {
     "defaultMessage": "Performance Fee"
   },
@@ -167,14 +176,11 @@
   "heM61T": {
     "defaultMessage": "Swap to USDC"
   },
-  "hincAk": {
-    "defaultMessage": "Uniswap"
+  "iDM1KQ": {
+    "defaultMessage": "{operation}ing {currency}"
   },
-  "i8dYu2": {
-    "defaultMessage": "GWEI"
-  },
-  "kZQLFm": {
-    "defaultMessage": "1 {asset} = {ratio} Shares"
+  "jHskc6": {
+    "defaultMessage": "Txn hash"
   },
   "kaPKOB": {
     "defaultMessage": "Insufficient balance"
@@ -191,14 +197,26 @@
   "mrwfXX": {
     "defaultMessage": "Shares"
   },
+  "p8bsw4": {
+    "defaultMessage": "Transaction Error"
+  },
   "qZbedW": {
     "defaultMessage": "Fees"
   },
   "rFZhzG": {
     "defaultMessage": "Current Gas"
   },
+  "rbrahO": {
+    "defaultMessage": "Close"
+  },
   "rfzzi6": {
     "defaultMessage": "Profit/Loss"
+  },
+  "rgdwQX": {
+    "defaultMessage": "Transaction Confirmed"
+  },
+  "riAanx": {
+    "defaultMessage": "Annual Percentage Yield"
   },
   "sHlvMe": {
     "defaultMessage": "Total Supply"
@@ -239,6 +257,12 @@
   "7CAm2s": {
     "defaultMessage": "mStable is a protocol for yield aggregation and diversification."
   },
+  "B4cMY/": {
+    "defaultMessage": "Super good looking"
+  },
+  "Bj2fLF": {
+    "defaultMessage": "Hot"
+  },
   "D/hLNw": {
     "defaultMessage": "The Strategy uses Curves 3CRV Pools and Factory pools. The strategy is exposed to the risk of the Curve smart contracts."
   },
@@ -254,6 +278,12 @@
   "f4vYF8": {
     "defaultMessage": "The Strategy uses Convex to stake liquidity tokens from Curve to earn additional rewards. The strategy is exposed to the risk of the Convex smart contracts."
   },
+  "fDjDFf": {
+    "defaultMessage": "This Strategy is super cool, I would even dare to say, HOT. Stay tune for more awesomeness!"
+  },
+  "il6pe+": {
+    "defaultMessage": "Yeah only mStable baby!"
+  },
   "meocUp": {
     "defaultMessage": "Convex is a platform that boosts rewards for CRV stakers and liquidity providers alike, all in a simple and easy to use interface."
   },
@@ -265,6 +295,9 @@
   },
   "hY+w99": {
     "defaultMessage": "Error fetching prices"
+  },
+  "W87PYU": {
+    "defaultMessage": "View on {name}"
   },
   "balance": {
     "defaultMessage": "Balance"

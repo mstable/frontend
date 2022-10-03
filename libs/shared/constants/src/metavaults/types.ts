@@ -4,6 +4,8 @@ import type { Protocol } from '../protocols';
 import type { Token } from '../tokens';
 import type { Vault } from '../vaults';
 
+export type SupportedMetavault = 'usdc3crv' | 'test';
+
 export type Strategy = {
   protocol: Protocol;
   strategy: MessageDescriptor;

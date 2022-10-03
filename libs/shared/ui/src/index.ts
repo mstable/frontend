@@ -11,6 +11,7 @@ export * from './Menus';
 export * from './Modals';
 export * from './Notifications';
 export * from './ProtocolIcon';
+export * from './RouterLink';
 export * from './SeverityIcon';
 export * from './TokenIcon';
 export * from './Typography';
