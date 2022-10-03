@@ -1,2 +1,3 @@
 export * from './components/SettingsButton';
-export * from './state';
+export * from './hooks';
+export { SettingsProvider, useSettings } from './state';
