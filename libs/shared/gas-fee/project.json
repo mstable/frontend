@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/gas-fee/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/gas-fee",
+        "tsConfig": "libs/shared/gas-fee/tsconfig.lib.json",
+        "project": "libs/shared/gas-fee/package.json",
+        "entryFile": "libs/shared/gas-fee/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "rollup.config.js",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "libs/shared/gas-fee/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/gas-fee/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "i18n-extract": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          "yarn run formatjs extract 'libs/shared/gas-fee/**/*.{ts,tsx}' --out-file i18n-extractions/libs-shared-gas-fee.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+        ]
+      }
+    }
+  }
+}
