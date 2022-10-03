@@ -11,6 +11,7 @@ import {
   CardHeader,
   useTheme,
 } from '@mui/material';
+import { useSearch } from '@tanstack/react-location';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -34,6 +35,8 @@ import { Controls } from './components/Controls';
 import { useChartConfig } from './hooks';
 
 import type { ChartData, ChartOptions, ScriptableContext } from 'chart.js';
+
+import type { MvGenerics } from '../../types';
 
 ChartJS.register(
   CategoryScale,
@@ -61,9 +64,16 @@ export const VaultPerformance = () => {
   const intl = useIntl();
   const theme = useTheme();
   const [expand, setExpand] = useState(false);
-  const { chartTypes, chartTimeframes } = useChartConfig();
-  const [chartType, setChartType] = useState('APY');
-  const [chartTimeframe, setChartTimeframe] = useState('1W');
+  const {
+    chartTypes,
+    chartTimeframes,
+    defaultChartTimeframe,
+    defaultChartType,
+  } = useChartConfig();
+  const {
+    chartType = defaultChartType,
+    chartTimeframe = defaultChartTimeframe,
+  } = useSearch<MvGenerics>();
   const {
     metavault: { address },
   } = useMetavault();
@@ -136,7 +146,13 @@ export const VaultPerformance = () => {
           },
         },
       };
-    }, [data, theme, chartTypes, chartType]);
+    }, [
+      chartType,
+      chartTypes,
+      data?.vault?.DailyVaultStats,
+      theme.palette.info.light,
+      theme.palette.info.main,
+    ]);
 
   return (
     <Card sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}>
@@ -154,12 +170,7 @@ export const VaultPerformance = () => {
         }
       />
       <CardContent>
-        <Controls
-          chartType={chartType}
-          setChartType={setChartType}
-          chartTimeframe={chartTimeframe}
-          setChartTimeframe={setChartTimeframe}
-        />
+        <Controls />
         <Line key="chart" options={chartData.options} data={chartData.data} />
       </CardContent>
       <Dialog
@@ -172,12 +183,7 @@ export const VaultPerformance = () => {
         title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
         content={
           <>
-            <Controls
-              chartType={chartType}
-              setChartType={setChartType}
-              chartTimeframe={chartTimeframe}
-              setChartTimeframe={setChartTimeframe}
-            />
+            <Controls />
             <Line
               key="chart"
               options={chartData.options}

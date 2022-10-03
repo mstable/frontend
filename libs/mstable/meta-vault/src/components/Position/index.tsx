@@ -230,7 +230,7 @@ export const Position = () => {
                         {intl.formatNumber(
                           new BigDecimal(
                             tx.shareAmount ?? constants.Zero,
-                            mvToken.decimals,
+                            mvToken?.decimals,
                           ).simple,
                         )}{' '}
                         {intl.formatMessage({ defaultMessage: 'Shares' })}

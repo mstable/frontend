@@ -652,6 +652,8 @@ export type Transaction = {
   __typename?: 'Transaction';
   assetAmount: Scalars['BigInt'];
   from: Scalars['Bytes'];
+  gasLimit: Scalars['BigInt'];
+  gasPrice: Scalars['BigInt'];
   hash: Scalars['Bytes'];
   id: Scalars['ID'];
   shareAmount: Scalars['BigInt'];
@@ -684,6 +686,22 @@ export type Transaction_Filter = {
   from_not?: InputMaybe<Scalars['Bytes']>;
   from_not_contains?: InputMaybe<Scalars['Bytes']>;
   from_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  gasLimit?: InputMaybe<Scalars['BigInt']>;
+  gasLimit_gt?: InputMaybe<Scalars['BigInt']>;
+  gasLimit_gte?: InputMaybe<Scalars['BigInt']>;
+  gasLimit_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  gasLimit_lt?: InputMaybe<Scalars['BigInt']>;
+  gasLimit_lte?: InputMaybe<Scalars['BigInt']>;
+  gasLimit_not?: InputMaybe<Scalars['BigInt']>;
+  gasLimit_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  gasPrice?: InputMaybe<Scalars['BigInt']>;
+  gasPrice_gt?: InputMaybe<Scalars['BigInt']>;
+  gasPrice_gte?: InputMaybe<Scalars['BigInt']>;
+  gasPrice_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  gasPrice_lt?: InputMaybe<Scalars['BigInt']>;
+  gasPrice_lte?: InputMaybe<Scalars['BigInt']>;
+  gasPrice_not?: InputMaybe<Scalars['BigInt']>;
+  gasPrice_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   hash?: InputMaybe<Scalars['Bytes']>;
   hash_contains?: InputMaybe<Scalars['Bytes']>;
   hash_in?: InputMaybe<Array<Scalars['Bytes']>>;
@@ -750,6 +768,8 @@ export type Transaction_Filter = {
 export enum Transaction_OrderBy {
   AssetAmount = 'assetAmount',
   From = 'from',
+  GasLimit = 'gasLimit',
+  GasPrice = 'gasPrice',
   Hash = 'hash',
   Id = 'id',
   ShareAmount = 'shareAmount',
