@@ -351,6 +351,12 @@
       "value": "TVL"
     }
   ],
+  "SRo6uF": [
+    {
+      "type": 0,
+      "value": "Meta Vaults"
+    }
+  ],
   "T3hbuQ": [
     {
       "type": 1,
@@ -627,12 +633,6 @@
       "value": "Not Connected"
     }
   ],
-  "nvv26d": [
-    {
-      "type": 0,
-      "value": "Metavault"
-    }
-  ],
   "ovJ26C": [
     {
       "type": 0,
@@ -643,6 +643,12 @@
     {
       "type": 0,
       "value": "Transaction Error"
+    }
+  ],
+  "qEnyZU": [
+    {
+      "type": 0,
+      "value": "Meta Vault"
     }
   ],
   "qZbedW": [
