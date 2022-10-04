@@ -6,8 +6,12 @@ import { Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
 
+import {
+  useChangeOperation,
+  useOperations,
+  useSetAmount,
+} from '../../../hooks';
 import { useMetavault } from '../../../state';
-import { useChangeOperation, useOperations, useSetAmount } from '../hooks';
 
 import type { StackProps } from '@mui/material';
 

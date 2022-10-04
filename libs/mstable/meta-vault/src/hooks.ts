@@ -3,17 +3,17 @@ import { useCallback, useMemo } from 'react';
 import produce from 'immer';
 import { useIntl } from 'react-intl';
 
-import { useMetavault } from '../../state';
-import { useTrackedState, useUpdate } from './state';
+import { useTrackedOperationsState, useUpdateOperations } from './state';
+import { useMetavault } from './state';
 
 import type { BigDecimal } from '@frontend/shared-utils';
 
 import type { SupportedOperation } from './state';
 
-export const useOperations = () => useTrackedState();
+export const useOperations = () => useTrackedOperationsState();
 
 export const useSetAmount = () => {
-  const update = useUpdate();
+  const update = useUpdateOperations();
 
   return useCallback(
     (amount: BigDecimal) => {
@@ -28,7 +28,7 @@ export const useSetAmount = () => {
 };
 
 export const useReset = () => {
-  const update = useUpdate();
+  const update = useUpdateOperations();
 
   return useCallback(() => {
     update(
@@ -41,7 +41,7 @@ export const useReset = () => {
 };
 
 export const useChangeOperation = () => {
-  const update = useUpdate();
+  const update = useUpdateOperations();
   const { assetToken, mvToken, assetBalance, mvBalance } = useMetavault();
 
   return useCallback(
@@ -70,7 +70,7 @@ export const useChangeOperation = () => {
 };
 
 export const useChangeTab = () => {
-  const update = useUpdate();
+  const update = useUpdateOperations();
   const { assetToken, mvToken, assetBalance, mvBalance } = useMetavault();
 
   return useCallback(
@@ -91,7 +91,7 @@ export const useChangeTab = () => {
 
 export const useOperationLabel = () => {
   const intl = useIntl();
-  const { operation } = useTrackedState();
+  const { operation } = useTrackedOperationsState();
 
   return useMemo(
     () =>
@@ -106,7 +106,7 @@ export const useOperationLabel = () => {
 };
 
 export const useSetIsSubmitLoading = () => {
-  const update = useUpdate();
+  const update = useUpdateOperations();
 
   return useCallback(
     (val?: boolean) => {

@@ -20,9 +20,9 @@ import {
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
 
+import { useChangeOperation, useSetAmount } from '../../hooks';
 import { useMetavaultQuery } from '../../queries.generated';
 import { useMetavault } from '../../state';
-import { useChangeOperation, useSetAmount } from '../Operations/hooks';
 import { GasImpact } from './components/GasImpact';
 
 import type { GasPriceConfig } from '@frontend/shared-gas-fee';

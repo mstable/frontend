@@ -1,14 +1,13 @@
 import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
 import { useIntl } from 'react-intl';
 
+import { useChangeTab, useOperations } from '../../hooks';
 import { ApprovalButton } from './components/ApprovalButton';
 import { OperationsForm } from './components/OperationsForm';
 import { Recap } from './components/Recap';
 import { SubmitButton } from './components/SubmitButton';
-import { useChangeTab, useOperations } from './hooks';
-import { Provider } from './state';
 
-const OperationsWrapped = () => {
+export const Operations = () => {
   const intl = useIntl();
   const changeTab = useChangeTab();
   const { tab, needsApproval, isSubmitLoading } = useOperations();
@@ -55,9 +54,3 @@ const OperationsWrapped = () => {
     </Card>
   );
 };
-
-export const Operations = () => (
-  <Provider>
-    <OperationsWrapped />
-  </Provider>
-);

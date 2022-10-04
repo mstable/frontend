@@ -6,7 +6,7 @@ import { Stack } from '@mui/material';
 import { Outlet } from '@tanstack/react-location';
 import { chainId, useAccount, useNetwork } from 'wagmi';
 
-import { MetavaultProvider } from '../state';
+import { MetavaultProvider, OperationsProvider } from '../state';
 
 import type { Metavault } from '@frontend/shared-constants';
 
@@ -21,10 +21,12 @@ export const Main = () => {
 
   return (
     <MetavaultProvider key={metavault?.address} initialState={{ metavault }}>
-      <Stack direction="column" width={1} height={1}>
-        <Outlet />
-        <Footer sx={(theme) => theme.mixins.paddings.page} />
-      </Stack>
+      <OperationsProvider>
+        <Stack direction="column" width={1} height={1}>
+          <Outlet />
+          <Footer sx={(theme) => theme.mixins.paddings.page} />
+        </Stack>
+      </OperationsProvider>
     </MetavaultProvider>
   );
 };
