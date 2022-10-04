@@ -14,14 +14,7 @@ export const Vaults = (props: StackProps) => {
     <Stack {...props}>
       <Grid container spacing={2}>
         {vaults.map(({ address, name, token }) => (
-          <Grid
-            item
-            key={`${address}-${name}`}
-            xs={12}
-            sm={6}
-            md={4}
-            zeroMinWidth
-          >
+          <Grid item key={`${address}-${name}`} xs={12} sm={6} zeroMinWidth>
             <Stack
               direction="column"
               sx={{

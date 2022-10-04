@@ -71,6 +71,7 @@ export const ClickAwayMenu = ({
     <Popper
       transition
       placement="bottom-end"
+      disablePortal
       modifiers={[
         {
           name: 'flip',
@@ -102,7 +103,10 @@ export const ClickAwayMenu = ({
           <Paper
             elevation={1}
             {...PaperProps}
-            sx={{ padding: 2, ...PaperProps?.sx }}
+            sx={{
+              padding: 2,
+              ...PaperProps?.sx,
+            }}
           >
             <ClickAwayListener onClickAway={handleClose}>
               <MenuList

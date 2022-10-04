@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material';
 
+import { breakpointsOptions } from './breakpoints';
 import { getAlert } from './components/Alert';
 import { getAppBar } from './components/AppBar';
 import { getAvatar } from './components/Avatar';
@@ -50,6 +51,7 @@ export const getTheme = (mode: PaletteMode) => {
   const base = createTheme(
     paletteOptions,
     shapeOptions,
+    breakpointsOptions,
     getTypographyOptions(paletteOptions),
     getShadowsOptions(mode),
   );
