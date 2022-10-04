@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { useDataSource } from '@frontend/shared-data-access';
 import { useGasFee } from '@frontend/shared-gas-fee';
 import { usePrices } from '@frontend/shared-prices';
 import { BigDecimalInput, Dialog, TokenInput } from '@frontend/shared-ui';
+import { BigDecimal } from '@frontend/shared-utils';
 import {
   Box,
+  Button,
   Checkbox,
   Divider,
   FormControl,
@@ -17,10 +20,12 @@ import {
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
 
+import { useMetavaultQuery } from '../../queries.generated';
 import { useMetavault } from '../../state';
+import { useChangeOperation, useSetAmount } from '../Operations/hooks';
+import { GasImpact } from './components/GasImpact';
 
 import type { GasPriceConfig } from '@frontend/shared-gas-fee';
-import type { BigDecimal } from '@frontend/shared-utils';
 
 export const YieldCalculatorDialog = ({
   open,
@@ -30,6 +35,8 @@ export const YieldCalculatorDialog = ({
   onClose: () => void;
 }) => {
   const intl = useIntl();
+  const changeOperation = useChangeOperation();
+  const setOperationAmount = useSetAmount();
   const { assetToken, assetBalance, metavault } = useMetavault();
   const { isConnected } = useAccount();
   const [amount, setAmount] = useState<BigDecimal>();
@@ -40,6 +47,18 @@ export const YieldCalculatorDialog = ({
     useState<GasPriceConfig>('average');
   const feeData = useGasFee();
   const { price, currency } = usePrices();
+
+  const dataSource = useDataSource();
+  const { data } = useMetavaultQuery(
+    dataSource,
+    { id: metavault.address },
+    { enabled: !!metavault.address },
+  );
+  useEffect(() => {
+    if (data?.vault?.apy) {
+      setApy(new BigDecimal(data?.vault?.apy));
+    }
+  }, [data?.vault?.apy]);
 
   const depositGasFee =
     (price *
@@ -59,6 +78,19 @@ export const YieldCalculatorDialog = ({
       (((duration?.simple || 0) * durationUnit) / 365);
 
   const profitOrLoss = totalValue - (amount?.simple || 0);
+
+  const [isDepositGasFeeSelected, setIsDepositGasFeeSelected] = useState(false);
+  const [isWithdrawalGasFeeSelected, setIsWithdrawalGasFeeSelected] =
+    useState(false);
+
+  const totalGasFee =
+    (isDepositGasFeeSelected ? depositGasFee : 0) +
+    (isWithdrawalGasFeeSelected ? withdrawlGasFee : 0);
+
+  const daysTillProfitable =
+    (Math.log10((totalGasFee + (amount?.simple || 0)) / (amount?.simple || 0)) *
+      365) /
+    Math.log10(1 + (apy?.simple || 0) / 100);
 
   return (
     <Dialog
@@ -170,6 +202,8 @@ export const YieldCalculatorDialog = ({
               alignItems="center"
             >
               <FormControlLabel
+                checked={isDepositGasFeeSelected}
+                onChange={() => setIsDepositGasFeeSelected((i) => !i)}
                 control={<Checkbox size="small" />}
                 label={intl.formatMessage({ defaultMessage: 'Deposit Gas' })}
                 componentsProps={{
@@ -189,6 +223,8 @@ export const YieldCalculatorDialog = ({
               alignItems="center"
             >
               <FormControlLabel
+                checked={isWithdrawalGasFeeSelected}
+                onChange={() => setIsWithdrawalGasFeeSelected((i) => !i)}
                 control={<Checkbox size="small" />}
                 label={intl.formatMessage({ defaultMessage: 'Withdrawal Gas' })}
                 componentsProps={{
@@ -235,6 +271,50 @@ export const YieldCalculatorDialog = ({
               {intl.formatNumber(totalValue)} {assetToken?.symbol || ''}
             </Typography>
           </Box>
+          {/* TODO: calculate PnL in dollar value */}
+          <GasImpact
+            profitOrLoss={profitOrLoss}
+            gasFee={totalGasFee}
+            daysTillProfitable={daysTillProfitable}
+          />
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            mt={2}
+          >
+            <Typography variant="label2" color="text.secondary">
+              {intl.formatMessage({ defaultMessage: 'Net Value' })}
+            </Typography>
+            <Typography
+              color={(theme) =>
+                totalGasFee > profitOrLoss
+                  ? theme.palette.error.main
+                  : theme.palette.success.main
+              }
+              variant="value5"
+            >
+              {intl.formatNumber(totalValue - totalGasFee)}{' '}
+              {assetToken?.symbol || ''}
+            </Typography>
+          </Box>
+        </>
+      }
+      actions={
+        <>
+          <Button variant="text" onClick={onClose}>
+            {intl.formatMessage({ defaultMessage: 'Close' })}
+          </Button>
+          <Button
+            color="secondary"
+            onClick={() => {
+              changeOperation('deposit');
+              setOperationAmount(amount);
+              onClose();
+            }}
+          >
+            {intl.formatMessage({ defaultMessage: 'Make a Deposit' })}
+          </Button>
         </>
       }
     />
