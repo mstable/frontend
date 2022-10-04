@@ -14,8 +14,8 @@ import {
   useWaitForTransaction,
 } from 'wagmi';
 
-import { useOperations, useReset, useSetIsSubmitLoading } from '../../../hooks';
 import { useMetavault } from '../../../state';
+import { useOperations, useReset, useSetIsSubmitLoading } from '../hooks';
 
 import type { ButtonProps } from '@mui/material';
 
@@ -141,7 +141,12 @@ export const SubmitButton = () => {
 
   if (!walletAddress) {
     return (
-      <OpenAccountModalButton variant="contained" color="primary" fullWidth />
+      <OpenAccountModalButton
+        variant="contained"
+        color="primary"
+        fullWidth
+        {...buttonProps}
+      />
     );
   }
 

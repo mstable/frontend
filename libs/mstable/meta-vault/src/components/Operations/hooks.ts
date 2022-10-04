@@ -3,17 +3,17 @@ import { useCallback, useMemo } from 'react';
 import produce from 'immer';
 import { useIntl } from 'react-intl';
 
-import { useTrackedOperationsState, useUpdateOperations } from './state';
-import { useMetavault } from './state';
+import { useMetavault } from '../../state';
+import { useTrackedState, useUpdate } from './state';
 
 import type { BigDecimal } from '@frontend/shared-utils';
 
-import type { SupportedOperation } from './state';
+import type { SupportedOperation } from '../../types';
 
-export const useOperations = () => useTrackedOperationsState();
+export const useOperations = () => useTrackedState();
 
 export const useSetAmount = () => {
-  const update = useUpdateOperations();
+  const update = useUpdate();
 
   return useCallback(
     (amount: BigDecimal) => {
@@ -28,7 +28,7 @@ export const useSetAmount = () => {
 };
 
 export const useReset = () => {
-  const update = useUpdateOperations();
+  const update = useUpdate();
 
   return useCallback(() => {
     update(
@@ -41,7 +41,7 @@ export const useReset = () => {
 };
 
 export const useChangeOperation = () => {
-  const update = useUpdateOperations();
+  const update = useUpdate();
   const { assetToken, mvToken, assetBalance, mvBalance } = useMetavault();
 
   return useCallback(
@@ -50,6 +50,7 @@ export const useChangeOperation = () => {
         produce((state) => {
           state.operation = operation;
           state.amount = null;
+          state.tab = ['deposit', 'mint'].includes(operation) ? 0 : 1;
           state.token = {
             deposit: assetToken,
             mint: mvToken,
@@ -70,7 +71,7 @@ export const useChangeOperation = () => {
 };
 
 export const useChangeTab = () => {
-  const update = useUpdateOperations();
+  const update = useUpdate();
   const { assetToken, mvToken, assetBalance, mvBalance } = useMetavault();
 
   return useCallback(
@@ -91,7 +92,7 @@ export const useChangeTab = () => {
 
 export const useOperationLabel = () => {
   const intl = useIntl();
-  const { operation } = useTrackedOperationsState();
+  const { operation } = useTrackedState();
 
   return useMemo(
     () =>
@@ -106,7 +107,7 @@ export const useOperationLabel = () => {
 };
 
 export const useSetIsSubmitLoading = () => {
-  const update = useUpdateOperations();
+  const update = useUpdate();
 
   return useCallback(
     (val?: boolean) => {

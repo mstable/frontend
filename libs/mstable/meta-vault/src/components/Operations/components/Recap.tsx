@@ -16,8 +16,8 @@ import {
   usePrepareContractWrite,
 } from 'wagmi';
 
-import { useOperationLabel, useOperations } from '../../../hooks';
 import { useMetavault } from '../../../state';
+import { useOperationLabel, useOperations } from '../hooks';
 
 import type { BoxProps, StackProps } from '@mui/material';
 

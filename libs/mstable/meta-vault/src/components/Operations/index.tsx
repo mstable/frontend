@@ -1,16 +1,50 @@
-import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
-import { useIntl } from 'react-intl';
+import { useEffect } from 'react';
 
-import { useChangeTab, useOperations } from '../../hooks';
+import { BigDecimal } from '@frontend/shared-utils';
+import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
+import { useNavigate, useSearch } from '@tanstack/react-location';
+import produce from 'immer';
+import { useIntl } from 'react-intl';
+import { useAccount } from 'wagmi';
+
 import { ApprovalButton } from './components/ApprovalButton';
 import { OperationsForm } from './components/OperationsForm';
 import { Recap } from './components/Recap';
 import { SubmitButton } from './components/SubmitButton';
+import {
+  useChangeOperation,
+  useChangeTab,
+  useOperations,
+  useSetAmount,
+} from './hooks';
+import { Provider } from './state';
 
-export const Operations = () => {
+import type { MvGenerics } from '../../types';
+
+const OperationsWrapped = () => {
   const intl = useIntl();
+  const { isConnected } = useAccount();
+  const navigate = useNavigate<MvGenerics>();
+  const { input } = useSearch<MvGenerics>();
   const changeTab = useChangeTab();
-  const { tab, needsApproval, isSubmitLoading } = useOperations();
+  const setAmount = useSetAmount();
+  const changeOperation = useChangeOperation();
+  const { operation, tab, needsApproval, isSubmitLoading } = useOperations();
+
+  useEffect(() => {
+    if (input && isConnected) {
+      if (operation !== input.operation) {
+        changeOperation(input.operation);
+      }
+      setAmount(BigDecimal.fromSimple(input.amount));
+      navigate({
+        replace: true,
+        search: produce((draft) => {
+          delete draft.input;
+        }),
+      });
+    }
+  }, [changeOperation, input, isConnected, navigate, operation, setAmount]);
 
   return (
     <Card>
@@ -54,3 +88,9 @@ export const Operations = () => {
     </Card>
   );
 };
+
+export const Operations = () => (
+  <Provider>
+    <OperationsWrapped />
+  </Provider>
+);

@@ -14,8 +14,8 @@ import {
   useWaitForTransaction,
 } from 'wagmi';
 
-import { useOperations, useSetIsSubmitLoading } from '../../../hooks';
 import { useMetavault } from '../../../state';
+import { useOperations, useSetIsSubmitLoading } from '../hooks';
 
 import type { ButtonProps } from '@mui/material';
 
