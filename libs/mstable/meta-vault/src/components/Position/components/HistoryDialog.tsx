@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { TransactionType, useDataSource } from '@frontend/shared-data-access';
 import { MiddleTruncated, TokenIcon } from '@frontend/shared-ui';
 import { Dialog } from '@frontend/shared-ui';
@@ -20,8 +18,8 @@ import { ArrowSquareOut, DownloadSimple, UploadSimple } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 import { etherscanBlockExplorers, useAccount, useNetwork } from 'wagmi';
 
-import { useUserTxHistoryQuery } from '../../queries.generated';
-import { useMetavault } from '../../state';
+import { useUserTxHistoryQuery } from '../../../queries.generated';
+import { useMetavault } from '../../../state';
 
 export const HistoryDialog = ({
   open,
@@ -36,22 +34,16 @@ export const HistoryDialog = ({
   const { address } = useAccount();
   const { chain } = useNetwork();
   const dataSource = useDataSource();
-  const { data: txHistory, refetch: fetchTxHistory } = useUserTxHistoryQuery(
+  const { data: txHistory } = useUserTxHistoryQuery(
     dataSource,
     {
       owner: address,
       vault: metavault?.address,
     },
     {
-      enabled: false,
+      enabled: open,
     },
   );
-
-  useEffect(() => {
-    if (open) {
-      fetchTxHistory();
-    }
-  }, [open]);
 
   return (
     <Dialog

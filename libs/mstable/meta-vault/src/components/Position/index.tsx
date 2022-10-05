@@ -17,8 +17,8 @@ import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
 
 import { useMetavault } from '../../state';
-import { HistoryDialog } from '../HistoryDialog';
-import { YieldCalculatorDialog } from '../YieldCalculatorDialog';
+import { HistoryDialog } from './components/HistoryDialog';
+import { YieldCalculatorDialog } from './components/YieldCalculatorDialog';
 
 export const Position = () => {
   const intl = useIntl();

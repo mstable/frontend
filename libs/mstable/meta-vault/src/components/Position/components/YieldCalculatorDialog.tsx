@@ -5,6 +5,7 @@ import { useGasFee } from '@frontend/shared-gas-fee';
 import { usePrices } from '@frontend/shared-prices';
 import { BigDecimalInput, Dialog, TokenInput } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
+import { OpenAccountModalButton } from '@frontend/shared-wagmi';
 import {
   Box,
   Button,
@@ -17,15 +18,19 @@ import {
   Select,
   Typography,
 } from '@mui/material';
+import { useNavigate } from '@tanstack/react-location';
+import produce from 'immer';
+import { not } from 'ramda';
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
 
-import { useChangeOperation, useSetAmount } from '../../hooks';
-import { useMetavaultQuery } from '../../queries.generated';
-import { useMetavault } from '../../state';
-import { GasImpact } from './components/GasImpact';
+import { useMetavaultQuery } from '../../../queries.generated';
+import { useMetavault } from '../../../state';
+import { GasImpact } from './GasImpact';
 
 import type { GasPriceConfig } from '@frontend/shared-gas-fee';
+
+import type { MvGenerics } from '../../../types';
 
 export const YieldCalculatorDialog = ({
   open,
@@ -35,8 +40,7 @@ export const YieldCalculatorDialog = ({
   onClose: () => void;
 }) => {
   const intl = useIntl();
-  const changeOperation = useChangeOperation();
-  const setOperationAmount = useSetAmount();
+  const navigate = useNavigate<MvGenerics>();
   const { assetToken, assetBalance, metavault } = useMetavault();
   const { isConnected } = useAccount();
   const [amount, setAmount] = useState<BigDecimal>();
@@ -92,6 +96,19 @@ export const YieldCalculatorDialog = ({
       365) /
     Math.log10(1 + (apy?.simple || 0) / 100);
 
+  const handleDeposit = () => {
+    navigate({
+      replace: true,
+      search: produce((draft) => {
+        draft.input = {
+          amount: amount.simple,
+          operation: 'deposit',
+        };
+      }),
+    });
+    onClose();
+  };
+
   return (
     <Dialog
       maxWidth="sm"
@@ -116,9 +133,10 @@ export const YieldCalculatorDialog = ({
               onChange={setAmount}
               placeholder="0.00"
               isConnected={isConnected}
+              hideBottomRow={!isConnected}
             />
             <Divider sx={{ my: 2 }} />
-            <Box display="flex">
+            <Box display="flex" alignItems="center">
               <FormControl>
                 <InputLabel>
                   {intl.formatMessage({ defaultMessage: 'Projected APY (%)' })}
@@ -138,26 +156,25 @@ export const YieldCalculatorDialog = ({
                   placeholder="0"
                   value={duration}
                   onChange={setDuration}
-                  endAdornment={
-                    <Select
-                      value={durationUnit}
-                      onChange={(e) => {
-                        setDurationUnit(e.target.value as number);
-                      }}
-                    >
-                      <MenuItem value={365}>
-                        {intl.formatMessage({ defaultMessage: 'Years' })}
-                      </MenuItem>
-                      <MenuItem value={30}>
-                        {intl.formatMessage({ defaultMessage: 'Months' })}
-                      </MenuItem>
-                      <MenuItem value={1}>
-                        {intl.formatMessage({ defaultMessage: 'Days' })}
-                      </MenuItem>
-                    </Select>
-                  }
                 />
               </FormControl>
+              <Select
+                value={durationUnit}
+                onChange={(e) => {
+                  setDurationUnit(e.target.value as number);
+                }}
+                sx={{ mt: 2.5, minWidth: 100 }}
+              >
+                <MenuItem value={365}>
+                  {intl.formatMessage({ defaultMessage: 'Years' })}
+                </MenuItem>
+                <MenuItem value={30}>
+                  {intl.formatMessage({ defaultMessage: 'Months' })}
+                </MenuItem>
+                <MenuItem value={1}>
+                  {intl.formatMessage({ defaultMessage: 'Days' })}
+                </MenuItem>
+              </Select>
             </Box>
             <Divider sx={{ my: 2 }} />
             <Box
@@ -203,7 +220,7 @@ export const YieldCalculatorDialog = ({
             >
               <FormControlLabel
                 checked={isDepositGasFeeSelected}
-                onChange={() => setIsDepositGasFeeSelected((i) => !i)}
+                onChange={() => setIsDepositGasFeeSelected(not)}
                 control={<Checkbox size="small" />}
                 label={intl.formatMessage({ defaultMessage: 'Deposit Gas' })}
                 componentsProps={{
@@ -224,7 +241,7 @@ export const YieldCalculatorDialog = ({
             >
               <FormControlLabel
                 checked={isWithdrawalGasFeeSelected}
-                onChange={() => setIsWithdrawalGasFeeSelected((i) => !i)}
+                onChange={() => setIsWithdrawalGasFeeSelected(not)}
                 control={<Checkbox size="small" />}
                 label={intl.formatMessage({ defaultMessage: 'Withdrawal Gas' })}
                 componentsProps={{
@@ -305,16 +322,13 @@ export const YieldCalculatorDialog = ({
           <Button variant="text" onClick={onClose}>
             {intl.formatMessage({ defaultMessage: 'Close' })}
           </Button>
-          <Button
-            color="secondary"
-            onClick={() => {
-              changeOperation('deposit');
-              setOperationAmount(amount);
-              onClose();
-            }}
-          >
-            {intl.formatMessage({ defaultMessage: 'Make a Deposit' })}
-          </Button>
+          {isConnected ? (
+            <Button color="secondary" onClick={handleDeposit}>
+              {intl.formatMessage({ defaultMessage: 'Make a Deposit' })}
+            </Button>
+          ) : (
+            <OpenAccountModalButton variant="contained" color="primary" />
+          )}
         </>
       }
     />
