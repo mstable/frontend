@@ -5,7 +5,7 @@ import { axiosInstance } from '@frontend/shared-data-access';
 import { usePushNotification } from '@frontend/shared-notifications';
 import { useQuery } from '@tanstack/react-query';
 import produce from 'immer';
-import { path } from 'ramda';
+import { pathOr } from 'ramda';
 import { useIntl } from 'react-intl';
 import { createContainer } from 'react-tracked';
 import { chainId, useBlockNumber, useNetwork } from 'wagmi';
@@ -56,13 +56,21 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
       onSuccess: (data) => {
         setState(
           produce((draft) => {
-            draft.fast =
-              path(['data', 'result', 'FastGasPrice'], data) || draft.fast;
-            draft.average =
-              path(['data', 'result', 'ProposeGasPrice'], data) ||
-              draft.average;
-            draft.slow =
-              path(['data', 'result', 'SafeGasPrice'], data) || draft.slow;
+            draft.fast = pathOr(
+              draft.fast,
+              ['data', 'result', 'FastGasPrice'],
+              data,
+            );
+            draft.average = pathOr(
+              draft.average,
+              ['data', 'result', 'ProposeGasPrice'],
+              data,
+            );
+            draft.slow = pathOr(
+              draft.slow,
+              ['data', 'result', 'SafeGasPrice'],
+              data,
+            );
           }),
         );
       },
