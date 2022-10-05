@@ -3,7 +3,12 @@ import { useEffect, useState } from 'react';
 import { useDataSource } from '@frontend/shared-data-access';
 import { useGasFee } from '@frontend/shared-gas-fee';
 import { usePrices } from '@frontend/shared-prices';
-import { BigDecimalInput, Dialog, TokenInput } from '@frontend/shared-ui';
+import {
+  BigDecimalInput,
+  Dialog,
+  InfoTooltip,
+  TokenInput,
+} from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import { OpenAccountModalButton } from '@frontend/shared-wagmi';
 import {
@@ -45,7 +50,7 @@ export const YieldCalculatorDialog = ({
   const { isConnected } = useAccount();
   const [amount, setAmount] = useState<BigDecimal>();
   const [apy, setApy] = useState<BigDecimal>();
-  const [duration, setDuration] = useState<BigDecimal>();
+  const [duration, setDuration] = useState<BigDecimal>(BigDecimal.ONE);
   const [durationUnit, setDurationUnit] = useState(365);
   const [gasPriceConfig, setGasPriceConfig] =
     useState<GasPriceConfig>('average');
@@ -183,9 +188,23 @@ export const YieldCalculatorDialog = ({
               alignItems="center"
               mb={2}
             >
-              <Typography variant="label2" color="text.secondary">
-                {intl.formatMessage({ defaultMessage: 'Gas Fee Estimation' })}
-              </Typography>
+              <Box display="flex" alignItems="center">
+                <Typography variant="label2" color="text.secondary">
+                  {intl.formatMessage({ defaultMessage: 'Gas Fee Estimation' })}
+                </Typography>
+                <InfoTooltip
+                  sx={{ ml: 1 }}
+                  display="flex"
+                  weight="bold"
+                  label={intl.formatMessage({
+                    defaultMessage:
+                      'Gas fee estimation is based on the current gas price and average gas used',
+                  })}
+                  variant="exclamation"
+                  color="text.secondary"
+                  size={16}
+                />
+              </Box>
               <Select
                 value={gasPriceConfig}
                 onChange={(e) => {

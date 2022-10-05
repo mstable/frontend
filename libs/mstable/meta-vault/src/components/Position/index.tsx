@@ -85,6 +85,7 @@ export const Position = () => {
                 variant="body2"
                 value={mvBalanceInAsset}
                 suffix={assetToken?.symbol}
+                commas
               />
               <Typography variant="body2" color="text.secondary">
                 {intl.formatMessage(
