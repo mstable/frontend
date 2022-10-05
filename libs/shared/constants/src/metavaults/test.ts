@@ -39,8 +39,8 @@ const mainnet: Metavault = {
     performance: 0.15,
   },
   gases: {
-    deposit: 100000,
-    withdraw: 100000,
+    deposit: 533687,
+    withdraw: 1600942,
   },
 };
 
