@@ -69,6 +69,10 @@ const mainnet: Metavault = {
     liquidation: 0.07,
     performance: 0.05,
   },
+  gases: {
+    deposit: 100000,
+    withdraw: 100000,
+  },
 };
 
 const goerli: Metavault = {

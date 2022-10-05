@@ -8,7 +8,7 @@ import { useTrackedState, useUpdate } from './state';
 
 import type { BigDecimal } from '@frontend/shared-utils';
 
-import type { SupportedOperation } from './state';
+import type { SupportedOperation } from '../../types';
 
 export const useOperations = () => useTrackedState();
 
@@ -50,6 +50,7 @@ export const useChangeOperation = () => {
         produce((state) => {
           state.operation = operation;
           state.amount = null;
+          state.tab = ['deposit', 'mint'].includes(operation) ? 0 : 1;
           state.token = {
             deposit: assetToken,
             mint: mvToken,

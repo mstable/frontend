@@ -11,7 +11,7 @@ export const Explore = () => {
   return (
     <Stack direction="column" minHeight="80vh">
       <MstableBackground sx={(theme) => theme.mixins.paddings.jumbo}>
-        <Typography variant="h1">
+        <Typography variant="h1" py={11} textAlign="center">
           {intl.formatMessage({ defaultMessage: 'Meta Vaults' })}
         </Typography>
       </MstableBackground>

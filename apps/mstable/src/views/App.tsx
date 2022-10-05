@@ -1,6 +1,7 @@
 import { SettingsProvider } from '@frontend/mstable-settings';
 import { Topnav } from '@frontend/mstable-topnav';
 import { queryClient } from '@frontend/shared-data-access';
+import { GasFeeProvider } from '@frontend/shared-gas-fee';
 import { I18nProvider } from '@frontend/shared-i18n';
 import { ModalsProvider } from '@frontend/shared-modals';
 import { NotificationsProvider } from '@frontend/shared-notifications';
@@ -58,6 +59,7 @@ export const App = () =>
       ],
       [WagmiProvider],
       [PricesProvider],
+      [GasFeeProvider],
       [ModalsProvider],
       [SettingsProvider],
     ],

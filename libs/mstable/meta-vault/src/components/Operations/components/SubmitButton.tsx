@@ -141,7 +141,12 @@ export const SubmitButton = () => {
 
   if (!walletAddress) {
     return (
-      <OpenAccountModalButton variant="contained" color="primary" fullWidth />
+      <OpenAccountModalButton
+        variant="contained"
+        color="primary"
+        fullWidth
+        {...buttonProps}
+      />
     );
   }
 

@@ -23,4 +23,8 @@ export type Metavault = {
     liquidation: number;
     performance: number;
   };
+  gases: {
+    deposit: number;
+    withdraw: number;
+  };
 };

@@ -14,7 +14,7 @@ import type { FetchTokenResult } from '@wagmi/core';
 import type { BigNumber } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
 
-export type SupportedOperation = 'deposit' | 'mint' | 'withdraw' | 'redeem';
+import type { SupportedOperation } from '../../types';
 
 const DEBOUNCE_TIME = 500; // ms
 

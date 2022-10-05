@@ -1,7 +1,6 @@
 import { Box, Button, ButtonGroup, MenuItem, Select } from '@mui/material';
 import { useNavigate, useSearch } from '@tanstack/react-location';
 import produce from 'immer';
-import { CaretDown } from 'phosphor-react';
 
 import { useChartConfig } from '../hooks';
 
@@ -24,13 +23,7 @@ export const Controls = (props: BoxProps) => {
 
   return (
     <Box {...props} display="flex" justifyContent="space-between" mb={3}>
-      <Select
-        value={chartType}
-        IconComponent={CaretDown}
-        size="small"
-        variant="filled"
-        disableUnderline
-      >
+      <Select value={chartType}>
         {Object.values(chartTypes).map((c) => (
           <MenuItem
             key={c.id}
