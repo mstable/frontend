@@ -294,7 +294,7 @@ const GasFeesRecap = (props: StackProps) => {
         <Typography variant="value5">
           {intl.formatMessage(
             { defaultMessage: 'Avg - {value} GWEI' },
-            { value: new BigDecimal(feeData.gasPrice).format(3) },
+            { value: new BigDecimal(feeData?.gasPrice).format(3) },
           )}
         </Typography>
       </Stack>
