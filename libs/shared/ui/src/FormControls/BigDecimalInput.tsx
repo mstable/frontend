@@ -1,10 +1,10 @@
 import { forwardRef, useEffect, useState } from 'react';
 
 import { BigDecimal } from '@frontend/shared-utils';
-import { InputBase } from '@mui/material';
+import { Box, InputBase, Skeleton } from '@mui/material';
 import { constants } from 'ethers';
 
-import type { InputBaseProps } from '@mui/material';
+import type { BoxProps, InputBaseProps } from '@mui/material';
 import type { ChangeEvent } from 'react';
 
 export type BigDecimalInputProps = {
@@ -12,7 +12,9 @@ export type BigDecimalInputProps = {
   onChange?: (value: BigDecimal) => void;
   min?: BigDecimal;
   max?: BigDecimal;
-} & Omit<InputBaseProps, 'value' | 'onChange'>;
+  isLoading?: boolean;
+  InputProps?: Omit<InputBaseProps, 'value' | 'onChange'>;
+} & Omit<BoxProps, 'onChange' | 'error'>;
 
 const inRange = (val: string, min: BigDecimal, max: BigDecimal) => {
   const value = BigDecimal.maybeParse(val);
@@ -32,6 +34,8 @@ export const BigDecimalInput = forwardRef<
       onChange,
       min = BigDecimal.ZERO,
       max = new BigDecimal(constants.MaxUint256),
+      isLoading,
+      InputProps,
       ...rest
     },
     ref,
@@ -56,19 +60,25 @@ export const BigDecimalInput = forwardRef<
     };
 
     return (
-      <InputBase
-        {...rest}
-        inputRef={ref}
-        value={val}
-        onChange={handleChange}
-        inputMode="numeric"
-        componentsProps={{
-          input: {
-            pattern: '[0-9]*(.[0-9]*)?',
-          },
-        }}
-        sx={{ typography: 'value1' }}
-      />
+      <Box {...rest}>
+        {isLoading ? (
+          <Skeleton height={48} sx={{ pt: '4px', pb: '5px' }} />
+        ) : (
+          <InputBase
+            {...InputProps}
+            inputRef={ref}
+            value={val}
+            onChange={handleChange}
+            inputMode="numeric"
+            componentsProps={{
+              input: {
+                pattern: '[0-9]*(.[0-9]*)?',
+              },
+            }}
+            sx={{ typography: 'value1', ...InputProps?.sx }}
+          />
+        )}
+      </Box>
     );
   },
 );

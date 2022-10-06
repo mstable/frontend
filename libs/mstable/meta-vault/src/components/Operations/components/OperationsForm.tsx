@@ -94,8 +94,8 @@ export const OperationsForm = (props: StackProps) => {
   useEffect(() => {
     if (
       document.hasFocus() &&
-      (primary.current.contains(document.activeElement) ||
-        secondary.current.contains(document.activeElement))
+      (primary.current?.contains(document.activeElement) ||
+        secondary.current?.contains(document.activeElement))
     ) {
       setHasFocus(true);
     }
@@ -106,6 +106,7 @@ export const OperationsForm = (props: StackProps) => {
     if (newOp !== operation) {
       changeOperation(newOp);
     }
+    setHasFocus(true);
     setAmount(newValue);
   };
 
@@ -114,6 +115,7 @@ export const OperationsForm = (props: StackProps) => {
     if (newOp !== operation) {
       changeOperation(newOp);
     }
+    setHasFocus(true);
     setAmount(newValue);
   };
 
