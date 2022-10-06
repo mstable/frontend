@@ -1,6 +1,6 @@
 import { RouterLink } from '@frontend/shared-ui';
 import { OpenNetworkModalButton } from '@frontend/shared-wagmi';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useNetwork, useSwitchNetwork } from 'wagmi';
 
@@ -15,25 +15,23 @@ export const UnsupportedMvPage = ({ mvid }: UnsupportedMvPageProps) => {
 
   return (
     <Stack direction="column">
-      <Box sx={(theme) => theme.mixins.paddings.jumbo}>
-        <Typography variant="h1" py={4}>
-          {intl.formatMessage({ defaultMessage: 'Unsupported Meta Vault' })}
-        </Typography>
-        <Typography variant="h4" pb={4}>
-          {intl.formatMessage(
-            {
-              defaultMessage:
-                'This application does not support the Meta Vault {mvid}, pick one from our list.',
-            },
-            {
-              mvid,
-            },
-          )}
-        </Typography>
-        <Button component={RouterLink} to="/">
-          {intl.formatMessage({ defaultMessage: 'Home Page' })}
-        </Button>
-      </Box>
+      <Typography variant="h1" py={4}>
+        {intl.formatMessage({ defaultMessage: 'Unsupported Meta Vault' })}
+      </Typography>
+      <Typography variant="h4" pb={4}>
+        {intl.formatMessage(
+          {
+            defaultMessage:
+              'This application does not support the Meta Vault {mvid}, pick one from our list.',
+          },
+          {
+            mvid,
+          },
+        )}
+      </Typography>
+      <Button component={RouterLink} to="/">
+        {intl.formatMessage({ defaultMessage: 'Home Page' })}
+      </Button>
     </Stack>
   );
 };
@@ -45,41 +43,39 @@ export const WrongNetworkPage = () => {
 
   return (
     <Stack direction="column" flexGrow={1}>
-      <Box sx={(theme) => theme.mixins.paddings.jumbo}>
-        <Typography variant="h1" py={4}>
-          {intl.formatMessage({ defaultMessage: 'Unsupported Network' })}
-        </Typography>
-        <Typography variant="h4" pb={4}>
+      <Typography variant="h1" py={4}>
+        {intl.formatMessage({ defaultMessage: 'Unsupported Network' })}
+      </Typography>
+      <Typography variant="h4" pb={4}>
+        {intl.formatMessage(
+          {
+            defaultMessage:
+              'The selected network is not supported by this application, why not try {defaultChain}?',
+          },
+          {
+            defaultChain: chains[0].name,
+          },
+        )}
+      </Typography>
+      <Stack direction="row" spacing={2} my={3}>
+        <Button
+          onClick={() => {
+            if (switchNetwork) {
+              switchNetwork(chains[0].id);
+            }
+          }}
+        >
           {intl.formatMessage(
-            {
-              defaultMessage:
-                'The selected network is not supported by this application, why not try {defaultChain}?',
-            },
-            {
-              defaultChain: chains[0].name,
-            },
+            { defaultMessage: 'Switch to {defaultChain}' },
+            { defaultChain: chains[0].name },
           )}
-        </Typography>
-        <Stack direction="row" spacing={2} my={3}>
-          <Button
-            onClick={() => {
-              if (switchNetwork) {
-                switchNetwork(chains[0].id);
-              }
-            }}
-          >
-            {intl.formatMessage(
-              { defaultMessage: 'Switch to {defaultChain}' },
-              { defaultChain: chains[0].name },
-            )}
-          </Button>
-          <OpenNetworkModalButton color="primary">
-            {intl.formatMessage({
-              defaultMessage: 'Select from supported list',
-            })}
-          </OpenNetworkModalButton>
-        </Stack>
-      </Box>
+        </Button>
+        <OpenNetworkModalButton color="primary">
+          {intl.formatMessage({
+            defaultMessage: 'Select from supported list',
+          })}
+        </OpenNetworkModalButton>
+      </Stack>
     </Stack>
   );
 };
