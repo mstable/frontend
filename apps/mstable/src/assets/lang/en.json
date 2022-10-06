@@ -11,12 +11,6 @@
       "value": "Connect"
     }
   ],
-  "/+9/FO": [
-    {
-      "type": 0,
-      "value": "Accrued Interest"
-    }
-  ],
   "/54G9d": [
     {
       "type": 0,
@@ -53,6 +47,26 @@
       "value": "My Position"
     }
   ],
+  "0WJNP/": [
+    {
+      "type": 0,
+      "value": "Return"
+    }
+  ],
+  "0mHzVQ": [
+    {
+      "type": 0,
+      "value": "Fast - "
+    },
+    {
+      "type": 1,
+      "value": "value"
+    },
+    {
+      "type": 0,
+      "value": " GWEI"
+    }
+  ],
   "0oLj/t": [
     {
       "type": 0,
@@ -81,10 +95,30 @@
       "value": "Transaction Cancelled"
     }
   ],
+  "2HXpSy": [
+    {
+      "type": 0,
+      "value": "This application does not support the Meta Vault "
+    },
+    {
+      "type": 1,
+      "value": "mvid"
+    },
+    {
+      "type": 0,
+      "value": ", pick one from our list."
+    }
+  ],
   "2JVe1j": [
     {
       "type": 0,
       "value": "Market Neutral"
+    }
+  ],
+  "2M9vCZ": [
+    {
+      "type": 0,
+      "value": "Projected APY (%)"
     }
   ],
   "3QSP9N": [
@@ -181,6 +215,12 @@
       "value": "Twitter"
     }
   ],
+  "93OUn6": [
+    {
+      "type": 0,
+      "value": "Profitable position after"
+    }
+  ],
   "9ALsvc": [
     {
       "type": 0,
@@ -193,16 +233,48 @@
       "value": "Strategy & Risks"
     }
   ],
+  "9tWILK": [
+    {
+      "type": 0,
+      "value": "Unsupported Meta Vault"
+    }
+  ],
+  "AxDOiG": [
+    {
+      "type": 0,
+      "value": "Months"
+    }
+  ],
   "B4cMY/": [
     {
       "type": 0,
       "value": "Super good looking"
     }
   ],
+  "Bak2Yy": [
+    {
+      "type": 0,
+      "value": "Select from supported list"
+    }
+  ],
   "Bj2fLF": [
     {
       "type": 0,
       "value": "Hot"
+    }
+  ],
+  "BnptNt": [
+    {
+      "type": 0,
+      "value": "Slow - "
+    },
+    {
+      "type": 1,
+      "value": "value"
+    },
+    {
+      "type": 0,
+      "value": " GWEI"
     }
   ],
   "BwwISd": [
@@ -227,6 +299,20 @@
     {
       "type": 0,
       "value": "This Strategy uses USDC to deposit into the 3CRV-Pool on Curve. The 3CRV token is then deposited in various Curve meta pools and staked in Convex. The earned CVX and CRV tokens are periodically claimed, swapped, and compounded."
+    }
+  ],
+  "FQUm7o": [
+    {
+      "type": 0,
+      "value": "Avg - "
+    },
+    {
+      "type": 1,
+      "value": "value"
+    },
+    {
+      "type": 0,
+      "value": " GWEI"
     }
   ],
   "FaoPNm": [
@@ -265,6 +351,18 @@
       "value": "Approve the exact amount of the transaction"
     }
   ],
+  "IuFETn": [
+    {
+      "type": 0,
+      "value": "Duration"
+    }
+  ],
+  "Jr5tMR": [
+    {
+      "type": 0,
+      "value": "Years"
+    }
+  ],
   "KYgRAc": [
     {
       "type": 0,
@@ -277,22 +375,16 @@
       "value": "Assets that are used by this vault."
     }
   ],
-  "LETDMp": [
-    {
-      "type": 0,
-      "value": "Include Gas Fees"
-    }
-  ],
-  "MJ2jZQ": [
-    {
-      "type": 0,
-      "value": "Total"
-    }
-  ],
   "MLTKb6": [
     {
       "type": 0,
       "value": "APY"
+    }
+  ],
+  "MMRXim": [
+    {
+      "type": 0,
+      "value": "Make a Deposit"
     }
   ],
   "MPUuRK": [
@@ -301,10 +393,32 @@
       "value": "The Strategy uses Meta Vault and Vault contracts and combines and wraps the underlying strategies into one contract."
     }
   ],
+  "MgN8gK": [
+    {
+      "type": 1,
+      "value": "days"
+    },
+    {
+      "type": 0,
+      "value": " Days"
+    }
+  ],
+  "MoJx/h": [
+    {
+      "type": 0,
+      "value": "Total Value"
+    }
+  ],
   "MqZGhr": [
     {
       "type": 0,
       "value": "Vault Performance"
+    }
+  ],
+  "N+SKIs": [
+    {
+      "type": 0,
+      "value": "Net Value"
     }
   ],
   "OwO+Nr": [
@@ -453,6 +567,12 @@
       "value": " GWEI"
     }
   ],
+  "b+LlHJ": [
+    {
+      "type": 0,
+      "value": "Deposit Gas"
+    }
+  ],
   "balance": [
     {
       "type": 0,
@@ -465,6 +585,12 @@
       "value": "The following protocols are used in the strategies and are therefore exposed to their risk:"
     }
   ],
+  "byXXyV": [
+    {
+      "type": 0,
+      "value": "Enter Amount"
+    }
+  ],
   "cyasTx": [
     {
       "type": 0,
@@ -475,6 +601,18 @@
     {
       "type": 0,
       "value": "Assets"
+    }
+  ],
+  "d8EqQY": [
+    {
+      "type": 0,
+      "value": "Days"
+    }
+  ],
+  "dD8CJD": [
+    {
+      "type": 0,
+      "value": "Gas Fee Estimation"
     }
   ],
   "dIgBOz": [
@@ -505,6 +643,18 @@
     {
       "type": 0,
       "value": "History"
+    }
+  ],
+  "eO0C1d": [
+    {
+      "type": 0,
+      "value": "Gas Impact"
+    }
+  ],
+  "erCS/d": [
+    {
+      "type": 0,
+      "value": "Gas fee estimation is based on the current gas price and average gas used"
     }
   ],
   "f4vYF8": [
@@ -541,6 +691,12 @@
       "value": "Vault Contracts"
     }
   ],
+  "hRuz7F": [
+    {
+      "type": 0,
+      "value": "Withdrawal Gas"
+    }
+  ],
   "hY+w99": [
     {
       "type": 0,
@@ -571,6 +727,12 @@
     {
       "type": 0,
       "value": "Yeah only mStable baby!"
+    }
+  ],
+  "ivgXZf": [
+    {
+      "type": 0,
+      "value": "Error fetching gas fee"
     }
   ],
   "jHskc6": [
@@ -737,10 +899,30 @@
       "value": "Curve is an exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers, without an opportunity cost."
     }
   ],
+  "w4Oc4e": [
+    {
+      "type": 0,
+      "value": "The selected network is not supported by this application, why not try "
+    },
+    {
+      "type": 1,
+      "value": "defaultChain"
+    },
+    {
+      "type": 0,
+      "value": "?"
+    }
+  ],
   "wqlXwW": [
     {
       "type": 0,
       "value": "Wrong Network"
+    }
+  ],
+  "xHJnaY": [
+    {
+      "type": 0,
+      "value": "Home Page"
     }
   ],
   "yuiyES": [
