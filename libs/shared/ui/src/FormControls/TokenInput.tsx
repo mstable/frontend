@@ -19,6 +19,8 @@ import { BigDecimalInput } from './BigDecimalInput';
 import type { ButtonProps, StackProps, SxProps } from '@mui/material';
 import type { FetchTokenResult } from '@wagmi/core';
 
+import type { BigDecimalInputProps } from './BigDecimalInput';
+
 export type TokenInputProps = {
   label?: string;
   placeholder?: string;
@@ -35,6 +37,10 @@ export type TokenInputProps = {
   hideTokenBadge?: boolean;
   components?: {
     container?: StackProps;
+    input?: Omit<
+      BigDecimalInputProps,
+      'value' | 'min' | 'max' | 'onChange' | 'ref'
+    >;
   };
 };
 
@@ -185,6 +191,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
                   </Stack>
                 )
               }
+              {...components?.input}
             />
           )}
         </FormControl>
