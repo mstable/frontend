@@ -25,8 +25,7 @@ export const Topnav = () => {
           display: 'flex',
           alignItems: 'stretch',
           py: 1,
-          pl: { xs: 1.5, sm: 3, md: 3, lg: 14, xl: 28 },
-          pr: (theme) => theme.mixins.paddings.page.paddingX,
+          px: (theme) => theme.mixins.paddings.page.paddingX,
           borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
           backgroundColor: (theme) =>
             alpha(theme.palette.background.default, 0.5),
@@ -39,6 +38,7 @@ export const Topnav = () => {
           onClick={() => {
             navigate({ to: '/' });
           }}
+          sx={{ ml: -2 }}
         >
           {wide ? <MStable sx={{ minWidth: 120 }} /> : <MStableShort />}
         </Button>
