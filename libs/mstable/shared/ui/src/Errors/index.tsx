@@ -14,11 +14,11 @@ export const UnsupportedMvPage = ({ mvid }: UnsupportedMvPageProps) => {
   const intl = useIntl();
 
   return (
-    <Stack direction="column">
-      <Typography variant="h1" py={4}>
+    <Stack direction="column" py={18} alignItems="flex-start">
+      <Typography variant="h1" pb={4}>
         {intl.formatMessage({ defaultMessage: 'Unsupported Meta Vault' })}
       </Typography>
-      <Typography variant="h4" pb={4}>
+      <Typography variant="h4" pb={8}>
         {intl.formatMessage(
           {
             defaultMessage:
@@ -30,7 +30,7 @@ export const UnsupportedMvPage = ({ mvid }: UnsupportedMvPageProps) => {
         )}
       </Typography>
       <Button component={RouterLink} to="/">
-        {intl.formatMessage({ defaultMessage: 'Home Page' })}
+        {intl.formatMessage({ defaultMessage: 'Explore Meta Vaults' })}
       </Button>
     </Stack>
   );
@@ -42,11 +42,11 @@ export const WrongNetworkPage = () => {
   const { switchNetwork } = useSwitchNetwork();
 
   return (
-    <Stack direction="column" flexGrow={1}>
-      <Typography variant="h1" py={4}>
+    <Stack direction="column" py={18}>
+      <Typography variant="h1" pb={4}>
         {intl.formatMessage({ defaultMessage: 'Unsupported Network' })}
       </Typography>
-      <Typography variant="h4" pb={4}>
+      <Typography variant="h4" pb={8}>
         {intl.formatMessage(
           {
             defaultMessage:
@@ -57,7 +57,7 @@ export const WrongNetworkPage = () => {
           },
         )}
       </Typography>
-      <Stack direction="row" spacing={2} my={3}>
+      <Stack direction="row" spacing={2}>
         <Button
           onClick={() => {
             if (switchNetwork) {
