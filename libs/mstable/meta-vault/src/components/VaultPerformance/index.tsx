@@ -116,7 +116,7 @@ export const VaultPerformance = () => {
           responsive: true,
           datasets: {
             line: {
-              tension: 0.5,
+              tension: 0.2,
               pointRadius: 0,
             },
           },
