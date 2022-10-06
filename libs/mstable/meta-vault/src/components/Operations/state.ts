@@ -32,6 +32,20 @@ type OperationsState = {
   isError: boolean;
 };
 
+const initialState: OperationsState = {
+  amount: null,
+  token: null,
+  operation: 'deposit',
+  preview: null,
+  allowance: null,
+  balance: null,
+  tab: 0,
+  needsApproval: false,
+  isInputLoading: false,
+  isSubmitLoading: false,
+  isError: false,
+};
+
 export const { Provider, useUpdate, useTrackedState } = createContainer<
   OperationsState,
   Dispatch<SetStateAction<OperationsState>>,
@@ -47,19 +61,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     assetsPerShare,
     sharesPerAsset,
   } = useMetavault();
-  const [state, setState] = useState<OperationsState>({
-    amount: null,
-    token: assetToken,
-    operation: 'deposit',
-    preview: null,
-    allowance: null,
-    balance: null,
-    tab: 0,
-    needsApproval: false,
-    isInputLoading: false,
-    isSubmitLoading: false,
-    isError: false,
-  });
+  const [state, setState] = useState<OperationsState>(initialState);
 
   const { amount, operation, allowance, preview } = state;
 
@@ -100,6 +102,12 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
       );
     },
   });
+
+  useEffect(() => {
+    if (!isConnected) {
+      setState(initialState);
+    }
+  }, [isConnected]);
 
   useEffect(() => {
     setState(

@@ -49,7 +49,7 @@ export const App = () =>
         {
           containerProps: {
             sx: {
-              top: (theme: Theme) => theme.spacing(8),
+              top: (theme: Theme) => theme.spacing(10),
               right: (theme: Theme) => theme.spacing(2),
               left: undefined,
               bottom: undefined,

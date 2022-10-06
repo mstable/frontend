@@ -106,7 +106,6 @@ export const OperationsForm = (props: StackProps) => {
     if (newOp !== operation) {
       changeOperation(newOp);
     }
-    setHasFocus(true);
     setAmount(newValue);
   };
 
@@ -115,7 +114,6 @@ export const OperationsForm = (props: StackProps) => {
     if (newOp !== operation) {
       changeOperation(newOp);
     }
-    setHasFocus(true);
     setAmount(newValue);
   };
 
@@ -147,6 +145,7 @@ export const OperationsForm = (props: StackProps) => {
         placeholder="0.00"
         disabled={!isConnected || isSubmitLoading}
         isConnected={isConnected}
+        hideTokenBadge={!isConnected}
         error={isError}
         ref={primary}
         components={{
