@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { Check, ContentCopy, Error, OpenInNew } from '@mui/icons-material';
-import { Divider, IconButton, Stack } from '@mui/material';
+import { Divider, IconButton, Link, Stack } from '@mui/material';
 
 import { MiddleTruncated } from '../Typography';
+
+import type { StackProps } from '@mui/material';
 
 const ETHERSCAN_URL = 'https://etherscan.io/address/';
 
@@ -12,13 +14,16 @@ export type AddressLabelProps = {
   hideCopyToClipboard?: boolean;
   hideEtherscan?: boolean;
   small?: boolean;
-};
+  link?: boolean;
+} & StackProps;
 
 export const AddressLabel = ({
   address,
   hideCopyToClipboard = false,
   hideEtherscan = false,
   small = false,
+  link = false,
+  ...rest
 }: AddressLabelProps) => {
   const [copied, setCopied] = useState('idle');
 
@@ -42,26 +47,62 @@ export const AddressLabel = ({
   return (
     <Stack
       direction="row"
-      flexWrap="nowrap"
       alignItems="center"
       divider={<Divider orientation="vertical" flexItem />}
+      {...rest}
+      flexWrap="nowrap"
     >
-      <MiddleTruncated
-        typographyProps={{
-          fontWeight: 'medium',
-          letterSpacing: 1.1,
-          sx: {
-            fontSize: small ? 14 : 16,
-            userSelect: 'none',
-            fontFamily: ['PT Mono', 'monospace'].join(','),
-          },
-        }}
-        flexGrow={1}
-        pr={1}
-      >
-        {address}
-      </MiddleTruncated>
-      {!hideEtherscan && (
+      {link ? (
+        <Link
+          href={`${ETHERSCAN_URL}${address}`}
+          target="_blank"
+          color="inherit"
+          sx={{
+            width: 1,
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            svg: {
+              marginBottom: small ? 0 : '2px',
+            },
+          }}
+        >
+          <MiddleTruncated
+            typographyProps={{
+              fontWeight: 'medium',
+              letterSpacing: 1.1,
+              sx: {
+                fontSize: small ? 14 : 16,
+                userSelect: 'none',
+                fontFamily: ['PT Mono', 'monospace'].join(','),
+              },
+            }}
+            flexGrow={1}
+            pr={1}
+          >
+            {address}
+          </MiddleTruncated>
+          <OpenInNew sx={{ fontSize: small ? 14 : 16 }} />
+        </Link>
+      ) : (
+        <MiddleTruncated
+          typographyProps={{
+            fontWeight: 'medium',
+            letterSpacing: 1.1,
+            sx: {
+              fontSize: small ? 14 : 16,
+              userSelect: 'none',
+              fontFamily: ['PT Mono', 'monospace'].join(','),
+            },
+          }}
+          flexGrow={1}
+          pr={1}
+        >
+          {address}
+        </MiddleTruncated>
+      )}
+
+      {!hideEtherscan && !link && (
         <IconButton
           href={`${ETHERSCAN_URL}${address}`}
           target="_blank"
@@ -71,6 +112,7 @@ export const AddressLabel = ({
           <OpenInNew sx={{ fontSize: small ? 14 : 16 }} />
         </IconButton>
       )}
+
       {!hideCopyToClipboard && (
         <IconButton
           onClick={handleCopyToClipboard}
