@@ -15,7 +15,7 @@ export const OpenNetworkModalButton = (props: ButtonProps) => (
         onClick={openChainModal}
         disabled={!chain?.id}
       >
-        <CurrentNetworkIcon />
+        {props?.children ?? <CurrentNetworkIcon />}
       </Button>
     )}
   </ConnectButton.Custom>

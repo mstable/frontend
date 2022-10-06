@@ -45,6 +45,11 @@ export const MstableBackground = styled(Box)(({ theme }) => ({
     ]),
     theme.mixins.gradients.colorCloud,
   ].join(','),
-  backgroundSize: '100%',
+  [theme.breakpoints.down('md')]: {
+    backgroundSize: '100% 440px',
+  },
+  [theme.breakpoints.up('md')]: {
+    backgroundSize: '100% 360px',
+  },
   backgroundRepeat: 'no-repeat',
 }));

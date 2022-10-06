@@ -1,5 +1,5 @@
 import { SettingsProvider } from '@frontend/mstable-settings';
-import { Topnav } from '@frontend/mstable-topnav';
+import { Topnav } from '@frontend/mstable-shared-ui';
 import { queryClient } from '@frontend/shared-data-access';
 import { GasFeeProvider } from '@frontend/shared-gas-fee';
 import { I18nProvider } from '@frontend/shared-i18n';
