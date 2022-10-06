@@ -34,7 +34,9 @@ export const Position = () => {
   const profitOrLoss =
     mvBalanceInAsset?.sub(mvDeposited || BigDecimal.ZERO) || BigDecimal.ZERO;
   const roi =
-    mvBalanceInAsset.exact.eq(constants.Zero) || !mvDeposited
+    mvBalanceInAsset.exact.eq(constants.Zero) ||
+    !mvDeposited ||
+    mvDeposited.exact.eq(constants.Zero)
       ? BigDecimal.ZERO
       : new BigDecimal(profitOrLoss.divPrecisely(mvDeposited).exact.mul(100));
 
