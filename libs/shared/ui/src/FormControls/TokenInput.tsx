@@ -157,12 +157,11 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
       <Stack {...components?.container}>
         <FormControl disabled={disabled} error={error}>
           <InputLabel error={error}>{label}</InputLabel>
-          <Stack direction="row" alignItems="center" spacing={1}>
+          <Stack direction="row" alignItems="center" spacing={1} mt={1}>
             <BigDecimalInput
               ref={ref}
-              placeholder={placeholder}
               value={amount}
-              InputProps={{ error, disabled }}
+              InputProps={{ error, disabled, placeholder }}
               onChange={handleChange}
               isLoading={isLoading}
               {...components?.input}
