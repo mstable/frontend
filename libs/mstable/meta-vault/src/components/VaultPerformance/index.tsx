@@ -55,7 +55,7 @@ const getBackgroundColor =
 
     gradient?.addColorStop(0, alpha(tone, 0.8));
     gradient?.addColorStop(0.25, alpha(tone, 0.4));
-    gradient?.addColorStop(0.5, alpha(tone, 0.0));
+    gradient?.addColorStop(0.85, alpha(tone, 0));
 
     return gradient;
   };
