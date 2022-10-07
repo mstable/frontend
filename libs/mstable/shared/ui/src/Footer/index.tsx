@@ -39,7 +39,6 @@ export const Footer = (props: StackProps) => {
   return (
     <Stack
       direction={{ xs: 'column', md: 'row' }}
-      py={4}
       alignItems="center"
       spacing={1.5}
       {...props}

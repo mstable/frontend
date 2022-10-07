@@ -38,6 +38,7 @@ export const Topnav = () => {
           onClick={() => {
             navigate({ to: '/' });
           }}
+          sx={{ ml: -2 }}
         >
           {wide ? <MStable sx={{ minWidth: 120 }} /> : <MStableShort />}
         </Button>

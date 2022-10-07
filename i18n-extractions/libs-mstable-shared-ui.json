@@ -1,0 +1,41 @@
+{
+  "1XVJUl": {
+    "defaultMessage": "Switch to {defaultChain}"
+  },
+  "2HXpSy": {
+    "defaultMessage": "This application does not support the Meta Vault {mvid}, pick one from our list."
+  },
+  "8ywLSf": {
+    "defaultMessage": "Twitter"
+  },
+  "9tWILK": {
+    "defaultMessage": "Unsupported Meta Vault"
+  },
+  "Bak2Yy": {
+    "defaultMessage": "Select from supported list"
+  },
+  "FvmV6q": {
+    "defaultMessage": "Discord"
+  },
+  "PmkP1H": {
+    "defaultMessage": "Unsupported Network"
+  },
+  "Vn76qV": {
+    "defaultMessage": "Github"
+  },
+  "cyasTx": {
+    "defaultMessage": "mStable"
+  },
+  "ovJ26C": {
+    "defaultMessage": "Medium"
+  },
+  "sy+pv5": {
+    "defaultMessage": "Email"
+  },
+  "w4Oc4e": {
+    "defaultMessage": "The selected network is not supported by this application, why not try {defaultChain}?"
+  },
+  "xHJnaY": {
+    "defaultMessage": "Home Page"
+  }
+}

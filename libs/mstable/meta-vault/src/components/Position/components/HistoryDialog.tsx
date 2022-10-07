@@ -1,11 +1,10 @@
 import { TransactionType, useDataSource } from '@frontend/shared-data-access';
-import { MiddleTruncated, TokenIcon } from '@frontend/shared-ui';
+import { AddressLabel, TokenIcon } from '@frontend/shared-ui';
 import { Dialog } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
   Box,
   Button,
-  Link,
   Table,
   TableBody,
   TableCell,
@@ -14,9 +13,9 @@ import {
 } from '@mui/material';
 import { format } from 'date-fns';
 import { constants } from 'ethers';
-import { ArrowSquareOut, DownloadSimple, UploadSimple } from 'phosphor-react';
+import { DownloadSimple, UploadSimple } from 'phosphor-react';
 import { useIntl } from 'react-intl';
-import { etherscanBlockExplorers, useAccount, useNetwork } from 'wagmi';
+import { useAccount } from 'wagmi';
 
 import { useUserTxHistoryQuery } from '../../../queries.generated';
 import { useMetavault } from '../../../state';
@@ -32,7 +31,6 @@ export const HistoryDialog = ({
   const { assetToken, mvToken, metavault } = useMetavault();
 
   const { address } = useAccount();
-  const { chain } = useNetwork();
   const dataSource = useDataSource();
   const { data: txHistory } = useUserTxHistoryQuery(
     dataSource,
@@ -53,7 +51,7 @@ export const HistoryDialog = ({
       fullWidth
       title={intl.formatMessage({ defaultMessage: 'History' })}
       content={
-        <Table>
+        <Table sx={{ tableLayout: 'fixed' }}>
           <TableBody>
             {(txHistory?.transactions || []).map((tx) => (
               <TableRow key={tx.hash}>
@@ -122,23 +120,12 @@ export const HistoryDialog = ({
                     <Typography variant="body2">
                       {intl.formatMessage({ defaultMessage: 'Txn hash' })}
                     </Typography>
-                    <Link
-                      href={`${
-                        chain?.blockExplorers?.etherscan?.url ??
-                        etherscanBlockExplorers.mainnet.url
-                      }/tx/${tx.hash ?? ''}`}
-                      target="_blank"
-                    >
-                      <Box display="flex" alignItems="center">
-                        <MiddleTruncated
-                          typographyProps={{ variant: 'body2' }}
-                          sx={{ maxWidth: 100, mr: 1 }}
-                        >
-                          {tx.hash}
-                        </MiddleTruncated>
-                        <ArrowSquareOut />
-                      </Box>
-                    </Link>
+                    <AddressLabel
+                      address={tx.hash}
+                      link
+                      small
+                      hideCopyToClipboard
+                    />
                   </Box>
                 </TableCell>
               </TableRow>

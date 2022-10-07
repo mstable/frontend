@@ -110,7 +110,7 @@ const DepositRecap = (props: StackProps) => {
       <Stack {...rowProps}>
         <Typography variant="value5">
           {operation === 'mint' && isInputLoading ? (
-            <Skeleton width={100} height={16} />
+            <Skeleton width={100} />
           ) : (
             `${amount?.format(2) ?? '0.00'} ${
               assetToken?.symbol ??
@@ -120,7 +120,7 @@ const DepositRecap = (props: StackProps) => {
         </Typography>
         <Typography variant="value5">
           {operation === 'deposit' && isInputLoading ? (
-            <Skeleton width={100} height={16} />
+            <Skeleton width={100} />
           ) : (
             intl.formatMessage(
               { defaultMessage: '{value} Shares' },
@@ -188,7 +188,7 @@ const WithdrawRecap = (props: StackProps) => {
       <Stack {...rowProps}>
         <Typography variant="value5">
           {operation === 'redeem' && isInputLoading ? (
-            <Skeleton width={100} height={16} />
+            <Skeleton width={100} />
           ) : (
             intl.formatMessage(
               { defaultMessage: '{value} Shares' },
@@ -198,7 +198,7 @@ const WithdrawRecap = (props: StackProps) => {
         </Typography>
         <Typography variant="value5">
           {operation === 'withdraw' && isInputLoading ? (
-            <Skeleton width={100} height={16} />
+            <Skeleton width={100} />
           ) : (
             `${preview?.format(2) ?? '0.00'} ${
               assetToken?.symbol ??

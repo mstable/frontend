@@ -29,7 +29,7 @@ export const Vaults = (props: StackProps) => {
               <Typography noWrap sx={{ typography: 'subtitle2', pb: 1 }}>
                 {name}
               </Typography>
-              <AddressLabel small address={address} hideCopyToClipboard />
+              <AddressLabel small address={address} hideCopyToClipboard link />
             </Stack>
           </Grid>
         ))}

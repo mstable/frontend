@@ -94,8 +94,8 @@ export const OperationsForm = (props: StackProps) => {
   useEffect(() => {
     if (
       document.hasFocus() &&
-      (primary.current.contains(document.activeElement) ||
-        secondary.current.contains(document.activeElement))
+      (primary.current?.contains(document.activeElement) ||
+        secondary.current?.contains(document.activeElement))
     ) {
       setHasFocus(true);
     }
@@ -145,6 +145,7 @@ export const OperationsForm = (props: StackProps) => {
         placeholder="0.00"
         disabled={!isConnected || isSubmitLoading}
         isConnected={isConnected}
+        hideTokenBadge={!isConnected}
         error={isError}
         ref={primary}
         components={{

@@ -1,5 +1,5 @@
 import { SettingsProvider } from '@frontend/mstable-settings';
-import { Topnav } from '@frontend/mstable-topnav';
+import { Topnav } from '@frontend/mstable-shared-ui';
 import { queryClient } from '@frontend/shared-data-access';
 import { GasFeeProvider } from '@frontend/shared-gas-fee';
 import { I18nProvider } from '@frontend/shared-i18n';
@@ -49,7 +49,7 @@ export const App = () =>
         {
           containerProps: {
             sx: {
-              top: (theme: Theme) => theme.spacing(8),
+              top: (theme: Theme) => theme.spacing(10),
               right: (theme: Theme) => theme.spacing(2),
               left: undefined,
               bottom: undefined,

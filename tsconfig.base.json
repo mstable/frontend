@@ -17,10 +17,9 @@
     "strict": false,
     "noPropertyAccessFromIndexSignature": false,
     "paths": {
-      "@frontend/mstable-footer": ["libs/mstable/footer/src/index.ts"],
       "@frontend/mstable-metavault": ["libs/mstable/meta-vault/src/index.ts"],
       "@frontend/mstable-settings": ["libs/mstable/settings/src/index.ts"],
-      "@frontend/mstable-topnav": ["libs/mstable/topnav/src/index.ts"],
+      "@frontend/mstable-shared-ui": ["libs/mstable/shared/ui/src/index.ts"],
       "@frontend/shared-constants": ["libs/shared/constants/src/index.ts"],
       "@frontend/shared-data-access": ["libs/shared/data-access/src/index.ts"],
       "@frontend/shared-gas-fee": ["libs/shared/gas-fee/src/index.ts"],

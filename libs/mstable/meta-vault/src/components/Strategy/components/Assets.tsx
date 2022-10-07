@@ -36,7 +36,12 @@ export const Assets = (props: StackProps) => {
                 <Typography variant="h5" gutterBottom noWrap>
                   {symbol}
                 </Typography>
-                <AddressLabel small address={address} hideCopyToClipboard />
+                <AddressLabel
+                  small
+                  address={address}
+                  hideCopyToClipboard
+                  link
+                />
               </Stack>
             </Grid>
           ))}
