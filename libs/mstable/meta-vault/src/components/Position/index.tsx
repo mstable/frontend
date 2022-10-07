@@ -82,20 +82,21 @@ export const Position = () => {
                 color="text.secondary"
               />
             </Box>
-            <Box textAlign="right">
+            <Stack direction="column" alignItems="flex-end" spacing={1}>
               <HighlightUpdate
-                variant="body2"
+                variant="value5"
                 value={mvBalanceInAsset}
                 suffix={assetToken?.symbol}
                 commas
+                fontWeight="bold"
               />
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="value5" color="text.secondary">
                 {intl.formatMessage(
                   { defaultMessage: '{val} Shares' },
                   { val: mvBalance?.format() ?? '0.00' },
                 )}
               </Typography>
-            </Box>
+            </Stack>
           </Stack>
           <Stack
             direction="row"
@@ -113,11 +114,15 @@ export const Position = () => {
                 color="text.secondary"
               />
             </Box>
-            <Box textAlign="right">
-              <Typography variant="body2" color="success.main">{`${
-                profitOrLoss.format() ?? '0.00'
-              } ${assetToken?.symbol || ''}`}</Typography>
-              <Typography variant="body2" color="text.secondary">
+            <Stack direction="column" alignItems="flex-end" spacing={1}>
+              <Typography
+                variant="value5"
+                color="success.main"
+                fontWeight="bold"
+              >{`${profitOrLoss.format() ?? '0.00'} ${
+                assetToken?.symbol || ''
+              }`}</Typography>
+              <Typography variant="value5" color="text.secondary">
                 {intl.formatMessage(
                   { defaultMessage: '{roi}% ROI' },
                   {
@@ -125,7 +130,7 @@ export const Position = () => {
                   },
                 )}
               </Typography>
-            </Box>
+            </Stack>
           </Stack>
           <Button
             onClick={() => setIsYieldCalculatorOpen(true)}
