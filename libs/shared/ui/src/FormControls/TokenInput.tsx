@@ -19,6 +19,8 @@ import { BigDecimalInput } from './BigDecimalInput';
 import type { ButtonProps, StackProps, SxProps } from '@mui/material';
 import type { FetchTokenResult } from '@wagmi/core';
 
+import type { BigDecimalInputProps } from './BigDecimalInput';
+
 export type TokenInputProps = {
   label?: string;
   placeholder?: string;
@@ -35,6 +37,10 @@ export type TokenInputProps = {
   hideTokenBadge?: boolean;
   components?: {
     container?: StackProps;
+    input?: Omit<
+      BigDecimalInputProps,
+      'value' | 'min' | 'max' | 'onChange' | 'ref'
+    >;
   };
 };
 
@@ -151,42 +157,38 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
       <Stack {...components?.container}>
         <FormControl disabled={disabled} error={error}>
           <InputLabel error={error}>{label}</InputLabel>
-          {isLoading ? (
-            <Skeleton variant="rectangular" height={48} sx={{ mt: 1 }} />
-          ) : (
+          <Stack direction="row" alignItems="center" spacing={1} mt={1}>
             <BigDecimalInput
               ref={ref}
-              placeholder={placeholder}
               value={amount}
-              error={error}
+              InputProps={{ error, disabled, placeholder }}
               onChange={handleChange}
-              disabled={disabled}
-              endAdornment={
-                !disabled &&
-                !hideTokenBadge && (
-                  <Stack
-                    direction="row"
-                    spacing={1}
-                    alignItems="center"
-                    sx={{
-                      p: 1,
-                      borderRadius: '4px',
-                      backgroundColor: 'background.highlight',
-                      color: 'text.primary',
-                    }}
-                  >
-                    <TokenIcon
-                      symbol={token?.symbol}
-                      sx={{ width: 14, height: 14 }}
-                    />
-                    <Typography variant="buttonMedium" color="inherit">
-                      {token?.symbol}
-                    </Typography>
-                  </Stack>
-                )
-              }
+              isLoading={isLoading}
+              {...components?.input}
+              sx={{ flexGrow: 1, ...components?.input?.sx }}
             />
-          )}
+            {!hideTokenBadge && (
+              <Stack
+                direction="row"
+                spacing={1}
+                alignItems="center"
+                sx={{
+                  p: 1,
+                  borderRadius: '4px',
+                  backgroundColor: 'background.highlight',
+                  color: 'text.primary',
+                }}
+              >
+                <TokenIcon
+                  symbol={token?.symbol}
+                  sx={{ width: 14, height: 14 }}
+                />
+                <Typography variant="buttonMedium" color="inherit">
+                  {token?.symbol}
+                </Typography>
+              </Stack>
+            )}
+          </Stack>
         </FormControl>
         {!hideBottomRow && (
           <Stack
@@ -197,7 +199,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
             alignItems="center"
           >
             {isLoading ? (
-              <Skeleton variant="rectangular" width={160} height={22} />
+              <Skeleton width={160} height={22} />
             ) : (
               <Stack direction="row" spacing={0.5}>
                 {range(1, PERCENTAGE_STEPS + 1).map((n) => (

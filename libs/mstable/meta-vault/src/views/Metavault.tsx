@@ -1,12 +1,14 @@
 import { useMemo } from 'react';
 
+import {
+  UnsupportedMvPage,
+  WrongNetworkPage,
+} from '@frontend/mstable-shared-ui';
 import { supportedMetavaults } from '@frontend/shared-constants';
-import { MstableBackground } from '@frontend/shared-ui';
-import { Box, Grid, Stack } from '@mui/material';
+import { Grid, Stack } from '@mui/material';
 import { useMatch } from '@tanstack/react-location';
 import { chainId, useNetwork } from 'wagmi';
 
-import { Oops } from '../components/Oops';
 import { Operations } from '../components/Operations';
 import { Position } from '../components/Position';
 import { Strategy } from '../components/Strategy';
@@ -26,30 +28,28 @@ export const Metavault = () => {
     [chain?.id, mvid],
   );
 
-  if (!metavault) return <Oops />;
+  if (chain?.unsupported) return <WrongNetworkPage />;
+
+  if (!metavault) return <UnsupportedMvPage mvid={mvid} />;
 
   return (
     <MetavaultProvider initialState={{ metavault }}>
       <Stack direction="column">
-        <MstableBackground sx={(theme) => theme.mixins.paddings.jumbo}>
-          <VaultJumbo />
-        </MstableBackground>
-        <Box sx={(theme) => theme.mixins.paddings.page}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
-              <Stack direction="column" spacing={2}>
-                <VaultPerformance />
-                <Strategy />
-              </Stack>
-            </Grid>
-            <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
-              <Stack direction="column" spacing={2}>
-                <Position />
-                <Operations />
-              </Stack>
-            </Grid>
+        <VaultJumbo py={8} />
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
+            <Stack direction="column" spacing={2}>
+              <VaultPerformance />
+              <Strategy />
+            </Stack>
           </Grid>
-        </Box>
+          <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
+            <Stack direction="column" spacing={2}>
+              <Position />
+              <Operations />
+            </Stack>
+          </Grid>
+        </Grid>
       </Stack>
     </MetavaultProvider>
   );

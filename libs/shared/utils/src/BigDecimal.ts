@@ -1,5 +1,5 @@
 import { BigNumber as FractionalBigNumber } from 'bignumber.js';
-import { BigNumber, utils } from 'ethers';
+import { BigNumber, constants, utils } from 'ethers';
 
 import type { BigNumberish } from 'ethers';
 
@@ -83,7 +83,7 @@ export class BigDecimal {
   exact: BigNumber;
 
   constructor(num: BigNumberish, decimals = DEFAULT_DECIMALS) {
-    this.exact = BigNumber.from(num);
+    this.exact = num ? BigNumber.from(num) : constants.Zero;
     this.decimals = decimals;
   }
 

@@ -77,7 +77,7 @@ const NotificationsWrapped = ({
 
 export const NotificationsProvider = ({
   maxVisible = 4,
-  autoHideDuration = 5000,
+  autoHideDuration = 7000,
   containerProps,
   children,
 }: NotificationsProviderProps) => (

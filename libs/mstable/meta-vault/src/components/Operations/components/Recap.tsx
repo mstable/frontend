@@ -108,9 +108,9 @@ const DepositRecap = (props: StackProps) => {
         </Typography>
       </Stack>
       <Stack {...rowProps}>
-        <Typography variant="value4">
+        <Typography variant="value5">
           {operation === 'mint' && isInputLoading ? (
-            <Skeleton width={100} height={16} />
+            <Skeleton width={100} />
           ) : (
             `${amount?.format(2) ?? '0.00'} ${
               assetToken?.symbol ??
@@ -118,9 +118,9 @@ const DepositRecap = (props: StackProps) => {
             }`
           )}
         </Typography>
-        <Typography variant="value4">
+        <Typography variant="value5">
           {operation === 'deposit' && isInputLoading ? (
-            <Skeleton width={100} height={16} />
+            <Skeleton width={100} />
           ) : (
             intl.formatMessage(
               { defaultMessage: '{value} Shares' },
@@ -186,9 +186,9 @@ const WithdrawRecap = (props: StackProps) => {
         </Typography>
       </Stack>
       <Stack {...rowProps}>
-        <Typography variant="value4">
+        <Typography variant="value5">
           {operation === 'redeem' && isInputLoading ? (
-            <Skeleton width={100} height={16} />
+            <Skeleton width={100} />
           ) : (
             intl.formatMessage(
               { defaultMessage: '{value} Shares' },
@@ -196,9 +196,9 @@ const WithdrawRecap = (props: StackProps) => {
             )
           )}
         </Typography>
-        <Typography variant="value4">
+        <Typography variant="value5">
           {operation === 'withdraw' && isInputLoading ? (
-            <Skeleton width={100} height={16} />
+            <Skeleton width={100} />
           ) : (
             `${preview?.format(2) ?? '0.00'} ${
               assetToken?.symbol ??
@@ -293,8 +293,8 @@ const GasFeesRecap = (props: StackProps) => {
         </Typography>
         <Typography variant="value5">
           {intl.formatMessage(
-            { defaultMessage: 'Average - {value} GWEI' },
-            { value: feeData?.formatted?.gasPrice },
+            { defaultMessage: 'Avg - {value} GWEI' },
+            { value: new BigDecimal(feeData?.gasPrice).format(3) },
           )}
         </Typography>
       </Stack>
@@ -308,7 +308,7 @@ const GasFeesRecap = (props: StackProps) => {
               )}
         </Typography>
         <Typography variant="value5">
-          {nativeTokenGasPrice?.format(8) ?? '-'}&nbsp;
+          {nativeTokenGasPrice?.format(3) ?? '-'}&nbsp;
           {chain?.nativeCurrency?.symbol}
         </Typography>
       </Stack>

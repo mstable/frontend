@@ -3,7 +3,7 @@ import { alpha, Box, styled } from '@mui/material';
 const getGradient = (orientation: string, steps: string[]) =>
   `linear-gradient(${orientation}, ${steps.join(', ')})`;
 
-const a = { light: 0.2, dark: 0.35 };
+const a = { light: 0.2, dark: 0 };
 
 export const MstableBackground = styled(Box)(({ theme }) => ({
   background: [
@@ -11,8 +11,8 @@ export const MstableBackground = styled(Box)(({ theme }) => ({
       `${theme.palette.background.default} 0%`,
       `${
         theme.palette.mode === 'light'
-          ? `${alpha(theme.palette.background.default, a.light)} 20%`
-          : `${alpha(theme.palette.background.default, a.dark)} 30%`
+          ? `${alpha(theme.palette.background.default, a.light)} 30%`
+          : `${alpha(theme.palette.background.default, a.dark)} 60%`
       }`,
       'transparent 100%',
     ]),
@@ -20,31 +20,36 @@ export const MstableBackground = styled(Box)(({ theme }) => ({
       `${theme.palette.background.default} 0%`,
       `${
         theme.palette.mode === 'light'
-          ? `${alpha(theme.palette.background.default, a.light)} 20%`
-          : `${alpha(theme.palette.background.default, a.dark)} 25%`
+          ? `${alpha(theme.palette.background.default, a.light)} 30%`
+          : `${alpha(theme.palette.background.default, a.dark)} 60%`
       }`,
       'transparent 100%',
     ]),
-    getGradient('178deg', [
+    getGradient('180deg', [
       `${theme.palette.background.default} 0%`,
       `${
         theme.palette.mode === 'light'
-          ? `${alpha(theme.palette.background.default, a.light)} 20%`
-          : `${alpha(theme.palette.background.default, a.dark)} 20%`
+          ? `${alpha(theme.palette.background.default, a.light)} 40%`
+          : `${alpha(theme.palette.background.default, a.dark)} 60%`
       }`,
       'transparent 100%',
     ]),
-    getGradient('182deg', [
+    getGradient('184deg', [
       `${theme.palette.background.default} 0%`,
       `${
         theme.palette.mode === 'light'
-          ? `${alpha(theme.palette.background.default, a.light)} 20%`
-          : `${alpha(theme.palette.background.default, a.dark)} 30%`
+          ? `${alpha(theme.palette.background.default, a.light)} 60%`
+          : `${alpha(theme.palette.background.default, a.dark)} 60%`
       }`,
       'transparent 100%',
     ]),
     theme.mixins.gradients.colorCloud,
   ].join(','),
-  backgroundSize: '100%',
+  [theme.breakpoints.down('md')]: {
+    backgroundSize: '100% 440px',
+  },
+  [theme.breakpoints.up('md')]: {
+    backgroundSize: '100% 360px',
+  },
   backgroundRepeat: 'no-repeat',
 }));

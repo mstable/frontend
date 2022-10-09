@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { useDataSource } from '@frontend/shared-data-access';
 import { TokenInput } from '@frontend/shared-ui';
@@ -40,6 +40,9 @@ export const OperationsForm = (props: StackProps) => {
   } = useOperations();
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
+  const [hasFocus, setHasFocus] = useState(false);
+  const primary = useRef(null);
+  const secondary = useRef(null);
 
   const primaryInput = useMemo(
     () =>
@@ -96,6 +99,16 @@ export const OperationsForm = (props: StackProps) => {
     [intl, tab],
   );
 
+  useEffect(() => {
+    if (
+      document.hasFocus() &&
+      (primary.current?.contains(document.activeElement) ||
+        secondary.current?.contains(document.activeElement))
+    ) {
+      setHasFocus(true);
+    }
+  }, []);
+
   const handlePrimaryChange = (newValue: BigDecimal) => {
     const newOp = tab === 0 ? 'deposit' : 'withdraw';
     if (newOp !== operation) {
@@ -119,7 +132,10 @@ export const OperationsForm = (props: StackProps) => {
       direction="column"
       spacing={3}
       sx={{
-        border: (theme) => `1px solid ${theme.palette.divider}`,
+        border: (theme) =>
+          `1px solid ${
+            hasFocus ? theme.palette.primary.main : theme.palette.divider
+          }`,
         ...(!isConnected && {
           backgroundColor: 'background.highlight',
         }),
@@ -137,7 +153,19 @@ export const OperationsForm = (props: StackProps) => {
         placeholder="0.00"
         disabled={!isConnected || isSubmitLoading}
         isConnected={isConnected}
+        hideTokenBadge={!isConnected}
         error={isError}
+        ref={primary}
+        components={{
+          input: {
+            onFocus: () => {
+              setHasFocus(true);
+            },
+            onBlur: () => {
+              setHasFocus(false);
+            },
+          },
+        }}
       />
       <Divider role="presentation" light={!isConnected}>
         <Typography variant="value6">
@@ -164,6 +192,17 @@ export const OperationsForm = (props: StackProps) => {
         disabled={!isConnected || isSubmitLoading}
         isConnected={isConnected}
         error={isError}
+        ref={secondary}
+        components={{
+          input: {
+            onFocus: () => {
+              setHasFocus(true);
+            },
+            onBlur: () => {
+              setHasFocus(false);
+            },
+          },
+        }}
       />
     </Stack>
   );

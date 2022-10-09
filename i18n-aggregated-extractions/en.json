@@ -1,27 +1,6 @@
 {
-  "8ywLSf": {
-    "defaultMessage": "Twitter"
-  },
-  "FvmV6q": {
-    "defaultMessage": "Discord"
-  },
-  "Vn76qV": {
-    "defaultMessage": "Github"
-  },
-  "cyasTx": {
-    "defaultMessage": "mStable"
-  },
-  "ovJ26C": {
-    "defaultMessage": "Medium"
-  },
-  "sy+pv5": {
-    "defaultMessage": "Email"
-  },
   "+1GGs7": {
     "defaultMessage": "Claim CVX & CRV"
-  },
-  "/+9/FO": {
-    "defaultMessage": "Accrued Interest"
   },
   "/54G9d": {
     "defaultMessage": "Approving Token"
@@ -35,6 +14,12 @@
   "0NMLMN": {
     "defaultMessage": "My Position"
   },
+  "0WJNP/": {
+    "defaultMessage": "Return"
+  },
+  "0mHzVQ": {
+    "defaultMessage": "Fast - {value} GWEI"
+  },
   "0oLj/t": {
     "defaultMessage": "Expand"
   },
@@ -43,6 +28,9 @@
   },
   "20X0BC": {
     "defaultMessage": "Transaction Cancelled"
+  },
+  "2M9vCZ": {
+    "defaultMessage": "Projected APY (%)"
   },
   "3QSP9N": {
     "defaultMessage": "Visualize Strategy"
@@ -74,17 +62,29 @@
   "8lLHeh": {
     "defaultMessage": "1Y"
   },
+  "93OUn6": {
+    "defaultMessage": "Profitable position after"
+  },
   "9ALsvc": {
     "defaultMessage": "Approval Cost"
   },
   "9RAHhM": {
     "defaultMessage": "Strategy & Risks"
   },
+  "AxDOiG": {
+    "defaultMessage": "Months"
+  },
+  "BnptNt": {
+    "defaultMessage": "Slow - {value} GWEI"
+  },
   "BwwISd": {
     "defaultMessage": "Vault"
   },
   "CGcoFj": {
     "defaultMessage": "Yield Calculator"
+  },
+  "FQUm7o": {
+    "defaultMessage": "Avg - {value} GWEI"
   },
   "FaoPNm": {
     "defaultMessage": "You Burn"
@@ -98,23 +98,35 @@
   "H5+NAX": {
     "defaultMessage": "Balance"
   },
+  "IuFETn": {
+    "defaultMessage": "Duration"
+  },
+  "Jr5tMR": {
+    "defaultMessage": "Years"
+  },
   "KYgRAc": {
     "defaultMessage": "DEPOSIT"
   },
   "LDz7xI": {
     "defaultMessage": "Assets that are used by this vault."
   },
-  "LETDMp": {
-    "defaultMessage": "Include Gas Fees"
-  },
-  "MJ2jZQ": {
-    "defaultMessage": "Total"
-  },
   "MLTKb6": {
     "defaultMessage": "APY"
   },
+  "MMRXim": {
+    "defaultMessage": "Make a Deposit"
+  },
+  "MgN8gK": {
+    "defaultMessage": "{days} Days"
+  },
+  "MoJx/h": {
+    "defaultMessage": "Total Value"
+  },
   "MqZGhr": {
     "defaultMessage": "Vault Performance"
+  },
+  "N+SKIs": {
+    "defaultMessage": "Net Value"
   },
   "OwO+Nr": {
     "defaultMessage": "Mint"
@@ -155,17 +167,35 @@
   "ZefNbE": {
     "defaultMessage": "Average - {value} GWEI"
   },
+  "b+LlHJ": {
+    "defaultMessage": "Deposit Gas"
+  },
   "bvmoAt": {
     "defaultMessage": "The following protocols are used in the strategies and are therefore exposed to their risk:"
   },
+  "byXXyV": {
+    "defaultMessage": "Enter Amount"
+  },
   "d1uESJ": {
     "defaultMessage": "Assets"
+  },
+  "d8EqQY": {
+    "defaultMessage": "Days"
+  },
+  "dD8CJD": {
+    "defaultMessage": "Gas Fee Estimation"
   },
   "dIgBOz": {
     "defaultMessage": "Deposit"
   },
   "djJp6c": {
     "defaultMessage": "History"
+  },
+  "eO0C1d": {
+    "defaultMessage": "Gas Impact"
+  },
+  "erCS/d": {
+    "defaultMessage": "Gas fee estimation is based on the current gas price and average gas used"
   },
   "fJjSsb": {
     "defaultMessage": "Performance Fee"
@@ -175,6 +205,9 @@
   },
   "gKTtPo": {
     "defaultMessage": "Vault Contracts"
+  },
+  "hRuz7F": {
+    "defaultMessage": "Withdrawal Gas"
   },
   "heM61T": {
     "defaultMessage": "Swap to USDC"
@@ -254,6 +287,45 @@
   "yuiyES": {
     "defaultMessage": "General Settings"
   },
+  "1XVJUl": {
+    "defaultMessage": "Switch to {defaultChain}"
+  },
+  "2HXpSy": {
+    "defaultMessage": "This application does not support the Meta Vault {mvid}, pick one from our list."
+  },
+  "8ywLSf": {
+    "defaultMessage": "Twitter"
+  },
+  "9tWILK": {
+    "defaultMessage": "Unsupported Meta Vault"
+  },
+  "Bak2Yy": {
+    "defaultMessage": "Select from supported list"
+  },
+  "FvmV6q": {
+    "defaultMessage": "Discord"
+  },
+  "PmkP1H": {
+    "defaultMessage": "Unsupported Network"
+  },
+  "Vn76qV": {
+    "defaultMessage": "Github"
+  },
+  "cyasTx": {
+    "defaultMessage": "mStable"
+  },
+  "ovJ26C": {
+    "defaultMessage": "Medium"
+  },
+  "sy+pv5": {
+    "defaultMessage": "Email"
+  },
+  "w4Oc4e": {
+    "defaultMessage": "The selected network is not supported by this application, why not try {defaultChain}?"
+  },
+  "xHJnaY": {
+    "defaultMessage": "Home Page"
+  },
   "2JVe1j": {
     "defaultMessage": "Market Neutral"
   },
@@ -296,6 +368,9 @@
   "vS/YSY": {
     "defaultMessage": "Curve is an exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers, without an opportunity cost."
   },
+  "ivgXZf": {
+    "defaultMessage": "Error fetching gas fee"
+  },
   "hY+w99": {
     "defaultMessage": "Error fetching prices"
   },
@@ -319,12 +394,6 @@
   },
   "+vVZ/G": {
     "defaultMessage": "Connect"
-  },
-  "1XVJUl": {
-    "defaultMessage": "Switch to {defaultChain}"
-  },
-  "PmkP1H": {
-    "defaultMessage": "Unsupported Network"
   },
   "R5x4Vk": {
     "defaultMessage": "The selected network is not supported by the application. You can either switch your wallet or reset to {defaultChain}."
