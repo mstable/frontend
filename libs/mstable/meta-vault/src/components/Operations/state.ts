@@ -43,9 +43,9 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     asset,
     assetToken,
     assetBalance,
+    assetBalanceInShare,
     mvBalance,
-    assetsPerShare,
-    sharesPerAsset,
+    mvBalanceInAsset,
   } = useMetavault();
   const [state, setState] = useState<OperationsState>({
     amount: null,
@@ -148,37 +148,37 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
             (amount && assetBalance && amount.exact.gt(assetBalance.exact)) ||
             (preview &&
               assetBalance &&
-              sharesPerAsset &&
-              preview.exact.gt(assetBalance.exact.mul(sharesPerAsset.exact))),
+              assetBalanceInShare &&
+              preview.exact.gt(assetBalanceInShare.exact)),
           mint:
             (preview && assetBalance && preview.exact.gt(assetBalance.exact)) ||
             (amount &&
               assetBalance &&
-              sharesPerAsset &&
-              amount.exact.gt(assetBalance.exact.mul(sharesPerAsset.exact))),
+              assetBalanceInShare &&
+              amount.exact.gt(assetBalanceInShare.exact)),
           redeem:
             (amount && mvBalance && amount.exact.gt(mvBalance.exact)) ||
             (preview &&
               mvBalance &&
-              assetsPerShare &&
-              preview.exact.gt(mvBalance.exact.mul(assetsPerShare.exact))),
+              mvBalanceInAsset &&
+              preview.exact.gt(mvBalanceInAsset.exact)),
           withdraw:
             (preview && mvBalance && preview.exact.gt(mvBalance.exact)) ||
             (amount &&
               mvBalance &&
-              assetsPerShare &&
-              amount.exact.gt(mvBalance.exact.mul(assetsPerShare.exact))),
+              mvBalanceInAsset &&
+              amount.exact.gt(mvBalanceInAsset.exact)),
         }[operation];
       }),
     );
   }, [
     amount,
     assetBalance,
-    assetsPerShare,
+    assetBalanceInShare,
     mvBalance,
     operation,
     preview,
-    sharesPerAsset,
+    mvBalanceInAsset,
   ]);
 
   useDebounce(

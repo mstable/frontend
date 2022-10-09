@@ -24,17 +24,13 @@ export const Position = () => {
   const intl = useIntl();
   const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
   const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
-  const { mvBalance, assetsPerShare, assetToken, mvDeposited, metavault } =
+  const { mvBalance, mvBalanceInAsset, assetToken, mvDeposited, metavault } =
     useMetavault();
 
-  const mvBalanceInAsset = new BigDecimal(
-    mvBalance?.exact.mul(assetsPerShare?.exact || constants.Zero) ||
-      constants.Zero,
-  );
   const profitOrLoss =
     mvBalanceInAsset?.sub(mvDeposited || BigDecimal.ZERO) || BigDecimal.ZERO;
   const roi =
-    mvBalanceInAsset.exact.eq(constants.Zero) || !mvDeposited
+    mvBalanceInAsset?.exact.eq(constants.Zero) || !mvDeposited
       ? BigDecimal.ZERO
       : new BigDecimal(profitOrLoss.divPrecisely(mvDeposited).exact.mul(100));
 
