@@ -172,10 +172,11 @@ export const OperationsForm = (props: StackProps) => {
           {intl.formatMessage(
             { defaultMessage: '1 Share = {ratio} {asset}' },
             {
-              ratio:
-                intl.formatNumber(Number(mvData?.vault?.assetPerShare), {
-                  maximumFractionDigits: 2,
-                }) ?? '-',
+              ratio: mvData?.vault?.assetPerShare
+                ? intl.formatNumber(Number(mvData?.vault?.assetPerShare), {
+                    maximumFractionDigits: 2,
+                  })
+                : '-',
               asset: assetToken?.symbol,
             },
           )}
