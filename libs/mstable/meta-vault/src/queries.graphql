@@ -3,12 +3,7 @@ query userVaultBalance($owner: Bytes!, $vault: String!) {
     owner
     vault {
       id
-      asset {
-        id
-        name
-        symbol
-        decimals
-      }
+      asset
     }
     timestamp
     shareBalance

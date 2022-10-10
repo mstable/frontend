@@ -27,7 +27,7 @@ export type UserVaultBalanceQueryVariables = Types.Exact<{
 }>;
 
 
-export type UserVaultBalanceQuery = { __typename?: 'Query', vaultBalances: Array<{ __typename?: 'VaultBalance', owner: any, timestamp: any, shareBalance: any, assetBalance: any, assetDeposited: any, vault: { __typename?: 'Vault', id: string, asset: { __typename?: 'Token', id: string, name: string, symbol: string, decimals: number } } }> };
+export type UserVaultBalanceQuery = { __typename?: 'Query', vaultBalances: Array<{ __typename?: 'VaultBalance', owner: any, timestamp: any, shareBalance: any, assetBalance: any, assetDeposited: any, vault: { __typename?: 'Vault', id: string, asset: any } }> };
 
 export type UserTxHistoryQueryVariables = Types.Exact<{
   owner: Types.Scalars['Bytes'];
@@ -52,12 +52,7 @@ export const UserVaultBalanceDocument = `
     owner
     vault {
       id
-      asset {
-        id
-        name
-        symbol
-        decimals
-      }
+      asset
     }
     timestamp
     shareBalance
