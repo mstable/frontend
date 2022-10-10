@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+import { useDataSource } from '@frontend/shared-data-access';
 import { TokenInput } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import { Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
 
+import { useMetavaultQuery } from '../../../queries.generated';
 import { useMetavault } from '../../../state';
 import { useChangeOperation, useOperations, useSetAmount } from '../hooks';
 
@@ -14,8 +16,19 @@ import type { StackProps } from '@mui/material';
 export const OperationsForm = (props: StackProps) => {
   const intl = useIntl();
   const { isConnected } = useAccount();
-  const { assetToken, mvToken, assetBalance, mvBalance, assetsPerShare } =
-    useMetavault();
+  const {
+    assetToken,
+    mvToken,
+    assetBalance,
+    mvBalanceInAsset,
+    metavault: { address },
+  } = useMetavault();
+  const dataSource = useDataSource();
+  const { data: mvData } = useMetavaultQuery(
+    dataSource,
+    { id: address },
+    { enabled: !!address },
+  );
   const {
     amount,
     operation,
@@ -74,13 +87,8 @@ export const OperationsForm = (props: StackProps) => {
   );
 
   const primaryBalance = useMemo(
-    () =>
-      tab === 0
-        ? assetBalance
-        : mvBalance?.exact && assetsPerShare?.exact
-        ? new BigDecimal(mvBalance?.exact.mul(assetsPerShare?.exact))
-        : BigDecimal.ZERO,
-    [assetBalance, assetsPerShare?.exact, mvBalance?.exact, tab],
+    () => (tab === 0 ? assetBalance : mvBalanceInAsset || BigDecimal.ZERO),
+    [assetBalance, mvBalanceInAsset, tab],
   );
 
   const primaryMaxLabel = useMemo(
@@ -164,7 +172,11 @@ export const OperationsForm = (props: StackProps) => {
           {intl.formatMessage(
             { defaultMessage: '1 Share = {ratio} {asset}' },
             {
-              ratio: assetsPerShare?.simple ?? '-',
+              ratio: mvData?.vault?.assetPerShare
+                ? intl.formatNumber(Number(mvData?.vault?.assetPerShare), {
+                    maximumFractionDigits: 2,
+                  })
+                : '-',
               asset: assetToken?.symbol,
             },
           )}
