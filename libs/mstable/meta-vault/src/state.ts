@@ -26,10 +26,10 @@ type MetaVaultState = {
   asset: string | null;
   assetToken: FetchTokenResult | null;
   mvBalance: BigDecimal | null;
+  mvBalanceInAsset: BigDecimal | null;
   mvDeposited: BigDecimal | null;
   assetBalance: BigDecimal | null;
-  assetsPerShare: BigDecimal | null;
-  sharesPerAsset: BigDecimal | null;
+  assetBalanceInShare: BigDecimal | null;
 };
 
 export const {
@@ -57,10 +57,10 @@ export const {
     asset: null,
     assetToken: null,
     mvBalance: null,
+    mvBalanceInAsset: null,
     mvDeposited: null,
     assetBalance: null,
-    assetsPerShare: null,
-    sharesPerAsset: null,
+    assetBalanceInShare: null,
   });
 
   const {
@@ -167,28 +167,34 @@ export const {
         addressOrName: address,
         contractInterface: erc4626ABI,
         functionName: 'convertToAssets',
-        args: [constants.One],
+        args: [state.mvBalance?.exact],
       },
       {
         addressOrName: address,
         contractInterface: erc4626ABI,
         functionName: 'convertToShares',
-        args: [constants.One],
+        args: [state.assetBalance?.exact],
       },
     ],
     allowFailure: true,
     cacheOnBlock: true,
     watch: true,
-    enabled: !!address && isConnected,
+    enabled:
+      !!address &&
+      isConnected &&
+      !!state.mvBalance &&
+      !!state.assetToken &&
+      !!state.assetBalance &&
+      !!state.mvToken,
     onSettled: (data) => {
       setState(
         produce((draft) => {
-          draft.assetsPerShare = data?.[0]
-            ? new BigDecimal(data[0], 0)
-            : BigDecimal.ONE;
-          draft.sharesPerAsset = data?.[1]
-            ? new BigDecimal(data[1], 0)
-            : BigDecimal.ONE;
+          draft.mvBalanceInAsset = data?.[0]
+            ? new BigDecimal(data[0], state.assetToken.decimals)
+            : BigDecimal.ZERO;
+          draft.assetBalanceInShare = data?.[1]
+            ? new BigDecimal(data[1], state.mvToken.decimals)
+            : BigDecimal.ZERO;
         }),
       );
     },
