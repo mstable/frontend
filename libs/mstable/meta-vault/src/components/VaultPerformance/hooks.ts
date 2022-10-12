@@ -94,21 +94,22 @@ export const useChartData = (
       const sortedData = sort(
         (a, b) => Number(a.timestamp) - Number(b.timestamp),
         data?.vault?.DailyVaultStats || [],
-      );
+      ).map((d) => ({
+        label: intlFormat(Number(d.timestamp) * 1000, {
+          timeZone: 'UTC',
+          day: 'numeric',
+          month: 'numeric',
+        }).replace('/', '-'),
+        value: chartTypes[chartType].getValue(d),
+      }));
 
       return {
         data: {
-          labels: sortedData.map((d) =>
-            intlFormat(Number(d.timestamp) * 1000, {
-              timeZone: 'UTC',
-              month: 'numeric',
-              day: 'numeric',
-            }),
-          ),
+          labels: sortedData.map((d) => d.label),
           datasets: [
             {
               label: chartTypes[chartType].label,
-              data: sortedData.map(chartTypes[chartType].getValue),
+              data: sortedData.map((d) => d.value),
               borderColor: theme.palette.info.main,
               backgroundColor: getBackgroundColor(theme.palette.info.light),
               fill: true,
@@ -151,7 +152,8 @@ export const useChartData = (
               },
               ticks: {
                 color: theme.palette.text.secondary,
-                count: 5,
+                maxTicksLimit: 5,
+                maxRotation: 0,
                 font: {
                   family: theme.typography.value5.fontFamily,
                   size: theme.typography.value5.fontSize,
