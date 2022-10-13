@@ -1,16 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
-import { useDataSource } from '@frontend/shared-data-access';
 import { Dialog } from '@frontend/shared-ui';
-import {
-  alpha,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  useTheme,
-} from '@mui/material';
+import { Button, Card, CardContent, CardHeader } from '@mui/material';
 import { useSearch } from '@tanstack/react-location';
 import {
   CategoryScale,
@@ -23,18 +15,12 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
-import { intlFormat } from 'date-fns';
 import { FrameCorners } from 'phosphor-react';
-import { sort } from 'ramda';
 import { Line } from 'react-chartjs-2';
 import { useIntl } from 'react-intl';
 
-import { useMetavaultQuery } from '../../queries.generated';
-import { useMetavault } from '../../state';
 import { Controls } from './components/Controls';
-import { useChartConfig } from './hooks';
-
-import type { ChartData, ChartOptions, ScriptableContext } from 'chart.js';
+import { useChartConfig, useChartData } from './hooks';
 
 import type { MvGenerics } from '../../types';
 
@@ -49,110 +35,15 @@ ChartJS.register(
   Legend,
 );
 
-const getBackgroundColor =
-  (tone: string) => (ctx: ScriptableContext<'line'>) => {
-    const gradient = ctx.chart.ctx.createLinearGradient(0, 0, 0, 400);
-
-    gradient?.addColorStop(0, alpha(tone, 0.8));
-    gradient?.addColorStop(0.25, alpha(tone, 0.4));
-    gradient?.addColorStop(0.85, alpha(tone, 0));
-
-    return gradient;
-  };
-
 export const VaultPerformance = () => {
   const intl = useIntl();
-  const theme = useTheme();
   const [expand, setExpand] = useState(false);
-  const {
-    chartTypes,
-    chartTimeframes,
-    defaultChartTimeframe,
-    defaultChartType,
-  } = useChartConfig();
+  const { defaultChartTimeframe, defaultChartType } = useChartConfig();
   const {
     chartType = defaultChartType,
     chartTimeframe = defaultChartTimeframe,
   } = useSearch<MvGenerics>();
-  const {
-    metavault: { address },
-  } = useMetavault();
-  const dataSource = useDataSource();
-  const { data } = useMetavaultQuery(
-    dataSource,
-    {
-      id: address,
-      days: chartTimeframes[chartTimeframe].days,
-    },
-    { enabled: !!address },
-  );
-  const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
-    useMemo(() => {
-      const sortedData = sort(
-        (a, b) => Number(a.timestamp) - Number(b.timestamp),
-        data?.vault?.DailyVaultStats || [],
-      );
-
-      return {
-        data: {
-          labels: sortedData.map((d) =>
-            intlFormat(Number(d.timestamp) * 1000, {
-              timeZone: 'UTC',
-              month: 'numeric',
-              day: 'numeric',
-            }),
-          ),
-          datasets: [
-            {
-              label: 'data1',
-              data: sortedData.map(chartTypes[chartType].getValue),
-              borderColor: theme.palette.info.main,
-              backgroundColor: getBackgroundColor(theme.palette.info.light),
-              fill: true,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          datasets: {
-            line: {
-              tension: 0.2,
-              pointRadius: 0,
-            },
-          },
-          scales: {
-            y: {
-              grid: {
-                display: false,
-              },
-              min: 0,
-              ticks: {
-                callback: chartTypes[chartType].getLabel,
-              },
-            },
-            x: {
-              grid: {
-                display: false,
-              },
-            },
-          },
-          plugins: {
-            legend: {
-              display: false,
-            },
-            title: {
-              display: false,
-            },
-          },
-        },
-      };
-    }, [
-      chartType,
-      chartTypes,
-      data?.vault?.DailyVaultStats,
-      theme.palette.info.light,
-      theme.palette.info.main,
-    ]);
+  const chartData = useChartData(chartTimeframe, chartType);
 
   return (
     <Card sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}>
