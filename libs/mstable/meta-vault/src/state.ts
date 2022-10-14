@@ -76,6 +76,7 @@ export const {
       vault: address,
     },
     {
+      enabled: false,
       onSuccess: (userVaultBalanceData) => {
         if (userVaultBalanceData) {
           setState(
@@ -197,6 +198,7 @@ export const {
             : BigDecimal.ZERO;
         }),
       );
+      refetchUserVaultBalance();
     },
   });
 
@@ -213,18 +215,14 @@ export const {
   }, [asset, fetchAssetToken]);
 
   useEffect(() => {
-    if (!walletAddress) {
-      setState(
-        produce((draft) => {
-          draft.mvBalance = null;
-          draft.assetBalance = null;
-          draft.mvDeposited = null;
-        }),
-      );
-    } else {
-      refetchUserVaultBalance();
-    }
-  }, [walletAddress, refetchUserVaultBalance]);
+    setState(
+      produce((draft) => {
+        draft.mvBalance = null;
+        draft.assetBalance = null;
+        draft.mvDeposited = null;
+      }),
+    );
+  }, [walletAddress]);
 
   return [state, setState];
 });
