@@ -57,8 +57,8 @@ export const SubmitButton = () => {
 
   const { config: submitConfig, refetch: fetchSubmitConfig } =
     usePrepareContractWrite({
-      addressOrName: address,
-      contractInterface: erc4626ABI,
+      address,
+      abi: erc4626ABI as const,
       functionName: operation,
       args,
       enabled: false,

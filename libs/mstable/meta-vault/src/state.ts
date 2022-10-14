@@ -93,8 +93,8 @@ export const {
   );
 
   useContractRead({
-    addressOrName: address,
-    contractInterface: erc4626ABI,
+    address,
+    abi: erc4626ABI as const,
     functionName: 'asset',
     enabled: !!address,
     onSuccess: (data) => {
@@ -107,7 +107,7 @@ export const {
   });
 
   const { refetch: fetchMvToken } = useToken({
-    address: address,
+    address,
     enabled: false,
     onSuccess: (data) => {
       setState(
@@ -165,14 +165,14 @@ export const {
   useContractReads({
     contracts: [
       {
-        addressOrName: address,
-        contractInterface: erc4626ABI,
+        address,
+        abi: erc4626ABI as const,
         functionName: 'convertToAssets',
         args: [state.mvBalance?.exact],
       },
       {
-        addressOrName: address,
-        contractInterface: erc4626ABI,
+        address,
+        abi: erc4626ABI as const,
         functionName: 'convertToShares',
         args: [state.assetBalance?.exact],
       },

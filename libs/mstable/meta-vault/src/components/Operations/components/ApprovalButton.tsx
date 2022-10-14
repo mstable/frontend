@@ -33,8 +33,8 @@ export const ApprovalButton = (props: ButtonProps) => {
 
   const { config: approveConfig, refetch: fetchApprovalConfig } =
     usePrepareContractWrite({
-      addressOrName: asset,
-      contractInterface: erc20ABI,
+      address: asset,
+      abi: erc20ABI as const,
       functionName: 'approve',
       args: [address, constants.MaxUint256],
       enabled: false,

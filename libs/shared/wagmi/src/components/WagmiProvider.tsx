@@ -7,8 +7,18 @@ import { Box, useTheme } from '@mui/material';
 import {
   connectorsForWallets,
   RainbowKitProvider,
-  wallet,
 } from '@rainbow-me/rainbowkit';
+import {
+  argentWallet,
+  braveWallet,
+  coinbaseWallet,
+  imTokenWallet,
+  injectedWallet,
+  ledgerWallet,
+  metaMaskWallet,
+  rainbowWallet,
+  walletConnectWallet,
+} from '@rainbow-me/rainbowkit/wallets';
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
@@ -43,21 +53,21 @@ const connectors = connectorsForWallets([
   {
     groupName: 'Recommended',
     wallets: [
-      wallet.metaMask({ chains, shimDisconnect: true }),
-      wallet.ledger({ chains }),
-      wallet.walletConnect({ chains }),
-      wallet.coinbase({ appName: 'mStable', chains }),
+      metaMaskWallet({ chains, shimDisconnect: true }),
+      ledgerWallet({ chains }),
+      walletConnectWallet({ chains }),
+      coinbaseWallet({ appName: 'mStable', chains }),
     ],
   },
   {
     groupName: 'Others',
     wallets: [
-      wallet.injected({ chains, shimDisconnect: true }),
+      injectedWallet({ chains, shimDisconnect: true }),
       gnosisSafeWallet({ chains }),
-      wallet.rainbow({ chains }),
-      wallet.brave({ chains, shimDisconnect: true }),
-      wallet.argent({ chains }),
-      wallet.imToken({ chains }),
+      rainbowWallet({ chains }),
+      braveWallet({ chains, shimDisconnect: true }),
+      argentWallet({ chains }),
+      imTokenWallet({ chains }),
     ],
   },
 ]);

@@ -66,8 +66,8 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   const { amount, operation, allowance, preview } = state;
 
   useContractRead({
-    addressOrName: asset,
-    contractInterface: erc20ABI,
+    address: asset,
+    abi: erc20ABI as const,
     functionName: 'allowance',
     args: [walletAddress, address],
     enabled: !!asset && isConnected,
@@ -83,8 +83,8 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   });
 
   const { refetch: fetchPreview } = useContractRead({
-    addressOrName: address,
-    contractInterface: erc4626ABI,
+    address,
+    abi: erc4626ABI as const,
     functionName: {
       deposit: 'previewDeposit',
       mint: 'previewMint',
