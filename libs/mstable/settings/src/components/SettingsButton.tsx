@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { Gear } from 'phosphor-react';
 import { useIntl } from 'react-intl';
-import { useNetwork } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 
 import { useToggleSettings } from '../hooks';
 import { useSettings } from '../state';
@@ -22,6 +22,7 @@ export const SettingsButton = (props: ButtonProps) => {
   const [open, setOpen] = useState(false);
   const anchorEl = useRef(null);
   const { chain } = useNetwork();
+  const { isConnected } = useAccount();
   const intl = useIntl();
   const { exactApproval, dark } = useSettings();
   const toggleSettings = useToggleSettings();
@@ -100,6 +101,7 @@ export const SettingsButton = (props: ButtonProps) => {
             }
             labelPlacement="start"
             disableTypography
+            disabled={!isConnected}
             onChange={() => {
               toggleSettings('exactApproval');
             }}
