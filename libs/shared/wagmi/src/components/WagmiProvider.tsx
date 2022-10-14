@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import '@rainbow-me/rainbowkit/styles.css';
 
 import { rbkDarkTheme, rbkLightTheme } from '@frontend/shared-theme';
@@ -26,7 +27,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import type { Children } from '@frontend/shared-utils';
 import type { BoxProps } from '@mui/material';
 import type { Wallet } from '@rainbow-me/rainbowkit';
-import type { Chain } from 'wagmi';
+import type { Chain, Connector } from 'wagmi';
 
 const { chains, provider, webSocketProvider } = configureChains(
   [
@@ -46,7 +47,9 @@ const gnosisSafeWallet = ({ chains }: { chains: Chain[] }): Wallet => ({
   iconUrl:
     'https://raw.githubusercontent.com/safe-global/safe-react/dev/src/assets/logo.svg',
   iconBackground: '#ffffff',
-  createConnector: () => ({ connector: new SafeConnector({ chains }) }),
+  createConnector: () => ({
+    connector: new SafeConnector({ chains }) as Connector<any, any, any>,
+  }),
 });
 
 const connectors = connectorsForWallets([
