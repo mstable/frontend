@@ -65,7 +65,7 @@ export const VaultJumbo = (props: StackProps) => {
       label: `${diff >= 0 ? '+' : ''}${diff.toFixed(2)}%(1W)`,
       color:
         diff > 0
-          ? theme.palette.success.main
+          ? theme.palette.success.dark
           : diff < 0
           ? theme.palette.error.main
           : theme.palette.text.primary,
@@ -73,7 +73,7 @@ export const VaultJumbo = (props: StackProps) => {
   }, [
     data?.vault?.DailyVaultStats,
     theme.palette.error.main,
-    theme.palette.success.main,
+    theme.palette.success.dark,
     theme.palette.text.primary,
   ]);
 

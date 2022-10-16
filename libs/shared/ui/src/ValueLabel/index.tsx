@@ -42,6 +42,7 @@ export const ValueLabel = ({
         noWrap
         position="relative"
         mb={{ xs: 0, md: 2 }}
+        color="text.secondary"
         {...(hint && { pr: 1.75 })}
         {...components?.label}
       >

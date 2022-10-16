@@ -76,6 +76,7 @@ export const Position = () => {
                 sx={{ ml: 1 }}
                 label="tooltip"
                 color="text.secondary"
+                variant="exclamation"
               />
             </Box>
             <Stack direction="column" alignItems="flex-end" spacing={1}>
@@ -108,6 +109,7 @@ export const Position = () => {
                 sx={{ ml: 1 }}
                 label="tooltip"
                 color="text.secondary"
+                variant="exclamation"
               />
             </Box>
             <Stack direction="column" alignItems="flex-end" spacing={1}>

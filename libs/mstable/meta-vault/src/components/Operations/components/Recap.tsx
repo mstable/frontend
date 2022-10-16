@@ -186,7 +186,7 @@ const WithdrawRecap = (props: StackProps) => {
         </Typography>
       </Stack>
       <Stack {...rowProps}>
-        <Typography variant="value5">
+        <Typography variant="value5" color="text.secondary">
           {operation === 'redeem' && isInputLoading ? (
             <Skeleton width={100} />
           ) : (
@@ -196,7 +196,7 @@ const WithdrawRecap = (props: StackProps) => {
             )
           )}
         </Typography>
-        <Typography variant="value5">
+        <Typography variant="value5" color="text.secondary">
           {operation === 'withdraw' && isInputLoading ? (
             <Skeleton width={100} />
           ) : (
@@ -288,7 +288,7 @@ const GasFeesRecap = (props: StackProps) => {
   return (
     <Stack {...props} direction="column">
       <Stack {...rowProps} pb={2}>
-        <Typography variant="label2">
+        <Typography variant="label2" color="text.secondary">
           {intl.formatMessage({ defaultMessage: 'Current Gas' })}
         </Typography>
         <Typography variant="value5">
@@ -299,7 +299,7 @@ const GasFeesRecap = (props: StackProps) => {
         </Typography>
       </Stack>
       <Stack {...rowProps} pb={1}>
-        <Typography variant="label2">
+        <Typography variant="label2" color="text.secondary">
           {needsApproval
             ? intl.formatMessage({ defaultMessage: 'Approval Cost' })
             : intl.formatMessage(
@@ -313,7 +313,7 @@ const GasFeesRecap = (props: StackProps) => {
         </Typography>
       </Stack>
       <Stack {...rowProps} justifyContent="flex-end">
-        <Typography variant="value5">
+        <Typography variant="value5" color="text.secondary">
           {fiatGasPrice?.format(2) ?? '-'}&nbsp;{symbol}
         </Typography>
       </Stack>
