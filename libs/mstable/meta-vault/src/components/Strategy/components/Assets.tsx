@@ -39,8 +39,8 @@ export const Assets = (props: StackProps) => {
                 <AddressLabel
                   small
                   address={address}
-                  hideCopyToClipboard
                   link
+                  sx={{ maxWidth: 120 }}
                 />
               </Stack>
             </Grid>
