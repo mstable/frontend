@@ -35,7 +35,8 @@ const rateChipProps: TypographyProps = {
 
 const logoContainerProps: StackProps = {
   mt: 4,
-  width: 1,
+  mx: -2,
+  width: 'calc(100% + 32px)',
   direction: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -44,7 +45,7 @@ const logoContainerProps: StackProps = {
     '::after': {
       content: '""',
       height: '2px',
-      top: '25%',
+      top: '50%',
       left: 8,
       right: 8,
       background: theme.palette.background.highlight,
@@ -61,7 +62,12 @@ type LogoProps = {
 
 const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
   return (
-    <Stack direction="column" alignItems="center" {...rest}>
+    <Stack
+      direction="column"
+      alignItems="center"
+      sx={{ px: 2, backgroundColor: 'background.paper' }}
+      {...rest}
+    >
       <Box
         sx={{
           backgroundColor: revertColors
@@ -81,7 +87,11 @@ const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
       >
         {children}
       </Box>
-      <Typography sx={{ fontSize: 14, fontWeight: 'medium' }} noWrap>
+      <Typography
+        sx={{ fontSize: 14, fontWeight: 'medium' }}
+        noWrap
+        color="text.secondary"
+      >
         {label}
       </Typography>
     </Stack>

@@ -61,7 +61,7 @@ export const Strategy = () => {
         }
       />
       <CardContent>
-        <Typography mb={2}>
+        <Typography mb={2} color="text.secondary">
           {metavault?.strategyDescription
             ? intl.formatMessage(metavault.strategyDescription)
             : ''}

@@ -91,6 +91,7 @@ export const CollapsibleSection = ({
             <Typography
               {...components?.subtitle}
               sx={{ typography: 'subtitle1', ...components?.subtitle?.sx }}
+              color="text.secondary"
             >
               {subtitle}
             </Typography>

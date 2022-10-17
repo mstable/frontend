@@ -150,7 +150,7 @@ export const SubmitButton = () => {
     );
   }
 
-  if (!amount || needsApproval) {
+  if (!amount || needsApproval || amount.simple === 0) {
     return (
       <Button {...buttonProps} disabled>
         {operationLabel}

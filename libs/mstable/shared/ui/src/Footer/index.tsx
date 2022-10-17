@@ -26,7 +26,7 @@ export const Footer = (props: StackProps) => {
     },
     {
       title: intl.formatMessage({ defaultMessage: 'Medium' }),
-      icon: <MediumLogo size={32} weight="fill" />,
+      icon: <MediumLogo size={24} weight="fill" />,
       href: 'https://medium.com/mstable',
     },
     {
