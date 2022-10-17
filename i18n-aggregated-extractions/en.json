@@ -305,14 +305,14 @@
   "FvmV6q": {
     "defaultMessage": "Discord"
   },
+  "JsHYR9": {
+    "defaultMessage": "<strong>Meta Vaults</strong> by mStable"
+  },
   "PmkP1H": {
     "defaultMessage": "Unsupported Network"
   },
   "Vn76qV": {
     "defaultMessage": "Github"
-  },
-  "cyasTx": {
-    "defaultMessage": "mStable"
   },
   "ovJ26C": {
     "defaultMessage": "Medium"
@@ -320,11 +320,11 @@
   "sy+pv5": {
     "defaultMessage": "Email"
   },
+  "vHwp5J": {
+    "defaultMessage": "Explore Meta Vaults"
+  },
   "w4Oc4e": {
     "defaultMessage": "The selected network is not supported by this application, why not try {defaultChain}?"
-  },
-  "xHJnaY": {
-    "defaultMessage": "Home Page"
   },
   "2JVe1j": {
     "defaultMessage": "Market Neutral"
@@ -391,6 +391,9 @@
   },
   "not_connected": {
     "defaultMessage": "Not Connected"
+  },
+  "p556q3": {
+    "defaultMessage": "Copied"
   },
   "+vVZ/G": {
     "defaultMessage": "Connect"

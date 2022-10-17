@@ -44,8 +44,9 @@ export const Footer = (props: StackProps) => {
       {...props}
     >
       <Typography>
-        <strong>{intl.formatMessage({ defaultMessage: 'mStable' })}</strong>
-        &nbsp;|&nbsp;Meta-Vaults
+        {intl.formatMessage({
+          defaultMessage: '<strong>Meta Vaults</strong> by mStable',
+        })}
       </Typography>
       <Stack
         direction="row"

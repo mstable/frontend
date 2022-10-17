@@ -30,6 +30,13 @@ const I18nProviderWrapped = ({
       messages={mess}
       defaultLocale="en"
       textComponent={Typography}
+      wrapRichTextChunksInFragment
+      defaultRichTextElements={{
+        p: (chunks) => <p>{chunks}</p>,
+        b: (chunks) => <b>{chunks}</b>,
+        br: () => <br />,
+        strong: (chunks) => <strong>{chunks}</strong>,
+      }}
     >
       {children}
     </IntlProvider>

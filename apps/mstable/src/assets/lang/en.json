@@ -363,6 +363,22 @@
       "value": "Years"
     }
   ],
+  "JsHYR9": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Meta Vaults"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " by mStable"
+    }
+  ],
   "KYgRAc": [
     {
       "type": 0,
@@ -591,12 +607,6 @@
       "value": "Enter Amount"
     }
   ],
-  "cyasTx": [
-    {
-      "type": 0,
-      "value": "mStable"
-    }
-  ],
   "d1uESJ": [
     {
       "type": 0,
@@ -801,6 +811,12 @@
       "value": "Medium"
     }
   ],
+  "p556q3": [
+    {
+      "type": 0,
+      "value": "Copied"
+    }
+  ],
   "p8bsw4": [
     {
       "type": 0,
@@ -893,6 +909,12 @@
       "value": "% performance upon underlying asset appreciation."
     }
   ],
+  "vHwp5J": [
+    {
+      "type": 0,
+      "value": "Explore Meta Vaults"
+    }
+  ],
   "vS/YSY": [
     {
       "type": 0,
@@ -917,12 +939,6 @@
     {
       "type": 0,
       "value": "Wrong Network"
-    }
-  ],
-  "xHJnaY": [
-    {
-      "type": 0,
-      "value": "Home Page"
     }
   ],
   "yuiyES": [
