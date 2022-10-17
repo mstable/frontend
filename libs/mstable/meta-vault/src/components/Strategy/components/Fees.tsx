@@ -34,45 +34,60 @@ const rateChipProps: TypographyProps = {
 };
 
 const logoContainerProps: StackProps = {
-  mt: 4,
-  mx: -2,
-  width: 'calc(100% + 32px)',
+  width: 1,
+  mt: 2,
   direction: 'row',
-  justifyContent: 'space-between',
+  flexWrap: 'wrap',
   alignItems: 'center',
-  position: 'relative',
-  sx: (theme) => ({
-    '::after': {
-      content: '""',
-      height: '2px',
-      top: '50%',
-      left: 8,
-      right: 8,
-      background: theme.palette.background.highlight,
-      position: 'absolute',
-      zIndex: -1,
-    },
-  }),
 };
 
 type LogoProps = {
+  first?: boolean;
+  last?: boolean;
   label: string;
-  revertColors?: boolean;
 } & StackProps;
 
-const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
+const Logo = ({ children, label, first, last, ...rest }: LogoProps) => {
   return (
     <Stack
       direction="column"
       alignItems="center"
-      sx={{ px: 2, backgroundColor: 'background.paper' }}
+      alignContent="space-between"
       {...rest}
+      {...(first && { mr: 2 })}
+      {...(last && { ml: 2 })}
+      mt={2}
+      sx={[
+        !first &&
+          !last && {
+            flexGrow: 1,
+            position: 'relative',
+            '::before': {
+              top: '50%',
+              width: 1,
+              height: 2,
+              content: '""',
+              position: 'absolute',
+              backgroundColor: 'divider',
+              zIndex: -2,
+            },
+            '::after': {
+              display: 'block',
+              top: '50%',
+              width: 1 / 2,
+              height: 2,
+              content: '""',
+              position: 'absolute',
+              backgroundColor: 'background.paper',
+              zIndex: -1,
+            },
+          },
+      ]}
     >
       <Box
         sx={{
-          backgroundColor: revertColors
-            ? 'icons.revertedBackground'
-            : 'icons.background',
+          backgroundColor:
+            first || last ? 'icons.revertedBackground' : 'icons.background',
           borderRadius: '50%',
           width: 30,
           height: 30,
@@ -81,14 +96,17 @@ const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
           alignItems: 'center',
           mb: 1,
           svg: {
-            color: revertColors ? 'icons.revertedColor' : 'icons.color',
+            color: first || last ? 'icons.revertedColor' : 'icons.color',
           },
         }}
       >
         {children}
       </Box>
       <Typography
-        sx={{ fontSize: 14, fontWeight: 'medium' }}
+        sx={{
+          fontSize: 14,
+          fontWeight: 'medium',
+        }}
         noWrap
         color="text.secondary"
       >
@@ -127,10 +145,7 @@ export const Fees = (props: StackProps) => {
           )}
         </Typography>
         <Stack {...logoContainerProps}>
-          <Logo
-            label={intl.formatMessage({ defaultMessage: 'Vault' })}
-            revertColors
-          >
+          <Logo label={intl.formatMessage({ defaultMessage: 'Vault' })} first>
             <Vault weight="fill" width={16} height={16} />
           </Logo>
           <Logo
@@ -149,10 +164,7 @@ export const Fees = (props: StackProps) => {
           >
             <ChartPieSlice weight="fill" width={16} height={16} />
           </Logo>
-          <Logo
-            revertColors
-            label={intl.formatMessage({ defaultMessage: 'DAO' })}
-          >
+          <Logo last label={intl.formatMessage({ defaultMessage: 'DAO' })}>
             <Bank weight="fill" width={16} height={16} />
           </Logo>
         </Stack>
@@ -176,10 +188,7 @@ export const Fees = (props: StackProps) => {
           )}
         </Typography>
         <Stack {...logoContainerProps}>
-          <Logo
-            label={intl.formatMessage({ defaultMessage: 'Token' })}
-            revertColors
-          >
+          <Logo label={intl.formatMessage({ defaultMessage: 'Token' })} first>
             <Coin weight="fill" width={16} height={16} />
           </Logo>
           <Logo
@@ -195,10 +204,7 @@ export const Fees = (props: StackProps) => {
           >
             <ChartPieSlice weight="fill" width={16} height={16} />
           </Logo>
-          <Logo
-            revertColors
-            label={intl.formatMessage({ defaultMessage: 'DAO' })}
-          >
+          <Logo last label={intl.formatMessage({ defaultMessage: 'DAO' })}>
             <Bank weight="fill" width={16} height={16} />
           </Logo>
         </Stack>
