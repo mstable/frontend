@@ -31,6 +31,8 @@ jobs:
         with:
           node-version: 16
           cache: "yarn"          
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@mstable'
 
       - run: yarn install --frozen-lockfile
         name: Install dependencies
@@ -73,6 +75,8 @@ jobs:
         with:
           node-version: 16
           cache: "yarn"
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@mstable'
 
       - run: yarn install --frozen-lockfile
         name: Install dependencies
