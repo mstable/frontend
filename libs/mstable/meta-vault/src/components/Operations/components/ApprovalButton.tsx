@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useMemo } from 'react';
 
 import { useSettings } from '@frontend/mstable-settings';
 import { usePushNotification } from '@frontend/shared-notifications';
@@ -19,6 +19,10 @@ import { useOperations, useSetIsSubmitLoading } from '../hooks';
 
 import type { ButtonProps } from '@mui/material';
 
+const buttonProps: ButtonProps = {
+  size: 'large',
+};
+
 export const ApprovalButton = (props: ButtonProps) => {
   const intl = useIntl();
   const { chain } = useNetwork();
@@ -31,102 +35,89 @@ export const ApprovalButton = (props: ButtonProps) => {
   const { amount, needsApproval } = useOperations();
   const setIsSubmitLoading = useSetIsSubmitLoading();
 
-  const { config: approveConfig, refetch: fetchApprovalConfig } =
-    usePrepareContractWrite({
-      addressOrName: asset,
-      contractInterface: erc20ABI,
-      functionName: 'approve',
-      args: [address, constants.MaxUint256],
-      enabled: false,
-    });
+  const args = useMemo(
+    () => [address, exactApproval ? amount?.exact : constants.MaxUint256],
+    [address, amount?.exact, exactApproval],
+  );
+
+  const { config } = usePrepareContractWrite({
+    addressOrName: asset,
+    contractInterface: erc20ABI,
+    functionName: 'approve',
+    args,
+    enabled: !!asset && needsApproval,
+  });
   const {
     data: approveData,
-    write: approve,
-    isLoading: isApproveLoading,
-    isSuccess: isApproveStarted,
+    write,
+    isLoading: isWriteLoading,
+    isSuccess: isWriteSuccess,
   } = useContractWrite({
-    ...approveConfig,
-    onError: () => {
-      pushNotification({
-        title: intl.formatMessage({ defaultMessage: 'Transaction Cancelled' }),
-        severity: 'info',
-      });
-      setIsSubmitLoading(false);
-    },
-  });
-  const { isSuccess: isApproveSuccess } = useWaitForTransaction({
-    hash: approveData?.hash,
-    onSettled: (data, error) => {
-      pushNotification({
-        title: error
-          ? intl.formatMessage({ defaultMessage: 'Transaction Error' })
-          : intl.formatMessage({ defaultMessage: 'Transaction Confirmed' }),
-        content: (
-          <ViewEtherscanLink
-            hash={error ? approveData?.hash : data?.transactionHash}
-            blockExplorer={chain?.blockExplorers?.etherscan}
-          />
-        ),
-        severity: error ? 'error' : 'success',
-      });
-      setIsSubmitLoading(false);
-    },
-  });
-
-  useEffect(() => {
-    if (!!asset && needsApproval) {
-      fetchApprovalConfig();
-    }
-  }, [asset, fetchApprovalConfig, needsApproval]);
-
-  useEffect(() => {
-    if (isApproveStarted && !isApproveSuccess) {
+    ...config,
+    onSuccess: (data) => {
       pushNotification({
         title: intl.formatMessage({ defaultMessage: 'Approving Token' }),
         content: (
           <ViewEtherscanLink
-            hash={approveData?.hash}
+            hash={data?.hash}
             blockExplorer={chain?.blockExplorers?.etherscan}
           />
         ),
         severity: 'info',
       });
-    }
-  }, [
-    approveData?.hash,
-    chain?.blockExplorers?.etherscan,
-    exactApproval,
-    intl,
-    isApproveStarted,
-    isApproveSuccess,
-    pushNotification,
-  ]);
-
-  const handleApprove = () => {
-    if (exactApproval) {
-      approve({
-        recklesslySetUnpreparedArgs: [address, amount.exact],
+    },
+    onError: () => {
+      setIsSubmitLoading(false);
+      pushNotification({
+        title: intl.formatMessage({ defaultMessage: 'Transaction Cancelled' }),
+        severity: 'info',
       });
-    } else {
-      approve();
-    }
+    },
+  });
+  const { isSuccess: isWaitSuccess, isLoading: isWaitLoading } =
+    useWaitForTransaction({
+      hash: approveData?.hash,
+      onSettled: (data, error) => {
+        setIsSubmitLoading(false);
+        pushNotification({
+          title: error
+            ? intl.formatMessage({ defaultMessage: 'Transaction Error' })
+            : intl.formatMessage({ defaultMessage: 'Transaction Confirmed' }),
+          content: (
+            <ViewEtherscanLink
+              hash={error ? approveData?.hash : data?.transactionHash}
+              blockExplorer={chain?.blockExplorers?.etherscan}
+            />
+          ),
+          severity: error ? 'error' : 'success',
+        });
+      },
+    });
+
+  const approve = () => {
+    write();
     setIsSubmitLoading(true);
   };
 
-  return (
-    <Button
-      {...props}
-      onClick={handleApprove}
-      disabled={isApproveLoading || isApproveStarted}
-      size="large"
-    >
-      {isApproveLoading ? (
-        intl.formatMessage({ defaultMessage: 'Waiting for approval' })
-      ) : isApproveStarted && !isApproveSuccess ? (
+  if (isWriteLoading) {
+    return (
+      <Button {...buttonProps} {...props} disabled>
+        {intl.formatMessage({ defaultMessage: 'Waiting for approval' })}
+      </Button>
+    );
+  }
+
+  if (isWriteSuccess && !isWaitSuccess && isWaitLoading) {
+    return (
+      <Button {...buttonProps} {...props} disabled>
         <CircularProgress size={20} />
-      ) : (
-        intl.formatMessage({ defaultMessage: 'Approve' })
-      )}
+      </Button>
+    );
+  }
+
+  return (
+    <Button {...buttonProps} {...props} onClick={approve}>
+      {intl.formatMessage({ defaultMessage: 'Approve' })}
     </Button>
   );
 };
