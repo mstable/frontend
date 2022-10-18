@@ -102,7 +102,7 @@ export const ApprovalButton = (props: ButtonProps) => {
   if (isWriteLoading) {
     return (
       <Button {...buttonProps} {...props} disabled>
-        {intl.formatMessage({ defaultMessage: 'Waiting for approval' })}
+        {intl.formatMessage({ defaultMessage: 'Sign Transaction' })}
       </Button>
     );
   }

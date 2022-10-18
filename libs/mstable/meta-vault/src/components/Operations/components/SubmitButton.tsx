@@ -142,7 +142,7 @@ export const SubmitButton = () => {
   if (isWriteLoading) {
     return (
       <Button {...buttonProps} disabled>
-        {intl.formatMessage({ defaultMessage: 'Waiting for approval' })}
+        {intl.formatMessage({ defaultMessage: 'Sign Transaction' })}
       </Button>
     );
   }
