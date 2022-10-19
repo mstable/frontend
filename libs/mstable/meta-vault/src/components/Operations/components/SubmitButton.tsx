@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { erc4626ABI } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-notifications';
@@ -55,32 +55,51 @@ export const SubmitButton = () => {
     [amount?.exact, operation, walletAddress],
   );
 
-  const { config: submitConfig, refetch: fetchSubmitConfig } =
-    usePrepareContractWrite({
-      addressOrName: address,
-      contractInterface: erc4626ABI,
-      functionName: operation,
-      args,
-      enabled: false,
-    });
+  const { config: submitConfig } = usePrepareContractWrite({
+    addressOrName: address,
+    contractInterface: erc4626ABI,
+    functionName: operation,
+    args,
+    enabled: !!amount?.exact && !!walletAddress && !needsApproval,
+  });
   const {
     data: submitData,
     write: submit,
-    isLoading: isSubmitLoading,
-    isSuccess: isSubmitStarted,
+    isLoading: isWriteLoading,
+    isSuccess: isWriteSuccess,
   } = useContractWrite({
     ...submitConfig,
+    onSuccess: (data) => {
+      pushNotification({
+        title: intl.formatMessage(
+          { defaultMessage: '{operation}ing {currency}' },
+          {
+            operation: operationLabel,
+            currency: token?.symbol,
+          },
+        ),
+        content: (
+          <ViewEtherscanLink
+            hash={data?.hash}
+            blockExplorer={chain?.blockExplorers?.etherscan}
+          />
+        ),
+        severity: 'info',
+      });
+    },
     onError: () => {
+      setIsSubmitLoading(false);
       pushNotification({
         title: intl.formatMessage({ defaultMessage: 'Transaction Cancelled' }),
         severity: 'info',
       });
-      setIsSubmitLoading(false);
     },
   });
   const { isSuccess: isSubmitSuccess } = useWaitForTransaction({
     hash: submitData?.hash,
     onSettled: (data, error) => {
+      reset();
+      setIsSubmitLoading(false);
       pushNotification({
         title: error
           ? intl.formatMessage({ defaultMessage: 'Transaction Error' })
@@ -93,46 +112,8 @@ export const SubmitButton = () => {
         ),
         severity: error ? 'error' : 'success',
       });
-      reset();
-      setIsSubmitLoading(false);
     },
   });
-
-  useEffect(() => {
-    if (!!amount?.exact && !!walletAddress && !needsApproval) {
-      fetchSubmitConfig();
-    }
-  }, [amount?.exact, fetchSubmitConfig, needsApproval, walletAddress]);
-
-  useEffect(() => {
-    if (isSubmitStarted && !isSubmitSuccess) {
-      pushNotification({
-        title: intl.formatMessage(
-          { defaultMessage: '{operation}ing {currency}' },
-          {
-            operation: operationLabel,
-            currency: token?.symbol,
-          },
-        ),
-        content: (
-          <ViewEtherscanLink
-            hash={submitData?.hash}
-            blockExplorer={chain?.blockExplorers?.etherscan}
-          />
-        ),
-        severity: 'info',
-      });
-    }
-  }, [
-    chain?.blockExplorers?.etherscan,
-    intl,
-    isSubmitStarted,
-    isSubmitSuccess,
-    operationLabel,
-    pushNotification,
-    submitData?.hash,
-    token?.symbol,
-  ]);
 
   const handleSubmit = () => {
     submit();
@@ -157,15 +138,15 @@ export const SubmitButton = () => {
     );
   }
 
-  if (isSubmitLoading) {
+  if (isWriteLoading) {
     return (
       <Button {...buttonProps} disabled>
-        {intl.formatMessage({ defaultMessage: 'Waiting for approval' })}
+        {intl.formatMessage({ defaultMessage: 'Sign Transaction' })}
       </Button>
     );
   }
 
-  if (isSubmitStarted && !isSubmitSuccess) {
+  if (isWriteSuccess && !isSubmitSuccess) {
     return (
       <Button {...buttonProps} disabled>
         <CircularProgress size={20} />

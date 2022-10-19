@@ -3,7 +3,14 @@ import { useEffect, useMemo } from 'react';
 import { erc4626ABI } from '@frontend/shared-constants';
 import { usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
-import { Box, Divider, Skeleton, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Collapse,
+  Divider,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { constants } from 'ethers';
 import { ArrowsClockwise, Fire, Ticket, Vault, Wallet } from 'phosphor-react';
 import { pathOr } from 'ramda';
@@ -329,12 +336,10 @@ export const Recap = (props: StackProps) => {
   return (
     <Stack {...props} spacing={3}>
       {tab === 0 ? <DepositRecap /> : <WithdrawRecap />}
-      {isConnected && !!amount && (
-        <>
-          <Divider flexItem />
-          <GasFeesRecap />
-        </>
-      )}
+      <Collapse in={isConnected && !!amount}>
+        <Divider flexItem />
+        <GasFeesRecap pt={2} />
+      </Collapse>
     </Stack>
   );
 };
