@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { BigDecimal } from '@frontend/shared-utils';
-import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
+import { Card, CardContent, Collapse, Stack, Tab, Tabs } from '@mui/material';
 import { useNavigate, useSearch } from '@tanstack/react-location';
 import produce from 'immer';
 import { useIntl } from 'react-intl';
@@ -79,7 +79,9 @@ const OperationsWrapped = () => {
               }}
             >
               <Recap pb={2} />
-              {needsApproval && <ApprovalButton />}
+              <Collapse in={needsApproval}>
+                <ApprovalButton fullWidth />
+              </Collapse>
               <SubmitButton />
             </Stack>
           </Stack>

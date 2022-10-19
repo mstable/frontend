@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { erc4626ABI } from '@frontend/shared-constants';
 import { BigDecimal } from '@frontend/shared-utils';
+import { constants } from 'ethers';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { useDebounce } from 'react-use';
@@ -126,6 +127,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
           ['deposit', 'mint'].includes(operation) &&
           !!amt &&
           !!allowance &&
+          amt.exact.gt(constants.Zero) &&
           amt.exact.gt(allowance);
       }),
     );
