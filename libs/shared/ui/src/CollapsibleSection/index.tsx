@@ -1,8 +1,5 @@
-import { useState } from 'react';
-
 import { isNilOrEmpty } from '@frontend/shared-utils';
 import { Box, Collapse, Stack, Typography } from '@mui/material';
-import { not } from 'ramda';
 
 import { ExpandIcon } from '../ExpandIcon';
 
@@ -13,6 +10,8 @@ import type { MouseEvent, ReactNode } from 'react';
 export type CollapsibleSectionProps = {
   title: string;
   subtitle?: string;
+  open: boolean;
+  onToggle: () => void;
   children:
     | ReactNode
     | ((open: boolean, onToggle: (event?: MouseEvent) => void) => ReactNode);
@@ -32,18 +31,17 @@ export const CollapsibleSection = ({
   subtitle,
   children,
   iconPosition = 'start',
-  defaultOpen = false,
+  open,
+  onToggle,
   components,
   ...rest
 }: CollapsibleSectionProps) => {
-  const [open, setOpen] = useState(defaultOpen);
-
   const handleToggle =
     (handler?: (event?: MouseEvent) => void) => (event: MouseEvent) => {
       if (handler) {
         handler(event);
       }
-      setOpen(not);
+      onToggle();
     };
 
   return (
