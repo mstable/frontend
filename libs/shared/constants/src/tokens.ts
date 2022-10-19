@@ -1,20 +1,11 @@
+import { tokens as toks } from '@mstable/metavaults-web';
 import { chainId } from 'wagmi';
 
 import { DEAD_ADDRESS } from './utils';
 
-export type SupportedToken =
-  | 'dai'
-  | 'eth'
-  | 'fei'
-  | 'mbtc'
-  | 'mta'
-  | 'musd'
-  | 'rai'
-  | 'usdc'
-  | 'usdt'
-  | 'lusd'
-  | 'frax'
-  | 'busd';
+import type { SupportedToken as SupportedToks } from '@mstable/metavaults-web';
+
+export type SupportedToken = SupportedToks | 'eth' | 'lusd' | 'frax';
 
 export type Token = {
   address: string;
@@ -22,17 +13,18 @@ export type Token = {
   symbol: string;
 };
 
-const mainnet: Record<SupportedToken, Token> = {
-  musd: {
-    address: '0xe2f2a5C287993345a840Db3B0845fbC70f5935a5',
-    name: 'mUSD',
-    symbol: 'MUSD',
+const reduceFn = (acc, [key, val]) => ({
+  ...acc,
+  [key]: {
+    address: val.address,
+    name: val.name,
+    symbol: key.toUpperCase(),
   },
-  busd: {
-    address: '0x4Fabb145d64652a948d72533023f6E7A623C7C53',
-    name: 'Binance',
-    symbol: 'BUSD',
-  },
+});
+
+const mainnet: Partial<Record<SupportedToken, Token>> = Object.entries(
+  toks[chainId.mainnet],
+).reduce(reduceFn, {
   lusd: {
     address: '0x5f98805A4E8be255a32880FDeC7F6728C6568bA0',
     name: 'Liquidity',
@@ -43,49 +35,11 @@ const mainnet: Record<SupportedToken, Token> = {
     name: 'Frax',
     symbol: 'FRAX',
   },
-  dai: {
-    address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-    name: 'DAI',
-    symbol: 'DAI',
-  },
-  usdc: {
-    address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-    name: 'USDC',
-    symbol: 'USDC',
-  },
-  usdt: {
-    address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-    name: 'USDT',
-    symbol: 'USDT',
-  },
-  eth: {
-    address: DEAD_ADDRESS,
-    name: 'Ethereum',
-    symbol: 'ETH',
-  },
-  fei: {
-    address: '0x956F47F50A910163D8BF957Cf5846D573E7f87CA',
-    name: 'FEI',
-    symbol: 'FEI',
-  },
-  mbtc: {
-    address: '0x945Facb997494CC2570096c74b5F66A3507330a1',
-    name: 'mBTC',
-    symbol: 'MBTC',
-  },
-  mta: {
-    address: '0xa3BeD4E1c75D00fa6f4E5E6922DB7261B5E9AcD2',
-    name: 'MTA',
-    symbol: 'MTA',
-  },
-  rai: {
-    address: '0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919',
-    name: 'Rai Reflex Index',
-    symbol: 'RAI',
-  },
-};
+});
 
-const goerli: Record<SupportedToken, Token> = {
+const goerli: Partial<Record<SupportedToken, Token>> = Object.entries(
+  toks[chainId.goerli],
+).reduce(reduceFn, {
   musd: {
     address: DEAD_ADDRESS,
     name: 'mUSD',
@@ -146,9 +100,18 @@ const goerli: Record<SupportedToken, Token> = {
     name: 'Rai Reflex Index',
     symbol: 'RAI',
   },
-};
+});
 
-export const tokens: Record<number, Record<SupportedToken, Token>> = {
+const polygon = Object.entries(toks[chainId.polygon]).reduce(reduceFn, {});
+
+const polygonMumbai = Object.entries(toks[chainId.polygonMumbai]).reduce(
+  reduceFn,
+  {},
+);
+
+export const tokens: Record<number, Partial<Record<SupportedToken, Token>>> = {
   [chainId.mainnet]: mainnet,
   [chainId.goerli]: goerli,
+  [chainId.polygon]: polygon,
+  [chainId.polygonMumbai]: polygonMumbai,
 };

@@ -31,9 +31,12 @@ jobs:
         with:
           node-version: 16
           cache: "yarn"
+          registry-url: 'https://npm.pkg.github.com'  
 
       - run: yarn install --frozen-lockfile
         name: Install dependencies
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_NPM_TOKEN }}
 
       - name: Build
         env:
@@ -54,7 +57,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "✨ New version of mStable frontend 🚀 Deploy url: https://frontend-7e17f.web.app/"
+          args: "✅ New version of mStable frontend 🚀 Deploy url: https://frontend-7e17f.web.app/"
 
   pr:
     runs-on: ubuntu-latest
@@ -71,9 +74,12 @@ jobs:
         with:
           node-version: 16
           cache: "yarn"
+          registry-url: 'https://npm.pkg.github.com'
 
       - run: yarn install --frozen-lockfile
         name: Install dependencies
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_NPM_TOKEN }}
 
       - name: Build
         env:

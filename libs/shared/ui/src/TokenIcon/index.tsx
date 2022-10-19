@@ -22,9 +22,8 @@ export type TokenIconProps = {
   symbol: string;
 } & SvgIconProps;
 
-const SupportedTokens: Record<
-  SupportedToken,
-  (props: SvgIconProps) => JSX.Element
+const SupportedTokens: Partial<
+  Record<SupportedToken, (props: SvgIconProps) => JSX.Element>
 > = {
   dai: DAI,
   eth: Ether,

@@ -1,4 +1,5 @@
 /* eslint-disable formatjs/no-id */
+import { tokens as toks } from '@mstable/metavaults-web';
 import { defineMessage } from 'react-intl';
 import { chainId } from 'wagmi';
 
@@ -77,7 +78,7 @@ const mainnet: Metavault = {
 
 const goerli: Metavault = {
   ...mainnet,
-  address: '0x0145a7fb49402b29be7c52d38aeacb5e1acae11b',
+  address: toks[chainId.goerli].tvg.address,
   vaults: [
     vaults[chainId.goerli].musdConvex3CrvLiquidatorVault,
     vaults[chainId.goerli].busdConvex3CrvLiquidatorVault,
