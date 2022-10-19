@@ -30,7 +30,8 @@ jobs:
         name: Setup node
         with:
           node-version: 16
-          cache: "yarn"          
+          cache: "yarn"
+          registry-url: 'https://npm.pkg.github.com'  
 
       - run: yarn install --frozen-lockfile
         name: Install dependencies
@@ -73,6 +74,7 @@ jobs:
         with:
           node-version: 16
           cache: "yarn"
+          registry-url: 'https://npm.pkg.github.com'
 
       - run: yarn install --frozen-lockfile
         name: Install dependencies
