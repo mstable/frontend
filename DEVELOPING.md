@@ -27,6 +27,8 @@ sudo apt-get update
 sudo apt-get install jq
 ```
 
+This project uses private npm packages published on github npm package registry, make sure you have access to it by using a Personal Access Token with `packages:read` rights. Check out github [documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to create the token and this [page](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token) on how to use it locally.
+
 ## Build configuration
 
 This project uses Nx's specific `project.json` files to expose applications or libraries build scripts. That allows for a smooth integration with Nx tooling such as dependency graph and distributed computing. You can find [here](https://nx.dev/configuration/projectjson) documentation on the full file schema. All builds are handled with executors/builders, usually webpack for applications and rollup for libraries. You can find more information on how to use them [here](https://nx.dev/executors/using-builders).
