@@ -11,7 +11,14 @@ import { ProfileDialog } from './ProfileDialog';
 import type { ButtonProps } from '@mui/material';
 import type { MouseEvent } from 'react';
 
-export const OpenAccountModalButton = (props: ButtonProps) => {
+interface OpenAccountModalButtonProps extends ButtonProps {
+  connectLabel?: string;
+}
+
+export const OpenAccountModalButton = ({
+  connectLabel,
+  ...props
+}: OpenAccountModalButtonProps) => {
   const intl = useIntl();
   const buttonRef = useRef(null);
   const showDialog = useShowDialog();
@@ -36,7 +43,8 @@ export const OpenAccountModalButton = (props: ButtonProps) => {
         if (!mounted || !account || !chain) {
           return (
             <Button {...buttonProps} onClick={handleClick(openConnectModal)}>
-              {intl.formatMessage({ defaultMessage: 'Connect' })}
+              {connectLabel ||
+                intl.formatMessage({ defaultMessage: 'Connect' })}
             </Button>
           );
         }

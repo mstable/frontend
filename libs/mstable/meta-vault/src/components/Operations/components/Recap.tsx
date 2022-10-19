@@ -108,7 +108,7 @@ const DepositRecap = (props: StackProps) => {
         </Typography>
       </Stack>
       <Stack {...rowProps}>
-        <Typography variant="value5">
+        <Typography variant="value5" color="text.secondary">
           {operation === 'mint' && isInputLoading ? (
             <Skeleton width={100} />
           ) : (
@@ -118,7 +118,7 @@ const DepositRecap = (props: StackProps) => {
             }`
           )}
         </Typography>
-        <Typography variant="value5">
+        <Typography variant="value5" color="text.secondary">
           {operation === 'deposit' && isInputLoading ? (
             <Skeleton width={100} />
           ) : (
@@ -289,7 +289,7 @@ const GasFeesRecap = (props: StackProps) => {
     <Stack {...props} direction="column">
       <Stack {...rowProps} pb={2}>
         <Typography variant="label2" color="text.secondary">
-          {intl.formatMessage({ defaultMessage: 'Current Gas' })}
+          {intl.formatMessage({ defaultMessage: 'Current Base Fee' })}
         </Typography>
         <Typography variant="value5">
           {intl.formatMessage(

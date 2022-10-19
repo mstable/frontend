@@ -142,9 +142,8 @@ export const SubmitButton = () => {
   if (!walletAddress) {
     return (
       <OpenAccountModalButton
-        variant="contained"
-        color="primary"
         fullWidth
+        connectLabel={intl.formatMessage({ defaultMessage: 'Connect Wallet' })}
         {...buttonProps}
       />
     );

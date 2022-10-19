@@ -129,6 +129,23 @@ export const VaultJumbo = (props: StackProps) => {
           </AvatarGroup>
         </ValueLabel>
         <ValueLabel
+          label={intl.formatMessage({ defaultMessage: 'APY' })}
+          hint={intl.formatMessage({
+            defaultMessage: 'Annual Percentage Yield',
+          })}
+        >
+          {isLoading ? (
+            <Skeleton height={24} width={60} />
+          ) : (
+            <Typography variant="value2">
+              {intl.formatNumber(
+                new BigDecimal(data?.vault?.apy ?? constants.Zero).simple,
+                { style: 'percent' },
+              )}
+            </Typography>
+          )}
+        </ValueLabel>
+        <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'TVL' })}
           hint={intl.formatMessage({ defaultMessage: 'Total Supply' })}
         >
@@ -147,23 +164,6 @@ export const VaultJumbo = (props: StackProps) => {
                 {apyTrend.label}
               </Typography>
             </Stack>
-          )}
-        </ValueLabel>
-        <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'APY' })}
-          hint={intl.formatMessage({
-            defaultMessage: 'Annual Percentage Yield',
-          })}
-        >
-          {isLoading ? (
-            <Skeleton height={24} width={60} />
-          ) : (
-            <Typography variant="value2">
-              {intl.formatNumber(
-                new BigDecimal(data?.vault?.apy ?? constants.Zero).simple,
-                { style: 'percent' },
-              )}
-            </Typography>
           )}
         </ValueLabel>
       </Stack>
