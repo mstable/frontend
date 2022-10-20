@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { erc4626ABI } from '@frontend/shared-constants';
 import { BigDecimal } from '@frontend/shared-utils';
+import { BasicVaultABI } from '@mstable/metavaults-web';
 import { constants } from 'ethers';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
@@ -85,7 +85,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
 
   const { refetch: fetchPreview } = useContractRead({
     addressOrName: address,
-    contractInterface: erc4626ABI,
+    contractInterface: BasicVaultABI,
     functionName: {
       deposit: 'previewDeposit',
       mint: 'previewMint',

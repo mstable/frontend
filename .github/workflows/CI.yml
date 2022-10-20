@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'pull_request' }}
     env:
+      NX_THE_GRAPH_MV_MAINNET_URL: ${{ secrets.NX_THE_GRAPH_MV_MAINNET_URL }}
       NX_THE_GRAPH_MV_GOERLI_URL: ${{ secrets.NX_THE_GRAPH_MV_GOERLI_URL }}
     steps:
       - uses: actions/checkout@v2
@@ -40,8 +41,9 @@ jobs:
 
       - name: Build
         env:
+          mainnet: ${{ secrets.NX_THE_GRAPH_MV_MAINNET_URL }}
           goerli: ${{ secrets.NX_THE_GRAPH_MV_GOERLI_URL }}
-        run: NX_THE_GRAPH_MV_GOERLI_URL=$goerli yarn build
+        run: NX_THE_GRAPH_MV_MAINNET_URL=$mainnet NX_THE_GRAPH_MV_GOERLI_URL=$goerli yarn build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         name: Firebase deploy
@@ -83,8 +85,9 @@ jobs:
 
       - name: Build
         env:
+          mainnet: ${{ secrets.NX_THE_GRAPH_MV_MAINNET_URL }}
           goerli: ${{ secrets.NX_THE_GRAPH_MV_GOERLI_URL }}
-        run: NX_THE_GRAPH_MV_GOERLI_URL=$goerli yarn build
+        run: NX_THE_GRAPH_MV_MAINNET_URL=$mainnet NX_THE_GRAPH_MV_GOERLI_URL=$goerli yarn build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         name: Firebase deploy

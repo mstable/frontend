@@ -1,8 +1,8 @@
 import { useEffect, useMemo } from 'react';
 
-import { erc4626ABI } from '@frontend/shared-constants';
 import { usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
+import { BasicVaultABI } from '@mstable/metavaults-web';
 import {
   Box,
   Collapse,
@@ -244,7 +244,7 @@ const GasFeesRecap = (props: StackProps) => {
   const { config: submitConfig, refetch: fetchSubmitConfig } =
     usePrepareContractWrite({
       addressOrName: address,
-      contractInterface: erc4626ABI,
+      contractInterface: BasicVaultABI,
       functionName: operation,
       args,
       enabled: false,
@@ -283,14 +283,14 @@ const GasFeesRecap = (props: StackProps) => {
   );
 
   useEffect(() => {
-    if (asset) {
+    if (asset && amount && amount?.exact.gt(constants.Zero)) {
       if (needsApproval) {
         fetchApprovalConfig();
       } else {
         fetchSubmitConfig();
       }
     }
-  }, [asset, fetchApprovalConfig, fetchSubmitConfig, needsApproval]);
+  }, [amount, asset, fetchApprovalConfig, fetchSubmitConfig, needsApproval]);
 
   return (
     <Stack {...props} direction="column">

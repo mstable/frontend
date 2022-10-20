@@ -45,3 +45,5 @@ ts-jest.log
 .firebase/
 .eslintcache
 *.log
+.yalc
+yalc.lock
