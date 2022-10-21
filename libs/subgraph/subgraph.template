@@ -1,0 +1,34 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  {{#metavaults}}
+  - kind: ethereum
+    name: {{name}}
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: metavault
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Vault
+        - DailyVaultStat
+        - VaultBalance
+        - DailyVaultBalance
+        - Transaction
+      abis:
+        - name: metavault
+          file: ./abis/metavault.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed address,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleWithdraw
+      blockHandlers:
+        - handler: handleBlock
+      file: ./src/metavaults.ts
+      {{/metavaults}}

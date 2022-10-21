@@ -9,7 +9,7 @@ import { vaults } from '../vaults';
 import type { Metavault } from './types';
 
 const mainnet: Metavault = {
-  address: tokens[chainId.mainnet]['mvusdc-3pcv'].address,
+  address: tokens[chainId.mainnet]['mvusdc-3pcv'].address.toLowerCase(),
   name: 'Stablecoin Meta Vault',
   tags: [
     defineMessage({
