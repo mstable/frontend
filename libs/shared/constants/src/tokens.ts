@@ -14,7 +14,7 @@ export type Token = {
 const reduceFn = (acc, [key, val]) => ({
   ...acc,
   [key]: {
-    address: val.address.toLowerCase(),
+    address: val.address,
     name: val.name,
     symbol: key.toUpperCase(),
   },
