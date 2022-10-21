@@ -3121,8 +3121,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@mstable/metavaults-web@file:.yalc/@mstable/metavaults-web":
-  version "0.0.2"
+"@mstable/metavaults-web@^0.0.4":
+  version "0.0.4"
+  resolved "https://npm.pkg.github.com/download/@mstable/metavaults-web/0.0.4/6aa11628b71c036021aa9d4168e310b5a761c23a#6aa11628b71c036021aa9d4168e310b5a761c23a"
+  integrity sha512-BtNT18Iz1045FDenjjJdkbNCbOgChwxOs08eFD2NdJ21E0uqHo5KcZ5Zl/Sf+TIsb8dFxzL8hAaiJnyfaGGtYg==
 
 "@mui/base@5.0.0-alpha.101":
   version "5.0.0-alpha.101"
@@ -12436,9 +12438,9 @@ globby@^9.2.0:
     pify "^4.0.1"
     slash "^2.0.0"
 
-"gluegun@git+https://github.com/edgeandnode/gluegun.git#v4.3.1-pin-colors-dep":
+"gluegun@https://github.com/edgeandnode/gluegun#v4.3.1-pin-colors-dep":
   version "4.3.1"
-  resolved "git+https://github.com/edgeandnode/gluegun.git#b34b9003d7bf556836da41b57ef36eb21570620a"
+  resolved "https://github.com/edgeandnode/gluegun#b34b9003d7bf556836da41b57ef36eb21570620a"
   dependencies:
     apisauce "^1.0.1"
     app-module-path "^2.2.0"
