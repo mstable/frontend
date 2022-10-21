@@ -141,6 +141,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
         onChange(
           BigDecimal.fromSimple(
             max?.simple * newValue * (1 / PERCENTAGE_STEPS),
+            token?.decimals,
           ),
         );
       }
