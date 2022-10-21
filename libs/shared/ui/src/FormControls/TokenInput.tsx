@@ -39,7 +39,7 @@ export type TokenInputProps = {
     container?: StackProps;
     input?: Omit<
       BigDecimalInputProps,
-      'value' | 'min' | 'max' | 'onChange' | 'ref'
+      'value' | 'min' | 'max' | 'onChange' | 'ref' | 'decimals'
     >;
   };
 };
@@ -149,7 +149,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
     const handleChange = (value: BigDecimal) => {
       setPercentage(0);
       if (onChange) {
-        onChange(value);
+        onChange(new BigDecimal(value?.exact, token?.decimals));
       }
     };
 
@@ -161,6 +161,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
             <BigDecimalInput
               ref={ref}
               value={amount}
+              decimals={token?.decimals ?? 18}
               InputProps={{ error, disabled, placeholder }}
               onChange={handleChange}
               isLoading={isLoading}
