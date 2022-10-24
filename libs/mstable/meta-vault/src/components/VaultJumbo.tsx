@@ -158,7 +158,7 @@ export const VaultJumbo = (props: StackProps) => {
                 {intl.formatNumber(
                   new BigDecimal(
                     data?.vault?.totalSupply ?? constants.Zero,
-                    mvToken.decimals,
+                    mvToken?.decimals,
                   ).simple,
                   { notation: 'compact' },
                 )}
