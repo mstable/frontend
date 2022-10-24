@@ -1,7 +1,7 @@
 import { TransactionType, useDataSource } from '@frontend/shared-data-access';
 import { AddressLabel, TokenIcon } from '@frontend/shared-ui';
 import { Dialog } from '@frontend/shared-ui';
-import { BigDecimal } from '@frontend/shared-utils';
+import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import {
   Box,
   Button,
@@ -53,8 +53,29 @@ export const HistoryDialog = ({
       content={
         <Table sx={{ tableLayout: 'fixed' }}>
           <TableBody>
-            {(txHistory?.transactions || []).length ? (
-              (txHistory?.transactions || []).map((tx) => (
+            {isNilOrEmpty(txHistory?.transactions) ? (
+              <Box display="flex" flexDirection="column" alignItems="center">
+                <Box
+                  bgcolor="icons.background"
+                  color="icons.color"
+                  width={80}
+                  height={80}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  borderRadius="50%"
+                  mb={3}
+                >
+                  <Tray weight="fill" size={24} />
+                </Box>
+                <Typography variant="h4" color="text.secondary">
+                  {intl.formatMessage({
+                    defaultMessage: 'Nothing here yet, make your first deposit',
+                  })}
+                </Typography>
+              </Box>
+            ) : (
+              txHistory?.transactions.map((tx) => (
                 <TableRow key={tx.hash}>
                   <TableCell>
                     <Box display="flex" alignItems="center">
@@ -131,27 +152,6 @@ export const HistoryDialog = ({
                   </TableCell>
                 </TableRow>
               ))
-            ) : (
-              <Box display="flex" flexDirection="column" alignItems="center">
-                <Box
-                  bgcolor="icons.background"
-                  color="icons.color"
-                  width={80}
-                  height={80}
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  borderRadius="50%"
-                  mb={3}
-                >
-                  <Tray weight="fill" size={24} />
-                </Box>
-                <Typography variant="h4" color="text.secondary">
-                  {intl.formatMessage({
-                    defaultMessage: 'Nothing here yet, make your first deposit',
-                  })}
-                </Typography>
-              </Box>
             )}
           </TableBody>
         </Table>
