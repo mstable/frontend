@@ -42,6 +42,7 @@ export const VaultJumbo = (props: StackProps) => {
   const {
     metavault: { address, name, tags, strategies },
     assetToken,
+    mvToken,
   } = useMetavault();
   const dataSource = useDataSource();
   const { data, isLoading } = useMetavaultQuery(
@@ -138,10 +139,10 @@ export const VaultJumbo = (props: StackProps) => {
             <Skeleton height={24} width={60} />
           ) : (
             <Typography variant="value2">
-              {intl.formatNumber(
-                new BigDecimal(data?.vault?.apy ?? constants.Zero).simple,
-                { style: 'percent' },
-              )}
+              {intl.formatNumber(data?.vault?.apy ?? 0, {
+                style: 'percent',
+                maximumFractionDigits: 2,
+              })}
             </Typography>
           )}
         </ValueLabel>
@@ -155,8 +156,10 @@ export const VaultJumbo = (props: StackProps) => {
             <Stack direction="row" spacing={1} alignItems="baseline">
               <Typography variant="value2">
                 {intl.formatNumber(
-                  new BigDecimal(data?.vault?.totalSupply ?? constants.Zero)
-                    .simple,
+                  new BigDecimal(
+                    data?.vault?.totalSupply ?? constants.Zero,
+                    mvToken.decimals,
+                  ).simple,
                   { notation: 'compact' },
                 )}
               </Typography>
