@@ -46,7 +46,7 @@ const updateProject = (tree: Tree, options: NormalizedSchema) => {
   ];
 
   projectConfig.targets['i18n-extract'] = {
-    executor: '@nrwl/workspace:run-commands',
+    executor: 'nx:run-commands',
     options: {
       commands: [
         `yarn run formatjs extract '${options.appProjectRoot}/**/*.{ts,tsx}' --out-file i18n-extractions/${appProjectRootKebabCase}.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'`,
@@ -55,7 +55,7 @@ const updateProject = (tree: Tree, options: NormalizedSchema) => {
   };
 
   projectConfig.targets['i18n-compile'] = {
-    executor: '@nrwl/workspace:run-commands',
+    executor: 'nx:run-commands',
     options: {
       commands: [
         "jq -rs 'reduce .[] as $item ({}; . * $item)' i18n-extractions/* > i18n-aggregated-extractions/en.json",

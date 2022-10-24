@@ -77,7 +77,7 @@ const updateProject = (tree: Tree, options: NormalizedSchema) => {
   projectConfig.targets['build'].options.rollupConfig = 'rollup.config.js';
 
   projectConfig.targets['i18n-extract'] = {
-    executor: '@nrwl/workspace:run-commands',
+    executor: 'nx:run-commands',
     options: {
       commands: [
         `yarn run formatjs extract '${options.projectRoot}/**/*.{ts,tsx}' --out-file i18n-extractions/${projectRootKebabCase}.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'`,

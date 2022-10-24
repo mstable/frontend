@@ -32,7 +32,7 @@
       }
     },
     "i18n-extract": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "yarn run formatjs extract 'libs/shared/wagmi/**/*.{ts,tsx}' --out-file i18n-extractions/libs-shared-wagmi.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
