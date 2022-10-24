@@ -1,9 +1,43 @@
 import { AddressLabel } from '@frontend/shared-ui';
+import { BasicVaultABI } from '@mstable/metavaults-web';
 import { Grid, Stack, Typography } from '@mui/material';
+import { useContractRead } from 'wagmi';
 
 import { useMetavault } from '../../../state';
 
+import type { Vault } from '@frontend/shared-constants';
 import type { StackProps } from '@mui/material';
+
+type VaultCardProps = Omit<Vault, 'decimals'> & StackProps;
+
+const VaultCard = ({ address, name, ...rest }: VaultCardProps) => {
+  const { data } = useContractRead({
+    addressOrName: address,
+    contractInterface: BasicVaultABI,
+    functionName: 'name',
+  });
+
+  return (
+    <Stack
+      direction="column"
+      {...rest}
+      sx={{
+        borderRadius: 1,
+        border: (theme) => `1px solid ${theme.palette.divider}`,
+        padding: 2,
+        ...rest?.sx,
+      }}
+    >
+      <Typography variant="h5" gutterBottom noWrap>
+        {data}
+      </Typography>
+      <Typography noWrap sx={{ typography: 'subtitle2', pb: 1 }}>
+        {name}
+      </Typography>
+      <AddressLabel small address={address} link sx={{ maxWidth: 120 }} />
+    </Stack>
+  );
+};
 
 export const Vaults = (props: StackProps) => {
   const {
@@ -13,29 +47,9 @@ export const Vaults = (props: StackProps) => {
   return (
     <Stack {...props}>
       <Grid container spacing={2}>
-        {vaults.map(({ address, name, token }) => (
+        {vaults.map(({ address, name }) => (
           <Grid item key={`${address}-${name}`} xs={12} sm={6} zeroMinWidth>
-            <Stack
-              direction="column"
-              sx={{
-                borderRadius: 1,
-                border: (theme) => `1px solid ${theme.palette.divider}`,
-                padding: 2,
-              }}
-            >
-              <Typography variant="h5" gutterBottom noWrap>
-                {token.symbol}
-              </Typography>
-              <Typography noWrap sx={{ typography: 'subtitle2', pb: 1 }}>
-                {name}
-              </Typography>
-              <AddressLabel
-                small
-                address={address}
-                link
-                sx={{ maxWidth: 120 }}
-              />
-            </Stack>
+            <VaultCard address={address} name={name} />
           </Grid>
         ))}
       </Grid>

@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 
-import { erc4626ABI } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-notifications';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { OpenAccountModalButton } from '@frontend/shared-wagmi';
+import { BasicVaultABI } from '@mstable/metavaults-web';
 import { Button, CircularProgress } from '@mui/material';
 import { useIntl } from 'react-intl';
 import {
@@ -57,7 +57,7 @@ export const SubmitButton = () => {
 
   const { config: submitConfig } = usePrepareContractWrite({
     addressOrName: address,
-    contractInterface: erc4626ABI,
+    contractInterface: BasicVaultABI,
     functionName: operation,
     args,
     enabled: !!amount?.exact && !!walletAddress && !needsApproval,

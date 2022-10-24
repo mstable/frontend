@@ -99,6 +99,14 @@ export const OperationsForm = (props: StackProps) => {
     [intl, tab],
   );
 
+  const disabled = useMemo(
+    () =>
+      !isConnected ||
+      isSubmitLoading ||
+      (tab === 1 && primaryBalance?.exact.isZero()),
+    [isConnected, isSubmitLoading, primaryBalance?.exact, tab],
+  );
+
   useEffect(() => {
     if (
       document.hasFocus() &&
@@ -151,7 +159,7 @@ export const OperationsForm = (props: StackProps) => {
         label={intl.formatMessage({ defaultMessage: 'Asset' })}
         onChange={handlePrimaryChange}
         placeholder="0.00"
-        disabled={!isConnected || isSubmitLoading}
+        disabled={disabled}
         isConnected={isConnected}
         hideTokenBadge={!isConnected}
         error={isError}
@@ -190,7 +198,7 @@ export const OperationsForm = (props: StackProps) => {
         label={intl.formatMessage({ defaultMessage: 'Shares' })}
         onChange={handleSecondaryChange}
         placeholder="0.00"
-        disabled={!isConnected || isSubmitLoading}
+        disabled={disabled}
         isConnected={isConnected}
         error={isError}
         ref={secondary}

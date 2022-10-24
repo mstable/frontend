@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { erc4626ABI } from '@frontend/shared-constants';
 import { useDataSource } from '@frontend/shared-data-access';
 import { BigDecimal } from '@frontend/shared-utils';
+import { BasicVaultABI } from '@mstable/metavaults-web';
 import { constants } from 'ethers';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
@@ -94,7 +94,7 @@ export const {
 
   useContractRead({
     addressOrName: address,
-    contractInterface: erc4626ABI,
+    contractInterface: BasicVaultABI,
     functionName: 'asset',
     enabled: !!address,
     onSuccess: (data) => {
@@ -166,13 +166,13 @@ export const {
     contracts: [
       {
         addressOrName: address,
-        contractInterface: erc4626ABI,
+        contractInterface: BasicVaultABI,
         functionName: 'convertToAssets',
         args: [state.mvBalance?.exact],
       },
       {
         addressOrName: address,
-        contractInterface: erc4626ABI,
+        contractInterface: BasicVaultABI,
         functionName: 'convertToShares',
         args: [state.assetBalance?.exact],
       },

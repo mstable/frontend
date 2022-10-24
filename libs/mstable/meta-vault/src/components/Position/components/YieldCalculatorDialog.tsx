@@ -149,6 +149,7 @@ export const YieldCalculatorDialog = ({
                 <BigDecimalInput
                   placeholder="0"
                   value={apy}
+                  decimals={18}
                   onChange={setApy}
                 />
               </FormControl>
@@ -161,6 +162,7 @@ export const YieldCalculatorDialog = ({
                   placeholder="0"
                   value={duration}
                   onChange={setDuration}
+                  decimals={18}
                 />
               </FormControl>
               <Select

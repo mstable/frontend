@@ -33,7 +33,7 @@ export const Metavault = () => {
   if (!metavault) return <UnsupportedMvPage mvid={mvid} />;
 
   return (
-    <MetavaultProvider initialState={{ metavault }}>
+    <MetavaultProvider key={chain?.id} initialState={{ metavault }}>
       <Stack direction="column">
         <VaultJumbo py={8} />
         <Grid container spacing={2}>

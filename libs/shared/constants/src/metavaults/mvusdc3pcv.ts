@@ -8,9 +8,8 @@ import { vaults } from '../vaults';
 
 import type { Metavault } from './types';
 
-// TODO update address when available
 const mainnet: Metavault = {
-  address: '0x0145a7fb49402b29be7c52d38aeacb5e1acae11b', // goerli address for now
+  address: tokens[chainId.mainnet]['mvusdc-3pcv'].address,
   name: 'Stablecoin Meta Vault',
   tags: [
     defineMessage({
@@ -51,10 +50,9 @@ const mainnet: Metavault = {
     },
   ],
   vaults: [
-    vaults[chainId.mainnet].musdConvex3CrvLiquidatorVault,
-    vaults[chainId.mainnet].busdConvex3CrvLiquidatorVault,
-    vaults[chainId.mainnet].lusdConvex3CrvLiquidatorVault,
-    vaults[chainId.mainnet].fraxConvex3CrvLiquidatorVault,
+    vaults[chainId.mainnet].vcx3crvbusd,
+    vaults[chainId.mainnet].vcx3crvfrax,
+    vaults[chainId.mainnet].vcx3crvmusd,
   ],
   assets: [
     tokens[chainId.mainnet].musd,
@@ -77,12 +75,11 @@ const mainnet: Metavault = {
 
 const goerli: Metavault = {
   ...mainnet,
-  address: '0x0145a7fb49402b29be7c52d38aeacb5e1acae11b',
+  address: tokens[chainId.goerli].tvg.address,
   vaults: [
-    vaults[chainId.goerli].musdConvex3CrvLiquidatorVault,
-    vaults[chainId.goerli].busdConvex3CrvLiquidatorVault,
-    vaults[chainId.goerli].lusdConvex3CrvLiquidatorVault,
-    vaults[chainId.goerli].fraxConvex3CrvLiquidatorVault,
+    vaults[chainId.goerli].vcx3crvbusd,
+    vaults[chainId.goerli].vcx3crvfrax,
+    vaults[chainId.goerli].vcx3crvmusd,
   ],
   assets: [
     tokens[chainId.goerli].musd,
@@ -95,7 +92,7 @@ const goerli: Metavault = {
   ],
 };
 
-export const usdc3crv: Record<number, Metavault> = {
+export const mvusdc3pcv: Record<number, Metavault> = {
   [chainId.mainnet]: mainnet,
   [chainId.goerli]: goerli,
 };

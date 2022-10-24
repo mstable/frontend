@@ -1,66 +1,24 @@
+import { tokens } from '@mstable/metavaults-web';
 import { chainId } from 'wagmi';
-
-import { tokens } from './tokens';
-import { DEAD_ADDRESS } from './utils';
-
-import type { Token } from './tokens';
-
-export type SupportedVault =
-  | 'musdConvex3CrvLiquidatorVault'
-  | 'busdConvex3CrvLiquidatorVault'
-  | 'lusdConvex3CrvLiquidatorVault'
-  | 'fraxConvex3CrvLiquidatorVault';
 
 export type Vault = {
   address: string;
   name: string;
-  token: Token;
+  decimals: number;
 };
 
+export type SupportedVault = 'vcx3crvmusd' | 'vcx3crvfrax' | 'vcx3crvbusd';
+
 const mainnet: Record<SupportedVault, Vault> = {
-  musdConvex3CrvLiquidatorVault: {
-    address: DEAD_ADDRESS,
-    name: 'musdConvex3CrvLiquidatorVault',
-    token: tokens[chainId.mainnet].musd,
-  },
-  busdConvex3CrvLiquidatorVault: {
-    address: DEAD_ADDRESS,
-    name: 'busdConvex3CrvLiquidatorVault',
-    token: tokens[chainId.mainnet].busd,
-  },
-  lusdConvex3CrvLiquidatorVault: {
-    address: DEAD_ADDRESS,
-    name: 'lusdConvex3CrvLiquidatorVault',
-    token: tokens[chainId.mainnet].lusd,
-  },
-  fraxConvex3CrvLiquidatorVault: {
-    address: DEAD_ADDRESS,
-    name: 'fraxConvex3CrvLiquidatorVault',
-    token: tokens[chainId.mainnet].frax,
-  },
+  vcx3crvmusd: tokens[chainId.mainnet]['vcx3crv-musd'],
+  vcx3crvfrax: tokens[chainId.mainnet]['vcx3crv-frax'],
+  vcx3crvbusd: tokens[chainId.mainnet]['vcx3crv-busd'],
 };
 
 const goerli: Record<SupportedVault, Vault> = {
-  musdConvex3CrvLiquidatorVault: {
-    address: DEAD_ADDRESS,
-    name: 'musdConvex3CrvLiquidatorVault',
-    token: tokens[chainId.goerli].musd,
-  },
-  busdConvex3CrvLiquidatorVault: {
-    address: DEAD_ADDRESS,
-    name: 'busdConvex3CrvLiquidatorVault',
-    token: tokens[chainId.goerli].busd,
-  },
-  lusdConvex3CrvLiquidatorVault: {
-    address: DEAD_ADDRESS,
-    name: 'lusdConvex3CrvLiquidatorVault',
-    token: tokens[chainId.goerli].lusd,
-  },
-  fraxConvex3CrvLiquidatorVault: {
-    address: DEAD_ADDRESS,
-    name: 'fraxConvex3CrvLiquidatorVault',
-    token: tokens[chainId.goerli].frax,
-  },
+  vcx3crvmusd: tokens[chainId.mainnet]['vcx3crv-musd'],
+  vcx3crvfrax: tokens[chainId.mainnet]['vcx3crv-frax'],
+  vcx3crvbusd: tokens[chainId.mainnet]['vcx3crv-busd'],
 };
 
 export const vaults: Record<number, Record<SupportedVault, Vault>> = {

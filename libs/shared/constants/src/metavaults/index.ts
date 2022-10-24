@@ -1,11 +1,11 @@
 import { chainId } from 'wagmi';
 
+import { mvusdc3pcv } from './mvusdc3pcv';
 import { test } from './test';
-import { usdc3crv } from './usdc3crv';
 
 import type { Metavault, SupportedMetavault } from './types';
 
-export * from './usdc3crv';
+export * from './mvusdc3pcv';
 export * from './types';
 
 export const supportedMetavaults: Record<
@@ -13,11 +13,11 @@ export const supportedMetavaults: Record<
   Record<SupportedMetavault, Metavault>
 > = {
   [chainId.mainnet]: {
-    usdc3crv: usdc3crv[chainId.mainnet],
+    mvusdc3pcv: mvusdc3pcv[chainId.mainnet],
     test: test[chainId.mainnet],
   },
   [chainId.goerli]: {
-    usdc3crv: usdc3crv[chainId.goerli],
+    mvusdc3pcv: mvusdc3pcv[chainId.goerli],
     test: test[chainId.goerli],
   },
 };
