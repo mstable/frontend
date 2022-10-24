@@ -7,6 +7,7 @@ import { BasicVaultABI } from '@mstable/metavaults-web';
 import { Button, CircularProgress } from '@mui/material';
 import { useIntl } from 'react-intl';
 import {
+  etherscanBlockExplorers,
   useAccount,
   useContractWrite,
   useNetwork,
@@ -81,7 +82,10 @@ export const SubmitButton = () => {
         content: (
           <ViewEtherscanLink
             hash={data?.hash}
-            blockExplorer={chain?.blockExplorers?.etherscan}
+            blockExplorer={
+              chain?.blockExplorers?.etherscan ??
+              etherscanBlockExplorers.mainnet
+            }
           />
         ),
         severity: 'info',
@@ -107,7 +111,10 @@ export const SubmitButton = () => {
         content: (
           <ViewEtherscanLink
             hash={error ? submitData?.hash : data?.transactionHash}
-            blockExplorer={chain?.blockExplorers?.etherscan}
+            blockExplorer={
+              chain?.blockExplorers?.etherscan ??
+              etherscanBlockExplorers.mainnet
+            }
           />
         ),
         severity: error ? 'error' : 'success',
