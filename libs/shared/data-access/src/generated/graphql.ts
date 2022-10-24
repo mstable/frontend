@@ -1,14 +1,8 @@
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -113,7 +107,7 @@ export enum DailyVaultBalance_OrderBy {
   Id = 'id',
   ShareBalance = 'shareBalance',
   Timestamp = 'timestamp',
-  VaultBalance = 'vaultBalance',
+  VaultBalance = 'vaultBalance'
 }
 
 export type DailyVaultStat = {
@@ -208,13 +202,13 @@ export enum DailyVaultStat_OrderBy {
   Timestamp = 'timestamp',
   TotalAssets = 'totalAssets',
   TotalSupply = 'totalSupply',
-  Vault = 'vault',
+  Vault = 'vault'
 }
 
 /** Defines the order direction, either ascending or descending */
 export enum OrderDirection {
   Asc = 'asc',
-  Desc = 'desc',
+  Desc = 'desc'
 }
 
 export type Query = {
@@ -233,15 +227,18 @@ export type Query = {
   vaults: Array<Vault>;
 };
 
+
 export type Query_MetaArgs = {
   block?: InputMaybe<Block_Height>;
 };
+
 
 export type QueryDailyVaultBalanceArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryDailyVaultBalancesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -253,11 +250,13 @@ export type QueryDailyVaultBalancesArgs = {
   where?: InputMaybe<DailyVaultBalance_Filter>;
 };
 
+
 export type QueryDailyVaultStatArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryDailyVaultStatsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -269,11 +268,13 @@ export type QueryDailyVaultStatsArgs = {
   where?: InputMaybe<DailyVaultStat_Filter>;
 };
 
+
 export type QueryTransactionArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryTransactionsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -285,17 +286,20 @@ export type QueryTransactionsArgs = {
   where?: InputMaybe<Transaction_Filter>;
 };
 
+
 export type QueryVaultArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type QueryVaultBalanceArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type QueryVaultBalancesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -306,6 +310,7 @@ export type QueryVaultBalancesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<VaultBalance_Filter>;
 };
+
 
 export type QueryVaultsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -333,15 +338,18 @@ export type Subscription = {
   vaults: Array<Vault>;
 };
 
+
 export type Subscription_MetaArgs = {
   block?: InputMaybe<Block_Height>;
 };
+
 
 export type SubscriptionDailyVaultBalanceArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionDailyVaultBalancesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -353,11 +361,13 @@ export type SubscriptionDailyVaultBalancesArgs = {
   where?: InputMaybe<DailyVaultBalance_Filter>;
 };
 
+
 export type SubscriptionDailyVaultStatArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionDailyVaultStatsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -369,11 +379,13 @@ export type SubscriptionDailyVaultStatsArgs = {
   where?: InputMaybe<DailyVaultStat_Filter>;
 };
 
+
 export type SubscriptionTransactionArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionTransactionsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -385,17 +397,20 @@ export type SubscriptionTransactionsArgs = {
   where?: InputMaybe<Transaction_Filter>;
 };
 
+
 export type SubscriptionVaultArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
 
+
 export type SubscriptionVaultBalanceArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID'];
   subgraphError?: _SubgraphErrorPolicy_;
 };
+
 
 export type SubscriptionVaultBalancesArgs = {
   block?: InputMaybe<Block_Height>;
@@ -406,6 +421,7 @@ export type SubscriptionVaultBalancesArgs = {
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<VaultBalance_Filter>;
 };
+
 
 export type SubscriptionVaultsArgs = {
   block?: InputMaybe<Block_Height>;
@@ -434,7 +450,7 @@ export type Transaction = {
 
 export enum TransactionType {
   Deposit = 'DEPOSIT',
-  Withdraw = 'WITHDRAW',
+  Withdraw = 'WITHDRAW'
 }
 
 export type Transaction_Filter = {
@@ -544,7 +560,7 @@ export enum Transaction_OrderBy {
   Timestamp = 'timestamp',
   To = 'to',
   Type = 'type',
-  Vault = 'vault',
+  Vault = 'vault'
 }
 
 export type Vault = {
@@ -559,6 +575,7 @@ export type Vault = {
   totalAssets: Scalars['BigInt'];
   totalSupply: Scalars['BigInt'];
 };
+
 
 export type VaultDailyVaultStatsArgs = {
   first?: InputMaybe<Scalars['Int']>;
@@ -579,6 +596,7 @@ export type VaultBalance = {
   timestamp: Scalars['BigInt'];
   vault: Vault;
 };
+
 
 export type VaultBalanceDailyVaultBalancesArgs = {
   first?: InputMaybe<Scalars['Int']>;
@@ -669,7 +687,7 @@ export enum VaultBalance_OrderBy {
   Owner = 'owner',
   ShareBalance = 'shareBalance',
   Timestamp = 'timestamp',
-  Vault = 'vault',
+  Vault = 'vault'
 }
 
 export type Vault_Filter = {
@@ -747,7 +765,7 @@ export enum Vault_OrderBy {
   Id = 'id',
   Timestamp = 'timestamp',
   TotalAssets = 'totalAssets',
-  TotalSupply = 'totalSupply',
+  TotalSupply = 'totalSupply'
 }
 
 export type _Block_ = {
@@ -781,5 +799,5 @@ export enum _SubgraphErrorPolicy_ {
   /** Data will be returned even if the subgraph has indexing errors */
   Allow = 'allow',
   /** If the subgraph has indexing errors, data will be omitted. The default. */
-  Deny = 'deny',
+  Deny = 'deny'
 }

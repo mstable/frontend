@@ -3,9 +3,7 @@ import { chainId } from 'wagmi';
 
 import { DEAD_ADDRESS } from './utils';
 
-import type { SupportedToken as SupportedToks } from '@mstable/metavaults-web';
-
-export type SupportedToken = SupportedToks | 'eth' | 'lusd' | 'frax';
+import type { SupportedToken } from '@mstable/metavaults-web';
 
 export type Token = {
   address: string;
@@ -24,18 +22,7 @@ const reduceFn = (acc, [key, val]) => ({
 
 const mainnet: Partial<Record<SupportedToken, Token>> = Object.entries(
   toks[chainId.mainnet],
-).reduce(reduceFn, {
-  lusd: {
-    address: '0x5f98805A4E8be255a32880FDeC7F6728C6568bA0',
-    name: 'Liquidity',
-    symbol: 'LUSD',
-  },
-  frax: {
-    address: '0x853d955aCEf822Db058eb8505911ED77F175b99e',
-    name: 'Frax',
-    symbol: 'FRAX',
-  },
-});
+).reduce(reduceFn, {});
 
 const goerli: Partial<Record<SupportedToken, Token>> = Object.entries(
   toks[chainId.goerli],
@@ -74,11 +61,6 @@ const goerli: Partial<Record<SupportedToken, Token>> = Object.entries(
     address: '0x509ee0d083ddf8ac028f2a56731412edd63223b9',
     name: 'USDT',
     symbol: 'USDT',
-  },
-  eth: {
-    address: DEAD_ADDRESS,
-    name: 'Ethereum',
-    symbol: 'ETH',
   },
   fei: {
     address: '0x117D23cAAb589eA68126b4EC7CaB3Ec10534B859',

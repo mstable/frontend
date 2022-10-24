@@ -1,0 +1,39 @@
+{
+  "name": "subgraph",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/subgraph/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/subgraph/**/*.ts"]
+      }
+    },
+    "prepare": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/subgraph",
+        "commands": [
+          "mustache config/{args.network}.json subgraph.template > subgraph.yaml",
+          "mustache config/{args.network}.json src/metavaults.template > src/metavaults.ts",
+          "graph codegen"
+        ],
+        "parallel": false
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "./libs/subgraph",
+        "commands": [
+          "graph codegen",
+          "graph build"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": []
+}

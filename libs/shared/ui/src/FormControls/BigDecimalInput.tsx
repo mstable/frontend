@@ -9,6 +9,7 @@ import type { ChangeEvent } from 'react';
 
 export type BigDecimalInputProps = {
   value: BigDecimal | null;
+  decimals: number;
   onChange?: (value: BigDecimal) => void;
   min?: BigDecimal;
   max?: BigDecimal;
@@ -31,6 +32,7 @@ export const BigDecimalInput = forwardRef<
   (
     {
       value,
+      decimals,
       onChange,
       min = BigDecimal.ZERO,
       max = new BigDecimal(constants.MaxUint256),
@@ -54,7 +56,7 @@ export const BigDecimalInput = forwardRef<
       if (evt.target.validity.valid && inRange(evt.target.value, min, max)) {
         setVal(evt.target.value);
         if (onChange && !evt.target.value.endsWith('.')) {
-          onChange(BigDecimal.maybeParse(evt.target.value));
+          onChange(BigDecimal.maybeParse(evt.target.value, decimals));
         }
       }
     };
