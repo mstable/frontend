@@ -17,7 +17,7 @@
         "cwd": "libs/subgraph",
         "commands": [
           "mustache config/{args.network}.json subgraph.template > subgraph.yaml",
-          "mustache config/{args.network}.json src/metavaults.template > src/metavaults.ts",
+          "mustache config/{args.network}.json src/metavaults.template.ts > src/metavaults.ts",
           "graph codegen"
         ],
         "parallel": false
@@ -27,10 +27,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "./libs/subgraph",
-        "commands": [
-          "graph codegen",
-          "graph build"
-        ],
+        "commands": ["graph codegen", "graph build"],
         "parallel": false
       }
     }

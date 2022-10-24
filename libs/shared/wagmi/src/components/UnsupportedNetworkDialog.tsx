@@ -1,4 +1,4 @@
-import { Button, DialogTitle, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useDisconnect, useNetwork, useSwitchNetwork } from 'wagmi';
 
@@ -7,11 +7,7 @@ import type { DialogOptions } from '@frontend/shared-modals';
 const Title = () => {
   const intl = useIntl();
 
-  return (
-    <DialogTitle>
-      {intl.formatMessage({ defaultMessage: 'Unsupported Network' })}
-    </DialogTitle>
-  );
+  return <>{intl.formatMessage({ defaultMessage: 'Unsupported Network' })}</>;
 };
 
 const Content = () => {
@@ -42,6 +38,7 @@ const Actions = ({ onClose }: ActionsProps) => {
   return (
     <>
       <Button
+        color="secondary"
         onClick={() => {
           if (switchNetwork) {
             onClose();
@@ -55,6 +52,7 @@ const Actions = ({ onClose }: ActionsProps) => {
         )}
       </Button>
       <Button
+        variant="text"
         onClick={() => {
           if (disconnect) {
             onClose();

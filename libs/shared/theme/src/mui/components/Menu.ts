@@ -11,6 +11,12 @@ export const getMenu = (base: Theme): ThemeOptions => ({
         paper: {
           padding: 0,
           backgroundColor: base.palette.background.paper,
+          borderRadius: '6px !important',
+          marginTop: base.spacing(0.5),
+        },
+        list: {
+          paddingTop: 0,
+          paddingBottom: 0,
         },
       },
     },
