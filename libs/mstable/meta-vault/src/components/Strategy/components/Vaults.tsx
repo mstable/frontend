@@ -1,7 +1,7 @@
 import { AddressLabel } from '@frontend/shared-ui';
 import { BasicVaultABI } from '@mstable/metavaults-web';
 import { Grid, Stack, Typography } from '@mui/material';
-import { useContractRead } from 'wagmi';
+import { useContractRead, useNetwork } from 'wagmi';
 
 import { useMetavault } from '../../../state';
 
@@ -11,6 +11,7 @@ import type { StackProps } from '@mui/material';
 type VaultCardProps = Omit<Vault, 'decimals'> & StackProps;
 
 const VaultCard = ({ address, name, ...rest }: VaultCardProps) => {
+  const { chain } = useNetwork();
   const { data } = useContractRead({
     addressOrName: address,
     contractInterface: BasicVaultABI,
@@ -34,7 +35,13 @@ const VaultCard = ({ address, name, ...rest }: VaultCardProps) => {
       <Typography noWrap sx={{ typography: 'subtitle2', pb: 1 }}>
         {name}
       </Typography>
-      <AddressLabel small address={address} link sx={{ maxWidth: 120 }} />
+      <AddressLabel
+        small
+        address={address}
+        link
+        blockExplorerUrl={chain?.blockExplorers?.etherscan?.url}
+        sx={{ maxWidth: 120 }}
+      />
     </Stack>
   );
 };

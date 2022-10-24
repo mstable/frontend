@@ -15,7 +15,7 @@ import { format } from 'date-fns';
 import { constants } from 'ethers';
 import { DownloadSimple, Tray, UploadSimple } from 'phosphor-react';
 import { useIntl } from 'react-intl';
-import { useAccount } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 
 import { useUserTxHistoryQuery } from '../../../queries.generated';
 import { useMetavault } from '../../../state';
@@ -29,7 +29,7 @@ export const HistoryDialog = ({
 }) => {
   const intl = useIntl();
   const { assetToken, mvToken, metavault } = useMetavault();
-
+  const { chain } = useNetwork();
   const { address } = useAccount();
   const dataSource = useDataSource();
   const { data: txHistory } = useUserTxHistoryQuery(
@@ -147,6 +147,7 @@ export const HistoryDialog = ({
                         link
                         small
                         hideCopyToClipboard
+                        blockExplorerUrl={chain?.blockExplorers?.etherscan?.url}
                       />
                     </Box>
                   </TableCell>

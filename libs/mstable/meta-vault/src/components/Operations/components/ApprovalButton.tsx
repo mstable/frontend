@@ -8,6 +8,7 @@ import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
 import {
   erc20ABI,
+  etherscanBlockExplorers,
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
@@ -60,7 +61,10 @@ export const ApprovalButton = (props: ButtonProps) => {
         content: (
           <ViewEtherscanLink
             hash={data?.hash}
-            blockExplorer={chain?.blockExplorers?.etherscan}
+            blockExplorer={
+              chain?.blockExplorers?.etherscan ??
+              etherscanBlockExplorers.mainnet
+            }
           />
         ),
         severity: 'info',
@@ -86,7 +90,10 @@ export const ApprovalButton = (props: ButtonProps) => {
           content: (
             <ViewEtherscanLink
               hash={error ? approveData?.hash : data?.transactionHash}
-              blockExplorer={chain?.blockExplorers?.etherscan}
+              blockExplorer={
+                chain?.blockExplorers?.etherscan ??
+                etherscanBlockExplorers.mainnet
+              }
             />
           ),
           severity: error ? 'error' : 'success',

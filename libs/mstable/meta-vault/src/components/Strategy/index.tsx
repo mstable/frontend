@@ -91,13 +91,14 @@ export const Strategy = () => {
     >
       <CardHeader
         title={intl.formatMessage({ defaultMessage: 'Strategy & Risks' })}
+        sx={{ paddingLeft: 0 }}
         action={
           <Button color="secondary" onClick={handleVisualizeStrategyClick}>
             {intl.formatMessage({ defaultMessage: 'Visualize Strategy' })}
           </Button>
         }
       />
-      <CardContent>
+      <CardContent sx={{ paddingLeft: 0 }}>
         <Typography mb={2} color="text.secondary">
           {metavault?.strategyDescription
             ? intl.formatMessage(metavault.strategyDescription)

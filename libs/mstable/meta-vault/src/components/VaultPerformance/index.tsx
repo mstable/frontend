@@ -49,6 +49,7 @@ export const VaultPerformance = () => {
     <Card sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}>
       <CardHeader
         title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
+        sx={{ paddingLeft: 0 }}
         action={
           <Button
             onClick={() => setExpand(true)}
@@ -60,7 +61,7 @@ export const VaultPerformance = () => {
           </Button>
         }
       />
-      <CardContent>
+      <CardContent sx={{ paddingLeft: 0 }}>
         <Controls />
         <Line key="chart" options={chartData.options} data={chartData.data} />
       </CardContent>

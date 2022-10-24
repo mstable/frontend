@@ -1,14 +1,35 @@
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 
-import mvStrat from './mv_strat.webp';
+import diagramDark from './diagram-dark.png';
+import diagramLight from './diagram-light.png';
 
 import type { DialogOptions } from '@frontend/shared-modals';
 
-export const VisualizeStrategyDialog: DialogOptions = {
-  maxWidth: 'xl',
-  content: (
-    <Box p={2} sx={{ img: { width: 1, height: 'auto', objectFit: 'contain' } }}>
-      <img src={mvStrat} alt="Strategy" />
+const Content = () => {
+  const {
+    palette: { mode },
+  } = useTheme();
+
+  return (
+    <Box
+      p={2}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        img: {
+          maxWidth: 800,
+          height: 'auto',
+          objectFit: 'contain',
+        },
+      }}
+    >
+      <img src={mode === 'dark' ? diagramDark : diagramLight} alt="Strategy" />
     </Box>
-  ),
+  );
+};
+
+export const VisualizeStrategyDialog: DialogOptions = {
+  maxWidth: 'md',
+  content: Content,
 };

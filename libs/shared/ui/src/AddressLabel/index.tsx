@@ -3,12 +3,11 @@ import { useEffect, useState } from 'react';
 import { Check, ContentCopy, Error, OpenInNew } from '@mui/icons-material';
 import { IconButton, Link, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
+import { etherscanBlockExplorers } from 'wagmi';
 
 import { MiddleTruncated } from '../Typography';
 
 import type { StackProps } from '@mui/material';
-
-const ETHERSCAN_URL = 'https://etherscan.io/address/';
 
 export type AddressLabelProps = {
   address: string;
@@ -16,6 +15,7 @@ export type AddressLabelProps = {
   hideEtherscan?: boolean;
   small?: boolean;
   link?: boolean;
+  blockExplorerUrl?: string;
 } & StackProps;
 
 export const AddressLabel = ({
@@ -24,6 +24,7 @@ export const AddressLabel = ({
   hideEtherscan = false,
   small = false,
   link = false,
+  blockExplorerUrl = etherscanBlockExplorers.mainnet.url,
   ...rest
 }: AddressLabelProps) => {
   const intl = useIntl();
@@ -50,7 +51,7 @@ export const AddressLabel = ({
     <Stack direction="row" alignItems="center" {...rest} flexWrap="nowrap">
       {link ? (
         <Link
-          href={`${ETHERSCAN_URL}${address}`}
+          href={[blockExplorerUrl, 'address', address].join('/')}
           target="_blank"
           sx={{
             width: 1,
@@ -97,7 +98,7 @@ export const AddressLabel = ({
 
       {!hideEtherscan && !link && (
         <IconButton
-          href={`${ETHERSCAN_URL}${address}`}
+          href={[blockExplorerUrl, 'address', address].join('/')}
           target="_blank"
           color="inherit"
           size={small ? 'small' : 'medium'}
