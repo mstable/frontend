@@ -18,6 +18,7 @@ import {
   Divider,
   FormControl,
   FormControlLabel,
+  InputBase,
   InputLabel,
   MenuItem,
   Select,
@@ -49,7 +50,7 @@ export const YieldCalculatorDialog = ({
   const { assetToken, assetBalance, metavault } = useMetavault();
   const { isConnected } = useAccount();
   const [amount, setAmount] = useState<BigDecimal>();
-  const [apy, setApy] = useState<BigDecimal>();
+  const [apy, setApy] = useState<string>();
   const [duration, setDuration] = useState<BigDecimal>(BigDecimal.ONE);
   const [durationUnit, setDurationUnit] = useState(365);
   const [gasPriceConfig, setGasPriceConfig] =
@@ -65,7 +66,11 @@ export const YieldCalculatorDialog = ({
   );
   useEffect(() => {
     if (data?.vault?.apy) {
-      setApy(new BigDecimal(data?.vault?.apy));
+      setApy(
+        intl.formatNumber(Number(data?.vault?.apy) * 100, {
+          maximumFractionDigits: 2,
+        }),
+      );
     }
   }, [data?.vault?.apy]);
 
@@ -83,7 +88,7 @@ export const YieldCalculatorDialog = ({
 
   const totalValue =
     (amount?.simple || 0) *
-    (1 + (apy?.simple || 0) / 100) **
+    (1 + (Number(apy) || 0) / 100) **
       (((duration?.simple || 0) * durationUnit) / 365);
 
   const profitOrLoss = totalValue - (amount?.simple || 0);
@@ -99,7 +104,7 @@ export const YieldCalculatorDialog = ({
   const daysTillProfitable =
     (Math.log10((totalGasFee + (amount?.simple || 0)) / (amount?.simple || 0)) *
       365) /
-    Math.log10(1 + (apy?.simple || 0) / 100);
+    Math.log10(1 + (Number(apy) || 0) / 100);
 
   const handleDeposit = () => {
     navigate({
@@ -146,11 +151,17 @@ export const YieldCalculatorDialog = ({
                 <InputLabel>
                   {intl.formatMessage({ defaultMessage: 'Projected APY (%)' })}
                 </InputLabel>
-                <BigDecimalInput
+                <InputBase
                   placeholder="0"
                   value={apy}
-                  decimals={18}
-                  onChange={setApy}
+                  onChange={(e) => setApy(e.target.value)}
+                  inputMode="numeric"
+                  componentsProps={{
+                    input: {
+                      pattern: '[0-9]*(.[0-9]*)?',
+                    },
+                  }}
+                  sx={{ typography: 'value1' }}
                 />
               </FormControl>
               <Divider sx={{ mx: 2 }} orientation="vertical" />

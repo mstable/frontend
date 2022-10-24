@@ -6,10 +6,14 @@ export const getMenuItem = (base: Theme): ThemeOptions => ({
       styleOverrides: {
         root: {
           backgroundColor: 'transparent',
-          padding: base.spacing(0, 0.5, 0, 2),
+          padding: base.spacing(1.25, 0.75, 1.25, 0.75),
           minHeight: '48px',
+          ...base.typography.hint,
           '&.Mui-Selected': {
-            backgroundColor: base.palette.action.selected,
+            backgroundColor: base.palette.grey[100],
+          },
+          '&:hover': {
+            backgroundColor: base.palette.grey[200],
           },
           '.MuiAvatar-root': {
             height: '40px',

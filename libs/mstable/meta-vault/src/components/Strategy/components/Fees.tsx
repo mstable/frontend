@@ -128,6 +128,46 @@ export const Fees = (props: StackProps) => {
     <Stack {...props} direction="column" spacing={2}>
       <Stack {...feeCardProps}>
         <Typography {...rateChipProps}>
+          {Math.round(performance * 100)}%
+        </Typography>
+        <Typography variant="h5" gutterBottom pt={2}>
+          {intl.formatMessage({
+            defaultMessage: 'Performance Fee',
+          })}
+        </Typography>
+        <Typography sx={{ typography: 'subtitle2', paddingBottom: 2 }}>
+          {intl.formatMessage(
+            {
+              defaultMessage:
+                'The Meta Vault charges a {fee}% performance upon underlying asset appreciation.',
+            },
+            { fee: Math.round(performance * 100) },
+          )}
+        </Typography>
+        <Stack {...logoContainerProps}>
+          <Logo label={intl.formatMessage({ defaultMessage: 'Token' })} first>
+            <Coin weight="fill" width={16} height={16} />
+          </Logo>
+          <Logo
+            label={intl.formatMessage({ defaultMessage: 'Collect swap fees' })}
+          >
+            <Coins weight="fill" width={16} height={16} />
+          </Logo>
+          <Logo
+            label={intl.formatMessage(
+              { defaultMessage: '{fee}%' },
+              { fee: Math.round(performance * 100) },
+            )}
+          >
+            <ChartPieSlice weight="fill" width={16} height={16} />
+          </Logo>
+          <Logo last label={intl.formatMessage({ defaultMessage: 'DAO' })}>
+            <Bank weight="fill" width={16} height={16} />
+          </Logo>
+        </Stack>
+      </Stack>
+      <Stack {...feeCardProps}>
+        <Typography {...rateChipProps}>
           {Math.round(liquidation * 100)}%
         </Typography>
         <Typography variant="h5" gutterBottom pt={2}>
@@ -160,46 +200,6 @@ export const Fees = (props: StackProps) => {
             label={intl.formatMessage(
               { defaultMessage: '{fee}% of USDC' },
               { fee: Math.round(liquidation * 100) },
-            )}
-          >
-            <ChartPieSlice weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo last label={intl.formatMessage({ defaultMessage: 'DAO' })}>
-            <Bank weight="fill" width={16} height={16} />
-          </Logo>
-        </Stack>
-      </Stack>
-      <Stack {...feeCardProps}>
-        <Typography {...rateChipProps}>
-          {Math.round(performance * 100)}%
-        </Typography>
-        <Typography variant="h5" gutterBottom pt={2}>
-          {intl.formatMessage({
-            defaultMessage: 'Performance Fee',
-          })}
-        </Typography>
-        <Typography sx={{ typography: 'subtitle2', paddingBottom: 2 }}>
-          {intl.formatMessage(
-            {
-              defaultMessage:
-                'The Meta Vault charges a {fee}% performance upon underlying asset appreciation.',
-            },
-            { fee: Math.round(performance * 100) },
-          )}
-        </Typography>
-        <Stack {...logoContainerProps}>
-          <Logo label={intl.formatMessage({ defaultMessage: 'Token' })} first>
-            <Coin weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo
-            label={intl.formatMessage({ defaultMessage: 'Collect swap fees' })}
-          >
-            <Coins weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo
-            label={intl.formatMessage(
-              { defaultMessage: '{fee}%' },
-              { fee: Math.round(performance * 100) },
             )}
           >
             <ChartPieSlice weight="fill" width={16} height={16} />
