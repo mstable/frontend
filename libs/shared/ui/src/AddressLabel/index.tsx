@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Check, ContentCopy, Error, OpenInNew } from '@mui/icons-material';
 import { IconButton, Link, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
-import { etherscanBlockExplorers, useNetwork } from 'wagmi';
+import { etherscanBlockExplorers } from 'wagmi';
 
 import { MiddleTruncated } from '../Typography';
 
@@ -15,6 +15,7 @@ export type AddressLabelProps = {
   hideEtherscan?: boolean;
   small?: boolean;
   link?: boolean;
+  blockExplorerUrl?: string;
 } & StackProps;
 
 export const AddressLabel = ({
@@ -23,11 +24,11 @@ export const AddressLabel = ({
   hideEtherscan = false,
   small = false,
   link = false,
+  blockExplorerUrl = etherscanBlockExplorers.mainnet.url,
   ...rest
 }: AddressLabelProps) => {
   const intl = useIntl();
   const [copied, setCopied] = useState('idle');
-  const { chain } = useNetwork();
 
   useEffect(() => {
     if (copied !== 'idle') {
@@ -50,12 +51,7 @@ export const AddressLabel = ({
     <Stack direction="row" alignItems="center" {...rest} flexWrap="nowrap">
       {link ? (
         <Link
-          href={[
-            chain?.blockExplorers?.etherscan.url ??
-              etherscanBlockExplorers.mainnet.url,
-            'address',
-            address,
-          ].join('/')}
+          href={[blockExplorerUrl, 'address', address].join('/')}
           target="_blank"
           sx={{
             width: 1,
@@ -102,12 +98,7 @@ export const AddressLabel = ({
 
       {!hideEtherscan && !link && (
         <IconButton
-          href={[
-            chain?.blockExplorers?.etherscan.url ??
-              etherscanBlockExplorers.mainnet.url,
-            'address',
-            address,
-          ].join('/')}
+          href={[blockExplorerUrl, 'address', address].join('/')}
           target="_blank"
           color="inherit"
           size={small ? 'small' : 'medium'}
