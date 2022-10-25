@@ -13,7 +13,7 @@ export type Flag = 'exactApproval' | 'dark';
 export type SettingsState = Record<Flag, boolean>;
 
 const initialState: SettingsState = {
-  exactApproval: false,
+  exactApproval: true,
   dark: false,
 };
 

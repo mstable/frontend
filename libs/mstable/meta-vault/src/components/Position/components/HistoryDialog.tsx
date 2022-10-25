@@ -96,14 +96,15 @@ export const HistoryDialog = ({
                         )}
                       </Box>
                       <Box>
-                        <Typography variant="body2">
+                        <Typography variant="label2">
                           {tx.type === TransactionType.Deposit
                             ? intl.formatMessage({ defaultMessage: 'Deposit' })
                             : intl.formatMessage({
                                 defaultMessage: 'Withdraw',
                               })}
                         </Typography>
-                        <Typography variant="label2" color="text.secondary">
+                        <br />
+                        <Typography variant="value5" color="text.secondary">
                           {format(Number(tx.timestamp) * 1000, 'MMM dd, yyyy')}
                         </Typography>
                       </Box>
@@ -139,7 +140,7 @@ export const HistoryDialog = ({
                   </TableCell>
                   <TableCell>
                     <Box display="flex" flexDirection="column">
-                      <Typography variant="body2">
+                      <Typography variant="label2" sx={{ mb: 0.5 }}>
                         {intl.formatMessage({ defaultMessage: 'Txn hash' })}
                       </Typography>
                       <AddressLabel
