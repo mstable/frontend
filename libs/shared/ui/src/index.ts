@@ -2,6 +2,7 @@ export * from './AddressLabel';
 export * from './Backgrounds';
 export * from './CollapsibleSection';
 export * from './ErrorBoundary';
+export * from './Errors';
 export * from './ExpandIcon';
 export * from './FormControls';
 export * from './InfoTooltip';
