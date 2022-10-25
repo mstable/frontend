@@ -523,6 +523,20 @@
       "value": "% ROI"
     }
   ],
+  "UMrrVX": [
+    {
+      "type": 0,
+      "value": "TVL ("
+    },
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
   "VlABxn": [
     {
       "type": 0,
@@ -563,6 +577,12 @@
       "value": "Connected User"
     }
   ],
+  "X1WPwl": [
+    {
+      "type": 0,
+      "value": "Nothing here yet, make your first deposit"
+    }
+  ],
   "XSdWHA": [
     {
       "type": 0,
@@ -595,6 +615,12 @@
       "value": "Balance"
     }
   ],
+  "bnF8kf": [
+    {
+      "type": 0,
+      "value": "Current Base Fee"
+    }
+  ],
   "bvmoAt": [
     {
       "type": 0,
@@ -605,6 +631,12 @@
     {
       "type": 0,
       "value": "Enter Amount"
+    }
+  ],
+  "cg1VJ2": [
+    {
+      "type": 0,
+      "value": "Connect Wallet"
     }
   ],
   "d1uESJ": [
@@ -763,12 +795,6 @@
       "value": "Insufficient balance"
     }
   ],
-  "kjUNOW": [
-    {
-      "type": 0,
-      "value": "Waiting for approval"
-    }
-  ],
   "korbaG": [
     {
       "type": 0,
@@ -839,12 +865,6 @@
     {
       "type": 0,
       "value": "Disconnect"
-    }
-  ],
-  "rFZhzG": [
-    {
-      "type": 0,
-      "value": "Current Gas"
     }
   ],
   "rbrahO": [
@@ -919,6 +939,12 @@
     {
       "type": 0,
       "value": "Curve is an exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers, without an opportunity cost."
+    }
+  ],
+  "w1LBDB": [
+    {
+      "type": 0,
+      "value": "Sign Transaction"
     }
   ],
   "w4Oc4e": [
