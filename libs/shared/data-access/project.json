@@ -32,14 +32,14 @@
       }
     },
     "codegen": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": ["yarn nx run shared-data-access:codegen-graphql"],
         "parallel": false
       }
     },
     "codegen-graphql": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           "yarn graphql-codegen --config 'libs/shared/data-access/codegen.js'"

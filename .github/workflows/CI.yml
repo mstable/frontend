@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'libs/subgraph/**'
   pull_request:
+    paths-ignore:
+      - 'libs/subgraph/**'
   workflow_dispatch:
 
 concurrency:

@@ -155,11 +155,17 @@
   "TVrR/z": {
     "defaultMessage": "{roi}% ROI"
   },
+  "UMrrVX": {
+    "defaultMessage": "TVL ({symbol})"
+  },
   "WCaf5C": {
     "defaultMessage": "Approve"
   },
   "WKCp0D": {
     "defaultMessage": "Asset"
+  },
+  "X1WPwl": {
+    "defaultMessage": "Nothing here yet, make your first deposit"
   },
   "XSdWHA": {
     "defaultMessage": "Redeem"
@@ -170,11 +176,17 @@
   "b+LlHJ": {
     "defaultMessage": "Deposit Gas"
   },
+  "bnF8kf": {
+    "defaultMessage": "Current Base Fee"
+  },
   "bvmoAt": {
     "defaultMessage": "The following protocols are used in the strategies and are therefore exposed to their risk:"
   },
   "byXXyV": {
     "defaultMessage": "Enter Amount"
+  },
+  "cg1VJ2": {
+    "defaultMessage": "Connect Wallet"
   },
   "d1uESJ": {
     "defaultMessage": "Assets"
@@ -221,9 +233,6 @@
   "kaPKOB": {
     "defaultMessage": "Insufficient balance"
   },
-  "kjUNOW": {
-    "defaultMessage": "Waiting for approval"
-  },
   "korbaG": {
     "defaultMessage": "The following assets are used in this strategy and therefore are exposed (partially) to their risk:"
   },
@@ -238,9 +247,6 @@
   },
   "qZbedW": {
     "defaultMessage": "Fees"
-  },
-  "rFZhzG": {
-    "defaultMessage": "Current Gas"
   },
   "rbrahO": {
     "defaultMessage": "Close"
@@ -265,6 +271,9 @@
   },
   "tvpAhG": {
     "defaultMessage": "The Meta Vault charges a {fee}% performance upon underlying asset appreciation."
+  },
+  "w1LBDB": {
+    "defaultMessage": "Sign Transaction"
   },
   "zFNxtv": {
     "defaultMessage": "Protocols"
