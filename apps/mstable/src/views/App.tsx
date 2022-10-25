@@ -7,6 +7,7 @@ import { ModalsProvider } from '@frontend/shared-modals';
 import { NotificationsProvider } from '@frontend/shared-notifications';
 import { PricesProvider } from '@frontend/shared-prices';
 import { ThemeProvider } from '@frontend/shared-theme';
+import { ErrorBoundary, ErrorPage } from '@frontend/shared-ui';
 import { composeContexts } from '@frontend/shared-utils';
 import { useUnsupportedNetworks, WagmiProvider } from '@frontend/shared-wagmi';
 import { Stack } from '@mui/material';
@@ -32,7 +33,17 @@ const AppWrapped = () => {
       }}
     >
       <Topnav />
-      <Outlet />
+      <ErrorBoundary
+        ErrorComponent={
+          <ErrorPage
+            height={1}
+            width={1}
+            sx={(theme) => theme.mixins.paddings.page}
+          />
+        }
+      >
+        <Outlet />
+      </ErrorBoundary>
     </Stack>
   );
 };
