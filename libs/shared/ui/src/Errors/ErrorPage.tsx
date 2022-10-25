@@ -1,3 +1,4 @@
+import { DISCORD_SUPPORT } from '@frontend/shared-constants';
 import { Link, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
@@ -45,10 +46,7 @@ export const ErrorPage = ({
             },
             {
               support: (
-                <Link
-                  href="https://discord.com/channels/525087739801239552/788766021887721533"
-                  target="_blank"
-                >
+                <Link href={DISCORD_SUPPORT} target="_blank">
                   {intl.formatMessage({
                     defaultMessage: 'Discord support channel',
                   })}
