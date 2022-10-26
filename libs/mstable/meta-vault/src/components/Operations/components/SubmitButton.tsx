@@ -57,8 +57,8 @@ export const SubmitButton = () => {
   );
 
   const { config: submitConfig } = usePrepareContractWrite({
-    addressOrName: address,
-    contractInterface: BasicVaultABI,
+    address,
+    abi: BasicVaultABI,
     functionName: operation,
     args,
     enabled: !!amount?.exact && !!walletAddress && !needsApproval,

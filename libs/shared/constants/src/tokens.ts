@@ -3,10 +3,11 @@ import { chainId } from 'wagmi';
 
 import { DEAD_ADDRESS } from './utils';
 
+import type { HexAddress } from '@frontend/shared-utils';
 import type { SupportedToken } from '@mstable/metavaults-web';
 
 export type Token = {
-  address: string;
+  address: HexAddress;
   name: string;
   symbol: string;
 };

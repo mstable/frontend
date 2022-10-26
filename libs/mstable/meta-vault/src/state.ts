@@ -17,13 +17,15 @@ import {
 import { useUserVaultBalanceQuery } from './queries.generated';
 
 import type { Metavault } from '@frontend/shared-constants';
+import type { HexAddress } from '@frontend/shared-utils';
 import type { FetchTokenResult } from '@wagmi/core';
+import type { BigNumberish } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
 
 type MetaVaultState = {
   metavault: Metavault | null;
   mvToken: FetchTokenResult | null;
-  asset: string | null;
+  asset: HexAddress | null;
   assetToken: FetchTokenResult | null;
   mvBalance: BigDecimal | null;
   mvBalanceInAsset: BigDecimal | null;
@@ -93,21 +95,21 @@ export const {
   );
 
   useContractRead({
-    addressOrName: address,
-    contractInterface: BasicVaultABI,
+    address,
+    abi: BasicVaultABI,
     functionName: 'asset',
     enabled: !!address,
     onSuccess: (data) => {
       setState(
         produce((draft) => {
-          draft.asset = data as unknown as string;
+          draft.asset = data as HexAddress;
         }),
       );
     },
   });
 
   const { refetch: fetchMvToken } = useToken({
-    address: address,
+    address,
     enabled: false,
     onSuccess: (data) => {
       setState(
@@ -165,14 +167,14 @@ export const {
   useContractReads({
     contracts: [
       {
-        addressOrName: address,
-        contractInterface: BasicVaultABI,
+        address,
+        abi: BasicVaultABI,
         functionName: 'convertToAssets',
         args: [state.mvBalance?.exact],
       },
       {
-        addressOrName: address,
-        contractInterface: BasicVaultABI,
+        address,
+        abi: BasicVaultABI,
         functionName: 'convertToShares',
         args: [state.assetBalance?.exact],
       },
@@ -191,10 +193,10 @@ export const {
       setState(
         produce((draft) => {
           draft.mvBalanceInAsset = data?.[0]
-            ? new BigDecimal(data[0], state.assetToken.decimals)
+            ? new BigDecimal(data[0] as BigNumberish, state.assetToken.decimals)
             : BigDecimal.ZERO;
           draft.assetBalanceInShare = data?.[1]
-            ? new BigDecimal(data[1], state.mvToken.decimals)
+            ? new BigDecimal(data[1] as BigNumberish, state.mvToken.decimals)
             : BigDecimal.ZERO;
         }),
       );

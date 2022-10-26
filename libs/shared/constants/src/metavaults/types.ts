@@ -1,3 +1,4 @@
+import type { HexAddress } from '@frontend/shared-utils';
 import type { MessageDescriptor } from 'react-intl';
 
 import type { Protocol } from '../protocols';
@@ -12,7 +13,7 @@ export type Strategy = {
 };
 
 export type Metavault = {
-  address: string;
+  address: HexAddress;
   name: string;
   tags: MessageDescriptor[];
   strategyDescription?: MessageDescriptor;

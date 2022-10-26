@@ -12,7 +12,7 @@ import { useMetavault } from '../../state';
 
 import type { Children } from '@frontend/shared-utils';
 import type { FetchTokenResult } from '@wagmi/core';
-import type { BigNumber } from 'ethers';
+import type { BigNumber, BigNumberish } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
 
 import type { SupportedOperation } from '../../types';
@@ -67,8 +67,8 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   const { amount, operation, allowance, preview } = state;
 
   useContractRead({
-    addressOrName: asset,
-    contractInterface: erc20ABI,
+    address: asset,
+    abi: erc20ABI,
     functionName: 'allowance',
     args: [walletAddress, address],
     enabled: !!asset && isConnected,
@@ -84,8 +84,8 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   });
 
   const { refetch: fetchPreview } = useContractRead({
-    addressOrName: address,
-    contractInterface: BasicVaultABI,
+    address,
+    abi: BasicVaultABI,
     functionName: {
       deposit: 'previewDeposit',
       mint: 'previewMint',
@@ -94,7 +94,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     }[operation],
     args: [amount?.exact],
     enabled: false,
-    onSuccess: (data) => {
+    onSuccess: (data: BigNumberish) => {
       setState(
         produce((draft) => {
           draft.preview = data ? new BigDecimal(data) : null;
