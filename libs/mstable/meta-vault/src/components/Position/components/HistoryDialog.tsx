@@ -5,6 +5,7 @@ import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import {
   Box,
   Button,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -95,18 +96,18 @@ export const HistoryDialog = ({
                           <UploadSimple />
                         )}
                       </Box>
-                      <Box>
-                        <Typography variant="body2">
+                      <Stack direction="column" spacing={0.5}>
+                        <Typography variant="label2">
                           {tx.type === TransactionType.Deposit
                             ? intl.formatMessage({ defaultMessage: 'Deposit' })
                             : intl.formatMessage({
                                 defaultMessage: 'Withdraw',
                               })}
                         </Typography>
-                        <Typography variant="label2" color="text.secondary">
+                        <Typography variant="value5" color="text.secondary">
                           {format(Number(tx.timestamp) * 1000, 'MMM dd, yyyy')}
                         </Typography>
-                      </Box>
+                      </Stack>
                     </Box>
                   </TableCell>
                   <TableCell>
@@ -139,7 +140,7 @@ export const HistoryDialog = ({
                   </TableCell>
                   <TableCell>
                     <Box display="flex" flexDirection="column">
-                      <Typography variant="body2">
+                      <Typography variant="label2" sx={{ mb: 0.5 }}>
                         {intl.formatMessage({ defaultMessage: 'Txn hash' })}
                       </Typography>
                       <AddressLabel

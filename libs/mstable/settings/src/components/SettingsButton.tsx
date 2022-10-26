@@ -79,8 +79,8 @@ export const SettingsButton = (props: ButtonProps) => {
             {intl.formatMessage({ defaultMessage: 'Token Approval' })}
           </Typography>
           <FormControlLabel
-            value={exactApproval}
-            control={<Switch checked={exactApproval} />}
+            value={!exactApproval}
+            control={<Switch checked={!exactApproval} />}
             label={
               <Stack
                 direction="row"
@@ -89,7 +89,7 @@ export const SettingsButton = (props: ButtonProps) => {
                 flexGrow={1}
               >
                 <Typography variant="label2">
-                  {intl.formatMessage({ defaultMessage: 'Set As Exact' })}
+                  {intl.formatMessage({ defaultMessage: 'Set As Infinite' })}
                 </Typography>
                 <InfoTooltip
                   label={intl.formatMessage({

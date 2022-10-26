@@ -54,7 +54,7 @@ export const Position = () => {
           <Button
             size="small"
             variant="text"
-            startIcon={<Receipt weight="fill" size={12} />}
+            startIcon={<Receipt weight="fill" size={14} />}
             disabled={!address || !metavault?.address}
             onClick={() => setIsHistoryDialogOpen(true)}
           >
@@ -74,6 +74,7 @@ export const Position = () => {
               </Typography>
               <InfoTooltip
                 sx={{ ml: 1 }}
+                size={14}
                 label="tooltip"
                 color="text.secondary"
                 variant="exclamation"
@@ -110,6 +111,7 @@ export const Position = () => {
               </Typography>
               <InfoTooltip
                 sx={{ ml: 1 }}
+                size={14}
                 label="tooltip"
                 color="text.secondary"
                 variant="exclamation"
