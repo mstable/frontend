@@ -15,7 +15,7 @@ export const Main = () => {
       width={1}
       sx={(theme) => theme.mixins.paddings.page}
     >
-      <Box flexGrow={1}>
+      <Box minHeight="80vh">
         {chain?.unsupported ? <WrongNetworkPage /> : <Outlet />}
       </Box>
       <Footer py={4} />

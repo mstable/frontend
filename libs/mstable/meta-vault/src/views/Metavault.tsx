@@ -5,6 +5,7 @@ import {
   WrongNetworkPage,
 } from '@frontend/mstable-shared-ui';
 import { supportedMetavaults } from '@frontend/shared-constants';
+import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
 import { Grid, Stack } from '@mui/material';
 import { useMatch } from '@tanstack/react-location';
 import { chainId, useNetwork } from 'wagmi';
@@ -33,20 +34,30 @@ export const Metavault = () => {
   if (!metavault) return <UnsupportedMvPage mvid={mvid} />;
 
   return (
-    <MetavaultProvider initialState={{ metavault }}>
+    <MetavaultProvider key={chain?.id} initialState={{ metavault }}>
       <Stack direction="column">
-        <VaultJumbo py={8} />
+        <ErrorBoundary ErrorComponent={<ErrorCard sx={{ py: 8 }} />}>
+          <VaultJumbo py={8} />
+        </ErrorBoundary>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
             <Stack direction="column" spacing={2}>
-              <VaultPerformance />
-              <Strategy />
+              <ErrorBoundary>
+                <VaultPerformance />
+              </ErrorBoundary>
+              <ErrorBoundary>
+                <Strategy />
+              </ErrorBoundary>
             </Stack>
           </Grid>
           <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
             <Stack direction="column" spacing={2}>
-              <Position />
-              <Operations />
+              <ErrorBoundary>
+                <Position />
+              </ErrorBoundary>
+              <ErrorBoundary>
+                <Operations />
+              </ErrorBoundary>
             </Stack>
           </Grid>
         </Grid>

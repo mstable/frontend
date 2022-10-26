@@ -1,9 +1,16 @@
 import { useEffect, useMemo } from 'react';
 
-import { erc4626ABI } from '@frontend/shared-constants';
 import { usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
-import { Box, Divider, Skeleton, Stack, Typography } from '@mui/material';
+import { BasicVaultABI } from '@mstable/metavaults-web';
+import {
+  Box,
+  Collapse,
+  Divider,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { constants } from 'ethers';
 import { ArrowsClockwise, Fire, Ticket, Vault, Wallet } from 'phosphor-react';
 import { pathOr } from 'ramda';
@@ -108,7 +115,7 @@ const DepositRecap = (props: StackProps) => {
         </Typography>
       </Stack>
       <Stack {...rowProps}>
-        <Typography variant="value5">
+        <Typography variant="value5" color="text.secondary">
           {operation === 'mint' && isInputLoading ? (
             <Skeleton width={100} />
           ) : (
@@ -118,7 +125,7 @@ const DepositRecap = (props: StackProps) => {
             }`
           )}
         </Typography>
-        <Typography variant="value5">
+        <Typography variant="value5" color="text.secondary">
           {operation === 'deposit' && isInputLoading ? (
             <Skeleton width={100} />
           ) : (
@@ -186,7 +193,7 @@ const WithdrawRecap = (props: StackProps) => {
         </Typography>
       </Stack>
       <Stack {...rowProps}>
-        <Typography variant="value5">
+        <Typography variant="value5" color="text.secondary">
           {operation === 'redeem' && isInputLoading ? (
             <Skeleton width={100} />
           ) : (
@@ -196,7 +203,7 @@ const WithdrawRecap = (props: StackProps) => {
             )
           )}
         </Typography>
-        <Typography variant="value5">
+        <Typography variant="value5" color="text.secondary">
           {operation === 'withdraw' && isInputLoading ? (
             <Skeleton width={100} />
           ) : (
@@ -237,7 +244,7 @@ const GasFeesRecap = (props: StackProps) => {
   const { config: submitConfig, refetch: fetchSubmitConfig } =
     usePrepareContractWrite({
       address,
-      abi: erc4626ABI as const,
+      abi: BasicVaultABI as const,
       functionName: operation,
       args,
       enabled: false,
@@ -276,20 +283,20 @@ const GasFeesRecap = (props: StackProps) => {
   );
 
   useEffect(() => {
-    if (asset) {
+    if (asset && amount && amount?.exact.gt(constants.Zero)) {
       if (needsApproval) {
         fetchApprovalConfig();
       } else {
         fetchSubmitConfig();
       }
     }
-  }, [asset, fetchApprovalConfig, fetchSubmitConfig, needsApproval]);
+  }, [amount, asset, fetchApprovalConfig, fetchSubmitConfig, needsApproval]);
 
   return (
     <Stack {...props} direction="column">
       <Stack {...rowProps} pb={2}>
-        <Typography variant="label2">
-          {intl.formatMessage({ defaultMessage: 'Current Gas' })}
+        <Typography variant="label2" color="text.secondary">
+          {intl.formatMessage({ defaultMessage: 'Current Base Fee' })}
         </Typography>
         <Typography variant="value5">
           {intl.formatMessage(
@@ -299,7 +306,7 @@ const GasFeesRecap = (props: StackProps) => {
         </Typography>
       </Stack>
       <Stack {...rowProps} pb={1}>
-        <Typography variant="label2">
+        <Typography variant="label2" color="text.secondary">
           {needsApproval
             ? intl.formatMessage({ defaultMessage: 'Approval Cost' })
             : intl.formatMessage(
@@ -313,7 +320,7 @@ const GasFeesRecap = (props: StackProps) => {
         </Typography>
       </Stack>
       <Stack {...rowProps} justifyContent="flex-end">
-        <Typography variant="value5">
+        <Typography variant="value5" color="text.secondary">
           {fiatGasPrice?.format(2) ?? '-'}&nbsp;{symbol}
         </Typography>
       </Stack>
@@ -329,12 +336,10 @@ export const Recap = (props: StackProps) => {
   return (
     <Stack {...props} spacing={3}>
       {tab === 0 ? <DepositRecap /> : <WithdrawRecap />}
-      {isConnected && !!amount && (
-        <>
-          <Divider flexItem />
-          <GasFeesRecap />
-        </>
-      )}
+      <Collapse in={isConnected && !!amount}>
+        <Divider flexItem />
+        <GasFeesRecap pt={2} />
+      </Collapse>
     </Stack>
   );
 };

@@ -1,6 +1,7 @@
 import { AddressLabel, TokenIcon } from '@frontend/shared-ui';
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
+import { useNetwork } from 'wagmi';
 
 import { useMetavault } from '../../../state';
 
@@ -8,6 +9,7 @@ import type { StackProps } from '@mui/material';
 
 export const Assets = (props: StackProps) => {
   const intl = useIntl();
+  const { chain } = useNetwork();
   const {
     metavault: { assets },
   } = useMetavault();
@@ -39,8 +41,9 @@ export const Assets = (props: StackProps) => {
                 <AddressLabel
                   small
                   address={address}
-                  hideCopyToClipboard
                   link
+                  blockExplorerUrl={chain?.blockExplorers?.etherscan?.url}
+                  sx={{ maxWidth: 120 }}
                 />
               </Stack>
             </Grid>

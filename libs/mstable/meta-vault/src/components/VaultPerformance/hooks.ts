@@ -27,7 +27,10 @@ export const useChartConfig = () => {
     },
     TVL: {
       id: 'TVL' as ChartType,
-      label: intl.formatMessage({ defaultMessage: 'TVL' }),
+      label: intl.formatMessage(
+        { defaultMessage: 'TVL ({symbol})' },
+        { symbol: mv?.assetToken?.symbol },
+      ),
       getValue: (v) =>
         new BigDecimal(v.totalAssets, mv?.assetToken?.decimals).simple,
       getLabel: (v) => intl.formatNumber(v, { notation: 'compact' }),
@@ -98,8 +101,11 @@ export const useChartData = (
         label: intlFormat(Number(d.timestamp) * 1000, {
           timeZone: 'UTC',
           day: 'numeric',
-          month: 'numeric',
-        }).replace('/', '-'),
+          month: 'short',
+        })
+          .split(' ')
+          .reverse()
+          .join(' '),
         value: chartTypes[chartType].getValue(d),
       }));
 

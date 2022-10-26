@@ -42,6 +42,7 @@ export const VaultJumbo = (props: StackProps) => {
   const {
     metavault: { address, name, tags, strategies },
     assetToken,
+    mvToken,
   } = useMetavault();
   const dataSource = useDataSource();
   const { data, isLoading } = useMetavaultQuery(
@@ -65,7 +66,7 @@ export const VaultJumbo = (props: StackProps) => {
       label: `${diff >= 0 ? '+' : ''}${diff.toFixed(2)}%(1W)`,
       color:
         diff > 0
-          ? theme.palette.success.main
+          ? theme.palette.success.dark
           : diff < 0
           ? theme.palette.error.main
           : theme.palette.text.primary,
@@ -73,7 +74,7 @@ export const VaultJumbo = (props: StackProps) => {
   }, [
     data?.vault?.DailyVaultStats,
     theme.palette.error.main,
-    theme.palette.success.main,
+    theme.palette.success.dark,
     theme.palette.text.primary,
   ]);
 
@@ -129,27 +130,6 @@ export const VaultJumbo = (props: StackProps) => {
           </AvatarGroup>
         </ValueLabel>
         <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'TVL' })}
-          hint={intl.formatMessage({ defaultMessage: 'Total Supply' })}
-        >
-          {isLoading ? (
-            <Skeleton height={24} width={60} />
-          ) : (
-            <Stack direction="row" spacing={1} alignItems="baseline">
-              <Typography variant="value2">
-                {intl.formatNumber(
-                  new BigDecimal(data?.vault?.totalSupply ?? constants.Zero)
-                    .simple,
-                  { notation: 'compact' },
-                )}
-              </Typography>
-              <Typography variant="value5" sx={{ color: apyTrend.color }}>
-                {apyTrend.label}
-              </Typography>
-            </Stack>
-          )}
-        </ValueLabel>
-        <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'APY' })}
           hint={intl.formatMessage({
             defaultMessage: 'Annual Percentage Yield',
@@ -159,11 +139,34 @@ export const VaultJumbo = (props: StackProps) => {
             <Skeleton height={24} width={60} />
           ) : (
             <Typography variant="value2">
-              {intl.formatNumber(
-                new BigDecimal(data?.vault?.apy ?? constants.Zero).simple,
-                { style: 'percent' },
-              )}
+              {intl.formatNumber(data?.vault?.apy ?? 0, {
+                style: 'percent',
+                maximumFractionDigits: 2,
+              })}
             </Typography>
+          )}
+        </ValueLabel>
+        <ValueLabel
+          label={intl.formatMessage({ defaultMessage: 'TVL' })}
+          hint={intl.formatMessage({ defaultMessage: 'Total Supply' })}
+        >
+          {isLoading ? (
+            <Skeleton height={24} width={60} />
+          ) : (
+            <Stack direction="row" spacing={1} alignItems="baseline">
+              <Typography variant="value2">
+                {intl.formatNumber(
+                  new BigDecimal(
+                    data?.vault?.totalSupply ?? constants.Zero,
+                    mvToken?.decimals,
+                  ).simple,
+                  { notation: 'compact' },
+                )}
+              </Typography>
+              <Typography variant="value5" sx={{ color: apyTrend.color }}>
+                {apyTrend.label}
+              </Typography>
+            </Stack>
           )}
         </ValueLabel>
       </Stack>

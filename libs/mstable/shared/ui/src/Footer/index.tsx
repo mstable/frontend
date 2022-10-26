@@ -1,3 +1,10 @@
+import {
+  DISCORD,
+  EMAIL,
+  GITHUB,
+  MEDIUM,
+  TWITTER,
+} from '@frontend/shared-constants';
 import { Discord, Email, Github, Twitter } from '@frontend/shared-icons';
 import { IconButton, Stack, Typography } from '@mui/material';
 import { MediumLogo } from 'phosphor-react';
@@ -12,27 +19,27 @@ export const Footer = (props: StackProps) => {
     {
       title: intl.formatMessage({ defaultMessage: 'Github' }),
       icon: <Github />,
-      href: 'https://github.com/mstable',
+      href: GITHUB,
     },
     {
       title: intl.formatMessage({ defaultMessage: 'Discord' }),
       icon: <Discord />,
-      href: 'https://discord.gg/pgCVG7e',
+      href: DISCORD,
     },
     {
       title: intl.formatMessage({ defaultMessage: 'Twitter' }),
       icon: <Twitter />,
-      href: 'https://twitter.com/mstable_',
+      href: TWITTER,
     },
     {
       title: intl.formatMessage({ defaultMessage: 'Medium' }),
-      icon: <MediumLogo size={32} weight="fill" />,
-      href: 'https://medium.com/mstable',
+      icon: <MediumLogo size={24} weight="fill" />,
+      href: MEDIUM,
     },
     {
       title: intl.formatMessage({ defaultMessage: 'Email' }),
       icon: <Email />,
-      href: 'mailto:info@mstable.org',
+      href: EMAIL,
     },
   ];
 
@@ -44,8 +51,9 @@ export const Footer = (props: StackProps) => {
       {...props}
     >
       <Typography>
-        <strong>{intl.formatMessage({ defaultMessage: 'mStable' })}</strong>
-        &nbsp;|&nbsp;Meta-Vaults
+        {intl.formatMessage({
+          defaultMessage: '<strong>Meta Vaults</strong> by mStable',
+        })}
       </Typography>
       <Stack
         direction="row"

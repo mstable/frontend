@@ -1,0 +1,60 @@
+type Vault @entity {
+  id: ID!
+  address: Bytes!
+  asset: Bytes!
+  timestamp: BigInt!
+  totalAssets: BigInt!
+  totalSupply: BigInt!
+  assetPerShare: BigDecimal!
+  apy: BigDecimal!
+  DailyVaultStats: [DailyVaultStat!]! @derivedFrom(field: "vault")
+}
+
+type DailyVaultStat @entity {
+  id: ID!
+  vault: Vault!
+  timestamp: BigInt!
+  apy: BigDecimal!
+  totalAssets: BigInt!
+  totalSupply: BigInt!
+  assetPerShare: BigDecimal!
+}
+
+type VaultBalance @entity {
+  id: ID!
+  owner: Bytes!
+  vault: Vault!
+  timestamp: BigInt!
+  shareBalance: BigInt!
+  assetBalance: BigInt!
+  assetDeposited: BigInt!
+  dailyVaultBalances: [DailyVaultBalance!]! @derivedFrom(field: "vaultBalance")
+}
+
+type DailyVaultBalance @entity {
+  id: ID!
+  vaultBalance: VaultBalance!
+  timestamp: BigInt!
+  shareBalance: BigInt!
+  assetBalance: BigInt!
+  assetDeposited: BigInt!
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAW
+}
+
+type Transaction @entity {
+  id: ID!
+  vault: Vault!
+  timestamp: BigInt!
+  type: TransactionType!
+  shareAmount: BigInt!
+  assetAmount: BigInt!
+  hash: Bytes!
+  to: Bytes!
+  from: Bytes!
+  gasLimit: BigInt!
+  gasPrice: BigInt!
+}

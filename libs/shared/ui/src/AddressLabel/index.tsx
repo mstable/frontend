@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
 import { Check, ContentCopy, Error, OpenInNew } from '@mui/icons-material';
-import { Divider, IconButton, Link, Stack } from '@mui/material';
+import { IconButton, Link, Stack, Typography } from '@mui/material';
+import { useIntl } from 'react-intl';
+import { etherscanBlockExplorers } from 'wagmi';
 
 import { MiddleTruncated } from '../Typography';
 
 import type { StackProps } from '@mui/material';
-
-const ETHERSCAN_URL = 'https://etherscan.io/address/';
 
 export type AddressLabelProps = {
   address: string;
@@ -15,6 +15,7 @@ export type AddressLabelProps = {
   hideEtherscan?: boolean;
   small?: boolean;
   link?: boolean;
+  blockExplorerUrl?: string;
 } & StackProps;
 
 export const AddressLabel = ({
@@ -23,15 +24,17 @@ export const AddressLabel = ({
   hideEtherscan = false,
   small = false,
   link = false,
+  blockExplorerUrl = etherscanBlockExplorers.mainnet.url,
   ...rest
 }: AddressLabelProps) => {
+  const intl = useIntl();
   const [copied, setCopied] = useState('idle');
 
   useEffect(() => {
     if (copied !== 'idle') {
       setTimeout(() => {
         setCopied('idle');
-      }, 500);
+      }, 1000);
     }
   }, [copied]);
 
@@ -45,18 +48,11 @@ export const AddressLabel = ({
   };
 
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      divider={<Divider orientation="vertical" flexItem />}
-      {...rest}
-      flexWrap="nowrap"
-    >
+    <Stack direction="row" alignItems="center" {...rest} flexWrap="nowrap">
       {link ? (
         <Link
-          href={`${ETHERSCAN_URL}${address}`}
+          href={[blockExplorerUrl, 'address', address].join('/')}
           target="_blank"
-          color="inherit"
           sx={{
             width: 1,
             display: 'flex',
@@ -77,7 +73,6 @@ export const AddressLabel = ({
                 fontFamily: ['PT Mono', 'monospace'].join(','),
               },
             }}
-            flexGrow={1}
             pr={1}
           >
             {address}
@@ -95,7 +90,6 @@ export const AddressLabel = ({
               fontFamily: ['PT Mono', 'monospace'].join(','),
             },
           }}
-          flexGrow={1}
           pr={1}
         >
           {address}
@@ -104,7 +98,7 @@ export const AddressLabel = ({
 
       {!hideEtherscan && !link && (
         <IconButton
-          href={`${ETHERSCAN_URL}${address}`}
+          href={[blockExplorerUrl, 'address', address].join('/')}
           target="_blank"
           color="inherit"
           size={small ? 'small' : 'medium'}
@@ -117,12 +111,31 @@ export const AddressLabel = ({
         <IconButton
           onClick={handleCopyToClipboard}
           disabled={['copied', 'error'].includes(copied)}
-          color="inherit"
+          sx={{
+            color: link ? 'info.dark' : 'inherit',
+            ':hover': {
+              color: link ? 'info.main' : 'inherit',
+            },
+          }}
         >
           {copied === 'idle' ? (
             <ContentCopy sx={{ fontSize: small ? 14 : 16 }} />
           ) : copied === 'copied' ? (
-            <Check color="success" sx={{ fontSize: small ? 14 : 16 }} />
+            <Typography
+              variant="value6"
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                color: 'text.secondary',
+              }}
+            >
+              <Check
+                color="success"
+                sx={{ fontSize: small ? 14 : 16, mr: 0.5 }}
+              />
+              {intl.formatMessage({ defaultMessage: 'Copied' })}
+            </Typography>
           ) : (
             <Error color="error" sx={{ fontSize: small ? 14 : 16 }} />
           )}

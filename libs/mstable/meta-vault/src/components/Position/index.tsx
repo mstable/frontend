@@ -36,7 +36,7 @@ export const Position = () => {
       ? BigDecimal.ZERO
       : new BigDecimal(profitOrLoss.divPrecisely(mvDeposited).exact.mul(100));
 
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
 
   return (
     <>
@@ -76,6 +76,7 @@ export const Position = () => {
                 sx={{ ml: 1 }}
                 label="tooltip"
                 color="text.secondary"
+                variant="exclamation"
               />
             </Box>
             <Stack direction="column" alignItems="flex-end" spacing={1}>
@@ -84,9 +85,12 @@ export const Position = () => {
                 value={mvBalanceInAsset}
                 suffix={assetToken?.symbol}
                 commas
-                fontWeight="bold"
+                color={isConnected ? undefined : 'grey.300'}
               />
-              <Typography variant="value5" color="text.secondary">
+              <Typography
+                variant="value5"
+                color={isConnected ? 'text.secondary' : 'grey.300'}
+              >
                 {intl.formatMessage(
                   { defaultMessage: '{val} Shares' },
                   { val: mvBalance?.format() ?? '0.00' },
@@ -108,17 +112,20 @@ export const Position = () => {
                 sx={{ ml: 1 }}
                 label="tooltip"
                 color="text.secondary"
+                variant="exclamation"
               />
             </Box>
             <Stack direction="column" alignItems="flex-end" spacing={1}>
               <Typography
                 variant="value5"
-                color="success.main"
-                fontWeight="bold"
+                color={isConnected ? 'success.main' : 'grey.300'}
               >{`${profitOrLoss.format() ?? '0.00'} ${
                 assetToken?.symbol || ''
               }`}</Typography>
-              <Typography variant="value5" color="text.secondary">
+              <Typography
+                variant="value5"
+                color={isConnected ? 'text.secondary' : 'grey.300'}
+              >
                 {intl.formatMessage(
                   { defaultMessage: '{roi}% ROI' },
                   {

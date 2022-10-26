@@ -30,14 +30,7 @@ import type { Wallet } from '@rainbow-me/rainbowkit';
 import type { Chain, Connector } from 'wagmi';
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [
-    // chain.mainnet,
-    // chain.ropsten,
-    chain.goerli,
-    // chain.kovan,
-    // chain.polygon,
-    // chain.polygonMumbai,
-  ],
+  [chain.mainnet, chain.goerli],
   [infuraProvider(), publicProvider()],
 );
 

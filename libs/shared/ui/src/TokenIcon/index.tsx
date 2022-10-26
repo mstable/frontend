@@ -15,16 +15,15 @@ import {
 import { SvgIcon } from '@mui/material';
 import { CurrencyCircleDollar } from 'phosphor-react';
 
-import type { SupportedToken } from '@frontend/shared-constants';
+import type { SupportedToken } from '@mstable/metavaults-web';
 import type { SvgIconProps } from '@mui/material';
 
 export type TokenIconProps = {
   symbol: string;
 } & SvgIconProps;
 
-const SupportedTokens: Record<
-  SupportedToken,
-  (props: SvgIconProps) => JSX.Element
+const SupportedTokens: Partial<
+  Record<SupportedToken | 'eth', (props: SvgIconProps) => JSX.Element>
 > = {
   dai: DAI,
   eth: Ether,

@@ -1,6 +1,6 @@
 export * from './metavaults';
-export * from './abis';
 export * from './etherscan';
+export * from './mstable';
 export * from './prices';
 export * from './protocols';
 export * from './thegraph';

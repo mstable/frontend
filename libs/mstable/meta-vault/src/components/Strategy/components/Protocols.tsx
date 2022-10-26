@@ -36,7 +36,10 @@ export const Protocols = (props: StackProps) => {
               <Typography variant="h5">{protocol.name}</Typography>
             </Stack>
 
-            <Typography sx={{ typography: 'subtitle2', paddingBottom: 2 }}>
+            <Typography
+              sx={{ typography: 'body2', paddingBottom: 2 }}
+              color="text.secondary"
+            >
               {intl.formatMessage(protocol.description)}
             </Typography>
             <Typography sx={{ typography: 'body2' }}>

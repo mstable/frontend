@@ -1,10 +1,6 @@
 import { useMemo } from 'react';
 
-import {
-  CssBaseline,
-  GlobalStyles,
-  ThemeProvider as MuiThemeProvider,
-} from '@mui/material';
+import { CssBaseline, ThemeProvider as MuiThemeProvider } from '@mui/material';
 import { clone } from 'ramda';
 
 import { dark, light } from '../mui';
@@ -35,19 +31,7 @@ const ThemeWrapped = ({
 
   return (
     <MuiThemeProvider theme={currentTheme}>
-      {!disableBaseStyles && (
-        <>
-          <CssBaseline enableColorScheme />
-          <GlobalStyles
-            styles={{
-              'html, body, #root': {
-                width: '100%',
-                height: '100%',
-              },
-            }}
-          />
-        </>
-      )}
+      {!disableBaseStyles && <CssBaseline enableColorScheme />}
       {children}
     </MuiThemeProvider>
   );

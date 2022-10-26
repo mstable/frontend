@@ -1,12 +1,12 @@
 import { Component } from 'react';
 
-import { Typography } from '@mui/material';
+import { ErrorCard } from '../Errors';
 
 import type { ErrorInfo, ReactNode } from 'react';
 
 type Props = {
   children: ReactNode;
-  ErrorPage?: ReactNode;
+  ErrorComponent?: ReactNode;
   onError?: (error: Error, errorInfo?: ErrorInfo) => void;
 };
 
@@ -30,14 +30,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   override render() {
     if (this.state.hasError) {
-      return (
-        this.props?.ErrorPage ?? (
-          // eslint-disable-next-line jsx-a11y/accessible-emoji
-          <Typography component="span" role="img" aria-label="Oops">
-            😓
-          </Typography>
-        )
-      );
+      return this.props?.ErrorComponent ?? <ErrorCard />;
     }
 
     return this.props.children;

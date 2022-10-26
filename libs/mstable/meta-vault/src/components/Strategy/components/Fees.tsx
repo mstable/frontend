@@ -34,39 +34,60 @@ const rateChipProps: TypographyProps = {
 };
 
 const logoContainerProps: StackProps = {
-  mt: 4,
   width: 1,
+  mt: 2,
   direction: 'row',
-  justifyContent: 'space-between',
+  flexWrap: 'wrap',
   alignItems: 'center',
-  position: 'relative',
-  sx: (theme) => ({
-    '::after': {
-      content: '""',
-      height: '2px',
-      top: '25%',
-      left: 8,
-      right: 8,
-      background: theme.palette.background.highlight,
-      position: 'absolute',
-      zIndex: -1,
-    },
-  }),
 };
 
 type LogoProps = {
+  first?: boolean;
+  last?: boolean;
   label: string;
-  revertColors?: boolean;
 } & StackProps;
 
-const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
+const Logo = ({ children, label, first, last, ...rest }: LogoProps) => {
   return (
-    <Stack direction="column" alignItems="center" {...rest}>
+    <Stack
+      direction="column"
+      alignItems="center"
+      alignContent="space-between"
+      {...rest}
+      {...(first && { mr: 2 })}
+      {...(last && { ml: 2 })}
+      mt={2}
+      sx={[
+        !first &&
+          !last && {
+            flexGrow: 1,
+            position: 'relative',
+            '::before': {
+              top: '50%',
+              width: 1,
+              height: 2,
+              content: '""',
+              position: 'absolute',
+              backgroundColor: 'divider',
+              zIndex: -2,
+            },
+            '::after': {
+              display: 'block',
+              top: '50%',
+              width: 1 / 2,
+              height: 2,
+              content: '""',
+              position: 'absolute',
+              backgroundColor: 'background.paper',
+              zIndex: -1,
+            },
+          },
+      ]}
+    >
       <Box
         sx={{
-          backgroundColor: revertColors
-            ? 'icons.revertedBackground'
-            : 'icons.background',
+          backgroundColor:
+            first || last ? 'icons.revertedBackground' : 'icons.background',
           borderRadius: '50%',
           width: 30,
           height: 30,
@@ -75,13 +96,20 @@ const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
           alignItems: 'center',
           mb: 1,
           svg: {
-            color: revertColors ? 'icons.revertedColor' : 'icons.color',
+            color: first || last ? 'icons.revertedColor' : 'icons.color',
           },
         }}
       >
         {children}
       </Box>
-      <Typography sx={{ fontSize: 14, fontWeight: 'medium' }} noWrap>
+      <Typography
+        sx={{
+          fontSize: 14,
+          fontWeight: 'medium',
+        }}
+        noWrap
+        color="text.secondary"
+      >
         {label}
       </Typography>
     </Stack>
@@ -98,55 +126,6 @@ export const Fees = (props: StackProps) => {
 
   return (
     <Stack {...props} direction="column" spacing={2}>
-      <Stack {...feeCardProps}>
-        <Typography {...rateChipProps}>
-          {Math.round(liquidation * 100)}%
-        </Typography>
-        <Typography variant="h5" gutterBottom pt={2}>
-          {intl.formatMessage({
-            defaultMessage: 'Liquidation Fee',
-          })}
-        </Typography>
-        <Typography sx={{ typography: 'subtitle2', paddingBottom: 2 }}>
-          {intl.formatMessage(
-            {
-              defaultMessage:
-                'The underlying vaults charge a {fee}% fee upon liquidation of the earned rewards.',
-            },
-            { fee: Math.round(liquidation * 100) },
-          )}
-        </Typography>
-        <Stack {...logoContainerProps}>
-          <Logo
-            label={intl.formatMessage({ defaultMessage: 'Vault' })}
-            revertColors
-          >
-            <Vault weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo
-            label={intl.formatMessage({ defaultMessage: 'Claim CVX & CRV' })}
-          >
-            <Coins weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo label={intl.formatMessage({ defaultMessage: 'Swap to USDC' })}>
-            <ArrowsClockwise weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo
-            label={intl.formatMessage(
-              { defaultMessage: '{fee}% of USDC' },
-              { fee: Math.round(liquidation * 100) },
-            )}
-          >
-            <ChartPieSlice weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo
-            revertColors
-            label={intl.formatMessage({ defaultMessage: 'DAO' })}
-          >
-            <Bank weight="fill" width={16} height={16} />
-          </Logo>
-        </Stack>
-      </Stack>
       <Stack {...feeCardProps}>
         <Typography {...rateChipProps}>
           {Math.round(performance * 100)}%
@@ -166,10 +145,7 @@ export const Fees = (props: StackProps) => {
           )}
         </Typography>
         <Stack {...logoContainerProps}>
-          <Logo
-            label={intl.formatMessage({ defaultMessage: 'Token' })}
-            revertColors
-          >
+          <Logo label={intl.formatMessage({ defaultMessage: 'Token' })} first>
             <Coin weight="fill" width={16} height={16} />
           </Logo>
           <Logo
@@ -185,10 +161,50 @@ export const Fees = (props: StackProps) => {
           >
             <ChartPieSlice weight="fill" width={16} height={16} />
           </Logo>
+          <Logo last label={intl.formatMessage({ defaultMessage: 'DAO' })}>
+            <Bank weight="fill" width={16} height={16} />
+          </Logo>
+        </Stack>
+      </Stack>
+      <Stack {...feeCardProps}>
+        <Typography {...rateChipProps}>
+          {Math.round(liquidation * 100)}%
+        </Typography>
+        <Typography variant="h5" gutterBottom pt={2}>
+          {intl.formatMessage({
+            defaultMessage: 'Liquidation Fee',
+          })}
+        </Typography>
+        <Typography sx={{ typography: 'subtitle2', paddingBottom: 2 }}>
+          {intl.formatMessage(
+            {
+              defaultMessage:
+                'The underlying vaults charge a {fee}% fee upon liquidation of the earned rewards.',
+            },
+            { fee: Math.round(liquidation * 100) },
+          )}
+        </Typography>
+        <Stack {...logoContainerProps}>
+          <Logo label={intl.formatMessage({ defaultMessage: 'Vault' })} first>
+            <Vault weight="fill" width={16} height={16} />
+          </Logo>
           <Logo
-            revertColors
-            label={intl.formatMessage({ defaultMessage: 'DAO' })}
+            label={intl.formatMessage({ defaultMessage: 'Claim CVX & CRV' })}
           >
+            <Coins weight="fill" width={16} height={16} />
+          </Logo>
+          <Logo label={intl.formatMessage({ defaultMessage: 'Swap to USDC' })}>
+            <ArrowsClockwise weight="fill" width={16} height={16} />
+          </Logo>
+          <Logo
+            label={intl.formatMessage(
+              { defaultMessage: '{fee}% of USDC' },
+              { fee: Math.round(liquidation * 100) },
+            )}
+          >
+            <ChartPieSlice weight="fill" width={16} height={16} />
+          </Logo>
+          <Logo last label={intl.formatMessage({ defaultMessage: 'DAO' })}>
             <Bank weight="fill" width={16} height={16} />
           </Logo>
         </Stack>

@@ -32,7 +32,7 @@ const mainnet: Metavault = {
       }),
     },
   ],
-  vaults: [vaults[chainId.mainnet].musdConvex3CrvLiquidatorVault],
+  vaults: [vaults[chainId.mainnet].vcx3crvmusd],
   assets: [tokens[chainId.mainnet].musd, tokens[chainId.mainnet].usdc],
   fees: {
     liquidation: 0.17,
@@ -47,7 +47,7 @@ const mainnet: Metavault = {
 const goerli: Metavault = {
   ...mainnet,
   address: '0x0145a7fb49402b29be7c52d38aeacb5e1acae11b',
-  vaults: [vaults[chainId.goerli].musdConvex3CrvLiquidatorVault],
+  vaults: [vaults[chainId.goerli].vcx3crvmusd],
   assets: [tokens[chainId.goerli].musd, tokens[chainId.goerli].usdc],
 };
 

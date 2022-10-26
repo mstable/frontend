@@ -35,7 +35,8 @@
       "@frontend/shared-utils": ["libs/shared/utils/src/index.ts"],
       "@frontend/shared-wagmi": ["libs/shared/wagmi/src/index.ts"],
       "@frontend/tools-nx-plugin": ["libs/tools/nx-plugin/src/index.ts"],
-      "@frontend/tools-storybook": ["libs/tools/storybook/src/index.ts"]
+      "@frontend/tools-storybook": ["libs/tools/storybook/src/index.ts"],
+      "@subgraph-metavault": ["libs/subgraph/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

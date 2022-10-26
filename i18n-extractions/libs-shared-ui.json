@@ -16,5 +16,8 @@
   },
   "not_connected": {
     "defaultMessage": "Not Connected"
+  },
+  "p556q3": {
+    "defaultMessage": "Copied"
   }
 }
