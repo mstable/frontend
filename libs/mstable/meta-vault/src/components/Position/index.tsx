@@ -14,6 +14,7 @@ import {
 import { constants } from 'ethers';
 import { Receipt } from 'phosphor-react';
 import { useIntl } from 'react-intl';
+import { useDebounce } from 'react-use';
 import { useAccount } from 'wagmi';
 
 import { useMetavault } from '../../state';
@@ -24,11 +25,21 @@ export const Position = () => {
   const intl = useIntl();
   const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
   const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
+  const [profitOrLoss, setProfitOrLoss] = useState(BigDecimal.ZERO);
   const { mvBalance, mvBalanceInAsset, assetToken, mvDeposited, metavault } =
     useMetavault();
 
-  const profitOrLoss =
-    mvBalanceInAsset?.sub(mvDeposited || BigDecimal.ZERO) || BigDecimal.ZERO;
+  useDebounce(
+    () => {
+      setProfitOrLoss(
+        mvBalanceInAsset?.sub(mvDeposited || BigDecimal.ZERO) ||
+          BigDecimal.ZERO,
+      );
+    },
+    1000,
+    [mvBalanceInAsset, mvDeposited],
+  );
+
   const roi =
     mvBalanceInAsset?.exact.eq(constants.Zero) ||
     !mvDeposited ||
