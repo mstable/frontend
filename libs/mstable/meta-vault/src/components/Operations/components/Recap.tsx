@@ -244,7 +244,7 @@ const GasFeesRecap = (props: StackProps) => {
   const { config: submitConfig, refetch: fetchSubmitConfig } =
     usePrepareContractWrite({
       address,
-      abi: BasicVaultABI as const,
+      abi: BasicVaultABI,
       functionName: operation,
       args,
       enabled: false,
@@ -252,7 +252,7 @@ const GasFeesRecap = (props: StackProps) => {
   const { config: approveConfig, refetch: fetchApprovalConfig } =
     usePrepareContractWrite({
       address: asset,
-      abi: erc20ABI as const,
+      abi: erc20ABI,
       functionName: 'approve',
       args: [address, constants.MaxUint256],
       enabled: false,

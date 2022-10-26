@@ -13,8 +13,8 @@ type VaultCardProps = Omit<Vault, 'decimals'> & StackProps;
 const VaultCard = ({ address, name, ...rest }: VaultCardProps) => {
   const { chain } = useNetwork();
   const { data } = useContractRead({
-    addressOrName: address,
-    contractInterface: BasicVaultABI,
+    address,
+    abi: BasicVaultABI,
     functionName: 'name',
   });
 
@@ -30,7 +30,7 @@ const VaultCard = ({ address, name, ...rest }: VaultCardProps) => {
       }}
     >
       <Typography variant="h5" gutterBottom noWrap>
-        {data}
+        {data as string}
       </Typography>
       <Typography noWrap sx={{ typography: 'subtitle2', pb: 1 }}>
         {name}

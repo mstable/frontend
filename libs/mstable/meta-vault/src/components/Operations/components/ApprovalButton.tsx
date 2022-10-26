@@ -18,7 +18,9 @@ import {
 import { useMetavault } from '../../../state';
 import { useOperations, useSetIsSubmitLoading } from '../hooks';
 
+import type { HexAddress } from '@frontend/shared-utils';
 import type { ButtonProps } from '@mui/material';
+import type { BigNumber } from 'ethers';
 
 const buttonProps: ButtonProps = {
   size: 'large',
@@ -36,7 +38,7 @@ export const ApprovalButton = (props: ButtonProps) => {
   const { amount, needsApproval } = useOperations();
   const setIsSubmitLoading = useSetIsSubmitLoading();
 
-  const args = useMemo(
+  const args = useMemo<[HexAddress, BigNumber]>(
     () => [address, exactApproval ? amount?.exact : constants.MaxUint256],
     [address, amount?.exact, exactApproval],
   );

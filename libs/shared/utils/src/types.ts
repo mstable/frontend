@@ -34,3 +34,5 @@ export type RecursivePartial<T> = {
 
 export type ArrayElement<ArrayType> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+
+export type HexAddress = `0x${string}`;
