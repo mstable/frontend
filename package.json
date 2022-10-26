@@ -130,6 +130,7 @@
     "jsonc-eslint-parser": "^2.1.0",
     "lint-staged": "^13.0.3",
     "mustache": "^4.2.0",
+    "node-polyfill-webpack-plugin": "^2.0.1",
     "nx": "^15.0.3",
     "prettier": "^2.7.1",
     "react-test-renderer": "18.2.0",
