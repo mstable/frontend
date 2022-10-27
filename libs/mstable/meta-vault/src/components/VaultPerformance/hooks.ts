@@ -146,7 +146,7 @@ export const useChartData = (
                 color: theme.palette.divider,
                 drawBorder: false,
               },
-              min: 0,
+              min: Math.min(0, ...sortedData.map((d) => d.value)),
               ticks: {
                 callback: chartTypes[chartType].getLabel,
                 color: theme.palette.text.secondary,
@@ -180,6 +180,11 @@ export const useChartData = (
             },
             title: {
               display: false,
+            },
+            tooltip: {
+              callbacks: {
+                label: (context) => chartTypes[chartType].getLabel(context.raw),
+              },
             },
           },
         },
