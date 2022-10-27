@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { HighlightUpdate, InfoTooltip } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
@@ -14,7 +14,6 @@ import {
 import { constants } from 'ethers';
 import { Receipt } from 'phosphor-react';
 import { useIntl } from 'react-intl';
-import { useDebounce } from 'react-use';
 import { useAccount } from 'wagmi';
 
 import { useMetavault } from '../../state';
@@ -25,27 +24,26 @@ export const Position = () => {
   const intl = useIntl();
   const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
   const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
-  const [profitOrLoss, setProfitOrLoss] = useState(BigDecimal.ZERO);
+  const [profitOrLoss, setProfitOrLoss] = useState<BigDecimal>();
   const { mvBalance, mvBalanceInAsset, assetToken, mvDeposited, metavault } =
     useMetavault();
 
-  useDebounce(
-    () => {
-      setProfitOrLoss(
-        mvBalanceInAsset?.sub(mvDeposited || BigDecimal.ZERO) ||
-          BigDecimal.ZERO,
-      );
-    },
-    1000,
-    [mvBalanceInAsset, mvDeposited],
-  );
+  useEffect(() => {
+    if (mvBalanceInAsset && mvDeposited && !profitOrLoss) {
+      setProfitOrLoss(mvBalanceInAsset.sub(mvDeposited));
+    }
+  }, [mvBalanceInAsset, mvDeposited, profitOrLoss]);
 
   const roi =
     mvBalanceInAsset?.exact.eq(constants.Zero) ||
     !mvDeposited ||
     mvDeposited.exact.eq(constants.Zero)
       ? BigDecimal.ZERO
-      : new BigDecimal(profitOrLoss.divPrecisely(mvDeposited).exact.mul(100));
+      : new BigDecimal(
+          profitOrLoss
+            ? profitOrLoss.divPrecisely(mvDeposited).exact.mul(100)
+            : 0,
+        );
 
   const { address, isConnected } = useAccount();
 
@@ -132,7 +130,7 @@ export const Position = () => {
               <Typography
                 variant="value5"
                 color={isConnected ? 'success.main' : 'grey.300'}
-              >{`${profitOrLoss.format() ?? '0.00'} ${
+              >{`${profitOrLoss?.format() ?? '0.00'} ${
                 assetToken?.symbol || ''
               }`}</Typography>
               <Typography
