@@ -1,5 +1,6 @@
 const { merge } = require('webpack-merge');
 const getWebpackConfig = require('@nrwl/react/plugins/webpack');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 function customLoader() {
   const { transform } = require('@formatjs/ts-transformer');
@@ -25,5 +26,9 @@ function customLoader() {
 
 module.exports = (config) => {
   const nxConfig = getWebpackConfig(config);
-  return merge(nxConfig, { module: { rules: [customLoader()] } });
+  return merge(
+    nxConfig,
+    { module: { rules: [customLoader()] } },
+    { plugins: [new NodePolyfillPlugin()] },
+  );
 };

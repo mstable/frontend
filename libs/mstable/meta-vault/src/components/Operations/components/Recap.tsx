@@ -243,16 +243,16 @@ const GasFeesRecap = (props: StackProps) => {
   );
   const { config: submitConfig, refetch: fetchSubmitConfig } =
     usePrepareContractWrite({
-      addressOrName: address,
-      contractInterface: BasicVaultABI,
+      address,
+      abi: BasicVaultABI,
       functionName: operation,
       args,
       enabled: false,
     });
   const { config: approveConfig, refetch: fetchApprovalConfig } =
     usePrepareContractWrite({
-      addressOrName: asset,
-      contractInterface: erc20ABI,
+      address: asset,
+      abi: erc20ABI,
       functionName: 'approve',
       args: [address, constants.MaxUint256],
       enabled: false,
