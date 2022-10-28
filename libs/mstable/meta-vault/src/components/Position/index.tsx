@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { HighlightUpdate, InfoTooltip } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
@@ -24,17 +24,26 @@ export const Position = () => {
   const intl = useIntl();
   const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
   const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
+  const [profitOrLoss, setProfitOrLoss] = useState<BigDecimal>();
   const { mvBalance, mvBalanceInAsset, assetToken, mvDeposited, metavault } =
     useMetavault();
 
-  const profitOrLoss =
-    mvBalanceInAsset?.sub(mvDeposited || BigDecimal.ZERO) || BigDecimal.ZERO;
+  useEffect(() => {
+    if (mvBalanceInAsset && mvDeposited && !profitOrLoss) {
+      setProfitOrLoss(mvBalanceInAsset.sub(mvDeposited));
+    }
+  }, [mvBalanceInAsset, mvDeposited, profitOrLoss]);
+
   const roi =
     mvBalanceInAsset?.exact.eq(constants.Zero) ||
     !mvDeposited ||
     mvDeposited.exact.eq(constants.Zero)
       ? BigDecimal.ZERO
-      : new BigDecimal(profitOrLoss.divPrecisely(mvDeposited).exact.mul(100));
+      : new BigDecimal(
+          profitOrLoss
+            ? profitOrLoss.divPrecisely(mvDeposited).exact.mul(100)
+            : 0,
+        );
 
   const { address, isConnected } = useAccount();
 
@@ -121,7 +130,7 @@ export const Position = () => {
               <Typography
                 variant="value5"
                 color={isConnected ? 'success.main' : 'grey.300'}
-              >{`${profitOrLoss.format() ?? '0.00'} ${
+              >{`${profitOrLoss?.format() ?? '0.00'} ${
                 assetToken?.symbol || ''
               }`}</Typography>
               <Typography

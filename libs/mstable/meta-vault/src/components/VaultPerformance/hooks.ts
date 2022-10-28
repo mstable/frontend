@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { useDataSource } from '@frontend/shared-data-access';
 import { BigDecimal } from '@frontend/shared-utils';
@@ -80,11 +80,12 @@ export const useChartData = (
 ) => {
   const {
     metavault: { address },
+    mvBalance,
   } = useMetavault();
   const theme = useTheme();
   const { chartTimeframes, chartTypes } = useChartConfig();
   const dataSource = useDataSource();
-  const { data } = useMetavaultQuery(
+  const { data, refetch } = useMetavaultQuery(
     dataSource,
     {
       id: address,
@@ -92,6 +93,11 @@ export const useChartData = (
     },
     { enabled: !!address },
   );
+
+  useEffect(() => {
+    refetch();
+  }, [mvBalance, refetch]);
+
   const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
     useMemo(() => {
       const sortedData = sort(
@@ -140,7 +146,7 @@ export const useChartData = (
                 color: theme.palette.divider,
                 drawBorder: false,
               },
-              min: 0,
+              min: Math.min(0, ...sortedData.map((d) => d.value)),
               ticks: {
                 callback: chartTypes[chartType].getLabel,
                 color: theme.palette.text.secondary,
@@ -174,6 +180,11 @@ export const useChartData = (
             },
             title: {
               display: false,
+            },
+            tooltip: {
+              callbacks: {
+                label: (context) => chartTypes[chartType].getLabel(context.raw),
+              },
             },
           },
         },
