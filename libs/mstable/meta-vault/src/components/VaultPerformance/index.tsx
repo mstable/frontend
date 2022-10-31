@@ -80,6 +80,7 @@ export const VaultPerformance = () => {
               key="chart"
               options={chartData.options}
               data={chartData.data}
+              height="100%"
             />
           </>
         }
