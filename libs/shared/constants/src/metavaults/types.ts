@@ -28,4 +28,5 @@ export type Metavault = {
     deposit: number;
     withdraw: number;
   };
+  featured?: boolean;
 };

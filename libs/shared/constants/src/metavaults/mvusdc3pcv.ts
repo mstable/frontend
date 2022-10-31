@@ -71,6 +71,7 @@ const mainnet: Metavault = {
     deposit: 100000,
     withdraw: 100000,
   },
+  featured: true,
 };
 
 const goerli: Metavault = {
@@ -90,6 +91,7 @@ const goerli: Metavault = {
     tokens[chainId.goerli].usdc,
     tokens[chainId.goerli].usdt,
   ],
+  featured: true,
 };
 
 export const mvusdc3pcv: Record<number, Metavault> = {
