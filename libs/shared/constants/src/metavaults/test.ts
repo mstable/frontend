@@ -11,6 +11,7 @@ import type { Metavault } from './types';
 // TODO update address when available
 const mainnet: Metavault = {
   address: '0x0145a7fb49402b29be7c52d38aeacb5e1acae11b', // goerli address for now
+  assetDecimals: 18,
   name: 'The sexy Meta Vault',
   tags: [
     defineMessage({

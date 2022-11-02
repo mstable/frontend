@@ -1,4 +1,5 @@
 import { MVIcon, ProtocolIcon, ValueLabel } from '@frontend/shared-ui';
+import { BigDecimal } from '@frontend/shared-utils';
 import {
   Avatar,
   AvatarGroup,
@@ -8,14 +9,21 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { constants } from 'ethers';
 import { StarFour } from 'phosphor-react';
+import { Line } from 'react-chartjs-2';
 import { useIntl } from 'react-intl';
+
+import { useChartData } from '../hooks';
 
 import type { Metavault } from '@frontend/shared-constants';
 import type { TypographyProps } from '@mui/material';
 
+import type { MetavaultQuery } from '../../../queries.generated';
+
 interface Props {
   metavault: Metavault;
+  data: MetavaultQuery;
 }
 
 const tagProps: TypographyProps = {
@@ -31,8 +39,9 @@ const tagProps: TypographyProps = {
   borderRadius: 2,
 };
 
-export const FeatureCard = ({ metavault }: Props) => {
+export const FeatureCard = ({ metavault, data }: Props) => {
   const intl = useIntl();
+  const chartData = useChartData(data);
   return (
     <Card>
       <CardContent sx={{ p: 4 }}>
@@ -75,11 +84,27 @@ export const FeatureCard = ({ metavault }: Props) => {
                     <Avatar key={strat.protocol.id}>
                       <ProtocolIcon
                         name={strat.protocol.id}
-                        sx={{ height: 20, width: 20 }}
+                        sx={{ height: 24, width: 24 }}
                       />
                     </Avatar>
                   ))}
                 </AvatarGroup>
+              </ValueLabel>
+              <ValueLabel
+                label={intl.formatMessage({ defaultMessage: 'TVL' })}
+                hint={intl.formatMessage({ defaultMessage: 'Total Supply' })}
+              >
+                <Stack direction="row" spacing={1} alignItems="baseline">
+                  <Typography variant="value2">
+                    {intl.formatNumber(
+                      new BigDecimal(
+                        data?.vault?.totalAssets ?? constants.Zero,
+                        metavault.assetDecimals,
+                      ).simple,
+                      { notation: 'compact' },
+                    )}
+                  </Typography>
+                </Stack>
               </ValueLabel>
               <ValueLabel
                 label={intl.formatMessage({ defaultMessage: 'APY' })}
@@ -88,31 +113,17 @@ export const FeatureCard = ({ metavault }: Props) => {
                 })}
               >
                 <Typography variant="value2">
-                  {/* {intl.formatNumber(data?.vault?.apy ?? 0, {
+                  {intl.formatNumber(data?.vault?.apy ?? 0, {
                     style: 'percent',
                     maximumFractionDigits: 2,
-                  })} */}
+                  })}
                 </Typography>
-              </ValueLabel>
-              <ValueLabel
-                label={intl.formatMessage({ defaultMessage: 'TVL' })}
-                hint={intl.formatMessage({ defaultMessage: 'Total Supply' })}
-              >
-                <Stack direction="row" spacing={1} alignItems="baseline">
-                  <Typography variant="value2">
-                    {/* {intl.formatNumber(
-                      new BigDecimal(
-                        data?.vault?.totalSupply ?? constants.Zero,
-                        mvToken?.decimals,
-                      ).simple,
-                      { notation: 'compact' },
-                    )} */}
-                  </Typography>
-                </Stack>
               </ValueLabel>
             </Stack>
           </Grid>
-          <Grid item sm={7} xs={12}></Grid>
+          <Grid item sm={7} xs={12}>
+            <Line options={chartData.options} data={chartData.data} />
+          </Grid>
         </Grid>
       </CardContent>
     </Card>

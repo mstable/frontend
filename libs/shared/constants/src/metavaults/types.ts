@@ -28,5 +28,6 @@ export type Metavault = {
     deposit: number;
     withdraw: number;
   };
+  assetDecimals: number;
   featured?: boolean;
 };
