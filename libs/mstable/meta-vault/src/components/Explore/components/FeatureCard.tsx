@@ -3,7 +3,6 @@ import { BigDecimal } from '@frontend/shared-utils';
 import {
   Avatar,
   AvatarGroup,
-  Card,
   CardContent,
   Grid,
   Stack,
@@ -15,6 +14,7 @@ import { Line } from 'react-chartjs-2';
 import { useIntl } from 'react-intl';
 
 import { useChartData } from '../hooks';
+import { HoverableCard } from './HoverableCard';
 
 import type { Metavault } from '@frontend/shared-constants';
 import type { TypographyProps } from '@mui/material';
@@ -24,6 +24,7 @@ import type { MetavaultQuery } from '../../../queries.generated';
 interface Props {
   metavault: Metavault;
   data: MetavaultQuery;
+  to: string;
 }
 
 const tagProps: TypographyProps = {
@@ -39,11 +40,11 @@ const tagProps: TypographyProps = {
   borderRadius: 2,
 };
 
-export const FeatureCard = ({ metavault, data }: Props) => {
+export const FeatureCard = ({ metavault, data, to }: Props) => {
   const intl = useIntl();
   const chartData = useChartData(data);
   return (
-    <Card>
+    <HoverableCard to={to}>
       <CardContent sx={{ p: 4 }}>
         <Grid container spacing={4}>
           <Grid item sm={5} xs={12}>
@@ -126,6 +127,6 @@ export const FeatureCard = ({ metavault, data }: Props) => {
           </Grid>
         </Grid>
       </CardContent>
-    </Card>
+    </HoverableCard>
   );
 };

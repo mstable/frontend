@@ -3,7 +3,6 @@ import { BigDecimal } from '@frontend/shared-utils';
 import {
   Avatar,
   AvatarGroup,
-  Card,
   CardContent,
   Stack,
   Typography,
@@ -13,6 +12,7 @@ import { Line } from 'react-chartjs-2';
 import { useIntl } from 'react-intl';
 
 import { useChartData } from '../hooks';
+import { HoverableCard } from './HoverableCard';
 
 import type { Metavault } from '@frontend/shared-constants';
 import type { TypographyProps } from '@mui/material';
@@ -22,6 +22,7 @@ import type { MetavaultQuery } from '../../../queries.generated';
 interface Props {
   metavault: Metavault;
   data: MetavaultQuery;
+  to: string;
 }
 
 const tagProps: TypographyProps = {
@@ -37,11 +38,11 @@ const tagProps: TypographyProps = {
   borderRadius: 2,
 };
 
-export const VaultCard = ({ metavault, data }: Props) => {
+export const VaultCard = ({ metavault, data, to }: Props) => {
   const intl = useIntl();
   const chartData = useChartData(data);
   return (
-    <Card>
+    <HoverableCard to={to}>
       <CardContent sx={{ p: 3 }}>
         <Stack direction="row" justifyContent="space-between" mb={3}>
           <MVIcon
@@ -110,6 +111,6 @@ export const VaultCard = ({ metavault, data }: Props) => {
           </ValueLabel>
         </Stack>
       </CardContent>
-    </Card>
+    </HoverableCard>
   );
 };

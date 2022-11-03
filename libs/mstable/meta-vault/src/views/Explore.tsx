@@ -1,16 +1,7 @@
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { useDataSource } from '@frontend/shared-data-access';
-import { RouterLink } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
-import {
-  alpha,
-  Box,
-  Grid,
-  Link,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { alpha, Box, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { GasPump, Vault } from 'phosphor-react';
 import { indexBy, prop } from 'ramda';
 import { useIntl } from 'react-intl';
@@ -25,9 +16,9 @@ export const Explore = () => {
   const { chain } = useNetwork();
   const { data } = useFeeData({ formatUnits: 'gwei' });
   const theme = useTheme();
-  const metavaults = Object.entries(supportedMetavaults[chain.id] || {}).map(
-    ([key, val]) => ({ ...val, key }),
-  );
+  const metavaults = Object.entries(
+    supportedMetavaults[chain?.id || 1] || {},
+  ).map(([key, val]) => ({ ...val, key }));
   const dataSource = useDataSource();
   const { data: vaultsData } = useMetavaultsQuery(dataSource);
   const vaults = vaultsData?.vaults || [];
@@ -90,12 +81,11 @@ export const Explore = () => {
         </Stack>
       </Stack>
       {featuredMv ? (
-        <Link component={RouterLink} to={`./${featuredMv.key}`}>
-          <FeatureCard
-            metavault={featuredMv}
-            data={{ vault: vaultsDataMap[featuredMv.address] }}
-          />
-        </Link>
+        <FeatureCard
+          to={`./${featuredMv.key}`}
+          metavault={featuredMv}
+          data={{ vault: vaultsDataMap[featuredMv.address] }}
+        />
       ) : null}
       <Typography mt={5} mb={3} variant="h3">
         {intl.formatMessage({ defaultMessage: 'Vaults' })}
@@ -104,9 +94,11 @@ export const Explore = () => {
         {metavaultsWithData.map(({ metavault, data }) => {
           return (
             <Grid key={metavault.key} item sm={12} md={6} lg={4}>
-              <Link component={RouterLink} to={`./${metavault.key}`}>
-                <VaultCard metavault={metavault} data={{ vault: data }} />
-              </Link>
+              <VaultCard
+                to={`./${metavault.key}`}
+                metavault={metavault}
+                data={{ vault: data }}
+              />
             </Grid>
           );
         })}

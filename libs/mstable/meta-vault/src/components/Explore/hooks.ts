@@ -1,12 +1,26 @@
 import { useMemo } from 'react';
 
-import { useTheme } from '@mui/material';
+import { alpha, useTheme } from '@mui/material';
 import { sort } from 'ramda';
 import { useIntl } from 'react-intl';
 
-import type { ChartData, ChartOptions } from 'chart.js';
+import type { ChartArea, ChartData, ChartOptions } from 'chart.js';
 
 import type { MetavaultQuery } from '../../queries.generated';
+
+const getGradient =
+  (tone: string) => (ctx: CanvasRenderingContext2D, chartArea?: ChartArea) => {
+    const gradient = ctx.createLinearGradient(
+      chartArea?.left || 0,
+      0,
+      chartArea?.right || 0,
+      0,
+    );
+    gradient?.addColorStop(0, alpha(tone, 0));
+    gradient?.addColorStop(1, alpha(tone, 1));
+
+    return gradient;
+  };
 
 export const useChartData = (data: MetavaultQuery) => {
   const theme = useTheme();
@@ -26,9 +40,16 @@ export const useChartData = (data: MetavaultQuery) => {
             {
               label: intl.formatMessage({ defaultMessage: 'APY' }),
               data: sortedData,
-              borderColor: theme.palette.info.main,
+              borderColor: function (context) {
+                const chart = context.chart;
+                const { ctx, chartArea } = chart;
+                return getGradient('#2775CA')(ctx, chartArea);
+              },
               backgroundColor: 'transparent',
               fill: true,
+              pointBackgroundColor: '#2775CA',
+              pointRadius: (context) =>
+                context.dataIndex === sortedData.length - 1 ? 5 : 0,
             },
           ],
         },
@@ -36,7 +57,7 @@ export const useChartData = (data: MetavaultQuery) => {
           responsive: true,
           datasets: {
             line: {
-              tension: 0.2,
+              tension: 0.4,
               pointRadius: 0,
             },
           },
@@ -61,7 +82,7 @@ export const useChartData = (data: MetavaultQuery) => {
           },
         },
       };
-    }, [data?.vault?.DailyVaultStats, intl, theme.palette.info.main]);
+    }, [data?.vault?.DailyVaultStats, intl]);
 
   return chartData;
 };
