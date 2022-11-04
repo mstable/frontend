@@ -93,7 +93,7 @@ export const VaultCard = ({ metavault, data, to }: Props) => {
           </ValueLabel>
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'TVL' })}
-            hint={intl.formatMessage({ defaultMessage: 'Total Supply' })}
+            hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
           >
             <Stack direction="row" spacing={1} alignItems="baseline">
               <Typography variant="value3">
