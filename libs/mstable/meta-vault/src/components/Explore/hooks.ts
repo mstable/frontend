@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { alpha, useTheme } from '@mui/material';
+import { alpha } from '@mui/material';
 import { sort } from 'ramda';
 import { useIntl } from 'react-intl';
 
@@ -23,7 +23,6 @@ const getGradient =
   };
 
 export const useChartData = (data: MetavaultQuery) => {
-  const theme = useTheme();
   const intl = useIntl();
 
   const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =

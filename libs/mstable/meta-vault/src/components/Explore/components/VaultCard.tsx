@@ -8,11 +8,10 @@ import {
   Typography,
 } from '@mui/material';
 import { constants } from 'ethers';
-import { Line } from 'react-chartjs-2';
 import { useIntl } from 'react-intl';
 
-import { useChartData } from '../hooks';
 import { HoverableCard } from './HoverableCard';
+import { LineChart } from './LineChart';
 
 import type { Metavault } from '@frontend/shared-constants';
 import type { TypographyProps } from '@mui/material';
@@ -40,9 +39,8 @@ const tagProps: TypographyProps = {
 
 export const VaultCard = ({ metavault, data, to }: Props) => {
   const intl = useIntl();
-  const chartData = useChartData(data);
   return (
-    <HoverableCard to={to}>
+    <HoverableCard primaryColor={metavault.primaryColor} to={to}>
       <CardContent sx={{ p: 3 }}>
         <Stack direction="row" justifyContent="space-between" mb={3}>
           <MVIcon
@@ -63,7 +61,7 @@ export const VaultCard = ({ metavault, data, to }: Props) => {
             </Typography>
           </ValueLabel>
         </Stack>
-        <Line options={chartData.options} data={chartData.data} />
+        <LineChart data={data} />
         <Typography variant="h4" mt={5}>
           {metavault.name}
         </Typography>

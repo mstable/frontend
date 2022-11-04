@@ -44,7 +44,11 @@ export const FeatureCard = ({ metavault, data, to }: Props) => {
   const intl = useIntl();
   const chartData = useChartData(data);
   return (
-    <HoverableCard to={to}>
+    <HoverableCard
+      transparentBackground
+      primaryColor={metavault.primaryColor}
+      to={to}
+    >
       <CardContent sx={{ p: 4 }}>
         <Grid container spacing={4}>
           <Grid item sm={5} xs={12}>
