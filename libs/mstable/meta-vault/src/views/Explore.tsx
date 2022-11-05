@@ -1,42 +1,22 @@
+import { WrongNetworkPage } from '@frontend/mstable-shared-ui';
 import { supportedMetavaults } from '@frontend/shared-constants';
-import { useDataSource } from '@frontend/shared-data-access';
-import { BigDecimal } from '@frontend/shared-utils';
 import { alpha, Box, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { GasPump, Vault } from 'phosphor-react';
-import { indexBy, prop } from 'ramda';
 import { useIntl } from 'react-intl';
-import { useFeeData, useNetwork } from 'wagmi';
+import { chainId, useFeeData, useNetwork } from 'wagmi';
 
-import { FeatureCard } from '../components/Explore/components/FeatureCard';
-import { VaultCard } from '../components/Explore/components/VaultCard';
-import { useMetavaultsQuery } from '../queries.generated';
+import { FeatureCard, useTotalTvl, VaultCard } from '../components/Explore';
 
 export const Explore = () => {
   const intl = useIntl();
-  const { chain } = useNetwork();
-  const { data } = useFeeData({ formatUnits: 'gwei' });
   const theme = useTheme();
-  const metavaults = Object.entries(
-    supportedMetavaults[chain?.id || 1] || {},
-  ).map(([key, val]) => ({ ...val, key }));
-  const dataSource = useDataSource();
-  const { data: vaultsData } = useMetavaultsQuery(dataSource);
-  const vaults = vaultsData?.vaults || [];
-  const vaultsMap = indexBy(prop('address'), metavaults);
-  const vaultsDataMap = indexBy(prop('address'), vaults);
-  const metavaultsWithData = metavaults.map((metavault) => ({
-    metavault,
-    data: vaultsDataMap[metavault.address],
-  }));
+  const { chain } = useNetwork();
+  const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
+  const { data: feeData } = useFeeData({ formatUnits: 'gwei' });
   const featuredMv = metavaults.find((mv) => mv.featured);
-  // TODO: calculate TVL in dollar value
-  const totalTvl = vaults
-    .map(
-      (v) =>
-        new BigDecimal(v.totalAssets, vaultsMap[v.address]?.assetDecimals)
-          .simple,
-    )
-    .reduce((a, b) => a + b, 0);
+  const totalTvl = useTotalTvl();
+
+  if (chain?.unsupported) return <WrongNetworkPage />;
 
   return (
     <Stack direction="column">
@@ -75,30 +55,22 @@ export const Explore = () => {
           <Typography variant="value5">
             {intl.formatMessage(
               { defaultMessage: '{value} GWEI' },
-              { value: data?.formatted.gasPrice },
+              { value: feeData?.formatted.gasPrice },
             )}
           </Typography>
         </Stack>
       </Stack>
-      {featuredMv ? (
-        <FeatureCard
-          to={`./${featuredMv.key}`}
-          metavault={featuredMv}
-          data={{ vault: vaultsDataMap[featuredMv.address] }}
-        />
-      ) : null}
+      {featuredMv && (
+        <FeatureCard metavault={featuredMv} to={`./${featuredMv.id}`} />
+      )}
       <Typography mt={5} mb={3} variant="h3">
         {intl.formatMessage({ defaultMessage: 'Vaults' })}
       </Typography>
       <Grid container spacing={3}>
-        {metavaultsWithData.map(({ metavault, data }) => {
+        {metavaults.map((mv) => {
           return (
-            <Grid key={metavault.key} item sm={12} md={6} lg={4}>
-              <VaultCard
-                to={`./${metavault.key}`}
-                metavault={metavault}
-                data={{ vault: data }}
-              />
+            <Grid key={mv.id} item sm={12} md={6} lg={4}>
+              <VaultCard metavault={mv} to={`./${mv.id}`} />
             </Grid>
           );
         })}

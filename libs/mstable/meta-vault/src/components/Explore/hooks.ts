@@ -1,12 +1,27 @@
 import { useMemo } from 'react';
 
+import { supportedMetavaults } from '@frontend/shared-constants';
+import { useDataSource } from '@frontend/shared-data-access';
+import { BigDecimal } from '@frontend/shared-utils';
 import { alpha } from '@mui/material';
-import { sort } from 'ramda';
+import { propEq, sort } from 'ramda';
 import { useIntl } from 'react-intl';
+import { chainId, useNetwork } from 'wagmi';
 
+import { useMetavaultsQuery } from '../../queries.generated';
+
+import type { HexAddress } from '@frontend/shared-utils';
 import type { ChartArea, ChartData, ChartOptions } from 'chart.js';
 
-import type { MetavaultQuery } from '../../queries.generated';
+export const useMetavaultData = (address: HexAddress) => {
+  const dataSource = useDataSource();
+  const { data: vaultsData } = useMetavaultsQuery(dataSource);
+
+  return useMemo(
+    () => vaultsData?.vaults?.find(propEq('address', address)),
+    [address, vaultsData?.vaults],
+  );
+};
 
 const getGradient =
   (tone: string) => (ctx: CanvasRenderingContext2D, chartArea?: ChartArea) => {
@@ -22,14 +37,15 @@ const getGradient =
     return gradient;
   };
 
-export const useChartData = (data: MetavaultQuery) => {
+export const useChartData = (address: HexAddress) => {
   const intl = useIntl();
+  const data = useMetavaultData(address);
 
   const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
     useMemo(() => {
       const sortedData = sort(
         (a, b) => Number(a.timestamp) - Number(b.timestamp),
-        data?.vault?.DailyVaultStats || [],
+        data?.DailyVaultStats || [],
       ).map((d) => Number(d.apy));
 
       return {
@@ -81,7 +97,27 @@ export const useChartData = (data: MetavaultQuery) => {
           },
         },
       };
-    }, [data?.vault?.DailyVaultStats, intl]);
+    }, [data?.DailyVaultStats, intl]);
 
   return chartData;
+};
+
+export const useTotalTvl = () => {
+  const dataSource = useDataSource();
+  const { data } = useMetavaultsQuery(dataSource);
+  const { chain } = useNetwork();
+  const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
+
+  // TODO: calculate TVL in dollar value
+  return useMemo(
+    () =>
+      data?.vaults?.reduce((acc, curr) => {
+        const dec = metavaults.find(
+          propEq('address', curr.address),
+        ).assetDecimals;
+
+        return acc + new BigDecimal(curr.totalAssets, dec).simple;
+      }, 0),
+    [data?.vaults, metavaults],
+  );
 };
