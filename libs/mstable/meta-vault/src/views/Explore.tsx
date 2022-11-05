@@ -1,4 +1,3 @@
-import { WrongNetworkPage } from '@frontend/mstable-shared-ui';
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { alpha, Box, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { GasPump, Vault } from 'phosphor-react';
@@ -11,12 +10,11 @@ export const Explore = () => {
   const intl = useIntl();
   const theme = useTheme();
   const { chain } = useNetwork();
-  const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
   const { data: feeData } = useFeeData({ formatUnits: 'gwei' });
-  const featuredMv = metavaults.find((mv) => mv.featured);
   const totalTvl = useTotalTvl();
 
-  if (chain?.unsupported) return <WrongNetworkPage />;
+  const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
+  const featuredMv = metavaults.find((mv) => mv.featured);
 
   return (
     <Stack direction="column">

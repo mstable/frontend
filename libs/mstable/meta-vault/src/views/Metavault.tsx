@@ -1,9 +1,6 @@
 import { useMemo } from 'react';
 
-import {
-  UnsupportedMvPage,
-  WrongNetworkPage,
-} from '@frontend/mstable-shared-ui';
+import { UnsupportedMvPage } from '@frontend/mstable-shared-ui';
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
 import { Grid, Stack } from '@mui/material';
@@ -32,8 +29,6 @@ export const Metavault = () => {
       ),
     [chain?.id, mvid],
   );
-
-  if (chain?.unsupported) return <WrongNetworkPage />;
 
   if (!metavault) return <UnsupportedMvPage mvid={mvid} />;
 
