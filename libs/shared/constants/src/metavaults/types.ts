@@ -13,6 +13,7 @@ export type Strategy = {
 };
 
 export type Metavault = {
+  id: SupportedMetavault;
   address: HexAddress;
   name: string;
   tags: MessageDescriptor[];

@@ -8,6 +8,7 @@ import { supportedMetavaults } from '@frontend/shared-constants';
 import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
 import { Grid, Stack } from '@mui/material';
 import { useMatch } from '@tanstack/react-location';
+import { propEq } from 'ramda';
 import { chainId, useNetwork } from 'wagmi';
 
 import { Operations } from '../components/Operations';
@@ -25,7 +26,10 @@ export const Metavault = () => {
     params: { mvid },
   } = useMatch<MvGenerics>();
   const metavault = useMemo(
-    () => supportedMetavaults[chain?.id ?? chainId.mainnet][mvid],
+    () =>
+      supportedMetavaults[chain?.id ?? chainId.mainnet].find(
+        propEq('id', mvid),
+      ),
     [chain?.id, mvid],
   );
 
