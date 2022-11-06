@@ -2,7 +2,6 @@ import { useEffect, useMemo } from 'react';
 
 import { usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
-import { BasicVaultABI } from '@mstable/metavaults-web';
 import {
   Box,
   Collapse,
@@ -17,6 +16,7 @@ import { pathOr } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
   erc20ABI,
+  erc4626ABI,
   useAccount,
   useFeeData,
   useNetwork,
@@ -233,7 +233,8 @@ const GasFeesRecap = (props: StackProps) => {
   const { data: feeData, isLoading: feeLoading } = useFeeData({
     formatUnits: 'gwei',
   });
-  const args = useMemo(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const args = useMemo<any>(
     () =>
       ({
         deposit: [amount?.exact, walletAddress],
@@ -246,7 +247,7 @@ const GasFeesRecap = (props: StackProps) => {
   const { config: submitConfig, refetch: fetchSubmitConfig } =
     usePrepareContractWrite({
       address,
-      abi: BasicVaultABI,
+      abi: erc4626ABI,
       functionName: operation,
       args,
       enabled: false,

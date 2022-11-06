@@ -4,13 +4,13 @@ import { supportedMetavaults } from '@frontend/shared-constants';
 import { useDataSource } from '@frontend/shared-data-access';
 import { useGetPrices, usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
-import { BasicVaultABI } from '@mstable/metavaults-web';
 import { alpha } from '@mui/material';
 import { pathOr, propEq, sort } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
   chainId,
   erc20ABI,
+  erc4626ABI,
   useContractRead,
   useContractReads,
   useNetwork,
@@ -113,7 +113,7 @@ export const useChartData = (address: HexAddress) => {
 export const useAssetDecimal = (address: HexAddress) => {
   const { data: asset } = useContractRead({
     address,
-    abi: BasicVaultABI,
+    abi: erc4626ABI,
     functionName: 'asset',
   });
 
@@ -133,7 +133,7 @@ export const useTotalTvl = () => {
   const { data: assets } = useContractReads({
     contracts: metavaults.map((mv) => ({
       address: mv.address,
-      abi: BasicVaultABI,
+      abi: erc4626ABI,
       functionName: 'asset',
     })),
   });

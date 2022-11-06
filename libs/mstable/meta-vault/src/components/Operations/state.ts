@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { BigDecimal } from '@frontend/shared-utils';
-import { BasicVaultABI } from '@mstable/metavaults-web';
 import { constants } from 'ethers';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { useDebounce } from 'react-use';
-import { erc20ABI, useAccount, useContractRead } from 'wagmi';
+import { erc20ABI, erc4626ABI, useAccount, useContractRead } from 'wagmi';
 
 import { useMetavault } from '../../state';
 
@@ -83,15 +82,21 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     },
   });
 
+  type PreviewOperation =
+    | 'previewDeposit'
+    | 'previewMint'
+    | 'previewWithdraw'
+    | 'previewRedeem';
+
   const { refetch: fetchPreview } = useContractRead({
     address,
-    abi: BasicVaultABI,
+    abi: erc4626ABI,
     functionName: {
       deposit: 'previewDeposit',
       mint: 'previewMint',
       withdraw: 'previewWithdraw',
       redeem: 'previewRedeem',
-    }[operation],
+    }[operation] as PreviewOperation,
     args: [amount?.exact],
     enabled: false,
     onSuccess: (data: BigNumberish) => {

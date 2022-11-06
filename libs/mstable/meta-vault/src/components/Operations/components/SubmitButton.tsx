@@ -3,10 +3,10 @@ import { useMemo } from 'react';
 import { usePushNotification } from '@frontend/shared-notifications';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { OpenAccountModalButton } from '@frontend/shared-wagmi';
-import { BasicVaultABI } from '@mstable/metavaults-web';
 import { Button, CircularProgress } from '@mui/material';
 import { useIntl } from 'react-intl';
 import {
+  erc4626ABI,
   etherscanBlockExplorers,
   useAccount,
   useContractWrite,
@@ -45,7 +45,8 @@ export const SubmitButton = () => {
     [intl, tab],
   );
 
-  const args = useMemo(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const args = useMemo<any>(
     () =>
       ({
         deposit: [amount?.exact, walletAddress],
@@ -58,7 +59,7 @@ export const SubmitButton = () => {
 
   const { config: submitConfig } = usePrepareContractWrite({
     address,
-    abi: BasicVaultABI,
+    abi: erc4626ABI,
     functionName: operation,
     args,
     enabled: !!amount?.exact && !!walletAddress && !needsApproval,
