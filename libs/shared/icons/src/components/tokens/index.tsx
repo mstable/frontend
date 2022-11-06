@@ -75,7 +75,7 @@ export const DAI = (props: SvgIconProps) => (
   <SvgIcon {...props} component={DAISvg} viewBox="0 0 177 177" />
 );
 export const Ether = (props: SvgIconProps) => (
-  <SvgIcon {...props} component={EtherSvg} viewBox="0 0 417 417" />
+  <SvgIcon {...props} component={EtherSvg} viewBox="0 0 32 32" />
 );
 export const FAKE = (props: SvgIconProps) => (
   <SvgIcon {...props} component={FAKESvg} viewBox="0 0 500 500" />

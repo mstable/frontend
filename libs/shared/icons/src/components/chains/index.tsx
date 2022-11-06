@@ -29,5 +29,5 @@ export const Polygon = (props: SvgIconProps) => (
   <SvgIcon {...props} component={PolygonSvg} viewBox="0 0 100 100" />
 );
 export const Zk = (props: SvgIconProps) => (
-  <SvgIcon {...props} component={ZkSvg} viewBox="0 0 509 276" />
+  <SvgIcon {...props} component={ZkSvg} viewBox="0 0 500 500" />
 );

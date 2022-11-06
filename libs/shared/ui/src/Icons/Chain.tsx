@@ -7,16 +7,16 @@ import {
   Zk,
 } from '@frontend/shared-icons';
 import { SvgIcon } from '@mui/material';
-import { CurrencyCircleDollar } from 'phosphor-react';
+import { Link } from 'phosphor-react';
 
 import type { SupportedChain } from '@frontend/shared-constants';
 import type { SvgIconProps } from '@mui/material';
 
 export type ChainIconProps = {
-  name: string;
+  name: SupportedChain | string;
 } & SvgIconProps;
 
-const supportedChains: Record<
+export const supportedChains: Record<
   SupportedChain,
   (props: SvgIconProps) => JSX.Element
 > = {
@@ -39,7 +39,7 @@ export const ChainIcon = ({ name, ...rest }: ChainIconProps) => {
       {...rest}
       sx={{ fontSize: 24, ...rest?.sx }}
     >
-      <CurrencyCircleDollar width={256} height={256} />
+      <Link width={256} height={256} />
     </SvgIcon>
   );
 };

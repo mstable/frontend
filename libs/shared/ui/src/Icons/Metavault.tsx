@@ -10,14 +10,14 @@ export type MVIconProps = {
   address: string;
 } & SvgIconProps;
 
-const SupportedMVs: Partial<
+export const supportedMVs: Partial<
   Record<string, (props: SvgIconProps) => JSX.Element>
 > = {
   [tokens[chainId.mainnet]['mvusdc-3pcv'].address]: MVUSDC3PCV,
 };
 
 export const MVIcon = ({ address, ...rest }: MVIconProps) => {
-  const Icon = SupportedMVs[address];
+  const Icon = supportedMVs[address];
 
   return Icon ? (
     <Icon {...rest} />

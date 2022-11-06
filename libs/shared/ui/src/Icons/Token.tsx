@@ -19,10 +19,10 @@ import type { SupportedToken } from '@mstable/metavaults-web';
 import type { SvgIconProps } from '@mui/material';
 
 export type TokenIconProps = {
-  symbol: string;
+  symbol: SupportedToken | string;
 } & SvgIconProps;
 
-const SupportedTokens: Partial<
+export const supportedTokens: Partial<
   Record<SupportedToken | 'eth', (props: SvgIconProps) => JSX.Element>
 > = {
   dai: DAI,
@@ -40,7 +40,7 @@ const SupportedTokens: Partial<
 };
 
 export const TokenIcon = ({ symbol, ...rest }: TokenIconProps) => {
-  const Icon = SupportedTokens[symbol?.toLowerCase()];
+  const Icon = supportedTokens[symbol?.toLowerCase()];
 
   return Icon ? (
     <Icon {...rest} />
