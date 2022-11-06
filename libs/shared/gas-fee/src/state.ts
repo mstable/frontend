@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import produce from 'immer';
 import { pathOr } from 'ramda';
 import { createContainer } from 'react-tracked';
-import { chainId, useBlockNumber, useNetwork } from 'wagmi';
+import { chainId, useNetwork } from 'wagmi';
 
 import type { Children } from '@frontend/shared-utils';
 import type { Dispatch, SetStateAction } from 'react';
@@ -27,10 +27,9 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     average: '0',
     slow: '0',
   });
-  const { data: blockNumber } = useBlockNumber({ watch: true });
   const { chain } = useNetwork();
   useQuery(
-    ['gas-fee', blockNumber, chain?.id],
+    ['gas-fee', chain?.id],
     () =>
       axiosInstance.get(
         `${
@@ -38,8 +37,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
         }/api?module=gastracker&action=gasoracle`,
       ),
     {
-      staleTime: 0,
-      cacheTime: 0,
+      refetchInterval: 30e3,
       onSuccess: (data) => {
         setState(
           produce((draft) => {
