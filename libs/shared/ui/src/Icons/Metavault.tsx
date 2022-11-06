@@ -7,7 +7,7 @@ import { chainId } from 'wagmi';
 import type { SvgIconProps } from '@mui/material';
 
 export type MVIconProps = {
-  address: string;
+  address?: string;
 } & SvgIconProps;
 
 export const supportedMVs: Partial<

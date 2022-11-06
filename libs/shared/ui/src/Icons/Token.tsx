@@ -19,7 +19,7 @@ import type { SupportedToken } from '@mstable/metavaults-web';
 import type { SvgIconProps } from '@mui/material';
 
 export type TokenIconProps = {
-  symbol: SupportedToken | string;
+  symbol?: SupportedToken | string;
 } & SvgIconProps;
 
 export const supportedTokens: Partial<

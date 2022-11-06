@@ -4,10 +4,11 @@ import { ChainIcon as ChIcon, supportedChains } from './Chain';
 import { ExpandIcon as ExIcon } from './ExpandIcon';
 import { MVIcon as MvIcon, supportedMVs } from './Metavault';
 import { ProtocolIcon as PrIcon, supportedProtocols } from './Protocol';
+import { SeverityIcon as SeIcon } from './SeverityIcon';
 import { supportedTokens, TokenIcon as ToIcon } from './Token';
 
 import type { Children } from '@frontend/shared-utils';
-import type { StackProps, SvgIconProps } from '@mui/material';
+import type { AlertColor, StackProps, SvgIconProps } from '@mui/material';
 
 export default {
   title: 'Components/Icons',
@@ -17,6 +18,7 @@ export default {
     MVIcon: MvIcon,
     ProtocolIcon: PrIcon,
     TokenIcon: ToIcon,
+    SeverityIcon: SeIcon,
   },
 };
 
@@ -88,6 +90,18 @@ export const ProtocolIcon = () => (
       <IconCard label="default">
         <PrIcon name="default" {...iconProps} />
       </IconCard>
+    </Stack>
+  </Stack>
+);
+
+export const SeverityIcon = () => (
+  <Stack direction="column" spacing={2} p={2}>
+    <Stack direction="row" spacing={4}>
+      {['error', 'info', 'success', 'warning'].map((key) => (
+        <IconCard key={key} label={key}>
+          <SeIcon severity={key as AlertColor} {...iconProps} />
+        </IconCard>
+      ))}
     </Stack>
   </Stack>
 );

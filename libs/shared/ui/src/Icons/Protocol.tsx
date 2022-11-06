@@ -12,7 +12,7 @@ import type { SupportedProtocol } from '@frontend/shared-constants';
 import type { SvgIconProps } from '@mui/material';
 
 export type ProtocolIconProps = {
-  name: SupportedProtocol | string;
+  name?: SupportedProtocol | string;
 } & SvgIconProps;
 
 export const supportedProtocols: Record<

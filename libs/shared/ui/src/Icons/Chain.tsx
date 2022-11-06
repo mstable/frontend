@@ -13,7 +13,7 @@ import type { SupportedChain } from '@frontend/shared-constants';
 import type { SvgIconProps } from '@mui/material';
 
 export type ChainIconProps = {
-  name: SupportedChain | string;
+  name?: SupportedChain | string;
 } & SvgIconProps;
 
 export const supportedChains: Record<

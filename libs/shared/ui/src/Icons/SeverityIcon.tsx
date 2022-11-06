@@ -7,9 +7,9 @@ import {
 
 import type { AlertColor, SvgIconProps } from '@mui/material';
 
-export interface SeverityIconProps extends SvgIconProps {
+export type SeverityIconProps = {
   severity: AlertColor;
-}
+} & SvgIconProps;
 
 export const SeverityIcon = ({ severity, ...rest }: SeverityIconProps) =>
   ({
