@@ -72,7 +72,7 @@ export const YieldCalculatorDialog = ({
         }),
       );
     }
-  }, [data?.vault?.apy]);
+  }, [data?.vault?.apy, intl]);
 
   const depositGasFee =
     (price *
