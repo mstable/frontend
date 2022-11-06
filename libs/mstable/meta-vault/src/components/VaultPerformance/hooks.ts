@@ -81,6 +81,7 @@ export const useChartData = (
   const {
     metavault: { address },
     mvBalance,
+    assetToken,
   } = useMetavault();
   const theme = useTheme();
   const { chartTimeframes, chartTypes } = useChartConfig();
@@ -100,20 +101,23 @@ export const useChartData = (
 
   const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
     useMemo(() => {
-      const sortedData = sort(
-        (a, b) => Number(a.timestamp) - Number(b.timestamp),
-        data?.vault?.DailyVaultStats || [],
-      ).map((d) => ({
-        label: intlFormat(Number(d.timestamp) * 1000, {
-          timeZone: 'UTC',
-          day: 'numeric',
-          month: 'short',
-        })
-          .split(' ')
-          .reverse()
-          .join(' '),
-        value: chartTypes[chartType].getValue(d),
-      }));
+      // Do not render if assetToken is not loaded
+      const sortedData = assetToken
+        ? sort(
+            (a, b) => Number(a.timestamp) - Number(b.timestamp),
+            data?.vault?.DailyVaultStats || [],
+          ).map((d) => ({
+            label: intlFormat(Number(d.timestamp) * 1000, {
+              timeZone: 'UTC',
+              day: 'numeric',
+              month: 'short',
+            })
+              .split(' ')
+              .reverse()
+              .join(' '),
+            value: chartTypes[chartType].getValue(d),
+          }))
+        : [];
 
       return {
         data: {
@@ -193,6 +197,7 @@ export const useChartData = (
       chartType,
       chartTypes,
       data?.vault?.DailyVaultStats,
+      assetToken,
       theme.palette.divider,
       theme.palette.info.light,
       theme.palette.info.main,

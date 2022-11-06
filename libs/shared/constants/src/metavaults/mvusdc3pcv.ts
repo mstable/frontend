@@ -9,6 +9,8 @@ import { vaults } from '../vaults';
 import type { Metavault } from './types';
 
 const mainnet: Metavault = {
+  id: 'mvusdc3pcv',
+  primaryColor: '#2775CA',
   address: tokens[chainId.mainnet]['mvusdc-3pcv'].address,
   name: 'Stablecoin Meta Vault',
   tags: [
@@ -71,6 +73,7 @@ const mainnet: Metavault = {
     deposit: 100000,
     withdraw: 100000,
   },
+  featured: true,
 };
 
 const goerli: Metavault = {
@@ -90,6 +93,7 @@ const goerli: Metavault = {
     tokens[chainId.goerli].usdc,
     tokens[chainId.goerli].usdt,
   ],
+  featured: true,
 };
 
 export const mvusdc3pcv: Record<number, Metavault> = {

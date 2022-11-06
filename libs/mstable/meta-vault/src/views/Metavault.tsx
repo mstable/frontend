@@ -1,13 +1,11 @@
 import { useMemo } from 'react';
 
-import {
-  UnsupportedMvPage,
-  WrongNetworkPage,
-} from '@frontend/mstable-shared-ui';
+import { UnsupportedMvPage } from '@frontend/mstable-shared-ui';
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
 import { Grid, Stack } from '@mui/material';
 import { useMatch } from '@tanstack/react-location';
+import { propEq } from 'ramda';
 import { chainId, useNetwork } from 'wagmi';
 
 import { Operations } from '../components/Operations';
@@ -25,16 +23,17 @@ export const Metavault = () => {
     params: { mvid },
   } = useMatch<MvGenerics>();
   const metavault = useMemo(
-    () => supportedMetavaults[chain?.id ?? chainId.mainnet][mvid],
+    () =>
+      supportedMetavaults[chain?.id ?? chainId.mainnet].find(
+        propEq('id', mvid),
+      ),
     [chain?.id, mvid],
   );
-
-  if (chain?.unsupported) return <WrongNetworkPage />;
 
   if (!metavault) return <UnsupportedMvPage mvid={mvid} />;
 
   return (
-    <MetavaultProvider key={chain?.id} initialState={{ metavault }}>
+    <MetavaultProvider initialState={{ metavault }}>
       <Stack direction="column">
         <ErrorBoundary ErrorComponent={<ErrorCard sx={{ py: 8 }} />}>
           <VaultJumbo py={8} />

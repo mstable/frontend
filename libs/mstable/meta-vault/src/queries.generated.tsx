@@ -43,7 +43,14 @@ export type MetavaultQueryVariables = Types.Exact<{
 }>;
 
 
-export type MetavaultQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', totalSupply: any, apy: any, assetPerShare: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, totalAssets: any, totalSupply: any, timestamp: any }> } | null };
+export type MetavaultQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', totalSupply: any, totalAssets: any, apy: any, assetPerShare: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, totalAssets: any, totalSupply: any, timestamp: any }> } | null };
+
+export type MetavaultsQueryVariables = Types.Exact<{
+  days?: Types.InputMaybe<Types.Scalars['Int']>;
+}>;
+
+
+export type MetavaultsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', address: any, totalSupply: any, totalAssets: any, apy: any, assetPerShare: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, totalAssets: any, totalSupply: any, timestamp: any }> }> };
 
 
 export const UserVaultBalanceDocument = `
@@ -111,6 +118,7 @@ export const MetavaultDocument = `
     query metavault($id: ID!, $days: Int = 7) {
   vault(id: $id) {
     totalSupply
+    totalAssets
     apy
     assetPerShare
     DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
@@ -133,5 +141,35 @@ export const useMetavaultQuery = <
     useQuery<MetavaultQuery, TError, TData>(
       ['metavault', variables],
       fetcher<MetavaultQuery, MetavaultQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, MetavaultDocument, variables),
+      options
+    );
+export const MetavaultsDocument = `
+    query metavaults($days: Int = 7) {
+  vaults {
+    address
+    totalSupply
+    totalAssets
+    apy
+    assetPerShare
+    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
+      apy
+      totalAssets
+      totalSupply
+      timestamp
+    }
+  }
+}
+    `;
+export const useMetavaultsQuery = <
+      TData = MetavaultsQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: MetavaultsQueryVariables,
+      options?: UseQueryOptions<MetavaultsQuery, TError, TData>
+    ) =>
+    useQuery<MetavaultsQuery, TError, TData>(
+      variables === undefined ? ['metavaults'] : ['metavaults', variables],
+      fetcher<MetavaultsQuery, MetavaultsQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, MetavaultsDocument, variables),
       options
     );

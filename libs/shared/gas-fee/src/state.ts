@@ -2,13 +2,11 @@ import { useState } from 'react';
 
 import { etherscanApiEndpoints } from '@frontend/shared-constants';
 import { axiosInstance } from '@frontend/shared-data-access';
-import { usePushNotification } from '@frontend/shared-notifications';
 import { useQuery } from '@tanstack/react-query';
 import produce from 'immer';
 import { pathOr } from 'ramda';
-import { useIntl } from 'react-intl';
 import { createContainer } from 'react-tracked';
-import { chainId, useBlockNumber, useNetwork } from 'wagmi';
+import { chainId, useNetwork } from 'wagmi';
 
 import type { Children } from '@frontend/shared-utils';
 import type { Dispatch, SetStateAction } from 'react';
@@ -29,12 +27,9 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     average: '0',
     slow: '0',
   });
-  const intl = useIntl();
-  const { data: blockNumber } = useBlockNumber({ watch: true });
-  const pushNotification = usePushNotification();
   const { chain } = useNetwork();
   useQuery(
-    ['gas-fee', blockNumber, chain?.id],
+    ['gas-fee', chain?.id],
     () =>
       axiosInstance.get(
         `${
@@ -42,17 +37,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
         }/api?module=gastracker&action=gasoracle`,
       ),
     {
-      staleTime: 0,
-      cacheTime: 0,
-      onError: (err: Error) => {
-        pushNotification({
-          title: intl.formatMessage({
-            defaultMessage: 'Error fetching gas fee',
-          }),
-          message: err?.message,
-          severity: 'error',
-        });
-      },
+      refetchInterval: 30e3,
       onSuccess: (data) => {
         setState(
           produce((draft) => {

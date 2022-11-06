@@ -10,6 +10,7 @@ export * from './Loaders';
 export * from './Icons';
 export * from './HoverDeleteButton';
 export * from './Menus';
+export * from './MVIcon';
 export * from './Modals';
 export * from './Notifications';
 export * from './RouterLink';

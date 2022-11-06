@@ -55,10 +55,10 @@ export const VaultJumbo = (props: StackProps) => {
       return { label: '-', color: theme.palette.text.primary };
     }
     const last = new BigDecimal(
-      data?.vault?.DailyVaultStats?.[6]?.totalSupply ?? constants.One,
+      data?.vault?.DailyVaultStats?.[6]?.totalAssets ?? constants.One,
     );
     const first = new BigDecimal(
-      data?.vault?.DailyVaultStats?.[0]?.totalSupply ?? constants.One,
+      data?.vault?.DailyVaultStats?.[0]?.totalAssets ?? constants.One,
     );
     const diff = 100 - (last.simple / first.simple) * 100;
 
@@ -148,7 +148,7 @@ export const VaultJumbo = (props: StackProps) => {
         </ValueLabel>
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'TVL' })}
-          hint={intl.formatMessage({ defaultMessage: 'Total Supply' })}
+          hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
         >
           {isLoading ? (
             <Skeleton height={24} width={60} />
@@ -157,8 +157,8 @@ export const VaultJumbo = (props: StackProps) => {
               <Typography variant="value2">
                 {intl.formatNumber(
                   new BigDecimal(
-                    data?.vault?.totalSupply ?? constants.Zero,
-                    mvToken?.decimals,
+                    data?.vault?.totalAssets ?? constants.Zero,
+                    assetToken?.decimals,
                   ).simple,
                   { notation: 'compact' },
                 )}
