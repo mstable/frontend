@@ -22,7 +22,7 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["shared-theme", "^build"]
+      "dependsOn": ["shared-theme:build", "^build"]
     }
   },
   "generators": {
