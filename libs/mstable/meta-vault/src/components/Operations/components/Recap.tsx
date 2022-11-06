@@ -230,7 +230,9 @@ const GasFeesRecap = (props: StackProps) => {
   } = useMetavault();
   const { amount, needsApproval, operation } = useOperations();
   const { price } = usePrices();
-  const { data: feeData } = useFeeData({ formatUnits: 'gwei' });
+  const { data: feeData, isLoading: feeLoading } = useFeeData({
+    formatUnits: 'gwei',
+  });
   const args = useMemo(
     () =>
       ({
@@ -299,9 +301,13 @@ const GasFeesRecap = (props: StackProps) => {
           {intl.formatMessage({ defaultMessage: 'Current Base Fee' })}
         </Typography>
         <Typography variant="value5">
-          {intl.formatMessage(
-            { defaultMessage: 'Avg - {value} GWEI' },
-            { value: new BigDecimal(feeData?.gasPrice).format(3) },
+          {feeLoading ? (
+            <Skeleton width={50} />
+          ) : (
+            intl.formatMessage(
+              { defaultMessage: 'Avg - {value} GWEI' },
+              { value: new BigDecimal(feeData?.gasPrice, 9).format(3) },
+            )
           )}
         </Typography>
       </Stack>
