@@ -1,7 +1,7 @@
 import { isNilOrEmpty } from '@frontend/shared-utils';
 import { Box, Collapse, Stack, Typography } from '@mui/material';
 
-import { ExpandIcon } from '../ExpandIcon';
+import { ExpandIcon } from '../Icons';
 
 import type { StackProps, SvgIconProps, TypographyProps } from '@mui/material';
 import type { BoxProps } from '@mui/system';

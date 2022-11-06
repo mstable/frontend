@@ -1,6 +1,7 @@
 import { IconsView } from '@frontend/tools-storybook';
 
 import * as chainIcons from '../components/chains';
+import * as mvIcons from '../components/meta-vaults';
 import * as mstableIcons from '../components/mstable';
 import * as protocolIcons from '../components/protocols';
 import * as socialIcons from '../components/social';
@@ -13,6 +14,9 @@ export default {
 
 export const ChainIcons = IconsView.bind({});
 ChainIcons.args = { icons: chainIcons };
+
+export const MetaVaultIcons = IconsView.bind({});
+MetaVaultIcons.args = { icons: mvIcons };
 
 export const MStableIcons = IconsView.bind({});
 MStableIcons.args = { icons: mstableIcons };

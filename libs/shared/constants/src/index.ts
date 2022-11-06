@@ -1,4 +1,5 @@
 export * from './metavaults';
+export * from './chains';
 export * from './etherscan';
 export * from './mstable';
 export * from './prices';
