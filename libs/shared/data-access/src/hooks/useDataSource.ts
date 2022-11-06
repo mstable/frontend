@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { metaVaultEndpoints } from '@frontend/shared-constants';
 import { chainId, useNetwork } from 'wagmi';
 
@@ -7,12 +9,15 @@ export const useDataSource = (): {
 } => {
   const { chain } = useNetwork();
 
-  return {
-    endpoint: metaVaultEndpoints[chain?.id ?? chainId.mainnet],
-    fetchParams: {
-      headers: {
-        'Content-Type': 'application/json',
+  return useMemo(
+    () => ({
+      endpoint: metaVaultEndpoints[chain?.id ?? chainId.mainnet],
+      fetchParams: {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    },
-  };
+    }),
+    [chain?.id],
+  );
 };

@@ -1,4 +1,5 @@
 export * from './components/AccountLabel';
+export * from './components/ChainRefresherProvider';
 export * from './components/CurrentNetworkIcon';
 export * from './components/OpenAccountModalButton';
 export * from './components/OpenNetworkModalButton';

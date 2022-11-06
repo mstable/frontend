@@ -57,14 +57,16 @@ export const useGetPrices = (addresses: HexAddress[]) => {
     queryKey: [
       'getTokenPrice',
       coingeckoCoinIds[chain?.id ?? chainId.mainnet],
-      addresses,
+      addresses ?? [],
       currency,
     ],
     queryFn: () =>
       axiosInstance.get(
         `${coingeckoEndpoint}/simple/token_price/${
           coingeckoCoinIds[chain?.id ?? chainId.mainnet]
-        }?contract_addresses=${addresses.join(',')}&vs_currencies=${currency}`,
+        }?contract_addresses=${(addresses ?? []).join(
+          ',',
+        )}&vs_currencies=${currency}`,
       ),
     select: prop('data'),
   });

@@ -33,7 +33,7 @@ export const Metavault = () => {
   if (!metavault) return <UnsupportedMvPage mvid={mvid} />;
 
   return (
-    <MetavaultProvider key={chain?.id} initialState={{ metavault }}>
+    <MetavaultProvider initialState={{ metavault }}>
       <Stack direction="column">
         <ErrorBoundary ErrorComponent={<ErrorCard sx={{ py: 8 }} />}>
           <VaultJumbo py={8} />

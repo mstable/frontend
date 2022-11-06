@@ -150,8 +150,10 @@ export const useTotalTvl = () => {
     () =>
       data?.vaults.reduce((acc, curr, idx) => {
         const price = pathOr(1, [curr.address, currency], prices);
-        const totalAssets = new BigDecimal(curr.totalAssets, decimals[idx])
-          .simple;
+        const totalAssets = new BigDecimal(
+          curr.totalAssets,
+          decimals?.[idx] ?? 18,
+        ).simple;
         const currPrice = totalAssets * Number(price);
 
         return acc + currPrice;

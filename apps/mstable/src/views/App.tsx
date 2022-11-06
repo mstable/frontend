@@ -9,7 +9,11 @@ import { PricesProvider } from '@frontend/shared-prices';
 import { ThemeProvider } from '@frontend/shared-theme';
 import { ErrorBoundary, ErrorPage } from '@frontend/shared-ui';
 import { composeContexts } from '@frontend/shared-utils';
-import { useUnsupportedNetworks, WagmiProvider } from '@frontend/shared-wagmi';
+import {
+  ChainRefresherProvider,
+  useUnsupportedNetworks,
+  WagmiProvider,
+} from '@frontend/shared-wagmi';
 import { Stack } from '@mui/material';
 import { Outlet, ReactLocation, Router } from '@tanstack/react-location';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -69,6 +73,7 @@ export const App = () =>
         },
       ],
       [WagmiProvider],
+      [ChainRefresherProvider],
       [PricesProvider],
       [GasFeeProvider],
       [ModalsProvider],
