@@ -22,11 +22,7 @@ export const MVIcon = ({ address, ...rest }: MVIconProps) => {
   return Icon ? (
     <Icon {...rest} />
   ) : (
-    <SvgIcon
-      viewBox="24 24 208 208"
-      {...rest}
-      sx={{ fontSize: 24, ...rest?.sx }}
-    >
+    <SvgIcon viewBox="0 0 256 256" {...rest}>
       <CurrencyCircleDollar width={256} height={256} />
     </SvgIcon>
   );

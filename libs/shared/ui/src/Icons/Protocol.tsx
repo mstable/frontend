@@ -33,11 +33,16 @@ export const ProtocolIcon = ({ name, ...rest }: ProtocolIconProps) => {
     <Icon {...rest} />
   ) : (
     <SvgIcon
-      viewBox="24 24 208 208"
+      viewBox="-32 -32 250 250"
       {...rest}
-      sx={{ fontSize: 24, ...rest?.sx }}
+      sx={{
+        color: 'icons.color',
+        borderRadius: '50%',
+        backgroundColor: 'icons.background',
+        ...rest?.sx,
+      }}
     >
-      <Bank width={256} height={256} />
+      <Bank width={180} height={180} />
     </SvgIcon>
   );
 };
