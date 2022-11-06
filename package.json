@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve",
+    "prebuild": "nx build shared-theme",
     "build": "nx build",
     "test": "nx test",
     "prepare": "husky install",
