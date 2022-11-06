@@ -10,7 +10,6 @@ import type { Metavault } from './types';
 
 const mainnet: Metavault = {
   id: 'mvusdc3pcv',
-  assetDecimals: 6,
   primaryColor: '#2775CA',
   address: tokens[chainId.mainnet]['mvusdc-3pcv'].address,
   name: 'Stablecoin Meta Vault',
@@ -79,7 +78,6 @@ const mainnet: Metavault = {
 
 const goerli: Metavault = {
   ...mainnet,
-  assetDecimals: 18,
   address: tokens[chainId.goerli].tvg.address,
   vaults: [
     vaults[chainId.goerli].vcx3crvbusd,

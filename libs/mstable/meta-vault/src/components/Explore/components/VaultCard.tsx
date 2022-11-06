@@ -4,13 +4,14 @@ import {
   Avatar,
   AvatarGroup,
   CardContent,
+  Skeleton,
   Stack,
   Typography,
 } from '@mui/material';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
 
-import { useChartData, useMetavaultData } from '../hooks';
+import { useAssetDecimal, useChartData, useMetavaultData } from '../hooks';
 import { HoverableCard } from './HoverableCard';
 import { LineChart } from './LineChart';
 
@@ -39,6 +40,9 @@ export const VaultCard = ({ metavault, to }: Props) => {
   const intl = useIntl();
   const data = useMetavaultData(metavault.address);
   const chartData = useChartData(metavault.address);
+  const { data: assetDecimal, isLoading: assetLoading } = useAssetDecimal(
+    metavault.address,
+  );
 
   return (
     <HoverableCard primaryColor={metavault.primaryColor} to={to}>
@@ -98,12 +102,16 @@ export const VaultCard = ({ metavault, to }: Props) => {
           >
             <Stack direction="row" spacing={1} alignItems="baseline">
               <Typography variant="value3">
-                {intl.formatNumber(
-                  new BigDecimal(
-                    data?.totalAssets ?? constants.Zero,
-                    metavault.assetDecimals,
-                  ).simple,
-                  { notation: 'compact' },
+                {assetLoading ? (
+                  <Skeleton width={50} />
+                ) : (
+                  intl.formatNumber(
+                    new BigDecimal(
+                      data?.totalAssets ?? constants.Zero,
+                      assetDecimal ?? 18,
+                    ).simple,
+                    { notation: 'compact' },
+                  )
                 )}
               </Typography>
             </Stack>

@@ -2,11 +2,19 @@ import { useMemo } from 'react';
 
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { useDataSource } from '@frontend/shared-data-access';
+import { useGetPrices, usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
+import { BasicVaultABI } from '@mstable/metavaults-web';
 import { alpha } from '@mui/material';
-import { propEq, sort } from 'ramda';
+import { pathOr, propEq, sort } from 'ramda';
 import { useIntl } from 'react-intl';
-import { chainId, useNetwork } from 'wagmi';
+import {
+  chainId,
+  erc20ABI,
+  useContractRead,
+  useContractReads,
+  useNetwork,
+} from 'wagmi';
 
 import { useMetavaultsQuery } from '../../queries.generated';
 
@@ -102,22 +110,52 @@ export const useChartData = (address: HexAddress) => {
   return chartData;
 };
 
+export const useAssetDecimal = (address: HexAddress) => {
+  const { data: asset } = useContractRead({
+    address,
+    abi: BasicVaultABI,
+    functionName: 'asset',
+  });
+
+  return useContractRead({
+    address: asset as HexAddress,
+    abi: erc20ABI,
+    functionName: 'decimals',
+  });
+};
+
 export const useTotalTvl = () => {
   const dataSource = useDataSource();
   const { data } = useMetavaultsQuery(dataSource);
   const { chain } = useNetwork();
+  const { currency } = usePrices();
   const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
+  const { data: assets } = useContractReads({
+    contracts: metavaults.map((mv) => ({
+      address: mv.address,
+      abi: BasicVaultABI,
+      functionName: 'asset',
+    })),
+  });
+  const { data: decimals } = useContractReads({
+    contracts: assets?.map((asset) => ({
+      address: asset as HexAddress,
+      abi: erc20ABI,
+      functionName: 'decimals',
+    })),
+  });
+  const { data: prices } = useGetPrices(assets as HexAddress[]);
 
-  // TODO: calculate TVL in dollar value
   return useMemo(
     () =>
-      data?.vaults?.reduce((acc, curr) => {
-        const dec = metavaults.find(
-          propEq('address', curr.address),
-        ).assetDecimals;
+      data?.vaults.reduce((acc, curr, idx) => {
+        const price = pathOr(1, [curr.address, currency], prices);
+        const totalAssets = new BigDecimal(curr.totalAssets, decimals[idx])
+          .simple;
+        const currPrice = totalAssets * Number(price);
 
-        return acc + new BigDecimal(curr.totalAssets, dec).simple;
+        return acc + currPrice;
       }, 0),
-    [data?.vaults, metavaults],
+    [currency, data?.vaults, decimals, prices],
   );
 };

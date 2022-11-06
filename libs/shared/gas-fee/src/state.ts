@@ -2,11 +2,9 @@ import { useState } from 'react';
 
 import { etherscanApiEndpoints } from '@frontend/shared-constants';
 import { axiosInstance } from '@frontend/shared-data-access';
-import { usePushNotification } from '@frontend/shared-notifications';
 import { useQuery } from '@tanstack/react-query';
 import produce from 'immer';
 import { pathOr } from 'ramda';
-import { useIntl } from 'react-intl';
 import { createContainer } from 'react-tracked';
 import { chainId, useBlockNumber, useNetwork } from 'wagmi';
 
@@ -29,9 +27,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     average: '0',
     slow: '0',
   });
-  const intl = useIntl();
   const { data: blockNumber } = useBlockNumber({ watch: true });
-  const pushNotification = usePushNotification();
   const { chain } = useNetwork();
   useQuery(
     ['gas-fee', blockNumber, chain?.id],
@@ -44,15 +40,6 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     {
       staleTime: 0,
       cacheTime: 0,
-      onError: (err: Error) => {
-        pushNotification({
-          title: intl.formatMessage({
-            defaultMessage: 'Error fetching gas fee',
-          }),
-          message: err?.message,
-          severity: 'error',
-        });
-      },
       onSuccess: (data) => {
         setState(
           produce((draft) => {

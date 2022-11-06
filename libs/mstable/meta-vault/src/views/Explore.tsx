@@ -1,5 +1,15 @@
 import { supportedMetavaults } from '@frontend/shared-constants';
-import { alpha, Box, Grid, Stack, Typography, useTheme } from '@mui/material';
+import { usePrices } from '@frontend/shared-prices';
+import { BigDecimal } from '@frontend/shared-utils';
+import {
+  alpha,
+  Box,
+  Grid,
+  Skeleton,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { GasPump, Vault } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 import { chainId, useFeeData, useNetwork } from 'wagmi';
@@ -10,8 +20,11 @@ export const Explore = () => {
   const intl = useIntl();
   const theme = useTheme();
   const { chain } = useNetwork();
-  const { data: feeData } = useFeeData({ formatUnits: 'gwei' });
+  const { data: feeData, isLoading: feeLoading } = useFeeData({
+    formatUnits: 'gwei',
+  });
   const totalTvl = useTotalTvl();
+  const { currency } = usePrices();
 
   const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
   const featuredMv = metavaults.find((mv) => mv.featured);
@@ -37,9 +50,19 @@ export const Explore = () => {
             <Vault weight="fill" color={theme.palette.info.main} />
           </Box>
           <Typography variant="value5" pr={3}>
-            {intl.formatMessage(
-              { defaultMessage: 'TVL {value}' },
-              { value: intl.formatNumber(totalTvl, { notation: 'compact' }) },
+            {isNaN(totalTvl) ? (
+              <Skeleton width={60} height={14} />
+            ) : (
+              intl.formatMessage(
+                { defaultMessage: 'TVL {value}' },
+                {
+                  value: intl.formatNumber(totalTvl, {
+                    style: 'currency',
+                    currency,
+                    notation: 'compact',
+                  }),
+                },
+              )
             )}
           </Typography>
           <Box
@@ -51,9 +74,13 @@ export const Explore = () => {
             <GasPump weight="fill" color={theme.palette.success.main} />
           </Box>
           <Typography variant="value5">
-            {intl.formatMessage(
-              { defaultMessage: '{value} GWEI' },
-              { value: feeData?.formatted.gasPrice },
+            {feeLoading ? (
+              <Skeleton width={75} />
+            ) : (
+              intl.formatMessage(
+                { defaultMessage: '{value} GWEI' },
+                { value: new BigDecimal(feeData?.gasPrice, 9).format(3) },
+              )
             )}
           </Typography>
         </Stack>
