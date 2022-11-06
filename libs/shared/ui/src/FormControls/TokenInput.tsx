@@ -13,7 +13,7 @@ import {
 import { range } from 'ramda';
 import { useIntl } from 'react-intl';
 
-import { TokenIcon } from '../TokenIcon';
+import { TokenIcon } from '../Icons';
 import { BigDecimalInput } from './BigDecimalInput';
 
 import type { ButtonProps, StackProps, SxProps } from '@mui/material';

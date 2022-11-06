@@ -1,7 +1,9 @@
 import {
+  AaveProtocol,
   ConvexProtocol,
   CurveProtocol,
   MStableProtocol,
+  UniswapProtocol,
 } from '@frontend/shared-icons';
 import { SvgIcon } from '@mui/material';
 import { CurrencyCircleDollar } from 'phosphor-react';
@@ -20,6 +22,8 @@ const supportedProtocols: Record<
   mstable: MStableProtocol,
   convex: ConvexProtocol,
   curve: CurveProtocol,
+  aave: AaveProtocol,
+  uniswap: UniswapProtocol,
 };
 
 export const ProtocolIcon = ({ name, ...rest }: ProtocolIconProps) => {
