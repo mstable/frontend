@@ -1,7 +1,6 @@
 import { AddressLabel } from '@frontend/shared-ui';
-import { BasicVaultABI } from '@mstable/metavaults-web';
 import { Grid, Stack, Typography } from '@mui/material';
-import { useContractRead, useNetwork } from 'wagmi';
+import { erc20ABI, useContractRead, useNetwork } from 'wagmi';
 
 import { useMetavault } from '../../../state';
 
@@ -14,7 +13,7 @@ const VaultCard = ({ address, name, ...rest }: VaultCardProps) => {
   const { chain } = useNetwork();
   const { data } = useContractRead({
     address,
-    abi: BasicVaultABI,
+    abi: erc20ABI,
     functionName: 'name',
   });
 

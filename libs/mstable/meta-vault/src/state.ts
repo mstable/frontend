@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 
 import { useDataSource } from '@frontend/shared-data-access';
 import { BigDecimal } from '@frontend/shared-utils';
-import { BasicVaultABI } from '@mstable/metavaults-web';
 import { constants } from 'ethers';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import {
+  erc4626ABI,
   useAccount,
   useBalance,
   useContractRead,
@@ -96,7 +96,7 @@ export const {
 
   useContractRead({
     address,
-    abi: BasicVaultABI,
+    abi: erc4626ABI,
     functionName: 'asset',
     enabled: !!address,
     onSuccess: (data) => {
@@ -168,13 +168,13 @@ export const {
     contracts: [
       {
         address,
-        abi: BasicVaultABI,
+        abi: erc4626ABI,
         functionName: 'convertToAssets',
         args: [state.mvBalance?.exact],
       },
       {
         address,
-        abi: BasicVaultABI,
+        abi: erc4626ABI,
         functionName: 'convertToShares',
         args: [state.assetBalance?.exact],
       },
