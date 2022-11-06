@@ -7,6 +7,7 @@ import produce from 'immer';
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
 
+import { useMetavault } from '../../state';
 import { ApprovalButton } from './components/ApprovalButton';
 import { OperationsForm } from './components/OperationsForm';
 import { Recap } from './components/Recap';
@@ -29,6 +30,7 @@ const OperationsWrapped = () => {
   const changeTab = useChangeTab();
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
+  const { assetToken } = useMetavault();
   const { operation, tab, needsApproval, isSubmitLoading } = useOperations();
 
   useEffect(() => {
@@ -36,7 +38,7 @@ const OperationsWrapped = () => {
       if (operation !== input.operation) {
         changeOperation(input.operation);
       }
-      setAmount(BigDecimal.fromSimple(input.amount));
+      setAmount(BigDecimal.fromSimple(input.amount, assetToken?.decimals));
       navigate({
         replace: true,
         search: produce((draft) => {
@@ -44,7 +46,15 @@ const OperationsWrapped = () => {
         }),
       });
     }
-  }, [changeOperation, input, isConnected, navigate, operation, setAmount]);
+  }, [
+    assetToken?.decimals,
+    changeOperation,
+    input,
+    isConnected,
+    navigate,
+    operation,
+    setAmount,
+  ]);
 
   return (
     <Card>

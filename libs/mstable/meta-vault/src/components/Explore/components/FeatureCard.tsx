@@ -5,6 +5,7 @@ import {
   AvatarGroup,
   CardContent,
   Grid,
+  Skeleton,
   Stack,
   Typography,
 } from '@mui/material';
@@ -13,17 +14,14 @@ import { StarFour } from 'phosphor-react';
 import { Line } from 'react-chartjs-2';
 import { useIntl } from 'react-intl';
 
-import { useChartData } from '../hooks';
+import { useAssetDecimal, useChartData, useMetavaultData } from '../hooks';
 import { HoverableCard } from './HoverableCard';
 
 import type { Metavault } from '@frontend/shared-constants';
 import type { TypographyProps } from '@mui/material';
 
-import type { MetavaultQuery } from '../../../queries.generated';
-
 interface Props {
   metavault: Metavault;
-  data: MetavaultQuery;
   to: string;
 }
 
@@ -40,9 +38,14 @@ const tagProps: TypographyProps = {
   borderRadius: 2,
 };
 
-export const FeatureCard = ({ metavault, data, to }: Props) => {
+export const FeatureCard = ({ metavault, to }: Props) => {
   const intl = useIntl();
-  const chartData = useChartData(data);
+  const data = useMetavaultData(metavault.address);
+  const chartData = useChartData(metavault.address);
+  const { data: assetDecimal, isLoading: assetLoading } = useAssetDecimal(
+    metavault.address,
+  );
+
   return (
     <HoverableCard
       transparentBackground
@@ -103,12 +106,16 @@ export const FeatureCard = ({ metavault, data, to }: Props) => {
               >
                 <Stack direction="row" spacing={1} alignItems="baseline">
                   <Typography variant="value2">
-                    {intl.formatNumber(
-                      new BigDecimal(
-                        data?.vault?.totalAssets ?? constants.Zero,
-                        metavault.assetDecimals,
-                      ).simple,
-                      { notation: 'compact' },
+                    {assetLoading ? (
+                      <Skeleton width={75} />
+                    ) : (
+                      intl.formatNumber(
+                        new BigDecimal(
+                          data?.totalAssets ?? constants.Zero,
+                          assetDecimal,
+                        ).simple,
+                        { notation: 'compact' },
+                      )
                     )}
                   </Typography>
                 </Stack>
@@ -120,7 +127,7 @@ export const FeatureCard = ({ metavault, data, to }: Props) => {
                 })}
               >
                 <Typography variant="value2">
-                  {intl.formatNumber(data?.vault?.apy ?? 0, {
+                  {intl.formatNumber(data?.apy ?? 0, {
                     style: 'percent',
                     maximumFractionDigits: 2,
                   })}
@@ -129,7 +136,7 @@ export const FeatureCard = ({ metavault, data, to }: Props) => {
             </Stack>
           </Grid>
           <Grid item sm={7} xs={12}>
-            <Line options={chartData.options} data={chartData.data} />
+            <Line {...chartData} />
           </Grid>
         </Grid>
       </CardContent>

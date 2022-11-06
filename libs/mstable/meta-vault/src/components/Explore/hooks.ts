@@ -1,12 +1,35 @@
 import { useMemo } from 'react';
 
+import { supportedMetavaults } from '@frontend/shared-constants';
+import { useDataSource } from '@frontend/shared-data-access';
+import { useGetPrices, usePrices } from '@frontend/shared-prices';
+import { BigDecimal } from '@frontend/shared-utils';
+import { BasicVaultABI } from '@mstable/metavaults-web';
 import { alpha } from '@mui/material';
-import { sort } from 'ramda';
+import { pathOr, propEq, sort } from 'ramda';
 import { useIntl } from 'react-intl';
+import {
+  chainId,
+  erc20ABI,
+  useContractRead,
+  useContractReads,
+  useNetwork,
+} from 'wagmi';
 
+import { useMetavaultsQuery } from '../../queries.generated';
+
+import type { HexAddress } from '@frontend/shared-utils';
 import type { ChartArea, ChartData, ChartOptions } from 'chart.js';
 
-import type { MetavaultQuery } from '../../queries.generated';
+export const useMetavaultData = (address: HexAddress) => {
+  const dataSource = useDataSource();
+  const { data: vaultsData } = useMetavaultsQuery(dataSource);
+
+  return useMemo(
+    () => vaultsData?.vaults?.find(propEq('address', address)),
+    [address, vaultsData?.vaults],
+  );
+};
 
 const getGradient =
   (tone: string) => (ctx: CanvasRenderingContext2D, chartArea?: ChartArea) => {
@@ -22,14 +45,15 @@ const getGradient =
     return gradient;
   };
 
-export const useChartData = (data: MetavaultQuery) => {
+export const useChartData = (address: HexAddress) => {
   const intl = useIntl();
+  const data = useMetavaultData(address);
 
   const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
     useMemo(() => {
       const sortedData = sort(
         (a, b) => Number(a.timestamp) - Number(b.timestamp),
-        data?.vault?.DailyVaultStats || [],
+        data?.DailyVaultStats || [],
       ).map((d) => Number(d.apy));
 
       return {
@@ -81,7 +105,57 @@ export const useChartData = (data: MetavaultQuery) => {
           },
         },
       };
-    }, [data?.vault?.DailyVaultStats, intl]);
+    }, [data?.DailyVaultStats, intl]);
 
   return chartData;
+};
+
+export const useAssetDecimal = (address: HexAddress) => {
+  const { data: asset } = useContractRead({
+    address,
+    abi: BasicVaultABI,
+    functionName: 'asset',
+  });
+
+  return useContractRead({
+    address: asset as HexAddress,
+    abi: erc20ABI,
+    functionName: 'decimals',
+  });
+};
+
+export const useTotalTvl = () => {
+  const dataSource = useDataSource();
+  const { data } = useMetavaultsQuery(dataSource);
+  const { chain } = useNetwork();
+  const { currency } = usePrices();
+  const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
+  const { data: assets } = useContractReads({
+    contracts: metavaults.map((mv) => ({
+      address: mv.address,
+      abi: BasicVaultABI,
+      functionName: 'asset',
+    })),
+  });
+  const { data: decimals } = useContractReads({
+    contracts: assets?.map((asset) => ({
+      address: asset as HexAddress,
+      abi: erc20ABI,
+      functionName: 'decimals',
+    })),
+  });
+  const { data: prices } = useGetPrices(assets as HexAddress[]);
+
+  return useMemo(
+    () =>
+      data?.vaults.reduce((acc, curr, idx) => {
+        const price = pathOr(1, [curr.address, currency], prices);
+        const totalAssets = new BigDecimal(curr.totalAssets, decimals[idx])
+          .simple;
+        const currPrice = totalAssets * Number(price);
+
+        return acc + currPrice;
+      }, 0),
+    [currency, data?.vaults, decimals, prices],
+  );
 };

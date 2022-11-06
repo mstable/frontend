@@ -1,42 +1,33 @@
 import { supportedMetavaults } from '@frontend/shared-constants';
-import { useDataSource } from '@frontend/shared-data-access';
+import { usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
-import { alpha, Box, Grid, Stack, Typography, useTheme } from '@mui/material';
+import {
+  alpha,
+  Box,
+  Grid,
+  Skeleton,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { GasPump, Vault } from 'phosphor-react';
-import { indexBy, prop } from 'ramda';
 import { useIntl } from 'react-intl';
-import { useFeeData, useNetwork } from 'wagmi';
+import { chainId, useFeeData, useNetwork } from 'wagmi';
 
-import { FeatureCard } from '../components/Explore/components/FeatureCard';
-import { VaultCard } from '../components/Explore/components/VaultCard';
-import { useMetavaultsQuery } from '../queries.generated';
+import { FeatureCard, useTotalTvl, VaultCard } from '../components/Explore';
 
 export const Explore = () => {
   const intl = useIntl();
-  const { chain } = useNetwork();
-  const { data } = useFeeData({ formatUnits: 'gwei' });
   const theme = useTheme();
-  const metavaults = Object.entries(
-    supportedMetavaults[chain?.id || 1] || {},
-  ).map(([key, val]) => ({ ...val, key }));
-  const dataSource = useDataSource();
-  const { data: vaultsData } = useMetavaultsQuery(dataSource);
-  const vaults = vaultsData?.vaults || [];
-  const vaultsMap = indexBy(prop('address'), metavaults);
-  const vaultsDataMap = indexBy(prop('address'), vaults);
-  const metavaultsWithData = metavaults.map((metavault) => ({
-    metavault,
-    data: vaultsDataMap[metavault.address],
-  }));
+  const { chain } = useNetwork();
+  const { data: feeData, isLoading: feeLoading } = useFeeData({
+    formatUnits: 'gwei',
+  });
+  const totalTvl = useTotalTvl();
+  const { currency } = usePrices();
+
+  const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
   const featuredMv = metavaults.find((mv) => mv.featured);
-  // TODO: calculate TVL in dollar value
-  const totalTvl = vaults
-    .map(
-      (v) =>
-        new BigDecimal(v.totalAssets, vaultsMap[v.address]?.assetDecimals)
-          .simple,
-    )
-    .reduce((a, b) => a + b, 0);
 
   return (
     <Stack direction="column">
@@ -59,9 +50,19 @@ export const Explore = () => {
             <Vault weight="fill" color={theme.palette.info.main} />
           </Box>
           <Typography variant="value5" pr={3}>
-            {intl.formatMessage(
-              { defaultMessage: 'TVL {value}' },
-              { value: intl.formatNumber(totalTvl, { notation: 'compact' }) },
+            {isNaN(totalTvl) ? (
+              <Skeleton width={60} height={14} />
+            ) : (
+              intl.formatMessage(
+                { defaultMessage: 'TVL {value}' },
+                {
+                  value: intl.formatNumber(totalTvl, {
+                    style: 'currency',
+                    currency,
+                    notation: 'compact',
+                  }),
+                },
+              )
             )}
           </Typography>
           <Box
@@ -73,32 +74,28 @@ export const Explore = () => {
             <GasPump weight="fill" color={theme.palette.success.main} />
           </Box>
           <Typography variant="value5">
-            {intl.formatMessage(
-              { defaultMessage: '{value} GWEI' },
-              { value: data?.formatted.gasPrice },
+            {feeLoading ? (
+              <Skeleton width={75} />
+            ) : (
+              intl.formatMessage(
+                { defaultMessage: '{value} GWEI' },
+                { value: new BigDecimal(feeData?.gasPrice, 9).format(3) },
+              )
             )}
           </Typography>
         </Stack>
       </Stack>
-      {featuredMv ? (
-        <FeatureCard
-          to={`./${featuredMv.key}`}
-          metavault={featuredMv}
-          data={{ vault: vaultsDataMap[featuredMv.address] }}
-        />
-      ) : null}
+      {featuredMv && (
+        <FeatureCard metavault={featuredMv} to={`./${featuredMv.id}`} />
+      )}
       <Typography mt={5} mb={3} variant="h3">
         {intl.formatMessage({ defaultMessage: 'Vaults' })}
       </Typography>
       <Grid container spacing={3}>
-        {metavaultsWithData.map(({ metavault, data }) => {
+        {metavaults.map((mv) => {
           return (
-            <Grid key={metavault.key} item sm={12} md={6} lg={4}>
-              <VaultCard
-                to={`./${metavault.key}`}
-                metavault={metavault}
-                data={{ vault: data }}
-              />
+            <Grid key={mv.id} item sm={12} md={6} lg={4}>
+              <VaultCard metavault={mv} to={`./${mv.id}`} />
             </Grid>
           );
         })}

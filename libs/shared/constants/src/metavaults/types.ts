@@ -13,6 +13,7 @@ export type Strategy = {
 };
 
 export type Metavault = {
+  id: SupportedMetavault;
   address: HexAddress;
   name: string;
   tags: MessageDescriptor[];
@@ -28,7 +29,6 @@ export type Metavault = {
     deposit: number;
     withdraw: number;
   };
-  assetDecimals: number;
   primaryColor: string;
   featured?: boolean;
 };

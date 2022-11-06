@@ -3,19 +3,19 @@ import React from 'react';
 import { RouterLink } from '@frontend/shared-ui';
 import { alpha, Card, Link } from '@mui/material';
 
-interface Props {
+export type HoverableCardProps = {
   transparentBackground?: boolean;
   primaryColor: string;
   children: React.ReactNode;
   to: string;
-}
+};
 
 export const HoverableCard = ({
   transparentBackground,
   primaryColor,
   children,
   to,
-}: Props) => {
+}: HoverableCardProps) => {
   return (
     <Link component={RouterLink} to={to}>
       <Card
