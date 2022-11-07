@@ -6,7 +6,6 @@ import {
   Button,
   FormControl,
   InputLabel,
-  Skeleton,
   Stack,
   Typography,
   useTheme,
@@ -203,35 +202,31 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
             justifyContent="space-between"
             alignItems="center"
           >
-            {isLoading ? (
-              <Skeleton width={160} height={22} />
-            ) : (
-              <Stack direction="row" spacing={0.5}>
-                {range(1, PERCENTAGE_STEPS + 1).map((n) => (
-                  <PercentageButton
-                    onClick={handlePercentageChange(n)}
-                    value={n}
-                    key={`percent-${n}`}
-                    disabled={disabled}
-                    sx={{
-                      ...(n === percentage && {
-                        color: 'primary.main',
+            <Stack direction="row" spacing={0.5}>
+              {range(1, PERCENTAGE_STEPS + 1).map((n) => (
+                <PercentageButton
+                  onClick={handlePercentageChange(n)}
+                  value={n}
+                  key={`percent-${n}`}
+                  disabled={disabled || isLoading}
+                  sx={{
+                    ...(n === percentage && {
+                      color: 'primary.main',
+                      borderColor: 'primary.main',
+                      ':hover': {
                         borderColor: 'primary.main',
-                        ':hover': {
-                          borderColor: 'primary.main',
-                        },
-                      }),
-                    }}
-                  >
-                    {`${
-                      n === PERCENTAGE_STEPS
-                        ? 'MAX'
-                        : `${n * (100 / PERCENTAGE_STEPS)}%`
-                    }`}
-                  </PercentageButton>
-                ))}
-              </Stack>
-            )}
+                      },
+                    }),
+                  }}
+                >
+                  {`${
+                    n === PERCENTAGE_STEPS
+                      ? 'MAX'
+                      : `${n * (100 / PERCENTAGE_STEPS)}%`
+                  }`}
+                </PercentageButton>
+              ))}
+            </Stack>
             {isConnected && max ? (
               <Stack direction="row" alignItems="center" spacing={0.5}>
                 <Wallet

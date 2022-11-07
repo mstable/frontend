@@ -58,6 +58,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     assetToken,
     assetBalance,
     assetBalanceInShare,
+    mvToken,
     mvBalance,
     mvBalanceInAsset,
   } = useMetavault();
@@ -100,9 +101,12 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     args: [amount?.exact],
     enabled: false,
     onSuccess: (data: BigNumberish) => {
+      const dec = ['deposit', 'withdraw'].includes(operation)
+        ? mvToken.decimals
+        : assetToken.decimals;
       setState(
         produce((draft) => {
-          draft.preview = data ? new BigDecimal(data) : null;
+          draft.preview = data ? new BigDecimal(data, dec) : null;
           draft.isInputLoading = false;
         }),
       );
