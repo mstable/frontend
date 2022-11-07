@@ -9,7 +9,9 @@ import {
   Skeleton,
   Stack,
   Typography,
+  useTheme,
 } from '@mui/material';
+import { Wallet } from 'phosphor-react';
 import { range } from 'ramda';
 import { useIntl } from 'react-intl';
 
@@ -118,6 +120,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
   ) => {
     const [percentage, setPercentage] = useState(0);
     const intl = useIntl();
+    const theme = useTheme();
 
     useEffect(() => {
       if (max && amount) {
@@ -230,22 +233,24 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
               </Stack>
             )}
             {isConnected && max ? (
-              <Typography
-                variant="value6"
-                sx={{
-                  ...maxStyles,
-                  color: 'text.secondary',
-                }}
-                noWrap
-              >
-                {maxLabel ??
-                  intl.formatMessage({
-                    defaultMessage: 'Balance',
-                    id: 'balance',
-                  })}
-                :&nbsp;
-                {max.format()}
-              </Typography>
+              <Stack direction="row" alignItems="center" spacing={0.5}>
+                <Wallet
+                  weight="fill"
+                  width={16}
+                  height={16}
+                  color={theme.palette.icons.color}
+                />
+                <Typography
+                  variant="value6"
+                  sx={{
+                    ...maxStyles,
+                    color: 'text.secondary',
+                  }}
+                  noWrap
+                >
+                  {max.format(3)}
+                </Typography>
+              </Stack>
             ) : (
               <Typography
                 variant="value6"

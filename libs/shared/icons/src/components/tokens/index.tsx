@@ -87,7 +87,7 @@ export const FLX = (props: SvgIconProps) => (
   <SvgIcon {...props} component={FLXSvg} viewBox="0 0 400 400" />
 );
 export const FRAX = (props: SvgIconProps) => (
-  <SvgIcon {...props} component={FRAXSvg} viewBox="0 0 64 64" />
+  <SvgIcon {...props} component={FRAXSvg} viewBox="0 0 570.4 570.4" />
 );
 export const FXS = (props: SvgIconProps) => (
   <SvgIcon {...props} component={FXSSvg} viewBox="0 0 64 64" />
