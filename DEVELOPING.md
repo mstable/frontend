@@ -10,7 +10,7 @@ You need
 - `yarn`
 - A Personal Access Token with `packages:read` rights to `mstable` npm registry
 
-> Follow github [guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to create a PAT and this [guide](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token) to authenticate locally.
+> Refer to github guides to [create a PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) and to [authenticate locally](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token).
 
 The `i18n:compile` script relies on external dependency `jq` that you need to install on your OS
 
@@ -31,11 +31,6 @@ npm i -g nx
 ## Nx
 
 This repository was generated using [Nx](https://nx.dev). We strongly recomend the reading of the documentation as it follows closely Nx conventions regarding code structure.
-
-> 👌 Nx provides IDE extensions to integrate better with cli
->
-> - [NxConsole plugin](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console) for VsCode
-> - [NxConsole Idea](https://plugins.jetbrains.com/plugin/15101-nx-console-idea) for Jetbrains
 
 <br>
 
@@ -74,7 +69,10 @@ nx run mstable:custom-build
 nx custom-build mstable
 ```
 
-Build artifacts are emmitted into the `/dist` folder at the root of the repo, the file structure reflects the monorepo structure.
+> 👌 Nx provides IDE extensions to integrate better with cli
+>
+> - [NxConsole plugin](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console) for VsCode
+> - [NxConsole Idea](https://plugins.jetbrains.com/plugin/15101-nx-console-idea) for Jetbrains
 
 ### Custom scripts
 
@@ -104,6 +102,8 @@ The libs folder contains:
 - 1 sub-folder per application containing application specific modules and optionally an app-scoped shared folder
 - 1 `shared` folder to contain all common libraries. Shared libs should not call any product-specific api
 - 1 `tools` folder that contains repository support libraries
+
+Build artifacts are emmitted into the `/dist` folder at the root of the repo, the file structure reflects the monorepo structure.
 
 ### How to split code between apps and libs
 
