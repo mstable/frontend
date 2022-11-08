@@ -2,11 +2,11 @@
   "+1GGs7": {
     "defaultMessage": "Claim CVX & CRV"
   },
+  "+rLSix": {
+    "defaultMessage": "TVL {value}"
+  },
   "/54G9d": {
     "defaultMessage": "Approving Token"
-  },
-  "/LEAtw": {
-    "defaultMessage": "Underlying Vaults that are used by this vault."
   },
   "/e4KBT": {
     "defaultMessage": "1 Share = {ratio} {asset}"
@@ -32,17 +32,23 @@
   "2M9vCZ": {
     "defaultMessage": "Projected APY (%)"
   },
+  "3Dvp3q": {
+    "defaultMessage": "Vault contract and underlying vaults that are utilized."
+  },
   "3QSP9N": {
     "defaultMessage": "Visualize Strategy"
   },
   "3wMm/H": {
     "defaultMessage": "You Deposit"
   },
+  "3zqxkt": {
+    "defaultMessage": "Automated and diversified yield strategies."
+  },
   "4/JAsV": {
     "defaultMessage": "The underlying vaults charge a {fee}% fee upon liquidation of the earned rewards."
   },
-  "5ZxAiY": {
-    "defaultMessage": "Token"
+  "4LNpZQ": {
+    "defaultMessage": "Current value of your position. Includes earned amount."
   },
   "5fjd4K": {
     "defaultMessage": "{fee}%"
@@ -59,6 +65,12 @@
   "7jeKkk": {
     "defaultMessage": "Protocols that are used by this vault."
   },
+  "7lqTh7": {
+    "defaultMessage": "Annual Percentage Yield. Annualized 24 hours performance."
+  },
+  "7ynb1z": {
+    "defaultMessage": "{value} GWEI"
+  },
   "8lLHeh": {
     "defaultMessage": "1Y"
   },
@@ -67,6 +79,9 @@
   },
   "9ALsvc": {
     "defaultMessage": "Approval Cost"
+  },
+  "9Q2RoH": {
+    "defaultMessage": "Profit or Losses accumulated since deposit. Flactuations possible due to liquidity provision position."
   },
   "9RAHhM": {
     "defaultMessage": "Strategy & Risks"
@@ -83,20 +98,29 @@
   "CGcoFj": {
     "defaultMessage": "Yield Calculator"
   },
+  "CnPG8j": {
+    "defaultMessage": "Featured"
+  },
+  "DUR59o": {
+    "defaultMessage": "Total Value Locked"
+  },
+  "EWa1Fv": {
+    "defaultMessage": "LP Position"
+  },
   "FQUm7o": {
     "defaultMessage": "Avg - {value} GWEI"
   },
   "FaoPNm": {
     "defaultMessage": "You Burn"
   },
-  "GC970B": {
-    "defaultMessage": "Collect swap fees"
-  },
   "Gh1Vm9": {
     "defaultMessage": "You Receive"
   },
   "H5+NAX": {
     "defaultMessage": "Balance"
+  },
+  "Imiiiv": {
+    "defaultMessage": "No Data Available"
   },
   "IuFETn": {
     "defaultMessage": "Duration"
@@ -140,14 +164,8 @@
   "SKB/G9": {
     "defaultMessage": "TVL"
   },
-  "SRo6uF": {
-    "defaultMessage": "Meta Vaults"
-  },
   "T3hbuQ": {
     "defaultMessage": "{val} Shares"
-  },
-  "THS5K4": {
-    "defaultMessage": "{fee}% of USDC"
   },
   "TL3yAY": {
     "defaultMessage": "Position Value"
@@ -164,6 +182,9 @@
   "WKCp0D": {
     "defaultMessage": "Asset"
   },
+  "WKF4Gx": {
+    "defaultMessage": "Swap to Stablecoin"
+  },
   "X1WPwl": {
     "defaultMessage": "Nothing here yet, make your first deposit"
   },
@@ -172,6 +193,12 @@
   },
   "ZefNbE": {
     "defaultMessage": "Average - {value} GWEI"
+  },
+  "ZwpbZp": {
+    "defaultMessage": "Contracts"
+  },
+  "aPi9xt": {
+    "defaultMessage": "Swap fees"
   },
   "b+LlHJ": {
     "defaultMessage": "Deposit Gas"
@@ -215,14 +242,11 @@
   "fcBYFp": {
     "defaultMessage": "{operationLabel} Cost"
   },
-  "gKTtPo": {
-    "defaultMessage": "Vault Contracts"
+  "g6UhRO": {
+    "defaultMessage": "Vault name"
   },
   "hRuz7F": {
     "defaultMessage": "Withdrawal Gas"
-  },
-  "heM61T": {
-    "defaultMessage": "Swap to USDC"
   },
   "iDM1KQ": {
     "defaultMessage": "{operation}ing {currency}"
@@ -257,11 +281,8 @@
   "rgdwQX": {
     "defaultMessage": "Transaction Confirmed"
   },
-  "riAanx": {
-    "defaultMessage": "Annual Percentage Yield"
-  },
-  "sHlvMe": {
-    "defaultMessage": "Total Supply"
+  "s2zphO": {
+    "defaultMessage": "Vaults"
   },
   "tH0obk": {
     "defaultMessage": "Return Projection"
@@ -272,11 +293,17 @@
   "tvpAhG": {
     "defaultMessage": "The Meta Vault charges a {fee}% performance upon underlying asset appreciation."
   },
+  "vHwp5J": {
+    "defaultMessage": "Explore Meta Vaults"
+  },
   "w1LBDB": {
     "defaultMessage": "Sign Transaction"
   },
   "zFNxtv": {
     "defaultMessage": "Protocols"
+  },
+  "zGHadw": {
+    "defaultMessage": "Strategy"
   },
   "zRbVmO": {
     "defaultMessage": "WITHDRAW"
