@@ -145,6 +145,7 @@ export const HistoryDialog = ({
                       </Typography>
                       <AddressLabel
                         address={tx.hash}
+                        type="transaction"
                         link
                         small
                         hideCopyToClipboard

@@ -66,7 +66,7 @@ export const VaultCard = ({ metavault, to }: Props) => {
             </Typography>
           </ValueLabel>
         </Stack>
-        <LineChart {...chartData} />
+        <LineChart id={metavault.id} {...chartData} />
         <Typography variant="h4" mt={5}>
           {metavault.name}
         </Typography>

@@ -152,7 +152,7 @@ export const useTotalTvl = () => {
   return useMemo(
     () =>
       data?.vaults.reduce((acc, curr, idx) => {
-        const price = pathOr(1, [curr.address, currency], prices);
+        const price = pathOr(1, [curr.address, currency.toLowerCase()], prices);
         const totalAssets = new BigDecimal(
           curr.totalAssets,
           decimals?.[idx] ?? 18,

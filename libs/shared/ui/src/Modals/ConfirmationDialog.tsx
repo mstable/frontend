@@ -87,7 +87,7 @@ export const ConfirmationDialog = ({
         )}
       </DialogContent>
       <DialogActions>
-        <Button {...cancelProps} onClick={handleCancel}>
+        <Button variant="text" {...cancelProps} onClick={handleCancel}>
           {isNilOrEmpty(cancelLabel)
             ? intl.formatMessage({
                 id: 'defaultCancel',
