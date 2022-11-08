@@ -110,6 +110,7 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
       <TableCell sx={tableCellSx}>
         <Stack sx={{ width: 60, height: 40 }}>
           <LineChart
+            id={metavault.id}
             options={{ ...chartData.options, maintainAspectRatio: false }}
             data={chartData.data}
             height={40}
