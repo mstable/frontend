@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Gear } from 'phosphor-react';
+import { not } from 'ramda';
 import { useIntl } from 'react-intl';
 import { useAccount, useNetwork } from 'wagmi';
 
@@ -33,7 +34,7 @@ export const SettingsButton = (props: ButtonProps) => {
         {...props}
         ref={anchorEl}
         onClick={() => {
-          setOpen(true);
+          setOpen(not);
         }}
         variant="text"
         color={chain?.unsupported ? 'warning' : 'inherit'}

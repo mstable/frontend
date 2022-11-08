@@ -48,7 +48,7 @@ const mainnet: Metavault = {
 
 const goerli: Metavault = {
   ...mainnet,
-  address: '0x0145a7fb49402b29be7c52d38aeacb5e1acae11b',
+  address: DEAD_ADDRESS,
   vaults: [vaults[chainId.goerli].vcx3crvmusd],
   assets: [tokens[chainId.goerli].musd, tokens[chainId.goerli].usdc],
 };

@@ -42,11 +42,11 @@ export const BigDecimalInput = forwardRef<
     },
     ref,
   ) => {
-    const [val, setVal] = useState(value?.simple.toString() ?? '');
+    const [val, setVal] = useState(value?.simpleRounded.toString() ?? '');
 
     useEffect(() => {
       if (value) {
-        setVal(value?.simple.toString());
+        setVal(value?.simpleRounded.toString());
       } else {
         setVal('');
       }
@@ -64,7 +64,7 @@ export const BigDecimalInput = forwardRef<
     return (
       <Box {...rest}>
         {isLoading ? (
-          <Skeleton height={48} sx={{ pt: '4px', pb: '5px' }} />
+          <Skeleton width={120} height={48} sx={{ pt: '4px', pb: '5px' }} />
         ) : (
           <InputBase
             {...InputProps}

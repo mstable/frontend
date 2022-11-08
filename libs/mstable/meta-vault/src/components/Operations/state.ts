@@ -11,7 +11,8 @@ import { useMetavault } from '../../state';
 
 import type { Children } from '@frontend/shared-utils';
 import type { FetchTokenResult } from '@wagmi/core';
-import type { BigNumber, BigNumberish } from 'ethers';
+import type { BigNumber } from 'ethers';
+import type { BigNumberish } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
 
 import type { SupportedOperation } from '../../types';
@@ -25,6 +26,7 @@ type OperationsState = {
   preview: BigDecimal | null;
   allowance: BigNumber | null;
   balance: BigDecimal | null;
+  assetsPerShare: BigDecimal | null;
   tab: 0 | 1;
   needsApproval: boolean;
   isInputLoading: boolean;
@@ -39,6 +41,7 @@ const initialState: OperationsState = {
   preview: null,
   allowance: null,
   balance: null,
+  assetsPerShare: null,
   tab: 0,
   needsApproval: false,
   isInputLoading: false,
@@ -58,6 +61,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     assetToken,
     assetBalance,
     assetBalanceInShare,
+    mvToken,
     mvBalance,
     mvBalanceInAsset,
   } = useMetavault();
@@ -82,6 +86,26 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     },
   });
 
+  useContractRead({
+    address,
+    abi: erc4626ABI,
+    functionName: 'convertToAssets',
+    enabled: !!assetToken && !!mvToken,
+    args: [BigDecimal.ONE.scale(mvToken?.decimals).exact],
+    watch: true,
+    cacheOnBlock: true,
+    onSuccess: (data) => {
+      setState(
+        produce((draft) => {
+          draft.assetsPerShare = new BigDecimal(
+            data as unknown as BigNumberish,
+            assetToken?.decimals,
+          );
+        }),
+      );
+    },
+  });
+
   type PreviewOperation =
     | 'previewDeposit'
     | 'previewMint'
@@ -100,9 +124,12 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     args: [amount?.exact],
     enabled: false,
     onSuccess: (data: BigNumberish) => {
+      const dec = ['deposit', 'withdraw'].includes(operation)
+        ? mvToken.decimals
+        : assetToken.decimals;
       setState(
         produce((draft) => {
-          draft.preview = data ? new BigDecimal(data) : null;
+          draft.preview = data ? new BigDecimal(data, dec) : null;
           draft.isInputLoading = false;
         }),
       );

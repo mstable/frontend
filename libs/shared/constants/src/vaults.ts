@@ -7,15 +7,24 @@ export type Vault = {
   decimals: number;
 };
 
-export type SupportedVault = 'vcx3crvmusd' | 'vcx3crvfrax' | 'vcx3crvbusd';
+export type SupportedVault =
+  | 'mvusdc3pcv'
+  | 'musd3crv'
+  | 'vcx3crvmusd'
+  | 'vcx3crvfrax'
+  | 'vcx3crvbusd';
 
 const mainnet: Record<SupportedVault, Vault> = {
+  mvusdc3pcv: tokens[chainId.mainnet]['mvusdc-3pcv'],
+  musd3crv: tokens[chainId.mainnet]['musd3crv'],
   vcx3crvmusd: tokens[chainId.mainnet]['vcx3crv-musd'],
   vcx3crvfrax: tokens[chainId.mainnet]['vcx3crv-frax'],
   vcx3crvbusd: tokens[chainId.mainnet]['vcx3crv-busd'],
 };
 
 const goerli: Record<SupportedVault, Vault> = {
+  mvusdc3pcv: tokens[chainId.mainnet]['mvusdc-3pcv'],
+  musd3crv: tokens[chainId.mainnet]['musd3crv'],
   vcx3crvmusd: tokens[chainId.mainnet]['vcx3crv-musd'],
   vcx3crvfrax: tokens[chainId.mainnet]['vcx3crv-frax'],
   vcx3crvbusd: tokens[chainId.mainnet]['vcx3crv-busd'],
