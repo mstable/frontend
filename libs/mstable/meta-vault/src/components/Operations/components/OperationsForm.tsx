@@ -135,6 +135,7 @@ export const OperationsForm = (props: StackProps) => {
         {...primaryInput}
         token={assetToken}
         max={primaryBalance}
+        maxIcon={tab === 0 ? 'wallet' : 'vault'}
         label={intl.formatMessage({ defaultMessage: 'Asset' })}
         onChange={handlePrimaryChange}
         placeholder="0.00"

@@ -10,7 +10,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { Wallet } from 'phosphor-react';
+import { Vault, Wallet } from 'phosphor-react';
 import { range } from 'ramda';
 import { useIntl } from 'react-intl';
 
@@ -32,6 +32,7 @@ export type TokenInputProps = {
   amount: BigDecimal;
   token: FetchTokenResult;
   max?: BigDecimal;
+  maxIcon?: 'wallet' | 'vault';
   onChange?: (newValue: BigDecimal) => void;
   hideBottomRow?: boolean;
   hideTokenBadge?: boolean;
@@ -108,6 +109,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
       amount,
       token,
       max,
+      maxIcon = 'wallet',
       onChange,
       hideBottomRow = false,
       hideTokenBadge = false,
@@ -227,12 +229,21 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
             </Stack>
             {isConnected && max ? (
               <Stack direction="row" alignItems="center" spacing={0.5}>
-                <Wallet
-                  weight="fill"
-                  width={16}
-                  height={16}
-                  color={theme.palette.icons.color}
-                />
+                {maxIcon === 'wallet' ? (
+                  <Wallet
+                    weight="fill"
+                    width={16}
+                    height={16}
+                    color={theme.palette.icons.color}
+                  />
+                ) : (
+                  <Vault
+                    weight="fill"
+                    width={16}
+                    height={16}
+                    color={theme.palette.icons.color}
+                  />
+                )}
                 <Typography
                   variant="value6"
                   sx={{
@@ -241,7 +252,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
                   }}
                   noWrap
                 >
-                  {max.format(3)}
+                  {max.simpleRounded.toString()}
                 </Typography>
               </Stack>
             ) : (
