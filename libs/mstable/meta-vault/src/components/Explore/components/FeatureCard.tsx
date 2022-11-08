@@ -99,6 +99,19 @@ export const FeatureCard = ({ metavault, to }: Props) => {
                 </AvatarGroup>
               </ValueLabel>
               <ValueLabel
+                label={intl.formatMessage({ defaultMessage: 'APY' })}
+                hint={intl.formatMessage({
+                  defaultMessage: 'Annual Percentage Yield',
+                })}
+              >
+                <Typography variant="value2">
+                  {intl.formatNumber(data?.apy ?? 0, {
+                    style: 'percent',
+                    maximumFractionDigits: 2,
+                  })}
+                </Typography>
+              </ValueLabel>
+              <ValueLabel
                 label={intl.formatMessage({ defaultMessage: 'TVL' })}
                 hint={intl.formatMessage({
                   defaultMessage: 'Total Value Locked',
@@ -119,19 +132,6 @@ export const FeatureCard = ({ metavault, to }: Props) => {
                     )}
                   </Typography>
                 </Stack>
-              </ValueLabel>
-              <ValueLabel
-                label={intl.formatMessage({ defaultMessage: 'APY' })}
-                hint={intl.formatMessage({
-                  defaultMessage: 'Annual Percentage Yield',
-                })}
-              >
-                <Typography variant="value2">
-                  {intl.formatNumber(data?.apy ?? 0, {
-                    style: 'percent',
-                    maximumFractionDigits: 2,
-                  })}
-                </Typography>
               </ValueLabel>
             </Stack>
           </Grid>
