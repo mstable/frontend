@@ -138,7 +138,6 @@ export const YieldCalculatorDialog = ({
               amount={amount}
               token={assetToken}
               max={assetBalance}
-              maxLabel={intl.formatMessage({ defaultMessage: 'Balance' })}
               label={intl.formatMessage({ defaultMessage: 'Enter Amount' })}
               onChange={setAmount}
               placeholder="0.00"

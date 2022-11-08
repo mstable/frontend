@@ -32,7 +32,6 @@ export type TokenInputProps = {
   amount: BigDecimal;
   token: FetchTokenResult;
   max?: BigDecimal;
-  maxLabel?: string;
   onChange?: (newValue: BigDecimal) => void;
   hideBottomRow?: boolean;
   hideTokenBadge?: boolean;
@@ -109,7 +108,6 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
       amount,
       token,
       max,
-      maxLabel,
       onChange,
       hideBottomRow = false,
       hideTokenBadge = false,

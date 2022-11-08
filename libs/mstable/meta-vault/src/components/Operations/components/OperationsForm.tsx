@@ -1,13 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { useDataSource } from '@frontend/shared-data-access';
 import { TokenInput } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
-import { Divider, Stack, Typography } from '@mui/material';
+import { Divider, Skeleton, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
 
-import { useMetavaultQuery } from '../../../queries.generated';
 import { useMetavault } from '../../../state';
 import { useChangeOperation, useOperations, useSetAmount } from '../hooks';
 
@@ -16,23 +14,13 @@ import type { StackProps } from '@mui/material';
 export const OperationsForm = (props: StackProps) => {
   const intl = useIntl();
   const { isConnected } = useAccount();
-  const {
-    assetToken,
-    mvToken,
-    assetBalance,
-    mvBalanceInAsset,
-    metavault: { address },
-  } = useMetavault();
-  const dataSource = useDataSource();
-  const { data: mvData } = useMetavaultQuery(
-    dataSource,
-    { id: address },
-    { enabled: !!address },
-  );
+  const { assetToken, mvToken, assetBalance, mvBalanceInAsset } =
+    useMetavault();
   const {
     amount,
     operation,
     preview,
+    assetsPerShare,
     tab,
     isInputLoading,
     isSubmitLoading,
@@ -91,14 +79,6 @@ export const OperationsForm = (props: StackProps) => {
     [assetBalance, mvBalanceInAsset, tab],
   );
 
-  const primaryMaxLabel = useMemo(
-    () =>
-      tab === 0
-        ? intl.formatMessage({ defaultMessage: 'Balance' })
-        : intl.formatMessage({ defaultMessage: 'My Position' }),
-    [intl, tab],
-  );
-
   const disabled = useMemo(
     () =>
       !isConnected ||
@@ -155,7 +135,6 @@ export const OperationsForm = (props: StackProps) => {
         {...primaryInput}
         token={assetToken}
         max={primaryBalance}
-        maxLabel={primaryMaxLabel}
         label={intl.formatMessage({ defaultMessage: 'Asset' })}
         onChange={handlePrimaryChange}
         placeholder="0.00"
@@ -176,19 +155,19 @@ export const OperationsForm = (props: StackProps) => {
         }}
       />
       <Divider role="presentation" light={!isConnected}>
-        <Typography variant="value6">
-          {intl.formatMessage(
-            { defaultMessage: '1 Share = {ratio} {asset}' },
-            {
-              ratio: mvData?.vault?.assetPerShare
-                ? intl.formatNumber(Number(mvData?.vault?.assetPerShare), {
-                    maximumFractionDigits: 2,
-                  })
-                : '-',
-              asset: assetToken?.symbol,
-            },
-          )}
-        </Typography>
+        {assetsPerShare && assetToken ? (
+          <Typography variant="value6">
+            {intl.formatMessage(
+              { defaultMessage: '1 Share = {ratio} {asset}' },
+              {
+                ratio: assetsPerShare?.simpleRounded ?? '-',
+                asset: assetToken?.symbol,
+              },
+            )}
+          </Typography>
+        ) : (
+          <Skeleton width={150} height={26} />
+        )}
       </Divider>
       <TokenInput
         {...secondaryInput}
