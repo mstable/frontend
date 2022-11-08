@@ -1,8 +1,11 @@
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/mstable/mStable-apps/master/libs/icons/src/lib/mstable.svg" width="450"></p>
+<br/>
+<img src="https://mstable.org/assets/img/email/mstable_logo_horizontal_black.png" width="420" >
+
+<br />
 
 # mStable Frontend
 
-This is the monorepo holding code for latest frontend applications of mStable
+Monorepo of latest frontend applications of mStable
 
 ## Quickstart
 
@@ -18,6 +21,8 @@ cd frontend
 ```bash
 yarn
 ```
+
+> Any trouble installing? Check the [environment setup](./DEVELOPING.md#environment-setup) guide
 
 ### Run main app
 
@@ -35,19 +40,6 @@ yarn storybook
 
 > By default the storybook is accessible on [http://localhost:6006](http://localhost:6006)
 
-## Scripts
-
-- **start**: serves default application (mStable)
-- **build**: builds default application (mStable)
-- **test**: run unit tests
-- **prepare**: setup husky for git hooks
-- **i18n:extract**: extract all translation strings to `i18n-extractions` folder
-- **i18n:compile**: compiles all translation for mStable application
-- **storybook**: serves storybook
-- **storybook:build**: builds storybook
-- **lint**: runs lint over the repo
-- **lint:fix**: fixes lint over the repo
-
 ## Developing
 
 Follow the [Developing Guide](./DEVELOPING.md) for detailed instructions and information regarding local development!
@@ -55,3 +47,9 @@ Follow the [Developing Guide](./DEVELOPING.md) for detailed instructions and inf
 ## Contributing
 
 Follow the [Contributing Guide](./CONTRIBUTING.md) for information regarding contribution guidelines!
+
+## Contact us
+
+<br />
+
+[![Discord](https://img.shields.io/discord/525087739801239552?color=7289DA&label=discord%20)](https://discordapp.com/channels/525087739801239552/)

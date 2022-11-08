@@ -1,39 +1,90 @@
 # How to Develop in frontend repository
 
-This project was generated using [Nx](https://nx.dev). We strongly recomend the reading of the documentation as it follows closely Nx conventions regarding code structure.
+## Environment setup
+
+It is recommended to develop on UNIX-based system or WSL for Windows.
+
+You need 
+
+- `node16`
+- `yarn`
+- A Personal Access Token with `packages:read` rights to `mstable` npm registry
+
+> Follow github [guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to create a PAT and this [guide](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token) to authenticate locally.
+
+The `i18n:compile` script relies on external dependency `jq` that you need to install on your OS
+
+```bash
+# on Ubuntu
+sudo apt-get update
+sudo apt-get install jq
+```
+
+### Optional
+
+You can install Nx cli globally to avoid to have to run all commands through yarn or npx
+
+```bash
+npm i -g nx
+```
+
+## Nx
+
+This repository was generated using [Nx](https://nx.dev). We strongly recomend the reading of the documentation as it follows closely Nx conventions regarding code structure.
 
 > 👌 Nx provides IDE extensions to integrate better with cli
 >
 > - [NxConsole plugin](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console) for VsCode
 > - [NxConsole Idea](https://plugins.jetbrains.com/plugin/15101-nx-console-idea) for Jetbrains
 
-## Environment setup
+<br>
 
-It is recommended to develop on UNIX-based system or WSL for Windows.
+- Project - the apps and libs containing a `project.json` file registered in root `workspace.json` (e.g., `mstable`).
+- Target - the name of an action taken on a project (e.g., `build`)
 
-You need `node16` and `yarn` to run this project.
+### Scripts
 
-You can install Nx cli globally to avoid to have to run all commands through yarn
+This project uses `project.json` files to expose applications or libraries scripts. You can define your own tasks by adding nx configuration.
 
-```bash
-npm i -g nx
+```json
+{
+  // ...
+  "targets": {
+    //...
+    "custom-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "yarn run shared-themes:build:production",
+          "yarn run mstable:build:production"
+        ],
+        "parallel": false
+      }
+    }
+  }
+}
 ```
 
-The `i18n:compile` script relies on external dependency `jq` that you need to install on your OS
+Use [Nx CLI](https://nx.dev/core-features/run-tasks) to run the projects tasks
 
 ```bash
-# on Ubuntu 
-sudo apt-get update
-sudo apt-get install jq
+nx run mstable:custom-build
+
+## or shorthand
+nx custom-build mstable
 ```
 
-This project uses private npm packages published on github npm package registry, make sure you have access to it by using a Personal Access Token with `packages:read` rights. Check out github [documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) to create the token and this [page](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token) on how to use it locally.
+Build artifacts are emmitted into the `/dist` folder at the root of the repo, the file structure reflects the monorepo structure.
 
-## Build configuration
+### Custom scripts
 
-This project uses Nx's specific `project.json` files to expose applications or libraries build scripts. That allows for a smooth integration with Nx tooling such as dependency graph and distributed computing. You can find [here](https://nx.dev/configuration/projectjson) documentation on the full file schema. All builds are handled with executors/builders, usually webpack for applications and rollup for libraries. You can find more information on how to use them [here](https://nx.dev/executors/using-builders).
+Additonally to common `package.json` scripts, we have global yarn tasks and lifecycle scripts
 
-Build artifacts are emmitted into the `/dist` folder at the root of the repo, the file structure reflects the monorepo structure.  
+- **codegen**: run graphql codegen
+- **i18n:extract**: extract all translation strings to `i18n-extractions` folder
+- **i18n:compile**: compiles all translation for mStable application
+- **prepare**: setup husky for git hooks
+- **pre-build**: several libraries depends on shared-themes typings for compilation, this ensures they are in `dist` folders
 
 ## Monorepo structure
 
@@ -63,7 +114,7 @@ The libs folder contains:
 
 ### Library types
 
-We use library types proposed by Nx: https://nx.dev/structure/library-types. Naming convention is to use kebab-case for all libraries.
+We use [library types](https://nx.dev/structure/library-types) proposed by Nx. Naming convention is to use kebab-case for all libraries.
 
 - **Feature libraries**:
   - shared globally or application-scoped
@@ -210,5 +261,5 @@ Just as VS Code, there are a few places you need to update in your preferences i
 
 ## Resources
 
-- [Very good article](https://nx.dev/structure/applications-and-libraries) concerning folder structure and organization
+- [Nx reference](https://nx.dev/reference)
 - [Mui](https://mui.com/material-ui/)
