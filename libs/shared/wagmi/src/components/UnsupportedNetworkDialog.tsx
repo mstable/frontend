@@ -38,7 +38,18 @@ const Actions = ({ onClose }: ActionsProps) => {
   return (
     <>
       <Button
-        color="secondary"
+        variant="text"
+        onClick={() => {
+          if (disconnect) {
+            onClose();
+            disconnect();
+          }
+        }}
+      >
+        {intl.formatMessage({ defaultMessage: 'Disconnect' })}
+      </Button>
+      <Button
+        color="primary"
         onClick={() => {
           if (switchNetwork) {
             onClose();
@@ -50,17 +61,6 @@ const Actions = ({ onClose }: ActionsProps) => {
           { defaultMessage: 'Switch to {defaultChain}' },
           { defaultChain: chains[0].name },
         )}
-      </Button>
-      <Button
-        variant="text"
-        onClick={() => {
-          if (disconnect) {
-            onClose();
-            disconnect();
-          }
-        }}
-      >
-        {intl.formatMessage({ defaultMessage: 'Disconnect' })}
       </Button>
     </>
   );
