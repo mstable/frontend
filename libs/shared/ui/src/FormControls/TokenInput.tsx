@@ -252,7 +252,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
                   }}
                   noWrap
                 >
-                  {max.simpleRounded.toString()}
+                  {max.format(2)}
                 </Typography>
               </Stack>
             ) : (
