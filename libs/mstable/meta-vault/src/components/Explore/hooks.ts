@@ -45,7 +45,7 @@ const getGradient =
     return gradient;
   };
 
-export const useChartData = (address: HexAddress) => {
+export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
   const intl = useIntl();
   const data = useMetavaultData(address);
 
@@ -68,11 +68,14 @@ export const useChartData = (address: HexAddress) => {
                 const { ctx, chartArea } = chart;
                 return getGradient('#2775CA')(ctx, chartArea);
               },
+              borderWidth: isSmallChart ? 2 : 3,
               backgroundColor: 'transparent',
               fill: true,
               pointBackgroundColor: '#2775CA',
               pointRadius: (context) =>
-                context.dataIndex === sortedData.length - 1 ? 5 : 0,
+                !isSmallChart && context.dataIndex === sortedData.length - 1
+                  ? 5
+                  : 0,
             },
           ],
         },
@@ -105,7 +108,7 @@ export const useChartData = (address: HexAddress) => {
           },
         },
       };
-    }, [data?.DailyVaultStats, intl]);
+    }, [data?.DailyVaultStats, intl, isSmallChart]);
 
   return chartData;
 };

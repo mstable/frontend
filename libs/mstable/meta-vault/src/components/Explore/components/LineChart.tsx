@@ -14,9 +14,18 @@ export type LineChartProps = {
   id: SupportedMetavault;
   data: ChartData<'line'>;
   options: ChartOptions<'line'>;
+  width?: string | number;
+  height?: string | number;
 } & StackProps;
 
-export const LineChart = ({ id, data, options, ...rest }: LineChartProps) => {
+export const LineChart = ({
+  id,
+  data,
+  options,
+  width,
+  height,
+  ...rest
+}: LineChartProps) => {
   const intl = useIntl();
   const { chain } = useNetwork();
   const color = supportedMetavaults[chain?.id ?? chainId.mainnet].find(
@@ -25,7 +34,7 @@ export const LineChart = ({ id, data, options, ...rest }: LineChartProps) => {
 
   return (
     <Stack {...rest} position="relative">
-      <Line options={options} data={data} />
+      <Line width={width} height={height} options={options} data={data} />
       {isNilOrEmpty(data?.labels) && (
         <Stack
           position="absolute"
