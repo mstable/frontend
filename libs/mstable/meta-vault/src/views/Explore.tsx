@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
@@ -7,14 +9,22 @@ import {
   Grid,
   Skeleton,
   Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
   useTheme,
 } from '@mui/material';
-import { GasPump, Vault } from 'phosphor-react';
+import { GasPump, ListDashes, SquaresFour, Vault } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 import { chainId, useFeeData, useNetwork } from 'wagmi';
 
 import { FeatureCard, useTotalTvl, VaultCard } from '../components/Explore';
+import { VaultTableRow } from '../components/Explore/components/VaultTableRow';
 
 export const Explore = () => {
   const intl = useIntl();
@@ -28,6 +38,8 @@ export const Explore = () => {
 
   const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
   const featuredMv = metavaults.find((mv) => mv.featured);
+
+  const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 
   return (
     <Stack direction="column">
@@ -88,18 +100,66 @@ export const Explore = () => {
       {featuredMv && (
         <FeatureCard metavault={featuredMv} to={`./${featuredMv.id}`} />
       )}
-      <Typography mt={5} mb={3} variant="h3">
-        {intl.formatMessage({ defaultMessage: 'Vaults' })}
-      </Typography>
-      <Grid container spacing={3}>
-        {metavaults.map((mv) => {
-          return (
-            <Grid key={mv.id} item sm={12} md={6} lg={4}>
-              <VaultCard metavault={mv} to={`./${mv.id}`} />
-            </Grid>
-          );
-        })}
-      </Grid>
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Typography mt={5} mb={3} variant="h3">
+          {intl.formatMessage({ defaultMessage: 'Vaults' })}
+        </Typography>
+        <ToggleButtonGroup
+          size="large"
+          value={viewMode}
+          onChange={(_, val) => setViewMode(val)}
+          exclusive
+        >
+          <ToggleButton value="grid">
+            <SquaresFour weight="fill" />
+          </ToggleButton>
+          <ToggleButton value="table">
+            <ListDashes weight="fill" />
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Stack>
+      {viewMode === 'grid' ? (
+        <Grid container spacing={3}>
+          {metavaults.map((mv) => {
+            return (
+              <Grid key={mv.id} item sm={12} md={6} lg={4}>
+                <VaultCard metavault={mv} to={`./${mv.id}`} />
+              </Grid>
+            );
+          })}
+        </Grid>
+      ) : (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                {intl.formatMessage({ defaultMessage: 'Asset' })}
+              </TableCell>
+              <TableCell>
+                {intl.formatMessage({ defaultMessage: 'Vault name' })}
+              </TableCell>
+              <TableCell>
+                {intl.formatMessage({ defaultMessage: 'Strategy' })}
+              </TableCell>
+              <TableCell>
+                {intl.formatMessage({ defaultMessage: 'Protocols' })}
+              </TableCell>
+              <TableCell>
+                {intl.formatMessage({ defaultMessage: 'TVL' })}
+              </TableCell>
+              <TableCell>
+                {intl.formatMessage({ defaultMessage: 'APY' })}
+              </TableCell>
+              <TableCell />
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {metavaults.map((mv) => (
+              <VaultTableRow key={mv.id} metavault={mv} to={`./${mv.id}`} />
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </Stack>
   );
 };

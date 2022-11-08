@@ -9,14 +9,22 @@ import type { ChartData, ChartOptions } from 'chart.js';
 export type LineChartProps = {
   data: ChartData<'line'>;
   options: ChartOptions<'line'>;
+  width?: string | number;
+  height?: string | number;
 } & StackProps;
 
-export const LineChart = ({ data, options, ...rest }: LineChartProps) => {
+export const LineChart = ({
+  data,
+  options,
+  width,
+  height,
+  ...rest
+}: LineChartProps) => {
   const intl = useIntl();
 
   return (
     <Stack {...rest} position="relative">
-      <Line options={options} data={data} />
+      <Line width={width} height={height} options={options} data={data} />
       {isNilOrEmpty(data?.labels) && (
         <Stack
           position="absolute"
