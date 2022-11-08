@@ -129,36 +129,43 @@ export const Explore = () => {
           })}
         </Grid>
       ) : (
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                {intl.formatMessage({ defaultMessage: 'Asset' })}
-              </TableCell>
-              <TableCell>
-                {intl.formatMessage({ defaultMessage: 'Vault name' })}
-              </TableCell>
-              <TableCell>
-                {intl.formatMessage({ defaultMessage: 'Strategy' })}
-              </TableCell>
-              <TableCell>
-                {intl.formatMessage({ defaultMessage: 'Protocols' })}
-              </TableCell>
-              <TableCell>
-                {intl.formatMessage({ defaultMessage: 'TVL' })}
-              </TableCell>
-              <TableCell>
-                {intl.formatMessage({ defaultMessage: 'APY' })}
-              </TableCell>
-              <TableCell />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {metavaults.map((mv) => (
-              <VaultTableRow key={mv.id} metavault={mv} to={`./${mv.id}`} />
-            ))}
-          </TableBody>
-        </Table>
+        <Box border={`1px solid ${theme.palette.divider}`} borderRadius={1}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  {intl.formatMessage({ defaultMessage: 'Asset' })}
+                </TableCell>
+                <TableCell>
+                  {intl.formatMessage({ defaultMessage: 'Vault name' })}
+                </TableCell>
+                <TableCell>
+                  {intl.formatMessage({ defaultMessage: 'Strategy' })}
+                </TableCell>
+                <TableCell>
+                  {intl.formatMessage({ defaultMessage: 'Protocols' })}
+                </TableCell>
+                <TableCell>
+                  {intl.formatMessage({ defaultMessage: 'TVL' })}
+                </TableCell>
+                <TableCell>
+                  {intl.formatMessage({ defaultMessage: 'APY' })}
+                </TableCell>
+                <TableCell />
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {metavaults.map((mv, i) => (
+                <VaultTableRow
+                  key={mv.id}
+                  metavault={mv}
+                  to={`./${mv.id}`}
+                  isLast={i === metavaults.length - 1}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </Box>
       )}
     </Stack>
   );

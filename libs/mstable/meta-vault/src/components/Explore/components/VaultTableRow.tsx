@@ -22,6 +22,7 @@ import type { TypographyProps } from '@mui/material';
 interface Props {
   metavault: Metavault;
   to: string;
+  isLast?: boolean;
 }
 
 const tagProps: TypographyProps = {
@@ -37,7 +38,7 @@ const tagProps: TypographyProps = {
   borderRadius: 2,
 };
 
-export const VaultTableRow = ({ metavault, to }: Props) => {
+export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
   const intl = useIntl();
   const navigate = useNavigate();
   const data = useMetavaultData(metavault.address);
@@ -46,15 +47,21 @@ export const VaultTableRow = ({ metavault, to }: Props) => {
     metavault.address,
   );
 
+  const tableCellSx = { borderBottom: isLast ? 'none' : undefined };
+
   return (
-    <TableRow hover onClick={() => navigate({ to })}>
-      <TableCell>
+    <TableRow
+      sx={{ cursor: 'pointer', borderBottom: isLast ? 'none' : undefined }}
+      hover
+      onClick={() => navigate({ to })}
+    >
+      <TableCell sx={tableCellSx}>
         <MVIcon address={metavault.address} sx={{ height: 32, width: 32 }} />
       </TableCell>
-      <TableCell>
+      <TableCell sx={tableCellSx}>
         <Typography variant="value4">{metavault.name}</Typography>
       </TableCell>
-      <TableCell>
+      <TableCell sx={tableCellSx}>
         <Stack direction="row" spacing={1}>
           {metavault.tags.map((tag, idx) => (
             <Typography key={`tag-${idx}`} {...tagProps}>
@@ -63,7 +70,7 @@ export const VaultTableRow = ({ metavault, to }: Props) => {
           ))}
         </Stack>
       </TableCell>
-      <TableCell>
+      <TableCell sx={tableCellSx}>
         <AvatarGroup max={6}>
           {metavault.strategies.map((strat) => (
             <Avatar key={strat.protocol.id}>
@@ -75,7 +82,7 @@ export const VaultTableRow = ({ metavault, to }: Props) => {
           ))}
         </AvatarGroup>
       </TableCell>
-      <TableCell>
+      <TableCell sx={tableCellSx}>
         <Typography variant="value4">
           {assetLoading ? (
             <Skeleton width={50} />
@@ -90,7 +97,7 @@ export const VaultTableRow = ({ metavault, to }: Props) => {
           )}
         </Typography>
       </TableCell>
-      <TableCell>
+      <TableCell sx={tableCellSx}>
         <Stack direction="row">
           <Typography variant="value4">
             {intl.formatNumber(data?.apy ?? 0, {
@@ -100,7 +107,7 @@ export const VaultTableRow = ({ metavault, to }: Props) => {
           </Typography>
         </Stack>
       </TableCell>
-      <TableCell>
+      <TableCell sx={tableCellSx}>
         <Stack sx={{ width: 60, height: 40 }}>
           <LineChart
             options={{ ...chartData.options, maintainAspectRatio: false }}
