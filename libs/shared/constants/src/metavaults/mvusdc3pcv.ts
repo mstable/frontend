@@ -53,7 +53,7 @@ const mainnet: Metavault = {
   ],
   vaults: [
     vaults[chainId.mainnet].mvusdc3pcv,
-    vaults[chainId.mainnet].musd3crv,
+    vaults[chainId.mainnet].mv3crvcvx,
     vaults[chainId.mainnet].vcx3crvbusd,
     vaults[chainId.mainnet].vcx3crvfrax,
     vaults[chainId.mainnet].vcx3crvmusd,
@@ -82,7 +82,7 @@ const goerli: Metavault = {
   address: tokens[chainId.goerli].tvg.address,
   vaults: [
     vaults[chainId.goerli].mvusdc3pcv,
-    vaults[chainId.goerli].musd3crv,
+    vaults[chainId.goerli].mv3crvcvx,
     vaults[chainId.goerli].vcx3crvbusd,
     vaults[chainId.goerli].vcx3crvfrax,
     vaults[chainId.goerli].vcx3crvmusd,
