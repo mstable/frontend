@@ -136,9 +136,9 @@ export const Position = () => {
               <Typography
                 variant="value5"
                 color={isConnected ? 'success.main' : 'grey.300'}
-              >{`${profitOrLoss?.format() ?? '0.00'} ${
-                assetToken?.symbol || ''
-              }`}</Typography>
+              >
+                0.00 {assetToken?.symbol || ''}
+              </Typography>
               <Typography
                 variant="value5"
                 color={isConnected ? 'text.secondary' : 'grey.300'}
