@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material';
+import { createTheme, responsiveFontSizes } from '@mui/material';
 
 import { breakpointsOptions } from './breakpoints';
 import { getAlert } from './components/Alert';
@@ -99,5 +99,5 @@ export const getTheme = (mode: PaletteMode) => {
   );
 };
 
-export const light = getTheme('light');
-export const dark = getTheme('dark');
+export const light = responsiveFontSizes(getTheme('light'));
+export const dark = responsiveFontSizes(getTheme('dark'));

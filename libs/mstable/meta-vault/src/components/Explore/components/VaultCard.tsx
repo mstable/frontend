@@ -55,7 +55,8 @@ export const VaultCard = ({ metavault, to }: Props) => {
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'APY' })}
             hint={intl.formatMessage({
-              defaultMessage: 'Annual Percentage Yield',
+              defaultMessage:
+                'Annual Percentage Yield. Annualized 24 hours performance.',
             })}
           >
             <Typography variant="value2">
@@ -66,7 +67,7 @@ export const VaultCard = ({ metavault, to }: Props) => {
             </Typography>
           </ValueLabel>
         </Stack>
-        <LineChart {...chartData} />
+        <LineChart id={metavault.id} {...chartData} />
         <Typography variant="h4" mt={5}>
           {metavault.name}
         </Typography>

@@ -2,11 +2,11 @@
   "+1GGs7": {
     "defaultMessage": "Claim CVX & CRV"
   },
+  "+rLSix": {
+    "defaultMessage": "TVL {value}"
+  },
   "/54G9d": {
     "defaultMessage": "Approving Token"
-  },
-  "/LEAtw": {
-    "defaultMessage": "Underlying Vaults that are used by this vault."
   },
   "/e4KBT": {
     "defaultMessage": "1 Share = {ratio} {asset}"
@@ -32,17 +32,23 @@
   "2M9vCZ": {
     "defaultMessage": "Projected APY (%)"
   },
+  "3Dvp3q": {
+    "defaultMessage": "Vault contract and underlying vaults that are utilized."
+  },
   "3QSP9N": {
     "defaultMessage": "Visualize Strategy"
   },
   "3wMm/H": {
     "defaultMessage": "You Deposit"
   },
+  "3zqxkt": {
+    "defaultMessage": "Automated and diversified yield strategies."
+  },
   "4/JAsV": {
     "defaultMessage": "The underlying vaults charge a {fee}% fee upon liquidation of the earned rewards."
   },
-  "5ZxAiY": {
-    "defaultMessage": "Token"
+  "4LNpZQ": {
+    "defaultMessage": "Current value of your position. Includes earned amount."
   },
   "5fjd4K": {
     "defaultMessage": "{fee}%"
@@ -59,6 +65,12 @@
   "7jeKkk": {
     "defaultMessage": "Protocols that are used by this vault."
   },
+  "7lqTh7": {
+    "defaultMessage": "Annual Percentage Yield. Annualized 24 hours performance."
+  },
+  "7ynb1z": {
+    "defaultMessage": "{value} GWEI"
+  },
   "8lLHeh": {
     "defaultMessage": "1Y"
   },
@@ -67,6 +79,9 @@
   },
   "9ALsvc": {
     "defaultMessage": "Approval Cost"
+  },
+  "9Q2RoH": {
+    "defaultMessage": "Profit or Losses accumulated since deposit. Flactuations possible due to liquidity provision position."
   },
   "9RAHhM": {
     "defaultMessage": "Strategy & Risks"
@@ -83,20 +98,29 @@
   "CGcoFj": {
     "defaultMessage": "Yield Calculator"
   },
+  "CnPG8j": {
+    "defaultMessage": "Featured"
+  },
+  "DUR59o": {
+    "defaultMessage": "Total Value Locked"
+  },
+  "EWa1Fv": {
+    "defaultMessage": "LP Position"
+  },
   "FQUm7o": {
     "defaultMessage": "Avg - {value} GWEI"
   },
   "FaoPNm": {
     "defaultMessage": "You Burn"
   },
-  "GC970B": {
-    "defaultMessage": "Collect swap fees"
-  },
   "Gh1Vm9": {
     "defaultMessage": "You Receive"
   },
   "H5+NAX": {
     "defaultMessage": "Balance"
+  },
+  "Imiiiv": {
+    "defaultMessage": "No Data Available"
   },
   "IuFETn": {
     "defaultMessage": "Duration"
@@ -140,14 +164,8 @@
   "SKB/G9": {
     "defaultMessage": "TVL"
   },
-  "SRo6uF": {
-    "defaultMessage": "Meta Vaults"
-  },
   "T3hbuQ": {
     "defaultMessage": "{val} Shares"
-  },
-  "THS5K4": {
-    "defaultMessage": "{fee}% of USDC"
   },
   "TL3yAY": {
     "defaultMessage": "Position Value"
@@ -164,6 +182,9 @@
   "WKCp0D": {
     "defaultMessage": "Asset"
   },
+  "WKF4Gx": {
+    "defaultMessage": "Swap to Stablecoin"
+  },
   "X1WPwl": {
     "defaultMessage": "Nothing here yet, make your first deposit"
   },
@@ -172,6 +193,12 @@
   },
   "ZefNbE": {
     "defaultMessage": "Average - {value} GWEI"
+  },
+  "ZwpbZp": {
+    "defaultMessage": "Contracts"
+  },
+  "aPi9xt": {
+    "defaultMessage": "Swap fees"
   },
   "b+LlHJ": {
     "defaultMessage": "Deposit Gas"
@@ -215,14 +242,11 @@
   "fcBYFp": {
     "defaultMessage": "{operationLabel} Cost"
   },
-  "gKTtPo": {
-    "defaultMessage": "Vault Contracts"
+  "g6UhRO": {
+    "defaultMessage": "Vault name"
   },
   "hRuz7F": {
     "defaultMessage": "Withdrawal Gas"
-  },
-  "heM61T": {
-    "defaultMessage": "Swap to USDC"
   },
   "iDM1KQ": {
     "defaultMessage": "{operation}ing {currency}"
@@ -257,11 +281,8 @@
   "rgdwQX": {
     "defaultMessage": "Transaction Confirmed"
   },
-  "riAanx": {
-    "defaultMessage": "Annual Percentage Yield"
-  },
-  "sHlvMe": {
-    "defaultMessage": "Total Supply"
+  "s2zphO": {
+    "defaultMessage": "Vaults"
   },
   "tH0obk": {
     "defaultMessage": "Return Projection"
@@ -272,23 +293,29 @@
   "tvpAhG": {
     "defaultMessage": "The Meta Vault charges a {fee}% performance upon underlying asset appreciation."
   },
+  "vHwp5J": {
+    "defaultMessage": "Explore Meta Vaults"
+  },
   "w1LBDB": {
     "defaultMessage": "Sign Transaction"
   },
   "zFNxtv": {
     "defaultMessage": "Protocols"
   },
+  "zGHadw": {
+    "defaultMessage": "Strategy"
+  },
   "zRbVmO": {
     "defaultMessage": "WITHDRAW"
+  },
+  "2fed1y": {
+    "defaultMessage": "A deposit into a vault requires an approval transaction.<br></br><br></br>Set as infinite to avoid approving multiple times and save gas on subsequent deposits.<br></br><br></br>Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost."
   },
   "5ObBlW": {
     "defaultMessage": "Dark Mode"
   },
-  "H7XA1G": {
-    "defaultMessage": "Approve the exact amount of the transaction"
-  },
-  "jsDfqU": {
-    "defaultMessage": "Set As Exact"
+  "Gtmi1D": {
+    "defaultMessage": "Set As Infinite"
   },
   "n9CFUs": {
     "defaultMessage": "Token Approval"
@@ -329,9 +356,6 @@
   "sy+pv5": {
     "defaultMessage": "Email"
   },
-  "vHwp5J": {
-    "defaultMessage": "Explore Meta Vaults"
-  },
   "w4Oc4e": {
     "defaultMessage": "The selected network is not supported by this application, why not try {defaultChain}?"
   },
@@ -353,11 +377,17 @@
   "EibIVS": {
     "defaultMessage": "This Strategy uses USDC to deposit into the 3CRV-Pool on Curve. The 3CRV token is then deposited in various Curve meta pools and staked in Convex. The earned CVX and CRV tokens are periodically claimed, swapped, and compounded."
   },
+  "LMK5Bl": {
+    "defaultMessage": "The Uniswap Protocol is an open-source protocol for providing liquidity and trading ERC20 tokens on Ethereum."
+  },
   "MPUuRK": {
     "defaultMessage": "The Strategy uses Meta Vault and Vault contracts and combines and wraps the underlying strategies into one contract."
   },
   "VlABxn": {
     "defaultMessage": "Stablecoin Strategy"
+  },
+  "ePxmfo": {
+    "defaultMessage": "Aave is a decentralised non-custodial liquidity market protocol where users can participate as depositors or borrowers."
   },
   "f4vYF8": {
     "defaultMessage": "The Strategy uses Convex to stake liquidity tokens from Curve to earn additional rewards. The strategy is exposed to the risk of the Convex smart contracts."
@@ -377,11 +407,23 @@
   "vS/YSY": {
     "defaultMessage": "Curve is an exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers, without an opportunity cost."
   },
-  "ivgXZf": {
-    "defaultMessage": "Error fetching gas fee"
+  "8XZjyW": {
+    "defaultMessage": "There was an error while loading this component, you can try to reload."
   },
-  "hY+w99": {
-    "defaultMessage": "Error fetching prices"
+  "9ghOJK": {
+    "defaultMessage": "Unhandled Error!"
+  },
+  "9lt7g1": {
+    "defaultMessage": "Discord support channel"
+  },
+  "AebVks": {
+    "defaultMessage": "There was an error while loading this page, you can try to reload."
+  },
+  "UkXeBW": {
+    "defaultMessage": "If the problem persists, you can contact us through our {support}."
+  },
+  "UlMgTq": {
+    "defaultMessage": "If the problem persists, contact us on our {support}."
   },
   "W87PYU": {
     "defaultMessage": "View on {name}"

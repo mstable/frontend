@@ -12,7 +12,7 @@ const mainnet: Metavault = {
   id: 'mvusdc3pcv',
   primaryColor: '#2775CA',
   address: tokens[chainId.mainnet]['mvusdc-3pcv'].address,
-  name: 'Stablecoin Meta Vault',
+  name: '3Pool Convex Meta Vault',
   tags: [
     defineMessage({
       defaultMessage: 'Stablecoin Strategy',
@@ -52,6 +52,8 @@ const mainnet: Metavault = {
     },
   ],
   vaults: [
+    vaults[chainId.mainnet].mvusdc3pcv,
+    vaults[chainId.mainnet].mv3crvcvx,
     vaults[chainId.mainnet].vcx3crvbusd,
     vaults[chainId.mainnet].vcx3crvfrax,
     vaults[chainId.mainnet].vcx3crvmusd,
@@ -59,15 +61,14 @@ const mainnet: Metavault = {
   assets: [
     tokens[chainId.mainnet].musd,
     tokens[chainId.mainnet].busd,
-    tokens[chainId.mainnet].lusd,
     tokens[chainId.mainnet].frax,
     tokens[chainId.mainnet].dai,
     tokens[chainId.mainnet].usdc,
     tokens[chainId.mainnet].usdt,
   ],
   fees: {
-    liquidation: 0.07,
-    performance: 0.05,
+    liquidation: 0.16,
+    performance: 0.04,
   },
   gases: {
     deposit: 100000,
@@ -80,6 +81,8 @@ const goerli: Metavault = {
   ...mainnet,
   address: tokens[chainId.goerli].tvg.address,
   vaults: [
+    vaults[chainId.goerli].mvusdc3pcv,
+    vaults[chainId.goerli].mv3crvcvx,
     vaults[chainId.goerli].vcx3crvbusd,
     vaults[chainId.goerli].vcx3crvfrax,
     vaults[chainId.goerli].vcx3crvmusd,

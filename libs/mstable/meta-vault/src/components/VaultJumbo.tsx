@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { useDataSource } from '@frontend/shared-data-access';
+import { useGetPrices, usePrices } from '@frontend/shared-prices';
 import { ProtocolIcon, TokenIcon, ValueLabel } from '@frontend/shared-ui';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import {
@@ -12,6 +13,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { constants } from 'ethers';
+import { pathOr } from 'ramda';
 import { useIntl } from 'react-intl';
 
 import { useMetavaultQuery } from '../queries.generated';
@@ -42,7 +44,6 @@ export const VaultJumbo = (props: StackProps) => {
   const {
     metavault: { address, name, tags, strategies },
     assetToken,
-    mvToken,
   } = useMetavault();
   const dataSource = useDataSource();
   const { data, isLoading } = useMetavaultQuery(
@@ -50,7 +51,11 @@ export const VaultJumbo = (props: StackProps) => {
     { id: address },
     { enabled: !!address },
   );
-  const apyTrend = useMemo(() => {
+  const { currency } = usePrices();
+  const { data: prices, isLoading: isPriceLoading } = useGetPrices([
+    assetToken?.address,
+  ]);
+  const tvlTrend = useMemo(() => {
     if (isNilOrEmpty(data?.vault?.DailyVaultStats)) {
       return { label: '-', color: theme.palette.text.primary };
     }
@@ -132,7 +137,8 @@ export const VaultJumbo = (props: StackProps) => {
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'APY' })}
           hint={intl.formatMessage({
-            defaultMessage: 'Annual Percentage Yield',
+            defaultMessage:
+              'Annual Percentage Yield. Annualized 24 hours performance.',
           })}
         >
           {isLoading ? (
@@ -150,7 +156,7 @@ export const VaultJumbo = (props: StackProps) => {
           label={intl.formatMessage({ defaultMessage: 'TVL' })}
           hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
         >
-          {isLoading ? (
+          {isLoading || isPriceLoading ? (
             <Skeleton height={24} width={60} />
           ) : (
             <Stack direction="row" spacing={1} alignItems="baseline">
@@ -159,12 +165,13 @@ export const VaultJumbo = (props: StackProps) => {
                   new BigDecimal(
                     data?.vault?.totalAssets ?? constants.Zero,
                     assetToken?.decimals,
-                  ).simple,
-                  { notation: 'compact' },
+                  ).simple *
+                    Number(pathOr(1, [currency.toLowerCase()], prices)),
+                  { style: 'currency', currency, notation: 'compact' },
                 )}
               </Typography>
-              <Typography variant="value5" sx={{ color: apyTrend.color }}>
-                {apyTrend.label}
+              <Typography variant="value5" sx={{ color: tvlTrend.color }}>
+                {tvlTrend.label}
               </Typography>
             </Stack>
           )}

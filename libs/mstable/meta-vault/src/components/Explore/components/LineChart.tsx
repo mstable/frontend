@@ -1,12 +1,17 @@
+import { supportedMetavaults } from '@frontend/shared-constants';
 import { isNilOrEmpty } from '@frontend/shared-utils';
 import { Stack, Typography } from '@mui/material';
+import { propEq } from 'ramda';
 import { Line } from 'react-chartjs-2';
 import { useIntl } from 'react-intl';
+import { chainId, useNetwork } from 'wagmi';
 
+import type { SupportedMetavault } from '@frontend/shared-constants';
 import type { StackProps } from '@mui/material';
 import type { ChartData, ChartOptions } from 'chart.js';
 
 export type LineChartProps = {
+  id: SupportedMetavault;
   data: ChartData<'line'>;
   options: ChartOptions<'line'>;
   width?: string | number;
@@ -14,6 +19,7 @@ export type LineChartProps = {
 } & StackProps;
 
 export const LineChart = ({
+  id,
   data,
   options,
   width,
@@ -21,6 +27,10 @@ export const LineChart = ({
   ...rest
 }: LineChartProps) => {
   const intl = useIntl();
+  const { chain } = useNetwork();
+  const color = supportedMetavaults[chain?.id ?? chainId.mainnet].find(
+    propEq('id', id),
+  ).primaryColor;
 
   return (
     <Stack {...rest} position="relative">
@@ -35,21 +45,11 @@ export const LineChart = ({
           direction="row"
           alignItems="center"
         >
-          <Stack
-            borderTop={`2px dashed ${data.datasets[0].pointBackgroundColor}`}
-            flex={1}
-          />
-          <Typography
-            variant="value5"
-            color={data.datasets[0].pointBackgroundColor as string}
-            mx={1}
-          >
+          <Stack borderTop={`2px dashed ${color}`} flex={1} />
+          <Typography variant="value5" color={color} mx={1}>
             {intl.formatMessage({ defaultMessage: 'No Data Available' })}
           </Typography>
-          <Stack
-            borderTop={`2px dashed ${data.datasets[0].pointBackgroundColor}`}
-            flex={1}
-          />
+          <Stack borderTop={`2px dashed ${color}`} flex={1} />
         </Stack>
       )}
     </Stack>

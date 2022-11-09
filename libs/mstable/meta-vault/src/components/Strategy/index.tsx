@@ -61,10 +61,11 @@ export const Strategy = () => {
     },
     {
       title: intl.formatMessage({
-        defaultMessage: 'Vault Contracts',
+        defaultMessage: 'Contracts',
       }),
       subtitle: intl.formatMessage({
-        defaultMessage: 'Underlying Vaults that are used by this vault.',
+        defaultMessage:
+          'Vault contract and underlying vaults that are utilized.',
       }),
       component: <Vaults />,
     },

@@ -53,13 +53,14 @@ export const Dialog = ({
     <MuiDialog fullWidth maxWidth="sm" {...rest} onClose={handleClose}>
       {!hideCloseButton && (
         <IconButton
+          color="inherit"
           aria-label="close"
           onClick={handleClose}
           sx={{
             position: 'absolute',
             top: (theme) => theme.spacing(2),
             right: (theme) => theme.spacing(2),
-            color: 'primary.main',
+            color: 'text.primary',
           }}
         >
           <Close />

@@ -9,8 +9,11 @@ import { MiddleTruncated } from '../Typography';
 
 import type { StackProps } from '@mui/material';
 
+export type AddressType = 'address' | 'transaction';
+
 export type AddressLabelProps = {
   address: string;
+  type?: AddressType;
   hideCopyToClipboard?: boolean;
   hideEtherscan?: boolean;
   small?: boolean;
@@ -18,8 +21,14 @@ export type AddressLabelProps = {
   blockExplorerUrl?: string;
 } & StackProps;
 
+const urlMapping: Record<AddressType, string> = {
+  address: 'address',
+  transaction: 'tx',
+};
+
 export const AddressLabel = ({
   address,
+  type = 'address',
   hideCopyToClipboard = false,
   hideEtherscan = false,
   small = false,
@@ -51,7 +60,7 @@ export const AddressLabel = ({
     <Stack direction="row" alignItems="center" {...rest} flexWrap="nowrap">
       {link ? (
         <Link
-          href={[blockExplorerUrl, 'address', address].join('/')}
+          href={[blockExplorerUrl, urlMapping[type], address].join('/')}
           target="_blank"
           sx={{
             width: 1,
@@ -98,7 +107,7 @@ export const AddressLabel = ({
 
       {!hideEtherscan && !link && (
         <IconButton
-          href={[blockExplorerUrl, 'address', address].join('/')}
+          href={[blockExplorerUrl, urlMapping[type], address].join('/')}
           target="_blank"
           color="inherit"
           size={small ? 'small' : 'medium'}

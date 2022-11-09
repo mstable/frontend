@@ -20,6 +20,7 @@ export const HoverableCard = ({
     <Link component={RouterLink} to={to}>
       <Card
         sx={(theme) => ({
+          borderRadius: 2,
           background: transparentBackground
             ? alpha(theme.palette.background.default, 0.4)
             : `linear-gradient(180deg, ${alpha(primaryColor, 0.08)} 0%, ${alpha(

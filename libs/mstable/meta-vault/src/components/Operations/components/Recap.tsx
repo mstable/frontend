@@ -119,7 +119,11 @@ const DepositRecap = (props: StackProps) => {
           {operation === 'mint' && isInputLoading ? (
             <Skeleton width={100} />
           ) : (
-            `${amount?.format(2) ?? '0.00'} ${
+            `${
+              operation === 'mint'
+                ? preview?.simpleRounded.toString() ?? '0.00'
+                : amount?.simpleRounded.toString() ?? '0.00'
+            } ${
               assetToken?.symbol ??
               intl.formatMessage({ defaultMessage: 'Assets' })
             }`
@@ -131,7 +135,12 @@ const DepositRecap = (props: StackProps) => {
           ) : (
             intl.formatMessage(
               { defaultMessage: '{value} Shares' },
-              { value: preview?.format(2) ?? '0.00' },
+              {
+                value:
+                  operation === 'deposit'
+                    ? preview?.simpleRounded.toString() ?? '0.00'
+                    : amount?.simpleRounded.toString() ?? '0.00',
+              },
             )
           )}
         </Typography>
@@ -194,20 +203,29 @@ const WithdrawRecap = (props: StackProps) => {
       </Stack>
       <Stack {...rowProps}>
         <Typography variant="value5" color="text.secondary">
-          {operation === 'redeem' && isInputLoading ? (
+          {operation === 'withdraw' && isInputLoading ? (
             <Skeleton width={100} />
           ) : (
             intl.formatMessage(
               { defaultMessage: '{value} Shares' },
-              { value: amount?.format(2) ?? '0.00' },
+              {
+                value:
+                  operation === 'withdraw'
+                    ? preview?.simpleRounded.toString() ?? '0.00'
+                    : amount?.simpleRounded.toString() ?? '0.00',
+              },
             )
           )}
         </Typography>
         <Typography variant="value5" color="text.secondary">
-          {operation === 'withdraw' && isInputLoading ? (
+          {operation === 'redeem' && isInputLoading ? (
             <Skeleton width={100} />
           ) : (
-            `${preview?.format(2) ?? '0.00'} ${
+            `${
+              operation === 'redeem'
+                ? preview?.simpleRounded.toString() ?? '0.00'
+                : amount?.simpleRounded.toString() ?? '0.00'
+            } ${
               assetToken?.symbol ??
               intl.formatMessage({ defaultMessage: 'Assets' })
             }`

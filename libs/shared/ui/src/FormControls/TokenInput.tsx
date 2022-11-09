@@ -6,10 +6,11 @@ import {
   Button,
   FormControl,
   InputLabel,
-  Skeleton,
   Stack,
   Typography,
+  useTheme,
 } from '@mui/material';
+import { Vault, Wallet } from 'phosphor-react';
 import { range } from 'ramda';
 import { useIntl } from 'react-intl';
 
@@ -31,7 +32,7 @@ export type TokenInputProps = {
   amount: BigDecimal;
   token: FetchTokenResult;
   max?: BigDecimal;
-  maxLabel?: string;
+  maxIcon?: 'wallet' | 'vault';
   onChange?: (newValue: BigDecimal) => void;
   hideBottomRow?: boolean;
   hideTokenBadge?: boolean;
@@ -108,7 +109,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
       amount,
       token,
       max,
-      maxLabel,
+      maxIcon = 'wallet',
       onChange,
       hideBottomRow = false,
       hideTokenBadge = false,
@@ -118,6 +119,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
   ) => {
     const [percentage, setPercentage] = useState(0);
     const intl = useIntl();
+    const theme = useTheme();
 
     useEffect(() => {
       if (max && amount) {
@@ -200,52 +202,59 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
             justifyContent="space-between"
             alignItems="center"
           >
-            {isLoading ? (
-              <Skeleton width={160} height={22} />
-            ) : (
-              <Stack direction="row" spacing={0.5}>
-                {range(1, PERCENTAGE_STEPS + 1).map((n) => (
-                  <PercentageButton
-                    onClick={handlePercentageChange(n)}
-                    value={n}
-                    key={`percent-${n}`}
-                    disabled={disabled}
-                    sx={{
-                      ...(n === percentage && {
-                        color: 'primary.main',
+            <Stack direction="row" spacing={0.5}>
+              {range(1, PERCENTAGE_STEPS + 1).map((n) => (
+                <PercentageButton
+                  onClick={handlePercentageChange(n)}
+                  value={n}
+                  key={`percent-${n}`}
+                  disabled={disabled || isLoading}
+                  sx={{
+                    ...(n === percentage && {
+                      color: 'primary.main',
+                      borderColor: 'primary.main',
+                      ':hover': {
                         borderColor: 'primary.main',
-                        ':hover': {
-                          borderColor: 'primary.main',
-                        },
-                      }),
-                    }}
-                  >
-                    {`${
-                      n === PERCENTAGE_STEPS
-                        ? 'MAX'
-                        : `${n * (100 / PERCENTAGE_STEPS)}%`
-                    }`}
-                  </PercentageButton>
-                ))}
-              </Stack>
-            )}
+                      },
+                    }),
+                  }}
+                >
+                  {`${
+                    n === PERCENTAGE_STEPS
+                      ? 'MAX'
+                      : `${n * (100 / PERCENTAGE_STEPS)}%`
+                  }`}
+                </PercentageButton>
+              ))}
+            </Stack>
             {isConnected && max ? (
-              <Typography
-                variant="value6"
-                sx={{
-                  ...maxStyles,
-                  color: 'text.secondary',
-                }}
-                noWrap
-              >
-                {maxLabel ??
-                  intl.formatMessage({
-                    defaultMessage: 'Balance',
-                    id: 'balance',
-                  })}
-                :&nbsp;
-                {max.format()}
-              </Typography>
+              <Stack direction="row" alignItems="center" spacing={0.5}>
+                {maxIcon === 'wallet' ? (
+                  <Wallet
+                    weight="fill"
+                    width={16}
+                    height={16}
+                    color={theme.palette.icons.color}
+                  />
+                ) : (
+                  <Vault
+                    weight="fill"
+                    width={16}
+                    height={16}
+                    color={theme.palette.icons.color}
+                  />
+                )}
+                <Typography
+                  variant="value6"
+                  sx={{
+                    ...maxStyles,
+                    color: 'text.secondary',
+                  }}
+                  noWrap
+                >
+                  {max.format(2)}
+                </Typography>
+              </Stack>
             ) : (
               <Typography
                 variant="value6"

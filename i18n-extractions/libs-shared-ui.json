@@ -1,4 +1,22 @@
 {
+  "8XZjyW": {
+    "defaultMessage": "There was an error while loading this component, you can try to reload."
+  },
+  "9ghOJK": {
+    "defaultMessage": "Unhandled Error!"
+  },
+  "9lt7g1": {
+    "defaultMessage": "Discord support channel"
+  },
+  "AebVks": {
+    "defaultMessage": "There was an error while loading this page, you can try to reload."
+  },
+  "UkXeBW": {
+    "defaultMessage": "If the problem persists, you can contact us through our {support}."
+  },
+  "UlMgTq": {
+    "defaultMessage": "If the problem persists, contact us on our {support}."
+  },
   "W87PYU": {
     "defaultMessage": "View on {name}"
   },
