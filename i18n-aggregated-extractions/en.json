@@ -116,9 +116,6 @@
   "Gh1Vm9": {
     "defaultMessage": "You Receive"
   },
-  "H5+NAX": {
-    "defaultMessage": "Balance"
-  },
   "Imiiiv": {
     "defaultMessage": "No Data Available"
   },
@@ -427,9 +424,6 @@
   },
   "W87PYU": {
     "defaultMessage": "View on {name}"
-  },
-  "balance": {
-    "defaultMessage": "Balance"
   },
   "defaultCancel": {
     "defaultMessage": "Cancel"
