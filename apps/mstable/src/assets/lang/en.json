@@ -5,6 +5,16 @@
       "value": "Claim CVX & CRV"
     }
   ],
+  "+rLSix": [
+    {
+      "type": 0,
+      "value": "TVL "
+    },
+    {
+      "type": 1,
+      "value": "value"
+    }
+  ],
   "+vVZ/G": [
     {
       "type": 0,
@@ -15,12 +25,6 @@
     {
       "type": 0,
       "value": "Approving Token"
-    }
-  ],
-  "/LEAtw": [
-    {
-      "type": 0,
-      "value": "Underlying Vaults that are used by this vault."
     }
   ],
   "/e4KBT": [
@@ -121,6 +125,50 @@
       "value": "Projected APY (%)"
     }
   ],
+  "2fed1y": [
+    {
+      "type": 0,
+      "value": "A deposit into a vault requires an approval transaction."
+    },
+    {
+      "children": [
+      ],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "children": [
+      ],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": "Set as infinite to avoid approving multiple times and save gas on subsequent deposits."
+    },
+    {
+      "children": [
+      ],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "children": [
+      ],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": "Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost."
+    }
+  ],
+  "3Dvp3q": [
+    {
+      "type": 0,
+      "value": "Vault contract and underlying vaults that are utilized."
+    }
+  ],
   "3QSP9N": [
     {
       "type": 0,
@@ -131,6 +179,12 @@
     {
       "type": 0,
       "value": "You Deposit"
+    }
+  ],
+  "3zqxkt": [
+    {
+      "type": 0,
+      "value": "Automated and diversified yield strategies."
     }
   ],
   "4/JAsV": [
@@ -147,16 +201,16 @@
       "value": "% fee upon liquidation of the earned rewards."
     }
   ],
+  "4LNpZQ": [
+    {
+      "type": 0,
+      "value": "Current value of your position. Includes earned amount."
+    }
+  ],
   "5ObBlW": [
     {
       "type": 0,
       "value": "Dark Mode"
-    }
-  ],
-  "5ZxAiY": [
-    {
-      "type": 0,
-      "value": "Token"
     }
   ],
   "5fjd4K": [
@@ -203,6 +257,28 @@
       "value": "Protocols that are used by this vault."
     }
   ],
+  "7lqTh7": [
+    {
+      "type": 0,
+      "value": "Annual Percentage Yield. Annualized 24 hours performance."
+    }
+  ],
+  "7ynb1z": [
+    {
+      "type": 1,
+      "value": "value"
+    },
+    {
+      "type": 0,
+      "value": " GWEI"
+    }
+  ],
+  "8XZjyW": [
+    {
+      "type": 0,
+      "value": "There was an error while loading this component, you can try to reload."
+    }
+  ],
   "8lLHeh": [
     {
       "type": 0,
@@ -227,16 +303,40 @@
       "value": "Approval Cost"
     }
   ],
+  "9Q2RoH": [
+    {
+      "type": 0,
+      "value": "Profit or Losses accumulated since deposit. Flactuations possible due to liquidity provision position."
+    }
+  ],
   "9RAHhM": [
     {
       "type": 0,
       "value": "Strategy & Risks"
     }
   ],
+  "9ghOJK": [
+    {
+      "type": 0,
+      "value": "Unhandled Error!"
+    }
+  ],
+  "9lt7g1": [
+    {
+      "type": 0,
+      "value": "Discord support channel"
+    }
+  ],
   "9tWILK": [
     {
       "type": 0,
       "value": "Unsupported Meta Vault"
+    }
+  ],
+  "AebVks": [
+    {
+      "type": 0,
+      "value": "There was an error while loading this page, you can try to reload."
     }
   ],
   "AxDOiG": [
@@ -289,10 +389,28 @@
       "value": "Yield Calculator"
     }
   ],
+  "CnPG8j": [
+    {
+      "type": 0,
+      "value": "Featured"
+    }
+  ],
   "D/hLNw": [
     {
       "type": 0,
       "value": "The Strategy uses Curves 3CRV Pools and Factory pools. The strategy is exposed to the risk of the Curve smart contracts."
+    }
+  ],
+  "DUR59o": [
+    {
+      "type": 0,
+      "value": "Total Value Locked"
+    }
+  ],
+  "EWa1Fv": [
+    {
+      "type": 0,
+      "value": "LP Position"
     }
   ],
   "EibIVS": [
@@ -327,16 +445,16 @@
       "value": "Discord"
     }
   ],
-  "GC970B": [
-    {
-      "type": 0,
-      "value": "Collect swap fees"
-    }
-  ],
   "Gh1Vm9": [
     {
       "type": 0,
       "value": "You Receive"
+    }
+  ],
+  "Gtmi1D": [
+    {
+      "type": 0,
+      "value": "Set As Infinite"
     }
   ],
   "H5+NAX": [
@@ -345,10 +463,10 @@
       "value": "Balance"
     }
   ],
-  "H7XA1G": [
+  "Imiiiv": [
     {
       "type": 0,
-      "value": "Approve the exact amount of the transaction"
+      "value": "No Data Available"
     }
   ],
   "IuFETn": [
@@ -389,6 +507,12 @@
     {
       "type": 0,
       "value": "Assets that are used by this vault."
+    }
+  ],
+  "LMK5Bl": [
+    {
+      "type": 0,
+      "value": "The Uniswap Protocol is an open-source protocol for providing liquidity and trading ERC20 tokens on Ethereum."
     }
   ],
   "MLTKb6": [
@@ -481,12 +605,6 @@
       "value": "TVL"
     }
   ],
-  "SRo6uF": [
-    {
-      "type": 0,
-      "value": "Meta Vaults"
-    }
-  ],
   "T3hbuQ": [
     {
       "type": 1,
@@ -495,16 +613,6 @@
     {
       "type": 0,
       "value": " Shares"
-    }
-  ],
-  "THS5K4": [
-    {
-      "type": 1,
-      "value": "fee"
-    },
-    {
-      "type": 0,
-      "value": "% of USDC"
     }
   ],
   "TL3yAY": [
@@ -535,6 +643,34 @@
     {
       "type": 0,
       "value": ")"
+    }
+  ],
+  "UkXeBW": [
+    {
+      "type": 0,
+      "value": "If the problem persists, you can contact us through our "
+    },
+    {
+      "type": 1,
+      "value": "support"
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "UlMgTq": [
+    {
+      "type": 0,
+      "value": "If the problem persists, contact us on our "
+    },
+    {
+      "type": 1,
+      "value": "support"
+    },
+    {
+      "type": 0,
+      "value": "."
     }
   ],
   "VlABxn": [
@@ -571,6 +707,12 @@
       "value": "Asset"
     }
   ],
+  "WKF4Gx": [
+    {
+      "type": 0,
+      "value": "Swap to Stablecoin"
+    }
+  ],
   "X0zKZO": [
     {
       "type": 0,
@@ -601,6 +743,18 @@
     {
       "type": 0,
       "value": " GWEI"
+    }
+  ],
+  "ZwpbZp": [
+    {
+      "type": 0,
+      "value": "Contracts"
+    }
+  ],
+  "aPi9xt": [
+    {
+      "type": 0,
+      "value": "Swap fees"
     }
   ],
   "b+LlHJ": [
@@ -693,6 +847,12 @@
       "value": "Gas Impact"
     }
   ],
+  "ePxmfo": [
+    {
+      "type": 0,
+      "value": "Aave is a decentralised non-custodial liquidity market protocol where users can participate as depositors or borrowers."
+    }
+  ],
   "erCS/d": [
     {
       "type": 0,
@@ -727,28 +887,16 @@
       "value": " Cost"
     }
   ],
-  "gKTtPo": [
+  "g6UhRO": [
     {
       "type": 0,
-      "value": "Vault Contracts"
+      "value": "Vault name"
     }
   ],
   "hRuz7F": [
     {
       "type": 0,
       "value": "Withdrawal Gas"
-    }
-  ],
-  "hY+w99": [
-    {
-      "type": 0,
-      "value": "Error fetching prices"
-    }
-  ],
-  "heM61T": [
-    {
-      "type": 0,
-      "value": "Swap to USDC"
     }
   ],
   "iDM1KQ": [
@@ -771,22 +919,10 @@
       "value": "Yeah only mStable baby!"
     }
   ],
-  "ivgXZf": [
-    {
-      "type": 0,
-      "value": "Error fetching gas fee"
-    }
-  ],
   "jHskc6": [
     {
       "type": 0,
       "value": "Txn hash"
-    }
-  ],
-  "jsDfqU": [
-    {
-      "type": 0,
-      "value": "Set As Exact"
     }
   ],
   "kaPKOB": [
@@ -885,16 +1021,10 @@
       "value": "Transaction Confirmed"
     }
   ],
-  "riAanx": [
+  "s2zphO": [
     {
       "type": 0,
-      "value": "Annual Percentage Yield"
-    }
-  ],
-  "sHlvMe": [
-    {
-      "type": 0,
-      "value": "Total Supply"
+      "value": "Vaults"
     }
   ],
   "sy+pv5": [
@@ -977,6 +1107,12 @@
     {
       "type": 0,
       "value": "Protocols"
+    }
+  ],
+  "zGHadw": [
+    {
+      "type": 0,
+      "value": "Strategy"
     }
   ],
   "zRbVmO": [

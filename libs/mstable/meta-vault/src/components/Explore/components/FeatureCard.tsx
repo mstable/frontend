@@ -112,6 +112,20 @@ export const FeatureCard = ({ metavault, to }: Props) => {
                 </Typography>
               </ValueLabel>
               <ValueLabel
+                label={intl.formatMessage({ defaultMessage: 'APY' })}
+                hint={intl.formatMessage({
+                  defaultMessage:
+                    'Annual Percentage Yield. Annualized 24 hours performance.',
+                })}
+              >
+                <Typography variant="value2">
+                  {intl.formatNumber(data?.apy ?? 0, {
+                    style: 'percent',
+                    maximumFractionDigits: 2,
+                  })}
+                </Typography>
+              </ValueLabel>
+              <ValueLabel
                 label={intl.formatMessage({ defaultMessage: 'TVL' })}
                 hint={intl.formatMessage({
                   defaultMessage: 'Total Value Locked',

@@ -84,7 +84,10 @@ export const Position = () => {
               <InfoTooltip
                 sx={{ ml: 1 }}
                 size={14}
-                label="tooltip"
+                label={intl.formatMessage({
+                  defaultMessage:
+                    'Current value of your position. Includes earned amount.',
+                })}
                 color="text.secondary"
                 variant="exclamation"
               />
@@ -121,7 +124,10 @@ export const Position = () => {
               <InfoTooltip
                 sx={{ ml: 1 }}
                 size={14}
-                label="tooltip"
+                label={intl.formatMessage({
+                  defaultMessage:
+                    'Profit or Losses accumulated since deposit. Flactuations possible due to liquidity provision position.',
+                })}
                 color="text.secondary"
                 variant="exclamation"
               />

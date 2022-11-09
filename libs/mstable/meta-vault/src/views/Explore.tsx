@@ -49,7 +49,9 @@ export const Explore = () => {
             {intl.formatMessage({ defaultMessage: 'Explore Meta Vaults' })}
           </Typography>
           <Typography variant="h4" color="text.secondary" mb={5}>
-            {intl.formatMessage({ defaultMessage: 'Lorem ipsum dolor sit.' })}
+            {intl.formatMessage({
+              defaultMessage: 'Automated and diversified yield strategies.',
+            })}
           </Typography>
         </Stack>
         <Stack direction="row" alignItems="center" spacing={1}>

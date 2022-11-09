@@ -145,12 +145,13 @@ export const Fees = (props: StackProps) => {
           )}
         </Typography>
         <Stack {...logoContainerProps}>
-          <Logo label={intl.formatMessage({ defaultMessage: 'Token' })} first>
+          <Logo
+            label={intl.formatMessage({ defaultMessage: 'LP Position' })}
+            first
+          >
             <Coin weight="fill" width={16} height={16} />
           </Logo>
-          <Logo
-            label={intl.formatMessage({ defaultMessage: 'Collect swap fees' })}
-          >
+          <Logo label={intl.formatMessage({ defaultMessage: 'Swap fees' })}>
             <Coins weight="fill" width={16} height={16} />
           </Logo>
           <Logo
@@ -193,12 +194,14 @@ export const Fees = (props: StackProps) => {
           >
             <Coins weight="fill" width={16} height={16} />
           </Logo>
-          <Logo label={intl.formatMessage({ defaultMessage: 'Swap to USDC' })}>
+          <Logo
+            label={intl.formatMessage({ defaultMessage: 'Swap to Stablecoin' })}
+          >
             <ArrowsClockwise weight="fill" width={16} height={16} />
           </Logo>
           <Logo
             label={intl.formatMessage(
-              { defaultMessage: '{fee}% of USDC' },
+              { defaultMessage: '{fee}%' },
               { fee: Math.round(liquidation * 100) },
             )}
           >

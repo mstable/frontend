@@ -137,7 +137,8 @@ export const VaultJumbo = (props: StackProps) => {
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'APY' })}
           hint={intl.formatMessage({
-            defaultMessage: 'Annual Percentage Yield',
+            defaultMessage:
+              'Annual Percentage Yield. Annualized 24 hours performance.',
           })}
         >
           {isLoading ? (

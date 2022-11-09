@@ -95,7 +95,7 @@ export const SettingsButton = (props: ButtonProps) => {
                 <InfoTooltip
                   label={intl.formatMessage({
                     defaultMessage:
-                      'Approve the exact amount of the transaction',
+                      'A deposit into a vault requires an approval transaction.<br></br><br></br>Set as infinite to avoid approving multiple times and save gas on subsequent deposits.<br></br><br></br>Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost.',
                   })}
                 />
               </Stack>
