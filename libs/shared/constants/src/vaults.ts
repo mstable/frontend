@@ -9,14 +9,14 @@ export type Vault = {
 
 export type SupportedVault =
   | 'mvusdc3pcv'
-  | 'musd3crv'
+  | 'mv3crvcvx'
   | 'vcx3crvmusd'
   | 'vcx3crvfrax'
   | 'vcx3crvbusd';
 
 const mainnet: Record<SupportedVault, Vault> = {
   mvusdc3pcv: tokens[chainId.mainnet]['mvusdc-3pcv'],
-  musd3crv: tokens[chainId.mainnet]['musd3crv'],
+  mv3crvcvx: tokens[chainId.mainnet]['mv3crv-cvx'],
   vcx3crvmusd: tokens[chainId.mainnet]['vcx3crv-musd'],
   vcx3crvfrax: tokens[chainId.mainnet]['vcx3crv-frax'],
   vcx3crvbusd: tokens[chainId.mainnet]['vcx3crv-busd'],
@@ -24,7 +24,7 @@ const mainnet: Record<SupportedVault, Vault> = {
 
 const goerli: Record<SupportedVault, Vault> = {
   mvusdc3pcv: tokens[chainId.mainnet]['mvusdc-3pcv'],
-  musd3crv: tokens[chainId.mainnet]['musd3crv'],
+  mv3crvcvx: tokens[chainId.mainnet]['mv3crv-cvx'],
   vcx3crvmusd: tokens[chainId.mainnet]['vcx3crv-musd'],
   vcx3crvfrax: tokens[chainId.mainnet]['vcx3crv-frax'],
   vcx3crvbusd: tokens[chainId.mainnet]['vcx3crv-busd'],
