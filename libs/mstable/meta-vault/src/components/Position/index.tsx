@@ -135,9 +135,17 @@ export const Position = () => {
             <Stack direction="column" alignItems="flex-end" spacing={1}>
               <Typography
                 variant="value5"
-                color={isConnected ? 'success.main' : 'grey.300'}
+                color={
+                  isConnected && profitOrLoss
+                    ? profitOrLoss.simple >= 0
+                      ? 'success.main'
+                      : 'error.main'
+                    : 'grey.300'
+                }
               >
-                0.00 {assetToken?.symbol || ''}
+                {`${profitOrLoss?.format() ?? '0.00'} ${
+                  assetToken?.symbol || ''
+                }`}
               </Typography>
               <Typography
                 variant="value5"
