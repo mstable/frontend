@@ -121,7 +121,7 @@ function updateOrCreateVaultBalance(
   address: Address,
   owner: Address,
   timestamp: BigInt,
-  sharesDeposited: BigInt,
+  assetsDeposited: BigInt,
 ): VaultBalance {
   let vaultContract = metavault.bind(address);
   let vaultBalanceId = address.toHex() + '-' + owner.toHex();
@@ -137,10 +137,6 @@ function updateOrCreateVaultBalance(
   vaultBalance.assetBalance = vaultContract.convertToAssets(
     vaultBalance.shareBalance,
   );
-
-  let assetsDeposited = vaultContract
-    .convertToAssets(BigInt.fromString('1'))
-    .times(sharesDeposited);
   vaultBalance.assetDeposited =
     vaultBalance.assetDeposited.plus(assetsDeposited);
   if (vaultBalance.assetDeposited.lt(BigInt.fromString('0'))) {
@@ -196,7 +192,7 @@ export function handleDeposit(event: Deposit): void {
     event.address,
     event.params.receiver,
     event.block.timestamp,
-    event.params.shares,
+    event.params.assets,
   );
   createTransaction(
     event.address,
@@ -219,7 +215,7 @@ export function handleWithdraw(event: Withdraw): void {
     event.address,
     event.params.owner,
     event.block.timestamp,
-    event.params.shares.times(BigInt.fromString('-1')),
+    event.params.assets.times(BigInt.fromString('-1')),
   );
   createTransaction(
     event.address,
