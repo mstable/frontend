@@ -156,7 +156,7 @@ export const VaultJumbo = (props: StackProps) => {
           label={intl.formatMessage({ defaultMessage: 'TVL' })}
           hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
         >
-          {isLoading || isPriceLoading ? (
+          {isLoading || isPriceLoading || !assetToken ? (
             <Skeleton height={24} width={60} />
           ) : (
             <Stack direction="row" spacing={1} alignItems="baseline">
