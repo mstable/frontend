@@ -457,12 +457,6 @@
       "value": "Set As Infinite"
     }
   ],
-  "H5+NAX": [
-    {
-      "type": 0,
-      "value": "Balance"
-    }
-  ],
   "Imiiiv": [
     {
       "type": 0,
@@ -761,12 +755,6 @@
     {
       "type": 0,
       "value": "Deposit Gas"
-    }
-  ],
-  "balance": [
-    {
-      "type": 0,
-      "value": "Balance"
     }
   ],
   "bnF8kf": [
