@@ -8,6 +8,7 @@ import {
   MBTC,
   MTA,
   MUSD,
+  MvUSDC,
   RAI,
   USDC,
   USDT,
@@ -19,7 +20,7 @@ import type { SupportedToken } from '@mstable/metavaults-web';
 import type { SvgIconProps } from '@mui/material';
 
 export type TokenIconProps = {
-  symbol?: SupportedToken | string;
+  symbol?: SupportedToken | 'mvUSDC-3PCV' | string;
 } & SvgIconProps;
 
 export const supportedTokens: Partial<
@@ -37,6 +38,7 @@ export const supportedTokens: Partial<
   lusd: LUSD,
   frax: FRAX,
   busd: BUSD,
+  'mvusdc-3pcv': MvUSDC,
 };
 
 export const TokenIcon = ({ symbol, ...rest }: TokenIconProps) => {
