@@ -1,4 +1,4 @@
-import { MVUSDC3PCV } from '@frontend/shared-icons';
+import { MvUSDC } from '@frontend/shared-icons';
 import { tokens } from '@mstable/metavaults-web';
 import { SvgIcon } from '@mui/material';
 import { CurrencyCircleDollar } from 'phosphor-react';
@@ -13,7 +13,7 @@ export type MVIconProps = {
 export const supportedMVs: Partial<
   Record<string, (props: SvgIconProps) => JSX.Element>
 > = {
-  [tokens[chainId.mainnet]['mvusdc-3pcv'].address]: MVUSDC3PCV,
+  [tokens[chainId.mainnet]['mvusdc-3pcv'].address]: MvUSDC,
 };
 
 export const MVIcon = ({ address, ...rest }: MVIconProps) => {
