@@ -34,7 +34,6 @@ export const ValueLabel = ({
     <Stack
       direction={{ xs: 'row', md: 'column' }}
       alignItems={{ xs: 'center', md: 'flex-start' }}
-      justifyContent="space-between"
       {...components?.container}
     >
       <Typography
