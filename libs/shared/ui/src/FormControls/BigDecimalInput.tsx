@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useState } from 'react';
 
 import { BigDecimal } from '@frontend/shared-utils';
 import { Box, InputBase, Skeleton } from '@mui/material';
@@ -52,14 +52,23 @@ export const BigDecimalInput = forwardRef<
       }
     }, [value]);
 
-    const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
-      if (evt.target.validity.valid && inRange(evt.target.value, min, max)) {
-        setVal(evt.target.value);
-        if (onChange && !evt.target.value.endsWith('.')) {
-          onChange(BigDecimal.maybeParse(evt.target.value, decimals));
+    const handleChange = useCallback(
+      (evt: ChangeEvent<HTMLInputElement>) => {
+        if (evt.target.validity.valid && inRange(evt.target.value, min, max)) {
+          setVal(evt.target.value);
+          const regex = new RegExp(`.*\\.0{0,${decimals}}$`);
+          const oldval = BigDecimal.maybeParse(val, decimals);
+          const newval = BigDecimal.maybeParse(evt.target.value, decimals);
+          if (
+            onChange &&
+            (!regex.test(evt.target.value) || oldval?.simple !== newval?.simple)
+          ) {
+            onChange(newval);
+          }
         }
-      }
-    };
+      },
+      [decimals, max, min, onChange, val],
+    );
 
     return (
       <Box {...rest}>

@@ -4,6 +4,8 @@ import { forwardRef, useEffect, useState } from 'react';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
   Button,
+  Collapse,
+  Fade,
   FormControl,
   InputLabel,
   Stack,
@@ -31,6 +33,7 @@ export type TokenInputProps = {
   isConnected?: boolean;
   amount: BigDecimal;
   token: FetchTokenResult;
+  tokenLabel?: string;
   max?: BigDecimal;
   maxIcon?: 'wallet' | 'vault';
   onChange?: (newValue: BigDecimal) => void;
@@ -108,6 +111,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
       isConnected,
       amount,
       token,
+      tokenLabel,
       max,
       maxIcon = 'wallet',
       onChange,
@@ -171,7 +175,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
               {...components?.input}
               sx={{ flexGrow: 1, ...components?.input?.sx }}
             />
-            {!hideTokenBadge && (
+            <Fade appear in={!hideTokenBadge}>
               <Stack
                 direction="row"
                 spacing={1}
@@ -188,13 +192,13 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
                   sx={{ width: 14, height: 14 }}
                 />
                 <Typography variant="buttonMedium" color="inherit">
-                  {token?.symbol}
+                  {tokenLabel ?? token?.symbol}
                 </Typography>
               </Stack>
-            )}
+            </Fade>
           </Stack>
         </FormControl>
-        {!hideBottomRow && (
+        <Collapse appear in={!hideBottomRow}>
           <Stack
             direction="row"
             mt={1}
@@ -272,7 +276,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
               </Typography>
             )}
           </Stack>
-        )}
+        </Collapse>
       </Stack>
     );
   },

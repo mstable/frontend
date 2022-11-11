@@ -1,21 +1,22 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { TokenInput } from '@frontend/shared-ui';
-import { BigDecimal } from '@frontend/shared-utils';
 import { Divider, Skeleton, Stack, Typography } from '@mui/material';
+import { mergeAll } from 'ramda';
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
 
 import { useMetavault } from '../../../state';
 import { useChangeOperation, useOperations, useSetAmount } from '../hooks';
 
+import type { TokenInputProps } from '@frontend/shared-ui';
+import type { BigDecimal } from '@frontend/shared-utils';
 import type { StackProps } from '@mui/material';
 
 export const OperationsForm = (props: StackProps) => {
   const intl = useIntl();
   const { isConnected } = useAccount();
-  const { assetToken, mvToken, assetBalance, mvBalanceInAsset } =
-    useMetavault();
+  const { assetToken, mvToken, assetBalance, mvBalance } = useMetavault();
   const {
     amount,
     operation,
@@ -32,86 +33,149 @@ export const OperationsForm = (props: StackProps) => {
   const primary = useRef(null);
   const secondary = useRef(null);
 
-  const primaryInput = useMemo(
-    () =>
-      ({
-        deposit: {
-          amount: amount,
-        },
-        mint: {
-          amount: preview,
-          isLoading: isInputLoading,
-        },
-        withdraw: {
-          amount: amount,
-        },
-        redeem: {
-          amount: preview,
-          isLoading: isInputLoading,
-        },
-      }[operation]),
-    [amount, isInputLoading, operation, preview],
-  );
-
-  const secondaryInput = useMemo(
-    () =>
-      ({
-        deposit: {
-          amount: preview,
-          isLoading: isInputLoading,
-        },
-        mint: {
-          amount: amount,
-        },
-        withdraw: {
-          amount: preview,
-          isLoading: isInputLoading,
-        },
-        redeem: {
-          amount: amount,
-        },
-      }[operation]),
-    [amount, isInputLoading, operation, preview],
-  );
-
-  const primaryBalance = useMemo(
-    () => (tab === 0 ? assetBalance : mvBalanceInAsset || BigDecimal.ZERO),
-    [assetBalance, mvBalanceInAsset, tab],
-  );
-
   const disabled = useMemo(
     () =>
       !isConnected ||
       isSubmitLoading ||
-      (tab === 1 && primaryBalance?.exact.isZero()),
-    [isConnected, isSubmitLoading, primaryBalance?.exact, tab],
+      (tab === 0 && assetBalance?.exact.isZero()) ||
+      (tab === 1 && mvBalance?.exact.isZero()),
+    [assetBalance?.exact, isConnected, isSubmitLoading, mvBalance?.exact, tab],
   );
 
-  useEffect(() => {
-    if (
-      document.hasFocus() &&
-      (primary.current?.contains(document.activeElement) ||
-        secondary.current?.contains(document.activeElement))
-    ) {
-      setHasFocus(true);
-    }
-  }, []);
+  const input = useMemo(
+    () => ({
+      placeholder: '0.00',
+      disabled: disabled,
+      isConnected: isConnected,
+      error: isError,
+      components: {
+        input: {
+          onFocus: () => {
+            setHasFocus(true);
+          },
+          onBlur: () => {
+            setHasFocus(false);
+          },
+        },
+      },
+    }),
+    [disabled, isConnected, isError],
+  );
 
-  const handlePrimaryChange = (newValue: BigDecimal) => {
-    const newOp = tab === 0 ? 'deposit' : 'withdraw';
-    if (newOp !== operation) {
-      changeOperation(newOp);
-    }
-    setAmount(newValue);
-  };
+  const handlePrimaryChange = useCallback(
+    (newValue: BigDecimal) => {
+      const newOp = tab === 0 ? 'deposit' : 'withdraw';
+      if (newOp !== operation) {
+        changeOperation(newOp);
+      }
+      setAmount(newValue);
+    },
+    [changeOperation, operation, setAmount, tab],
+  );
 
-  const handleSecondaryChange = (newValue: BigDecimal) => {
-    const newOp = tab === 0 ? 'mint' : 'redeem';
-    if (newOp !== operation) {
-      changeOperation(newOp);
-    }
-    setAmount(newValue);
-  };
+  const handleSecondaryChange = useCallback(
+    (newValue: BigDecimal) => {
+      const newOp = tab === 0 ? 'mint' : 'redeem';
+      if (newOp !== operation) {
+        changeOperation(newOp);
+      }
+      setAmount(newValue);
+    },
+    [changeOperation, operation, setAmount, tab],
+  );
+
+  const primaryInput = useMemo(
+    () =>
+      mergeAll([
+        input,
+        {
+          token: assetToken,
+          max: assetBalance,
+          maxIcon: 'wallet',
+          hideTokenBadge: !isConnected || !assetToken || tab === 1,
+          hideBottomRow: tab === 1,
+          label: intl.formatMessage({ defaultMessage: 'Asset' }),
+          onChange: handlePrimaryChange,
+          ref: primary,
+        },
+        {
+          deposit: {
+            amount: amount,
+          },
+          mint: {
+            amount: preview,
+            isLoading: isInputLoading,
+          },
+          withdraw: {
+            amount: amount,
+          },
+          redeem: {
+            amount: preview,
+            isLoading: isInputLoading,
+          },
+        }[operation],
+      ]) as TokenInputProps,
+    [
+      amount,
+      assetBalance,
+      assetToken,
+      handlePrimaryChange,
+      input,
+      intl,
+      isConnected,
+      isInputLoading,
+      operation,
+      preview,
+      tab,
+    ],
+  );
+
+  const secondaryInput = useMemo(
+    () =>
+      mergeAll([
+        input,
+        {
+          token: mvToken,
+          max: mvBalance,
+          maxIcon: 'vault',
+          hideTokenBadge: !isConnected || !mvToken || tab === 0,
+          hideBottomRow: tab === 0,
+          label: intl.formatMessage({ defaultMessage: 'Shares' }),
+          tokenLabel: intl.formatMessage({ defaultMessage: 'Shares' }),
+          onChange: handleSecondaryChange,
+          ref: secondary,
+        },
+        {
+          deposit: {
+            amount: preview,
+            isLoading: isInputLoading,
+          },
+          mint: {
+            amount: amount,
+          },
+          withdraw: {
+            amount: preview,
+            isLoading: isInputLoading,
+          },
+          redeem: {
+            amount: amount,
+          },
+        }[operation],
+      ]) as TokenInputProps,
+    [
+      amount,
+      handleSecondaryChange,
+      input,
+      intl,
+      isConnected,
+      isInputLoading,
+      mvBalance,
+      mvToken,
+      operation,
+      preview,
+      tab,
+    ],
+  );
 
   return (
     <Stack
@@ -131,30 +195,7 @@ export const OperationsForm = (props: StackProps) => {
       }}
       {...props}
     >
-      <TokenInput
-        {...primaryInput}
-        token={assetToken}
-        max={primaryBalance}
-        maxIcon={tab === 0 ? 'wallet' : 'vault'}
-        label={intl.formatMessage({ defaultMessage: 'Asset' })}
-        onChange={handlePrimaryChange}
-        placeholder="0.00"
-        disabled={disabled}
-        isConnected={isConnected}
-        hideTokenBadge={!isConnected}
-        error={isError}
-        ref={primary}
-        components={{
-          input: {
-            onFocus: () => {
-              setHasFocus(true);
-            },
-            onBlur: () => {
-              setHasFocus(false);
-            },
-          },
-        }}
-      />
+      <TokenInput {...primaryInput} />
       <Divider role="presentation" light={!isConnected}>
         {assetsPerShare && assetToken ? (
           <Typography variant="value6">
@@ -170,29 +211,7 @@ export const OperationsForm = (props: StackProps) => {
           <Skeleton width={150} height={26} />
         )}
       </Divider>
-      <TokenInput
-        {...secondaryInput}
-        hideTokenBadge
-        hideBottomRow
-        token={mvToken}
-        label={intl.formatMessage({ defaultMessage: 'Shares' })}
-        onChange={handleSecondaryChange}
-        placeholder="0.00"
-        disabled={disabled}
-        isConnected={isConnected}
-        error={isError}
-        ref={secondary}
-        components={{
-          input: {
-            onFocus: () => {
-              setHasFocus(true);
-            },
-            onBlur: () => {
-              setHasFocus(false);
-            },
-          },
-        }}
-      />
+      <TokenInput {...secondaryInput} />
     </Stack>
   );
 };

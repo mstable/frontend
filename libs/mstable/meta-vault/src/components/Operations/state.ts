@@ -10,7 +10,6 @@ import { erc20ABI, erc4626ABI, useAccount, useContractRead } from 'wagmi';
 import { useMetavault } from '../../state';
 
 import type { Children } from '@frontend/shared-utils';
-import type { FetchTokenResult } from '@wagmi/core';
 import type { BigNumber } from 'ethers';
 import type { BigNumberish } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
@@ -21,7 +20,6 @@ const DEBOUNCE_TIME = 500; // ms
 
 type OperationsState = {
   amount: BigDecimal | null;
-  token: FetchTokenResult | null;
   operation: SupportedOperation;
   preview: BigDecimal | null;
   allowance: BigNumber | null;
@@ -36,7 +34,6 @@ type OperationsState = {
 
 const initialState: OperationsState = {
   amount: null,
-  token: null,
   operation: 'deposit',
   preview: null,
   allowance: null,
@@ -60,10 +57,8 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     asset,
     assetToken,
     assetBalance,
-    assetBalanceInShare,
     mvToken,
     mvBalance,
-    mvBalanceInAsset,
   } = useMetavault();
   const [state, setState] = useState<OperationsState>(initialState);
 
@@ -143,14 +138,6 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   }, [isConnected]);
 
   useEffect(() => {
-    setState(
-      produce((draft) => {
-        draft.token = assetToken;
-      }),
-    );
-  }, [assetToken]);
-
-  useEffect(() => {
     const amt = operation === 'deposit' ? amount : preview;
 
     setState(
@@ -187,41 +174,25 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
       produce((draft) => {
         draft.isError = {
           deposit:
-            (amount && assetBalance && amount.exact.gt(assetBalance.exact)) ||
-            (preview &&
-              assetBalance &&
-              assetBalanceInShare &&
-              preview.exact.gt(assetBalanceInShare.exact)),
+            amount &&
+            assetBalance &&
+            amount.simpleRounded > assetBalance.simpleRounded,
           mint:
-            (preview && assetBalance && preview.exact.gt(assetBalance.exact)) ||
-            (amount &&
-              assetBalance &&
-              assetBalanceInShare &&
-              amount.exact.gt(assetBalanceInShare.exact)),
+            preview &&
+            assetBalance &&
+            preview.simpleRounded > assetBalance.simpleRounded,
           redeem:
-            (amount && mvBalance && amount.exact.gt(mvBalance.exact)) ||
-            (preview &&
-              mvBalance &&
-              mvBalanceInAsset &&
-              preview.exact.gt(mvBalanceInAsset.exact)),
+            amount &&
+            mvBalance &&
+            amount.simpleRounded > mvBalance.simpleRounded,
           withdraw:
-            (preview && mvBalance && preview.exact.gt(mvBalance.exact)) ||
-            (amount &&
-              mvBalance &&
-              mvBalanceInAsset &&
-              amount.exact.gt(mvBalanceInAsset.exact)),
+            preview &&
+            mvBalance &&
+            preview.simpleRounded > mvBalance.simpleRounded,
         }[operation];
       }),
     );
-  }, [
-    amount,
-    assetBalance,
-    assetBalanceInShare,
-    mvBalance,
-    operation,
-    preview,
-    mvBalanceInAsset,
-  ]);
+  }, [amount, assetBalance, mvBalance, operation, preview]);
 
   useDebounce(
     () => {
