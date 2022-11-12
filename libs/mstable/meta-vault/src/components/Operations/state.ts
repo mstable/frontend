@@ -164,6 +164,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
       setState(
         produce((draft) => {
           draft.isInputLoading = true;
+          draft.isError = false;
         }),
       );
     }
