@@ -1,5 +1,5 @@
 /* eslint-disable formatjs/no-id */
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 import { BigDecimal } from '@frontend/shared-utils';
 import {
@@ -125,6 +125,12 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
     const intl = useIntl();
     const theme = useTheme();
 
+    useEffect(() => {
+      if (!amount) {
+        setPercentage(0);
+      }
+    }, [amount]);
+
     const handlePercentageChange = (newValue: number) => () => {
       setPercentage(newValue);
       if (onChange) {
@@ -132,7 +138,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
           newValue === PERCENTAGE_STEPS
             ? max
             : BigDecimal.fromSimple(
-                max?.simple * newValue * (1 / PERCENTAGE_STEPS),
+                max?.simpleRounded * newValue * (1 / PERCENTAGE_STEPS),
                 token?.decimals,
               );
 
