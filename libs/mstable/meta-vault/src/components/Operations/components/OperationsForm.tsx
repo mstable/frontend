@@ -16,7 +16,14 @@ import type { StackProps } from '@mui/material';
 export const OperationsForm = (props: StackProps) => {
   const intl = useIntl();
   const { isConnected } = useAccount();
-  const { assetToken, mvToken, assetBalance, mvBalance } = useMetavault();
+  const {
+    assetToken,
+    mvToken,
+    assetBalance,
+    mvBalance,
+    assetBalanceInShare,
+    mvBalanceInAsset,
+  } = useMetavault();
   const {
     amount,
     operation,
@@ -90,7 +97,7 @@ export const OperationsForm = (props: StackProps) => {
         input,
         {
           token: assetToken,
-          max: assetBalance,
+          max: tab === 0 ? assetBalance : mvBalanceInAsset,
           maxIcon: 'wallet',
           hideTokenBadge: !isConnected || !assetToken || tab === 1,
           hideBottomRow: tab === 1,
@@ -124,6 +131,7 @@ export const OperationsForm = (props: StackProps) => {
       intl,
       isConnected,
       isInputLoading,
+      mvBalanceInAsset,
       operation,
       preview,
       tab,
@@ -136,7 +144,7 @@ export const OperationsForm = (props: StackProps) => {
         input,
         {
           token: mvToken,
-          max: mvBalance,
+          max: tab === 0 ? assetBalanceInShare : mvBalance,
           maxIcon: 'vault',
           hideTokenBadge: !isConnected || !mvToken || tab === 0,
           hideBottomRow: tab === 0,
@@ -164,6 +172,7 @@ export const OperationsForm = (props: StackProps) => {
       ]) as TokenInputProps,
     [
       amount,
+      assetBalanceInShare,
       handleSecondaryChange,
       input,
       intl,
