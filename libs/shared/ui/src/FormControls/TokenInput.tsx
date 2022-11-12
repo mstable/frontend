@@ -144,19 +144,26 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
     const handlePercentageChange = (newValue: number) => () => {
       setPercentage(newValue);
       if (onChange) {
-        onChange(
-          BigDecimal.fromSimple(
-            max?.simple * newValue * (1 / PERCENTAGE_STEPS),
-            token?.decimals,
-          ),
-        );
+        const amt =
+          newValue === PERCENTAGE_STEPS
+            ? max
+            : BigDecimal.fromSimple(
+                max?.simple * newValue * (1 / PERCENTAGE_STEPS),
+                token?.decimals,
+              );
+
+        onChange(amt);
       }
     };
 
     const handleChange = (value: BigDecimal) => {
       setPercentage(0);
       if (onChange) {
-        onChange(new BigDecimal(value?.exact, token?.decimals));
+        const amt =
+          value?.simpleRounded === max?.simpleRounded
+            ? max
+            : new BigDecimal(value?.exact, token?.decimals);
+        onChange(amt);
       }
     };
 
