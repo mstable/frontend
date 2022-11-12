@@ -56,7 +56,7 @@ export const BigDecimalInput = forwardRef<
       (evt: ChangeEvent<HTMLInputElement>) => {
         if (evt.target.validity.valid && inRange(evt.target.value, min, max)) {
           setVal(evt.target.value);
-          const regex = new RegExp(`.*\\.0{0,${decimals}}$`);
+          const regex = new RegExp(`.*\\.0{0,2}$`);
           const oldval = BigDecimal.maybeParse(val, decimals);
           const newval = BigDecimal.maybeParse(evt.target.value, decimals);
           if (
@@ -83,7 +83,7 @@ export const BigDecimalInput = forwardRef<
             inputMode="numeric"
             componentsProps={{
               input: {
-                pattern: '[0-9]*(.[0-9]*)?',
+                pattern: `[0-9]*(.[0-9]{0,2})`,
               },
             }}
             sx={{ typography: 'value1', ...InputProps?.sx }}
