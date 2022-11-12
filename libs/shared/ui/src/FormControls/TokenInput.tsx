@@ -34,6 +34,7 @@ export type TokenInputProps = {
   amount: BigDecimal;
   token: FetchTokenResult;
   tokenLabel?: string;
+  tokenIconSize?: number;
   max?: BigDecimal;
   maxIcon?: 'wallet' | 'vault';
   onChange?: (newValue: BigDecimal) => void;
@@ -112,6 +113,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
       amount,
       token,
       tokenLabel,
+      tokenIconSize = 14,
       max,
       maxIcon = 'wallet',
       onChange,
@@ -182,13 +184,17 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
                   borderRadius: '4px',
                   backgroundColor: 'background.highlight',
                   color: 'text.primary',
+                  maxWidth: 100,
                 }}
               >
                 <TokenIcon
                   symbol={token?.symbol}
-                  sx={{ width: 14, height: 14 }}
+                  sx={{
+                    width: tokenIconSize,
+                    height: tokenIconSize,
+                  }}
                 />
-                <Typography variant="buttonMedium" color="inherit">
+                <Typography variant="buttonMedium" color="inherit" noWrap>
                   {tokenLabel ?? token?.symbol}
                 </Typography>
               </Stack>
