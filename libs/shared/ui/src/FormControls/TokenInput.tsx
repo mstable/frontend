@@ -128,10 +128,10 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
     const theme = useTheme();
 
     useEffect(() => {
-      if (!amount) {
+      if (!amount || isLoading) {
         setPercentage(0);
       }
-    }, [amount]);
+    }, [amount, isLoading]);
 
     const handlePercentageChange = (newValue: number) => () => {
       setPercentage(newValue);

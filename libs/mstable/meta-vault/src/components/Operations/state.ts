@@ -173,27 +173,36 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   useEffect(() => {
     setState(
       produce((draft) => {
-        draft.isError = {
-          deposit:
-            amount &&
-            assetBalance &&
-            amount.simpleRounded > assetBalance.simpleRounded,
-          mint:
-            preview &&
-            assetBalance &&
-            preview.simpleRounded > assetBalance.simpleRounded,
-          redeem:
-            amount &&
-            mvBalance &&
-            amount.simpleRounded > mvBalance.simpleRounded,
-          withdraw:
-            preview &&
-            mvBalance &&
-            preview.simpleRounded > mvBalance.simpleRounded,
-        }[operation];
+        draft.isError = state.isInputLoading
+          ? false
+          : {
+              deposit:
+                amount &&
+                assetBalance &&
+                amount.simpleRounded > assetBalance.simpleRounded,
+              mint:
+                preview &&
+                assetBalance &&
+                preview.simpleRounded > assetBalance.simpleRounded,
+              redeem:
+                amount &&
+                mvBalance &&
+                amount.simpleRounded > mvBalance.simpleRounded,
+              withdraw:
+                preview &&
+                mvBalance &&
+                preview.simpleRounded > mvBalance.simpleRounded,
+            }[operation];
       }),
     );
-  }, [amount, assetBalance, mvBalance, operation, preview]);
+  }, [
+    amount,
+    assetBalance,
+    mvBalance,
+    operation,
+    preview,
+    state.isInputLoading,
+  ]);
 
   useDebounce(
     () => {
