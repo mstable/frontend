@@ -18,10 +18,11 @@ import { LineChart } from './LineChart';
 import type { Metavault } from '@frontend/shared-constants';
 import type { TypographyProps } from '@mui/material';
 
-interface Props {
+import type { HoverableCardProps } from './HoverableCard';
+
+export type VaultCardProps = {
   metavault: Metavault;
-  to: string;
-}
+} & Omit<HoverableCardProps, 'primaryColor' | 'children'>;
 
 const tagProps: TypographyProps = {
   display: 'flex',
@@ -36,7 +37,7 @@ const tagProps: TypographyProps = {
   borderRadius: 2,
 };
 
-export const VaultCard = ({ metavault, to }: Props) => {
+export const VaultCard = ({ metavault, to, ...rest }: VaultCardProps) => {
   const intl = useIntl();
   const data = useMetavaultData(metavault.address);
   const chartData = useChartData(metavault.address);
@@ -45,7 +46,7 @@ export const VaultCard = ({ metavault, to }: Props) => {
   );
 
   return (
-    <HoverableCard primaryColor={metavault.primaryColor} to={to}>
+    <HoverableCard {...rest} primaryColor={metavault.primaryColor} to={to}>
       <CardContent sx={{ p: 3 }}>
         <Stack direction="row" justifyContent="space-between" mb={3}>
           <MVIcon

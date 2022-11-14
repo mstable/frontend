@@ -4,7 +4,7 @@ export const light: ThemeOptions = {
   shadows: [
     'none',
     '0px 0px 20px rgba(0, 0, 0, 0.05)',
-    '0px 0px 20px rgba(0, 0, 0, 0.05)',
+    '0px 0px 20px 0px rgba(106, 103, 203, 0.1)',
     '0px 0px 20px rgba(0, 0, 0, 0.05)',
     '0px 0px 20px rgba(0, 0, 0, 0.05)',
     '0px 0px 20px rgba(0, 0, 0, 0.05)',
@@ -33,7 +33,7 @@ export const dark: ThemeOptions = {
   shadows: [
     'none',
     '0px 0px 20px rgba(255, 255, 255, 0.05)',
-    '0px 0px 20px rgba(255, 255, 255, 0.05)',
+    '0px 0px 20px 0px rgba(106, 103, 203, 0.1)',
     '0px 0px 20px rgba(255, 255, 255, 0.05)',
     '0px 0px 20px rgba(255, 255, 255, 0.05)',
     '0px 0px 20px rgba(255, 255, 255, 0.05)',
