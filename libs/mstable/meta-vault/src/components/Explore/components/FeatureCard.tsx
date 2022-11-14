@@ -81,7 +81,7 @@ export const FeatureCard = () => {
           backgroundSize: `200% 200%`,
           backgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
-          animation: `${gradientReverse} 1s ease forwards`,
+          animation: `${gradientReverse} 0.5s ease forwards`,
         },
         '.subtitle': {
           color:
@@ -110,7 +110,7 @@ export const FeatureCard = () => {
             0.12,
           )} 0%, ${alpha(theme.palette.background.default, 0.4)} 100%)`,
           '.title': {
-            animation: `${gradient} 0.3s ease forwards`,
+            animation: `${gradient} 0.2s ease forwards`,
           },
           '.subtitle': {
             color: theme.palette.grey['600'],
