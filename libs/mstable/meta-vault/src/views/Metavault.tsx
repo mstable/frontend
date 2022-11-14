@@ -1,6 +1,9 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
-import { UnsupportedMvPage } from '@frontend/mstable-shared-ui';
+import {
+  UnsupportedMvPage,
+  useTransitionBackgroundColor,
+} from '@frontend/mstable-shared-ui';
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
 import { Grid, Stack } from '@mui/material';
@@ -19,6 +22,7 @@ import type { MvGenerics } from '../types';
 
 export const Metavault = () => {
   const { chain } = useNetwork();
+  const updateBkgColor = useTransitionBackgroundColor();
   const {
     params: { mvid },
   } = useMatch<MvGenerics>();
@@ -29,6 +33,12 @@ export const Metavault = () => {
       ),
     [chain?.id, mvid],
   );
+
+  useEffect(() => {
+    if (metavault) {
+      updateBkgColor(metavault.primaryColor);
+    }
+  }, [metavault, updateBkgColor]);
 
   if (!metavault) return <UnsupportedMvPage mvid={mvid} />;
 

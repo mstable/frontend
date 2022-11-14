@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { useTransitionBackgroundColor } from '@frontend/mstable-shared-ui';
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
@@ -35,11 +36,15 @@ export const Explore = () => {
   });
   const totalTvl = useTotalTvl();
   const { currency } = usePrices();
-
+  const updateBkgColor = useTransitionBackgroundColor();
   const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
   const featuredMv = metavaults.find((mv) => mv.featured);
 
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
+
+  useEffect(() => {
+    updateBkgColor(null);
+  }, [updateBkgColor]);
 
   return (
     <Stack direction="column">
