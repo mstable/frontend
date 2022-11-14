@@ -51,10 +51,14 @@ export const VaultCard = ({ metavault, to, ...rest }: VaultCardProps) => {
         <Stack direction="row" justifyContent="space-between" mb={3}>
           <MVIcon
             address={metavault.address}
-            sx={{ height: 50, width: 50, mb: 2 }}
+            sx={{ height: 53, width: 53, mb: 2, ml: '-6px' }}
           />
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'APY' })}
+            components={{
+              label: { sx: { mb: 0.5 } },
+              container: { alignItems: 'flex-end' },
+            }}
             hint={intl.formatMessage({
               defaultMessage:
                 'Annual Percentage Yield. Annualized 24 hours performance.',
@@ -85,7 +89,10 @@ export const VaultCard = ({ metavault, to, ...rest }: VaultCardProps) => {
         >
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'Protocols' })}
-            components={{ valueContainer: { pb: 0.3 } }}
+            components={{
+              valueContainer: { pb: 0.3 },
+              label: { sx: { mb: 0.5 } },
+            }}
           >
             <AvatarGroup max={6}>
               {metavault.strategies.map((strat) => (
@@ -101,6 +108,9 @@ export const VaultCard = ({ metavault, to, ...rest }: VaultCardProps) => {
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'TVL' })}
             hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
+            components={{
+              label: { sx: { mb: 0.5 } },
+            }}
           >
             <Stack direction="row" spacing={1} alignItems="baseline">
               <Typography variant="value3">

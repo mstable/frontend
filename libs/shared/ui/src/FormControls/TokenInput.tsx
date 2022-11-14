@@ -4,6 +4,8 @@ import { forwardRef, useEffect, useState } from 'react';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
   Button,
+  Collapse,
+  Fade,
   FormControl,
   InputLabel,
   Stack,
@@ -31,6 +33,8 @@ export type TokenInputProps = {
   isConnected?: boolean;
   amount: BigDecimal;
   token: FetchTokenResult;
+  tokenLabel?: string;
+  tokenIconSize?: number;
   max?: BigDecimal;
   maxIcon?: 'wallet' | 'vault';
   onChange?: (newValue: BigDecimal) => void;
@@ -108,6 +112,8 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
       isConnected,
       amount,
       token,
+      tokenLabel,
+      tokenIconSize = 14,
       max,
       maxIcon = 'wallet',
       onChange,
@@ -122,37 +128,34 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
     const theme = useTheme();
 
     useEffect(() => {
-      if (max && amount) {
-        const ranges = range(1, PERCENTAGE_STEPS + 1).map(
-          (n) => max.simple * n * (1 / PERCENTAGE_STEPS),
-        );
-        const idx = ranges.findIndex((r) => r === amount.simple);
-        if (idx > -1) {
-          setPercentage(idx + 1);
-        } else {
-          setPercentage(0);
-        }
-      } else {
+      if (!amount || isLoading) {
         setPercentage(0);
       }
-    }, [amount, max]);
+    }, [amount, isLoading]);
 
     const handlePercentageChange = (newValue: number) => () => {
       setPercentage(newValue);
       if (onChange) {
-        onChange(
-          BigDecimal.fromSimple(
-            max?.simple * newValue * (1 / PERCENTAGE_STEPS),
-            token?.decimals,
-          ),
-        );
+        const amt =
+          newValue === PERCENTAGE_STEPS
+            ? max
+            : BigDecimal.fromSimple(
+                max?.simpleRounded * newValue * (1 / PERCENTAGE_STEPS),
+                token?.decimals,
+              );
+
+        onChange(amt);
       }
     };
 
     const handleChange = (value: BigDecimal) => {
       setPercentage(0);
       if (onChange) {
-        onChange(new BigDecimal(value?.exact, token?.decimals));
+        const amt =
+          value?.simpleRounded === max?.simpleRounded
+            ? max
+            : new BigDecimal(value?.exact, token?.decimals);
+        onChange(amt);
       }
     };
 
@@ -171,7 +174,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
               {...components?.input}
               sx={{ flexGrow: 1, ...components?.input?.sx }}
             />
-            {!hideTokenBadge && (
+            <Fade appear in={!hideTokenBadge}>
               <Stack
                 direction="row"
                 spacing={1}
@@ -181,20 +184,24 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
                   borderRadius: '4px',
                   backgroundColor: 'background.highlight',
                   color: 'text.primary',
+                  maxWidth: 100,
                 }}
               >
                 <TokenIcon
                   symbol={token?.symbol}
-                  sx={{ width: 14, height: 14 }}
+                  sx={{
+                    width: tokenIconSize,
+                    height: tokenIconSize,
+                  }}
                 />
-                <Typography variant="buttonMedium" color="inherit">
-                  {token?.symbol}
+                <Typography variant="buttonMedium" color="inherit" noWrap>
+                  {tokenLabel ?? token?.symbol}
                 </Typography>
               </Stack>
-            )}
+            </Fade>
           </Stack>
         </FormControl>
-        {!hideBottomRow && (
+        <Collapse appear in={!hideBottomRow}>
           <Stack
             direction="row"
             mt={1}
@@ -272,7 +279,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
               </Typography>
             )}
           </Stack>
-        )}
+        </Collapse>
       </Stack>
     );
   },

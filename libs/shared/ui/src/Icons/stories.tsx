@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material';
+import { Grid, Stack, Typography } from '@mui/material';
 
 import { ChainIcon as ChIcon, supportedChains } from './Chain';
 import { ExpandIcon as ExIcon } from './ExpandIcon';
@@ -8,7 +8,7 @@ import { SeverityIcon as SeIcon } from './SeverityIcon';
 import { supportedTokens, TokenIcon as ToIcon } from './Token';
 
 import type { Children } from '@frontend/shared-utils';
-import type { AlertColor, StackProps, SvgIconProps } from '@mui/material';
+import type { AlertColor, GridProps, SvgIconProps } from '@mui/material';
 
 export default {
   title: 'Components/Icons',
@@ -29,94 +29,90 @@ const iconProps: SvgIconProps = {
   },
 };
 
-type IconCardProps = { label: string } & Children & StackProps;
+type IconCardProps = { label: string } & Children & GridProps;
 
 const IconCard = ({ label, children, ...rest }: IconCardProps) => (
-  <Stack direction="column" alignItems="center" spacing={1} {...rest}>
+  <Grid item xs {...rest}>
+    <Stack direction="column" alignItems="center" spacing={1}>
+      {children}
+      <Typography variant="label2" textAlign="center">
+        {label}
+      </Typography>
+    </Stack>
+  </Grid>
+);
+
+const IconGrid = ({ children }: Children) => (
+  <Grid container spacing={2} padding={2}>
     {children}
-    <Typography variant="label2" textAlign="center">
-      {label}
-    </Typography>
-  </Stack>
+  </Grid>
 );
 
 export const ChainIcon = () => (
-  <Stack direction="column" spacing={2} p={2}>
-    <Stack direction="row" spacing={4}>
-      {Object.keys(supportedChains).map((key) => (
-        <IconCard key={key} label={key}>
-          <ChIcon name={key} {...iconProps} />
-        </IconCard>
-      ))}
-      <IconCard label="default">
-        <ChIcon name="" {...iconProps} />
+  <IconGrid>
+    {Object.keys(supportedChains).map((key) => (
+      <IconCard key={key} label={key}>
+        <ChIcon name={key} {...iconProps} />
       </IconCard>
-    </Stack>
-  </Stack>
+    ))}
+    <IconCard label="default">
+      <ChIcon name="" {...iconProps} />
+    </IconCard>
+  </IconGrid>
 );
 
 export const ExpandIcon = () => (
-  <Stack direction="column" spacing={2} p={2}>
-    <Stack direction="row" spacing={4}>
-      <ExIcon expanded {...iconProps} />
-      <ExIcon {...iconProps} />
-    </Stack>
-  </Stack>
+  <IconGrid>
+    <ExIcon expanded {...iconProps} />
+    <ExIcon {...iconProps} />
+  </IconGrid>
 );
 
 export const MVIcon = () => (
-  <Stack direction="column" spacing={2} p={2}>
-    <Stack direction="row" spacing={4}>
-      {Object.keys(supportedMVs).map((key) => (
-        <IconCard key={key} label={key}>
-          <MvIcon address={key} {...iconProps} />
-        </IconCard>
-      ))}
-      <IconCard label="default">
-        <MvIcon address="default" {...iconProps} />
+  <IconGrid>
+    {Object.keys(supportedMVs).map((key) => (
+      <IconCard key={key} label={key}>
+        <MvIcon address={key} {...iconProps} />
       </IconCard>
-    </Stack>
-  </Stack>
+    ))}
+    <IconCard label="default">
+      <MvIcon address="default" {...iconProps} />
+    </IconCard>
+  </IconGrid>
 );
 
 export const ProtocolIcon = () => (
-  <Stack direction="column" spacing={2} p={2}>
-    <Stack direction="row" spacing={4}>
-      {Object.keys(supportedProtocols).map((key) => (
-        <IconCard key={key} label={key}>
-          <PrIcon name={key} {...iconProps} />
-        </IconCard>
-      ))}
-      <IconCard label="default">
-        <PrIcon name="default" {...iconProps} />
+  <IconGrid>
+    {Object.keys(supportedProtocols).map((key) => (
+      <IconCard key={key} label={key}>
+        <PrIcon name={key} {...iconProps} />
       </IconCard>
-    </Stack>
-  </Stack>
+    ))}
+    <IconCard label="default">
+      <PrIcon name="default" {...iconProps} />
+    </IconCard>
+  </IconGrid>
 );
 
 export const SeverityIcon = () => (
-  <Stack direction="column" spacing={2} p={2}>
-    <Stack direction="row" spacing={4}>
-      {['error', 'info', 'success', 'warning'].map((key) => (
-        <IconCard key={key} label={key}>
-          <SeIcon severity={key as AlertColor} {...iconProps} />
-        </IconCard>
-      ))}
-    </Stack>
-  </Stack>
+  <IconGrid>
+    {['error', 'info', 'success', 'warning'].map((key) => (
+      <IconCard key={key} label={key}>
+        <SeIcon severity={key as AlertColor} {...iconProps} />
+      </IconCard>
+    ))}
+  </IconGrid>
 );
 
 export const TokenIcon = () => (
-  <Stack direction="column" spacing={2} p={2}>
-    <Stack direction="row" spacing={4}>
-      {Object.keys(supportedTokens).map((key) => (
-        <IconCard key={key} label={key}>
-          <ToIcon symbol={key} {...iconProps} />
-        </IconCard>
-      ))}
-      <IconCard label="default">
-        <ToIcon symbol="default" {...iconProps} />
+  <IconGrid>
+    {Object.keys(supportedTokens).map((key) => (
+      <IconCard key={key} label={key}>
+        <ToIcon symbol={key} {...iconProps} />
       </IconCard>
-    </Stack>
-  </Stack>
+    ))}
+    <IconCard label="default">
+      <ToIcon symbol="default" {...iconProps} />
+    </IconCard>
+  </IconGrid>
 );
