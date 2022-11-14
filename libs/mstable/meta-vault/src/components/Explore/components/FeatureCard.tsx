@@ -1,5 +1,6 @@
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { usePrices } from '@frontend/shared-prices';
+import { hoverPrimarySx } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
   alpha,
@@ -10,6 +11,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { useNavigate } from '@tanstack/react-location';
 import { GasPump, Vault } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 import { chainId, useFeeData, useNetwork } from 'wagmi';
@@ -39,6 +41,7 @@ export const FeatureCard = () => {
   const intl = useIntl();
   const theme = useTheme();
   const { chain } = useNetwork();
+  const navigate = useNavigate();
   const { data: feeData, isLoading: feeLoading } = useFeeData({
     formatUnits: 'gwei',
   });
@@ -47,8 +50,14 @@ export const FeatureCard = () => {
   const totalTvl = useTotalTvl();
   const { currency } = usePrices();
 
+  const handleClick = () => {
+    navigate({ to: `./${featuredMv.id}` });
+  };
+
   return (
     <Stack
+      onClick={handleClick}
+      role="button"
       display="flex"
       alignItems="center"
       justifyContent="center"
@@ -60,7 +69,7 @@ export const FeatureCard = () => {
         backdropFilter: 'blur(10px)',
         boxShadow: 1,
         border: `1px solid ${theme.palette.divider}`,
-        cursor: 'default',
+        cursor: 'pointer',
         '.title': {
           fontSize: 64,
           fontWeight: 900,
@@ -95,6 +104,11 @@ export const FeatureCard = () => {
               ? theme.palette.grey['200']
               : theme.palette.grey['700']
           }`,
+
+          background: `linear-gradient(180deg, ${alpha(
+            featuredMv.primaryColor,
+            0.12,
+          )} 0%, ${alpha(theme.palette.background.default, 0.4)} 100%)`,
           '.title': {
             animation: `${gradient} 0.3s ease forwards`,
           },
@@ -108,6 +122,7 @@ export const FeatureCard = () => {
                 : theme.palette.grey['700']
             }`,
           },
+          '.vaultcard': hoverPrimarySx(theme, featuredMv.primaryColor),
         },
       })}
     >
@@ -170,8 +185,8 @@ export const FeatureCard = () => {
         >
           <VaultCard
             metavault={featuredMv}
-            to={`./${featuredMv.id}`}
             sx={{ width: 400, height: 500 }}
+            className="vaultcard"
           />
         </Stack>
       </Stack>

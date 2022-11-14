@@ -1,4 +1,9 @@
-import { MVIcon, ProtocolIcon, ValueLabel } from '@frontend/shared-ui';
+import {
+  HoverablePrimaryCard,
+  MVIcon,
+  ProtocolIcon,
+  ValueLabel,
+} from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
   Avatar,
@@ -8,21 +13,21 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { useNavigate } from '@tanstack/react-location';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
 
 import { useAssetDecimal, useChartData, useMetavaultData } from '../hooks';
-import { HoverableCard } from './HoverableCard';
 import { LineChart } from './LineChart';
 
 import type { Metavault } from '@frontend/shared-constants';
-import type { TypographyProps } from '@mui/material';
-
-import type { HoverableCardProps } from './HoverableCard';
+import type { CardProps, TypographyProps } from '@mui/material';
 
 export type VaultCardProps = {
   metavault: Metavault;
-} & Omit<HoverableCardProps, 'primaryColor' | 'children'>;
+  onClick?: (mvid: string) => void;
+  to?: string;
+} & Omit<CardProps, 'children' | 'onClick'>;
 
 const tagProps: TypographyProps = {
   display: 'flex',
@@ -37,16 +42,37 @@ const tagProps: TypographyProps = {
   borderRadius: 2,
 };
 
-export const VaultCard = ({ metavault, to, ...rest }: VaultCardProps) => {
+export const VaultCard = ({
+  metavault,
+  onClick,
+  to,
+  ...rest
+}: VaultCardProps) => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const data = useMetavaultData(metavault.address);
   const chartData = useChartData(metavault.address);
   const { data: assetDecimal, isLoading: assetLoading } = useAssetDecimal(
     metavault.address,
   );
 
+  const handleClick = () => {
+    if (onClick) {
+      onClick(metavault.id);
+    }
+    if (to) {
+      navigate({ to });
+    }
+  };
+
   return (
-    <HoverableCard {...rest} primaryColor={metavault.primaryColor} to={to}>
+    <HoverablePrimaryCard
+      primaryColor={metavault.primaryColor}
+      {...rest}
+      onClick={handleClick}
+      sx={{ cursor: onClick || to ? 'pointer' : 'inherit', ...rest?.sx }}
+      role={onClick || to ? 'button' : 'presentation'}
+    >
       <CardContent sx={{ p: 3 }}>
         <Stack direction="row" justifyContent="space-between" mb={3}>
           <MVIcon
@@ -130,6 +156,6 @@ export const VaultCard = ({ metavault, to, ...rest }: VaultCardProps) => {
           </ValueLabel>
         </Stack>
       </CardContent>
-    </HoverableCard>
+    </HoverablePrimaryCard>
   );
 };
