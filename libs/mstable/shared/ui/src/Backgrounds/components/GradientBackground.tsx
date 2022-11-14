@@ -25,27 +25,15 @@ const GradientBackgroundWrapped = (props: BoxProps) => {
     () =>
       [
         maskLinearGradient(
-          '2deg',
+          '0deg',
           bkg,
           mode === 'light' ? '30' : '60',
-          mode === 'light' ? 0.2 : 0,
-        ),
-        maskLinearGradient(
-          '358deg',
-          bkg,
-          mode === 'light' ? '30' : '60',
-          mode === 'light' ? 0.2 : 0,
+          mode === 'light' ? 0.3 : 0,
         ),
         maskLinearGradient(
           '180deg',
           bkg,
           mode === 'light' ? '40' : '60',
-          mode === 'light' ? 0.2 : 0,
-        ),
-        maskLinearGradient(
-          '184deg',
-          bkg,
-          mode === 'light' ? '60' : '60',
           mode === 'light' ? 0.2 : 0,
         ),
         colorCloud,
@@ -57,16 +45,10 @@ const GradientBackgroundWrapped = (props: BoxProps) => {
     () =>
       [
         maskLinearGradient(
-          '2deg',
+          '0deg',
           bkg,
           mode === 'light' ? '30' : '60',
-          mode === 'light' ? 0.2 : 0,
-        ),
-        maskLinearGradient(
-          '358deg',
-          bkg,
-          mode === 'light' ? '30' : '60',
-          mode === 'light' ? 0.2 : 0,
+          mode === 'light' ? 0.3 : 0,
         ),
         maskLinearGradient(
           '180deg',
@@ -74,29 +56,24 @@ const GradientBackgroundWrapped = (props: BoxProps) => {
           mode === 'light' ? '40' : '60',
           mode === 'light' ? 0.2 : 0,
         ),
-        maskLinearGradient(
-          '184deg',
-          bkg,
-          mode === 'light' ? '60' : '60',
-          mode === 'light' ? 0.2 : 0,
-        ),
         ...(next
           ? [
               linearGradient('90deg', [
-                `${alpha(next, 0.6)} 0%`,
-                `${alpha(next, 0.3)} 60%`,
-                `${alpha(next, 0.8)} 100%`,
+                `${alpha(next, 0.5)} 0%`,
+                `${alpha(next, 0.25)} 60%`,
+                `${alpha(next, 0.5)} 100%`,
               ]),
             ]
           : prev
           ? [
               linearGradient('90deg', [
-                `${alpha(prev, 0.6)} 0%`,
-                `${alpha(prev, 0.3)} 60%`,
-                `${alpha(prev, 0.8)} 100%`,
+                `${alpha(prev, 0.5)} 0%`,
+                `${alpha(prev, 0.1)} 60%`,
+                `${alpha(prev, 0.5)} 100%`,
               ]),
             ]
           : []),
+        bkg,
       ].join(','),
     [bkg, mode, next, prev],
   );
