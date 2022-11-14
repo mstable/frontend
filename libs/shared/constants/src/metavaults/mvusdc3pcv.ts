@@ -71,8 +71,8 @@ const mainnet: Metavault = {
     performance: 0.04,
   },
   gases: {
-    deposit: 100000,
-    withdraw: 100000,
+    deposit: 500000,
+    withdraw: 500000,
   },
   featured: true,
 };
