@@ -1,11 +1,16 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
-import { UnsupportedMvPage } from '@frontend/mstable-shared-ui';
+import {
+  UnsupportedMvPage,
+  useTransitionBackgroundColor,
+} from '@frontend/mstable-shared-ui';
 import { supportedMetavaults } from '@frontend/shared-constants';
-import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
-import { Grid, Stack } from '@mui/material';
-import { useMatch } from '@tanstack/react-location';
+import { ErrorBoundary, ErrorCard, MVIcon } from '@frontend/shared-ui';
+import { Button, Grid, Stack } from '@mui/material';
+import { useMatch, useNavigate } from '@tanstack/react-location';
+import { ArrowLeft } from 'phosphor-react';
 import { propEq } from 'ramda';
+import { useIntl } from 'react-intl';
 import { chainId, useNetwork } from 'wagmi';
 
 import { Operations } from '../components/Operations';
@@ -18,7 +23,10 @@ import { MetavaultProvider } from '../state';
 import type { MvGenerics } from '../types';
 
 export const Metavault = () => {
+  const intl = useIntl();
   const { chain } = useNetwork();
+  const navigate = useNavigate();
+  const updateBkgColor = useTransitionBackgroundColor();
   const {
     params: { mvid },
   } = useMatch<MvGenerics>();
@@ -30,13 +38,35 @@ export const Metavault = () => {
     [chain?.id, mvid],
   );
 
+  useEffect(() => {
+    if (metavault) {
+      updateBkgColor(metavault.primaryColor);
+    }
+  }, [metavault, updateBkgColor]);
+
   if (!metavault) return <UnsupportedMvPage mvid={mvid} />;
 
   return (
     <MetavaultProvider initialState={{ metavault }}>
-      <Stack direction="column">
+      <Stack direction="column" alignItems="flex-start">
+        <Button
+          variant="text"
+          onClick={() => {
+            navigate({ to: '..' });
+          }}
+          sx={{ mb: 1 }}
+        >
+          <Stack direction="row" alignItems="center" spacing={0.5}>
+            <ArrowLeft width={16} height={16} />
+            {intl.formatMessage({ defaultMessage: 'Back' })}
+          </Stack>
+        </Button>
+        <MVIcon
+          address={metavault.address}
+          sx={{ height: 64, width: 64, mb: 2 }}
+        />
         <ErrorBoundary ErrorComponent={<ErrorCard sx={{ py: 8 }} />}>
-          <VaultJumbo py={8} />
+          <VaultJumbo pb={8} />
         </ErrorBoundary>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>

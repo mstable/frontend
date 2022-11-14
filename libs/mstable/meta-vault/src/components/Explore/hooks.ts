@@ -72,10 +72,7 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
               backgroundColor: 'transparent',
               fill: true,
               pointBackgroundColor: '#2775CA',
-              pointRadius: (context) =>
-                !isSmallChart && context.dataIndex === sortedData.length - 1
-                  ? 5
-                  : 0,
+              pointRadius: 0,
             },
           ],
         },
