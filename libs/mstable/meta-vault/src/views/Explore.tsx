@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { useTransitionBackgroundColor } from '@frontend/mstable-shared-ui';
 import { supportedMetavaults } from '@frontend/shared-constants';
 import {
   Box,
@@ -26,10 +27,15 @@ export const Explore = () => {
   const intl = useIntl();
   const theme = useTheme();
   const { chain } = useNetwork();
+  const updateBkgColor = useTransitionBackgroundColor();
 
   const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
 
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
+
+  useEffect(() => {
+    updateBkgColor(null);
+  }, [updateBkgColor]);
 
   return (
     <Stack direction="column" pt={{ xs: 2, md: 5 }} spacing={4}>
