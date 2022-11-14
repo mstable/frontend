@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useState } from 'react';
 
 import { BigDecimal } from '@frontend/shared-utils';
 import { Box, InputBase, Skeleton } from '@mui/material';
@@ -52,14 +52,23 @@ export const BigDecimalInput = forwardRef<
       }
     }, [value]);
 
-    const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
-      if (evt.target.validity.valid && inRange(evt.target.value, min, max)) {
-        setVal(evt.target.value);
-        if (onChange && !evt.target.value.endsWith('.')) {
-          onChange(BigDecimal.maybeParse(evt.target.value, decimals));
+    const handleChange = useCallback(
+      (evt: ChangeEvent<HTMLInputElement>) => {
+        if (evt.target.validity.valid && inRange(evt.target.value, min, max)) {
+          setVal(evt.target.value);
+          const regex = new RegExp(`.*\\.0{0,2}$`);
+          const oldval = BigDecimal.maybeParse(val, decimals);
+          const newval = BigDecimal.maybeParse(evt.target.value, decimals);
+          if (
+            onChange &&
+            (!regex.test(evt.target.value) || oldval?.simple !== newval?.simple)
+          ) {
+            onChange(newval);
+          }
         }
-      }
-    };
+      },
+      [decimals, max, min, onChange, val],
+    );
 
     return (
       <Box {...rest}>
@@ -74,7 +83,7 @@ export const BigDecimalInput = forwardRef<
             inputMode="numeric"
             componentsProps={{
               input: {
-                pattern: '[0-9]*(.[0-9]*)?',
+                pattern: `[0-9]*(.[0-9]{0,2})`,
               },
             }}
             sx={{ typography: 'value1', ...InputProps?.sx }}

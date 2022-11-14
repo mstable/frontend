@@ -12,13 +12,17 @@ export default {
 export const TokenInput = () => (
   <Stack direction="column" spacing={2} p={2}>
     <Comp
+      amount={null}
       label="Tokens"
       token={{
         address: '0x123',
         decimals: 18,
         name: 'USDC',
         symbol: 'USDC',
-        totalSupply: constants.One,
+        totalSupply: {
+          value: constants.One,
+          formatted: '1',
+        },
       }}
       placeholder="0.00"
       max={BigDecimal.fromSimple(200)}

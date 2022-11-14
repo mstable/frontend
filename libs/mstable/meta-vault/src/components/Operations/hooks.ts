@@ -42,7 +42,6 @@ export const useReset = () => {
 
 export const useChangeOperation = () => {
   const update = useUpdate();
-  const { assetToken, mvToken, assetBalance, mvBalance } = useMetavault();
 
   return useCallback(
     (operation: SupportedOperation) => {
@@ -51,28 +50,16 @@ export const useChangeOperation = () => {
           state.operation = operation;
           state.amount = null;
           state.tab = ['deposit', 'mint'].includes(operation) ? 0 : 1;
-          state.token = {
-            deposit: assetToken,
-            mint: mvToken,
-            withdraw: assetToken,
-            redeem: mvToken,
-          }[operation];
-          state.balance = {
-            deposit: assetBalance,
-            mint: mvBalance,
-            withdraw: assetBalance,
-            redeem: mvBalance,
-          }[operation];
         }),
       );
     },
-    [assetBalance, assetToken, mvBalance, mvToken, update],
+    [update],
   );
 };
 
 export const useChangeTab = () => {
   const update = useUpdate();
-  const { assetToken, mvToken, assetBalance, mvBalance } = useMetavault();
+  const { assetBalance, mvBalance } = useMetavault();
 
   return useCallback(
     (tab: 0 | 1) => {
@@ -81,12 +68,11 @@ export const useChangeTab = () => {
           state.tab = tab;
           state.operation = tab === 0 ? 'deposit' : 'withdraw';
           state.amount = null;
-          state.token = tab === 0 ? assetToken : mvToken;
           state.balance = tab === 0 ? assetBalance : mvBalance;
         }),
       );
     },
-    [assetBalance, assetToken, mvBalance, mvToken, update],
+    [assetBalance, mvBalance, update],
   );
 };
 
