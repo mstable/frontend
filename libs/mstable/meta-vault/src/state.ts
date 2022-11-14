@@ -79,6 +79,7 @@ export const {
     },
     {
       enabled: false,
+      refetchInterval: 15000,
       onSuccess: (userVaultBalanceData) => {
         if (userVaultBalanceData) {
           setState(
