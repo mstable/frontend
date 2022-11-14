@@ -51,11 +51,13 @@ export const FeatureCard = () => {
     <Stack
       direction={{ xs: 'column', md: 'row' }}
       sx={(theme) => ({
-        p: { xs: 2, md: 4, lg: 7.5 },
+        px: { xs: 2, md: 4, lg: 7.5 },
+        py: { xs: 4, md: 8, lg: 15 },
         borderRadius: 2.6,
         backgroundColor: alpha(theme.palette.background.paper, 0.4),
         backdropFilter: 'blur(10px)',
         boxShadow: 1,
+        border: `1px solid ${theme.palette.divider}`,
         cursor: 'default',
         '.title': {
           fontSize: 64,
@@ -70,80 +72,97 @@ export const FeatureCard = () => {
           WebkitTextFillColor: 'transparent',
           animation: `${gradientReverse} 1s ease forwards`,
         },
+        '.subtitle': {
+          color:
+            theme.palette.mode === 'light'
+              ? theme.palette.grey['500']
+              : theme.palette.grey['700'],
+          fontSize: 32,
+          fontWeight: 800,
+          mb: 4,
+        },
+        '.panel': {
+          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 1,
+          p: 2,
+        },
         '&:hover': {
+          boxShadow: 2,
+          border: `1px solid ${
+            theme.palette.mode === 'light'
+              ? theme.palette.grey['200']
+              : theme.palette.grey['700']
+          }`,
           '.title': {
             animation: `${gradient} 0.3s ease forwards`,
           },
+          '.subtitle': {
+            color: theme.palette.grey['600'],
+          },
+          '.panel': {
+            border: `1px solid ${
+              theme.palette.mode === 'light'
+                ? theme.palette.grey['200']
+                : theme.palette.grey['700']
+            }`,
+          },
         },
       })}
-      spacing={2}
+      spacing={16}
     >
       <Stack
         direction="column"
         width={{ xs: 1, md: 1 / 2 }}
-        alignItems="flex-start"
-        spacing={3}
+        alignItems="flex-end"
       >
-        <Typography className="title">
-          {intl.formatMessage({
-            defaultMessage: 'Discover<br></br>Meta Vaults',
-          })}
-        </Typography>
-        <Typography
-          sx={(theme) => ({
-            fontSize: 32,
-            fontWeight: 800,
-            mb: 4,
-            color:
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[500]
-                : theme.palette.grey[700],
-          })}
-        >
-          {intl.formatMessage({
-            defaultMessage: 'The easiest way to yield in DeFi.',
-          })}
-        </Typography>
-        <Stack
-          direction="row"
-          alignItems="center"
-          spacing={1}
-          sx={(theme) => ({
-            border: `1px solid ${theme.palette.divider}`,
-            borderRadius: 1,
-            p: 2,
-          })}
-        >
-          <Vault weight="fill" color={theme.palette.icons.color} />
-          <Typography variant="value5" pr={3}>
-            {isNaN(totalTvl) ? (
-              <Skeleton width={60} height={14} />
-            ) : (
-              intl.formatNumber(totalTvl, {
-                style: 'currency',
-                currency,
-                notation: 'compact',
-              })
-            )}
+        <Stack direction="column" alignItems="flex-start" spacing={3}>
+          <Typography className="title">
+            {intl.formatMessage({
+              defaultMessage: 'Discover<br></br>Meta Vaults',
+            })}
           </Typography>
-          <Divider orientation="vertical" variant="middle" flexItem />
-          <GasPump weight="fill" color={theme.palette.icons.color} />
-          <Typography variant="value5">
-            {feeLoading ? (
-              <Skeleton width={75} />
-            ) : (
-              intl.formatMessage(
-                { defaultMessage: '{value} GWEI' },
-                { value: new BigDecimal(feeData?.gasPrice, 9).format(3) },
-              )
-            )}
+          <Typography className="subtitle">
+            {intl.formatMessage({
+              defaultMessage: 'The easiest way to yield in DeFi.',
+            })}
           </Typography>
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1}
+            className="panel"
+          >
+            <Vault weight="fill" color={theme.palette.icons.color} />
+            <Typography variant="value5" pr={3}>
+              {isNaN(totalTvl) ? (
+                <Skeleton width={60} height={14} />
+              ) : (
+                intl.formatNumber(totalTvl, {
+                  style: 'currency',
+                  currency,
+                  notation: 'compact',
+                })
+              )}
+            </Typography>
+            <Divider orientation="vertical" variant="middle" flexItem />
+            <GasPump weight="fill" color={theme.palette.icons.color} />
+            <Typography variant="value5">
+              {feeLoading ? (
+                <Skeleton width={75} />
+              ) : (
+                intl.formatMessage(
+                  { defaultMessage: '{value} GWEI' },
+                  { value: new BigDecimal(feeData?.gasPrice, 9).format(3) },
+                )
+              )}
+            </Typography>
+          </Stack>
         </Stack>
       </Stack>
       <Stack
         width={{ xs: 1, md: 1 / 2 }}
         justifyContent="center"
-        alignItems="center"
+        alignItems="flex-start"
       >
         <VaultCard
           metavault={featuredMv}
