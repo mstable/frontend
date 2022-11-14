@@ -49,9 +49,11 @@ export const FeatureCard = () => {
 
   return (
     <Stack
-      direction={{ xs: 'column', md: 'row' }}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
       sx={(theme) => ({
-        px: { xs: 2, md: 4, lg: 7.5 },
+        px: 4,
         py: { xs: 4, md: 8, lg: 15 },
         borderRadius: 2.6,
         backgroundColor: alpha(theme.palette.background.paper, 0.4),
@@ -108,14 +110,17 @@ export const FeatureCard = () => {
           },
         },
       })}
-      spacing={16}
     >
       <Stack
-        direction="column"
-        width={{ xs: 1, md: 1 / 2 }}
-        alignItems="flex-end"
+        direction={{ xs: 'column', md: 'row' }}
+        spacing={{ xs: 2, sm: 4, md: 8, lg: 15 }}
       >
-        <Stack direction="column" alignItems="flex-start" spacing={3}>
+        <Stack
+          direction="column"
+          width={{ xs: 1, md: 1 / 2 }}
+          alignItems="flex-start"
+          spacing={3}
+        >
           <Typography className="title">
             {intl.formatMessage({
               defaultMessage: 'Discover<br></br>Meta Vaults',
@@ -158,17 +163,17 @@ export const FeatureCard = () => {
             </Typography>
           </Stack>
         </Stack>
-      </Stack>
-      <Stack
-        width={{ xs: 1, md: 1 / 2 }}
-        justifyContent="center"
-        alignItems="flex-start"
-      >
-        <VaultCard
-          metavault={featuredMv}
-          to={`./${featuredMv.id}`}
-          sx={{ width: 400, height: 500 }}
-        />
+        <Stack
+          width={{ xs: 1, md: 1 / 2 }}
+          justifyContent="center"
+          alignItems="flex-end"
+        >
+          <VaultCard
+            metavault={featuredMv}
+            to={`./${featuredMv.id}`}
+            sx={{ width: 400, height: 500 }}
+          />
+        </Stack>
       </Stack>
     </Stack>
   );

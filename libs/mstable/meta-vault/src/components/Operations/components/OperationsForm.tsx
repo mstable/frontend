@@ -1,7 +1,8 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { TokenInput } from '@frontend/shared-ui';
-import { Divider, Skeleton, Stack, Typography } from '@mui/material';
+import { Divider, Skeleton, Stack, Typography, useTheme } from '@mui/material';
+import { Ticket } from 'phosphor-react';
 import { mergeAll } from 'ramda';
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
@@ -34,6 +35,7 @@ export const OperationsForm = (props: StackProps) => {
     isSubmitLoading,
     isError,
   } = useOperations();
+  const theme = useTheme();
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
   const [hasFocus, setHasFocus] = useState(false);
@@ -150,6 +152,14 @@ export const OperationsForm = (props: StackProps) => {
           hideBottomRow: tab === 0,
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
           tokenLabel: intl.formatMessage({ defaultMessage: 'Shares' }),
+          TokenIcon: (
+            <Ticket
+              width={14}
+              height={14}
+              weight="fill"
+              color={theme.palette.icons.color}
+            />
+          ),
           onChange: handleSecondaryChange,
           ref: secondary,
         },
@@ -183,6 +193,7 @@ export const OperationsForm = (props: StackProps) => {
       operation,
       preview,
       tab,
+      theme.palette.icons.color,
     ],
   );
 
