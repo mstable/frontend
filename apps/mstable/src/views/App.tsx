@@ -1,3 +1,4 @@
+import { createInstance, MatomoProvider } from '@datapunt/matomo-tracker-react';
 import { SettingsProvider } from '@frontend/mstable-settings';
 import { Topnav } from '@frontend/mstable-shared-ui';
 import { queryClient } from '@frontend/shared-data-access';
@@ -24,6 +25,11 @@ import { routes } from '../routes';
 import type { Theme } from '@mui/material';
 
 const location = new ReactLocation();
+
+const instance = createInstance({
+  urlBase: 'https://frontend-7e17f--pr127-analytics-5da2m0e4.web.app',
+  siteId: 1,
+});
 
 const AppWrapped = () => {
   useUnsupportedNetworks();
@@ -78,6 +84,7 @@ export const App = () =>
       [GasFeeProvider],
       [ModalsProvider],
       [SettingsProvider],
+      [MatomoProvider, { value: instance }],
     ],
     <AppWrapped />,
   );

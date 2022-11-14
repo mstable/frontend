@@ -21,6 +21,7 @@
     "*.{js,jsx,ts,tsx,mdx}": "eslint --cache --fix"
   },
   "dependencies": {
+    "@datapunt/matomo-tracker-react": "^0.5.1",
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
     "@fontsource/plus-jakarta-sans": "^4.5.10",
