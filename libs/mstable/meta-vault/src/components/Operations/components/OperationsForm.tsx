@@ -152,7 +152,7 @@ export const OperationsForm = (props: StackProps) => {
           hideBottomRow: tab === 0,
           label: intl.formatMessage({ defaultMessage: 'Shares' }),
           tokenLabel: intl.formatMessage({ defaultMessage: 'Shares' }),
-          TokenIcon: (
+          tokenIcon: (
             <Ticket
               width={14}
               height={14}
