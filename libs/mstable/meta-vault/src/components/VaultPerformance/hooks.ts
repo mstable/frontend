@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useMemo } from 'react';
 
 import { useDataSource } from '@frontend/shared-data-access';
@@ -194,13 +195,12 @@ export const useChartData = (
         },
       };
     }, [
-      chartType,
-      chartTypes,
-      data?.vault?.DailyVaultStats,
       assetToken,
+      data?.vault?.DailyVaultStats,
+      chartTypes,
+      chartType,
+      primaryColor,
       theme.palette.divider,
-      theme.palette.info.light,
-      theme.palette.info.main,
       theme.palette.text.secondary,
       theme.typography.value5.fontFamily,
       theme.typography.value5.fontSize,
