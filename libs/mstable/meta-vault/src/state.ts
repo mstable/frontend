@@ -79,7 +79,7 @@ export const {
     },
     {
       enabled: false,
-      refetchInterval: 15000,
+      refetchInterval: 15,
       onSuccess: (userVaultBalanceData) => {
         if (userVaultBalanceData) {
           setState(
@@ -221,7 +221,9 @@ export const {
     setState(
       produce((draft) => {
         draft.mvBalance = null;
+        draft.mvBalanceInAsset = null;
         draft.assetBalance = null;
+        draft.assetBalanceInShare = null;
         draft.mvDeposited = null;
       }),
     );
