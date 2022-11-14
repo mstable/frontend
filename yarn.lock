@@ -3427,8 +3427,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@mstable/metavaults-web@file:.yalc/@mstable/metavaults-web":
+"@mstable/metavaults-web@^0.0.4":
   version "0.0.4"
+  resolved "https://npm.pkg.github.com/download/@mstable/metavaults-web/0.0.4/62ae9a1e682436da1406d1580bc2aa2e51b135ba#62ae9a1e682436da1406d1580bc2aa2e51b135ba"
+  integrity sha512-KCVSnrdgGGRrHYIeHCXg7gdzf3d8Zam6M7gue+qnciUDMmofYHa90Wyf0eALN+WATHQvGGnZwAItLtg+LejgGA==
 
 "@mui/base@5.0.0-alpha.104":
   version "5.0.0-alpha.104"
