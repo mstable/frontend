@@ -238,7 +238,12 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
               ))}
             </Stack>
             {isConnected && max ? (
-              <Stack direction="row" alignItems="center" spacing={0.5}>
+              <Stack
+                direction="row"
+                alignItems="center"
+                spacing={0.5}
+                overflow="hidden"
+              >
                 {maxIcon === 'wallet' ? (
                   <Wallet
                     weight="fill"

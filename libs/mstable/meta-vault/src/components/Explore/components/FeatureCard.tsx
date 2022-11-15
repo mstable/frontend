@@ -65,9 +65,17 @@ export const FeatureCard = () => {
         px: 4,
         py: { xs: 4, md: 8, lg: 15 },
         borderRadius: 2.6,
-        backgroundColor: alpha(theme.palette.background.paper, 0.4),
+        background:
+          theme.palette.mode === 'light'
+            ? `linear-gradient(107.33deg, ${alpha(
+                theme.palette.background.default,
+                0.2,
+              )} 0%, #F8FAFF 100%)`
+            : `linear-gradient(106.57deg, ${alpha(
+                theme.palette.background.default,
+                0.2,
+              )} 0%, #0A102C 100%)`,
         backdropFilter: 'blur(10px)',
-        boxShadow: 1,
         border: `1px solid ${theme.palette.divider}`,
         cursor: 'pointer',
         '.title': {
@@ -86,7 +94,7 @@ export const FeatureCard = () => {
         '.subtitle': {
           color:
             theme.palette.mode === 'light'
-              ? theme.palette.grey['500']
+              ? theme.palette.grey['400']
               : theme.palette.grey['700'],
           fontSize: 32,
           fontWeight: 800,
@@ -98,22 +106,21 @@ export const FeatureCard = () => {
           p: 2,
         },
         '&:hover': {
-          boxShadow: 2,
+          boxShadow: 1,
           border: `1px solid ${
             theme.palette.mode === 'light'
               ? theme.palette.grey['200']
               : theme.palette.grey['700']
           }`,
-
-          background: `linear-gradient(180deg, ${alpha(
-            featuredMv.primaryColor,
-            0.12,
-          )} 0%, ${alpha(theme.palette.background.default, 0.4)} 100%)`,
+          background:
+            theme.palette.mode === 'light'
+              ? `linear-gradient(106.79deg, rgba(234, 235, 255, 0.08) 3.2%, rgba(248, 250, 255, 0.4) 97.33%)`
+              : ` linear-gradient(106.33deg, rgba(44, 48, 78, 0.08) 5.27%, rgba(10, 16, 44, 0.4) 99.37%)`,
           '.title': {
             animation: `${gradient} 0.2s ease forwards`,
           },
           '.subtitle': {
-            color: theme.palette.grey['600'],
+            color: theme.palette.grey['500'],
           },
           '.panel': {
             border: `1px solid ${

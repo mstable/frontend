@@ -48,9 +48,10 @@ export const Metavault = () => {
 
   return (
     <MetavaultProvider initialState={{ metavault }}>
-      <Stack direction="column" alignItems="flex-start">
+      <Stack direction="column" alignItems="flex-start" pt={{ xs: 2, md: 5 }}>
         <Button
           variant="text"
+          size="small"
           onClick={() => {
             navigate({ to: '..' });
           }}

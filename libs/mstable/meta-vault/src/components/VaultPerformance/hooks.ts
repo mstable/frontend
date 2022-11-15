@@ -187,6 +187,21 @@ export const useChartData = (
               display: false,
             },
             tooltip: {
+              backgroundColor:
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[200]
+                  : theme.palette.grey[800],
+              titleColor:
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[600]
+                  : theme.palette.grey[500],
+              bodyColor:
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[600]
+                  : theme.palette.grey[500],
+              padding: 8,
+              fontSize: '12px',
+              borderRadius: '6px',
               callbacks: {
                 label: (context) => chartTypes[chartType].getLabel(context.raw),
               },
@@ -200,11 +215,7 @@ export const useChartData = (
       chartTypes,
       chartType,
       primaryColor,
-      theme.palette.divider,
-      theme.palette.text.secondary,
-      theme.typography.value5.fontFamily,
-      theme.typography.value5.fontSize,
-      theme.typography.value5.fontWeight,
+      theme,
     ]);
 
   return chartData;
