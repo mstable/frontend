@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useMemo } from 'react';
 
 import { useDataSource } from '@frontend/shared-data-access';
@@ -186,6 +187,21 @@ export const useChartData = (
               display: false,
             },
             tooltip: {
+              backgroundColor:
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[200]
+                  : theme.palette.grey[800],
+              titleColor:
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[600]
+                  : theme.palette.grey[500],
+              bodyColor:
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[600]
+                  : theme.palette.grey[500],
+              padding: 8,
+              fontSize: '12px',
+              borderRadius: '6px',
               callbacks: {
                 label: (context) => chartTypes[chartType].getLabel(context.raw),
               },
@@ -194,17 +210,12 @@ export const useChartData = (
         },
       };
     }, [
-      chartType,
-      chartTypes,
-      data?.vault?.DailyVaultStats,
       assetToken,
-      theme.palette.divider,
-      theme.palette.info.light,
-      theme.palette.info.main,
-      theme.palette.text.secondary,
-      theme.typography.value5.fontFamily,
-      theme.typography.value5.fontSize,
-      theme.typography.value5.fontWeight,
+      data?.vault?.DailyVaultStats,
+      chartTypes,
+      chartType,
+      primaryColor,
+      theme,
     ]);
 
   return chartData;
