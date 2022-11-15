@@ -40,6 +40,19 @@ yarn storybook
 
 > By default the storybook is accessible on [http://localhost:6006](http://localhost:6006)
 
+### Deploy Subgraph
+
+```bash
+nx prepare subgraph --network=mainnet
+nx build subgraph
+cd libs/subgraph
+graph deploy --studio mstable-meta-vaults --debug --access-token [subgraph deploy token]
+```
+
+After redeploying subgraph, change `NX_THE_GRAPH_MV_MAINNET_URL` on `.env` and github secret to use the latest url
+
+Unarchive the old subgraph version on subgraph studio to keep previous version's url working
+
 ## Developing
 
 Follow the [Developing Guide](./DEVELOPING.md) for detailed instructions and information regarding local development!
