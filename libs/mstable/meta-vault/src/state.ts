@@ -201,7 +201,7 @@ export const {
             : BigDecimal.ZERO;
         }),
       );
-      refetchUserVaultBalance();
+      setTimeout(refetchUserVaultBalance, 3000);
     },
   });
 

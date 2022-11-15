@@ -29,10 +29,12 @@ export const Position = () => {
     useMetavault();
 
   useEffect(() => {
-    if (mvBalanceInAsset && mvDeposited && !profitOrLoss) {
+    if (mvDeposited) {
       setProfitOrLoss(mvBalanceInAsset.sub(mvDeposited));
+    } else {
+      setProfitOrLoss(undefined);
     }
-  }, [mvBalanceInAsset, mvDeposited, profitOrLoss]);
+  }, [mvDeposited]);
 
   const roi =
     mvBalanceInAsset?.exact.eq(constants.Zero) ||
