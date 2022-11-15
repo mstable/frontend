@@ -46,7 +46,7 @@ function updateOrCreateVault(address: Address, timestamp: BigInt): Vault {
     .convertToAssets(BigInt.fromString('1000000000000000000'))
     .divDecimal(BigInt.fromString('1000000000000000000').toBigDecimal());
   let prevVaultStat = DailyVaultStat.load(
-    vault.id + '-' + days.minus(BigInt.fromString('2')).toString(),
+    vault.id + '-' + days.minus(BigInt.fromString('7')).toString(),
   );
   vault.apy = calculateApy(prevVaultStat, vault.assetPerShare, timestamp);
   vault.save();
@@ -66,7 +66,7 @@ function updateOrCreateDailyStat(
   if (forceUpdate || dailyVaultStat === null) {
     dailyVaultStat = new DailyVaultStat(dailyVaultStatId);
     let prevVaultStat = DailyVaultStat.load(
-      address.toHex() + '-' + days.minus(BigInt.fromString('2')).toString(),
+      address.toHex() + '-' + days.minus(BigInt.fromString('7')).toString(),
     );
     dailyVaultStat.vault = address.toHex();
     dailyVaultStat.timestamp = timestamp;
