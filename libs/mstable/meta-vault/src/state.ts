@@ -78,8 +78,8 @@ export const {
       vault: address,
     },
     {
-      enabled: false,
-      refetchInterval: 15,
+      enabled: !!address && !!walletAddress,
+      refetchInterval: 15000,
       onSuccess: (userVaultBalanceData) => {
         if (userVaultBalanceData) {
           setState(
