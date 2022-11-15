@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { useDataSource } from '@frontend/shared-data-access';
+import { useDataSource } from '@frontend/mstable-data-access';
 import { useGetPrices, usePrices } from '@frontend/shared-prices';
 import { ProtocolIcon, ValueLabel } from '@frontend/shared-ui';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';

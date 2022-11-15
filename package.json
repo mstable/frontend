@@ -10,7 +10,7 @@
     "prepare": "husky install",
     "i18n:extract": "nx run-many --target=i18n-extract --all",
     "i18n:compile": "nx run mstable:i18n-compile",
-    "codegen": "nx run shared-data-access:codegen",
+    "codegen": "nx run mstable-data-access:codegen",
     "storybook": "yarn start-storybook -p 6006",
     "storybook:build": "yarn build-storybook -o dist/storybook",
     "lint": "nx lint",
