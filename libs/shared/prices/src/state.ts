@@ -4,8 +4,8 @@ import {
   coingeckoCoinIds,
   coingeckoEndpoint,
 } from '@frontend/shared-constants';
-import { axiosInstance } from '@frontend/shared-data-access';
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import produce from 'immer';
 import { path } from 'ramda';
 import { createContainer } from 'react-tracked';
@@ -40,7 +40,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   useQuery(
     ['prices', state.currency, chain?.id],
     () =>
-      axiosInstance.get(
+      axios.get(
         `${coingeckoEndpoint}/simple/price?ids=${coingeckoCoinId}&vs_currencies=${state.currency}`,
       ),
     {

@@ -1,4 +1,4 @@
-import * as Types from '@frontend/shared-data-access';
+import * as Types from '@frontend/mstable-shared-data-access';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 

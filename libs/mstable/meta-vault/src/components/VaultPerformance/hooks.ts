@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useMemo } from 'react';
 
-import { useDataSource } from '@frontend/shared-data-access';
+import { useDataSource } from '@frontend/mstable-shared-data-access';
 import { BigDecimal } from '@frontend/shared-utils';
 import { alpha, useTheme } from '@mui/material';
 import { intlFormat } from 'date-fns';

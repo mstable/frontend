@@ -4,8 +4,8 @@ import {
   coingeckoCoinIds,
   coingeckoEndpoint,
 } from '@frontend/shared-constants';
-import { axiosInstance } from '@frontend/shared-data-access';
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import produce from 'immer';
 import { prop } from 'ramda';
 import { chainId, useNetwork } from 'wagmi';
@@ -61,7 +61,7 @@ export const useGetPrices = (addresses: HexAddress[]) => {
       currency,
     ],
     queryFn: () =>
-      axiosInstance.get(
+      axios.get(
         `${coingeckoEndpoint}/simple/token_price/${
           coingeckoCoinIds[chain?.id ?? chainId.mainnet]
         }?contract_addresses=${(addresses ?? []).join(

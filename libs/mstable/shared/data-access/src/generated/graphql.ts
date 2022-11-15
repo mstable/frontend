@@ -114,6 +114,7 @@ export type DailyVaultStat = {
   __typename?: 'DailyVaultStat';
   apy: Scalars['BigDecimal'];
   assetPerShare: Scalars['BigDecimal'];
+  blockNumber: Scalars['BigInt'];
   id: Scalars['ID'];
   timestamp: Scalars['BigInt'];
   totalAssets: Scalars['BigInt'];
@@ -140,6 +141,14 @@ export type DailyVaultStat_Filter = {
   assetPerShare_lte?: InputMaybe<Scalars['BigDecimal']>;
   assetPerShare_not?: InputMaybe<Scalars['BigDecimal']>;
   assetPerShare_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  blockNumber?: InputMaybe<Scalars['BigInt']>;
+  blockNumber_gt?: InputMaybe<Scalars['BigInt']>;
+  blockNumber_gte?: InputMaybe<Scalars['BigInt']>;
+  blockNumber_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  blockNumber_lt?: InputMaybe<Scalars['BigInt']>;
+  blockNumber_lte?: InputMaybe<Scalars['BigInt']>;
+  blockNumber_not?: InputMaybe<Scalars['BigInt']>;
+  blockNumber_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   id?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
@@ -198,6 +207,7 @@ export type DailyVaultStat_Filter = {
 export enum DailyVaultStat_OrderBy {
   Apy = 'apy',
   AssetPerShare = 'assetPerShare',
+  BlockNumber = 'blockNumber',
   Id = 'id',
   Timestamp = 'timestamp',
   TotalAssets = 'totalAssets',
