@@ -1,6 +1,7 @@
 {
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/shared/data-access/src",
+  "name": "mstable-data-access",
+  "sourceRoot": "libs/mstable/data-access/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -8,16 +9,16 @@
       "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/shared/data-access",
-        "tsConfig": "libs/shared/data-access/tsconfig.lib.json",
-        "project": "libs/shared/data-access/package.json",
-        "entryFile": "libs/shared/data-access/src/index.ts",
+        "outputPath": "dist/libs/mstable/data-access",
+        "tsConfig": "libs/mstable/data-access/tsconfig.lib.json",
+        "project": "libs/mstable/data-access/package.json",
+        "entryFile": "libs/mstable/data-access/src/index.ts",
         "external": ["react/jsx-runtime"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
         "compiler": "babel",
         "assets": [
           {
-            "glob": "libs/shared/data-access/README.md",
+            "glob": "libs/mstable/data-access/README.md",
             "input": ".",
             "output": "."
           }
@@ -28,13 +29,13 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/shared/data-access/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/mstable/data-access/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "codegen": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["yarn nx run shared-data-access:codegen-graphql"],
+        "commands": ["yarn nx run mstable-data-access:codegen-graphql"],
         "parallel": false
       }
     },
@@ -42,7 +43,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "yarn graphql-codegen --config 'libs/shared/data-access/codegen.js'"
+          "yarn graphql-codegen --config 'libs/mstable/data-access/codegen.js'"
         ]
       }
     }

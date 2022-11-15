@@ -1,4 +1,4 @@
-import { TransactionType, useDataSource } from '@frontend/shared-data-access';
+import { TransactionType, useDataSource } from '@frontend/mstable-data-access';
 import { AddressLabel, TokenIcon } from '@frontend/shared-ui';
 import { Dialog } from '@frontend/shared-ui';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';

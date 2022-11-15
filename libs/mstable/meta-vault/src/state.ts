@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useDataSource } from '@frontend/shared-data-access';
+import { useDataSource } from '@frontend/mstable-data-access';
 import { BigDecimal } from '@frontend/shared-utils';
 import { constants } from 'ethers';
 import produce from 'immer';
