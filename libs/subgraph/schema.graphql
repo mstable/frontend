@@ -18,6 +18,7 @@ type DailyVaultStat @entity {
   totalAssets: BigInt!
   totalSupply: BigInt!
   assetPerShare: BigDecimal!
+  blockNumber: BigInt!
 }
 
 type VaultBalance @entity {
