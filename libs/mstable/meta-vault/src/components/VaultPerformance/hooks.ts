@@ -79,7 +79,7 @@ export const useChartData = (
   chartType: ChartType,
 ) => {
   const {
-    metavault: { address },
+    metavault: { address, primaryColor },
     mvBalance,
     assetToken,
   } = useMetavault();
@@ -126,8 +126,8 @@ export const useChartData = (
             {
               label: chartTypes[chartType].label,
               data: sortedData.map((d) => d.value),
-              borderColor: theme.palette.info.main,
-              backgroundColor: getBackgroundColor(theme.palette.info.light),
+              borderColor: primaryColor,
+              backgroundColor: getBackgroundColor(primaryColor),
               fill: true,
             },
           ],

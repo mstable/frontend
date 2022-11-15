@@ -1,146 +1,175 @@
-import { MVIcon, ProtocolIcon, ValueLabel } from '@frontend/shared-ui';
+import { supportedMetavaults } from '@frontend/shared-constants';
+import { usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
-  Avatar,
-  AvatarGroup,
-  CardContent,
-  Grid,
+  alpha,
+  Divider,
+  keyframes,
   Skeleton,
   Stack,
   Typography,
+  useTheme,
 } from '@mui/material';
-import { constants } from 'ethers';
-import { StarFour } from 'phosphor-react';
-import { Line } from 'react-chartjs-2';
+import { GasPump, Vault } from 'phosphor-react';
 import { useIntl } from 'react-intl';
+import { chainId, useFeeData, useNetwork } from 'wagmi';
 
-import { useAssetDecimal, useChartData, useMetavaultData } from '../hooks';
-import { HoverableCard } from './HoverableCard';
+import { useTotalTvl } from '../hooks';
+import { VaultCard } from './VaultCard';
 
-import type { Metavault } from '@frontend/shared-constants';
-import type { TypographyProps } from '@mui/material';
+const gradient = keyframes`  
+	from {
+		background-position: 0% 50%;
+	}
+	to {
+		background-position: 100% 100%;
+	}
+`;
 
-interface Props {
-  metavault: Metavault;
-  to: string;
-}
+const gradientReverse = keyframes`  
+	from {
+		background-position: 100% 100%;
+	}
+	to {
+    background-position: 0% 50%;		
+	}
+`;
 
-const tagProps: TypographyProps = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  fontWeight: 'medium',
-  fontSize: 14,
-  px: 1,
-  height: 30,
-  noWrap: true,
-  bgcolor: (theme) => theme.palette.background.highlight,
-  borderRadius: 2,
-};
-
-export const FeatureCard = ({ metavault, to }: Props) => {
+export const FeatureCard = () => {
   const intl = useIntl();
-  const data = useMetavaultData(metavault.address);
-  const chartData = useChartData(metavault.address);
-  const { data: assetDecimal, isLoading: assetLoading } = useAssetDecimal(
-    metavault.address,
-  );
+  const theme = useTheme();
+  const { chain } = useNetwork();
+  const { data: feeData, isLoading: feeLoading } = useFeeData({
+    formatUnits: 'gwei',
+  });
+  const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
+  const featuredMv = metavaults.find((mv) => mv.featured);
+  const totalTvl = useTotalTvl();
+  const { currency } = usePrices();
 
   return (
-    <HoverableCard
-      transparentBackground
-      primaryColor={metavault.primaryColor}
-      to={to}
+    <Stack
+      direction={{ xs: 'column', md: 'row' }}
+      sx={(theme) => ({
+        px: { xs: 2, md: 4, lg: 7.5 },
+        py: { xs: 4, md: 8, lg: 15 },
+        borderRadius: 2.6,
+        backgroundColor: alpha(theme.palette.background.paper, 0.4),
+        backdropFilter: 'blur(10px)',
+        boxShadow: 1,
+        border: `1px solid ${theme.palette.divider}`,
+        cursor: 'default',
+        '.title': {
+          fontSize: 64,
+          fontWeight: 900,
+          lineHeight: '64px',
+          pt: { xs: 4, md: 8 },
+          background: `linear-gradient(${
+            theme.palette.mode === 'light' ? '90' : '270'
+          }deg,#D1C6FF 0%, #D1C6FF 2.49%, #6A67CB 68.52%, #6A67CB 100%)`,
+          backgroundSize: `200% 200%`,
+          backgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          animation: `${gradientReverse} 1s ease forwards`,
+        },
+        '.subtitle': {
+          color:
+            theme.palette.mode === 'light'
+              ? theme.palette.grey['500']
+              : theme.palette.grey['700'],
+          fontSize: 32,
+          fontWeight: 800,
+          mb: 4,
+        },
+        '.panel': {
+          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 1,
+          p: 2,
+        },
+        '&:hover': {
+          boxShadow: 2,
+          border: `1px solid ${
+            theme.palette.mode === 'light'
+              ? theme.palette.grey['200']
+              : theme.palette.grey['700']
+          }`,
+          '.title': {
+            animation: `${gradient} 0.3s ease forwards`,
+          },
+          '.subtitle': {
+            color: theme.palette.grey['600'],
+          },
+          '.panel': {
+            border: `1px solid ${
+              theme.palette.mode === 'light'
+                ? theme.palette.grey['200']
+                : theme.palette.grey['700']
+            }`,
+          },
+        },
+      })}
+      spacing={16}
     >
-      <CardContent sx={{ p: 4 }}>
-        <Grid container spacing={4}>
-          <Grid item sm={5} xs={12}>
-            <Stack
-              direction="row"
-              spacing={1}
-              color="text.secondary"
-              alignItems="center"
-              mb={4}
-            >
-              <StarFour weight="fill" />
-              <Typography variant="h5" color="text.secondary">
-                {intl.formatMessage({ defaultMessage: 'Featured' })}
-              </Typography>
-            </Stack>
-            <MVIcon
-              address={metavault.address}
-              sx={{ height: 80, width: 80, mb: 2 }}
-            />
-            <Typography variant="h2">{metavault.name}</Typography>
-            <Stack direction="row" spacing={1} mt={2} mb={4}>
-              {metavault.tags.map((tag, idx) => (
-                <Typography key={`tag-${idx}`} {...tagProps}>
-                  {intl.formatMessage(tag)}
-                </Typography>
-              ))}
-            </Stack>
-            <Stack
-              direction={{ xs: 'column', md: 'row' }}
-              spacing={{ xs: 3, md: 4 }}
-            >
-              <ValueLabel
-                label={intl.formatMessage({ defaultMessage: 'Protocols' })}
-                components={{ valueContainer: { pb: 0.3 } }}
-              >
-                <AvatarGroup max={6}>
-                  {metavault.strategies.map((strat) => (
-                    <Avatar key={strat.protocol.id}>
-                      <ProtocolIcon
-                        name={strat.protocol.id}
-                        sx={{ height: 24, width: 24 }}
-                      />
-                    </Avatar>
-                  ))}
-                </AvatarGroup>
-              </ValueLabel>
-              <ValueLabel
-                label={intl.formatMessage({ defaultMessage: 'APY' })}
-                hint={intl.formatMessage({
-                  defaultMessage:
-                    'Annual Percentage Yield. Annualized 24 hours performance.',
-                })}
-              >
-                <Typography variant="value2">
-                  {intl.formatNumber(data?.apy ?? 0, {
-                    style: 'percent',
-                    maximumFractionDigits: 2,
-                  })}
-                </Typography>
-              </ValueLabel>
-              <ValueLabel
-                label={intl.formatMessage({ defaultMessage: 'TVL' })}
-                hint={intl.formatMessage({
-                  defaultMessage: 'Total Value Locked',
-                })}
-              >
-                <Stack direction="row" spacing={1} alignItems="baseline">
-                  <Typography variant="value2">
-                    {assetLoading ? (
-                      <Skeleton width={75} />
-                    ) : (
-                      intl.formatNumber(
-                        new BigDecimal(
-                          data?.totalAssets ?? constants.Zero,
-                          assetDecimal,
-                        ).simple,
-                        { notation: 'compact' },
-                      )
-                    )}
-                  </Typography>
-                </Stack>
-              </ValueLabel>
-            </Stack>
-          </Grid>
-          <Grid item sm={7} xs={12}>
-            <Line {...chartData} />
-          </Grid>
-        </Grid>
-      </CardContent>
-    </HoverableCard>
+      <Stack
+        direction="column"
+        width={{ xs: 1, md: 1 / 2 }}
+        alignItems="flex-end"
+      >
+        <Stack direction="column" alignItems="flex-start" spacing={3}>
+          <Typography className="title">
+            {intl.formatMessage({
+              defaultMessage: 'Discover<br></br>Meta Vaults',
+            })}
+          </Typography>
+          <Typography className="subtitle">
+            {intl.formatMessage({
+              defaultMessage: 'The easiest way to yield in DeFi.',
+            })}
+          </Typography>
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1}
+            className="panel"
+          >
+            <Vault weight="fill" color={theme.palette.icons.color} />
+            <Typography variant="value5" pr={3}>
+              {isNaN(totalTvl) ? (
+                <Skeleton width={60} height={14} />
+              ) : (
+                intl.formatNumber(totalTvl, {
+                  style: 'currency',
+                  currency,
+                  notation: 'compact',
+                })
+              )}
+            </Typography>
+            <Divider orientation="vertical" variant="middle" flexItem />
+            <GasPump weight="fill" color={theme.palette.icons.color} />
+            <Typography variant="value5">
+              {feeLoading ? (
+                <Skeleton width={75} />
+              ) : (
+                intl.formatMessage(
+                  { defaultMessage: '{value} GWEI' },
+                  { value: new BigDecimal(feeData?.gasPrice, 9).format(3) },
+                )
+              )}
+            </Typography>
+          </Stack>
+        </Stack>
+      </Stack>
+      <Stack
+        width={{ xs: 1, md: 1 / 2 }}
+        justifyContent="center"
+        alignItems="flex-start"
+      >
+        <VaultCard
+          metavault={featuredMv}
+          to={`./${featuredMv.id}`}
+          sx={{ width: 400, height: 500 }}
+        />
+      </Stack>
+    </Stack>
   );
 };

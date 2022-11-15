@@ -32,8 +32,7 @@ export const SubmitButton = () => {
   const {
     metavault: { address },
   } = useMetavault();
-  const { amount, operation, needsApproval, isError, tab, token } =
-    useOperations();
+  const { amount, operation, needsApproval, isError, tab } = useOperations();
   const reset = useReset();
   const setIsSubmitLoading = useSetIsSubmitLoading();
 
@@ -74,10 +73,9 @@ export const SubmitButton = () => {
     onSuccess: (data) => {
       pushNotification({
         title: intl.formatMessage(
-          { defaultMessage: '{operation}ing {currency}' },
+          { defaultMessage: '{operation}ing' },
           {
             operation: operationLabel,
-            currency: token?.symbol,
           },
         ),
         content: (
