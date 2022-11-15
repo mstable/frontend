@@ -3,10 +3,10 @@
   "version": 2,
   "projects": {
     "mstable": "apps/mstable",
-    "mstable-data-access": "libs/mstable/data-access",
     "mstable-e2e": "apps/mstable-e2e",
     "mstable-meta-vault": "libs/mstable/meta-vault",
     "mstable-settings": "libs/mstable/settings",
+    "mstable-shared-data-access": "libs/mstable/shared/data-access",
     "mstable-shared-ui": "libs/mstable/shared/ui",
     "shared-constants": "libs/shared/constants",
     "shared-gas-fee": "libs/shared/gas-fee",

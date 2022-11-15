@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useDataSource } from '@frontend/mstable-data-access';
+import { useDataSource } from '@frontend/mstable-shared-data-access';
 import { useGasFee } from '@frontend/shared-gas-fee';
 import { usePrices } from '@frontend/shared-prices';
 import {

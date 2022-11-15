@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { useDataSource } from '@frontend/mstable-data-access';
+import { useDataSource } from '@frontend/mstable-shared-data-access';
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { useGetPrices, usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';

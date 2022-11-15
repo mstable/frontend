@@ -17,9 +17,11 @@
     "strict": false,
     "noPropertyAccessFromIndexSignature": false,
     "paths": {
-      "@frontend/mstable-data-access": ["libs/mstable/data-access/src/index.ts"],
       "@frontend/mstable-metavault": ["libs/mstable/meta-vault/src/index.ts"],
       "@frontend/mstable-settings": ["libs/mstable/settings/src/index.ts"],
+      "@frontend/mstable-shared-data-access": [
+        "libs/mstable/shared/data-access/src/index.ts"
+      ],
       "@frontend/mstable-shared-ui": ["libs/mstable/shared/ui/src/index.ts"],
       "@frontend/shared-constants": ["libs/shared/constants/src/index.ts"],
       "@frontend/shared-gas-fee": ["libs/shared/gas-fee/src/index.ts"],
