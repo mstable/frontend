@@ -30,6 +30,7 @@ type MetaVaultState = {
   mvBalance: BigDecimal | null;
   mvBalanceInAsset: BigDecimal | null;
   mvDeposited: BigDecimal | null;
+  profitOrLoss: BigDecimal | null;
   assetBalance: BigDecimal | null;
   assetBalanceInShare: BigDecimal | null;
 };
@@ -61,6 +62,7 @@ export const {
     mvBalance: null,
     mvBalanceInAsset: null,
     mvDeposited: null,
+    profitOrLoss: null,
     assetBalance: null,
     assetBalanceInShare: null,
   });
@@ -71,23 +73,25 @@ export const {
   } = state;
 
   const dataSource = useDataSource();
-  const { refetch: refetchUserVaultBalance } = useUserVaultBalanceQuery(
+  useUserVaultBalanceQuery(
     dataSource,
     {
       owner: walletAddress,
       vault: address,
     },
     {
-      enabled: !!address && !!walletAddress,
+      enabled: !!address && !!walletAddress && !!state.mvBalanceInAsset,
       refetchInterval: 15000,
       onSuccess: (userVaultBalanceData) => {
         if (userVaultBalanceData) {
           setState(
             produce((draft) => {
-              draft.mvDeposited = new BigDecimal(
+              const mvDeposited = new BigDecimal(
                 userVaultBalanceData.vaultBalances[0]?.assetDeposited ||
                   constants.Zero,
               );
+              draft.mvDeposited = mvDeposited;
+              draft.profitOrLoss = draft.mvBalanceInAsset.sub(mvDeposited);
             }),
           );
         }
@@ -201,7 +205,6 @@ export const {
             : BigDecimal.ZERO;
         }),
       );
-      setTimeout(refetchUserVaultBalance, 3000);
     },
   });
 
@@ -225,6 +228,7 @@ export const {
         draft.assetBalance = null;
         draft.assetBalanceInShare = null;
         draft.mvDeposited = null;
+        draft.profitOrLoss = null;
       }),
     );
   }, [walletAddress]);
