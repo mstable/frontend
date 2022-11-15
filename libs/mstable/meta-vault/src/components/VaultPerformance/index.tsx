@@ -1,20 +1,8 @@
-/* eslint-disable react/prop-types */
 import { useState } from 'react';
 
 import { Dialog } from '@frontend/shared-ui';
 import { Button, Card, CardContent, CardHeader } from '@mui/material';
 import { useSearch } from '@tanstack/react-location';
-import {
-  CategoryScale,
-  Chart as ChartJS,
-  Filler,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-} from 'chart.js';
 import { FrameCorners } from 'phosphor-react';
 import { Line } from 'react-chartjs-2';
 import { useIntl } from 'react-intl';
@@ -23,17 +11,6 @@ import { Controls } from './components/Controls';
 import { useChartConfig, useChartData } from './hooks';
 
 import type { MvGenerics } from '../../types';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend,
-);
 
 export const VaultPerformance = () => {
   const intl = useIntl();

@@ -1,6 +1,5 @@
 import { SettingsProvider } from '@frontend/mstable-settings';
 import { Topnav } from '@frontend/mstable-shared-ui';
-import { queryClient } from '@frontend/shared-data-access';
 import { GasFeeProvider } from '@frontend/shared-gas-fee';
 import { I18nProvider } from '@frontend/shared-i18n';
 import { ModalsProvider } from '@frontend/shared-modals';
@@ -15,18 +14,28 @@ import {
   WagmiProvider,
 } from '@frontend/shared-wagmi';
 import { Stack } from '@mui/material';
-import { Outlet, ReactLocation, Router } from '@tanstack/react-location';
+import { Outlet, Router } from '@tanstack/react-location';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { useEffectOnce } from 'react-use';
 
 import en from '../assets/lang/en.json';
+import {
+  chains,
+  reactLocation,
+  reactQueryClient,
+  registerCharts,
+  wagmiClient,
+} from '../clients';
 import { routes } from '../routes';
 
 import type { Theme } from '@mui/material';
 
-const location = new ReactLocation();
-
 const AppWrapped = () => {
   useUnsupportedNetworks();
+
+  useEffectOnce(() => {
+    registerCharts();
+  });
 
   return (
     <Stack
@@ -55,10 +64,10 @@ const AppWrapped = () => {
 export const App = () =>
   composeContexts(
     [
-      [QueryClientProvider, { client: queryClient }],
+      [QueryClientProvider, { client: reactQueryClient }],
       [I18nProvider, { messages: { en } }],
       [ThemeProvider],
-      [Router, { location, routes }],
+      [Router, { location: reactLocation, routes }],
       [
         NotificationsProvider,
         {
@@ -72,7 +81,7 @@ export const App = () =>
           },
         },
       ],
-      [WagmiProvider],
+      [WagmiProvider, { client: wagmiClient, chains: chains }],
       [ChainRefresherProvider],
       [PricesProvider],
       [GasFeeProvider],
