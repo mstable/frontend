@@ -1,4 +1,3 @@
-export * from './axios';
 export * from './chartjs';
 export * from './react-location';
 export * from './react-query';
