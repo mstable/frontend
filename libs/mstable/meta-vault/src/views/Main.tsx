@@ -7,11 +7,6 @@ import { Box } from '@mui/material';
 import { Outlet } from '@tanstack/react-location';
 import { useNetwork } from 'wagmi';
 
-import { plausible } from '../analytics';
-
-plausible.enableAutoPageviews();
-plausible.enableAutoOutboundTracking();
-
 export const Main = () => {
   const { chain } = useNetwork();
 

@@ -18,10 +18,14 @@ import { Stack } from '@mui/material';
 import { Outlet, ReactLocation, Router } from '@tanstack/react-location';
 import { QueryClientProvider } from '@tanstack/react-query';
 
+import { plausible } from '../analytics';
 import en from '../assets/lang/en.json';
 import { routes } from '../routes';
 
 import type { Theme } from '@mui/material';
+
+plausible.enableAutoPageviews();
+plausible.enableAutoOutboundTracking();
 
 const location = new ReactLocation();
 
