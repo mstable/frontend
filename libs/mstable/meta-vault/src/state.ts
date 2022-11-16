@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useDataSource } from '@frontend/shared-data-access';
+import { useDataSource } from '@frontend/mstable-shared-data-access';
 import { BigDecimal } from '@frontend/shared-utils';
 import { constants } from 'ethers';
 import produce from 'immer';
@@ -30,6 +30,7 @@ type MetaVaultState = {
   mvBalance: BigDecimal | null;
   mvBalanceInAsset: BigDecimal | null;
   mvDeposited: BigDecimal | null;
+  profitOrLoss: BigDecimal | null;
   assetBalance: BigDecimal | null;
   assetBalanceInShare: BigDecimal | null;
 };
@@ -61,6 +62,7 @@ export const {
     mvBalance: null,
     mvBalanceInAsset: null,
     mvDeposited: null,
+    profitOrLoss: null,
     assetBalance: null,
     assetBalanceInShare: null,
   });
@@ -71,22 +73,25 @@ export const {
   } = state;
 
   const dataSource = useDataSource();
-  const { refetch: refetchUserVaultBalance } = useUserVaultBalanceQuery(
+  useUserVaultBalanceQuery(
     dataSource,
     {
       owner: walletAddress,
       vault: address,
     },
     {
-      enabled: false,
+      enabled: !!address && !!walletAddress && !!state.mvBalanceInAsset,
+      refetchInterval: 15000,
       onSuccess: (userVaultBalanceData) => {
         if (userVaultBalanceData) {
           setState(
             produce((draft) => {
-              draft.mvDeposited = new BigDecimal(
+              const mvDeposited = new BigDecimal(
                 userVaultBalanceData.vaultBalances[0]?.assetDeposited ||
                   constants.Zero,
               );
+              draft.mvDeposited = mvDeposited;
+              draft.profitOrLoss = draft.mvBalanceInAsset.sub(mvDeposited);
             }),
           );
         }
@@ -200,7 +205,6 @@ export const {
             : BigDecimal.ZERO;
         }),
       );
-      refetchUserVaultBalance();
     },
   });
 
@@ -220,8 +224,11 @@ export const {
     setState(
       produce((draft) => {
         draft.mvBalance = null;
+        draft.mvBalanceInAsset = null;
         draft.assetBalance = null;
+        draft.assetBalanceInShare = null;
         draft.mvDeposited = null;
+        draft.profitOrLoss = null;
       }),
     );
   }, [walletAddress]);

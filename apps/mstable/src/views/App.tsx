@@ -1,36 +1,22 @@
-import { SettingsProvider } from '@frontend/mstable-settings';
 import { Topnav } from '@frontend/mstable-shared-ui';
-import { queryClient } from '@frontend/shared-data-access';
-import { GasFeeProvider } from '@frontend/shared-gas-fee';
-import { I18nProvider } from '@frontend/shared-i18n';
-import { ModalsProvider } from '@frontend/shared-modals';
-import { NotificationsProvider } from '@frontend/shared-notifications';
-import { PricesProvider } from '@frontend/shared-prices';
-import { ThemeProvider } from '@frontend/shared-theme';
 import { ErrorBoundary, ErrorPage } from '@frontend/shared-ui';
-import { composeContexts } from '@frontend/shared-utils';
-import {
-  ChainRefresherProvider,
-  useUnsupportedNetworks,
-  WagmiProvider,
-} from '@frontend/shared-wagmi';
+import { useUnsupportedNetworks } from '@frontend/shared-wagmi';
 import { Stack } from '@mui/material';
-import { Outlet, ReactLocation, Router } from '@tanstack/react-location';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { Outlet } from '@tanstack/react-location';
+import { useEffectOnce } from 'react-use';
 
 import { plausible } from '../analytics';
-import en from '../assets/lang/en.json';
-import { routes } from '../routes';
-
-import type { Theme } from '@mui/material';
+import { registerCharts } from '../clients';
 
 plausible.enableAutoPageviews();
 plausible.enableAutoOutboundTracking();
 
-const location = new ReactLocation();
-
-const AppWrapped = () => {
+export const App = () => {
   useUnsupportedNetworks();
+
+  useEffectOnce(() => {
+    registerCharts();
+  });
 
   return (
     <Stack
@@ -55,33 +41,3 @@ const AppWrapped = () => {
     </Stack>
   );
 };
-
-export const App = () =>
-  composeContexts(
-    [
-      [QueryClientProvider, { client: queryClient }],
-      [I18nProvider, { messages: { en } }],
-      [ThemeProvider],
-      [Router, { location, routes }],
-      [
-        NotificationsProvider,
-        {
-          containerProps: {
-            sx: {
-              top: (theme: Theme) => theme.spacing(10),
-              right: (theme: Theme) => theme.spacing(2),
-              left: undefined,
-              bottom: undefined,
-            },
-          },
-        },
-      ],
-      [WagmiProvider],
-      [ChainRefresherProvider],
-      [PricesProvider],
-      [GasFeeProvider],
-      [ModalsProvider],
-      [SettingsProvider],
-    ],
-    <AppWrapped />,
-  );

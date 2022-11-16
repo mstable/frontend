@@ -1,5 +1,6 @@
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { usePrices } from '@frontend/shared-prices';
+import { hoverPrimarySx } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
   alpha,
@@ -10,6 +11,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { useNavigate } from '@tanstack/react-location';
 import { GasPump, Vault } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 import { chainId, useFeeData, useNetwork } from 'wagmi';
@@ -39,6 +41,7 @@ export const FeatureCard = () => {
   const intl = useIntl();
   const theme = useTheme();
   const { chain } = useNetwork();
+  const navigate = useNavigate();
   const { data: feeData, isLoading: feeLoading } = useFeeData({
     formatUnits: 'gwei',
   });
@@ -47,18 +50,34 @@ export const FeatureCard = () => {
   const totalTvl = useTotalTvl();
   const { currency } = usePrices();
 
+  const handleClick = () => {
+    navigate({ to: `./${featuredMv.id}` });
+  };
+
   return (
     <Stack
-      direction={{ xs: 'column', md: 'row' }}
+      onClick={handleClick}
+      role="button"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
       sx={(theme) => ({
-        px: { xs: 2, md: 4, lg: 7.5 },
+        px: 4,
         py: { xs: 4, md: 8, lg: 15 },
         borderRadius: 2.6,
-        backgroundColor: alpha(theme.palette.background.paper, 0.4),
+        background:
+          theme.palette.mode === 'light'
+            ? `linear-gradient(107.33deg, ${alpha(
+                theme.palette.background.default,
+                0.2,
+              )} 0%, #F8FAFF 100%)`
+            : `linear-gradient(106.57deg, ${alpha(
+                theme.palette.background.default,
+                0.2,
+              )} 0%, #0A102C 100%)`,
         backdropFilter: 'blur(10px)',
-        boxShadow: 1,
         border: `1px solid ${theme.palette.divider}`,
-        cursor: 'default',
+        cursor: 'pointer',
         '.title': {
           fontSize: 64,
           fontWeight: 900,
@@ -70,12 +89,12 @@ export const FeatureCard = () => {
           backgroundSize: `200% 200%`,
           backgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
-          animation: `${gradientReverse} 1s ease forwards`,
+          animation: `${gradientReverse} 0.5s ease forwards`,
         },
         '.subtitle': {
           color:
             theme.palette.mode === 'light'
-              ? theme.palette.grey['500']
+              ? theme.palette.grey['400']
               : theme.palette.grey['700'],
           fontSize: 32,
           fontWeight: 800,
@@ -87,17 +106,21 @@ export const FeatureCard = () => {
           p: 2,
         },
         '&:hover': {
-          boxShadow: 2,
+          boxShadow: 1,
           border: `1px solid ${
             theme.palette.mode === 'light'
               ? theme.palette.grey['200']
               : theme.palette.grey['700']
           }`,
+          background:
+            theme.palette.mode === 'light'
+              ? `linear-gradient(106.79deg, rgba(234, 235, 255, 0.08) 3.2%, rgba(248, 250, 255, 0.4) 97.33%)`
+              : ` linear-gradient(106.33deg, rgba(44, 48, 78, 0.08) 5.27%, rgba(10, 16, 44, 0.4) 99.37%)`,
           '.title': {
-            animation: `${gradient} 0.3s ease forwards`,
+            animation: `${gradient} 0.2s ease forwards`,
           },
           '.subtitle': {
-            color: theme.palette.grey['600'],
+            color: theme.palette.grey['500'],
           },
           '.panel': {
             border: `1px solid ${
@@ -106,16 +129,20 @@ export const FeatureCard = () => {
                 : theme.palette.grey['700']
             }`,
           },
+          '.vaultcard': hoverPrimarySx(theme, featuredMv.primaryColor),
         },
       })}
-      spacing={16}
     >
       <Stack
-        direction="column"
-        width={{ xs: 1, md: 1 / 2 }}
-        alignItems="flex-end"
+        direction={{ xs: 'column', md: 'row' }}
+        spacing={{ xs: 2, sm: 4, md: 8, lg: 15 }}
       >
-        <Stack direction="column" alignItems="flex-start" spacing={3}>
+        <Stack
+          direction="column"
+          width={{ xs: 1, md: 1 / 2 }}
+          alignItems="flex-start"
+          spacing={3}
+        >
           <Typography className="title">
             {intl.formatMessage({
               defaultMessage: 'Discover<br></br>Meta Vaults',
@@ -158,17 +185,17 @@ export const FeatureCard = () => {
             </Typography>
           </Stack>
         </Stack>
-      </Stack>
-      <Stack
-        width={{ xs: 1, md: 1 / 2 }}
-        justifyContent="center"
-        alignItems="flex-start"
-      >
-        <VaultCard
-          metavault={featuredMv}
-          to={`./${featuredMv.id}`}
-          sx={{ width: 400, height: 500 }}
-        />
+        <Stack
+          width={{ xs: 1, md: 1 / 2 }}
+          justifyContent="center"
+          alignItems="flex-end"
+        >
+          <VaultCard
+            metavault={featuredMv}
+            sx={{ width: 400, height: 500 }}
+            className="vaultcard"
+          />
+        </Stack>
       </Stack>
     </Stack>
   );

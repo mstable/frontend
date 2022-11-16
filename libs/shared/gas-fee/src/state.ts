@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import { etherscanApiEndpoints } from '@frontend/shared-constants';
-import { axiosInstance } from '@frontend/shared-data-access';
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import produce from 'immer';
 import { pathOr } from 'ramda';
 import { createContainer } from 'react-tracked';
@@ -31,7 +31,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   useQuery(
     ['gas-fee', chain?.id],
     () =>
-      axiosInstance.get(
+      axios.get(
         `${
           etherscanApiEndpoints[chain?.id ?? chainId.mainnet]
         }/api?module=gastracker&action=gasoracle`,
