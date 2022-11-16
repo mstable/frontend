@@ -5,7 +5,7 @@ import { supportedMetavaults } from '@frontend/shared-constants';
 import { useGetPrices, usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
 import { alpha } from '@mui/material';
-import { pathOr, pluck, propEq } from 'ramda';
+import { pathOr, pluck, prop, propEq } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
   chainId,
@@ -55,6 +55,39 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
     propEq('address', address),
   );
 
+  const series = useMemo(
+    () =>
+      data?.DailyVaultStats
+        ? data.DailyVaultStats.map((d) => ({
+            label: '',
+            value: prop('assetPerShare', d),
+          }))
+        : null,
+    [data?.DailyVaultStats],
+  );
+
+  const min = useMemo(
+    () =>
+      series
+        ? series.reduce(
+            (acc, curr) => Math.min(acc, Number(curr.value) - 0.05),
+            series[0].value,
+          )
+        : undefined,
+    [series],
+  );
+
+  const max = useMemo(
+    () =>
+      series
+        ? series.reduce(
+            (acc, curr) => Math.max(acc, Number(curr.value) + 0.05),
+            series[0].value,
+          )
+        : undefined,
+    [series],
+  );
+
   const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
     useMemo(
       () => ({
@@ -63,7 +96,7 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
           datasets: [
             {
               label: intl.formatMessage({ defaultMessage: 'Perf' }),
-              data: pluck('assetPerShare', data?.DailyVaultStats ?? []),
+              data: pluck('value', series),
               borderColor: function (context) {
                 const chart = context.chart;
                 const { ctx, chartArea } = chart;
@@ -88,6 +121,8 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
           scales: {
             y: {
               display: false,
+              min,
+              max,
             },
             x: {
               display: false,
@@ -106,7 +141,7 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
           },
         },
       }),
-      [data?.DailyVaultStats, intl, isSmallChart, mv.primaryColor],
+      [data?.DailyVaultStats, intl, isSmallChart, max, min, mv.primaryColor],
     );
 
   return chartData;
