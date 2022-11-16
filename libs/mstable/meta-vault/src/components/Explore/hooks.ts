@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useDataSource } from '@frontend/mstable-shared-data-access';
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { useGetPrices, usePrices } from '@frontend/shared-prices';
-import { BigDecimal } from '@frontend/shared-utils';
+import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import { alpha } from '@mui/material';
 import { pathOr, pluck, prop, propEq } from 'ramda';
 import { useIntl } from 'react-intl';
@@ -24,8 +24,6 @@ import type { ChartArea, ChartData, ChartOptions } from 'chart.js';
 export const useMetavaultData = (address: HexAddress) => {
   const dataSource = useDataSource();
   const { data } = useMetavaultsQuery(dataSource);
-
-  console.log(data);
 
   return useMemo(
     () => data?.vaults?.find(propEq('address', address)),
@@ -68,7 +66,7 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
 
   const min = useMemo(
     () =>
-      series
+      !isNilOrEmpty(series)
         ? series.reduce(
             (acc, curr) => Math.min(acc, Number(curr.value) - 0.05),
             series[0].value,
@@ -79,7 +77,7 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
 
   const max = useMemo(
     () =>
-      series
+      !isNilOrEmpty(series)
         ? series.reduce(
             (acc, curr) => Math.max(acc, Number(curr.value) + 0.05),
             series[0].value,
@@ -92,7 +90,7 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
     useMemo(
       () => ({
         data: {
-          labels: data?.DailyVaultStats?.map(() => '') ?? [],
+          labels: pluck('label', series),
           datasets: [
             {
               label: intl.formatMessage({ defaultMessage: 'Perf' }),
@@ -141,7 +139,7 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
           },
         },
       }),
-      [data?.DailyVaultStats, intl, isSmallChart, max, min, mv.primaryColor],
+      [intl, isSmallChart, max, min, mv.primaryColor, series],
     );
 
   return chartData;

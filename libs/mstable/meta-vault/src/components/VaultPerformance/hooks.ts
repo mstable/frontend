@@ -2,7 +2,7 @@
 import { useMemo } from 'react';
 
 import { useDataSource } from '@frontend/mstable-shared-data-access';
-import { BigDecimal } from '@frontend/shared-utils';
+import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import { alpha, useTheme } from '@mui/material';
 import { intlFormat } from 'date-fns';
 import { pluck } from 'ramda';
@@ -126,10 +126,12 @@ export const useChartData = (
   const min = useMemo(
     () =>
       ({
-        PERF: series.reduce(
-          (acc, curr) => Math.min(acc, Number(curr.value) - 0.05),
-          series[0].value,
-        ),
+        PERF: !isNilOrEmpty(series)
+          ? series.reduce(
+              (acc, curr) => Math.min(acc, Number(curr.value) - 0.05),
+              series[0].value,
+            )
+          : undefined,
         APY: Math.min(0, ...series.map((d) => d.value)),
         TVL: Math.min(0, ...series.map((d) => d.value)),
       }[chartType]),
@@ -139,10 +141,12 @@ export const useChartData = (
   const max = useMemo(
     () =>
       ({
-        PERF: series.reduce(
-          (acc, curr) => Math.max(acc, Number(curr.value) + 0.05),
-          series[0].value,
-        ),
+        PERF: !isNilOrEmpty(series)
+          ? series.reduce(
+              (acc, curr) => Math.max(acc, Number(curr.value) + 0.05),
+              series[0].value,
+            )
+          : undefined,
         APY: undefined,
         TVL: undefined,
       }[chartType]),
