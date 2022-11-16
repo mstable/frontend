@@ -3,7 +3,9 @@ query userVaultBalance($owner: Bytes!, $vault: String!) {
     owner
     vault {
       id
-      asset
+      asset {        
+        address
+      }
     }
     timestamp
     shareBalance
@@ -37,6 +39,7 @@ query metavault($id: ID!, $days: Int = 7) {
     assetPerShare
     DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
       apy
+      assetPerShare
       totalAssets
       totalSupply
       timestamp
@@ -53,6 +56,7 @@ query metavaults($days: Int = 7) {
     DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
       apy
       totalAssets
+      assetPerShare
       totalSupply
       timestamp
     }

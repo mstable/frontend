@@ -5,7 +5,7 @@ import { supportedMetavaults } from '@frontend/shared-constants';
 import { useGetPrices, usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
 import { alpha } from '@mui/material';
-import { pathOr, propEq, sort } from 'ramda';
+import { pathOr, pluck, propEq } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
   chainId,
@@ -23,11 +23,13 @@ import type { ChartArea, ChartData, ChartOptions } from 'chart.js';
 
 export const useMetavaultData = (address: HexAddress) => {
   const dataSource = useDataSource();
-  const { data: vaultsData } = useMetavaultsQuery(dataSource);
+  const { data } = useMetavaultsQuery(dataSource);
+
+  console.log(data);
 
   return useMemo(
-    () => vaultsData?.vaults?.find(propEq('address', address)),
-    [address, vaultsData?.vaults],
+    () => data?.vaults?.find(propEq('address', address)),
+    [address, data?.vaults],
   );
 };
 
@@ -47,31 +49,30 @@ const getGradient =
 
 export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
   const intl = useIntl();
+  const { chain } = useNetwork();
   const data = useMetavaultData(address);
+  const mv = supportedMetavaults[chain?.id ?? chainId.mainnet].find(
+    propEq('address', address),
+  );
 
   const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
-    useMemo(() => {
-      const sortedData = sort(
-        (a, b) => Number(a.timestamp) - Number(b.timestamp),
-        data?.DailyVaultStats || [],
-      ).map((d) => Number(d.apy));
-
-      return {
+    useMemo(
+      () => ({
         data: {
-          labels: sortedData.map(() => ''),
+          labels: data?.DailyVaultStats?.map(() => '') ?? [],
           datasets: [
             {
-              label: intl.formatMessage({ defaultMessage: 'APY' }),
-              data: sortedData,
+              label: intl.formatMessage({ defaultMessage: 'Perf' }),
+              data: pluck('assetPerShare', data?.DailyVaultStats ?? []),
               borderColor: function (context) {
                 const chart = context.chart;
                 const { ctx, chartArea } = chart;
-                return getGradient('#2775CA')(ctx, chartArea);
+                return getGradient(mv.primaryColor)(ctx, chartArea);
               },
               borderWidth: isSmallChart ? 2 : 3,
               backgroundColor: 'transparent',
               fill: true,
-              pointBackgroundColor: '#2775CA',
+              pointBackgroundColor: mv.primaryColor,
               pointRadius: 0,
             },
           ],
@@ -104,8 +105,9 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
             },
           },
         },
-      };
-    }, [data?.DailyVaultStats, intl, isSmallChart]);
+      }),
+      [data?.DailyVaultStats, intl, isSmallChart, mv.primaryColor],
+    );
 
   return chartData;
 };

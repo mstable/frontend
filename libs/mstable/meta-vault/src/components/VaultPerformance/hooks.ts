@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { useDataSource } from '@frontend/mstable-shared-data-access';
 import { BigDecimal } from '@frontend/shared-utils';
@@ -20,6 +20,12 @@ export const useChartConfig = () => {
   const mv = useMetavault();
 
   const chartTypes = {
+    PERF: {
+      id: 'PERF' as ChartType,
+      label: intl.formatMessage({ defaultMessage: 'Assets per Share' }),
+      getValue: (v) => v.assetPerShare,
+      getLabel: (v) => intl.formatNumber(v, { style: 'decimal' }),
+    },
     APY: {
       id: 'APY' as ChartType,
       label: intl.formatMessage({ defaultMessage: 'APY' }),
@@ -87,18 +93,19 @@ export const useChartData = (
   const theme = useTheme();
   const { chartTimeframes, chartTypes } = useChartConfig();
   const dataSource = useDataSource();
-  const { data, refetch } = useMetavaultQuery(
+  const { data } = useMetavaultQuery(
     dataSource,
     {
       id: address,
       days: chartTimeframes[chartTimeframe].days,
     },
-    { enabled: !!address },
+    {
+      queryKey: [address, chartTimeframe, mvBalance?.simple],
+      enabled: !!address,
+    },
   );
 
-  useEffect(() => {
-    refetch();
-  }, [mvBalance, refetch]);
+  console.log(data);
 
   const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
     useMemo(() => {

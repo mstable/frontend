@@ -126,19 +126,18 @@ export const VaultJumbo = (props: StackProps) => {
           </AvatarGroup>
         </ValueLabel>
         <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'APY' })}
+          label={intl.formatMessage({ defaultMessage: 'Performance' })}
           hint={intl.formatMessage({
-            defaultMessage:
-              'Annual Percentage Yield. Annualized 24 hours performance.',
+            defaultMessage: 'Asset per share price.',
           })}
         >
           {isLoading ? (
             <Skeleton height={24} width={60} />
           ) : (
             <Typography variant="value2">
-              {intl.formatNumber(data?.vault?.apy ?? 0, {
-                style: 'percent',
-                maximumFractionDigits: 2,
+              {intl.formatNumber(data?.vault?.assetPerShare ?? 0, {
+                style: 'currency',
+                currency,
               })}
             </Typography>
           )}
