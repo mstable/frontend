@@ -96,7 +96,6 @@ const goerli: Metavault = {
     tokens[chainId.goerli].usdc,
     tokens[chainId.goerli].usdt,
   ],
-  featured: true,
 };
 
 export const mvusdc3pcv: Record<number, Metavault> = {

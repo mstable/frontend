@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 
-import { useDataSource } from '@frontend/shared-data-access';
+import { useDataSource } from '@frontend/mstable-shared-data-access';
 import { useGetPrices, usePrices } from '@frontend/shared-prices';
-import { ProtocolIcon, TokenIcon, ValueLabel } from '@frontend/shared-ui';
+import { ProtocolIcon, ValueLabel } from '@frontend/shared-ui';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import {
   Avatar,
@@ -110,15 +110,6 @@ export const VaultJumbo = (props: StackProps) => {
         spacing={{ xs: 3, md: 4 }}
         sx={{ overflowX: 'auto', maxWidth: 1, width: 1 }}
       >
-        <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'Asset' })}
-          components={{ valueContainer: { pb: 0.3 } }}
-        >
-          <TokenIcon
-            symbol={assetToken?.symbol}
-            sx={{ height: 24, width: 24 }}
-          />
-        </ValueLabel>
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'Protocols Involved' })}
           components={{ valueContainer: { pb: 0.3 } }}

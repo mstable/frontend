@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { HighlightUpdate, InfoTooltip } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
@@ -24,15 +24,14 @@ export const Position = () => {
   const intl = useIntl();
   const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
   const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
-  const [profitOrLoss, setProfitOrLoss] = useState<BigDecimal>();
-  const { mvBalance, mvBalanceInAsset, assetToken, mvDeposited, metavault } =
-    useMetavault();
-
-  useEffect(() => {
-    if (mvBalanceInAsset && mvDeposited && !profitOrLoss) {
-      setProfitOrLoss(mvBalanceInAsset.sub(mvDeposited));
-    }
-  }, [mvBalanceInAsset, mvDeposited, profitOrLoss]);
+  const {
+    mvBalance,
+    mvBalanceInAsset,
+    assetToken,
+    mvDeposited,
+    metavault,
+    profitOrLoss,
+  } = useMetavault();
 
   const roi =
     mvBalanceInAsset?.exact.eq(constants.Zero) ||

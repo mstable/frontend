@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
+import { useDataSource } from '@frontend/mstable-shared-data-access';
 import { supportedMetavaults } from '@frontend/shared-constants';
-import { useDataSource } from '@frontend/shared-data-access';
 import { useGetPrices, usePrices } from '@frontend/shared-prices';
 import { BigDecimal } from '@frontend/shared-utils';
 import { alpha } from '@mui/material';

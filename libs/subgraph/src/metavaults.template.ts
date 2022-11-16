@@ -56,6 +56,7 @@ function updateOrCreateVault(address: Address, timestamp: BigInt): Vault {
 function updateOrCreateDailyStat(
   address: Address,
   timestamp: BigInt,
+  blockNumber: BigInt,
   forceUpdate: boolean = false,
 ): DailyVaultStat {
   let vaultContract = metavault.bind(address);
@@ -70,6 +71,7 @@ function updateOrCreateDailyStat(
     );
     dailyVaultStat.vault = address.toHex();
     dailyVaultStat.timestamp = timestamp;
+    dailyVaultStat.blockNumber = blockNumber;
 
     let totalAssets = vaultContract.try_totalAssets();
 
@@ -206,7 +208,12 @@ export function handleDeposit(event: Deposit): void {
     event.transaction.gasLimit,
     event.transaction.gasPrice,
   );
-  updateOrCreateDailyStat(event.address, event.block.timestamp, true);
+  updateOrCreateDailyStat(
+    event.address,
+    event.block.timestamp,
+    event.block.number,
+    true,
+  );
 }
 
 export function handleWithdraw(event: Withdraw): void {
@@ -229,11 +236,20 @@ export function handleWithdraw(event: Withdraw): void {
     event.transaction.gasLimit,
     event.transaction.gasPrice,
   );
-  updateOrCreateDailyStat(event.address, event.block.timestamp, true);
+  updateOrCreateDailyStat(
+    event.address,
+    event.block.timestamp,
+    event.block.number,
+    true,
+  );
 }
 
 export function handleBlock(block: ethereum.Block): void {
   // {{#metavaults}}
-  updateOrCreateDailyStat(Address.fromString('{{address}}'), block.timestamp);
+  updateOrCreateDailyStat(
+    Address.fromString('{{address}}'),
+    block.timestamp,
+    block.number,
+  );
   // {{/metavaults}}
 }
