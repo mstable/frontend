@@ -23,12 +23,10 @@ import type { ChartArea, ChartData, ChartOptions } from 'chart.js';
 
 export const useMetavaultData = (address: HexAddress) => {
   const dataSource = useDataSource();
-  const { data } = useMetavaultsQuery(dataSource);
 
-  return useMemo(
-    () => data?.vaults?.find(propEq('address', address)),
-    [address, data?.vaults],
-  );
+  return useMetavaultsQuery(dataSource, null, {
+    select: (data) => data?.vaults?.find(propEq('address', address)),
+  });
 };
 
 const getGradient =
@@ -48,19 +46,19 @@ const getGradient =
 export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
   const intl = useIntl();
   const { chain } = useNetwork();
-  const data = useMetavaultData(address);
+  const { data } = useMetavaultData(address);
   const mv = supportedMetavaults[chain?.id ?? chainId.mainnet].find(
     propEq('address', address),
   );
 
   const series = useMemo(
     () =>
-      data?.DailyVaultStats
+      !isNilOrEmpty(data?.DailyVaultStats)
         ? data.DailyVaultStats.map((d) => ({
             label: '',
             value: prop('assetPerShare', d),
           }))
-        : null,
+        : [],
     [data?.DailyVaultStats],
   );
 

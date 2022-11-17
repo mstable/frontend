@@ -52,7 +52,7 @@ export const VaultCard = ({
   const intl = useIntl();
   const navigate = useNavigate();
   const { currency } = usePrices();
-  const data = useMetavaultData(metavault.address);
+  const { data, isLoading } = useMetavaultData(metavault.address);
   const chartData = useChartData(metavault.address);
   const { data: assetDecimal, isLoading: assetLoading } = useAssetDecimal(
     metavault.address,
@@ -92,15 +92,23 @@ export const VaultCard = ({
             })}
           >
             <Typography variant="value2">
-              {intl.formatNumber(data?.assetPerShare ?? 0, {
-                maximumFractionDigits: 2,
-                style: 'currency',
-                currency,
-              })}
+              {isLoading ? (
+                <Skeleton width={75} />
+              ) : (
+                intl.formatNumber(data?.assetPerShare ?? 0, {
+                  maximumFractionDigits: 2,
+                  style: 'currency',
+                  currency,
+                })
+              )}
             </Typography>
           </ValueLabel>
         </Stack>
-        <LineChart id={metavault.id} {...chartData} />
+        {isLoading ? (
+          <Skeleton width={350} height={175} variant="rounded" />
+        ) : (
+          <LineChart id={metavault.id} {...chartData} />
+        )}
         <Typography variant="h4" mt={5}>
           {metavault.name}
         </Typography>
