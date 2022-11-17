@@ -5,13 +5,14 @@ import { Stack } from '@mui/material';
 import { Outlet } from '@tanstack/react-location';
 import { useEffectOnce } from 'react-use';
 
-import { registerCharts } from '../clients';
+import { registerCharts, registerPlausible } from '../clients';
 
 export const App = () => {
   useUnsupportedNetworks();
 
   useEffectOnce(() => {
     registerCharts();
+    registerPlausible();
   });
 
   return (
