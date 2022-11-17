@@ -1,13 +1,20 @@
 type Vault @entity {
   id: ID!
   address: Bytes!
-  asset: Bytes!
+  decimals: Int!
+  asset: Asset!
   timestamp: BigInt!
   totalAssets: BigInt!
   totalSupply: BigInt!
   assetPerShare: BigDecimal!
   apy: BigDecimal!
   DailyVaultStats: [DailyVaultStat!]! @derivedFrom(field: "vault")
+}
+
+type Asset @entity {
+  id: ID!
+  address: Bytes!
+  decimals: Int!
 }
 
 type DailyVaultStat @entity {

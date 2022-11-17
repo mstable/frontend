@@ -60,10 +60,10 @@ export const VaultJumbo = (props: StackProps) => {
       return { label: '-', color: theme.palette.text.primary };
     }
     const last = new BigDecimal(
-      data?.vault?.DailyVaultStats?.[6]?.totalAssets ?? constants.One,
+      data?.vault?.DailyVaultStats?.[0]?.totalAssets ?? constants.One,
     );
     const first = new BigDecimal(
-      data?.vault?.DailyVaultStats?.[0]?.totalAssets ?? constants.One,
+      data?.vault?.DailyVaultStats?.[1]?.totalAssets ?? constants.One,
     );
     const diff = 100 - (last.simple / first.simple) * 100;
 
@@ -77,7 +77,7 @@ export const VaultJumbo = (props: StackProps) => {
           : theme.palette.text.primary,
     };
   }, [
-    data?.vault?.DailyVaultStats,
+    data,
     theme.palette.error.main,
     theme.palette.success.dark,
     theme.palette.text.primary,
@@ -126,19 +126,18 @@ export const VaultJumbo = (props: StackProps) => {
           </AvatarGroup>
         </ValueLabel>
         <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'APY' })}
+          label={intl.formatMessage({ defaultMessage: 'Performance' })}
           hint={intl.formatMessage({
-            defaultMessage:
-              'Annual Percentage Yield. Annualized 24 hours performance.',
+            defaultMessage: 'Asset per share price.',
           })}
         >
           {isLoading ? (
             <Skeleton height={24} width={60} />
           ) : (
             <Typography variant="value2">
-              {intl.formatNumber(data?.vault?.apy ?? 0, {
-                style: 'percent',
-                maximumFractionDigits: 2,
+              {intl.formatNumber(data?.vault?.assetPerShare ?? 0, {
+                style: 'currency',
+                currency,
               })}
             </Typography>
           )}

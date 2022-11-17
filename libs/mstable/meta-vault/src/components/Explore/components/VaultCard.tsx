@@ -1,3 +1,4 @@
+import { usePrices } from '@frontend/shared-prices';
 import {
   HoverablePrimaryCard,
   MVIcon,
@@ -50,7 +51,8 @@ export const VaultCard = ({
 }: VaultCardProps) => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const data = useMetavaultData(metavault.address);
+  const { currency } = usePrices();
+  const { data, isLoading } = useMetavaultData(metavault.address);
   const chartData = useChartData(metavault.address);
   const { data: assetDecimal, isLoading: assetLoading } = useAssetDecimal(
     metavault.address,
@@ -80,25 +82,33 @@ export const VaultCard = ({
             sx={{ height: 53, width: 53, mb: 2, ml: '-6px' }}
           />
           <ValueLabel
-            label={intl.formatMessage({ defaultMessage: 'APY' })}
+            label={intl.formatMessage({ defaultMessage: 'Performance' })}
             components={{
               label: { sx: { mb: 0.5 } },
               container: { alignItems: 'flex-end' },
             }}
             hint={intl.formatMessage({
-              defaultMessage:
-                'Annual Percentage Yield. Annualized 24 hours performance.',
+              defaultMessage: 'Asset per share price.',
             })}
           >
             <Typography variant="value2">
-              {intl.formatNumber(data?.apy ?? 0, {
-                style: 'percent',
-                maximumFractionDigits: 2,
-              })}
+              {isLoading ? (
+                <Skeleton width={75} />
+              ) : (
+                intl.formatNumber(data?.assetPerShare ?? 0, {
+                  maximumFractionDigits: 2,
+                  style: 'currency',
+                  currency,
+                })
+              )}
             </Typography>
           </ValueLabel>
         </Stack>
-        <LineChart id={metavault.id} {...chartData} />
+        {isLoading ? (
+          <Skeleton width={350} height={175} variant="rounded" />
+        ) : (
+          <LineChart id={metavault.id} {...chartData} />
+        )}
         <Typography variant="h4" mt={5}>
           {metavault.name}
         </Typography>

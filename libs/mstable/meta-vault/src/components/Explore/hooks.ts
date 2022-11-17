@@ -3,9 +3,9 @@ import { useMemo } from 'react';
 import { useDataSource } from '@frontend/mstable-shared-data-access';
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { useGetPrices, usePrices } from '@frontend/shared-prices';
-import { BigDecimal } from '@frontend/shared-utils';
+import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import { alpha } from '@mui/material';
-import { pathOr, propEq, sort } from 'ramda';
+import { pathOr, pluck, prop, propEq } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
   chainId,
@@ -23,12 +23,10 @@ import type { ChartArea, ChartData, ChartOptions } from 'chart.js';
 
 export const useMetavaultData = (address: HexAddress) => {
   const dataSource = useDataSource();
-  const { data: vaultsData } = useMetavaultsQuery(dataSource);
 
-  return useMemo(
-    () => vaultsData?.vaults?.find(propEq('address', address)),
-    [address, vaultsData?.vaults],
-  );
+  return useMetavaultsQuery(dataSource, null, {
+    select: (data) => data?.vaults?.find(propEq('address', address)),
+  });
 };
 
 const getGradient =
@@ -47,31 +45,63 @@ const getGradient =
 
 export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
   const intl = useIntl();
-  const data = useMetavaultData(address);
+  const { chain } = useNetwork();
+  const { data } = useMetavaultData(address);
+  const mv = supportedMetavaults[chain?.id ?? chainId.mainnet].find(
+    propEq('address', address),
+  );
+
+  const series = useMemo(
+    () =>
+      !isNilOrEmpty(data?.DailyVaultStats)
+        ? data.DailyVaultStats.map((d) => ({
+            label: '',
+            value: prop('assetPerShare', d),
+          }))
+        : [],
+    [data?.DailyVaultStats],
+  );
+
+  const min = useMemo(
+    () =>
+      !isNilOrEmpty(series)
+        ? series.reduce(
+            (acc, curr) => Math.min(acc, Number(curr.value) - 0.05),
+            series[0].value,
+          )
+        : undefined,
+    [series],
+  );
+
+  const max = useMemo(
+    () =>
+      !isNilOrEmpty(series)
+        ? series.reduce(
+            (acc, curr) => Math.max(acc, Number(curr.value) + 0.05),
+            series[0].value,
+          )
+        : undefined,
+    [series],
+  );
 
   const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
-    useMemo(() => {
-      const sortedData = sort(
-        (a, b) => Number(a.timestamp) - Number(b.timestamp),
-        data?.DailyVaultStats || [],
-      ).map((d) => Number(d.apy));
-
-      return {
+    useMemo(
+      () => ({
         data: {
-          labels: sortedData.map(() => ''),
+          labels: pluck('label', series),
           datasets: [
             {
-              label: intl.formatMessage({ defaultMessage: 'APY' }),
-              data: sortedData,
+              label: intl.formatMessage({ defaultMessage: 'Perf' }),
+              data: pluck('value', series),
               borderColor: function (context) {
                 const chart = context.chart;
                 const { ctx, chartArea } = chart;
-                return getGradient('#2775CA')(ctx, chartArea);
+                return getGradient(mv.primaryColor)(ctx, chartArea);
               },
               borderWidth: isSmallChart ? 2 : 3,
               backgroundColor: 'transparent',
               fill: true,
-              pointBackgroundColor: '#2775CA',
+              pointBackgroundColor: mv.primaryColor,
               pointRadius: 0,
             },
           ],
@@ -87,6 +117,8 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
           scales: {
             y: {
               display: false,
+              min,
+              max,
             },
             x: {
               display: false,
@@ -104,8 +136,9 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
             },
           },
         },
-      };
-    }, [data?.DailyVaultStats, intl, isSmallChart]);
+      }),
+      [intl, isSmallChart, max, min, mv.primaryColor, series],
+    );
 
   return chartData;
 };
