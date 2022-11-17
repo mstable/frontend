@@ -10,6 +10,7 @@ import {
   Skeleton,
   Stack,
   Typography,
+  useMediaQuery,
   useTheme,
 } from '@mui/material';
 import { constants } from 'ethers';
@@ -26,9 +27,7 @@ const tagProps: TypographyProps = {
   justifyContent: 'center',
   alignItems: 'center',
   fontWeight: 'medium',
-  fontSize: 14,
   px: 1,
-  height: 30,
   noWrap: true,
   bgcolor: (theme) =>
     theme.palette.mode === 'light'
@@ -36,11 +35,20 @@ const tagProps: TypographyProps = {
       : theme.palette.grey[900],
   border: (theme) => `1px solid ${theme.palette.divider}`,
   borderRadius: 2,
+  sx: (theme) => ({
+    height: 30,
+    fontSize: 14,
+    [theme.breakpoints.down('md')]: {
+      height: 20,
+      fontSize: 12,
+    },
+  }),
 };
 
 export const VaultJumbo = (props: StackProps) => {
   const intl = useIntl();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {
     metavault: { address, name, tags, strategies },
     assetToken,
@@ -106,13 +114,18 @@ export const VaultJumbo = (props: StackProps) => {
         ))}
       </Stack>
       <Stack
-        direction={{ xs: 'column', md: 'row' }}
+        direction="row"
         spacing={{ xs: 3, md: 4 }}
         sx={{ overflowX: 'auto', maxWidth: 1, width: 1 }}
       >
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'Protocols Involved' })}
-          components={{ valueContainer: { pb: 0.3 } }}
+          components={{
+            valueContainer: { pb: 0.3 },
+            container: isMobile
+              ? { direction: 'column', alignItems: 'flex-start', width: '50%' }
+              : {},
+          }}
         >
           <AvatarGroup max={6}>
             {strategies.map((strat) => (
@@ -131,6 +144,11 @@ export const VaultJumbo = (props: StackProps) => {
             defaultMessage:
               'Annual Percentage Yield. Annualized 24 hours performance.',
           })}
+          components={{
+            container: isMobile
+              ? { direction: 'column', alignItems: 'flex-start', width: '50%' }
+              : {},
+          }}
         >
           {isLoading ? (
             <Skeleton height={24} width={60} />
@@ -143,30 +161,32 @@ export const VaultJumbo = (props: StackProps) => {
             </Typography>
           )}
         </ValueLabel>
-        <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'TVL' })}
-          hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
-        >
-          {isLoading || isPriceLoading || !assetToken ? (
-            <Skeleton height={24} width={60} />
-          ) : (
-            <Stack direction="row" spacing={1} alignItems="baseline">
-              <Typography variant="value2">
-                {intl.formatNumber(
-                  new BigDecimal(
-                    data?.vault?.totalAssets ?? constants.Zero,
-                    assetToken?.decimals,
-                  ).simple *
-                    Number(pathOr(1, [currency.toLowerCase()], prices)),
-                  { style: 'currency', currency, notation: 'compact' },
-                )}
-              </Typography>
-              <Typography variant="value5" sx={{ color: tvlTrend.color }}>
-                {tvlTrend.label}
-              </Typography>
-            </Stack>
-          )}
-        </ValueLabel>
+        {isMobile ? null : (
+          <ValueLabel
+            label={intl.formatMessage({ defaultMessage: 'TVL' })}
+            hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
+          >
+            {isLoading || isPriceLoading || !assetToken ? (
+              <Skeleton height={24} width={60} />
+            ) : (
+              <Stack direction="row" spacing={1} alignItems="baseline">
+                <Typography variant="value2">
+                  {intl.formatNumber(
+                    new BigDecimal(
+                      data?.vault?.totalAssets ?? constants.Zero,
+                      assetToken?.decimals,
+                    ).simple *
+                      Number(pathOr(1, [currency.toLowerCase()], prices)),
+                    { style: 'currency', currency, notation: 'compact' },
+                  )}
+                </Typography>
+                <Typography variant="value5" sx={{ color: tvlTrend.color }}>
+                  {tvlTrend.label}
+                </Typography>
+              </Stack>
+            )}
+          </ValueLabel>
+        )}
       </Stack>
     </Stack>
   );

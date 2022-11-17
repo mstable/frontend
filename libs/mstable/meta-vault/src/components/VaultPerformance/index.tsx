@@ -1,7 +1,14 @@
 import { useState } from 'react';
 
 import { Dialog } from '@frontend/shared-ui';
-import { Button, Card, CardContent, CardHeader } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { useSearch } from '@tanstack/react-location';
 import { FrameCorners } from 'phosphor-react';
 import { Line } from 'react-chartjs-2';
@@ -14,6 +21,8 @@ import type { MvGenerics } from '../../types';
 
 export const VaultPerformance = () => {
   const intl = useIntl();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [expand, setExpand] = useState(false);
   const { defaultChartTimeframe, defaultChartType } = useChartConfig();
   const {
@@ -28,19 +37,26 @@ export const VaultPerformance = () => {
         title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
         sx={{ paddingLeft: 0 }}
         action={
-          <Button
-            onClick={() => setExpand(true)}
-            color="secondary"
-            startIcon={<FrameCorners />}
-            size="small"
-          >
-            {intl.formatMessage({ defaultMessage: 'Expand' })}
-          </Button>
+          isMobile ? null : (
+            <Button
+              onClick={() => setExpand(true)}
+              color="secondary"
+              startIcon={<FrameCorners />}
+              size="small"
+            >
+              {intl.formatMessage({ defaultMessage: 'Expand' })}
+            </Button>
+          )
         }
       />
       <CardContent sx={{ paddingLeft: 0 }}>
         <Controls />
-        <Line key="chart" options={chartData.options} data={chartData.data} />
+        <Line
+          height={isMobile ? 240 : undefined}
+          key="chart"
+          options={chartData.options}
+          data={chartData.data}
+        />
       </CardContent>
       <Dialog
         maxWidth="lg"
