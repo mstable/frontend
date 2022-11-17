@@ -37,7 +37,7 @@ query metavault($id: ID!, $days: Int = 7) {
     totalAssets
     apy
     assetPerShare
-    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
+    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: asc) {
       apy
       assetPerShare
       totalAssets
@@ -53,7 +53,7 @@ query metavaults($days: Int = 7) {
     totalAssets
     apy
     assetPerShare
-    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
+    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: asc) {
       apy
       totalAssets
       assetPerShare

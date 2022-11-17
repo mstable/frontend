@@ -123,7 +123,7 @@ export const MetavaultDocument = `
     totalAssets
     apy
     assetPerShare
-    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
+    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: asc) {
       apy
       assetPerShare
       totalAssets
@@ -154,7 +154,7 @@ export const MetavaultsDocument = `
     totalAssets
     apy
     assetPerShare
-    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
+    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: asc) {
       apy
       totalAssets
       assetPerShare
