@@ -5,17 +5,14 @@ import { Stack } from '@mui/material';
 import { Outlet } from '@tanstack/react-location';
 import { useEffectOnce } from 'react-use';
 
-import { plausible } from '../analytics';
-import { registerCharts } from '../clients';
-
-plausible.enableAutoPageviews();
-plausible.enableAutoOutboundTracking();
+import { registerCharts, registerPlausible } from '../clients';
 
 export const App = () => {
   useUnsupportedNetworks();
 
   useEffectOnce(() => {
     registerCharts();
+    registerPlausible();
   });
 
   return (
