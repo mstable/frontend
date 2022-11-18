@@ -5,6 +5,7 @@ import { supportedMetavaults } from '@frontend/shared-constants';
 import { useGetPrices, usePrices } from '@frontend/shared-prices';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import { alpha } from '@mui/material';
+import { constants } from 'ethers';
 import { pathOr, pluck, prop, propEq } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
@@ -16,18 +17,11 @@ import {
   useNetwork,
 } from 'wagmi';
 
-import { useMetavaultsQuery } from '../../queries.generated';
+import { useMetavaultQuery } from '../../queries.generated';
 
 import type { HexAddress } from '@frontend/shared-utils';
 import type { ChartArea, ChartData, ChartOptions } from 'chart.js';
-
-export const useMetavaultData = (address: HexAddress) => {
-  const dataSource = useDataSource();
-
-  return useMetavaultsQuery(dataSource, null, {
-    select: (data) => data?.vaults?.find(propEq('address', address)),
-  });
-};
+import type { BigNumberish } from 'ethers';
 
 const getGradient =
   (tone: string) => (ctx: CanvasRenderingContext2D, chartArea?: ChartArea) => {
@@ -46,27 +40,31 @@ const getGradient =
 export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
   const intl = useIntl();
   const { chain } = useNetwork();
-  const { data } = useMetavaultData(address);
   const mv = supportedMetavaults[chain?.id ?? chainId.mainnet].find(
     propEq('address', address),
   );
+  const dataSource = useDataSource();
+  const { data } = useMetavaultQuery(dataSource, {
+    id: address,
+    firstBlock: mv.firstBlock,
+  });
 
   const series = useMemo(
     () =>
-      !isNilOrEmpty(data?.DailyVaultStats)
-        ? data.DailyVaultStats.map((d) => ({
+      !isNilOrEmpty(data?.vault?.DailyVaultStats)
+        ? data.vault.DailyVaultStats.map((d) => ({
             label: '',
             value: prop('assetPerShare', d),
           }))
         : [],
-    [data?.DailyVaultStats],
+    [data?.vault?.DailyVaultStats],
   );
 
   const min = useMemo(
     () =>
       !isNilOrEmpty(series)
         ? series.reduce(
-            (acc, curr) => Math.min(acc, Number(curr.value) - 0.05),
+            (acc, curr) => Math.min(acc, Number(curr.value) - 0.005),
             series[0].value,
           )
         : undefined,
@@ -77,7 +75,7 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
     () =>
       !isNilOrEmpty(series)
         ? series.reduce(
-            (acc, curr) => Math.max(acc, Number(curr.value) + 0.05),
+            (acc, curr) => Math.max(acc, Number(curr.value) + 0.005),
             series[0].value,
           )
         : undefined,
@@ -158,39 +156,61 @@ export const useAssetDecimal = (address: HexAddress) => {
 };
 
 export const useTotalTvl = () => {
-  const dataSource = useDataSource();
-  const { data } = useMetavaultsQuery(dataSource);
   const { chain } = useNetwork();
   const { currency } = usePrices();
   const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
-  const { data: assets } = useContractReads({
+  const { data: assets, isLoading: assetLoading } = useContractReads({
     contracts: metavaults.map((mv) => ({
       address: mv.address,
       abi: erc4626ABI,
       functionName: 'asset',
     })),
   });
-  const { data: decimals } = useContractReads({
+  const { data: tvls, isLoading: tvlsLoading } = useContractReads({
+    contracts: metavaults.map((mv) => ({
+      address: mv.address,
+      abi: erc4626ABI,
+      functionName: 'totalAssets',
+    })),
+  });
+  const { data: decimals, isLoading: decimalsLoading } = useContractReads({
     contracts: assets?.map((asset) => ({
       address: asset as HexAddress,
       abi: erc20ABI,
       functionName: 'decimals',
     })),
   });
-  const { data: prices } = useGetPrices(assets as HexAddress[]);
+  const { data: prices, isLoading: priceLoading } = useGetPrices(
+    assets as HexAddress[],
+  );
 
   return useMemo(
-    () =>
-      data?.vaults.reduce((acc, curr, idx) => {
-        const price = pathOr(1, [curr.address, currency.toLowerCase()], prices);
-        const totalAssets = new BigDecimal(
-          curr.totalAssets,
-          decimals?.[idx] ?? 18,
-        ).simple;
-        const currPrice = totalAssets * Number(price);
+    () => ({
+      data:
+        assetLoading || tvlsLoading || decimalsLoading || priceLoading
+          ? 0
+          : assets.reduce((acc, curr, idx) => {
+              const price = pathOr(1, [curr, currency.toLowerCase()], prices);
+              const totalAssets = new BigDecimal(
+                (tvls?.[idx] as unknown as BigNumberish) ?? constants.One,
+                decimals?.[idx] ?? 18,
+              ).simple;
+              const currPrice = totalAssets * Number(price);
 
-        return acc + currPrice;
-      }, 0),
-    [currency, data?.vaults, decimals, prices],
+              return acc + currPrice;
+            }, 0),
+      isLoading: assetLoading || tvlsLoading || decimalsLoading || priceLoading,
+    }),
+    [
+      assetLoading,
+      assets,
+      currency,
+      decimals,
+      decimalsLoading,
+      priceLoading,
+      prices,
+      tvls,
+      tvlsLoading,
+    ],
   );
 };

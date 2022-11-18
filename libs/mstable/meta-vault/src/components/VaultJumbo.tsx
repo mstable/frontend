@@ -42,13 +42,13 @@ export const VaultJumbo = (props: StackProps) => {
   const intl = useIntl();
   const theme = useTheme();
   const {
-    metavault: { address, name, tags, strategies },
+    metavault: { address, name, tags, strategies, firstBlock },
     assetToken,
   } = useMetavault();
   const dataSource = useDataSource();
   const { data, isLoading } = useMetavaultQuery(
     dataSource,
-    { id: address },
+    { id: address, firstBlock },
     { enabled: !!address },
   );
   const { currency } = usePrices();
