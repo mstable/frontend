@@ -14,7 +14,10 @@ import {
   useToken,
 } from 'wagmi';
 
-import { useUserVaultBalanceQuery } from './queries.generated';
+import {
+  useMetavaultQuery,
+  useUserVaultBalanceQuery,
+} from './queries.generated';
 
 import type { Metavault } from '@frontend/shared-constants';
 import type { HexAddress } from '@frontend/shared-utils';
@@ -33,6 +36,7 @@ type MetaVaultState = {
   profitOrLoss: BigDecimal | null;
   assetBalance: BigDecimal | null;
   assetBalanceInShare: BigDecimal | null;
+  roi: number | null;
 };
 
 export const {
@@ -65,10 +69,11 @@ export const {
     profitOrLoss: null,
     assetBalance: null,
     assetBalanceInShare: null,
+    roi: null,
   });
 
   const {
-    metavault: { address },
+    metavault: { address, firstBlock },
     asset,
   } = state;
 
@@ -95,6 +100,23 @@ export const {
             }),
           );
         }
+      },
+    },
+  );
+
+  useMetavaultQuery(
+    dataSource,
+    { id: address, firstBlock },
+    {
+      onSuccess: (data) => {
+        setState(
+          produce((draft) => {
+            draft.roi =
+              data?.vault?.assetPerShare /
+                (data?.vault?.first?.[0]?.assetPerShare ?? 1) -
+                1 ?? 0;
+          }),
+        );
       },
     },
   );
