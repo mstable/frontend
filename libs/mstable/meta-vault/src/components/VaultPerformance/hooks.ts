@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { useDataSource } from '@frontend/mstable-shared-data-access';
-import { BigDecimal } from '@frontend/shared-utils';
+import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import { alpha, useTheme } from '@mui/material';
 import { intlFormat } from 'date-fns';
-import { sort } from 'ramda';
+import { pluck } from 'ramda';
 import { useIntl } from 'react-intl';
 
 import { useMetavaultQuery } from '../../queries.generated';
@@ -20,6 +20,12 @@ export const useChartConfig = () => {
   const mv = useMetavault();
 
   const chartTypes = {
+    PERF: {
+      id: 'PERF' as ChartType,
+      label: intl.formatMessage({ defaultMessage: 'Assets per Share' }),
+      getValue: (v) => v.assetPerShare,
+      getLabel: (v) => intl.formatNumber(v, { style: 'decimal' }),
+    },
     APY: {
       id: 'APY' as ChartType,
       label: intl.formatMessage({ defaultMessage: 'APY' }),
@@ -59,7 +65,7 @@ export const useChartConfig = () => {
   return {
     chartTypes,
     chartTimeframes,
-    defaultChartType: 'TVL' as ChartType,
+    defaultChartType: 'PERF' as ChartType,
     defaultChartTimeframe: '1M' as ChartTimeframe,
   };
 };
@@ -87,27 +93,22 @@ export const useChartData = (
   const theme = useTheme();
   const { chartTimeframes, chartTypes } = useChartConfig();
   const dataSource = useDataSource();
-  const { data, refetch } = useMetavaultQuery(
+  const { data } = useMetavaultQuery(
     dataSource,
     {
       id: address,
       days: chartTimeframes[chartTimeframe].days,
     },
-    { enabled: !!address },
+    {
+      queryKey: [address, chartTimeframe, mvBalance?.simple],
+      enabled: !!address,
+    },
   );
 
-  useEffect(() => {
-    refetch();
-  }, [mvBalance, refetch]);
-
-  const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
-    useMemo(() => {
-      // Do not render if assetToken is not loaded
-      const sortedData = assetToken
-        ? sort(
-            (a, b) => Number(a.timestamp) - Number(b.timestamp),
-            data?.vault?.DailyVaultStats || [],
-          ).map((d) => ({
+  const series = useMemo(
+    () =>
+      assetToken
+        ? (data?.vault?.DailyVaultStats || []).map((d) => ({
             label: intlFormat(Number(d.timestamp) * 1000, {
               timeZone: 'UTC',
               day: 'numeric',
@@ -118,15 +119,49 @@ export const useChartData = (
               .join(' '),
             value: chartTypes[chartType].getValue(d),
           }))
-        : [];
+        : [],
+    [assetToken, chartType, chartTypes, data?.vault?.DailyVaultStats],
+  );
 
-      return {
+  const min = useMemo(
+    () =>
+      ({
+        PERF: !isNilOrEmpty(series)
+          ? series.reduce(
+              (acc, curr) => Math.min(acc, Number(curr.value) - 0.05),
+              series[0].value,
+            )
+          : undefined,
+        APY: Math.min(0, ...series.map((d) => d.value)),
+        TVL: Math.min(0, ...series.map((d) => d.value)),
+      }[chartType]),
+    [chartType, series],
+  );
+
+  const max = useMemo(
+    () =>
+      ({
+        PERF: !isNilOrEmpty(series)
+          ? series.reduce(
+              (acc, curr) => Math.max(acc, Number(curr.value) + 0.05),
+              series[0].value,
+            )
+          : undefined,
+        APY: undefined,
+        TVL: undefined,
+      }[chartType]),
+    [chartType, series],
+  );
+
+  const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
+    useMemo(
+      () => ({
         data: {
-          labels: sortedData.map((d) => d.label),
+          labels: series.map((d) => d.label),
           datasets: [
             {
               label: chartTypes[chartType].label,
-              data: sortedData.map((d) => d.value),
+              data: pluck('value', series),
               borderColor: primaryColor,
               backgroundColor: getBackgroundColor(primaryColor),
               fill: true,
@@ -151,7 +186,8 @@ export const useChartData = (
                 color: theme.palette.divider,
                 drawBorder: false,
               },
-              min: Math.min(0, ...sortedData.map((d) => d.value)),
+              min,
+              max,
               ticks: {
                 callback: chartTypes[chartType].getLabel,
                 color: theme.palette.text.secondary,
@@ -208,15 +244,23 @@ export const useChartData = (
             },
           },
         },
-      };
-    }, [
-      assetToken,
-      data?.vault?.DailyVaultStats,
-      chartTypes,
-      chartType,
-      primaryColor,
-      theme,
-    ]);
+      }),
+      [
+        series,
+        chartTypes,
+        chartType,
+        primaryColor,
+        theme.palette.divider,
+        theme.palette.text.secondary,
+        theme.palette.mode,
+        theme.palette.grey,
+        theme.typography.value5.fontFamily,
+        theme.typography.value5.fontSize,
+        theme.typography.value5.fontWeight,
+        min,
+        max,
+      ],
+    );
 
   return chartData;
 };

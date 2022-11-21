@@ -5,9 +5,10 @@
 import { Address, BigDecimal, BigInt } from '@graphprotocol/graph-ts';
 import { Bytes, ethereum } from '@graphprotocol/graph-ts';
 
-import { metavault } from '../generated/metavault/metavault';
-import { Deposit, Withdraw } from '../generated/metavault/metavault';
+import { erc20 } from '../generated/metavault/erc20';
+import { Deposit, erc4626, Withdraw } from '../generated/metavault/erc4626';
 import {
+  Asset,
   DailyVaultBalance,
   DailyVaultStat,
   Transaction,
@@ -30,21 +31,49 @@ function calculateApy(
     .div(timestamp.minus(prevVault.timestamp).toBigDecimal());
 }
 
+function updateOrCreateAsset(address: Address): Asset {
+  let assetContract = erc20.bind(address);
+  let asset = Asset.load(address.toHex());
+  if (asset === null) {
+    asset = new Asset(address.toHex());
+    asset.address = address;
+  }
+  let decimals = assetContract.try_decimals();
+  if (decimals.reverted) {
+    asset.decimals = 18;
+  } else {
+    asset.decimals = decimals.value;
+  }
+  asset.save();
+
+  return asset;
+}
+
 function updateOrCreateVault(address: Address, timestamp: BigInt): Vault {
-  let vaultContract = metavault.bind(address);
+  let vaultContract = erc4626.bind(address);
   let vault = Vault.load(address.toHex());
   let days = timestamp.div(BigInt.fromString('86400'));
   if (vault === null) {
     vault = new Vault(address.toHex());
+    vault.decimals = 18;
   }
   vault.address = address;
   vault.timestamp = timestamp;
-  vault.asset = vaultContract.asset();
   vault.totalAssets = vaultContract.totalAssets();
   vault.totalSupply = vaultContract.totalSupply();
-  vault.assetPerShare = vaultContract
-    .convertToAssets(BigInt.fromString('1000000000000000000'))
-    .divDecimal(BigInt.fromString('1000000000000000000').toBigDecimal());
+  let assetAddress = vaultContract.asset();
+  let asset = updateOrCreateAsset(assetAddress);
+  vault.asset = asset.id;
+  let oneShare = BigInt.fromString('10').pow(<u8>vault.decimals);
+  let oneAsset = BigInt.fromString('10').pow(<u8>asset.decimals);
+  let assetPerShare = vaultContract.try_convertToAssets(oneShare);
+  if (assetPerShare.reverted || assetPerShare.value.isZero()) {
+    vault.assetPerShare = BigDecimal.fromString('1');
+  } else {
+    vault.assetPerShare = assetPerShare.value.divDecimal(
+      oneAsset.toBigDecimal(),
+    );
+  }
   let prevVaultStat = DailyVaultStat.load(
     vault.id + '-' + days.minus(BigInt.fromString('7')).toString(),
   );
@@ -59,7 +88,7 @@ function updateOrCreateDailyStat(
   blockNumber: BigInt,
   forceUpdate: boolean = false,
 ): DailyVaultStat {
-  let vaultContract = metavault.bind(address);
+  let vaultContract = erc4626.bind(address);
   let vault = Vault.load(address.toHex());
   let days = timestamp.div(BigInt.fromString('86400'));
   let dailyVaultStatId = address.toHex() + '-' + days.toString();
@@ -89,14 +118,15 @@ function updateOrCreateDailyStat(
       dailyVaultStat.totalSupply = totalSupply.value;
     }
 
-    let assetPerShare = vaultContract.try_convertToAssets(
-      BigInt.fromString('1000000000000000000'),
-    );
-    if (assetPerShare.reverted) {
+    let asset = updateOrCreateAsset(vaultContract.asset());
+    let oneShare = BigInt.fromString('10').pow(<u8>vaultContract.decimals());
+    let oneAsset = BigInt.fromString('10').pow(<u8>asset.decimals);
+    let assetPerShare = vaultContract.try_convertToAssets(oneShare);
+    if (assetPerShare.reverted || assetPerShare.value.isZero()) {
       dailyVaultStat.assetPerShare = BigDecimal.fromString('1');
     } else {
       dailyVaultStat.assetPerShare = assetPerShare.value.divDecimal(
-        BigInt.fromString('1000000000000000000').toBigDecimal(),
+        oneAsset.toBigDecimal(),
       );
     }
 
@@ -125,7 +155,7 @@ function updateOrCreateVaultBalance(
   timestamp: BigInt,
   assetsDeposited: BigInt,
 ): VaultBalance {
-  let vaultContract = metavault.bind(address);
+  let vaultContract = erc4626.bind(address);
   let vaultBalanceId = address.toHex() + '-' + owner.toHex();
   let vaultBalance = VaultBalance.load(vaultBalanceId);
   if (vaultBalance === null) {

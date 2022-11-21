@@ -15,6 +15,46 @@ export type Scalars = {
   Bytes: any;
 };
 
+export type Asset = {
+  __typename?: 'Asset';
+  address: Scalars['Bytes'];
+  decimals: Scalars['Int'];
+  id: Scalars['ID'];
+};
+
+export type Asset_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  address?: InputMaybe<Scalars['Bytes']>;
+  address_contains?: InputMaybe<Scalars['Bytes']>;
+  address_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  address_not?: InputMaybe<Scalars['Bytes']>;
+  address_not_contains?: InputMaybe<Scalars['Bytes']>;
+  address_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  decimals?: InputMaybe<Scalars['Int']>;
+  decimals_gt?: InputMaybe<Scalars['Int']>;
+  decimals_gte?: InputMaybe<Scalars['Int']>;
+  decimals_in?: InputMaybe<Array<Scalars['Int']>>;
+  decimals_lt?: InputMaybe<Scalars['Int']>;
+  decimals_lte?: InputMaybe<Scalars['Int']>;
+  decimals_not?: InputMaybe<Scalars['Int']>;
+  decimals_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  id?: InputMaybe<Scalars['ID']>;
+  id_gt?: InputMaybe<Scalars['ID']>;
+  id_gte?: InputMaybe<Scalars['ID']>;
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_lt?: InputMaybe<Scalars['ID']>;
+  id_lte?: InputMaybe<Scalars['ID']>;
+  id_not?: InputMaybe<Scalars['ID']>;
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+export enum Asset_OrderBy {
+  Address = 'address',
+  Decimals = 'decimals',
+  Id = 'id'
+}
+
 export type BlockChangedFilter = {
   number_gte: Scalars['Int'];
 };
@@ -225,6 +265,8 @@ export type Query = {
   __typename?: 'Query';
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
+  asset?: Maybe<Asset>;
+  assets: Array<Asset>;
   dailyVaultBalance?: Maybe<DailyVaultBalance>;
   dailyVaultBalances: Array<DailyVaultBalance>;
   dailyVaultStat?: Maybe<DailyVaultStat>;
@@ -240,6 +282,24 @@ export type Query = {
 
 export type Query_MetaArgs = {
   block?: InputMaybe<Block_Height>;
+};
+
+
+export type QueryAssetArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryAssetsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Asset_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Asset_Filter>;
 };
 
 
@@ -336,6 +396,8 @@ export type Subscription = {
   __typename?: 'Subscription';
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
+  asset?: Maybe<Asset>;
+  assets: Array<Asset>;
   dailyVaultBalance?: Maybe<DailyVaultBalance>;
   dailyVaultBalances: Array<DailyVaultBalance>;
   dailyVaultStat?: Maybe<DailyVaultStat>;
@@ -351,6 +413,24 @@ export type Subscription = {
 
 export type Subscription_MetaArgs = {
   block?: InputMaybe<Block_Height>;
+};
+
+
+export type SubscriptionAssetArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionAssetsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Asset_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<Asset_Filter>;
 };
 
 
@@ -578,8 +658,9 @@ export type Vault = {
   DailyVaultStats: Array<DailyVaultStat>;
   address: Scalars['Bytes'];
   apy: Scalars['BigDecimal'];
-  asset: Scalars['Bytes'];
+  asset: Asset;
   assetPerShare: Scalars['BigDecimal'];
+  decimals: Scalars['Int'];
   id: Scalars['ID'];
   timestamp: Scalars['BigInt'];
   totalAssets: Scalars['BigInt'];
@@ -718,7 +799,7 @@ export type Vault_Filter = {
   apy_lte?: InputMaybe<Scalars['BigDecimal']>;
   apy_not?: InputMaybe<Scalars['BigDecimal']>;
   apy_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-  asset?: InputMaybe<Scalars['Bytes']>;
+  asset?: InputMaybe<Scalars['String']>;
   assetPerShare?: InputMaybe<Scalars['BigDecimal']>;
   assetPerShare_gt?: InputMaybe<Scalars['BigDecimal']>;
   assetPerShare_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -727,11 +808,34 @@ export type Vault_Filter = {
   assetPerShare_lte?: InputMaybe<Scalars['BigDecimal']>;
   assetPerShare_not?: InputMaybe<Scalars['BigDecimal']>;
   assetPerShare_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-  asset_contains?: InputMaybe<Scalars['Bytes']>;
-  asset_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  asset_not?: InputMaybe<Scalars['Bytes']>;
-  asset_not_contains?: InputMaybe<Scalars['Bytes']>;
-  asset_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  asset_?: InputMaybe<Asset_Filter>;
+  asset_contains?: InputMaybe<Scalars['String']>;
+  asset_contains_nocase?: InputMaybe<Scalars['String']>;
+  asset_ends_with?: InputMaybe<Scalars['String']>;
+  asset_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  asset_gt?: InputMaybe<Scalars['String']>;
+  asset_gte?: InputMaybe<Scalars['String']>;
+  asset_in?: InputMaybe<Array<Scalars['String']>>;
+  asset_lt?: InputMaybe<Scalars['String']>;
+  asset_lte?: InputMaybe<Scalars['String']>;
+  asset_not?: InputMaybe<Scalars['String']>;
+  asset_not_contains?: InputMaybe<Scalars['String']>;
+  asset_not_contains_nocase?: InputMaybe<Scalars['String']>;
+  asset_not_ends_with?: InputMaybe<Scalars['String']>;
+  asset_not_ends_with_nocase?: InputMaybe<Scalars['String']>;
+  asset_not_in?: InputMaybe<Array<Scalars['String']>>;
+  asset_not_starts_with?: InputMaybe<Scalars['String']>;
+  asset_not_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  asset_starts_with?: InputMaybe<Scalars['String']>;
+  asset_starts_with_nocase?: InputMaybe<Scalars['String']>;
+  decimals?: InputMaybe<Scalars['Int']>;
+  decimals_gt?: InputMaybe<Scalars['Int']>;
+  decimals_gte?: InputMaybe<Scalars['Int']>;
+  decimals_in?: InputMaybe<Array<Scalars['Int']>>;
+  decimals_lt?: InputMaybe<Scalars['Int']>;
+  decimals_lte?: InputMaybe<Scalars['Int']>;
+  decimals_not?: InputMaybe<Scalars['Int']>;
+  decimals_not_in?: InputMaybe<Array<Scalars['Int']>>;
   id?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
@@ -772,6 +876,7 @@ export enum Vault_OrderBy {
   Apy = 'apy',
   Asset = 'asset',
   AssetPerShare = 'assetPerShare',
+  Decimals = 'decimals',
   Id = 'id',
   Timestamp = 'timestamp',
   TotalAssets = 'totalAssets',

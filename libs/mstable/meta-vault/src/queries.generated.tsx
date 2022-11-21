@@ -27,7 +27,7 @@ export type UserVaultBalanceQueryVariables = Types.Exact<{
 }>;
 
 
-export type UserVaultBalanceQuery = { __typename?: 'Query', vaultBalances: Array<{ __typename?: 'VaultBalance', owner: any, timestamp: any, shareBalance: any, assetBalance: any, assetDeposited: any, vault: { __typename?: 'Vault', id: string, asset: any } }> };
+export type UserVaultBalanceQuery = { __typename?: 'Query', vaultBalances: Array<{ __typename?: 'VaultBalance', owner: any, timestamp: any, shareBalance: any, assetBalance: any, assetDeposited: any, vault: { __typename?: 'Vault', id: string, asset: { __typename?: 'Asset', address: any } } }> };
 
 export type UserTxHistoryQueryVariables = Types.Exact<{
   owner: Types.Scalars['Bytes'];
@@ -43,14 +43,14 @@ export type MetavaultQueryVariables = Types.Exact<{
 }>;
 
 
-export type MetavaultQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', totalSupply: any, totalAssets: any, apy: any, assetPerShare: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, totalAssets: any, totalSupply: any, timestamp: any }> } | null };
+export type MetavaultQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', totalSupply: any, totalAssets: any, apy: any, assetPerShare: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, assetPerShare: any, totalAssets: any, totalSupply: any, timestamp: any }> } | null };
 
 export type MetavaultsQueryVariables = Types.Exact<{
   days?: Types.InputMaybe<Types.Scalars['Int']>;
 }>;
 
 
-export type MetavaultsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', address: any, totalSupply: any, totalAssets: any, apy: any, assetPerShare: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, totalAssets: any, totalSupply: any, timestamp: any }> }> };
+export type MetavaultsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', address: any, totalSupply: any, totalAssets: any, apy: any, assetPerShare: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, totalAssets: any, assetPerShare: any, totalSupply: any, timestamp: any }> }> };
 
 
 export const UserVaultBalanceDocument = `
@@ -59,7 +59,9 @@ export const UserVaultBalanceDocument = `
     owner
     vault {
       id
-      asset
+      asset {
+        address
+      }
     }
     timestamp
     shareBalance
@@ -121,8 +123,9 @@ export const MetavaultDocument = `
     totalAssets
     apy
     assetPerShare
-    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
+    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: asc) {
       apy
+      assetPerShare
       totalAssets
       totalSupply
       timestamp
@@ -151,9 +154,10 @@ export const MetavaultsDocument = `
     totalAssets
     apy
     assetPerShare
-    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: desc) {
+    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: asc) {
       apy
       totalAssets
+      assetPerShare
       totalSupply
       timestamp
     }

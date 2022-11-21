@@ -41,7 +41,7 @@ const tagProps: TypographyProps = {
 export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const data = useMetavaultData(metavault.address);
+  const { data } = useMetavaultData(metavault.address);
   const chartData = useChartData(metavault.address, true);
   const { data: assetDecimal, isLoading: assetLoading } = useAssetDecimal(
     metavault.address,
