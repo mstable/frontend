@@ -14,6 +14,8 @@ import {
   TableCell,
   TableRow,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { format } from 'date-fns';
 import { constants } from 'ethers';
@@ -32,6 +34,8 @@ export const HistoryDialog = ({
   onClose: () => void;
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { assetToken, mvToken, metavault } = useMetavault();
   const { chain } = useNetwork();
   const { address } = useAccount();
@@ -53,6 +57,7 @@ export const HistoryDialog = ({
       onClose={onClose}
       maxWidth="sm"
       fullWidth
+      fullScreen={isMobile}
       title={intl.formatMessage({ defaultMessage: 'History' })}
       content={
         <Table sx={{ tableLayout: 'fixed' }}>
@@ -162,11 +167,15 @@ export const HistoryDialog = ({
           </TableBody>
         </Table>
       }
-      actions={(onClose) => (
-        <Button color="secondary" onClick={onClose}>
-          {intl.formatMessage({ defaultMessage: 'Close' })}
-        </Button>
-      )}
+      actions={
+        isMobile
+          ? undefined
+          : (onClose) => (
+              <Button color="secondary" onClick={onClose}>
+                {intl.formatMessage({ defaultMessage: 'Close' })}
+              </Button>
+            )
+      }
     />
   );
 };

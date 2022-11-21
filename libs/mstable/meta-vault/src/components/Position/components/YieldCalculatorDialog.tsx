@@ -23,6 +23,8 @@ import {
   MenuItem,
   Select,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import produce from 'immer';
@@ -46,6 +48,8 @@ export const YieldCalculatorDialog = ({
   onClose: () => void;
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate<MvGenerics>();
   const { assetToken, assetBalance, metavault } = useMetavault();
   const { isConnected } = useAccount();
@@ -123,6 +127,7 @@ export const YieldCalculatorDialog = ({
     <Dialog
       maxWidth="sm"
       fullWidth
+      fullScreen={isMobile}
       open={open}
       onClose={onClose}
       title={intl.formatMessage({ defaultMessage: 'Yield Calculator' })}

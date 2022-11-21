@@ -11,6 +11,9 @@ export const getDialog = (base: Theme): ThemeOptions => ({
           borderRadius: '16px',
           backgroundColor: base.palette.background.paper,
         },
+        paperFullScreen: {
+          borderRadius: 0,
+        },
       },
     },
   },

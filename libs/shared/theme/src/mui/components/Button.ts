@@ -11,6 +11,10 @@ export const getButton = (base: Theme): ThemeOptions => ({
         root: {
           textTransform: 'none',
         },
+        outlinedSecondary: {
+          borderColor: base.palette.divider,
+          color: base.palette.text.primary,
+        },
 
         containedPrimary: {
           backgroundSize: '200% 200%',
