@@ -31,34 +31,31 @@ query userTxHistory($owner: Bytes!, $vault: String!) {
     from
   }
 }
-query metavault($id: ID!, $days: Int = 7) {
+query metavault($id: ID!, $firstBlock: BigInt!, $days: Int = 7) {
   vault(id: $id) {
     totalSupply
     totalAssets
     apy
     assetPerShare
-    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: asc) {
+    DailyVaultStats(
+      first: $days
+      orderBy: timestamp
+      orderDirection: asc
+      where: { blockNumber_gte: $firstBlock }
+    ) {
       apy
       assetPerShare
       totalAssets
       totalSupply
       timestamp
+    }
+    first: DailyVaultStats(first: 1, where: { blockNumber_gte: $firstBlock }) {
+      assetPerShare
     }
   }
 }
-query metavaults($days: Int = 7) {
+query metavaults {
   vaults {
     address
-    totalSupply
-    totalAssets
-    apy
-    assetPerShare
-    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: asc) {
-      apy
-      totalAssets
-      assetPerShare
-      totalSupply
-      timestamp
-    }
   }
 }

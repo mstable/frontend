@@ -39,18 +39,17 @@ export type UserTxHistoryQuery = { __typename?: 'Query', transactions: Array<{ _
 
 export type MetavaultQueryVariables = Types.Exact<{
   id: Types.Scalars['ID'];
+  firstBlock: Types.Scalars['BigInt'];
   days?: Types.InputMaybe<Types.Scalars['Int']>;
 }>;
 
 
-export type MetavaultQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', totalSupply: any, totalAssets: any, apy: any, assetPerShare: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, assetPerShare: any, totalAssets: any, totalSupply: any, timestamp: any }> } | null };
+export type MetavaultQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', totalSupply: any, totalAssets: any, apy: any, assetPerShare: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, assetPerShare: any, totalAssets: any, totalSupply: any, timestamp: any }>, first: Array<{ __typename?: 'DailyVaultStat', assetPerShare: any }> } | null };
 
-export type MetavaultsQueryVariables = Types.Exact<{
-  days?: Types.InputMaybe<Types.Scalars['Int']>;
-}>;
+export type MetavaultsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type MetavaultsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', address: any, totalSupply: any, totalAssets: any, apy: any, assetPerShare: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, totalAssets: any, assetPerShare: any, totalSupply: any, timestamp: any }> }> };
+export type MetavaultsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', address: any }> };
 
 
 export const UserVaultBalanceDocument = `
@@ -117,18 +116,26 @@ export const useUserTxHistoryQuery = <
       options
     );
 export const MetavaultDocument = `
-    query metavault($id: ID!, $days: Int = 7) {
+    query metavault($id: ID!, $firstBlock: BigInt!, $days: Int = 7) {
   vault(id: $id) {
     totalSupply
     totalAssets
     apy
     assetPerShare
-    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: asc) {
+    DailyVaultStats(
+      first: $days
+      orderBy: timestamp
+      orderDirection: asc
+      where: {blockNumber_gte: $firstBlock}
+    ) {
       apy
       assetPerShare
       totalAssets
       totalSupply
       timestamp
+    }
+    first: DailyVaultStats(first: 1, where: {blockNumber_gte: $firstBlock}) {
+      assetPerShare
     }
   }
 }
@@ -147,20 +154,9 @@ export const useMetavaultQuery = <
       options
     );
 export const MetavaultsDocument = `
-    query metavaults($days: Int = 7) {
+    query metavaults {
   vaults {
     address
-    totalSupply
-    totalAssets
-    apy
-    assetPerShare
-    DailyVaultStats(first: $days, orderBy: timestamp, orderDirection: asc) {
-      apy
-      totalAssets
-      assetPerShare
-      totalSupply
-      timestamp
-    }
   }
 }
     `;

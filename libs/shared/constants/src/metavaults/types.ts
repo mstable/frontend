@@ -31,4 +31,5 @@ export type Metavault = {
   };
   primaryColor: string;
   featured?: boolean;
+  firstBlock: number;
 };

@@ -19,23 +19,18 @@ import { chainId, useFeeData, useNetwork } from 'wagmi';
 import { useTotalTvl } from '../hooks';
 import { VaultCard } from './VaultCard';
 
+import type { PaletteMode } from '@mui/material';
+
 const gradient = keyframes`  
-	from {
-		background-position: 0% 50%;
-	}
 	to {
-		background-position: 100% 100%;
+		background-position: 300%;
 	}
 `;
 
-const gradientReverse = keyframes`  
-	from {
-		background-position: 100% 100%;
-	}
-	to {
-    background-position: 0% 50%;		
-	}
-`;
+const colorGradient = (mode: PaletteMode) =>
+  mode === 'light'
+    ? `linear-gradient(90deg, #9D95FF 12.5%, #FAC371 37.5%, #55D5FF 62.5%, #FB88D7 87.5%, #9D95FF 100%)`
+    : `linear-gradient(90deg, #9D95FF 12.5%, #FAC371 37.5%, #55D5FF 62.5%, #FB88D7 87.5%, #9D95FF 100%)`;
 
 export const FeatureCard = () => {
   const intl = useIntl();
@@ -47,7 +42,7 @@ export const FeatureCard = () => {
   });
   const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
   const featuredMv = metavaults.find((mv) => mv.featured);
-  const totalTvl = useTotalTvl();
+  const { data: totalTvl, isLoading: totalTvlLoading } = useTotalTvl();
   const { currency } = usePrices();
 
   const handleClick = () => {
@@ -82,14 +77,10 @@ export const FeatureCard = () => {
           fontSize: 64,
           fontWeight: 900,
           lineHeight: '64px',
-          pt: { xs: 4, md: 8 },
-          background: `linear-gradient(${
-            theme.palette.mode === 'light' ? '90' : '270'
-          }deg,#D1C6FF 0%, #D1C6FF 2.49%, #6A67CB 68.52%, #6A67CB 100%)`,
-          backgroundSize: `200% 200%`,
+          background: colorGradient(theme.palette.mode),
+          backgroundSize: `300%`,
           backgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
-          animation: `${gradientReverse} 0.5s ease forwards`,
         },
         '.subtitle': {
           color:
@@ -117,10 +108,7 @@ export const FeatureCard = () => {
               ? `linear-gradient(106.79deg, rgba(234, 235, 255, 0.08) 3.2%, rgba(248, 250, 255, 0.4) 97.33%)`
               : ` linear-gradient(106.33deg, rgba(44, 48, 78, 0.08) 5.27%, rgba(10, 16, 44, 0.4) 99.37%)`,
           '.title': {
-            animation: `${gradient} 0.2s ease forwards`,
-          },
-          '.subtitle': {
-            color: theme.palette.grey['500'],
+            animation: `${gradient} 10s linear infinite`,
           },
           '.panel': {
             border: `1px solid ${
@@ -141,16 +129,27 @@ export const FeatureCard = () => {
           direction="column"
           width={{ xs: 1, md: 1 / 2 }}
           alignItems="flex-start"
-          spacing={3}
         >
-          <Typography className="title">
+          <Typography
+            sx={{
+              fontSize: 64,
+              fontWeight: 900,
+              lineHeight: '64px',
+              color: theme.palette.mode === 'light' ? 'grey.600' : 'grey.500',
+              pt: { xs: 4, md: 8 },
+              pb: 1,
+            }}
+          >
+            {intl.formatMessage({ defaultMessage: 'Explore' })}
+          </Typography>
+          <Typography className="title" mb={3}>
             {intl.formatMessage({
-              defaultMessage: 'Discover<br></br>Meta Vaults',
+              defaultMessage: 'Meta Vaults',
             })}
           </Typography>
-          <Typography className="subtitle">
+          <Typography className="subtitle" mb={3}>
             {intl.formatMessage({
-              defaultMessage: 'The easiest way to yield in DeFi.',
+              defaultMessage: 'Earn and invest across DeFi.',
             })}
           </Typography>
           <Stack
@@ -161,7 +160,7 @@ export const FeatureCard = () => {
           >
             <Vault weight="fill" color={theme.palette.icons.color} />
             <Typography variant="value5" pr={3}>
-              {isNaN(totalTvl) ? (
+              {totalTvlLoading ? (
                 <Skeleton width={60} height={14} />
               ) : (
                 intl.formatNumber(totalTvl, {
@@ -179,7 +178,7 @@ export const FeatureCard = () => {
               ) : (
                 intl.formatMessage(
                   { defaultMessage: '{value} GWEI' },
-                  { value: new BigDecimal(feeData?.gasPrice, 9).format(3) },
+                  { value: new BigDecimal(feeData?.gasPrice, 9).simpleRounded },
                 )
               )}
             </Typography>
@@ -190,11 +189,7 @@ export const FeatureCard = () => {
           justifyContent="center"
           alignItems="flex-end"
         >
-          <VaultCard
-            metavault={featuredMv}
-            sx={{ width: 400, height: 500 }}
-            className="vaultcard"
-          />
+          <VaultCard metavault={featuredMv} className="vaultcard" />
         </Stack>
       </Stack>
     </Stack>

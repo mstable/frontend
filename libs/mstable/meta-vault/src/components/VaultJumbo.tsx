@@ -7,6 +7,7 @@ import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import {
   Avatar,
   AvatarGroup,
+  Divider,
   Skeleton,
   Stack,
   Typography,
@@ -50,13 +51,14 @@ export const VaultJumbo = (props: StackProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {
-    metavault: { address, name, tags, strategies },
+    metavault: { address, name, tags, strategies, firstBlock },
     assetToken,
+    roi,
   } = useMetavault();
   const dataSource = useDataSource();
   const { data, isLoading } = useMetavaultQuery(
     dataSource,
-    { id: address },
+    { id: address, firstBlock },
     { enabled: !!address },
   );
   const { currency } = usePrices();
@@ -117,29 +119,10 @@ export const VaultJumbo = (props: StackProps) => {
         direction="row"
         spacing={{ xs: 3, md: 4 }}
         sx={{ overflowX: 'auto', maxWidth: 1, width: 1 }}
+        divider={<Divider orientation="vertical" flexItem variant="middle" />}
       >
         <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'Protocols Involved' })}
-          components={{
-            valueContainer: { pb: 0.3 },
-            container: isMobile
-              ? { direction: 'column', alignItems: 'flex-start', width: '50%' }
-              : {},
-          }}
-        >
-          <AvatarGroup max={6}>
-            {strategies.map((strat) => (
-              <Avatar key={strat.protocol.id}>
-                <ProtocolIcon
-                  name={strat.protocol.id}
-                  sx={{ height: 20, width: 20 }}
-                />
-              </Avatar>
-            ))}
-          </AvatarGroup>
-        </ValueLabel>
-        <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'Performance' })}
+          label={intl.formatMessage({ defaultMessage: 'Share Price' })}
           hint={intl.formatMessage({
             defaultMessage: 'Asset per share price.',
           })}
@@ -160,6 +143,25 @@ export const VaultJumbo = (props: StackProps) => {
             </Typography>
           )}
         </ValueLabel>
+        {isMobile ? null : (
+          <ValueLabel
+            label={intl.formatMessage({ defaultMessage: 'ROI' })}
+            hint={intl.formatMessage({
+              defaultMessage: 'Return on Investment',
+            })}
+          >
+            {isLoading ? (
+              <Skeleton height={24} width={60} />
+            ) : (
+              <Typography variant="value2">
+                {intl.formatNumber(roi, {
+                  style: 'percent',
+                  minimumFractionDigits: 2,
+                })}
+              </Typography>
+            )}
+          </ValueLabel>
+        )}
         {isMobile ? null : (
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'TVL' })}
@@ -186,6 +188,26 @@ export const VaultJumbo = (props: StackProps) => {
             )}
           </ValueLabel>
         )}
+        <ValueLabel
+          label={intl.formatMessage({ defaultMessage: 'Protocols Involved' })}
+          components={{
+            valueContainer: { pb: 0.3 },
+            container: isMobile
+              ? { direction: 'column', alignItems: 'flex-start', width: '50%' }
+              : {},
+          }}
+        >
+          <AvatarGroup max={6}>
+            {strategies.map((strat) => (
+              <Avatar key={strat.protocol.id}>
+                <ProtocolIcon
+                  name={strat.protocol.id}
+                  sx={{ height: 20, width: 20 }}
+                />
+              </Avatar>
+            ))}
+          </AvatarGroup>
+        </ValueLabel>
       </Stack>
     </Stack>
   );

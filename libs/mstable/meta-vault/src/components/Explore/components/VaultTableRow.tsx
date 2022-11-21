@@ -1,3 +1,4 @@
+import { useDataSource } from '@frontend/mstable-shared-data-access';
 import { MVIcon, ProtocolIcon } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
@@ -13,7 +14,8 @@ import { useNavigate } from '@tanstack/react-location';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
 
-import { useAssetDecimal, useChartData, useMetavaultData } from '../hooks';
+import { useMetavaultQuery } from '../../../queries.generated';
+import { useAssetDecimal, useChartData } from '../hooks';
 import { LineChart } from './LineChart';
 
 import type { Metavault } from '@frontend/shared-constants';
@@ -41,12 +43,15 @@ const tagProps: TypographyProps = {
 export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
   const intl = useIntl();
   const navigate = useNavigate();
-  const { data } = useMetavaultData(metavault.address);
+  const dataSource = useDataSource();
+  const { data } = useMetavaultQuery(dataSource, {
+    id: metavault.address,
+    firstBlock: metavault.firstBlock,
+  });
   const chartData = useChartData(metavault.address, true);
   const { data: assetDecimal, isLoading: assetLoading } = useAssetDecimal(
     metavault.address,
   );
-
   const tableCellSx = { borderBottom: isLast ? 'none' : undefined };
 
   return (
@@ -89,7 +94,7 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
           ) : (
             intl.formatNumber(
               new BigDecimal(
-                data?.totalAssets ?? constants.Zero,
+                data?.vault?.totalAssets ?? constants.Zero,
                 assetDecimal ?? 18,
               ).simple,
               { notation: 'compact' },
@@ -100,10 +105,15 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
       <TableCell sx={tableCellSx}>
         <Stack direction="row">
           <Typography variant="value4">
-            {intl.formatNumber(data?.apy ?? 0, {
-              style: 'percent',
-              maximumFractionDigits: 2,
-            })}
+            {intl.formatNumber(
+              data?.vault?.assetPerShare /
+                (data?.vault?.first?.[0]?.assetPerShare ?? 1) -
+                1 ?? 0,
+              {
+                style: 'percent',
+                minimumFractionDigits: 2,
+              },
+            )}
           </Typography>
         </Stack>
       </TableCell>

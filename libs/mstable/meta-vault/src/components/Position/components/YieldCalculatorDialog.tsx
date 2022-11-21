@@ -65,7 +65,7 @@ export const YieldCalculatorDialog = ({
   const dataSource = useDataSource();
   const { data } = useMetavaultQuery(
     dataSource,
-    { id: metavault.address },
+    { id: metavault.address, firstBlock: metavault.firstBlock },
     { enabled: !!metavault.address },
   );
   useEffect(() => {
