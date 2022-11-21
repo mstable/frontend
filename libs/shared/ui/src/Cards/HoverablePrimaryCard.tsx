@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { alpha, Card } from '@mui/material';
+import { alpha, Stack } from '@mui/material';
 import { mergeDeepRight } from 'ramda';
 
-import type { CardProps, SxProps, Theme } from '@mui/material';
+import type { StackProps, SxProps, Theme } from '@mui/material';
 
 export type HoverableCardProps = {
   transparentBackground?: boolean;
   primaryColor: string;
   children: React.ReactNode;
-} & CardProps;
+} & StackProps;
 
 export const hoverPrimarySx = (theme: Theme, color: string): SxProps => ({
   background: `linear-gradient(180deg, ${alpha(color, 0.12)} 0%, ${alpha(
@@ -27,7 +27,7 @@ export const HoverablePrimaryCard = ({
   ...rest
 }: HoverableCardProps) => {
   return (
-    <Card
+    <Stack
       {...rest}
       sx={(theme) =>
         mergeDeepRight(rest?.sx, {
@@ -39,16 +39,12 @@ export const HoverablePrimaryCard = ({
                 0.4,
               )} 100%)`,
           border: `1px solid ${theme.palette.background.highlight}`,
-          boxShadow: `0px 0px 20px ${
-            theme.palette.mode === 'dark'
-              ? 'rgba(255, 255, 255, 0.05)'
-              : 'rgba(0, 0, 0, 0.05)'
-          }`,
+          boxShadow: 1,
           '&:hover': hoverPrimarySx(theme, primaryColor),
         })
       }
     >
       {children}
-    </Card>
+    </Stack>
   );
 };

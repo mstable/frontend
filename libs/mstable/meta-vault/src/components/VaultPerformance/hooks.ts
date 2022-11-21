@@ -86,7 +86,7 @@ export const useChartData = (
   chartType: ChartType,
 ) => {
   const {
-    metavault: { address, primaryColor },
+    metavault: { address, primaryColor, firstBlock },
     mvBalance,
     assetToken,
   } = useMetavault();
@@ -97,6 +97,7 @@ export const useChartData = (
     dataSource,
     {
       id: address,
+      firstBlock,
       days: chartTimeframes[chartTimeframe].days,
     },
     {
@@ -128,7 +129,7 @@ export const useChartData = (
       ({
         PERF: !isNilOrEmpty(series)
           ? series.reduce(
-              (acc, curr) => Math.min(acc, Number(curr.value) - 0.05),
+              (acc, curr) => Math.min(acc, Number(curr.value) - 0.005),
               series[0].value,
             )
           : undefined,
@@ -143,7 +144,7 @@ export const useChartData = (
       ({
         PERF: !isNilOrEmpty(series)
           ? series.reduce(
-              (acc, curr) => Math.max(acc, Number(curr.value) + 0.05),
+              (acc, curr) => Math.max(acc, Number(curr.value) + 0.005),
               series[0].value,
             )
           : undefined,

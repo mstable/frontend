@@ -90,7 +90,7 @@ export const Explore = () => {
                     {intl.formatMessage({ defaultMessage: 'TVL' })}
                   </TableCell>
                   <TableCell>
-                    {intl.formatMessage({ defaultMessage: 'APY' })}
+                    {intl.formatMessage({ defaultMessage: 'ROI' })}
                   </TableCell>
                   <TableCell />
                 </TableRow>
