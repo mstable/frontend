@@ -1,4 +1,6 @@
+import type { TransactionType } from '@frontend/mstable-shared-data-access';
 import type { MakeGenerics } from '@tanstack/react-location';
+import type { BigNumber } from 'ethers';
 
 import type {
   ChartTimeframe,
@@ -18,3 +20,13 @@ export type MvGenerics = MakeGenerics<{
     };
   };
 }>;
+
+export type TxHistory = {
+  timestamp: string;
+  type: TransactionType;
+  shareAmount: BigNumber;
+  assetAmount: BigNumber;
+  hash: string;
+  to: string;
+  from: string;
+};

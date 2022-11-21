@@ -3,7 +3,7 @@ query userVaultBalance($owner: Bytes!, $vault: String!) {
     owner
     vault {
       id
-      asset {        
+      asset {
         address
       }
     }
