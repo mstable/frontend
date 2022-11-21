@@ -21,7 +21,7 @@ const mainnet: Metavault = {
       defaultMessage: 'Market Neutral',
     }),
     defineMessage({
-      defaultMessage: 'Meta Vault',
+      defaultMessage: 'Diversified',
     }),
   ],
   strategyDescription: defineMessage({

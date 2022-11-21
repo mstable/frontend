@@ -116,7 +116,8 @@ export const VaultJumbo = (props: StackProps) => {
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'Share Price' })}
           hint={intl.formatMessage({
-            defaultMessage: 'Asset per share price.',
+            defaultMessage:
+              'The current price of 1 share. Return is represented as a increase in share price value.',
           })}
         >
           {isLoading ? (
@@ -133,7 +134,7 @@ export const VaultJumbo = (props: StackProps) => {
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'ROI' })}
           hint={intl.formatMessage({
-            defaultMessage: 'Return on Investment',
+            defaultMessage: 'Return on investment since Vault inception.',
           })}
         >
           {isLoading ? (
@@ -149,7 +150,9 @@ export const VaultJumbo = (props: StackProps) => {
         </ValueLabel>
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'TVL' })}
-          hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
+          hint={intl.formatMessage({
+            defaultMessage: 'Total Value Locked in vault',
+          })}
         >
           {isLoading || isPriceLoading || !assetToken ? (
             <Skeleton height={24} width={60} />
