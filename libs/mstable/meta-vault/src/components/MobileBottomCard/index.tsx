@@ -10,7 +10,7 @@ export const MobileBottomCard = () => {
   const intl = useIntl();
   const [myPositionOpen, setMyPositionOpen] = useState(false);
   return (
-    <Card sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}>
+    <Card sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1 }}>
       <Box
         m={2}
         pb={1}

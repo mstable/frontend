@@ -83,16 +83,18 @@ export const Metavault = () => {
               </ErrorBoundary>
             </Stack>
           </Grid>
-          <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
-            <Stack direction="column" spacing={2}>
-              <ErrorBoundary>
-                <Position />
-              </ErrorBoundary>
-              <ErrorBoundary>
-                <Operations />
-              </ErrorBoundary>
-            </Stack>
-          </Grid>
+          {isMobile ? null : (
+            <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
+              <Stack direction="column" spacing={2}>
+                <ErrorBoundary>
+                  <Position />
+                </ErrorBoundary>
+                <ErrorBoundary>
+                  <Operations />
+                </ErrorBoundary>
+              </Stack>
+            </Grid>
+          )}
         </Grid>
       </Stack>
       {isMobile ? <MobileBottomCard /> : null}
