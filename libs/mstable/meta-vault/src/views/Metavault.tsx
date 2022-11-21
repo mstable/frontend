@@ -6,13 +6,14 @@ import {
 } from '@frontend/mstable-shared-ui';
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { ErrorBoundary, ErrorCard, MVIcon } from '@frontend/shared-ui';
-import { Button, Grid, Stack } from '@mui/material';
+import { Button, Grid, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
 import { propEq } from 'ramda';
 import { useIntl } from 'react-intl';
 import { chainId, useNetwork } from 'wagmi';
 
+import { MobileBottomCard } from '../components/MobileBottomCard';
 import { Operations } from '../components/Operations';
 import { Position } from '../components/Position';
 import { Strategy } from '../components/Strategy';
@@ -24,6 +25,8 @@ import type { MvGenerics } from '../types';
 
 export const Metavault = () => {
   const intl = useIntl();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { chain } = useNetwork();
   const navigate = useNavigate();
   const updateBkgColor = useTransitionBackgroundColor();
@@ -92,6 +95,7 @@ export const Metavault = () => {
           </Grid>
         </Grid>
       </Stack>
+      {isMobile ? <MobileBottomCard /> : null}
     </MetavaultProvider>
   );
 };

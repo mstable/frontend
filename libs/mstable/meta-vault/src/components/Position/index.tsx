@@ -20,18 +20,11 @@ import { useMetavault } from '../../state';
 import { HistoryDialog } from './components/HistoryDialog';
 import { YieldCalculatorDialog } from './components/YieldCalculatorDialog';
 
-export const Position = () => {
+export const PositionContent = () => {
   const intl = useIntl();
-  const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
-  const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
-  const {
-    mvBalance,
-    mvBalanceInAsset,
-    assetToken,
-    mvDeposited,
-    metavault,
-    profitOrLoss,
-  } = useMetavault();
+  const { mvBalance, mvBalanceInAsset, assetToken, mvDeposited, profitOrLoss } =
+    useMetavault();
+  const { isConnected } = useAccount();
 
   const roi =
     mvBalanceInAsset?.exact.eq(constants.Zero) ||
@@ -43,8 +36,106 @@ export const Position = () => {
             ? profitOrLoss.divPrecisely(mvDeposited).exact.mul(100)
             : 0,
         );
+  return (
+    <>
+      <Stack
+        direction="row"
+        mb={3}
+        justifyContent="space-between"
+        alignItems="flex-start"
+      >
+        <Box display="flex" alignItems="center">
+          <Typography variant="body2" color="text.secondary">
+            {intl.formatMessage({ defaultMessage: 'Position Value' })}
+          </Typography>
+          <InfoTooltip
+            sx={{ ml: 1 }}
+            size={14}
+            label={intl.formatMessage({
+              defaultMessage:
+                'Current value of your position. Includes earned amount.',
+            })}
+            color="text.secondary"
+            variant="exclamation"
+          />
+        </Box>
+        <Stack direction="column" alignItems="flex-end" spacing={1}>
+          <HighlightUpdate
+            variant="value5"
+            value={mvBalanceInAsset}
+            suffix={assetToken?.symbol}
+            commas
+            color={isConnected ? undefined : 'grey.300'}
+          />
+          <Typography
+            variant="value5"
+            color={isConnected ? 'text.secondary' : 'grey.300'}
+          >
+            {intl.formatMessage(
+              { defaultMessage: '{val} Shares' },
+              { val: mvBalance?.format() ?? '0.00' },
+            )}
+          </Typography>
+        </Stack>
+      </Stack>
+      <Stack
+        direction="row"
+        mb={3}
+        justifyContent="space-between"
+        alignItems="flex-start"
+      >
+        <Box display="flex" alignItems="center">
+          <Typography variant="body2" color="text.secondary">
+            {intl.formatMessage({ defaultMessage: 'Profit/Loss' })}
+          </Typography>
+          <InfoTooltip
+            sx={{ ml: 1 }}
+            size={14}
+            label={intl.formatMessage({
+              defaultMessage:
+                'Profit or Losses accumulated since deposit. Flactuations possible due to liquidity provision position.',
+            })}
+            color="text.secondary"
+            variant="exclamation"
+          />
+        </Box>
+        <Stack direction="column" alignItems="flex-end" spacing={1}>
+          <Typography
+            variant="value5"
+            color={
+              isConnected && profitOrLoss
+                ? profitOrLoss.simple >= 0
+                  ? 'success.main'
+                  : 'error.main'
+                : 'grey.300'
+            }
+          >
+            {`${profitOrLoss?.format() ?? '0.00'} ${assetToken?.symbol || ''}`}
+          </Typography>
+          <Typography
+            variant="value5"
+            color={isConnected ? 'text.secondary' : 'grey.300'}
+          >
+            {intl.formatMessage(
+              { defaultMessage: '{roi}% ROI' },
+              {
+                roi: roi.format() ?? '0.00',
+              },
+            )}
+          </Typography>
+        </Stack>
+      </Stack>
+    </>
+  );
+};
 
-  const { address, isConnected } = useAccount();
+export const Position = () => {
+  const intl = useIntl();
+  const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
+  const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
+  const { metavault } = useMetavault();
+
+  const { address } = useAccount();
 
   return (
     <>
@@ -70,95 +161,7 @@ export const Position = () => {
           </Button>
         </Box>
         <CardContent>
-          <Stack
-            direction="row"
-            mb={3}
-            justifyContent="space-between"
-            alignItems="flex-start"
-          >
-            <Box display="flex" alignItems="center">
-              <Typography variant="body2" color="text.secondary">
-                {intl.formatMessage({ defaultMessage: 'Position Value' })}
-              </Typography>
-              <InfoTooltip
-                sx={{ ml: 1 }}
-                size={14}
-                label={intl.formatMessage({
-                  defaultMessage:
-                    'Current value of your position. Includes earned amount.',
-                })}
-                color="text.secondary"
-                variant="exclamation"
-              />
-            </Box>
-            <Stack direction="column" alignItems="flex-end" spacing={1}>
-              <HighlightUpdate
-                variant="value5"
-                value={mvBalanceInAsset}
-                suffix={assetToken?.symbol}
-                commas
-                color={isConnected ? undefined : 'grey.300'}
-              />
-              <Typography
-                variant="value5"
-                color={isConnected ? 'text.secondary' : 'grey.300'}
-              >
-                {intl.formatMessage(
-                  { defaultMessage: '{val} Shares' },
-                  { val: mvBalance?.format() ?? '0.00' },
-                )}
-              </Typography>
-            </Stack>
-          </Stack>
-          <Stack
-            direction="row"
-            mb={3}
-            justifyContent="space-between"
-            alignItems="flex-start"
-          >
-            <Box display="flex" alignItems="center">
-              <Typography variant="body2" color="text.secondary">
-                {intl.formatMessage({ defaultMessage: 'Profit/Loss' })}
-              </Typography>
-              <InfoTooltip
-                sx={{ ml: 1 }}
-                size={14}
-                label={intl.formatMessage({
-                  defaultMessage:
-                    'Profit or Losses accumulated since deposit. Flactuations possible due to liquidity provision position.',
-                })}
-                color="text.secondary"
-                variant="exclamation"
-              />
-            </Box>
-            <Stack direction="column" alignItems="flex-end" spacing={1}>
-              <Typography
-                variant="value5"
-                color={
-                  isConnected && profitOrLoss
-                    ? profitOrLoss.simple >= 0
-                      ? 'success.main'
-                      : 'error.main'
-                    : 'grey.300'
-                }
-              >
-                {`${profitOrLoss?.format() ?? '0.00'} ${
-                  assetToken?.symbol || ''
-                }`}
-              </Typography>
-              <Typography
-                variant="value5"
-                color={isConnected ? 'text.secondary' : 'grey.300'}
-              >
-                {intl.formatMessage(
-                  { defaultMessage: '{roi}% ROI' },
-                  {
-                    roi: roi.format() ?? '0.00',
-                  },
-                )}
-              </Typography>
-            </Stack>
-          </Stack>
+          <PositionContent />
           <Button
             onClick={() => setIsYieldCalculatorOpen(true)}
             sx={{ width: '100%' }}
