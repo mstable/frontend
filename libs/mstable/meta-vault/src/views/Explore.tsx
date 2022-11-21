@@ -22,6 +22,7 @@ import { chainId, useNetwork } from 'wagmi';
 
 import { FeatureCard, VaultCard } from '../components/Explore';
 import { VaultTableRow } from '../components/Explore/components/VaultTableRow';
+import { StrategyStepper } from '../components/Strategy/components/StrategyStepper';
 
 export const Explore = () => {
   const intl = useIntl();
@@ -39,6 +40,7 @@ export const Explore = () => {
 
   return (
     <Stack direction="column" pt={{ xs: 2, md: 5 }} spacing={4}>
+      <StrategyStepper />
       <FeatureCard />
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography mt={5} mb={3} variant="h3">
