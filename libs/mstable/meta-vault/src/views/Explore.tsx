@@ -60,17 +60,21 @@ export const Explore = () => {
       </Stack>
       <Box pb={4}>
         {viewMode === 'grid' ? (
-          <Grid container spacing={3}>
+          <Grid container spacing={{ xs: 2, md: 3 }}>
             {metavaults.map((mv) => {
               return (
-                <Grid key={mv.id} item sm={12} md={6} lg={4}>
+                <Grid key={mv.id} item xs={12} sm={6} lg={4}>
                   <VaultCard metavault={mv} to={`./${mv.id}`} />
                 </Grid>
               );
             })}
           </Grid>
         ) : (
-          <Box border={`1px solid ${theme.palette.divider}`} borderRadius={1}>
+          <Box
+            border={`1px solid ${theme.palette.divider}`}
+            borderRadius={1}
+            sx={{ overflowX: 'auto' }}
+          >
             <Table>
               <TableHead>
                 <TableRow>
