@@ -8,9 +8,6 @@ You need
 
 - `node16`
 - `yarn`
-- A Personal Access Token with `packages:read` rights to `mstable` npm registry
-
-> Refer to github guides to [create a PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) and to [authenticate locally](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token).
 
 The `i18n:compile` script relies on external dependency `jq` that you need to install on your OS
 
