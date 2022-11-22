@@ -26,7 +26,7 @@
     "@fontsource/plus-jakarta-sans": "^4.5.10",
     "@fontsource/red-hat-mono": "^4.5.11",
     "@gnosis.pm/safe-apps-wagmi": "^1.1.0",
-    "@mstable/metavaults-web": "^0.0.4",
+    "@mstable/metavaults-web": "^0.0.5",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.12",
     "@nrwl/nx-cloud": "^15.0.2",
