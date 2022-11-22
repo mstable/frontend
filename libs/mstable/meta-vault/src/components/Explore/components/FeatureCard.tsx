@@ -149,7 +149,7 @@ export const FeatureCard = () => {
           </Typography>
           <Typography className="subtitle" mb={3}>
             {intl.formatMessage({
-              defaultMessage: 'Earn and invest across DeFi.',
+              defaultMessage: 'Earn diversified yield across DeFi.',
             })}
           </Typography>
           <Stack

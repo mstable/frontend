@@ -2,9 +2,6 @@
   "+1GGs7": {
     "defaultMessage": "Claim CVX & CRV"
   },
-  "+rLSix": {
-    "defaultMessage": "TVL {value}"
-  },
   "/54G9d": {
     "defaultMessage": "Approving Token"
   },
@@ -41,14 +38,14 @@
   "3wMm/H": {
     "defaultMessage": "You Deposit"
   },
-  "3zqxkt": {
-    "defaultMessage": "Automated and diversified yield strategies."
-  },
   "4/JAsV": {
     "defaultMessage": "The underlying vaults charge a {fee}% fee upon liquidation of the earned rewards."
   },
   "4LNpZQ": {
     "defaultMessage": "Current value of your position. Includes earned amount."
+  },
+  "5PmGOj": {
+    "defaultMessage": "Assets per Share"
   },
   "5fjd4K": {
     "defaultMessage": "{fee}%"
@@ -59,14 +56,14 @@
   "6bJGds": {
     "defaultMessage": "1W"
   },
+  "7JlauX": {
+    "defaultMessage": "Explore"
+  },
   "7d2ri8": {
     "defaultMessage": "{value} Shares"
   },
   "7jeKkk": {
     "defaultMessage": "Protocols that are used by this vault."
-  },
-  "7lqTh7": {
-    "defaultMessage": "Annual Percentage Yield. Annualized 24 hours performance."
   },
   "7ynb1z": {
     "defaultMessage": "{value} GWEI"
@@ -97,12 +94,6 @@
   },
   "CGcoFj": {
     "defaultMessage": "Yield Calculator"
-  },
-  "CnPG8j": {
-    "defaultMessage": "Featured"
-  },
-  "DUR59o": {
-    "defaultMessage": "Total Value Locked"
   },
   "EWa1Fv": {
     "defaultMessage": "LP Position"
@@ -152,14 +143,26 @@
   "OwO+Nr": {
     "defaultMessage": "Mint"
   },
+  "P1xtEU": {
+    "defaultMessage": "Earn diversified yield across DeFi."
+  },
+  "P8Xs51": {
+    "defaultMessage": "ROI"
+  },
   "PXAur5": {
     "defaultMessage": "Withdraw"
   },
   "Pk6qK4": {
     "defaultMessage": "Fees that are charged by this vault."
   },
+  "PxG1Yq": {
+    "defaultMessage": "Total Value Locked in vault"
+  },
   "SKB/G9": {
     "defaultMessage": "TVL"
+  },
+  "SRo6uF": {
+    "defaultMessage": "Meta Vaults"
   },
   "T3hbuQ": {
     "defaultMessage": "{val} Shares"
@@ -169,6 +172,12 @@
   },
   "TVrR/z": {
     "defaultMessage": "{roi}% ROI"
+  },
+  "TvzL+L": {
+    "defaultMessage": "Share Price"
+  },
+  "ULHfQE": {
+    "defaultMessage": "The current price of 1 share. Return is represented as a increase in share price value."
   },
   "UMrrVX": {
     "defaultMessage": "TVL ({symbol})"
@@ -187,6 +196,9 @@
   },
   "XSdWHA": {
     "defaultMessage": "Redeem"
+  },
+  "YC/ZXg": {
+    "defaultMessage": "Share price"
   },
   "ZefNbE": {
     "defaultMessage": "Average - {value} GWEI"
@@ -245,9 +257,6 @@
   "hRuz7F": {
     "defaultMessage": "Withdrawal Gas"
   },
-  "iDM1KQ": {
-    "defaultMessage": "{operation}ing {currency}"
-  },
   "jHskc6": {
     "defaultMessage": "Txn hash"
   },
@@ -260,11 +269,17 @@
   "lLuyem": {
     "defaultMessage": "DAO"
   },
+  "m+DGTj": {
+    "defaultMessage": "{operation}ing"
+  },
   "mrwfXX": {
     "defaultMessage": "Shares"
   },
   "p8bsw4": {
     "defaultMessage": "Transaction Error"
+  },
+  "qNhf66": {
+    "defaultMessage": "Perf"
   },
   "qZbedW": {
     "defaultMessage": "Fees"
@@ -290,9 +305,6 @@
   "tvpAhG": {
     "defaultMessage": "The Meta Vault charges a {fee}% performance upon underlying asset appreciation."
   },
-  "vHwp5J": {
-    "defaultMessage": "Explore Meta Vaults"
-  },
   "w1LBDB": {
     "defaultMessage": "Sign Transaction"
   },
@@ -301,6 +313,9 @@
   },
   "zGHadw": {
     "defaultMessage": "Strategy"
+  },
+  "zKtTJT": {
+    "defaultMessage": "Return on investment since Vault inception."
   },
   "zRbVmO": {
     "defaultMessage": "WITHDRAW"
@@ -353,6 +368,9 @@
   "sy+pv5": {
     "defaultMessage": "Email"
   },
+  "vHwp5J": {
+    "defaultMessage": "Explore Meta Vaults"
+  },
   "w4Oc4e": {
     "defaultMessage": "The selected network is not supported by this application, why not try {defaultChain}?"
   },
@@ -398,8 +416,8 @@
   "meocUp": {
     "defaultMessage": "Convex is a platform that boosts rewards for CRV stakers and liquidity providers alike, all in a simple and easy to use interface."
   },
-  "qEnyZU": {
-    "defaultMessage": "Meta Vault"
+  "s47Z6j": {
+    "defaultMessage": "Diversified"
   },
   "vS/YSY": {
     "defaultMessage": "Curve is an exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers, without an opportunity cost."

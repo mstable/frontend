@@ -5,16 +5,6 @@
       "value": "Claim CVX & CRV"
     }
   ],
-  "+rLSix": [
-    {
-      "type": 0,
-      "value": "TVL "
-    },
-    {
-      "type": 1,
-      "value": "value"
-    }
-  ],
   "+vVZ/G": [
     {
       "type": 0,
@@ -181,12 +171,6 @@
       "value": "You Deposit"
     }
   ],
-  "3zqxkt": [
-    {
-      "type": 0,
-      "value": "Automated and diversified yield strategies."
-    }
-  ],
   "4/JAsV": [
     {
       "type": 0,
@@ -211,6 +195,12 @@
     {
       "type": 0,
       "value": "Dark Mode"
+    }
+  ],
+  "5PmGOj": [
+    {
+      "type": 0,
+      "value": "Assets per Share"
     }
   ],
   "5fjd4K": [
@@ -241,6 +231,12 @@
       "value": "mStable is a protocol for yield aggregation and diversification."
     }
   ],
+  "7JlauX": [
+    {
+      "type": 0,
+      "value": "Explore"
+    }
+  ],
   "7d2ri8": [
     {
       "type": 1,
@@ -255,12 +251,6 @@
     {
       "type": 0,
       "value": "Protocols that are used by this vault."
-    }
-  ],
-  "7lqTh7": [
-    {
-      "type": 0,
-      "value": "Annual Percentage Yield. Annualized 24 hours performance."
     }
   ],
   "7ynb1z": [
@@ -389,22 +379,10 @@
       "value": "Yield Calculator"
     }
   ],
-  "CnPG8j": [
-    {
-      "type": 0,
-      "value": "Featured"
-    }
-  ],
   "D/hLNw": [
     {
       "type": 0,
       "value": "The Strategy uses Curves 3CRV Pools and Factory pools. The strategy is exposed to the risk of the Curve smart contracts."
-    }
-  ],
-  "DUR59o": [
-    {
-      "type": 0,
-      "value": "Total Value Locked"
     }
   ],
   "EWa1Fv": [
@@ -561,6 +539,18 @@
       "value": "Mint"
     }
   ],
+  "P1xtEU": [
+    {
+      "type": 0,
+      "value": "Earn diversified yield across DeFi."
+    }
+  ],
+  "P8Xs51": [
+    {
+      "type": 0,
+      "value": "ROI"
+    }
+  ],
   "PXAur5": [
     {
       "type": 0,
@@ -577,6 +567,12 @@
     {
       "type": 0,
       "value": "Unsupported Network"
+    }
+  ],
+  "PxG1Yq": [
+    {
+      "type": 0,
+      "value": "Total Value Locked in vault"
     }
   ],
   "R5x4Vk": [
@@ -597,6 +593,12 @@
     {
       "type": 0,
       "value": "TVL"
+    }
+  ],
+  "SRo6uF": [
+    {
+      "type": 0,
+      "value": "Meta Vaults"
     }
   ],
   "T3hbuQ": [
@@ -623,6 +625,18 @@
     {
       "type": 0,
       "value": "% ROI"
+    }
+  ],
+  "TvzL+L": [
+    {
+      "type": 0,
+      "value": "Share Price"
+    }
+  ],
+  "ULHfQE": [
+    {
+      "type": 0,
+      "value": "The current price of 1 share. Return is represented as a increase in share price value."
     }
   ],
   "UMrrVX": [
@@ -723,6 +737,12 @@
     {
       "type": 0,
       "value": "Redeem"
+    }
+  ],
+  "YC/ZXg": [
+    {
+      "type": 0,
+      "value": "Share price"
     }
   ],
   "ZefNbE": [
@@ -887,20 +907,6 @@
       "value": "Withdrawal Gas"
     }
   ],
-  "iDM1KQ": [
-    {
-      "type": 1,
-      "value": "operation"
-    },
-    {
-      "type": 0,
-      "value": "ing "
-    },
-    {
-      "type": 1,
-      "value": "currency"
-    }
-  ],
   "il6pe+": [
     {
       "type": 0,
@@ -929,6 +935,16 @@
     {
       "type": 0,
       "value": "DAO"
+    }
+  ],
+  "m+DGTj": [
+    {
+      "type": 1,
+      "value": "operation"
+    },
+    {
+      "type": 0,
+      "value": "ing"
     }
   ],
   "meocUp": [
@@ -973,10 +989,10 @@
       "value": "Transaction Error"
     }
   ],
-  "qEnyZU": [
+  "qNhf66": [
     {
       "type": 0,
-      "value": "Meta Vault"
+      "value": "Perf"
     }
   ],
   "qZbedW": [
@@ -1013,6 +1029,12 @@
     {
       "type": 0,
       "value": "Vaults"
+    }
+  ],
+  "s47Z6j": [
+    {
+      "type": 0,
+      "value": "Diversified"
     }
   ],
   "sy+pv5": [
@@ -1101,6 +1123,12 @@
     {
       "type": 0,
       "value": "Strategy"
+    }
+  ],
+  "zKtTJT": [
+    {
+      "type": 0,
+      "value": "Return on investment since Vault inception."
     }
   ],
   "zRbVmO": [

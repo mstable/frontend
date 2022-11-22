@@ -124,7 +124,8 @@ export const VaultJumbo = (props: StackProps) => {
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'Share Price' })}
           hint={intl.formatMessage({
-            defaultMessage: 'Asset per share price.',
+            defaultMessage:
+              'The current price of 1 share. Return is represented as a increase in share price value.',
           })}
           components={{
             container: isMobile
@@ -147,7 +148,7 @@ export const VaultJumbo = (props: StackProps) => {
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'ROI' })}
             hint={intl.formatMessage({
-              defaultMessage: 'Return on Investment',
+              defaultMessage: 'Return on investment since Vault inception.',
             })}
           >
             {isLoading ? (
