@@ -43,7 +43,7 @@ export const Strategy = () => {
   const intl = useIntl();
   const { metavault } = useMetavault();
   const [openingSectionIndex, setOpenningSectionIndex] = useState(-1);
-  const [showStrategy, setShowStrategy] = useState(true);
+  const [showStrategy, setShowStrategy] = useState(false);
 
   const collapseSections = [
     {
