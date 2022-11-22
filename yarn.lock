@@ -3415,10 +3415,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@mstable/metavaults-web@^0.0.4":
-  version "0.0.4"
-  resolved "https://npm.pkg.github.com/download/@mstable/metavaults-web/0.0.4/62ae9a1e682436da1406d1580bc2aa2e51b135ba#62ae9a1e682436da1406d1580bc2aa2e51b135ba"
-  integrity sha512-KCVSnrdgGGRrHYIeHCXg7gdzf3d8Zam6M7gue+qnciUDMmofYHa90Wyf0eALN+WATHQvGGnZwAItLtg+LejgGA==
+"@mstable/metavaults-web@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@mstable/metavaults-web/-/metavaults-web-0.0.5.tgz#62d0d7a1d5966939082be487f1df31544011ec52"
+  integrity sha512-YiFqhGskJ+9+tKFtoxZRr5NWODj2OVRATYn0DbeUvX/Og0NGqnv8NdJP/ooZtQ5UJoffwOqnaGYjL972H/t/uA==
 
 "@mui/base@5.0.0-alpha.104":
   version "5.0.0-alpha.104"
