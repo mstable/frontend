@@ -93,7 +93,8 @@ export const VaultCard = ({
             container: { alignItems: 'flex-end' },
           }}
           hint={intl.formatMessage({
-            defaultMessage: 'Asset per share price.',
+            defaultMessage:
+              'The current price of 1 share. Return is represented as a increase in share price value.',
           })}
         >
           <Typography variant="value2">
@@ -136,7 +137,7 @@ export const VaultCard = ({
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'ROI' })}
           hint={intl.formatMessage({
-            defaultMessage: 'DIMITRI NEEDS TO CHANGE THAT',
+            defaultMessage: 'Return on investment since Vault inception.',
           })}
           components={{
             valueContainer: { pb: 0.3 },
@@ -161,7 +162,9 @@ export const VaultCard = ({
         </ValueLabel>
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'TVL' })}
-          hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
+          hint={intl.formatMessage({
+            defaultMessage: 'Total Value Locked in vault',
+          })}
           components={{
             label: { sx: { mb: 0.5 } },
           }}
