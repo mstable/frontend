@@ -13,7 +13,24 @@ export const IconContainer = (props: StackProps) => (
       mergeDeepRight(props?.sx, {
         border: `1px solid ${theme.palette.info.main}`,
         borderRadius: '53px',
-        padding: 0.5,
+        padding: 1,
+        backgroundColor: alpha(theme.palette.info.main, 0.2),
+      })
+    }
+  />
+);
+
+export const SquaredIconContainer = (props: StackProps) => (
+  <Stack
+    direction="column"
+    spacing={1}
+    alignItems="center"
+    {...props}
+    sx={(theme) =>
+      mergeDeepRight(props?.sx, {
+        border: `1px solid ${theme.palette.info.main}`,
+        borderRadius: 1,
+        padding: 1,
         backgroundColor: alpha(theme.palette.info.main, 0.2),
       })
     }
@@ -27,7 +44,6 @@ export const ArrowRight = (props: StackProps) => {
     <Stack
       {...props}
       direction="row"
-      justifyContent="flex-end"
       alignItems="center"
       sx={mergeDeepRight(props?.sx, {
         position: 'relative',
@@ -47,6 +63,37 @@ export const ArrowRight = (props: StackProps) => {
           width: 1,
           top: '50%',
           left: 0,
+        },
+      })}
+    />
+  );
+};
+
+export const ArrowUp = (props: StackProps) => {
+  const theme = useTheme();
+
+  return (
+    <Stack
+      {...props}
+      direction="row"
+      alignItems="center"
+      sx={mergeDeepRight(props?.sx, {
+        position: 'relative',
+        '::after': {
+          position: 'absolute',
+          content: '""',
+          background: `linear-gradient(0deg, ${alpha(
+            theme.palette.info.light,
+            0,
+          )} 0%, ${alpha(theme.palette.info.light, 0.4)} 30%, ${
+            theme.palette.info.light
+          } 100%)`,
+          width: 2,
+          height: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          left: '50%',
         },
       })}
     />

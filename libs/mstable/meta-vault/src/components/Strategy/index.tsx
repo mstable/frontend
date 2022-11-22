@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { useShowDialog } from '@frontend/shared-modals';
 import { CollapsibleSection } from '@frontend/shared-ui';
 import {
   Button,
@@ -16,8 +15,8 @@ import { useMetavault } from '../../state';
 import { Assets } from './components/Assets';
 import { Fees } from './components/Fees';
 import { Protocols } from './components/Protocols';
+import { StrategyStepperDialog } from './components/StrategyStepperDialog';
 import { Vaults } from './components/Vaults';
-import { VisualizeStrategyDialog } from './components/VisualizeStrategyDialog';
 
 import type { CollapsibleSectionProps } from '@frontend/shared-ui';
 
@@ -43,13 +42,8 @@ const collapsibleProps: Partial<CollapsibleSectionProps> = {
 export const Strategy = () => {
   const intl = useIntl();
   const { metavault } = useMetavault();
-  const showDialog = useShowDialog();
-
-  const handleVisualizeStrategyClick = () => {
-    showDialog(VisualizeStrategyDialog);
-  };
-
   const [openingSectionIndex, setOpenningSectionIndex] = useState(-1);
+  const [showStrategy, setShowStrategy] = useState(true);
 
   const collapseSections = [
     {
@@ -86,48 +80,61 @@ export const Strategy = () => {
   ];
 
   return (
-    <Card
-      elevation={0}
-      sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}
-    >
-      <CardHeader
-        title={intl.formatMessage({ defaultMessage: 'Strategy & Risks' })}
-        sx={{ paddingLeft: 0 }}
-        action={
-          <Button color="secondary" onClick={handleVisualizeStrategyClick}>
-            {intl.formatMessage({ defaultMessage: 'Visualize Strategy' })}
-          </Button>
-        }
-      />
-      <CardContent sx={{ paddingLeft: 0 }}>
-        <Typography mb={2} color="text.secondary">
-          {metavault?.strategyDescription
-            ? intl.formatMessage(metavault.strategyDescription)
-            : ''}
-        </Typography>
-        <Stack
-          direction="column"
-          sx={{
-            border: (theme) => `1px solid ${theme.palette.divider}`,
-            borderRadius: 1,
-          }}
-        >
-          {collapseSections.map((s, i) => (
-            <CollapsibleSection
-              {...collapsibleProps}
-              key={s.title}
-              open={openingSectionIndex === i}
-              onToggle={() => {
-                setOpenningSectionIndex((ci) => (ci === i ? -1 : i));
+    <>
+      <Card
+        elevation={0}
+        sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}
+      >
+        <CardHeader
+          title={intl.formatMessage({ defaultMessage: 'Strategy & Risks' })}
+          sx={{ paddingLeft: 0 }}
+          action={
+            <Button
+              color="secondary"
+              onClick={() => {
+                setShowStrategy(true);
               }}
-              title={s.title}
-              subtitle={s.subtitle}
             >
-              {s.component}
-            </CollapsibleSection>
-          ))}
-        </Stack>
-      </CardContent>
-    </Card>
+              {intl.formatMessage({ defaultMessage: 'Visualize Strategy' })}
+            </Button>
+          }
+        />
+        <CardContent sx={{ paddingLeft: 0 }}>
+          <Typography mb={2} color="text.secondary">
+            {metavault?.strategyDescription
+              ? intl.formatMessage(metavault.strategyDescription)
+              : ''}
+          </Typography>
+          <Stack
+            direction="column"
+            sx={{
+              border: (theme) => `1px solid ${theme.palette.divider}`,
+              borderRadius: 1,
+            }}
+          >
+            {collapseSections.map((s, i) => (
+              <CollapsibleSection
+                {...collapsibleProps}
+                key={s.title}
+                open={openingSectionIndex === i}
+                onToggle={() => {
+                  setOpenningSectionIndex((ci) => (ci === i ? -1 : i));
+                }}
+                title={s.title}
+                subtitle={s.subtitle}
+              >
+                {s.component}
+              </CollapsibleSection>
+            ))}
+          </Stack>
+        </CardContent>
+      </Card>
+      <StrategyStepperDialog
+        open={showStrategy}
+        onClose={() => {
+          setShowStrategy(false);
+        }}
+      />
+    </>
   );
 };
