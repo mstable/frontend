@@ -134,23 +134,6 @@ export const VaultJumbo = (props: StackProps) => {
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'ROI' })}
           hint={intl.formatMessage({
-            defaultMessage: 'Return on Investment',
-          })}
-        >
-          {isLoading ? (
-            <Skeleton height={24} width={60} />
-          ) : (
-            <Typography variant="value2">
-              {intl.formatNumber(roi, {
-                style: 'percent',
-                minimumFractionDigits: 2,
-              })}
-            </Typography>
-          )}
-        </ValueLabel>
-        <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'ROI' })}
-          hint={intl.formatMessage({
             defaultMessage: 'Return on investment since Vault inception.',
           })}
         >
