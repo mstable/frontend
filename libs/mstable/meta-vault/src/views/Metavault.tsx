@@ -83,7 +83,7 @@ export const Metavault = () => {
               </ErrorBoundary>
             </Stack>
           </Grid>
-          {isMobile ? null : (
+          {!isMobile && (
             <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
               <Stack direction="column" spacing={2}>
                 <ErrorBoundary>
@@ -97,7 +97,7 @@ export const Metavault = () => {
           )}
         </Grid>
       </Stack>
-      {isMobile ? <MobileBottomCard /> : null}
+      {isMobile && <MobileBottomCard />}
     </MetavaultProvider>
   );
 };

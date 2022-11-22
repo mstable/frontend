@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { CollapsibleSection } from '@frontend/shared-ui';
+import { CollapsibleSection, Dialog } from '@frontend/shared-ui';
 import { Box, Button, Card, Stack } from '@mui/material';
 import { Receipt } from 'phosphor-react';
 import { useIntl } from 'react-intl';
@@ -14,6 +14,7 @@ export const MobileBottomCard = () => {
   const [isMyPositionOpen, setIsMyPositionOpen] = useState(false);
   const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
   const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
+  const [isOperationOpen, setIsOperationOpen] = useState(false);
   return (
     <>
       <Card sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1 }}>
@@ -65,6 +66,13 @@ export const MobileBottomCard = () => {
       <HistoryDialog
         open={isHistoryDialogOpen}
         onClose={() => setIsHistoryDialogOpen(false)}
+      />
+      <Dialog
+        fullScreen
+        open={isOperationOpen}
+        onClose={() => setIsOperationOpen(false)}
+        title={intl.formatMessage({ defaultMessage: 'Deposit/Withdraw' })}
+        content={<></>}
       />
     </>
   );

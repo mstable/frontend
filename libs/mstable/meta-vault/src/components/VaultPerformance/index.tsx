@@ -37,7 +37,7 @@ export const VaultPerformance = () => {
         title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
         sx={{ paddingLeft: 0 }}
         action={
-          isMobile ? null : (
+          !isMobile && (
             <Button
               onClick={() => setExpand(true)}
               color="secondary"

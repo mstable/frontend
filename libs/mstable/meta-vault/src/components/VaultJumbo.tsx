@@ -144,7 +144,7 @@ export const VaultJumbo = (props: StackProps) => {
             </Typography>
           )}
         </ValueLabel>
-        {isMobile ? null : (
+        {!isMobile && (
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'ROI' })}
             hint={intl.formatMessage({
@@ -163,7 +163,7 @@ export const VaultJumbo = (props: StackProps) => {
             )}
           </ValueLabel>
         )}
-        {isMobile ? null : (
+        {!isMobile && (
           <ValueLabel
             label={intl.formatMessage({ defaultMessage: 'TVL' })}
             hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
