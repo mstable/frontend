@@ -32,7 +32,8 @@ export const useVaultCardProps = ({
     id: metavault.address,
     firstBlock: metavault.firstBlock,
   });
-  const chartData = useChartData(metavault.address);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const chartData = useChartData(metavault.address) as any;
   const { data: asset } = useContractRead({
     address: metavault.address,
     abi: erc4626ABI,
