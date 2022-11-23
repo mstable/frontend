@@ -12,7 +12,6 @@ import {
   chainId,
   erc20ABI,
   erc4626ABI,
-  useContractRead,
   useContractReads,
   useNetwork,
 } from 'wagmi';
@@ -139,20 +138,6 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
     );
 
   return chartData;
-};
-
-export const useAssetDecimal = (address: HexAddress) => {
-  const { data: asset } = useContractRead({
-    address,
-    abi: erc4626ABI,
-    functionName: 'asset',
-  });
-
-  return useContractRead({
-    address: asset as HexAddress,
-    abi: erc20ABI,
-    functionName: 'decimals',
-  });
 };
 
 export const useTotalTvl = () => {

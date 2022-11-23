@@ -7,10 +7,12 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
+import { erc20ABI, erc4626ABI, useContractRead } from 'wagmi';
 
 import { useMetavaultQuery } from '../../../../queries.generated';
-import { useAssetDecimal, useChartData } from '../../hooks';
+import { useChartData } from '../../hooks';
 
+import type { HexAddress } from '@frontend/shared-utils';
 import type { TypographyProps } from '@mui/material';
 
 import type { VaultCardProps } from './types';
@@ -31,9 +33,17 @@ export const useVaultCardProps = ({
     firstBlock: metavault.firstBlock,
   });
   const chartData = useChartData(metavault.address);
-  const { data: assetDecimal, isLoading: assetLoading } = useAssetDecimal(
-    metavault.address,
-  );
+  const { data: asset } = useContractRead({
+    address: metavault.address,
+    abi: erc4626ABI,
+    functionName: 'asset',
+  });
+  const { data: assetDecimal, isLoading: assetLoading } = useContractRead({
+    address: asset as HexAddress,
+    abi: erc20ABI,
+    functionName: 'decimals',
+  });
+
   const tagProps: TypographyProps = {
     display: 'flex',
     justifyContent: 'center',
