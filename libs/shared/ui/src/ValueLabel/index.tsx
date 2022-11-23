@@ -12,6 +12,7 @@ export type ValueLabelProps = {
   hint?: string;
   subhint?: string;
   children?: ReactNode;
+  disableResponsive?: boolean;
   components?: {
     container?: StackProps;
     label?: TypographyProps;
@@ -29,18 +30,26 @@ export const ValueLabel = ({
   hint,
   subhint,
   components,
+  disableResponsive,
 }: ValueLabelProps) => {
   return (
     <Stack
-      direction={{ xs: 'row', md: 'column' }}
-      alignItems={{ xs: 'center', md: 'flex-start' }}
+      direction={disableResponsive ? 'column' : { xs: 'row', md: 'column' }}
+      alignItems={
+        disableResponsive ? 'flex-start' : { xs: 'center', md: 'flex-start' }
+      }
+      justifyContent={
+        disableResponsive
+          ? 'flex-start'
+          : { xs: 'space-between', md: 'flex-start' }
+      }
       {...components?.container}
     >
       <Typography
         variant="label2"
         noWrap
         position="relative"
-        mb={{ xs: 0, md: 2 }}
+        mb={{ xs: 0.5, md: 2 }}
         color="text.secondary"
         {...(hint && { pr: 1.75 })}
         {...components?.label}
