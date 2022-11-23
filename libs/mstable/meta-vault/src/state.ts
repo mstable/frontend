@@ -160,7 +160,7 @@ export const {
   });
 
   useBalance({
-    addressOrName: walletAddress,
+    address: walletAddress,
     token: address,
     watch: true,
     enabled: !!walletAddress && !!address,
@@ -176,7 +176,7 @@ export const {
   });
 
   useBalance({
-    addressOrName: walletAddress,
+    address: walletAddress,
     token: asset,
     watch: true,
     enabled: !!walletAddress && !!asset,

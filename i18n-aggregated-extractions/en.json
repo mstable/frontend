@@ -95,6 +95,9 @@
   "CGcoFj": {
     "defaultMessage": "Yield Calculator"
   },
+  "DUR59o": {
+    "defaultMessage": "Total Value Locked"
+  },
   "EWa1Fv": {
     "defaultMessage": "LP Position"
   },
@@ -256,6 +259,9 @@
   },
   "hRuz7F": {
     "defaultMessage": "Withdrawal Gas"
+  },
+  "in6iXe": {
+    "defaultMessage": "Deposit/Withdraw"
   },
   "jHskc6": {
     "defaultMessage": "Txn hash"
