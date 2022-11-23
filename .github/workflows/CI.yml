@@ -40,8 +40,6 @@ jobs:
 
       - run: yarn install --frozen-lockfile
         name: Install dependencies
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_NPM_TOKEN }}
 
       - name: Build
         env:
@@ -84,8 +82,6 @@ jobs:
 
       - run: yarn install --frozen-lockfile
         name: Install dependencies
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_NPM_TOKEN }}
 
       - name: Build
         env:
