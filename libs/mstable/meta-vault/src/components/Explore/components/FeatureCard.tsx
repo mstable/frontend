@@ -175,7 +175,7 @@ export const FeatureCard = () => {
           )}
         </Typography>
       </Stack>
-      <VaultCard metavault={featuredMv} className="vaultcard" />
+      <VaultCard metavault={featuredMv} className="vaultcard" featured />
     </Stack>
   ) : (
     <Stack
