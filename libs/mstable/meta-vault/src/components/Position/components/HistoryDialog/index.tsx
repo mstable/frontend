@@ -49,7 +49,6 @@ export const HistoryDialog = ({
       onClose={onClose}
       maxWidth="sm"
       fullWidth
-      fullScreen={isMobile}
       title={intl.formatMessage({ defaultMessage: 'History' })}
       content={
         isNilOrEmpty(txHistory?.transactions) ? (

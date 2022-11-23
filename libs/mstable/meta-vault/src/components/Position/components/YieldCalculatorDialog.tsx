@@ -128,7 +128,6 @@ export const YieldCalculatorDialog = ({
     <Dialog
       maxWidth="sm"
       fullWidth
-      fullScreen={isMobile}
       open={open}
       onClose={onClose}
       title={intl.formatMessage({ defaultMessage: 'Yield Calculator' })}

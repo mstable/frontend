@@ -80,7 +80,6 @@ export const MobileBottomCard = () => {
         onClose={() => setIsHistoryDialogOpen(false)}
       />
       <Dialog
-        fullScreen
         open={isOperationOpen}
         onClose={() => setIsOperationOpen(false)}
         title={intl.formatMessage({ defaultMessage: 'Deposit/Withdraw' })}
