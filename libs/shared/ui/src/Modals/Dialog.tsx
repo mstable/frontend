@@ -7,6 +7,8 @@ import {
   DialogContentText,
   DialogTitle,
   IconButton,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 
 import type { DialogProps as MuiDialogProps } from '@mui/material';
@@ -42,6 +44,9 @@ export const Dialog = ({
   disableClickAway = false,
   ...rest
 }: DialogProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   if (isNilOrEmpty(content)) return null;
 
   const handleClose = () => {
@@ -50,7 +55,13 @@ export const Dialog = ({
   };
 
   return (
-    <MuiDialog fullWidth maxWidth="sm" {...rest} onClose={handleClose}>
+    <MuiDialog
+      fullWidth
+      fullScreen={isMobile}
+      maxWidth="sm"
+      {...rest}
+      onClose={handleClose}
+    >
       {!hideCloseButton && (
         <IconButton
           color="inherit"

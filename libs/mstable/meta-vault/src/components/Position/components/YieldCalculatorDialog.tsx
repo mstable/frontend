@@ -22,7 +22,10 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Stack,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import produce from 'immer';
@@ -46,6 +49,8 @@ export const YieldCalculatorDialog = ({
   onClose: () => void;
 }) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate<MvGenerics>();
   const { assetToken, assetBalance, metavault } = useMetavault();
   const { isConnected } = useAccount();
@@ -129,8 +134,13 @@ export const YieldCalculatorDialog = ({
       content={
         <>
           <Box
-            p={2}
-            border={(theme) => `1px solid ${theme.palette.divider}`}
+            p={isMobile ? undefined : 2}
+            pt={2}
+            border={
+              isMobile
+                ? undefined
+                : (theme) => `1px solid ${theme.palette.divider}`
+            }
             borderRadius={1}
             mb={3}
           >
@@ -145,7 +155,10 @@ export const YieldCalculatorDialog = ({
               hideBottomRow={!isConnected}
             />
             <Divider sx={{ my: 2 }} />
-            <Box display="flex" alignItems="center">
+            <Stack
+              direction={isMobile ? 'column' : 'row'}
+              alignItems={isMobile ? undefined : 'center'}
+            >
               <FormControl>
                 <InputLabel>
                   {intl.formatMessage({ defaultMessage: 'Projected APY (%)' })}
@@ -163,36 +176,43 @@ export const YieldCalculatorDialog = ({
                   sx={{ typography: 'value1' }}
                 />
               </FormControl>
-              <Divider sx={{ mx: 2 }} orientation="vertical" />
-              <FormControl>
-                <InputLabel>
-                  {intl.formatMessage({ defaultMessage: 'Duration' })}
-                </InputLabel>
-                <BigDecimalInput
-                  placeholder="0"
-                  value={duration}
-                  onChange={setDuration}
-                  decimals={18}
-                />
-              </FormControl>
-              <Select
-                value={durationUnit}
-                onChange={(e) => {
-                  setDurationUnit(e.target.value as number);
-                }}
-                sx={{ mt: 2.5, minWidth: 100 }}
-              >
-                <MenuItem value={365}>
-                  {intl.formatMessage({ defaultMessage: 'Years' })}
-                </MenuItem>
-                <MenuItem value={30}>
-                  {intl.formatMessage({ defaultMessage: 'Months' })}
-                </MenuItem>
-                <MenuItem value={1}>
-                  {intl.formatMessage({ defaultMessage: 'Days' })}
-                </MenuItem>
-              </Select>
-            </Box>
+              {isMobile ? (
+                <Divider sx={{ my: 2 }} />
+              ) : (
+                <Divider sx={{ mx: 2 }} orientation="vertical" />
+              )}
+              <Stack direction="row" alignItems="center">
+                <FormControl>
+                  <InputLabel>
+                    {intl.formatMessage({ defaultMessage: 'Duration' })}
+                  </InputLabel>
+                  <BigDecimalInput
+                    placeholder="0"
+                    value={duration}
+                    onChange={setDuration}
+                    decimals={18}
+                  />
+                </FormControl>
+
+                <Select
+                  value={durationUnit}
+                  onChange={(e) => {
+                    setDurationUnit(e.target.value as number);
+                  }}
+                  sx={{ mt: 2.5, minWidth: 100 }}
+                >
+                  <MenuItem value={365}>
+                    {intl.formatMessage({ defaultMessage: 'Years' })}
+                  </MenuItem>
+                  <MenuItem value={30}>
+                    {intl.formatMessage({ defaultMessage: 'Months' })}
+                  </MenuItem>
+                  <MenuItem value={1}>
+                    {intl.formatMessage({ defaultMessage: 'Days' })}
+                  </MenuItem>
+                </Select>
+              </Stack>
+            </Stack>
             <Divider sx={{ my: 2 }} />
             <Box
               display="flex"
@@ -346,21 +366,46 @@ export const YieldCalculatorDialog = ({
               {assetToken?.symbol || ''}
             </Typography>
           </Box>
+          {isMobile && (
+            <Stack direction="row" mt={5} spacing={1}>
+              <Button
+                variant="outlined"
+                onClick={onClose}
+                fullWidth
+                color="secondary"
+              >
+                {intl.formatMessage({ defaultMessage: 'Close' })}
+              </Button>
+              {isConnected ? (
+                <Button color="secondary" onClick={handleDeposit} fullWidth>
+                  {intl.formatMessage({ defaultMessage: 'Make a Deposit' })}
+                </Button>
+              ) : (
+                <OpenAccountModalButton
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                />
+              )}
+            </Stack>
+          )}
         </>
       }
       actions={
-        <>
-          <Button variant="text" onClick={onClose}>
-            {intl.formatMessage({ defaultMessage: 'Close' })}
-          </Button>
-          {isConnected ? (
-            <Button color="secondary" onClick={handleDeposit}>
-              {intl.formatMessage({ defaultMessage: 'Make a Deposit' })}
+        isMobile ? undefined : (
+          <>
+            <Button variant="text" onClick={onClose}>
+              {intl.formatMessage({ defaultMessage: 'Close' })}
             </Button>
-          ) : (
-            <OpenAccountModalButton variant="contained" color="primary" />
-          )}
-        </>
+            {isConnected ? (
+              <Button color="secondary" onClick={handleDeposit}>
+                {intl.formatMessage({ defaultMessage: 'Make a Deposit' })}
+              </Button>
+            ) : (
+              <OpenAccountModalButton variant="contained" color="primary" />
+            )}
+          </>
+        )
       }
     />
   );
