@@ -367,21 +367,46 @@ export const YieldCalculatorDialog = ({
               {assetToken?.symbol || ''}
             </Typography>
           </Box>
+          {isMobile && (
+            <Stack direction="row" mt={5} spacing={1}>
+              <Button
+                variant="outlined"
+                onClick={onClose}
+                fullWidth
+                color="secondary"
+              >
+                {intl.formatMessage({ defaultMessage: 'Close' })}
+              </Button>
+              {isConnected ? (
+                <Button color="secondary" onClick={handleDeposit} fullWidth>
+                  {intl.formatMessage({ defaultMessage: 'Make a Deposit' })}
+                </Button>
+              ) : (
+                <OpenAccountModalButton
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                />
+              )}
+            </Stack>
+          )}
         </>
       }
       actions={
-        <>
-          <Button variant="text" onClick={onClose}>
-            {intl.formatMessage({ defaultMessage: 'Close' })}
-          </Button>
-          {isConnected ? (
-            <Button color="secondary" onClick={handleDeposit}>
-              {intl.formatMessage({ defaultMessage: 'Make a Deposit' })}
+        isMobile ? undefined : (
+          <>
+            <Button variant="text" onClick={onClose}>
+              {intl.formatMessage({ defaultMessage: 'Close' })}
             </Button>
-          ) : (
-            <OpenAccountModalButton variant="contained" color="primary" />
-          )}
-        </>
+            {isConnected ? (
+              <Button color="secondary" onClick={handleDeposit}>
+                {intl.formatMessage({ defaultMessage: 'Make a Deposit' })}
+              </Button>
+            ) : (
+              <OpenAccountModalButton variant="contained" color="primary" />
+            )}
+          </>
+        )
       }
     />
   );

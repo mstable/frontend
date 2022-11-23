@@ -74,9 +74,19 @@ export const HistoryDialog = ({
             </Typography>
           </Box>
         ) : isMobile ? (
-          txHistory?.transactions.map((tx) => (
-            <ItemMobile key={tx.hash} tx={tx} />
-          ))
+          <>
+            {txHistory?.transactions.map((tx) => (
+              <ItemMobile key={tx.hash} tx={tx} />
+            ))}
+            <Button
+              sx={{ mt: 2 }}
+              color="secondary"
+              onClick={onClose}
+              fullWidth
+            >
+              {intl.formatMessage({ defaultMessage: 'Close' })}
+            </Button>
+          </>
         ) : (
           <Table sx={{ tableLayout: 'fixed' }}>
             <TableBody>
