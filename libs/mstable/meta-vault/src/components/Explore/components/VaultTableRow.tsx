@@ -13,12 +13,14 @@ import {
 import { useNavigate } from '@tanstack/react-location';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
+import { erc20ABI, erc4626ABI, useContractRead } from 'wagmi';
 
 import { useMetavaultQuery } from '../../../queries.generated';
-import { useAssetDecimal, useChartData } from '../hooks';
+import { useChartData } from '../hooks';
 import { LineChart } from './LineChart';
 
 import type { Metavault } from '@frontend/shared-constants';
+import type { HexAddress } from '@frontend/shared-utils';
 import type { TypographyProps } from '@mui/material';
 
 interface Props {
@@ -49,9 +51,16 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
     firstBlock: metavault.firstBlock,
   });
   const chartData = useChartData(metavault.address, true);
-  const { data: assetDecimal, isLoading: assetLoading } = useAssetDecimal(
-    metavault.address,
-  );
+  const { data: asset } = useContractRead({
+    address: metavault.address,
+    abi: erc4626ABI,
+    functionName: 'asset',
+  });
+  const { data: assetDecimal, isLoading: assetLoading } = useContractRead({
+    address: asset as HexAddress,
+    abi: erc20ABI,
+    functionName: 'decimals',
+  });
   const tableCellSx = { borderBottom: isLast ? 'none' : undefined };
 
   return (
