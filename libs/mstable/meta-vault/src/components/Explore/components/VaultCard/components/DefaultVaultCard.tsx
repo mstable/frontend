@@ -72,7 +72,14 @@ export const DefaultVaultCard = (props: VaultCardProps) => {
       <Typography variant="h4" mt={5}>
         {metavault.name}
       </Typography>
-      <Stack direction="row" spacing={1} mt={2} mb={3}>
+      <Stack
+        direction="row"
+        mb={4}
+        flexWrap="wrap"
+        columnGap={1}
+        rowGap={2}
+        mt={2}
+      >
         {metavault.tags.map((tag, idx) => (
           <Typography key={`tag-${idx}`} {...tagProps}>
             {intl.formatMessage(tag)}

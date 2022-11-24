@@ -275,7 +275,16 @@ export const FeatureCard = () => {
               defaultMessage: 'Meta Vaults',
             })}
           </Typography>
-          <Typography className="subtitle" mb={3}>
+          <Typography
+            color={
+              theme.palette.mode === 'light'
+                ? theme.palette.grey['400']
+                : theme.palette.grey['700']
+            }
+            fontSize={32}
+            fontWeight={800}
+            mb={4}
+          >
             {intl.formatMessage({
               defaultMessage: 'Earn diversified yield across DeFi.',
             })}
