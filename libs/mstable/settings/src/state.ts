@@ -1,7 +1,7 @@
 import { useCallback, useLayoutEffect, useMemo } from 'react';
 
 import { useToggleThemeMode } from '@frontend/shared-theme';
-import { useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 import { createContainer } from 'react-tracked';
 import { useLocalStorage } from 'react-use';
 import { useAccount } from 'wagmi';
@@ -12,11 +12,6 @@ export type Flag = 'exactApproval' | 'dark';
 
 export type SettingsState = Record<Flag, boolean>;
 
-const initialState: SettingsState = {
-  exactApproval: false,
-  dark: false,
-};
-
 type State = Record<'disconnected' & string, SettingsState>;
 
 export const {
@@ -25,8 +20,12 @@ export const {
   useTrackedState: useSettings,
 } = createContainer(() => {
   const { address = 'disconnected' } = useAccount();
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [ls, setLs] = useLocalStorage<State>('settings', {
-    disconnected: initialState,
+    disconnected: {
+      exactApproval: false,
+      dark: prefersDarkMode,
+    },
   });
   const {
     palette: { mode },
@@ -40,7 +39,14 @@ export const {
     }
   }, [address, ls, mode, toggleThemeMode]);
 
-  const state = useMemo(() => ls[address] ?? initialState, [address, ls]);
+  const state = useMemo(
+    () =>
+      ls[address] ?? {
+        exactApproval: false,
+        dark: prefersDarkMode,
+      },
+    [address, ls, prefersDarkMode],
+  );
 
   const setState = useCallback(
     (input: SetStateAction<SettingsState>) => {

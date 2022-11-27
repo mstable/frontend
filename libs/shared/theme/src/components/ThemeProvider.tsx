@@ -1,6 +1,10 @@
 import { useMemo } from 'react';
 
-import { CssBaseline, ThemeProvider as MuiThemeProvider } from '@mui/material';
+import {
+  CssBaseline,
+  ThemeProvider as MuiThemeProvider,
+  useMediaQuery,
+} from '@mui/material';
 import { clone } from 'ramda';
 
 import { dark, light } from '../mui';
@@ -38,11 +42,19 @@ const ThemeWrapped = ({
 };
 
 export const ThemeProvider = ({
-  defaultMode: mode = 'light',
+  defaultMode,
   themes = { light, dark },
   ...rest
-}: ThemeProviderProps) => (
-  <Provider initialState={{ mode, themes }}>
-    <ThemeWrapped {...rest} />
-  </Provider>
-);
+}: ThemeProviderProps) => {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const mode = useMemo(
+    () => (defaultMode ?? prefersDarkMode ? 'dark' : 'light'),
+    [defaultMode, prefersDarkMode],
+  );
+
+  return (
+    <Provider initialState={{ mode, themes }}>
+      <ThemeWrapped {...rest} />
+    </Provider>
+  );
+};
