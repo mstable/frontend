@@ -96,7 +96,8 @@ export const {
                   constants.Zero,
               );
               draft.mvDeposited = mvDeposited;
-              draft.profitOrLoss = draft.mvBalanceInAsset.sub(mvDeposited);
+              draft.profitOrLoss =
+                draft.mvBalanceInAsset?.sub(mvDeposited) ?? BigDecimal.ZERO;
             }),
           );
         }
