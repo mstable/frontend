@@ -22,16 +22,16 @@ export const useChartConfig = () => {
   const chartTypes = {
     APS: {
       id: 'APS' as ChartType,
-      label: intl.formatMessage({ defaultMessage: 'Assets per Share' }),
+      label: intl.formatMessage({ defaultMessage: 'Share Price' }),
       getValue: (v) => v.assetPerShare,
       getLabel: (v) => intl.formatNumber(v, { style: 'decimal' }),
     },
-    APY: {
-      id: 'APY' as ChartType,
-      label: intl.formatMessage({ defaultMessage: 'APY' }),
-      getValue: (v) => Number(v.apy),
-      getLabel: (v) => (Number(v) * 100).toFixed(2) + '%',
-    },
+    // APY: {
+    //   id: 'APY' as ChartType,
+    //   label: intl.formatMessage({ defaultMessage: 'APY' }),
+    //   getValue: (v) => Number(v.apy),
+    //   getLabel: (v) => (Number(v) * 100).toFixed(2) + '%',
+    // },
     TVL: {
       id: 'TVL' as ChartType,
       label: intl.formatMessage(
