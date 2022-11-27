@@ -57,7 +57,7 @@ export const ErrorCard = ({
             },
             {
               support: (
-                <Link href={DISCORD_SUPPORT} target="_blank">
+                <Link href={DISCORD_SUPPORT} target="_blank" rel="noreferrer">
                   {intl.formatMessage({
                     defaultMessage: 'Discord support channel',
                   })}
