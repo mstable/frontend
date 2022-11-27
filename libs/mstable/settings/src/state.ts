@@ -1,6 +1,7 @@
 import { useCallback, useLayoutEffect, useMemo } from 'react';
 
 import { useToggleThemeMode } from '@frontend/shared-theme';
+import { isNilOrEmpty } from '@frontend/shared-utils';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { createContainer } from 'react-tracked';
 import { useLocalStorage } from 'react-use';
@@ -33,20 +34,22 @@ export const {
   const toggleThemeMode = useToggleThemeMode();
 
   useLayoutEffect(() => {
+    if (address !== 'disconnected' && isNilOrEmpty(ls[address])) {
+      setLs({
+        ...ls,
+        [address]: ls.disconnected,
+      });
+    }
+  }, [address, ls, setLs]);
+
+  useLayoutEffect(() => {
     const set = ls[address]?.dark ? 'dark' : 'light';
     if (mode !== set) {
       toggleThemeMode();
     }
   }, [address, ls, mode, toggleThemeMode]);
 
-  const state = useMemo(
-    () =>
-      ls[address] ?? {
-        exactApproval: false,
-        dark: prefersDarkMode,
-      },
-    [address, ls, prefersDarkMode],
-  );
+  const state = useMemo(() => ls[address] ?? ls.disconnected, [address, ls]);
 
   const setState = useCallback(
     (input: SetStateAction<SettingsState>) => {
