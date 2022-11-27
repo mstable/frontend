@@ -204,7 +204,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
             </Fade>
           </Stack>
         </FormControl>
-        <Collapse appear in={!hideBottomRow}>
+        <Collapse in={!hideBottomRow}>
           <Stack
             direction="row"
             mt={1}

@@ -40,7 +40,7 @@ query metavault($id: ID!, $firstBlock: BigInt!, $days: Int = 7) {
     DailyVaultStats(
       first: $days
       orderBy: timestamp
-      orderDirection: asc
+      orderDirection: desc
       where: { blockNumber_gte: $firstBlock }
     ) {
       apy
@@ -50,7 +50,11 @@ query metavault($id: ID!, $firstBlock: BigInt!, $days: Int = 7) {
       timestamp
     }
     first: DailyVaultStats(first: 1, where: { blockNumber_gte: $firstBlock }) {
+      apy
       assetPerShare
+      totalAssets
+      totalSupply
+      timestamp
     }
   }
 }

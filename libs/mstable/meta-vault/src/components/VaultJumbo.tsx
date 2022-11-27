@@ -11,7 +11,6 @@ import {
   Skeleton,
   Stack,
   Typography,
-  useMediaQuery,
   useTheme,
 } from '@mui/material';
 import { constants } from 'ethers';
@@ -49,7 +48,6 @@ const tagProps: TypographyProps = {
 export const VaultJumbo = (props: StackProps) => {
   const intl = useIntl();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {
     metavault: { address, name, tags, strategies, firstBlock },
     assetToken,
@@ -69,13 +67,16 @@ export const VaultJumbo = (props: StackProps) => {
     if (isNilOrEmpty(data?.vault?.DailyVaultStats)) {
       return { label: '-', color: theme.palette.text.primary };
     }
-    const last = new BigDecimal(
+
+    const oneWeekAgo = new BigDecimal(
+      data?.vault?.DailyVaultStats?.[6]?.totalAssets ?? constants.One,
+    );
+
+    const current = new BigDecimal(
       data?.vault?.DailyVaultStats?.[0]?.totalAssets ?? constants.One,
     );
-    const first = new BigDecimal(
-      data?.vault?.DailyVaultStats?.[1]?.totalAssets ?? constants.One,
-    );
-    const diff = 100 - (last.simple / first.simple) * 100;
+
+    const diff = 100 - (oneWeekAgo.simple / current.simple) * 100;
 
     return {
       label: `${diff >= 0 ? '+' : ''}${diff.toFixed(2)}%(1W)`,
@@ -106,8 +107,10 @@ export const VaultJumbo = (props: StackProps) => {
       </Typography>
       <Stack
         direction="row"
-        spacing={1.5}
-        sx={{ overflowX: 'auto', maxWidth: 1, pb: 7.5 }}
+        columnGap={1.5}
+        rowGap={1}
+        flexWrap="wrap"
+        sx={{ pb: 7.5 }}
       >
         {tags.map((tag, idx) => (
           <Typography key={`tag-${idx}`} {...tagProps}>
@@ -116,9 +119,10 @@ export const VaultJumbo = (props: StackProps) => {
         ))}
       </Stack>
       <Stack
-        direction="row"
-        spacing={{ xs: 3, md: 4 }}
-        sx={{ overflowX: 'auto', maxWidth: 1, width: 1 }}
+        direction={{ xs: 'column', md: 'row' }}
+        columnGap={4}
+        rowGap={1}
+        width={1}
         divider={<Divider orientation="vertical" flexItem variant="middle" />}
       >
         <ValueLabel
@@ -127,11 +131,6 @@ export const VaultJumbo = (props: StackProps) => {
             defaultMessage:
               'The current price of 1 share. Return is represented as a increase in share price value.',
           })}
-          components={{
-            container: isMobile
-              ? { direction: 'column', alignItems: 'flex-start', width: '50%' }
-              : {},
-          }}
         >
           {isLoading ? (
             <Skeleton height={24} width={60} />
@@ -144,58 +143,51 @@ export const VaultJumbo = (props: StackProps) => {
             </Typography>
           )}
         </ValueLabel>
-        {!isMobile && (
-          <ValueLabel
-            label={intl.formatMessage({ defaultMessage: 'ROI' })}
-            hint={intl.formatMessage({
-              defaultMessage: 'Return on investment since Vault inception.',
-            })}
-          >
-            {isLoading ? (
-              <Skeleton height={24} width={60} />
-            ) : (
+        <ValueLabel
+          label={intl.formatMessage({ defaultMessage: 'ROI' })}
+          hint={intl.formatMessage({
+            defaultMessage: 'Return on investment since Vault inception.',
+          })}
+        >
+          {isLoading ? (
+            <Skeleton height={24} width={60} />
+          ) : (
+            <Typography variant="value2">
+              {intl.formatNumber(roi, {
+                style: 'percent',
+                minimumFractionDigits: 2,
+              })}
+            </Typography>
+          )}
+        </ValueLabel>
+        <ValueLabel
+          label={intl.formatMessage({ defaultMessage: 'TVL' })}
+          hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
+        >
+          {isLoading || isPriceLoading || !assetToken ? (
+            <Skeleton height={24} width={160} />
+          ) : (
+            <Stack direction="row" spacing={1} alignItems="baseline">
               <Typography variant="value2">
-                {intl.formatNumber(roi, {
-                  style: 'percent',
-                  minimumFractionDigits: 2,
-                })}
+                {intl.formatNumber(
+                  new BigDecimal(
+                    data?.vault?.totalAssets ?? constants.Zero,
+                    assetToken?.decimals,
+                  ).simple *
+                    Number(pathOr(1, [currency.toLowerCase()], prices)),
+                  { style: 'currency', currency, notation: 'compact' },
+                )}
               </Typography>
-            )}
-          </ValueLabel>
-        )}
-        {!isMobile && (
-          <ValueLabel
-            label={intl.formatMessage({ defaultMessage: 'TVL' })}
-            hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
-          >
-            {isLoading || isPriceLoading || !assetToken ? (
-              <Skeleton height={24} width={60} />
-            ) : (
-              <Stack direction="row" spacing={1} alignItems="baseline">
-                <Typography variant="value2">
-                  {intl.formatNumber(
-                    new BigDecimal(
-                      data?.vault?.totalAssets ?? constants.Zero,
-                      assetToken?.decimals,
-                    ).simple *
-                      Number(pathOr(1, [currency.toLowerCase()], prices)),
-                    { style: 'currency', currency, notation: 'compact' },
-                  )}
-                </Typography>
-                <Typography variant="value5" sx={{ color: tvlTrend.color }}>
-                  {tvlTrend.label}
-                </Typography>
-              </Stack>
-            )}
-          </ValueLabel>
-        )}
+              <Typography variant="value5" sx={{ color: tvlTrend.color }}>
+                {tvlTrend.label}
+              </Typography>
+            </Stack>
+          )}
+        </ValueLabel>
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'Protocols Involved' })}
           components={{
             valueContainer: { pb: 0.3 },
-            container: isMobile
-              ? { direction: 'column', alignItems: 'flex-start', width: '50%' }
-              : {},
           }}
         >
           <AvatarGroup max={6}>

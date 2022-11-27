@@ -6,7 +6,7 @@ import { useGetPrices, usePrices } from '@frontend/shared-prices';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import { alpha } from '@mui/material';
 import { constants } from 'ethers';
-import { pathOr, pluck, prop, propEq } from 'ramda';
+import { ascend, pathOr, pluck, prop, propEq, sort } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
   chainId,
@@ -51,10 +51,12 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
   const series = useMemo(
     () =>
       !isNilOrEmpty(data?.vault?.DailyVaultStats)
-        ? data.vault.DailyVaultStats.map((d) => ({
-            label: '',
-            value: prop('assetPerShare', d),
-          }))
+        ? sort(ascend(prop('timestamp')), data.vault.DailyVaultStats).map(
+            (d) => ({
+              label: '',
+              value: prop('assetPerShare', d),
+            }),
+          )
         : [],
     [data?.vault?.DailyVaultStats],
   );

@@ -5,7 +5,7 @@ import { useDataSource } from '@frontend/mstable-shared-data-access';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import { alpha, useTheme } from '@mui/material';
 import { intlFormat } from 'date-fns';
-import { pluck } from 'ramda';
+import { ascend, pluck, prop, sort } from 'ramda';
 import { useIntl } from 'react-intl';
 
 import { useMetavaultQuery } from '../../queries.generated';
@@ -20,8 +20,8 @@ export const useChartConfig = () => {
   const mv = useMetavault();
 
   const chartTypes = {
-    PERF: {
-      id: 'PERF' as ChartType,
+    APS: {
+      id: 'APS' as ChartType,
       label: intl.formatMessage({ defaultMessage: 'Assets per Share' }),
       getValue: (v) => v.assetPerShare,
       getLabel: (v) => intl.formatNumber(v, { style: 'decimal' }),
@@ -65,7 +65,7 @@ export const useChartConfig = () => {
   return {
     chartTypes,
     chartTimeframes,
-    defaultChartType: 'PERF' as ChartType,
+    defaultChartType: 'APS' as ChartType,
     defaultChartTimeframe: '1M' as ChartTimeframe,
   };
 };
@@ -109,7 +109,10 @@ export const useChartData = (
   const series = useMemo(
     () =>
       assetToken
-        ? (data?.vault?.DailyVaultStats || []).map((d) => ({
+        ? sort(
+            ascend(prop('timestamp')),
+            data?.vault?.DailyVaultStats || [],
+          ).map((d) => ({
             label: intlFormat(Number(d.timestamp) * 1000, {
               timeZone: 'UTC',
               day: 'numeric',
@@ -127,7 +130,7 @@ export const useChartData = (
   const min = useMemo(
     () =>
       ({
-        PERF: !isNilOrEmpty(series)
+        APS: !isNilOrEmpty(series)
           ? series.reduce(
               (acc, curr) => Math.min(acc, Number(curr.value) - 0.005),
               series[0].value,
@@ -142,7 +145,7 @@ export const useChartData = (
   const max = useMemo(
     () =>
       ({
-        PERF: !isNilOrEmpty(series)
+        APS: !isNilOrEmpty(series)
           ? series.reduce(
               (acc, curr) => Math.max(acc, Number(curr.value) + 0.005),
               series[0].value,
