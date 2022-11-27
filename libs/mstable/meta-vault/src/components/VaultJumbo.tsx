@@ -69,13 +69,16 @@ export const VaultJumbo = (props: StackProps) => {
     if (isNilOrEmpty(data?.vault?.DailyVaultStats)) {
       return { label: '-', color: theme.palette.text.primary };
     }
-    const last = new BigDecimal(
+
+    const oneWeekAgo = new BigDecimal(
+      data?.vault?.DailyVaultStats?.[6]?.totalAssets ?? constants.One,
+    );
+
+    const current = new BigDecimal(
       data?.vault?.DailyVaultStats?.[0]?.totalAssets ?? constants.One,
     );
-    const first = new BigDecimal(
-      data?.vault?.DailyVaultStats?.[1]?.totalAssets ?? constants.One,
-    );
-    const diff = 100 - (last.simple / first.simple) * 100;
+
+    const diff = 100 - (oneWeekAgo.simple / current.simple) * 100;
 
     return {
       label: `${diff >= 0 ? '+' : ''}${diff.toFixed(2)}%(1W)`,
