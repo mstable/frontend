@@ -45,13 +45,13 @@ export const useChartConfig = () => {
       getValue: (v) => v.assetPerShare,
       getLabel: (v) => intl.formatNumber(v, { style: 'decimal' }),
     },
-    APY: {
-      id: 'APY' as ChartType,
-      label: intl.formatMessage({ defaultMessage: 'APY' }),
-      chartMargin: 0.001,
-      getValue: (v) => Number(v.apy),
-      getLabel: (v) => (Number(v) * 100).toFixed(2) + '%',
-    },
+    // APY: {
+    //   id: 'APY' as ChartType,
+    //   label: intl.formatMessage({ defaultMessage: 'APY' }),
+    //   chartMargin: 0.001,
+    //   getValue: (v) => Number(v.apy),
+    //   getLabel: (v) => (Number(v) * 100).toFixed(2) + '%',
+    // },
     TVL: {
       id: 'TVL' as ChartType,
       label: intl.formatMessage(
