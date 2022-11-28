@@ -1,5 +1,5 @@
 import { useDataSource } from '@frontend/mstable-shared-data-access';
-import { Dialog } from '@frontend/shared-ui';
+import { Dialog, Spinner } from '@frontend/shared-ui';
 import { isNilOrEmpty } from '@frontend/shared-utils';
 import {
   Box,
@@ -32,7 +32,7 @@ export const HistoryDialog = ({
   const { metavault } = useMetavault();
   const { address } = useAccount();
   const dataSource = useDataSource();
-  const { data: txHistory } = useUserTxHistoryQuery(
+  const { data: txHistory, isLoading } = useUserTxHistoryQuery(
     dataSource,
     {
       owner: address,
@@ -51,7 +51,9 @@ export const HistoryDialog = ({
       fullWidth
       title={intl.formatMessage({ defaultMessage: 'History' })}
       content={
-        isNilOrEmpty(txHistory?.transactions) ? (
+        isLoading ? (
+          <Spinner />
+        ) : isNilOrEmpty(txHistory?.transactions) ? (
           <Box display="flex" flexDirection="column" alignItems="center">
             <Box
               bgcolor="icons.background"
