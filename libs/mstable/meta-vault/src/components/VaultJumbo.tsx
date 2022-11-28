@@ -144,51 +144,57 @@ export const VaultJumbo = (props: StackProps) => {
             </Typography>
           )}
         </ValueLabel>
-        {!isMobile && (
-          <ValueLabel
-            label={intl.formatMessage({ defaultMessage: 'ROI' })}
-            hint={intl.formatMessage({
-              defaultMessage: 'Return on investment since Vault inception.',
-            })}
-          >
-            {isLoading ? (
-              <Skeleton height={24} width={60} />
-            ) : (
+        <ValueLabel
+          label={intl.formatMessage({ defaultMessage: 'ROI' })}
+          hint={intl.formatMessage({
+            defaultMessage: 'Return on investment since Vault inception.',
+          })}
+          components={{
+            container: isMobile
+              ? { direction: 'column', alignItems: 'flex-start', width: '50%' }
+              : {},
+          }}
+        >
+          {isLoading ? (
+            <Skeleton height={24} width={60} />
+          ) : (
+            <Typography variant="value2">
+              {intl.formatNumber(roi, {
+                style: 'percent',
+                minimumFractionDigits: 2,
+              })}
+            </Typography>
+          )}
+        </ValueLabel>
+        <ValueLabel
+          label={intl.formatMessage({ defaultMessage: 'TVL' })}
+          hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
+          components={{
+            container: isMobile
+              ? { direction: 'column', alignItems: 'flex-start', width: '50%' }
+              : {},
+          }}
+        >
+          {isLoading || isPriceLoading || !assetToken ? (
+            <Skeleton height={24} width={60} />
+          ) : (
+            <Stack direction="row" spacing={1} alignItems="baseline">
               <Typography variant="value2">
-                {intl.formatNumber(roi, {
-                  style: 'percent',
-                  minimumFractionDigits: 2,
-                })}
+                {intl.formatNumber(
+                  new BigDecimal(
+                    data?.vault?.totalAssets ?? constants.Zero,
+                    assetToken?.decimals,
+                  ).simple *
+                    Number(pathOr(1, [currency.toLowerCase()], prices)),
+                  { style: 'currency', currency, notation: 'compact' },
+                )}
               </Typography>
-            )}
-          </ValueLabel>
-        )}
-        {!isMobile && (
-          <ValueLabel
-            label={intl.formatMessage({ defaultMessage: 'TVL' })}
-            hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
-          >
-            {isLoading || isPriceLoading || !assetToken ? (
-              <Skeleton height={24} width={60} />
-            ) : (
-              <Stack direction="row" spacing={1} alignItems="baseline">
-                <Typography variant="value2">
-                  {intl.formatNumber(
-                    new BigDecimal(
-                      data?.vault?.totalAssets ?? constants.Zero,
-                      assetToken?.decimals,
-                    ).simple *
-                      Number(pathOr(1, [currency.toLowerCase()], prices)),
-                    { style: 'currency', currency, notation: 'compact' },
-                  )}
-                </Typography>
-                <Typography variant="value5" sx={{ color: tvlTrend.color }}>
-                  {tvlTrend.label}
-                </Typography>
-              </Stack>
-            )}
-          </ValueLabel>
-        )}
+              <Typography variant="value5" sx={{ color: tvlTrend.color }}>
+                {tvlTrend.label}
+              </Typography>
+            </Stack>
+          )}
+        </ValueLabel>
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'Protocols Involved' })}
           components={{

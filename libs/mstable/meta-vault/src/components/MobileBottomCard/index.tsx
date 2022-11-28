@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { CollapsibleSection, Dialog } from '@frontend/shared-ui';
-import { Box, Button, Card, Stack } from '@mui/material';
+import { Box, Button, Card, Portal, Stack } from '@mui/material';
 import { useSearch } from '@tanstack/react-location';
 import { Receipt } from 'phosphor-react';
 import { useIntl } from 'react-intl';
@@ -85,6 +85,9 @@ export const MobileBottomCard = () => {
         title={intl.formatMessage({ defaultMessage: 'Deposit/Withdraw' })}
         content={<Operations />}
       />
+      <Portal>
+        <Box height={150} />
+      </Portal>
     </>
   );
 };
