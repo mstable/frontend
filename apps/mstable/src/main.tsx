@@ -16,7 +16,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import en from './assets/lang/en.json';
 import {
   chains,
-  reactLocation,
+  reactLocationClient,
   reactQueryClient,
   wagmiClient,
 } from './clients';
@@ -35,7 +35,7 @@ root.render(
       [QueryClientProvider, { client: reactQueryClient }],
       [I18nProvider, { messages: { en } }],
       [ThemeProvider],
-      [Router, { location: reactLocation, routes }],
+      [Router, { location: reactLocationClient, routes }],
       [
         NotificationsProvider,
         {

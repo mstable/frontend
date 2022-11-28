@@ -70,8 +70,10 @@ export const ItemTableRow = ({ tx }: { tx: TxHistory }) => {
           </Box>
           <Typography variant="value5" color="text.secondary">
             {intl.formatNumber(
-              new BigDecimal(tx.shareAmount ?? constants.Zero, mvToken.decimals)
-                .simple,
+              new BigDecimal(
+                tx.shareAmount ?? constants.Zero,
+                mvToken?.decimals,
+              ).simple,
             )}{' '}
             {intl.formatMessage({ defaultMessage: 'Shares' })}
           </Typography>
