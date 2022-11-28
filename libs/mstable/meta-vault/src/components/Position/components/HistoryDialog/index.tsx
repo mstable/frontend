@@ -52,7 +52,7 @@ export const HistoryDialog = ({
       title={intl.formatMessage({ defaultMessage: 'History' })}
       content={
         isLoading ? (
-          <Spinner />
+          <Spinner sx={{ minWidth: 500, minHeight: 150 }} />
         ) : isNilOrEmpty(txHistory?.transactions) ? (
           <Box display="flex" flexDirection="column" alignItems="center">
             <Box
