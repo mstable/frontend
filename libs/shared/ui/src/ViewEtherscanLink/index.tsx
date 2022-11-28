@@ -26,7 +26,7 @@ export const ViewEtherscanLink = ({
         hash ?? ''
       }`}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
     >
       {intl.formatMessage(
         {

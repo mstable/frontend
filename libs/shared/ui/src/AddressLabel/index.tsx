@@ -62,7 +62,7 @@ export const AddressLabel = ({
         <Link
           href={[blockExplorerUrl, urlMapping[type], address].join('/')}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           sx={{
             width: 1,
             display: 'flex',
@@ -110,7 +110,7 @@ export const AddressLabel = ({
         <IconButton
           href={[blockExplorerUrl, urlMapping[type], address].join('/')}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           color="inherit"
           size={small ? 'small' : 'medium'}
         >
