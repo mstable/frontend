@@ -8,6 +8,11 @@ import {
   MBTC,
   MTA,
   MUSD,
+  MvDAI,
+  MvETH,
+  MvFrax,
+  MvMTA,
+  MvMUSD,
   MvUSDC,
   RAI,
   USDC,
@@ -19,12 +24,21 @@ import { CurrencyCircleDollar } from 'phosphor-react';
 import type { SupportedToken } from '@mstable/metavaults-web';
 import type { SvgIconProps } from '@mui/material';
 
+type AdditionalToken =
+  | 'eth'
+  | 'mvdai'
+  | 'mveth'
+  | 'mvfrax'
+  | 'mvmta'
+  | 'mvmusd'
+  | 'mvusdc';
+
 export type TokenIconProps = {
-  symbol?: SupportedToken | 'mvUSDC-3PCV' | string;
+  symbol?: SupportedToken | AdditionalToken | 'mvUSDC-3PCV' | string;
 } & SvgIconProps;
 
 export const supportedTokens: Partial<
-  Record<SupportedToken | 'eth', (props: SvgIconProps) => JSX.Element>
+  Record<SupportedToken & AdditionalToken, (props: SvgIconProps) => JSX.Element>
 > = {
   dai: DAI,
   eth: Ether,
@@ -39,6 +53,12 @@ export const supportedTokens: Partial<
   frax: FRAX,
   busd: BUSD,
   'mvusdc-3pcv': MvUSDC,
+  mvdai: MvDAI,
+  mveth: MvETH,
+  mvfrax: MvFrax,
+  mvmta: MvMTA,
+  mvmusd: MvMUSD,
+  mvusdc: MvUSDC,
 };
 
 export const TokenIcon = ({ symbol, ...rest }: TokenIconProps) => {

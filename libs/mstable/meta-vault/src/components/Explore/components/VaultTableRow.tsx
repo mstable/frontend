@@ -13,12 +13,14 @@ import {
 import { useNavigate } from '@tanstack/react-location';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
+import { erc20ABI, erc4626ABI, useContractRead } from 'wagmi';
 
 import { useMetavaultQuery } from '../../../queries.generated';
-import { useAssetDecimal, useChartData } from '../hooks';
+import { useChartData } from '../hooks';
 import { LineChart } from './LineChart';
 
 import type { Metavault } from '@frontend/shared-constants';
+import type { HexAddress } from '@frontend/shared-utils';
 import type { TypographyProps } from '@mui/material';
 
 interface Props {
@@ -49,10 +51,16 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
     firstBlock: metavault.firstBlock,
   });
   const chartData = useChartData(metavault.address, true);
-  const { data: assetDecimal, isLoading: assetLoading } = useAssetDecimal(
-    metavault.address,
-  );
-  const tableCellSx = { borderBottom: isLast ? 'none' : undefined };
+  const { data: asset } = useContractRead({
+    address: metavault.address,
+    abi: erc4626ABI,
+    functionName: 'asset',
+  });
+  const { data: assetDecimal, isLoading: assetLoading } = useContractRead({
+    address: asset as HexAddress,
+    abi: erc20ABI,
+    functionName: 'decimals',
+  });
 
   return (
     <TableRow
@@ -60,14 +68,14 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
       hover
       onClick={() => navigate({ to })}
     >
-      <TableCell sx={tableCellSx}>
+      <TableCell>
         <MVIcon address={metavault.address} sx={{ height: 32, width: 32 }} />
       </TableCell>
-      <TableCell sx={tableCellSx}>
+      <TableCell>
         <Typography variant="value4">{metavault.name}</Typography>
       </TableCell>
-      <TableCell sx={tableCellSx}>
-        <Stack direction="row" spacing={1}>
+      <TableCell>
+        <Stack direction="row" flexWrap="wrap" columnGap={1} rowGap={1}>
           {metavault.tags.map((tag, idx) => (
             <Typography key={`tag-${idx}`} {...tagProps}>
               {intl.formatMessage(tag)}
@@ -75,7 +83,7 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
           ))}
         </Stack>
       </TableCell>
-      <TableCell sx={tableCellSx}>
+      <TableCell>
         <AvatarGroup max={6}>
           {metavault.strategies.map((strat) => (
             <Avatar key={strat.protocol.id}>
@@ -87,7 +95,7 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
           ))}
         </AvatarGroup>
       </TableCell>
-      <TableCell sx={tableCellSx}>
+      <TableCell>
         <Typography variant="value4">
           {assetLoading ? (
             <Skeleton width={50} />
@@ -102,7 +110,7 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
           )}
         </Typography>
       </TableCell>
-      <TableCell sx={tableCellSx}>
+      <TableCell>
         <Stack direction="row">
           <Typography variant="value4">
             {intl.formatNumber(
@@ -117,7 +125,7 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
           </Typography>
         </Stack>
       </TableCell>
-      <TableCell sx={tableCellSx}>
+      <TableCell>
         <Stack sx={{ width: 60, height: 40 }}>
           <LineChart
             id={metavault.id}

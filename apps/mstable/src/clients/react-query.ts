@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
 
-const DEFAULT_STALE_TIME = 1000 * 60 * 120; // 2 hours
+const DEFAULT_STALE_TIME = 0;
 const DEFAULT_CACHE_TIME = 1000 * 60 * 60 * 24; // 24 hours
 
 export const reactQueryClient = new QueryClient({

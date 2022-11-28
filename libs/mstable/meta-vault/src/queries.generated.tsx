@@ -44,7 +44,7 @@ export type MetavaultQueryVariables = Types.Exact<{
 }>;
 
 
-export type MetavaultQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', totalSupply: any, totalAssets: any, apy: any, assetPerShare: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, assetPerShare: any, totalAssets: any, totalSupply: any, timestamp: any }>, first: Array<{ __typename?: 'DailyVaultStat', assetPerShare: any }> } | null };
+export type MetavaultQuery = { __typename?: 'Query', vault?: { __typename?: 'Vault', totalSupply: any, totalAssets: any, apy: any, assetPerShare: any, DailyVaultStats: Array<{ __typename?: 'DailyVaultStat', apy: any, assetPerShare: any, totalAssets: any, totalSupply: any, timestamp: any }>, first: Array<{ __typename?: 'DailyVaultStat', apy: any, assetPerShare: any, totalAssets: any, totalSupply: any, timestamp: any }> } | null };
 
 export type MetavaultsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
@@ -125,7 +125,7 @@ export const MetavaultDocument = `
     DailyVaultStats(
       first: $days
       orderBy: timestamp
-      orderDirection: asc
+      orderDirection: desc
       where: {blockNumber_gte: $firstBlock}
     ) {
       apy
@@ -135,7 +135,11 @@ export const MetavaultDocument = `
       timestamp
     }
     first: DailyVaultStats(first: 1, where: {blockNumber_gte: $firstBlock}) {
+      apy
       assetPerShare
+      totalAssets
+      totalSupply
+      timestamp
     }
   }
 }

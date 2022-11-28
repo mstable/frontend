@@ -29,8 +29,8 @@ export const AccountLabel = ({
   const theme = useTheme();
   const wide = useMediaQuery(theme.breakpoints.up('sm'));
   const { address } = useAccount();
-  const { data: ensAvatar } = useEnsAvatar({ addressOrName: address });
-  const { data: ensName } = useEnsName({ address: address });
+  const { data: ensAvatar } = useEnsAvatar({ address });
+  const { data: ensName } = useEnsName({ address });
 
   if (!address) {
     return null;

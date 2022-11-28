@@ -23,7 +23,10 @@ import type { Chain, Connector } from 'wagmi';
 
 export const { chains, provider, webSocketProvider } = configureChains(
   [chain.mainnet, chain.goerli],
-  [infuraProvider(), publicProvider()],
+  [
+    infuraProvider({ apiKey: process.env['NX_INFURA_API_KEY'] }),
+    publicProvider(),
+  ],
 );
 
 const gnosisSafeWallet = ({ chains }: { chains: Chain[] }): Wallet => ({
