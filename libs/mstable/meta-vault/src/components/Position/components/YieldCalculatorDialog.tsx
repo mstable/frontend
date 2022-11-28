@@ -362,8 +362,9 @@ export const YieldCalculatorDialog = ({
               }
               variant="value5"
             >
-              {intl.formatNumber(totalValue - totalGasFee)}{' '}
-              {assetToken?.symbol || ''}
+              {`${intl.formatNumber(totalValue - totalGasFee)} ${
+                assetToken?.symbol ?? ''
+              }`}
             </Typography>
           </Box>
           {isMobile && (

@@ -66,7 +66,9 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
     <TableRow
       sx={{ cursor: 'pointer', borderBottom: isLast ? 'none' : undefined }}
       hover
-      onClick={() => navigate({ to })}
+      onClick={() => {
+        navigate({ to });
+      }}
     >
       <TableCell>
         <MVIcon address={metavault.address} sx={{ height: 32, width: 32 }} />
