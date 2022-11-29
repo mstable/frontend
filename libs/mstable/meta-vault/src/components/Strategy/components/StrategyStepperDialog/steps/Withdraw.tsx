@@ -108,7 +108,7 @@ export const Withdraw = () => {
       <Typography variant="subtitle1" textAlign="center">
         {intl.formatMessage({
           defaultMessage:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+            'Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position.',
         })}
       </Typography>
     </Stack>

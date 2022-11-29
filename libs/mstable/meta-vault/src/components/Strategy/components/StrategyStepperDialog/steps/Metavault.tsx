@@ -193,13 +193,13 @@ export const Metavault = () => {
       </Stack>
       <Typography variant="h3" pb={3} textAlign="center">
         {intl.formatMessage({
-          defaultMessage: 'What’s Meta Vault?',
+          defaultMessage: 'What is a Meta Vault?',
         })}
       </Typography>
       <Typography variant="subtitle1" textAlign="center">
         {intl.formatMessage({
           defaultMessage:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+            'The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded.',
         })}
       </Typography>
     </Stack>

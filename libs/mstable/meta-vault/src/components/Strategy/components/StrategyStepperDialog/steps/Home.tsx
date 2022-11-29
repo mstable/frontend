@@ -91,7 +91,8 @@ export const Home = () => {
       </Typography>
       <Typography variant="subtitle1">
         {intl.formatMessage({
-          defaultMessage: 'Check the onboarding tour.',
+          defaultMessage:
+            'Start the tour and get more insight on the strategy.',
         })}
       </Typography>
     </Stack>

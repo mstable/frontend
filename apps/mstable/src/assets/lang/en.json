@@ -191,6 +191,12 @@
       "value": "Current value of your position. Includes earned amount."
     }
   ],
+  "4tvRCp": [
+    {
+      "type": 0,
+      "value": "Start Again"
+    }
+  ],
   "5ObBlW": [
     {
       "type": 0,
@@ -279,6 +285,12 @@
     {
       "type": 0,
       "value": "Twitter"
+    }
+  ],
+  "9+Ddtu": [
+    {
+      "type": 0,
+      "value": "Next"
     }
   ],
   "93OUn6": [
@@ -379,6 +391,12 @@
       "value": "Yield Calculator"
     }
   ],
+  "CiONZE": [
+    {
+      "type": 0,
+      "value": "Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position."
+    }
+  ],
   "D/hLNw": [
     {
       "type": 0,
@@ -395,6 +413,18 @@
     {
       "type": 0,
       "value": "This Strategy uses USDC to deposit into the 3CRV-Pool on Curve. The 3CRV token is then deposited in various Curve meta pools and staked in Convex. The earned CVX and CRV tokens are periodically claimed, swapped, and compounded."
+    }
+  ],
+  "EwRIOm": [
+    {
+      "type": 0,
+      "value": "User"
+    }
+  ],
+  "FApc0Y": [
+    {
+      "type": 0,
+      "value": "Need more light on the strategy?"
     }
   ],
   "FQUm7o": [
@@ -435,6 +465,12 @@
       "value": "Set As Infinite"
     }
   ],
+  "HfR2zS": [
+    {
+      "type": 0,
+      "value": "USDC"
+    }
+  ],
   "Imiiiv": [
     {
       "type": 0,
@@ -467,6 +503,12 @@
     {
       "type": 0,
       "value": " by mStable"
+    }
+  ],
+  "KJBr2Z": [
+    {
+      "type": 0,
+      "value": "Start the tour and get more insight on the strategy."
     }
   ],
   "KYgRAc": [
@@ -573,6 +615,12 @@
     {
       "type": 0,
       "value": "Total Value Locked in vault"
+    }
+  ],
+  "QS3Tk3": [
+    {
+      "type": 0,
+      "value": "The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded."
     }
   ],
   "R5x4Vk": [
@@ -771,6 +819,12 @@
       "value": "Swap fees"
     }
   ],
+  "aad9T5": [
+    {
+      "type": 0,
+      "value": "Start Tour"
+    }
+  ],
   "b+LlHJ": [
     {
       "type": 0,
@@ -789,6 +843,12 @@
       "value": "The following protocols are used in the strategies and are therefore exposed to their risk:"
     }
   ],
+  "bxTM3Z": [
+    {
+      "type": 0,
+      "value": "This Meta Vault accepts USDC. Anyone can deposit and receive vault shares."
+    }
+  ],
   "byXXyV": [
     {
       "type": 0,
@@ -799,6 +859,12 @@
     {
       "type": 0,
       "value": "Connect Wallet"
+    }
+  ],
+  "cyR7Kh": [
+    {
+      "type": 0,
+      "value": "Back"
     }
   ],
   "d1uESJ": [
@@ -907,6 +973,12 @@
       "value": "Withdrawal Gas"
     }
   ],
+  "iYgKR9": [
+    {
+      "type": 0,
+      "value": "User deposits USDC"
+    }
+  ],
   "il6pe+": [
     {
       "type": 0,
@@ -923,6 +995,12 @@
     {
       "type": 0,
       "value": "Insufficient balance"
+    }
+  ],
+  "kdIIDL": [
+    {
+      "type": 0,
+      "value": "User withdraws USDC"
     }
   ],
   "korbaG": [
@@ -965,6 +1043,12 @@
       "value": "Token Approval"
     }
   ],
+  "nDSmrJ": [
+    {
+      "type": 0,
+      "value": "What is a Meta Vault?"
+    }
+  ],
   "not_connected": [
     {
       "type": 0,
@@ -987,6 +1071,12 @@
     {
       "type": 0,
       "value": "Transaction Error"
+    }
+  ],
+  "qEnyZU": [
+    {
+      "type": 0,
+      "value": "Meta Vault"
     }
   ],
   "qNhf66": [
@@ -1067,6 +1157,12 @@
     {
       "type": 0,
       "value": "% performance upon underlying asset appreciation."
+    }
+  ],
+  "u7a5FI": [
+    {
+      "type": 0,
+      "value": "Visualize strategy"
     }
   ],
   "vHwp5J": [
