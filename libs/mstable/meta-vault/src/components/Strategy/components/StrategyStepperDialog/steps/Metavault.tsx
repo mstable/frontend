@@ -191,17 +191,19 @@ export const Metavault = () => {
       <Stack display="flex" justifyContent="center" alignItems="center" my={9}>
         <StepIndicator />
       </Stack>
-      <Typography variant="h3" pb={3} textAlign="center">
-        {intl.formatMessage({
-          defaultMessage: 'What is a Meta Vault?',
-        })}
-      </Typography>
-      <Typography variant="subtitle1" textAlign="center">
-        {intl.formatMessage({
-          defaultMessage:
-            'The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded.',
-        })}
-      </Typography>
+      <Stack direction="column" alignItems="center">
+        <Typography variant="h3" pb={3} textAlign="center" maxWidth={1 / 2}>
+          {intl.formatMessage({
+            defaultMessage: 'What is a Meta Vault?',
+          })}
+        </Typography>
+        <Typography variant="subtitle1" textAlign="center" maxWidth={1 / 2}>
+          {intl.formatMessage({
+            defaultMessage:
+              'The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded.',
+          })}
+        </Typography>
+      </Stack>
     </Stack>
   );
 };

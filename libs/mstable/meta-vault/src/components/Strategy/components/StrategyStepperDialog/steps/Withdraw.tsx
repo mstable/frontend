@@ -100,17 +100,19 @@ export const Withdraw = () => {
       <Stack display="flex" justifyContent="center" alignItems="center" my={9}>
         <StepIndicator />
       </Stack>
-      <Typography variant="h3" pb={3} textAlign="center">
-        {intl.formatMessage({
-          defaultMessage: 'User withdraws USDC',
-        })}
-      </Typography>
-      <Typography variant="subtitle1" textAlign="center">
-        {intl.formatMessage({
-          defaultMessage:
-            'Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position.',
-        })}
-      </Typography>
+      <Stack direction="column" alignItems="center">
+        <Typography variant="h3" pb={3} textAlign="center" maxWidth={1 / 2}>
+          {intl.formatMessage({
+            defaultMessage: 'User withdraws USDC',
+          })}
+        </Typography>
+        <Typography variant="subtitle1" textAlign="center" maxWidth={1 / 2}>
+          {intl.formatMessage({
+            defaultMessage:
+              'Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position.',
+          })}
+        </Typography>
+      </Stack>
     </Stack>
   );
 };

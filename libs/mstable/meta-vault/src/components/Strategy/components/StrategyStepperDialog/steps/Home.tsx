@@ -84,12 +84,19 @@ export const Home = () => {
           </SquaredIconContainer>
         </Stack>
       </Stack>
-      <Typography variant="h3" pt={10} pb={3}>
+
+      <Typography
+        variant="h3"
+        pb={3}
+        pt={10}
+        textAlign="center"
+        maxWidth={1 / 2}
+      >
         {intl.formatMessage({
           defaultMessage: 'Need more light on the strategy?',
         })}
       </Typography>
-      <Typography variant="subtitle1">
+      <Typography variant="subtitle1" maxWidth={1 / 2} textAlign="center">
         {intl.formatMessage({
           defaultMessage:
             'Start the tour and get more insight on the strategy.',

@@ -99,17 +99,19 @@ export const Deposit = () => {
       <Stack display="flex" justifyContent="center" alignItems="center" my={9}>
         <StepIndicator />
       </Stack>
-      <Typography variant="h3" pb={3} textAlign="center">
-        {intl.formatMessage({
-          defaultMessage: 'User deposits USDC',
-        })}
-      </Typography>
-      <Typography variant="subtitle1" textAlign="center">
-        {intl.formatMessage({
-          defaultMessage:
-            'This Meta Vault accepts USDC. Anyone can deposit and receive vault shares.',
-        })}
-      </Typography>
+      <Stack direction="column" alignItems="center">
+        <Typography variant="h3" pb={3} textAlign="center" maxWidth={1 / 2}>
+          {intl.formatMessage({
+            defaultMessage: 'User deposits USDC',
+          })}
+        </Typography>
+        <Typography variant="subtitle1" textAlign="center" maxWidth={1 / 2}>
+          {intl.formatMessage({
+            defaultMessage:
+              'This Meta Vault accepts USDC. Anyone can deposit and receive vault shares.',
+          })}
+        </Typography>
+      </Stack>
     </Stack>
   );
 };

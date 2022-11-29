@@ -14,14 +14,12 @@ import { Metavault } from './steps/Metavault';
 import { Withdraw } from './steps/Withdraw';
 
 import type { DialogProps } from '@frontend/shared-ui';
-import type { ButtonProps } from '@mui/material';
+import type { SxProps } from '@mui/material';
 
 type StrategyStepperDialogProps = Pick<DialogProps, 'open' | 'onClose'>;
 
-const actionButtonProps: ButtonProps = {
-  sx: {
-    minWidth: 200,
-  },
+const actionButtonSx: SxProps = {
+  minWidth: 200,
 };
 
 const StrategyStepperDialogWrapped = (props: StrategyStepperDialogProps) => {
@@ -67,15 +65,15 @@ const StrategyStepperDialogWrapped = (props: StrategyStepperDialogProps) => {
                 <>
                   <Button
                     color="secondary"
-                    {...actionButtonProps}
                     onClick={handleClose}
+                    sx={actionButtonSx}
                   >
                     {intl.formatMessage({ defaultMessage: 'Close' })}
                   </Button>
                   <Button
                     color="primary"
-                    {...actionButtonProps}
                     onClick={handleNext}
+                    sx={actionButtonSx}
                   >
                     {intl.formatMessage({ defaultMessage: 'Start Tour' })}
                   </Button>
@@ -85,15 +83,15 @@ const StrategyStepperDialogWrapped = (props: StrategyStepperDialogProps) => {
                 <>
                   <Button
                     color="secondary"
-                    {...actionButtonProps}
                     onClick={handleClose}
+                    sx={actionButtonSx}
                   >
                     {intl.formatMessage({ defaultMessage: 'Close' })}
                   </Button>
                   <Button
                     color="primary"
-                    {...actionButtonProps}
                     onClick={handleNext}
+                    sx={{ ...actionButtonSx, svg: { ml: 1 } }}
                   >
                     {intl.formatMessage({ defaultMessage: 'Next' })}
                     <ArrowRight />
@@ -104,16 +102,16 @@ const StrategyStepperDialogWrapped = (props: StrategyStepperDialogProps) => {
                 <>
                   <Button
                     color="secondary"
-                    {...actionButtonProps}
                     onClick={handlePrev}
+                    sx={{ ...actionButtonSx, svg: { mr: 1 } }}
                   >
                     <ArrowLeft />
                     {intl.formatMessage({ defaultMessage: 'Back' })}
                   </Button>
                   <Button
                     color="primary"
-                    {...actionButtonProps}
                     onClick={handleNext}
+                    sx={{ ...actionButtonSx, svg: { ml: 1 } }}
                   >
                     {intl.formatMessage({ defaultMessage: 'Next' })}
                     <ArrowRight />
@@ -124,15 +122,15 @@ const StrategyStepperDialogWrapped = (props: StrategyStepperDialogProps) => {
                 <>
                   <Button
                     color="secondary"
-                    {...actionButtonProps}
                     onClick={handleClose}
+                    sx={actionButtonSx}
                   >
                     {intl.formatMessage({ defaultMessage: 'Close' })}
                   </Button>
                   <Button
                     color="primary"
-                    {...actionButtonProps}
                     onClick={handleReset}
+                    sx={{ ...actionButtonSx, svg: { ml: 1 } }}
                   >
                     {intl.formatMessage({ defaultMessage: 'Start Again' })}
                     <ArrowRight />
