@@ -1,33 +1,29 @@
-import { ErrorPage, RouterLink } from '@frontend/shared-ui';
+import { ErrorPage, NetworkTips, RouterLink } from '@frontend/shared-ui';
 import { OpenNetworkModalButton } from '@frontend/shared-wagmi';
 import { Button, Stack } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useNetwork, useSwitchNetwork } from 'wagmi';
 
-export type UnsupportedMvPageProps = {
-  mvid?: string;
-};
-
-export const UnsupportedMvPage = ({ mvid }: UnsupportedMvPageProps) => {
+export const UnsupportedMvPage = () => {
   const intl = useIntl();
 
   return (
     <ErrorPage
       hideSupport
-      title={intl.formatMessage({ defaultMessage: 'Unsupported Meta Vault' })}
-      subtitle={intl.formatMessage(
-        {
-          defaultMessage:
-            'This application does not support the Meta Vault {mvid}, pick one from our list.',
-        },
-        {
-          mvid,
-        },
-      )}
+      title={intl.formatMessage({ defaultMessage: '404' })}
       message={
-        <Button component={RouterLink} to="/">
-          {intl.formatMessage({ defaultMessage: 'Explore Meta Vaults' })}
-        </Button>
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <Button component={RouterLink} to="/" color="secondary">
+            {intl.formatMessage({ defaultMessage: 'Back' })}
+          </Button>
+          <Button
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            {intl.formatMessage({ defaultMessage: 'Reload Page' })}
+          </Button>
+        </Stack>
       }
     />
   );
@@ -45,14 +41,19 @@ export const WrongNetworkPage = () => {
       subtitle={intl.formatMessage(
         {
           defaultMessage:
-            'The selected network is not supported by this application, why not try {defaultChain}?',
+            'The selected network is not supported by this application.',
         },
         {
           defaultChain: chains[0].name,
         },
       )}
       message={
-        <Stack direction="row" spacing={2}>
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <OpenNetworkModalButton color="secondary" variant="contained">
+            {intl.formatMessage({
+              defaultMessage: 'Select from supported list',
+            })}
+          </OpenNetworkModalButton>
           <Button
             onClick={() => {
               if (switchNetwork) {
@@ -65,13 +66,9 @@ export const WrongNetworkPage = () => {
               { defaultChain: chains[0].name },
             )}
           </Button>
-          <OpenNetworkModalButton color="primary">
-            {intl.formatMessage({
-              defaultMessage: 'Select from supported list',
-            })}
-          </OpenNetworkModalButton>
         </Stack>
       }
+      tips={<NetworkTips />}
     />
   );
 };

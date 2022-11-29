@@ -1,6 +1,7 @@
-import { Button, Typography } from '@mui/material';
+import { NetworkTips } from '@frontend/shared-ui';
+import { Button, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
-import { useDisconnect, useNetwork, useSwitchNetwork } from 'wagmi';
+import { useNetwork, useSwitchNetwork } from 'wagmi';
 
 import type { DialogOptions } from '@frontend/shared-modals';
 
@@ -12,18 +13,17 @@ const Title = () => {
 
 const Content = () => {
   const intl = useIntl();
-  const { chains } = useNetwork();
 
   return (
-    <Typography>
-      {intl.formatMessage(
-        {
+    <Stack direction="column" spacing={3}>
+      <Typography>
+        {intl.formatMessage({
           defaultMessage:
-            'The selected network is not supported by the application. You can either switch your wallet or reset to {defaultChain}.',
-        },
-        { defaultChain: chains[0].name },
-      )}
-    </Typography>
+            'The selected network is not supported by the application.',
+        })}
+      </Typography>
+      <NetworkTips />
+    </Stack>
   );
 };
 
@@ -32,21 +32,12 @@ type ActionsProps = { onClose: () => void };
 const Actions = ({ onClose }: ActionsProps) => {
   const intl = useIntl();
   const { switchNetwork } = useSwitchNetwork();
-  const { disconnect } = useDisconnect();
   const { chains } = useNetwork();
 
   return (
     <>
-      <Button
-        variant="text"
-        onClick={() => {
-          if (disconnect) {
-            onClose();
-            disconnect();
-          }
-        }}
-      >
-        {intl.formatMessage({ defaultMessage: 'Disconnect' })}
+      <Button color="secondary" onClick={onClose}>
+        {intl.formatMessage({ defaultMessage: 'Close' })}
       </Button>
       <Button
         color="primary"
