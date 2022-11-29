@@ -25,6 +25,36 @@ You can install Nx cli globally to avoid to have to run all commands through yar
 npm i -g nx
 ```
 
+You can create a `.env.local` file to override defaults with your own credentials. Possible variables are
+
+- `NX_CLOUD_ACCESS_TOKEN`: allows pushing local build files to nx cloud
+- `NX_THE_GRAPH_MV_MAINNET_URL`: TheGraph endpoint for mainnet metavault subgraph
+- `NX_THE_GRAPH_MV_GOERLI_URL`: TheGraph endpoint for goerli metavault subgraph
+- `NX_INFURA_API_KEY`: use your own infura api key
+
+## Meta Vault Subgraph
+
+The monorepo contains the code for generating and deploying Meta Vault Subgraph. 
+
+- `prepare` will generate the code using mustache templates and config files from `libs/subgraph/config`.
+- `build` will run TheGraph cli to generate bundle.
+- `deploy` will upload the bundle to TheGraph
+
+```bash
+nx prepare subgraph --network=mainnet
+nx build subgraph
+cd libs/subgraph
+graph deploy --studio mstable-meta-vaults --deploy-key [subgraph deploy token]
+```
+
+> You can run `graph auth` to authenticate locally and skip token argument
+
+Update the env variable `NX_THE_GRAPH_MV_MAINNET_URL` on `.env` or `.env.local` to use the latest url. Note that `dev` or `PR` deploys will use the versions defined in env file, while main PROD deploy will use the endpoints from Github secrets. Don't forget to update them when releasing to live channel.
+
+>❗Publish a new Subgraph version causes TheGraph to immediately archive the previous subgraph.
+> Most of the time, you want to wait until the new version finishes to index before starting to consume it in the app.
+> Unarchive the old subgraph version on subgraph studio to keep previous version's url working.
+
 ## Nx
 
 This repository was generated using [Nx](https://nx.dev). We strongly recomend the reading of the documentation as it follows closely Nx conventions regarding code structure.
