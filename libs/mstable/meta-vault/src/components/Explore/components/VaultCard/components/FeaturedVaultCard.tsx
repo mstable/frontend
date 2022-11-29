@@ -52,7 +52,7 @@ export const FeaturedVaultCard = (props: VaultCardProps) => {
         address={metavault.address}
         sx={{ height: 40, width: 40, mb: 2, ml: '-6px' }}
       />
-      <Typography variant="h5" mb={2}>
+      <Typography variant="h4" mb={2}>
         {metavault.name}
       </Typography>
       <Stack direction="row" mb={4} flexWrap="wrap" columnGap={1} rowGap={2}>

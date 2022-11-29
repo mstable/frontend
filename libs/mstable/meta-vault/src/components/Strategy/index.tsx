@@ -37,6 +37,9 @@ const collapsibleProps: Partial<CollapsibleSectionProps> = {
         padding: 2,
       },
     },
+    subtitle: {
+      variant: 'value5',
+    },
   },
 };
 
