@@ -1,0 +1,60 @@
+name: Main release
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "libs/subgraph/**"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    env:
+      NX_THE_GRAPH_MV_MAINNET_URL: ${{ secrets.NX_THE_GRAPH_MV_MAINNET_URL }}
+      NX_THE_GRAPH_MV_GOERLI_URL: ${{ secrets.NX_THE_GRAPH_MV_GOERLI_URL }}
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout [main]
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+        name: Setup node
+        with:
+          node-version: 16
+          cache: "yarn"
+
+      - run: yarn install --frozen-lockfile
+        name: Install dependencies
+
+      - name: Build
+        env:
+          mainnet: ${{ secrets.NX_THE_GRAPH_MV_MAINNET_URL }}
+          goerli: ${{ secrets.NX_THE_GRAPH_MV_GOERLI_URL }}
+          infura: ${{ secrets.INFURA_API_KEY }}
+        run: NX_THE_GRAPH_MV_MAINNET_URL=$mainnet NX_THE_GRAPH_MV_GOERLI_URL=$goerli NX_INFURA_API_KEY=$infura yarn build
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        name: Firebase deploy
+        id: deploy
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_FRONTEND_7E17F }}"
+          channelId: live
+          projectId: frontend-7e17f
+
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "✅ New PROD version of Meta Vaults 🚀 Deploy url: https://yield.mstable.org"
