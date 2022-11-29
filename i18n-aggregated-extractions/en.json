@@ -47,9 +47,6 @@
   "4tvRCp": {
     "defaultMessage": "Start Again"
   },
-  "5PmGOj": {
-    "defaultMessage": "Assets per Share"
-  },
   "5fjd4K": {
     "defaultMessage": "{fee}%"
   },
@@ -101,6 +98,9 @@
   "CGcoFj": {
     "defaultMessage": "Yield Calculator"
   },
+  "CiONZE": {
+    "defaultMessage": "Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position."
+  },
   "DUR59o": {
     "defaultMessage": "Total Value Locked"
   },
@@ -112,9 +112,6 @@
   },
   "FApc0Y": {
     "defaultMessage": "Need more light on the strategy?"
-  },
-  "FQUm7o": {
-    "defaultMessage": "Avg - {value} GWEI"
   },
   "FaoPNm": {
     "defaultMessage": "You Burn"
@@ -143,8 +140,8 @@
   "LDz7xI": {
     "defaultMessage": "Assets that are used by this vault."
   },
-  "MLTKb6": {
-    "defaultMessage": "APY"
+  "LiHQih": {
+    "defaultMessage": "Coming Soon"
   },
   "MMRXim": {
     "defaultMessage": "Make a Deposit"
@@ -289,6 +286,9 @@
   },
   "hRuz7F": {
     "defaultMessage": "Withdrawal Gas"
+  },
+  "iYgKR9": {
+    "defaultMessage": "User deposits USDC"
   },
   "in6iXe": {
     "defaultMessage": "Deposit/Withdraw"

@@ -203,12 +203,6 @@
       "value": "Dark Mode"
     }
   ],
-  "5PmGOj": [
-    {
-      "type": 0,
-      "value": "Assets per Share"
-    }
-  ],
   "5fjd4K": [
     {
       "type": 1,
@@ -433,20 +427,6 @@
       "value": "Need more light on the strategy?"
     }
   ],
-  "FQUm7o": [
-    {
-      "type": 0,
-      "value": "Avg - "
-    },
-    {
-      "type": 1,
-      "value": "value"
-    },
-    {
-      "type": 0,
-      "value": " GWEI"
-    }
-  ],
   "FaoPNm": [
     {
       "type": 0,
@@ -535,10 +515,10 @@
       "value": "The Uniswap Protocol is an open-source protocol for providing liquidity and trading ERC20 tokens on Ethereum."
     }
   ],
-  "MLTKb6": [
+  "LiHQih": [
     {
       "type": 0,
-      "value": "APY"
+      "value": "Coming Soon"
     }
   ],
   "MMRXim": [
