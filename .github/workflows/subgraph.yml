@@ -1,0 +1,43 @@
+name: Deploy Meta Vault Subgraph
+
+on:
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - "libs/subgraph/config/**"
+      - "libs/subgraph/src/metavaults.template.ts"
+      - "libs/subgraph/schema.graphql"
+      - "libs/subgraph/subgraph.template"
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "yarn"
+
+      - name: Build and publish subgraph
+        env:
+          THE_GRAPH_API_KEY: ${{ secrets.THE_GRAPH_API_KEY }}
+          COMMIT_HASH: ${{ GITHUB_SHA }}
+        run: |
+          yarn install
+          yarn run nx prepare subgraph --network=mainnet
+          yarn run nx build subgraph
+          cd libs/subgraph && yarn run graph deploy --studio mstable-meta-vaults --deploy-key $THE_GRAPH_API_KEY --version-label $COMMIT_HASH
+
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          COMMIT_HASH: ${{ GITHUB_SHA }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "🤖 New Meta Vault subgraph **{{ COMMIT_HASH }}** 🚀 The Graph: https://thegraph.com/studio/subgraph/mstable-meta-vaults/"
