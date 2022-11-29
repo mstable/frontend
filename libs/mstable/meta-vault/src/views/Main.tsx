@@ -18,7 +18,7 @@ export const Main = () => {
       width={1}
       sx={{
         paddingY: { xs: 1, sm: 2, md: 2.5 },
-        paddingX: { xs: 4, sm: 6, md: 8, lg: 16, xl: 30 },
+        paddingX: { xs: 2, sm: 4, md: 8, lg: 16, xl: 30 },
       }}
     >
       <Box minHeight="80vh">

@@ -68,6 +68,7 @@ export const Footer = (props: StackProps) => {
             key={social.title}
             href={social.href}
             target="_blank"
+            rel="noopener noreferrer"
           >
             {social.icon}
           </IconButton>

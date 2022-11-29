@@ -262,22 +262,28 @@ const GasFeesRecap = (props: StackProps) => {
       }[operation] || []),
     [amount?.exact, operation, walletAddress],
   );
-  const { config: submitConfig, refetch: fetchSubmitConfig } =
-    usePrepareContractWrite({
-      address,
-      abi: erc4626ABI,
-      functionName: operation,
-      args,
-      enabled: false,
-    });
-  const { config: approveConfig, refetch: fetchApprovalConfig } =
-    usePrepareContractWrite({
-      address: asset,
-      abi: erc20ABI,
-      functionName: 'approve',
-      args: [address, constants.MaxUint256],
-      enabled: false,
-    });
+  const {
+    config: submitConfig,
+    refetch: fetchSubmitConfig,
+    isLoading: submitLoading,
+  } = usePrepareContractWrite({
+    address,
+    abi: erc4626ABI,
+    functionName: operation,
+    args,
+    enabled: false,
+  });
+  const {
+    config: approveConfig,
+    refetch: fetchApprovalConfig,
+    isLoading: approveLoading,
+  } = usePrepareContractWrite({
+    address: asset,
+    abi: erc20ABI,
+    functionName: 'approve',
+    args: [address, constants.MaxUint256],
+    enabled: false,
+  });
   const nativeTokenGasPrice = useMemo(() => {
     const estimatedGas = pathOr(
       constants.Zero,
@@ -321,11 +327,11 @@ const GasFeesRecap = (props: StackProps) => {
         </Typography>
         <Typography variant="value5">
           {feeLoading ? (
-            <Skeleton width={50} />
+            <Skeleton width={85} />
           ) : (
             intl.formatMessage(
-              { defaultMessage: 'Avg - {value} GWEI' },
-              { value: new BigDecimal(feeData?.gasPrice, 9).format(3) },
+              { defaultMessage: '{value} GWEI' },
+              { value: new BigDecimal(feeData?.gasPrice, 9).format(2) },
             )
           )}
         </Typography>
@@ -340,13 +346,22 @@ const GasFeesRecap = (props: StackProps) => {
               )}
         </Typography>
         <Typography variant="value5">
-          {nativeTokenGasPrice?.format(3) ?? '-'}&nbsp;
-          {chain?.nativeCurrency?.symbol}
+          {feeLoading || submitLoading || approveLoading ? (
+            <Skeleton width={85} />
+          ) : (
+            `${nativeTokenGasPrice?.format(4) ?? '-'} ${
+              chain?.nativeCurrency?.symbol
+            }`
+          )}
         </Typography>
       </Stack>
       <Stack {...rowProps} justifyContent="flex-end">
         <Typography variant="value5" color="text.secondary">
-          {fiatGasPrice?.format(2) ?? '-'}&nbsp;{symbol}
+          {feeLoading || submitLoading || approveLoading ? (
+            <Skeleton width={50} />
+          ) : (
+            `${fiatGasPrice?.format(2) ?? '-'} ${symbol}`
+          )}
         </Typography>
       </Stack>
     </Stack>

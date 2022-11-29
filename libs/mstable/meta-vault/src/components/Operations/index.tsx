@@ -1,7 +1,16 @@
 import { useEffect } from 'react';
 
 import { BigDecimal } from '@frontend/shared-utils';
-import { Card, CardContent, Collapse, Stack, Tab, Tabs } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  Collapse,
+  Stack,
+  Tab,
+  Tabs,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { useNavigate, useSearch } from '@tanstack/react-location';
 import produce from 'immer';
 import { useIntl } from 'react-intl';
@@ -57,52 +66,60 @@ const OperationsWrapped = () => {
   ]);
 
   return (
-    <Card>
-      <CardContent>
-        <Stack>
-          <Tabs
-            value={tab}
-            onChange={(_, tab: 0 | 1) => {
-              changeTab(tab);
-            }}
-            textColor="inherit"
-            variant="fullWidth"
-          >
-            <Tab
-              label={intl.formatMessage({ defaultMessage: 'DEPOSIT' })}
-              disabled={isSubmitLoading}
-            />
-            <Tab
-              label={intl.formatMessage({ defaultMessage: 'WITHDRAW' })}
-              disabled={isSubmitLoading}
-            />
-          </Tabs>
-          <Stack pt={2} spacing={2}>
-            <OperationsForm />
-            <Stack
-              direction="column"
-              spacing={1}
-              sx={{
-                p: 2,
-                borderRadius: 1,
-                border: (theme) => `1px solid ${theme.palette.divider}`,
-              }}
-            >
-              <Recap pb={2} />
-              <Collapse in={needsApproval}>
-                <ApprovalButton fullWidth />
-              </Collapse>
-              <SubmitButton />
-            </Stack>
-          </Stack>
+    <Stack>
+      <Tabs
+        value={tab}
+        onChange={(_, tab: 0 | 1) => {
+          changeTab(tab);
+        }}
+        textColor="inherit"
+        variant="fullWidth"
+      >
+        <Tab
+          label={intl.formatMessage({ defaultMessage: 'DEPOSIT' })}
+          disabled={isSubmitLoading}
+        />
+        <Tab
+          label={intl.formatMessage({ defaultMessage: 'WITHDRAW' })}
+          disabled={isSubmitLoading}
+        />
+      </Tabs>
+      <Stack pt={2} spacing={2}>
+        <OperationsForm />
+        <Stack
+          direction="column"
+          spacing={1}
+          sx={{
+            p: 2,
+            borderRadius: 1,
+            border: (theme) => `1px solid ${theme.palette.divider}`,
+          }}
+        >
+          <Recap pb={2} />
+          <Collapse in={needsApproval}>
+            <ApprovalButton fullWidth />
+          </Collapse>
+          <SubmitButton />
         </Stack>
-      </CardContent>
-    </Card>
+      </Stack>
+    </Stack>
   );
 };
 
-export const Operations = () => (
-  <Provider>
-    <OperationsWrapped />
-  </Provider>
-);
+export const Operations = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  return (
+    <Provider>
+      {isMobile ? (
+        <OperationsWrapped />
+      ) : (
+        <Card>
+          <CardContent>
+            <OperationsWrapped />
+          </CardContent>
+        </Card>
+      )}
+    </Provider>
+  );
+};

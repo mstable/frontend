@@ -403,6 +403,12 @@
       "value": "The Strategy uses Curves 3CRV Pools and Factory pools. The strategy is exposed to the risk of the Curve smart contracts."
     }
   ],
+  "DUR59o": [
+    {
+      "type": 0,
+      "value": "Total Value Locked"
+    }
+  ],
   "EWa1Fv": [
     {
       "type": 0,
@@ -983,6 +989,12 @@
     {
       "type": 0,
       "value": "Yeah only mStable baby!"
+    }
+  ],
+  "in6iXe": [
+    {
+      "type": 0,
+      "value": "Deposit/Withdraw"
     }
   ],
   "jHskc6": [

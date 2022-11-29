@@ -101,8 +101,8 @@
   "CGcoFj": {
     "defaultMessage": "Yield Calculator"
   },
-  "CiONZE": {
-    "defaultMessage": "Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position."
+  "DUR59o": {
+    "defaultMessage": "Total Value Locked"
   },
   "EWa1Fv": {
     "defaultMessage": "LP Position"
@@ -290,8 +290,8 @@
   "hRuz7F": {
     "defaultMessage": "Withdrawal Gas"
   },
-  "iYgKR9": {
-    "defaultMessage": "User deposits USDC"
+  "in6iXe": {
+    "defaultMessage": "Deposit/Withdraw"
   },
   "jHskc6": {
     "defaultMessage": "Txn hash"

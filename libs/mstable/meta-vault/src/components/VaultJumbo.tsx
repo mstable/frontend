@@ -27,9 +27,7 @@ const tagProps: TypographyProps = {
   justifyContent: 'center',
   alignItems: 'center',
   fontWeight: 'medium',
-  fontSize: 14,
   px: 1,
-  height: 30,
   noWrap: true,
   bgcolor: (theme) =>
     theme.palette.mode === 'light'
@@ -37,6 +35,14 @@ const tagProps: TypographyProps = {
       : theme.palette.grey[900],
   border: (theme) => `1px solid ${theme.palette.divider}`,
   borderRadius: 2,
+  sx: (theme) => ({
+    height: 30,
+    fontSize: 14,
+    [theme.breakpoints.down('md')]: {
+      height: 20,
+      fontSize: 12,
+    },
+  }),
 };
 
 export const VaultJumbo = (props: StackProps) => {
@@ -61,13 +67,16 @@ export const VaultJumbo = (props: StackProps) => {
     if (isNilOrEmpty(data?.vault?.DailyVaultStats)) {
       return { label: '-', color: theme.palette.text.primary };
     }
-    const last = new BigDecimal(
+
+    const oneWeekAgo = new BigDecimal(
+      data?.vault?.DailyVaultStats?.[6]?.totalAssets ?? constants.One,
+    );
+
+    const current = new BigDecimal(
       data?.vault?.DailyVaultStats?.[0]?.totalAssets ?? constants.One,
     );
-    const first = new BigDecimal(
-      data?.vault?.DailyVaultStats?.[1]?.totalAssets ?? constants.One,
-    );
-    const diff = 100 - (last.simple / first.simple) * 100;
+
+    const diff = 100 - (oneWeekAgo.simple / current.simple) * 100;
 
     return {
       label: `${diff >= 0 ? '+' : ''}${diff.toFixed(2)}%(1W)`,
@@ -98,8 +107,10 @@ export const VaultJumbo = (props: StackProps) => {
       </Typography>
       <Stack
         direction="row"
-        spacing={1.5}
-        sx={{ overflowX: 'auto', maxWidth: 1, pb: 7.5 }}
+        columnGap={1.5}
+        rowGap={1}
+        flexWrap="wrap"
+        sx={{ pb: 7.5 }}
       >
         {tags.map((tag, idx) => (
           <Typography key={`tag-${idx}`} {...tagProps}>
@@ -109,8 +120,9 @@ export const VaultJumbo = (props: StackProps) => {
       </Stack>
       <Stack
         direction={{ xs: 'column', md: 'row' }}
-        spacing={{ xs: 3, md: 4 }}
-        sx={{ overflowX: 'auto', maxWidth: 1, width: 1 }}
+        columnGap={4}
+        rowGap={1}
+        width={1}
         divider={<Divider orientation="vertical" flexItem variant="middle" />}
       >
         <ValueLabel
@@ -150,12 +162,10 @@ export const VaultJumbo = (props: StackProps) => {
         </ValueLabel>
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'TVL' })}
-          hint={intl.formatMessage({
-            defaultMessage: 'Total Value Locked in vault',
-          })}
+          hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
         >
           {isLoading || isPriceLoading || !assetToken ? (
-            <Skeleton height={24} width={60} />
+            <Skeleton height={24} width={160} />
           ) : (
             <Stack direction="row" spacing={1} alignItems="baseline">
               <Typography variant="value2">
@@ -176,7 +186,9 @@ export const VaultJumbo = (props: StackProps) => {
         </ValueLabel>
         <ValueLabel
           label={intl.formatMessage({ defaultMessage: 'Protocols Involved' })}
-          components={{ valueContainer: { pb: 0.3 } }}
+          components={{
+            valueContainer: { pb: 0.3 },
+          }}
         >
           <AvatarGroup max={6}>
             {strategies.map((strat) => (

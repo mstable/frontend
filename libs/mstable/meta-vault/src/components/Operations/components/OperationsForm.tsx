@@ -1,7 +1,14 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { TokenInput } from '@frontend/shared-ui';
-import { Divider, Skeleton, Stack, Typography, useTheme } from '@mui/material';
+import {
+  Divider,
+  Skeleton,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { Ticket } from 'phosphor-react';
 import { mergeAll } from 'ramda';
 import { useIntl } from 'react-intl';
@@ -36,6 +43,7 @@ export const OperationsForm = (props: StackProps) => {
     isError,
   } = useOperations();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
   const [hasFocus, setHasFocus] = useState(false);
@@ -200,14 +208,16 @@ export const OperationsForm = (props: StackProps) => {
   return (
     <Stack
       borderRadius={1}
-      p={2}
+      p={isMobile ? 0 : 2}
       direction="column"
       spacing={3}
       sx={{
-        border: (theme) =>
-          `1px solid ${
-            hasFocus ? theme.palette.primary.main : theme.palette.divider
-          }`,
+        border: isMobile
+          ? undefined
+          : (theme) =>
+              `1px solid ${
+                hasFocus ? theme.palette.primary.main : theme.palette.divider
+              }`,
         ...(!isConnected && {
           backgroundColor: 'background.highlight',
         }),

@@ -96,7 +96,8 @@ export const {
                   constants.Zero,
               );
               draft.mvDeposited = mvDeposited;
-              draft.profitOrLoss = draft.mvBalanceInAsset.sub(mvDeposited);
+              draft.profitOrLoss =
+                draft.mvBalanceInAsset?.sub(mvDeposited) ?? BigDecimal.ZERO;
             }),
           );
         }
@@ -160,7 +161,7 @@ export const {
   });
 
   useBalance({
-    addressOrName: walletAddress,
+    address: walletAddress,
     token: address,
     watch: true,
     enabled: !!walletAddress && !!address,
@@ -176,7 +177,7 @@ export const {
   });
 
   useBalance({
-    addressOrName: walletAddress,
+    address: walletAddress,
     token: asset,
     watch: true,
     enabled: !!walletAddress && !!asset,
