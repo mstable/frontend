@@ -43,7 +43,11 @@ export const Vaults = () => {
         <ToggleButtonGroup
           size="large"
           value={viewMode}
-          onChange={(_, val) => setViewMode(val)}
+          onChange={(_, val) => {
+            if (val !== null) {
+              setViewMode(val);
+            }
+          }}
           exclusive
         >
           <ToggleButton value="grid">
