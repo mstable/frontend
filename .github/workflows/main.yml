@@ -1,11 +1,14 @@
-name: Main release
+name: Release Main
 
 on:
   push:
     branches:
       - main
-    paths-ignore:
-      - "libs/subgraph/**"
+    paths:      
+      - "apps/mstable/**"
+      - "libs/**"
+      - "!libs/subgraph/**"
+      - "!libs/tools/**"
   workflow_dispatch:
 
 concurrency:
@@ -18,9 +21,6 @@ env:
 jobs:
   main:
     runs-on: ubuntu-latest
-    env:
-      NX_THE_GRAPH_MV_MAINNET_URL: ${{ secrets.NX_THE_GRAPH_MV_MAINNET_URL }}
-      NX_THE_GRAPH_MV_GOERLI_URL: ${{ secrets.NX_THE_GRAPH_MV_GOERLI_URL }}
     steps:
       - uses: actions/checkout@v2
         name: Checkout [main]
