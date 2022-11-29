@@ -18,7 +18,6 @@ import { useAccount } from 'wagmi';
 
 import { useMetavault } from '../../state';
 import { HistoryDialog } from './components/HistoryDialog';
-import { YieldCalculatorDialog } from './components/YieldCalculatorDialog';
 
 export const PositionContent = () => {
   const intl = useIntl();
@@ -104,7 +103,7 @@ export const PositionContent = () => {
             variant="value5"
             color={
               isConnected && profitOrLoss
-                ? profitOrLoss.simple >= 0
+                ? profitOrLoss.simpleRounded >= 0
                   ? 'success.main'
                   : 'error.main'
                 : 'grey.300'
@@ -132,7 +131,7 @@ export const PositionContent = () => {
 export const Position = () => {
   const intl = useIntl();
   const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
-  const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
+  // const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
   const { metavault } = useMetavault();
 
   const { address } = useAccount();
@@ -162,21 +161,21 @@ export const Position = () => {
         </Box>
         <CardContent>
           <PositionContent />
-          <Button
+          {/* <Button
             onClick={() => setIsYieldCalculatorOpen(true)}
             sx={{ width: '100%' }}
             color="secondary"
             size="large"
           >
             {intl.formatMessage({ defaultMessage: 'Yield Calculator' })}
-          </Button>
+          </Button> */}
         </CardContent>
         <Divider />
       </Card>
-      <YieldCalculatorDialog
+      {/* <YieldCalculatorDialog
         open={isYieldCalculatorOpen}
         onClose={() => setIsYieldCalculatorOpen(false)}
-      />
+      /> */}
       <HistoryDialog
         open={isHistoryDialogOpen}
         onClose={() => setIsHistoryDialogOpen(false)}

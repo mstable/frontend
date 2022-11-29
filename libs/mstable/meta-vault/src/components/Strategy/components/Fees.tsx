@@ -69,7 +69,6 @@ const Logo = ({ children, label, first, last, ...rest }: LogoProps) => {
               content: '""',
               position: 'absolute',
               backgroundColor: 'divider',
-              zIndex: -2,
             },
             '::after': {
               display: 'block',
@@ -79,7 +78,6 @@ const Logo = ({ children, label, first, last, ...rest }: LogoProps) => {
               content: '""',
               position: 'absolute',
               backgroundColor: 'background.paper',
-              zIndex: -1,
             },
           },
       ]}

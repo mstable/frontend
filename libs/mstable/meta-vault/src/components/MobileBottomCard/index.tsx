@@ -9,7 +9,6 @@ import { useIntl } from 'react-intl';
 import { Operations } from '../Operations';
 import { PositionContent } from '../Position';
 import { HistoryDialog } from '../Position/components/HistoryDialog';
-import { YieldCalculatorDialog } from '../Position/components/YieldCalculatorDialog';
 
 import type { MvGenerics } from '../../types';
 
@@ -18,7 +17,7 @@ export const MobileBottomCard = () => {
   const { input } = useSearch<MvGenerics>();
   const [isMyPositionOpen, setIsMyPositionOpen] = useState(false);
   const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
-  const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
+  // const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
   const [isOperationOpen, setIsOperationOpen] = useState(false);
 
   useEffect(() => {
@@ -47,7 +46,6 @@ export const MobileBottomCard = () => {
             <PositionContent />
             <Stack direction="row" spacing={2} mb={1}>
               <Button
-                fullWidth
                 variant="outlined"
                 color="secondary"
                 startIcon={<Receipt weight="fill" size={14} />}
@@ -55,13 +53,13 @@ export const MobileBottomCard = () => {
               >
                 {intl.formatMessage({ defaultMessage: 'History' })}
               </Button>
-              <Button
+              {/* <Button
                 fullWidth
                 color="secondary"
                 onClick={() => setIsYieldCalculatorOpen(true)}
               >
                 {intl.formatMessage({ defaultMessage: 'Yield Calculator' })}
-              </Button>
+              </Button> */}
             </Stack>
           </CollapsibleSection>
         </Box>
@@ -71,10 +69,10 @@ export const MobileBottomCard = () => {
           </Button>
         </Box>
       </Card>
-      <YieldCalculatorDialog
+      {/* <YieldCalculatorDialog
         open={isYieldCalculatorOpen}
         onClose={() => setIsYieldCalculatorOpen(false)}
-      />
+      /> */}
       <HistoryDialog
         open={isHistoryDialogOpen}
         onClose={() => setIsHistoryDialogOpen(false)}
