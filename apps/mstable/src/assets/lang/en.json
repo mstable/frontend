@@ -983,6 +983,12 @@
       "value": "Txn hash"
     }
   ],
+  "k6yAtR": [
+    {
+      "type": 0,
+      "value": "How does the 3Pool Convex Meta Vault works?"
+    }
+  ],
   "kaPKOB": [
     {
       "type": 0,
@@ -1033,12 +1039,6 @@
     {
       "type": 0,
       "value": "Token Approval"
-    }
-  ],
-  "nDSmrJ": [
-    {
-      "type": 0,
-      "value": "What is a Meta Vault?"
     }
   ],
   "not_connected": [

@@ -296,6 +296,9 @@
   "jHskc6": {
     "defaultMessage": "Txn hash"
   },
+  "k6yAtR": {
+    "defaultMessage": "How does the 3Pool Convex Meta Vault works?"
+  },
   "kaPKOB": {
     "defaultMessage": "Insufficient balance"
   },
@@ -313,9 +316,6 @@
   },
   "mrwfXX": {
     "defaultMessage": "Shares"
-  },
-  "nDSmrJ": {
-    "defaultMessage": "What is a Meta Vault?"
   },
   "p8bsw4": {
     "defaultMessage": "Transaction Error"

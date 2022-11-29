@@ -194,7 +194,7 @@ export const Metavault = () => {
       <Stack direction="column" alignItems="center">
         <Typography variant="h3" pb={3} textAlign="center" maxWidth={1 / 2}>
           {intl.formatMessage({
-            defaultMessage: 'What is a Meta Vault?',
+            defaultMessage: 'How does the 3Pool Convex Meta Vault works?',
           })}
         </Typography>
         <Typography variant="subtitle1" textAlign="center" maxWidth={1 / 2}>
