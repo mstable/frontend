@@ -1,9 +1,9 @@
-name: Chromatic
+name: Publish Chromatic
 
 on:
   pull_request:
     branches:
-      - "main"
+      - "dev"
       - "!dependabot/**"
     paths:
       - ".github/workflows/chromatic.yml"
@@ -28,13 +28,16 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - uses: actions/setup-node@v3
         with:
           node-version: 16
           cache: "yarn"
-          registry-url: 'https://npm.pkg.github.com'
-      - run: yarn install
-      - run: yarn storybook:build
+
+      - run: |
+          yarn install
+          yarn storybook:build
+
       - name: Publish to Chromatic
         uses: chromaui/action@v1
         id: chromatic
@@ -42,6 +45,7 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitZeroOnChanges: true
           storybookBuildDir: dist/storybook
+          
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
