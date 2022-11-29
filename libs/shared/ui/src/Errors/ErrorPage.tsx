@@ -1,17 +1,8 @@
 import { DISCORD_SUPPORT } from '@frontend/shared-constants';
-import {
-  Divider,
-  Link,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material';
-import { Browsers, WifiX } from 'phosphor-react';
+import { Link, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
+
+import { ConnectionTips } from './ErrorTips';
 
 import type { PaletteMode, StackProps } from '@mui/material';
 import type { ReactNode } from 'react';
@@ -21,6 +12,7 @@ export type ErrorPageProps = {
   subtitle?: string;
   message?: ReactNode;
   hideSupport?: boolean;
+  tips?: ReactNode;
 } & StackProps;
 
 const colorGradient = (mode: PaletteMode) =>
@@ -33,10 +25,10 @@ export const ErrorPage = ({
   subtitle,
   message,
   hideSupport,
+  tips,
   ...rest
 }: ErrorPageProps) => {
   const intl = useIntl();
-  const theme = useTheme();
 
   return (
     <Stack direction="row" py={18} {...rest}>
@@ -89,47 +81,7 @@ export const ErrorPage = ({
         )}
       </Stack>
       <Stack direction="column" width={1 / 2} p={4}>
-        <Stack
-          borderRadius={1}
-          bgcolor="background.paper"
-          alignItems="stretch"
-          border={(theme) => `1px solid ${theme.palette.divider}`}
-          p={2}
-        >
-          <Typography variant="h4" color="grey.600">
-            {intl.formatMessage({
-              defaultMessage: 'Tips',
-            })}
-          </Typography>
-          <List>
-            <ListItem>
-              <ListItemIcon>
-                <Browsers color={theme.palette.icons.color} size={24} />
-              </ListItemIcon>
-              <ListItemText
-                primary={intl.formatMessage({ defaultMessage: 'Check URL' })}
-                secondary={intl.formatMessage({
-                  defaultMessage: 'Make sure you are on the right URL.',
-                })}
-              />
-            </ListItem>
-            <Divider />
-            <ListItem>
-              <ListItemIcon>
-                <WifiX color={theme.palette.icons.color} size={24} />
-              </ListItemIcon>
-              <ListItemText
-                primary={intl.formatMessage({
-                  defaultMessage: 'Check connectivity',
-                })}
-                secondary={intl.formatMessage({
-                  defaultMessage:
-                    'Make sure your internet connection is working.',
-                })}
-              />
-            </ListItem>
-          </List>
-        </Stack>
+        {tips ?? <ConnectionTips />}
       </Stack>
     </Stack>
   );

@@ -47,7 +47,7 @@ export const Metavault = () => {
     }
   }, [metavault, updateBkgColor]);
 
-  if (!metavault) return <UnsupportedMvPage mvid={mvid} />;
+  if (!metavault) return <UnsupportedMvPage />;
 
   return (
     <MetavaultProvider initialState={{ metavault }}>
