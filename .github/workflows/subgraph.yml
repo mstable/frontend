@@ -1,9 +1,11 @@
 name: Deploy Meta Vault Subgraph
 
 on:
-  pull_request:
+  push:
     branches:
-      - "main"
+      - main
+    tags-ignore:
+      - "**"
     paths:
       - "libs/subgraph/config/**"
       - "libs/subgraph/src/metavaults.template.ts"

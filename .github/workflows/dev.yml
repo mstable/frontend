@@ -3,9 +3,11 @@ name: Publish Dev
 on:
   push:
     branches:
-      - dev
+      - main
+    tags-ignore:
+      - "**"
     paths-ignore:
-      - '**/*.@(md|mdx)'
+      - "**/*.@(md|mdx)"
       - "libs/subgraph/**"
 
 concurrency:
