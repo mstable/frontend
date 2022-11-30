@@ -13,6 +13,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  useMediaQuery,
   useTheme,
 } from '@mui/material';
 import { ListDashes, SquaresFour } from 'phosphor-react';
@@ -28,6 +29,7 @@ const COMING_SOON = ['mveth', 'mvfrax'];
 export const Vaults = () => {
   const intl = useIntl();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { chain } = useNetwork();
 
   const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
@@ -87,19 +89,25 @@ export const Vaults = () => {
                   <TableCell>
                     {intl.formatMessage({ defaultMessage: 'Vault name' })}
                   </TableCell>
-                  <TableCell>
-                    {intl.formatMessage({ defaultMessage: 'Strategy' })}
-                  </TableCell>
-                  <TableCell>
-                    {intl.formatMessage({ defaultMessage: 'Protocols' })}
-                  </TableCell>
-                  <TableCell>
-                    {intl.formatMessage({ defaultMessage: 'TVL' })}
-                  </TableCell>
+                  {!isMobile && (
+                    <TableCell>
+                      {intl.formatMessage({ defaultMessage: 'Strategy' })}
+                    </TableCell>
+                  )}
+                  {!isMobile && (
+                    <TableCell>
+                      {intl.formatMessage({ defaultMessage: 'Protocols' })}
+                    </TableCell>
+                  )}
+                  {!isMobile && (
+                    <TableCell>
+                      {intl.formatMessage({ defaultMessage: 'TVL' })}
+                    </TableCell>
+                  )}
                   <TableCell>
                     {intl.formatMessage({ defaultMessage: 'ROI' })}
                   </TableCell>
-                  <TableCell />
+                  {!isMobile && <TableCell />}
                 </TableRow>
               </TableHead>
               <TableBody>

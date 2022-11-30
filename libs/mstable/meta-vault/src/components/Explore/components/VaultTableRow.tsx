@@ -9,6 +9,8 @@ import {
   TableCell,
   TableRow,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import { constants } from 'ethers';
@@ -44,6 +46,8 @@ const tagProps: TypographyProps = {
 
 export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
   const dataSource = useDataSource();
   const { data } = useMetavaultQuery(dataSource, {
@@ -76,42 +80,48 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
       <TableCell>
         <Typography variant="value4">{metavault.name}</Typography>
       </TableCell>
-      <TableCell>
-        <Stack direction="row" flexWrap="wrap" columnGap={1} rowGap={1}>
-          {metavault.tags.map((tag, idx) => (
-            <Typography key={`tag-${idx}`} {...tagProps}>
-              {intl.formatMessage(tag)}
-            </Typography>
-          ))}
-        </Stack>
-      </TableCell>
-      <TableCell>
-        <AvatarGroup max={6}>
-          {metavault.strategies.map((strat) => (
-            <Avatar key={strat.protocol.id}>
-              <ProtocolIcon
-                name={strat.protocol.id}
-                sx={{ height: 24, width: 24 }}
-              />
-            </Avatar>
-          ))}
-        </AvatarGroup>
-      </TableCell>
-      <TableCell>
-        <Typography variant="value4">
-          {assetLoading ? (
-            <Skeleton width={50} />
-          ) : (
-            intl.formatNumber(
-              new BigDecimal(
-                data?.vault?.totalAssets ?? constants.Zero,
-                assetDecimal ?? 18,
-              ).simple,
-              { notation: 'compact' },
-            )
-          )}
-        </Typography>
-      </TableCell>
+      {!isMobile && (
+        <TableCell>
+          <Stack direction="row" flexWrap="wrap" columnGap={1} rowGap={1}>
+            {metavault.tags.map((tag, idx) => (
+              <Typography key={`tag-${idx}`} {...tagProps}>
+                {intl.formatMessage(tag)}
+              </Typography>
+            ))}
+          </Stack>
+        </TableCell>
+      )}
+      {!isMobile && (
+        <TableCell>
+          <AvatarGroup max={6}>
+            {metavault.strategies.map((strat) => (
+              <Avatar key={strat.protocol.id}>
+                <ProtocolIcon
+                  name={strat.protocol.id}
+                  sx={{ height: 24, width: 24 }}
+                />
+              </Avatar>
+            ))}
+          </AvatarGroup>
+        </TableCell>
+      )}
+      {!isMobile && (
+        <TableCell>
+          <Typography variant="value4">
+            {assetLoading ? (
+              <Skeleton width={50} />
+            ) : (
+              intl.formatNumber(
+                new BigDecimal(
+                  data?.vault?.totalAssets ?? constants.Zero,
+                  assetDecimal ?? 18,
+                ).simple,
+                { notation: 'compact' },
+              )
+            )}
+          </Typography>
+        </TableCell>
+      )}
       <TableCell>
         <Stack direction="row">
           <Typography variant="value4">
@@ -127,17 +137,19 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
           </Typography>
         </Stack>
       </TableCell>
-      <TableCell>
-        <Stack sx={{ width: 60, height: 40 }}>
-          <LineChart
-            id={metavault.id}
-            options={{ ...chartData.options, maintainAspectRatio: false }}
-            data={chartData.data}
-            height={40}
-            width={60}
-          />
-        </Stack>
-      </TableCell>
+      {!isMobile && (
+        <TableCell>
+          <Stack sx={{ width: 60, height: 40 }}>
+            <LineChart
+              id={metavault.id}
+              options={{ ...chartData.options, maintainAspectRatio: false }}
+              data={chartData.data}
+              height={40}
+              width={60}
+            />
+          </Stack>
+        </TableCell>
+      )}
     </TableRow>
   );
 };
