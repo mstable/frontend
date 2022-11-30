@@ -26,8 +26,8 @@ export const StepIndicator = ({
           weight="fill"
           color={
             step === activeStep
-              ? theme.palette.icons.color
-              : theme.palette.grey['300']
+              ? theme.palette.primary.main
+              : theme.palette.text.secondary
           }
         />
       ))}
