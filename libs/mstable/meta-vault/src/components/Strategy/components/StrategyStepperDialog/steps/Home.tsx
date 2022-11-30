@@ -26,17 +26,17 @@ export const Home = () => {
         <ArrowRight width={1} />
         <IconContainer>
           <MvUSDC />
-          <Typography>USDC</Typography>
+          <Typography variant="buttonSmall">USDC</Typography>
         </IconContainer>
         <ArrowRight width={1} />
         <IconContainer minWidth={466} justifyContent="center">
           <SimplePurpleBkgIcon icon={<Vault />} />
-          <Typography>Meta Vault</Typography>
+          <Typography variant="buttonSmall">Meta Vault</Typography>
         </IconContainer>
         <ArrowRight width={1} />
         <IconContainer>
           <MvUSDC />
-          <Typography>USDC</Typography>
+          <Typography variant="buttonSmall">USDC</Typography>
         </IconContainer>
         <ArrowRight width={1} />
         <TriplePurpleBkgIcon icon={<User />} size={56} />
@@ -50,37 +50,49 @@ export const Home = () => {
         <Stack direction="column" alignItems="center" height={200} width={150}>
           <ArrowUp height={100} />
           <IconContainer width={1}>
-            <CurveProtocol />
-            <Typography>mUSD/3CRV</Typography>
+            <CurveProtocol fontSize="small" />
+            <Typography variant="buttonSmall" color="text.secondary">
+              mUSD/3CRV
+            </Typography>
           </IconContainer>
           <ArrowUp height={100} />
           <SquaredIconContainer width={1}>
-            <ConvexProtocol />
-            <Typography>Convex</Typography>
+            <ConvexProtocol fontSize="small" />
+            <Typography variant="buttonSmall" color="text.secondary">
+              Convex
+            </Typography>
           </SquaredIconContainer>
         </Stack>
         <Stack direction="column" alignItems="center" height={200} width={150}>
           <ArrowUp height={100} />
           <IconContainer>
-            <CurveProtocol />
-            <Typography>BUSD/3CRV</Typography>
+            <CurveProtocol fontSize="small" />
+            <Typography variant="buttonSmall" color="text.secondary">
+              BUSD/3CRV
+            </Typography>
           </IconContainer>
           <ArrowUp height={100} />
           <SquaredIconContainer width={1}>
-            <ConvexProtocol />
-            <Typography>Convex</Typography>
+            <ConvexProtocol fontSize="small" />
+            <Typography variant="buttonSmall" color="text.secondary">
+              Convex
+            </Typography>
           </SquaredIconContainer>
         </Stack>
         <Stack direction="column" alignItems="center" height={200} width={150}>
           <ArrowUp height={100} />
           <IconContainer>
-            <CurveProtocol />
-            <Typography>FRAX/3CRV</Typography>
+            <CurveProtocol fontSize="small" />
+            <Typography variant="buttonSmall" color="text.secondary">
+              FRAX/3CRV
+            </Typography>
           </IconContainer>
           <ArrowUp height={100} />
           <SquaredIconContainer width={1}>
-            <ConvexProtocol />
-            <Typography>Convex</Typography>
+            <ConvexProtocol fontSize="small" />
+            <Typography variant="buttonSmall" color="text.secondary">
+              Convex
+            </Typography>
           </SquaredIconContainer>
         </Stack>
       </Stack>
@@ -96,7 +108,12 @@ export const Home = () => {
           defaultMessage: 'Need more light on the strategy?',
         })}
       </Typography>
-      <Typography variant="subtitle1" maxWidth={1 / 2} textAlign="center">
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        maxWidth={1 / 2}
+        textAlign="center"
+      >
         {intl.formatMessage({
           defaultMessage:
             'Start the tour and get more insight on the strategy.',

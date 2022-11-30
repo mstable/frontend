@@ -51,10 +51,10 @@ export const ArrowRight = (props: StackProps) => {
           position: 'absolute',
           content: '""',
           background: `linear-gradient(90deg, ${alpha(
-            theme.palette.info.light,
+            theme.palette.info.main,
             0,
-          )} 0%, ${alpha(theme.palette.info.light, 0.4)} 30%, ${
-            theme.palette.info.light
+          )} 0%, ${alpha(theme.palette.info.main, 0.4)} 30%, ${
+            theme.palette.info.main
           } 100%)`,
           height: 2,
           display: 'flex',
@@ -83,10 +83,10 @@ export const ArrowUp = (props: StackProps) => {
           position: 'absolute',
           content: '""',
           background: `linear-gradient(0deg, ${alpha(
-            theme.palette.info.light,
+            theme.palette.info.main,
             0,
-          )} 0%, ${alpha(theme.palette.info.light, 0.4)} 30%, ${
-            theme.palette.info.light
+          )} 0%, ${alpha(theme.palette.info.main, 0.4)} 30%, ${
+            theme.palette.info.main
           } 100%)`,
           width: 2,
           height: 1,

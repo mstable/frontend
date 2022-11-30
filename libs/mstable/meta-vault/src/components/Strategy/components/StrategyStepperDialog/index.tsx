@@ -5,7 +5,6 @@ import { Button, Stack } from '@mui/material';
 import { ArrowLeft, ArrowRight } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
-import { StepNavigator } from './components/StepNavigator';
 import { useSteps } from './hooks';
 import { Provider } from './state';
 import { Deposit } from './steps/Deposit';
@@ -39,7 +38,7 @@ const StrategyStepperDialogWrapped = (props: StrategyStepperDialogProps) => {
       maxWidth="lg"
       title={intl.formatMessage({ defaultMessage: 'Visualize strategy' })}
       content={
-        <StepNavigator pt={8} hideNavigation={activeStep === 'home'}>
+        <Stack pt={8}>
           {
             {
               home: <Home />,
@@ -48,7 +47,7 @@ const StrategyStepperDialogWrapped = (props: StrategyStepperDialogProps) => {
               withdraw: <Withdraw />,
             }[activeStep]
           }
-        </StepNavigator>
+        </Stack>
       }
       actions={(handleClose) => (
         <Stack

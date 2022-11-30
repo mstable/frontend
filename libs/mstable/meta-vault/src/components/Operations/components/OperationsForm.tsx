@@ -50,19 +50,10 @@ export const OperationsForm = (props: StackProps) => {
   const primary = useRef(null);
   const secondary = useRef(null);
 
-  const disabled = useMemo(
-    () =>
-      !isConnected ||
-      isSubmitLoading ||
-      (tab === 0 && assetBalance?.exact.isZero()) ||
-      (tab === 1 && mvBalance?.exact.isZero()),
-    [assetBalance?.exact, isConnected, isSubmitLoading, mvBalance?.exact, tab],
-  );
-
   const input = useMemo(
     () => ({
       placeholder: '0.00',
-      disabled: disabled,
+      disabled: !isConnected || isSubmitLoading,
       isConnected: isConnected,
       error: isError,
       components: {
@@ -76,7 +67,7 @@ export const OperationsForm = (props: StackProps) => {
         },
       },
     }),
-    [disabled, isConnected, isError],
+    [isConnected, isError, isSubmitLoading],
   );
 
   const handlePrimaryChange = useCallback(

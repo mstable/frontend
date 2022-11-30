@@ -105,7 +105,12 @@ export const Deposit = () => {
             defaultMessage: 'User deposits USDC',
           })}
         </Typography>
-        <Typography variant="subtitle1" textAlign="center" maxWidth={1 / 2}>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          textAlign="center"
+          maxWidth={1 / 2}
+        >
           {intl.formatMessage({
             defaultMessage:
               'This Meta Vault accepts USDC. Anyone can deposit and receive vault shares.',

@@ -43,7 +43,7 @@ export const Metavault = () => {
               <IconContainer
                 key={`user-${n}`}
                 sx={{
-                  opacity: 0.75,
+                  opacity: 0.3,
                 }}
               >
                 <MvUSDC />
@@ -100,7 +100,7 @@ export const Metavault = () => {
               <IconContainer
                 key={`user-${n}`}
                 sx={{
-                  opacity: 0.75,
+                  opacity: 0.3,
                 }}
               >
                 <MvUSDC />
@@ -139,16 +139,20 @@ export const Metavault = () => {
             <ArrowUp height={50} />
           </Stack>
           <IconContainer width={1}>
-            <CurveProtocol />
-            <Typography>mUSD/3CRV</Typography>
+            <CurveProtocol fontSize="small" />
+            <Typography variant="buttonSmall" color="text.secondary">
+              mUSD/3CRV
+            </Typography>
           </IconContainer>
           <Stack direction="row" spacing={2}>
             <ArrowUp height={50} />
             <ArrowUp height={50} />
           </Stack>
           <SquaredIconContainer width={1}>
-            <ConvexProtocol />
-            <Typography>Convex</Typography>
+            <ConvexProtocol fontSize="small" />
+            <Typography variant="buttonSmall" color="text.secondary">
+              Convex
+            </Typography>
           </SquaredIconContainer>
         </Stack>
         <Stack direction="column" alignItems="center" height={200} width={150}>
@@ -157,16 +161,20 @@ export const Metavault = () => {
             <ArrowUp height={50} />
           </Stack>
           <IconContainer>
-            <CurveProtocol />
-            <Typography>BUSD/3CRV</Typography>
+            <CurveProtocol fontSize="small" />
+            <Typography variant="buttonSmall" color="text.secondary">
+              BUSD/3CRV
+            </Typography>
           </IconContainer>
           <Stack direction="row" spacing={2}>
             <ArrowUp height={50} />
             <ArrowUp height={50} />
           </Stack>
           <SquaredIconContainer width={1}>
-            <ConvexProtocol />
-            <Typography>Convex</Typography>
+            <ConvexProtocol fontSize="small" />
+            <Typography variant="buttonSmall" color="text.secondary">
+              Convex
+            </Typography>
           </SquaredIconContainer>
         </Stack>
         <Stack direction="column" alignItems="center" height={200} width={150}>
@@ -175,16 +183,20 @@ export const Metavault = () => {
             <ArrowUp height={50} />
           </Stack>
           <IconContainer>
-            <CurveProtocol />
-            <Typography>FRAX/3CRV</Typography>
+            <CurveProtocol fontSize="small" />
+            <Typography variant="buttonSmall" color="text.secondary">
+              FRAX/3CRV
+            </Typography>
           </IconContainer>
           <Stack direction="row" spacing={2}>
             <ArrowUp height={50} />
             <ArrowUp height={50} />
           </Stack>
           <SquaredIconContainer width={1}>
-            <ConvexProtocol />
-            <Typography>Convex</Typography>
+            <ConvexProtocol fontSize="small" />
+            <Typography variant="buttonSmall" color="text.secondary">
+              Convex
+            </Typography>
           </SquaredIconContainer>
         </Stack>
       </Stack>
@@ -197,7 +209,12 @@ export const Metavault = () => {
             defaultMessage: 'How does the 3Pool Convex Meta Vault works?',
           })}
         </Typography>
-        <Typography variant="subtitle1" textAlign="center" maxWidth={1 / 2}>
+        <Typography
+          textAlign="center"
+          variant="body2"
+          color="text.secondary"
+          maxWidth={1 / 2}
+        >
           {intl.formatMessage({
             defaultMessage:
               'The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded.',

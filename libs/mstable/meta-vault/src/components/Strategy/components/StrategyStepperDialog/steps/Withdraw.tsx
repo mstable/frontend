@@ -106,7 +106,12 @@ export const Withdraw = () => {
             defaultMessage: 'User withdraws USDC',
           })}
         </Typography>
-        <Typography variant="subtitle1" textAlign="center" maxWidth={1 / 2}>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          textAlign="center"
+          maxWidth={1 / 2}
+        >
           {intl.formatMessage({
             defaultMessage:
               'Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position.',

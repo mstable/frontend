@@ -266,6 +266,7 @@ const GasFeesRecap = (props: StackProps) => {
     config: submitConfig,
     refetch: fetchSubmitConfig,
     isLoading: submitLoading,
+    isError: submitError,
   } = usePrepareContractWrite({
     address,
     abi: erc4626ABI,
@@ -277,6 +278,7 @@ const GasFeesRecap = (props: StackProps) => {
     config: approveConfig,
     refetch: fetchApprovalConfig,
     isLoading: approveLoading,
+    isError: approveError,
   } = usePrepareContractWrite({
     address: asset,
     abi: erc20ABI,
@@ -348,6 +350,8 @@ const GasFeesRecap = (props: StackProps) => {
         <Typography variant="value5">
           {feeLoading || submitLoading || approveLoading ? (
             <Skeleton width={85} />
+          ) : !fiatGasPrice || approveError || submitError ? (
+            '-'
           ) : (
             `${nativeTokenGasPrice?.format(4) ?? '-'} ${
               chain?.nativeCurrency?.symbol
@@ -359,6 +363,8 @@ const GasFeesRecap = (props: StackProps) => {
         <Typography variant="value5" color="text.secondary">
           {feeLoading || submitLoading || approveLoading ? (
             <Skeleton width={50} />
+          ) : !fiatGasPrice || approveError || submitError ? (
+            '-'
           ) : (
             `${fiatGasPrice?.format(2) ?? '-'} ${symbol}`
           )}
