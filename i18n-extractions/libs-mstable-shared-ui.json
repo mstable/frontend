@@ -1,24 +1,27 @@
 {
+  "+k7bPd": {
+    "defaultMessage": "The selected network is not supported by this application."
+  },
   "1XVJUl": {
     "defaultMessage": "Switch to {defaultChain}"
-  },
-  "2HXpSy": {
-    "defaultMessage": "This application does not support the Meta Vault {mvid}, pick one from our list."
   },
   "8ywLSf": {
     "defaultMessage": "Twitter"
   },
-  "9tWILK": {
-    "defaultMessage": "Unsupported Meta Vault"
-  },
   "Bak2Yy": {
     "defaultMessage": "Select from supported list"
+  },
+  "DRXWXB": {
+    "defaultMessage": "404"
+  },
+  "EhET/Q": {
+    "defaultMessage": "<strong>Yield app</strong> by mStable"
   },
   "FvmV6q": {
     "defaultMessage": "Discord"
   },
-  "JsHYR9": {
-    "defaultMessage": "<strong>Meta Vaults</strong> by mStable"
+  "MSTVqC": {
+    "defaultMessage": "Reload Page"
   },
   "PmkP1H": {
     "defaultMessage": "Unsupported Network"
@@ -26,16 +29,13 @@
   "Vn76qV": {
     "defaultMessage": "Github"
   },
+  "cyR7Kh": {
+    "defaultMessage": "Back"
+  },
   "ovJ26C": {
     "defaultMessage": "Medium"
   },
   "sy+pv5": {
     "defaultMessage": "Email"
-  },
-  "vHwp5J": {
-    "defaultMessage": "Explore Meta Vaults"
-  },
-  "w4Oc4e": {
-    "defaultMessage": "The selected network is not supported by this application, why not try {defaultChain}?"
   }
 }

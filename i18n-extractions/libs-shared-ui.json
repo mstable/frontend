@@ -1,4 +1,19 @@
 {
+  "/p1GSi": {
+    "defaultMessage": "Check connectivity"
+  },
+  "1O5/yX": {
+    "defaultMessage": "Make sure your wallet is on Ethereum Mainet network."
+  },
+  "2zD+V+": {
+    "defaultMessage": "Wrong network selected"
+  },
+  "6OuLVd": {
+    "defaultMessage": "Tips"
+  },
+  "6z2ptx": {
+    "defaultMessage": "Want to use a testnet?"
+  },
   "8XZjyW": {
     "defaultMessage": "There was an error while loading this component, you can try to reload."
   },
@@ -8,8 +23,17 @@
   "9lt7g1": {
     "defaultMessage": "Discord support channel"
   },
-  "AebVks": {
-    "defaultMessage": "There was an error while loading this page, you can try to reload."
+  "Ar5obI": {
+    "defaultMessage": "No balance"
+  },
+  "IdL95F": {
+    "defaultMessage": "Make sure you are on the right URL."
+  },
+  "RnacAD": {
+    "defaultMessage": "Make sure your internet connection is working."
+  },
+  "STj9QY": {
+    "defaultMessage": "Oops, something went wrong."
   },
   "UkXeBW": {
     "defaultMessage": "If the problem persists, you can contact us through our {support}."
@@ -19,6 +43,9 @@
   },
   "W87PYU": {
     "defaultMessage": "View on {name}"
+  },
+  "XYEIBG": {
+    "defaultMessage": "App supports Goerli Testnet."
   },
   "defaultCancel": {
     "defaultMessage": "Cancel"
@@ -34,5 +61,8 @@
   },
   "p556q3": {
     "defaultMessage": "Copied"
+  },
+  "y1NA43": {
+    "defaultMessage": "Check URL"
   }
 }
