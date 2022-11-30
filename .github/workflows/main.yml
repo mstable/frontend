@@ -6,11 +6,6 @@ on:
       - main
     tags:
       - "v*.*.*"
-    paths:
-      - "apps/mstable/**"
-      - "libs/**"
-      - "!libs/subgraph/**"
-      - "!libs/tools/**"
   workflow_dispatch:
 
 concurrency:
