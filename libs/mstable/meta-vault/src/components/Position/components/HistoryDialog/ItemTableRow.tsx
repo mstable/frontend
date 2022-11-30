@@ -59,21 +59,21 @@ export const ItemTableRow = ({ tx }: { tx: TxHistory }) => {
               sx={{ height: 14, width: 14, mr: 1 }}
             />
             <Typography variant="value5">
-              {intl.formatNumber(
+              {`${intl.formatNumber(
                 new BigDecimal(
                   tx.assetAmount ?? constants.Zero,
                   assetToken?.decimals,
                 ).simple,
-              )}{' '}
-              {assetToken?.symbol}
+              )} ${assetToken?.symbol}`}
             </Typography>
           </Box>
           <Typography variant="value5" color="text.secondary">
-            {intl.formatNumber(
-              new BigDecimal(tx.shareAmount ?? constants.Zero, mvToken.decimals)
-                .simple,
-            )}{' '}
-            {intl.formatMessage({ defaultMessage: 'Shares' })}
+            {`${intl.formatNumber(
+              new BigDecimal(
+                tx.shareAmount ?? constants.Zero,
+                mvToken?.decimals,
+              ).simple,
+            )} ${intl.formatMessage({ defaultMessage: 'Shares' })}`}
           </Typography>
         </Box>
       </TableCell>

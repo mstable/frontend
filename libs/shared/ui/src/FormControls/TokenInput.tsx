@@ -12,7 +12,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { Vault, Wallet } from 'phosphor-react';
+import { Vault, Wallet, Warning } from 'phosphor-react';
 import { range } from 'ramda';
 import { useIntl } from 'react-intl';
 
@@ -218,7 +218,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
                   onClick={handlePercentageChange(n)}
                   value={n}
                   key={`percent-${n}`}
-                  disabled={disabled || isLoading}
+                  disabled={disabled || isLoading || max?.exact.isZero()}
                   sx={{
                     ...(n === percentage && {
                       color: 'primary.main',
@@ -237,39 +237,66 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
                 </PercentageButton>
               ))}
             </Stack>
-            {isConnected && max ? (
-              <Stack
-                direction="row"
-                alignItems="center"
-                spacing={0.5}
-                overflow="hidden"
-              >
-                {maxIcon === 'wallet' ? (
-                  <Wallet
-                    weight="fill"
-                    width={16}
-                    height={16}
-                    color={theme.palette.icons.color}
-                  />
-                ) : (
-                  <Vault
-                    weight="fill"
-                    width={16}
-                    height={16}
-                    color={theme.palette.icons.color}
-                  />
-                )}
-                <Typography
-                  variant="value6"
-                  sx={{
-                    ...maxStyles,
-                    color: 'text.secondary',
-                  }}
-                  noWrap
+            {isConnected ? (
+              !max?.exact || max.exact.isZero() ? (
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={0.5}
+                  overflow="hidden"
                 >
-                  {max.format(2)}
-                </Typography>
-              </Stack>
+                  <Warning
+                    weight="fill"
+                    width={16}
+                    height={16}
+                    color={theme.palette.icons.color}
+                  />
+
+                  <Typography
+                    variant="value6"
+                    sx={{
+                      ...maxStyles,
+                      color: 'text.secondary',
+                    }}
+                    noWrap
+                  >
+                    {intl.formatMessage({ defaultMessage: 'No balance' })}
+                  </Typography>
+                </Stack>
+              ) : (
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={0.5}
+                  overflow="hidden"
+                >
+                  {maxIcon === 'wallet' ? (
+                    <Wallet
+                      weight="fill"
+                      width={16}
+                      height={16}
+                      color={theme.palette.icons.color}
+                    />
+                  ) : (
+                    <Vault
+                      weight="fill"
+                      width={16}
+                      height={16}
+                      color={theme.palette.icons.color}
+                    />
+                  )}
+                  <Typography
+                    variant="value6"
+                    sx={{
+                      ...maxStyles,
+                      color: 'text.secondary',
+                    }}
+                    noWrap
+                  >
+                    {max.format(2)}
+                  </Typography>
+                </Stack>
+              )
             ) : (
               <Typography
                 variant="value6"

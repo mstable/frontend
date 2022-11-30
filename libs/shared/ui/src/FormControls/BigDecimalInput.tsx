@@ -80,10 +80,10 @@ export const BigDecimalInput = forwardRef<
             inputRef={ref}
             value={val}
             onChange={handleChange}
-            inputMode="numeric"
             componentsProps={{
               input: {
                 pattern: `[0-9]*(.[0-9]{0,2})`,
+                inputMode: 'numeric',
               },
             }}
             sx={{ typography: 'value1', ...InputProps?.sx }}

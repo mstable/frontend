@@ -6,5 +6,7 @@ export const plausible = Plausible({
 
 export const registerPlausible = () => {
   plausible.enableAutoPageviews();
-  plausible.enableAutoOutboundTracking();
+  // this breaks all external links by attaching an event listener to all a tags
+  // TODO needs a cleanup function
+  // plausible.enableAutoOutboundTracking();
 };

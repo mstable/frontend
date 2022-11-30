@@ -52,7 +52,7 @@ export const Footer = (props: StackProps) => {
     >
       <Typography>
         {intl.formatMessage({
-          defaultMessage: '<strong>Meta Vaults</strong> by mStable',
+          defaultMessage: '<strong>Yield app</strong> by mStable',
         })}
       </Typography>
       <Stack
@@ -68,6 +68,7 @@ export const Footer = (props: StackProps) => {
             key={social.title}
             href={social.href}
             target="_blank"
+            rel="noopener noreferrer"
           >
             {social.icon}
           </IconButton>

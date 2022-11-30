@@ -5,7 +5,13 @@ import { constants } from 'ethers';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { useDebounce } from 'react-use';
-import { erc20ABI, erc4626ABI, useAccount, useContractRead } from 'wagmi';
+import {
+  erc20ABI,
+  erc4626ABI,
+  useAccount,
+  useContractRead,
+  useNetwork,
+} from 'wagmi';
 
 import { useMetavault } from '../../state';
 
@@ -51,6 +57,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   Dispatch<SetStateAction<OperationsState>>,
   Children
 >(() => {
+  const { chain } = useNetwork();
   const { address: walletAddress, isConnected } = useAccount();
   const {
     metavault: { address },
@@ -213,6 +220,10 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     DEBOUNCE_TIME,
     [amount, operation, fetchPreview],
   );
+
+  useEffect(() => {
+    setState(initialState);
+  }, [walletAddress, chain?.id]);
 
   return [state, setState];
 });

@@ -1,3 +1,4 @@
+export * from './components/backgrounds';
 export * from './components/chains';
 export * from './components/meta-vaults';
 export * from './components/mstable';

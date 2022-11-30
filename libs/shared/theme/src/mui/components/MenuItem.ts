@@ -10,10 +10,16 @@ export const getMenuItem = (base: Theme): ThemeOptions => ({
           minHeight: '48px',
           ...base.typography.hint,
           '&.Mui-Selected': {
-            backgroundColor: base.palette.grey[100],
+            backgroundColor:
+              base.palette.mode === 'light'
+                ? base.palette.grey[100]
+                : base.palette.grey[800],
           },
           '&:hover': {
-            backgroundColor: base.palette.grey[200],
+            backgroundColor:
+              base.palette.mode === 'light'
+                ? base.palette.grey[200]
+                : base.palette.grey[700],
           },
           '.MuiAvatar-root': {
             height: '40px',

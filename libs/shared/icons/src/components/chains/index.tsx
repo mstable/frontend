@@ -5,6 +5,7 @@ import { ReactComponent as EthIconSvg } from './Ethereum.svg';
 import { ReactComponent as NightfallSvg } from './Nightfall.svg';
 import { ReactComponent as OptimismSvg } from './Optimism.svg';
 import { ReactComponent as PolygonSvg } from './Polygon.svg';
+import { ReactComponent as TestnetSvg } from './Testnet.svg';
 import { ReactComponent as ZkSvg } from './Zk.svg';
 
 import type { SvgIconProps } from '@mui/material';
@@ -27,6 +28,9 @@ export const Optimism = (props: SvgIconProps) => (
 );
 export const Polygon = (props: SvgIconProps) => (
   <SvgIcon {...props} component={PolygonSvg} viewBox="0 0 100 100" />
+);
+export const Testnet = (props: SvgIconProps) => (
+  <SvgIcon {...props} component={TestnetSvg} viewBox="0 0 24 24" />
 );
 export const Zk = (props: SvgIconProps) => (
   <SvgIcon {...props} component={ZkSvg} viewBox="0 0 500 500" />
