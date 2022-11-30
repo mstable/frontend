@@ -5,6 +5,12 @@
       "value": "Claim CVX & CRV"
     }
   ],
+  "+k7bPd": [
+    {
+      "type": 0,
+      "value": "The selected network is not supported by this application."
+    }
+  ],
   "+vVZ/G": [
     {
       "type": 0,
@@ -33,6 +39,12 @@
     {
       "type": 1,
       "value": "asset"
+    }
+  ],
+  "/p1GSi": [
+    {
+      "type": 0,
+      "value": "Check connectivity"
     }
   ],
   "0NMLMN": [
@@ -67,6 +79,12 @@
       "value": "Expand"
     }
   ],
+  "1O5/yX": [
+    {
+      "type": 0,
+      "value": "Make sure your wallet is on Ethereum Mainet network."
+    }
+  ],
   "1XVJUl": [
     {
       "type": 0,
@@ -87,20 +105,6 @@
     {
       "type": 0,
       "value": "Transaction Cancelled"
-    }
-  ],
-  "2HXpSy": [
-    {
-      "type": 0,
-      "value": "This application does not support the Meta Vault "
-    },
-    {
-      "type": 1,
-      "value": "mvid"
-    },
-    {
-      "type": 0,
-      "value": ", pick one from our list."
     }
   ],
   "2JVe1j": [
@@ -151,6 +155,12 @@
     {
       "type": 0,
       "value": "Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost."
+    }
+  ],
+  "2zD+V+": [
+    {
+      "type": 0,
+      "value": "Wrong network selected"
     }
   ],
   "3Dvp3q": [
@@ -219,10 +229,28 @@
       "value": "Protocols Involved"
     }
   ],
+  "6GZbSi": [
+    {
+      "type": 0,
+      "value": "The selected network is not supported by the application."
+    }
+  ],
+  "6OuLVd": [
+    {
+      "type": 0,
+      "value": "Tips"
+    }
+  ],
   "6bJGds": [
     {
       "type": 0,
       "value": "1W"
+    }
+  ],
+  "6z2ptx": [
+    {
+      "type": 0,
+      "value": "Want to use a testnet?"
     }
   ],
   "7CAm2s": [
@@ -323,16 +351,10 @@
       "value": "Discord support channel"
     }
   ],
-  "9tWILK": [
+  "Ar5obI": [
     {
       "type": 0,
-      "value": "Unsupported Meta Vault"
-    }
-  ],
-  "AebVks": [
-    {
-      "type": 0,
-      "value": "There was an error while loading this page, you can try to reload."
+      "value": "No balance"
     }
   ],
   "AxDOiG": [
@@ -397,6 +419,12 @@
       "value": "The Strategy uses Curves 3CRV Pools and Factory pools. The strategy is exposed to the risk of the Curve smart contracts."
     }
   ],
+  "DRXWXB": [
+    {
+      "type": 0,
+      "value": "404"
+    }
+  ],
   "DUR59o": [
     {
       "type": 0,
@@ -407,6 +435,22 @@
     {
       "type": 0,
       "value": "LP Position"
+    }
+  ],
+  "EhET/Q": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Yield app"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " by mStable"
     }
   ],
   "EibIVS": [
@@ -457,6 +501,12 @@
       "value": "USDC"
     }
   ],
+  "IdL95F": [
+    {
+      "type": 0,
+      "value": "Make sure you are on the right URL."
+    }
+  ],
   "Imiiiv": [
     {
       "type": 0,
@@ -473,22 +523,6 @@
     {
       "type": 0,
       "value": "Years"
-    }
-  ],
-  "JsHYR9": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Meta Vaults"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " by mStable"
     }
   ],
   "KJBr2Z": [
@@ -531,6 +565,12 @@
     {
       "type": 0,
       "value": "The Strategy uses Meta Vault and Vault contracts and combines and wraps the underlying strategies into one contract."
+    }
+  ],
+  "MSTVqC": [
+    {
+      "type": 0,
+      "value": "Reload Page"
     }
   ],
   "MgN8gK": [
@@ -609,18 +649,10 @@
       "value": "The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded."
     }
   ],
-  "R5x4Vk": [
+  "RnacAD": [
     {
       "type": 0,
-      "value": "The selected network is not supported by the application. You can either switch your wallet or reset to "
-    },
-    {
-      "type": 1,
-      "value": "defaultChain"
-    },
-    {
-      "type": 0,
-      "value": "."
+      "value": "Make sure your internet connection is working."
     }
   ],
   "SKB/G9": [
@@ -633,6 +665,12 @@
     {
       "type": 0,
       "value": "Meta Vaults"
+    }
+  ],
+  "STj9QY": [
+    {
+      "type": 0,
+      "value": "Oops, something went wrong."
     }
   ],
   "T3hbuQ": [
@@ -771,6 +809,12 @@
     {
       "type": 0,
       "value": "Redeem"
+    }
+  ],
+  "XYEIBG": [
+    {
+      "type": 0,
+      "value": "App supports Goerli Testnet."
     }
   ],
   "YC/ZXg": [
@@ -1157,12 +1201,6 @@
       "value": "Visualize strategy"
     }
   ],
-  "vHwp5J": [
-    {
-      "type": 0,
-      "value": "Explore Meta Vaults"
-    }
-  ],
   "vS/YSY": [
     {
       "type": 0,
@@ -1175,24 +1213,16 @@
       "value": "Sign Transaction"
     }
   ],
-  "w4Oc4e": [
-    {
-      "type": 0,
-      "value": "The selected network is not supported by this application, why not try "
-    },
-    {
-      "type": 1,
-      "value": "defaultChain"
-    },
-    {
-      "type": 0,
-      "value": "?"
-    }
-  ],
   "wqlXwW": [
     {
       "type": 0,
       "value": "Wrong Network"
+    }
+  ],
+  "y1NA43": [
+    {
+      "type": 0,
+      "value": "Check URL"
     }
   ],
   "yuiyES": [
