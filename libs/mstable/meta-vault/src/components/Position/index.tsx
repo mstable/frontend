@@ -64,12 +64,9 @@ export const PositionContent = () => {
             value={mvBalanceInAsset}
             suffix={assetToken?.symbol}
             commas
-            color={isConnected ? undefined : 'grey.300'}
+            color="text.secondary"
           />
-          <Typography
-            variant="value5"
-            color={isConnected ? 'text.secondary' : 'grey.300'}
-          >
+          <Typography variant="value5" color="text.secondary">
             {intl.formatMessage(
               { defaultMessage: '{val} Shares' },
               { val: mvBalance?.format() ?? '0.00' },
@@ -106,15 +103,12 @@ export const PositionContent = () => {
                 ? profitOrLoss.simpleRounded >= 0
                   ? 'success.main'
                   : 'error.main'
-                : 'grey.300'
+                : 'text.secondary'
             }
           >
             {`${profitOrLoss?.format() ?? '0.00'} ${assetToken?.symbol || ''}`}
           </Typography>
-          <Typography
-            variant="value5"
-            color={isConnected ? 'text.secondary' : 'grey.300'}
-          >
+          <Typography variant="value5" color="text.secondary">
             {intl.formatMessage(
               { defaultMessage: '{roi}% ROI' },
               {
