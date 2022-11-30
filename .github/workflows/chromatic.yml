@@ -3,7 +3,7 @@ name: Publish Chromatic
 on:
   pull_request:
     branches:
-      - "dev"
+      - main
       - "!dependabot/**"
     paths:
       - ".github/workflows/chromatic.yml"
