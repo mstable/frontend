@@ -5,12 +5,8 @@ on:
     branches:
       - main
     tags:
-      - "v*.*.*"
+      - "v*"
   workflow_dispatch:
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
