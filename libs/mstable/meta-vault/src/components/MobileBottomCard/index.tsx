@@ -46,6 +46,7 @@ export const MobileBottomCard = () => {
             <PositionContent />
             <Stack direction="row" spacing={2} mb={1}>
               <Button
+                fullWidth
                 variant="outlined"
                 color="secondary"
                 startIcon={<Receipt weight="fill" size={14} />}
