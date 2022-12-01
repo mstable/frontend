@@ -16,13 +16,6 @@ export const UnsupportedMvPage = () => {
           <Button component={RouterLink} to="/" color="secondary">
             {intl.formatMessage({ defaultMessage: 'Back' })}
           </Button>
-          <Button
-            onClick={() => {
-              window.location.reload();
-            }}
-          >
-            {intl.formatMessage({ defaultMessage: 'Reload Page' })}
-          </Button>
         </Stack>
       }
     />
