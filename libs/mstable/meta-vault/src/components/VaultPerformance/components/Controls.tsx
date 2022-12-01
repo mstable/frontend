@@ -24,23 +24,25 @@ export const Controls = (props: BoxProps) => {
   return (
     <Box {...props} display="flex" justifyContent="space-between" mb={3}>
       <Select value={chartType}>
-        {Object.values(chartTypes).map((c) => (
-          <MenuItem
-            key={c.id}
-            value={c.id}
-            sx={{ px: 2 }}
-            onClick={() => {
-              navigate({
-                replace: true,
-                search: produce((draft) => {
-                  draft.chartType = c.id;
-                }),
-              });
-            }}
-          >
-            {c.label}
-          </MenuItem>
-        ))}
+        {Object.entries(chartTypes)
+          .filter(([k]) => k !== 'APY')
+          .map(([_, c]) => (
+            <MenuItem
+              key={c.id}
+              value={c.id}
+              sx={{ px: 2 }}
+              onClick={() => {
+                navigate({
+                  replace: true,
+                  search: produce((draft) => {
+                    draft.chartType = c.id;
+                  }),
+                });
+              }}
+            >
+              {c.label}
+            </MenuItem>
+          ))}
       </Select>
       <ButtonGroup color="secondary" size="small">
         {Object.values(chartTimeframes).map((c) => (

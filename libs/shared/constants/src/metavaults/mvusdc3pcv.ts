@@ -75,7 +75,7 @@ const mainnet: Metavault = {
     withdraw: 500000,
   },
   featured: true,
-  firstBlock: 15890000,
+  firstBlock: 15946291,
 };
 
 const goerli: Metavault = {
