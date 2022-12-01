@@ -1,0 +1,44 @@
+{
+  "name": "shared-analytics",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/analytics/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/analytics",
+        "tsConfig": "libs/shared/analytics/tsconfig.lib.json",
+        "project": "libs/shared/analytics/package.json",
+        "entryFile": "libs/shared/analytics/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "rollup.config.js",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "libs/shared/analytics/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/shared/analytics/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "i18n-extract": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "yarn run formatjs extract 'libs/shared/analytics/**/*.{ts,tsx}' --out-file i18n-extractions/libs-shared-analytics.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+        ]
+      }
+    }
+  }
+}
