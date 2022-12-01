@@ -80,9 +80,6 @@
   "9ALsvc": {
     "defaultMessage": "Approval Cost"
   },
-  "9Q2RoH": {
-    "defaultMessage": "Profit or Losses accumulated since deposit. Flactuations possible due to liquidity provision position."
-  },
   "9RAHhM": {
     "defaultMessage": "Strategy & Risks"
   },
@@ -142,6 +139,9 @@
   },
   "LiHQih": {
     "defaultMessage": "Coming Soon"
+  },
+  "MLTKb6": {
+    "defaultMessage": "APY"
   },
   "MMRXim": {
     "defaultMessage": "Make a Deposit"
@@ -274,6 +274,9 @@
   },
   "erCS/d": {
     "defaultMessage": "Gas fee estimation is based on the current gas price and average gas used"
+  },
+  "eyJuTX": {
+    "defaultMessage": "Profit or Losses accumulated since deposit. Fluctuations possible due to liquidity provision position."
   },
   "fJjSsb": {
     "defaultMessage": "Performance Fee"
