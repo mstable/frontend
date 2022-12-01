@@ -7,6 +7,8 @@ import { Box, useTheme } from '@mui/material';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { WagmiConfig } from 'wagmi';
 
+import { ChainRefresherProvider } from './ChainRefresherProvider';
+
 import type { Children } from '@frontend/shared-utils';
 import type { BoxProps } from '@mui/material';
 import type { Chain, Client } from 'wagmi';
@@ -48,6 +50,7 @@ export const WagmiProvider = ({
           theme: mode === 'dark' ? rbkDarkTheme : rbkLightTheme,
         },
       ],
+      [ChainRefresherProvider],
     ],
     children,
   );
