@@ -89,7 +89,7 @@ export const PositionContent = () => {
             size={14}
             label={intl.formatMessage({
               defaultMessage:
-                'Profit or Losses accumulated since deposit. Flactuations possible due to liquidity provision position.',
+                'Profit or Losses accumulated since deposit. Fluctuations possible due to liquidity provision position.',
             })}
             color="text.secondary"
             variant="exclamation"

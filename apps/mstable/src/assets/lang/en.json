@@ -327,12 +327,6 @@
       "value": "Approval Cost"
     }
   ],
-  "9Q2RoH": [
-    {
-      "type": 0,
-      "value": "Profit or Losses accumulated since deposit. Flactuations possible due to liquidity provision position."
-    }
-  ],
   "9RAHhM": [
     {
       "type": 0,
@@ -553,6 +547,12 @@
     {
       "type": 0,
       "value": "Coming Soon"
+    }
+  ],
+  "MLTKb6": [
+    {
+      "type": 0,
+      "value": "APY"
     }
   ],
   "MMRXim": [
@@ -961,6 +961,12 @@
     {
       "type": 0,
       "value": "Gas fee estimation is based on the current gas price and average gas used"
+    }
+  ],
+  "eyJuTX": [
+    {
+      "type": 0,
+      "value": "Profit or Losses accumulated since deposit. Fluctuations possible due to liquidity provision position."
     }
   ],
   "f4vYF8": [
