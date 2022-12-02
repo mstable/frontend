@@ -8,6 +8,7 @@
     "mstable-settings": "libs/mstable/settings",
     "mstable-shared-data-access": "libs/mstable/shared/data-access",
     "mstable-shared-ui": "libs/mstable/shared/ui",
+    "shared-analytics": "libs/shared/analytics",
     "shared-constants": "libs/shared/constants",
     "shared-gas-fee": "libs/shared/gas-fee",
     "shared-i18n": "libs/shared/i18n",

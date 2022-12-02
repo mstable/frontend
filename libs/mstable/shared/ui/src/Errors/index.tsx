@@ -1,14 +1,55 @@
+import { useEffect } from 'react';
+
+import { useTrack } from '@frontend/shared-analytics';
 import { ErrorPage, NetworkTips, RouterLink } from '@frontend/shared-ui';
+import { ErrorCard } from '@frontend/shared-ui';
 import { OpenNetworkModalButton } from '@frontend/shared-wagmi';
 import { Button, Stack } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useNetwork, useSwitchNetwork } from 'wagmi';
 
+import type { ErrorCardProps, ErrorPageProps } from '@frontend/shared-ui';
+import type { EventOptions } from 'plausible-tracker';
+
+export type ErrorCardWithMessageProps = {
+  errorProps?: EventOptions['props'];
+} & ErrorCardProps;
+
+export const ErrorCardWithMessage = ({
+  errorProps,
+  ...rest
+}: ErrorCardWithMessageProps) => {
+  const track = useTrack();
+
+  useEffect(() => {
+    track('error', errorProps);
+  }, [errorProps, track]);
+
+  return <ErrorCard {...rest} />;
+};
+
+export type ErrorPageWithMessageProps = {
+  errorProps?: EventOptions['props'];
+} & ErrorPageProps;
+
+export const ErrorPageWithMessage = ({
+  errorProps,
+  ...rest
+}: ErrorPageWithMessageProps) => {
+  const track = useTrack();
+
+  useEffect(() => {
+    track('error', errorProps);
+  }, [errorProps, track]);
+
+  return <ErrorPage {...rest} />;
+};
+
 export const UnsupportedMvPage = () => {
   const intl = useIntl();
 
   return (
-    <ErrorPage
+    <ErrorPageWithMessage
       hideSupport
       title={intl.formatMessage({ defaultMessage: '404' })}
       message={
@@ -16,26 +57,20 @@ export const UnsupportedMvPage = () => {
           <Button component={RouterLink} to="/" color="secondary">
             {intl.formatMessage({ defaultMessage: 'Back' })}
           </Button>
-          <Button
-            onClick={() => {
-              window.location.reload();
-            }}
-          >
-            {intl.formatMessage({ defaultMessage: 'Reload Page' })}
-          </Button>
         </Stack>
       }
+      errorProps={{ name: 'Unsupported Meta Vault' }}
     />
   );
 };
 
 export const WrongNetworkPage = () => {
   const intl = useIntl();
-  const { chains } = useNetwork();
+  const { chains, chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
 
   return (
-    <ErrorPage
+    <ErrorPageWithMessage
       hideSupport
       title={intl.formatMessage({ defaultMessage: 'Unsupported Network' })}
       subtitle={intl.formatMessage(
@@ -69,6 +104,7 @@ export const WrongNetworkPage = () => {
         </Stack>
       }
       tips={<NetworkTips />}
+      errorProps={{ name: 'Unsupported Network', chain: chain?.id }}
     />
   );
 };

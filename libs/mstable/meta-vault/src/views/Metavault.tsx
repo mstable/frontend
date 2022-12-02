@@ -1,11 +1,12 @@
 import { useEffect, useMemo } from 'react';
 
 import {
+  ErrorCardWithMessage,
   UnsupportedMvPage,
   useTransitionBackgroundColor,
 } from '@frontend/mstable-shared-ui';
 import { supportedMetavaults } from '@frontend/shared-constants';
-import { ErrorBoundary, ErrorCard, MVIcon } from '@frontend/shared-ui';
+import { ErrorBoundary, MVIcon } from '@frontend/shared-ui';
 import { Button, Grid, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
@@ -69,16 +70,33 @@ export const Metavault = () => {
           address={metavault.address}
           sx={{ height: 64, width: 64, mb: 2 }}
         />
-        <ErrorBoundary ErrorComponent={<ErrorCard sx={{ py: 8 }} />}>
+        <ErrorBoundary
+          ErrorComponent={
+            <ErrorCardWithMessage
+              sx={{ py: 8 }}
+              errorProps={{ name: 'Vault Jumbo' }}
+            />
+          }
+        >
           <VaultJumbo pb={8} />
         </ErrorBoundary>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
             <Stack direction="column" spacing={2}>
-              <ErrorBoundary>
+              <ErrorBoundary
+                ErrorComponent={
+                  <ErrorCardWithMessage
+                    errorProps={{ name: 'Vault Performance' }}
+                  />
+                }
+              >
                 <VaultPerformance />
               </ErrorBoundary>
-              <ErrorBoundary>
+              <ErrorBoundary
+                ErrorComponent={
+                  <ErrorCardWithMessage errorProps={{ name: 'Strategy' }} />
+                }
+              >
                 <Strategy />
               </ErrorBoundary>
             </Stack>
@@ -86,10 +104,18 @@ export const Metavault = () => {
           {!isMobile && (
             <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
               <Stack direction="column" spacing={2}>
-                <ErrorBoundary>
+                <ErrorBoundary
+                  ErrorComponent={
+                    <ErrorCardWithMessage errorProps={{ name: 'Position' }} />
+                  }
+                >
                   <Position />
                 </ErrorBoundary>
-                <ErrorBoundary>
+                <ErrorBoundary
+                  ErrorComponent={
+                    <ErrorCardWithMessage errorProps={{ name: 'Operations' }} />
+                  }
+                >
                   <Operations />
                 </ErrorBoundary>
               </Stack>

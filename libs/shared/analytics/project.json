@@ -1,27 +1,24 @@
 {
+  "name": "shared-analytics",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/shared/constants/src",
+  "sourceRoot": "libs/shared/analytics/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "inputs": [
-        { "env": "NX_THE_GRAPH_MV_MAINNET_URL" },
-        { "env": "NX_THE_GRAPH_MV_GOERLI_URL" }
-      ],
       "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/shared/constants",
-        "tsConfig": "libs/shared/constants/tsconfig.lib.json",
-        "project": "libs/shared/constants/package.json",
-        "entryFile": "libs/shared/constants/src/index.ts",
+        "outputPath": "dist/libs/shared/analytics",
+        "tsConfig": "libs/shared/analytics/tsconfig.lib.json",
+        "project": "libs/shared/analytics/package.json",
+        "entryFile": "libs/shared/analytics/src/index.ts",
         "external": ["react/jsx-runtime"],
         "rollupConfig": "rollup.config.js",
         "compiler": "babel",
         "assets": [
           {
-            "glob": "libs/shared/constants/README.md",
+            "glob": "libs/shared/analytics/README.md",
             "input": ".",
             "output": "."
           }
@@ -32,14 +29,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/shared/constants/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/shared/analytics/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "i18n-extract": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "yarn run formatjs extract 'libs/shared/constants/**/*.{ts,tsx}' --out-file i18n-extractions/libs-shared-constants.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+          "yarn run formatjs extract 'libs/shared/analytics/**/*.{ts,tsx}' --out-file i18n-extractions/libs-shared-analytics.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
         ]
       }
     }

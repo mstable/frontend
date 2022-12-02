@@ -170,10 +170,9 @@ export const Position = () => {
         open={isYieldCalculatorOpen}
         onClose={() => setIsYieldCalculatorOpen(false)}
       /> */}
-      <HistoryDialog
-        open={isHistoryDialogOpen}
-        onClose={() => setIsHistoryDialogOpen(false)}
-      />
+      {isHistoryDialogOpen && (
+        <HistoryDialog onClose={() => setIsHistoryDialogOpen(false)} />
+      )}
     </>
   );
 };

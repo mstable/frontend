@@ -129,12 +129,13 @@ export const Strategy = () => {
           </Stack>
         </CardContent>
       </Card>
-      <StrategyStepperDialog
-        open={showStrategy}
-        onClose={() => {
-          setShowStrategy(false);
-        }}
-      />
+      {showStrategy && (
+        <StrategyStepperDialog
+          onClose={() => {
+            setShowStrategy(false);
+          }}
+        />
+      )}
     </>
   );
 };

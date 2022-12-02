@@ -23,6 +23,7 @@
         "libs/mstable/shared/data-access/src/index.ts"
       ],
       "@frontend/mstable-shared-ui": ["libs/mstable/shared/ui/src/index.ts"],
+      "@frontend/shared-analytics": ["libs/shared/analytics/src/index.ts"],
       "@frontend/shared-constants": ["libs/shared/constants/src/index.ts"],
       "@frontend/shared-gas-fee": ["libs/shared/gas-fee/src/index.ts"],
       "@frontend/shared-i18n": ["libs/shared/i18n/src/index.ts"],

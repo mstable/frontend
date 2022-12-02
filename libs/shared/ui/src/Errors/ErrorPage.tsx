@@ -1,5 +1,5 @@
 import { DISCORD_SUPPORT } from '@frontend/shared-constants';
-import { Link, Stack, Typography } from '@mui/material';
+import { Button, Link, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import { ConnectionTips } from './ErrorTips';
@@ -57,27 +57,36 @@ export const ErrorPage = ({
         </Typography>
         {message}
         {!hideSupport && (
-          <Typography variant="label2">
-            {intl.formatMessage(
-              {
-                defaultMessage:
-                  'If the problem persists, you can contact us through our {support}.',
-              },
-              {
-                support: (
-                  <Link
-                    href={DISCORD_SUPPORT}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {intl.formatMessage({
-                      defaultMessage: 'Discord support channel',
-                    })}
-                  </Link>
-                ),
-              },
-            )}
-          </Typography>
+          <Stack direction="column" spacing={4} alignItems="flex-start">
+            <Typography variant="label2">
+              {intl.formatMessage(
+                {
+                  defaultMessage:
+                    'If the problem persists, you can contact us through our {support}.',
+                },
+                {
+                  support: (
+                    <Link
+                      href={DISCORD_SUPPORT}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {intl.formatMessage({
+                        defaultMessage: 'Discord support channel',
+                      })}
+                    </Link>
+                  ),
+                },
+              )}
+            </Typography>
+            <Button
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              {intl.formatMessage({ defaultMessage: 'Reload Page' })}
+            </Button>
+          </Stack>
         )}
       </Stack>
       <Stack direction="column" width={1 / 2} p={4}>

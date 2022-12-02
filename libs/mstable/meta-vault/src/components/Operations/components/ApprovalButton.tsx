@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { useSettings } from '@frontend/mstable-settings';
+import { useTrack } from '@frontend/shared-analytics';
 import { usePushNotification } from '@frontend/shared-notifications';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { Button, CircularProgress } from '@mui/material';
@@ -28,6 +29,7 @@ const buttonProps: ButtonProps = {
 
 export const ApprovalButton = (props: ButtonProps) => {
   const intl = useIntl();
+  const track = useTrack();
   const { chain } = useNetwork();
   const pushNotification = usePushNotification();
   const { exactApproval } = useSettings();
@@ -83,23 +85,47 @@ export const ApprovalButton = (props: ButtonProps) => {
   const { isSuccess: isWaitSuccess, isLoading: isWaitLoading } =
     useWaitForTransaction({
       hash: approveData?.hash,
-      onSettled: (data, error) => {
-        setIsSubmitLoading(false);
+      onSuccess: ({ transactionHash, from, to, blockNumber }) => {
         pushNotification({
-          title: error
-            ? intl.formatMessage({ defaultMessage: 'Transaction Error' })
-            : intl.formatMessage({ defaultMessage: 'Transaction Confirmed' }),
+          title: intl.formatMessage({
+            defaultMessage: 'Transaction Confirmed',
+          }),
           content: (
             <ViewEtherscanLink
-              hash={error ? approveData?.hash : data?.transactionHash}
+              hash={transactionHash}
               blockExplorer={
                 chain?.blockExplorers?.etherscan ??
                 etherscanBlockExplorers.mainnet
               }
             />
           ),
-          severity: error ? 'error' : 'success',
+          severity: 'success',
         });
+        track('approve', {
+          transactionHash,
+          from,
+          to,
+          blockNumber,
+          chain: chain?.id,
+        });
+      },
+      onError: () => {
+        pushNotification({
+          title: intl.formatMessage({ defaultMessage: 'Transaction Error' }),
+          content: (
+            <ViewEtherscanLink
+              hash={approveData?.hash}
+              blockExplorer={
+                chain?.blockExplorers?.etherscan ??
+                etherscanBlockExplorers.mainnet
+              }
+            />
+          ),
+          severity: 'error',
+        });
+      },
+      onSettled: () => {
+        setIsSubmitLoading(false);
       },
     });
 
