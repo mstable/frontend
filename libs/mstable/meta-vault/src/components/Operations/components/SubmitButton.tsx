@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { useTrack } from '@frontend/shared-analytics';
 import { usePushNotification } from '@frontend/shared-notifications';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { OpenAccountModalButton } from '@frontend/shared-wagmi';
@@ -26,6 +27,7 @@ const buttonProps: ButtonProps = {
 
 export const SubmitButton = () => {
   const intl = useIntl();
+  const track = useTrack();
   const { chain } = useNetwork();
   const pushNotification = usePushNotification();
   const { address: walletAddress } = useAccount();
@@ -100,24 +102,46 @@ export const SubmitButton = () => {
   });
   const { isSuccess: isSubmitSuccess } = useWaitForTransaction({
     hash: submitData?.hash,
-    onSettled: (data, error) => {
-      reset();
-      setIsSubmitLoading(false);
+    onSuccess: ({ blockNumber, transactionHash, from, to }) => {
       pushNotification({
-        title: error
-          ? intl.formatMessage({ defaultMessage: 'Transaction Error' })
-          : intl.formatMessage({ defaultMessage: 'Transaction Confirmed' }),
+        title: intl.formatMessage({ defaultMessage: 'Transaction Confirmed' }),
         content: (
           <ViewEtherscanLink
-            hash={error ? submitData?.hash : data?.transactionHash}
+            hash={transactionHash}
             blockExplorer={
               chain?.blockExplorers?.etherscan ??
               etherscanBlockExplorers.mainnet
             }
           />
         ),
-        severity: error ? 'error' : 'success',
+        severity: 'success',
       });
+      track(tab === 0 ? 'deposit' : 'withdraw', {
+        blockNumber,
+        transactionHash,
+        from,
+        to,
+        chain: chain?.id,
+      });
+    },
+    onError: () => {
+      pushNotification({
+        title: intl.formatMessage({ defaultMessage: 'Transaction Error' }),
+        content: (
+          <ViewEtherscanLink
+            hash={submitData?.hash}
+            blockExplorer={
+              chain?.blockExplorers?.etherscan ??
+              etherscanBlockExplorers.mainnet
+            }
+          />
+        ),
+        severity: 'error',
+      });
+    },
+    onSettled: () => {
+      reset();
+      setIsSubmitLoading(false);
     },
   });
 

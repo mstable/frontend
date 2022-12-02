@@ -8,6 +8,7 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { WagmiConfig } from 'wagmi';
 
 import { ChainRefresherProvider } from './ChainRefresherProvider';
+import { WalletAnalyticsProvider } from './WalletAnalyticsProvider';
 
 import type { Children } from '@frontend/shared-utils';
 import type { BoxProps } from '@mui/material';
@@ -51,6 +52,7 @@ export const WagmiProvider = ({
         },
       ],
       [ChainRefresherProvider],
+      [WalletAnalyticsProvider],
     ],
     children,
   );

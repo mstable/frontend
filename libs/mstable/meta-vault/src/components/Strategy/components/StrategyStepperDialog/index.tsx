@@ -1,9 +1,11 @@
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 
+import { useTrack } from '@frontend/shared-analytics';
 import { Dialog } from '@frontend/shared-ui';
 import { Button, Stack } from '@mui/material';
 import { ArrowLeft, ArrowRight } from 'phosphor-react';
 import { useIntl } from 'react-intl';
+import { useAccount } from 'wagmi';
 
 import { useSteps } from './hooks';
 import { Provider } from './state';
@@ -15,7 +17,7 @@ import { Withdraw } from './steps/Withdraw';
 import type { DialogProps } from '@frontend/shared-ui';
 import type { SxProps } from '@mui/material';
 
-type StrategyStepperDialogProps = Pick<DialogProps, 'open' | 'onClose'>;
+type StrategyStepperDialogProps = Pick<DialogProps, 'onClose'>;
 
 const actionButtonSx: SxProps = {
   minWidth: 200,
@@ -23,17 +25,22 @@ const actionButtonSx: SxProps = {
 
 const StrategyStepperDialogWrapped = (props: StrategyStepperDialogProps) => {
   const intl = useIntl();
+  const track = useTrack();
+  const { address } = useAccount();
   const { activeStep, handleNext, handlePrev, handleReset } = useSteps();
 
   useLayoutEffect(() => {
-    if (props.open) {
-      handleReset();
-    }
-  }, [handleReset, props.open]);
+    handleReset();
+  }, [handleReset]);
+
+  useEffect(() => {
+    track('view_strategy', { address: address ?? 'not_connected' });
+  }, [address, track]);
 
   return (
     <Dialog
       {...props}
+      open
       fullWidth
       maxWidth="lg"
       title={intl.formatMessage({ defaultMessage: 'Visualize strategy' })}

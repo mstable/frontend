@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
+
 import { useDataSource } from '@frontend/mstable-shared-data-access';
+import { useTrack } from '@frontend/shared-analytics';
 import { Dialog, Spinner } from '@frontend/shared-ui';
 import { isNilOrEmpty } from '@frontend/shared-utils';
 import {
@@ -12,40 +15,38 @@ import {
 } from '@mui/material';
 import { Tray } from 'phosphor-react';
 import { useIntl } from 'react-intl';
-import { useAccount } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 
 import { useUserTxHistoryQuery } from '../../../../queries.generated';
 import { useMetavault } from '../../../../state';
 import { ItemMobile } from './ItemMobile';
 import { ItemTableRow } from './ItemTableRow';
 
-export const HistoryDialog = ({
-  open,
-  onClose,
-}: {
-  open: boolean;
-  onClose: () => void;
-}) => {
+export const HistoryDialog = ({ onClose }: { onClose: () => void }) => {
   const intl = useIntl();
   const theme = useTheme();
+  const track = useTrack();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { chain } = useNetwork();
   const { metavault } = useMetavault();
   const { address } = useAccount();
   const dataSource = useDataSource();
-  const { data: txHistory, isLoading } = useUserTxHistoryQuery(
-    dataSource,
-    {
-      owner: address,
-      vault: metavault?.address,
-    },
-    {
-      enabled: open,
-    },
-  );
+  const { data: txHistory, isLoading } = useUserTxHistoryQuery(dataSource, {
+    owner: address,
+    vault: metavault?.address,
+  });
+
+  useEffect(() => {
+    track('view_tx_history', {
+      address,
+      metavault: metavault.id,
+      chain: chain?.id,
+    });
+  }, [address, chain?.id, metavault.id, track]);
 
   return (
     <Dialog
-      open={open}
+      open
       onClose={onClose}
       maxWidth="sm"
       fullWidth
