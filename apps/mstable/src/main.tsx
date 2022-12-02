@@ -17,7 +17,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import en from './assets/lang/en.json';
 import {
   chains,
-  plausible,
+  plausibleClient,
   reactLocationClient,
   reactQueryClient,
   wagmiClient,
@@ -32,7 +32,7 @@ root.render(
   composeContexts(
     [
       [StrictMode],
-      [AnalyticsProvider, { client: plausible }],
+      [AnalyticsProvider, { client: plausibleClient }],
       [QueryClientProvider, { client: reactQueryClient }],
       [I18nProvider, { messages: { en } }],
       [ThemeProvider],
