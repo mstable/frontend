@@ -5,6 +5,10 @@
   "tags": [],
   "targets": {
     "build": {
+      "inputs": [
+        { "env": "NX_THE_GRAPH_MV_MAINNET_URL" },
+        { "env": "NX_THE_GRAPH_MV_GOERLI_URL" }
+      ],
       "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
