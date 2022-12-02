@@ -1,5 +1,5 @@
-import { Topnav } from '@frontend/mstable-shared-ui';
-import { ErrorBoundary, ErrorPage } from '@frontend/shared-ui';
+import { ErrorPageWithMessage, Topnav } from '@frontend/mstable-shared-ui';
+import { ErrorBoundary } from '@frontend/shared-ui';
 import { useUnsupportedNetworks } from '@frontend/shared-wagmi';
 import { Stack } from '@mui/material';
 import { Outlet } from '@tanstack/react-location';
@@ -25,10 +25,11 @@ export const App = () => {
       <Topnav />
       <ErrorBoundary
         ErrorComponent={
-          <ErrorPage
+          <ErrorPageWithMessage
             height={1}
             width={1}
             sx={(theme) => theme.mixins.paddings.page}
+            errorProps={{ name: 'Unhandled Error Main Page' }}
           />
         }
       >

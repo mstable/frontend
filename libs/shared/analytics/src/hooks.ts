@@ -12,7 +12,11 @@ export const useTrack = () => {
 
   return useCallback(
     (goal: Goal, props?: EventOptions['props'], options?: PlausibleOptions) => {
-      trackEvent(goals[goal], { props: { ...props, timestamp: Date.now() } });
+      trackEvent(
+        goals[goal],
+        { props: { ...props, timestamp: Date.now() } },
+        options,
+      );
     },
     [trackEvent],
   );
