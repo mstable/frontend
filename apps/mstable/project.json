@@ -5,6 +5,10 @@
   "targets": {
     "build": {
       "executor": "@nrwl/web:webpack",
+      "inputs": [
+        { "env": "NX_THE_GRAPH_MV_MAINNET_URL" },
+        { "env": "NX_THE_GRAPH_MV_GOERLI_URL" }
+      ],
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "dependsOn": ["^build"],
