@@ -22,7 +22,11 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "inputs": [
+        { "env": "NX_THE_GRAPH_MV_MAINNET_URL" },
+        { "env": "NX_THE_GRAPH_MV_GOERLI_URL" }
+      ]
     }
   },
   "generators": {
