@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { CollapsibleSection } from '@frontend/shared-ui';
+import { DiagramStrategy } from '@frontend/mstable-shared-ui';
+import { CollapsibleSection, Dialog } from '@frontend/shared-ui';
 import {
   Button,
   Card,
@@ -15,7 +16,6 @@ import { useMetavault } from '../../state';
 import { Assets } from './components/Assets';
 import { Fees } from './components/Fees';
 import { Protocols } from './components/Protocols';
-import { StrategyStepperDialog } from './components/StrategyStepperDialog';
 import { Vaults } from './components/Vaults';
 
 import type { CollapsibleSectionProps } from '@frontend/shared-ui';
@@ -43,7 +43,7 @@ export const Strategy = () => {
   const intl = useIntl();
   const { metavault } = useMetavault();
   const [openingSectionIndex, setOpenningSectionIndex] = useState(-1);
-  const [showStrategy, setShowStrategy] = useState(false);
+  const [showStrategy, setShowStrategy] = useState(true);
 
   const collapseSections = [
     {
@@ -130,10 +130,21 @@ export const Strategy = () => {
         </CardContent>
       </Card>
       {showStrategy && (
-        <StrategyStepperDialog
+        <Dialog
+          open
+          fullWidth
+          maxWidth="lg"
           onClose={() => {
             setShowStrategy(false);
           }}
+          title={intl.formatMessage({ defaultMessage: 'Visualize strategy' })}
+          content={
+            <DiagramStrategy
+              onClose={() => {
+                setShowStrategy(false);
+              }}
+            />
+          }
         />
       )}
     </>
