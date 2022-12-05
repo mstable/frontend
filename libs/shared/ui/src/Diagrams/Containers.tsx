@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { alpha, styled, useTheme } from '@mui/material';
+import { alpha, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import { mergeDeepRight } from 'ramda';
 
@@ -14,8 +14,6 @@ export type ContentContainerProps = {
   accentBkg?: boolean;
   square?: boolean;
 } & MotionProps;
-
-const Container = styled(motion.div)();
 
 export const ContentContainer = ({
   direction = 'row',
@@ -40,7 +38,7 @@ export const ContentContainer = ({
   );
 
   return (
-    <Container
+    <motion.div
       {...rest}
       style={mergeDeepRight(
         {

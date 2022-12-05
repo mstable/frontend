@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 
-import { Stack } from '@mui/material';
+import { Stack, useMediaQuery, useTheme } from '@mui/material';
 
 import { AnimatedDiagram } from './components/AnimatedDiagram';
 import { Controls } from './components/Controls';
+import { MobileDiagram } from './components/MobileDiagram';
 import { StepIndicator } from './components/StepIndicator';
 import { StepLabel } from './components/StepLabel';
 import { useSteps } from './hooks';
@@ -15,18 +16,24 @@ export type DiagramStrategyProps = {
 
 const DiagramStrategyWrapped = ({ onClose }: DiagramStrategyProps) => {
   const { handleReset } = useSteps();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   useEffect(() => {
     handleReset();
   }, [handleReset]);
 
   return (
-    <Stack direction="column" minHeight="60vh">
-      <AnimatedDiagram flexGrow={1} pt={4} />
-      <Stack direction="row" justifyContent="center" alignItems="center" my={1}>
+    <Stack direction="column" minHeight="60vh" pt={4} height={1}>
+      {isMobile ? (
+        <MobileDiagram flexGrow={1} />
+      ) : (
+        <AnimatedDiagram flexGrow={1} />
+      )}
+      <Stack direction="row" justifyContent="center" alignItems="center" my={3}>
         <StepIndicator />
       </Stack>
-      <StepLabel minHeight={150} />
+      <StepLabel minHeight={isMobile ? 260 : 150} />
       <Controls onClose={onClose} py={4} />
     </Stack>
   );

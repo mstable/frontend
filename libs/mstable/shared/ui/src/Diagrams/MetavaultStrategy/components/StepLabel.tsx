@@ -23,13 +23,17 @@ export const StepLabel = (props: StackProps) => {
 
   return (
     <Stack justifyContent="center" alignItems="center" spacing={3} {...props}>
-      <Typography variant="h3" textAlign="center" maxWidth={1 / 2}>
+      <Typography
+        variant="h3"
+        textAlign="center"
+        maxWidth={{ xs: 1, md: 1 / 2 }}
+      >
         {intl.formatMessage(label.title)}
       </Typography>
       <Typography
         variant="body2"
         color="text.secondary"
-        maxWidth={2 / 3}
+        maxWidth={{ xs: 1, md: 2 / 3 }}
         textAlign="center"
       >
         {intl.formatMessage(label.subtitle)}

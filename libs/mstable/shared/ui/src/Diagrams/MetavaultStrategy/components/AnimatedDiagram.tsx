@@ -1,6 +1,4 @@
 import {
-  ConvexProtocol,
-  CurveProtocol,
   MvUSDC,
   SimplePurpleBkgIcon,
   TriplePurpleBkgIcon,
@@ -12,6 +10,7 @@ import { User, Vault } from 'phosphor-react';
 import { times } from 'ramda';
 import { useIntl } from 'react-intl';
 
+import { underLyingVaults } from '../constants';
 import { useSteps } from '../hooks';
 
 import type { StackProps, TypographyProps } from '@mui/material';
@@ -49,21 +48,6 @@ export const AnimatedDiagram = (props: StackProps) => {
   const theme = useTheme();
   const { step } = useSteps();
 
-  // TODO get from mv
-  const underLyingVaults = [
-    {
-      token: { label: 'mUSD/3CRV', icon: <CurveProtocol /> },
-      vault: { label: 'Convex', icon: <ConvexProtocol /> },
-    },
-    {
-      token: { label: 'BUSD/3CRV', icon: <CurveProtocol /> },
-      vault: { label: 'Convex', icon: <ConvexProtocol /> },
-    },
-    {
-      token: { label: 'Frax/3CRV', icon: <CurveProtocol /> },
-      vault: { label: 'Convex', icon: <ConvexProtocol /> },
-    },
-  ];
   const sizes = [
     ['20%', '60%', '20%'],
     ['60%', '20%', '20%'],
