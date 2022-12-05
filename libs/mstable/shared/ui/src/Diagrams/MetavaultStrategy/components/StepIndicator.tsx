@@ -1,5 +1,6 @@
 import { Stack, useTheme } from '@mui/material';
 import { Circle } from 'phosphor-react';
+import { times } from 'ramda';
 
 import { useSteps } from '../hooks';
 
@@ -14,23 +15,26 @@ export const StepIndicator = ({
   ...rest
 }: StepIndicatorProps) => {
   const theme = useTheme();
-  const { steps, activeStep } = useSteps();
+  const { step, maxLength } = useSteps();
 
   return (
     <Stack direction="row" spacing={1} {...rest}>
-      {steps.map((step) => (
-        <Circle
-          key={`step-${step}`}
-          width={dotSize}
-          height={dotSize}
-          weight="fill"
-          color={
-            step === activeStep
-              ? theme.palette.primary.main
-              : theme.palette.text.secondary
-          }
-        />
-      ))}
+      {times(
+        (n) => (
+          <Circle
+            key={`step-${n}`}
+            width={dotSize}
+            height={dotSize}
+            weight="fill"
+            color={
+              n === step
+                ? theme.palette.primary.main
+                : theme.palette.text.secondary
+            }
+          />
+        ),
+        maxLength,
+      )}
     </Stack>
   );
 };
