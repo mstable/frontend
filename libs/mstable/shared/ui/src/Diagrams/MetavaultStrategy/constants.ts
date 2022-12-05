@@ -6,7 +6,7 @@ export const stepsLabels = [
       defaultMessage: 'Need more light on the strategy?',
     }),
     subtitle: defineMessage({
-      defaultMessage: 'Start the tour and get more insight on the strategy.',
+      defaultMessage: 'Start the tour and get more insight.',
     }),
   },
   {
