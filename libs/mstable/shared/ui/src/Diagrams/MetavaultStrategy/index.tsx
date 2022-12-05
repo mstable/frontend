@@ -15,9 +15,9 @@ export type DiagramStrategyProps = {
 };
 
 const DiagramStrategyWrapped = ({ onClose }: DiagramStrategyProps) => {
-  const { handleReset } = useSteps();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { handleReset } = useSteps();
 
   useEffect(() => {
     handleReset();
