@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 
-import { alpha, styled, useTheme } from '@mui/material';
+import { alpha, Box, Stack, Typography, useTheme } from '@mui/material';
 import { motion } from 'framer-motion';
 import { mergeDeepRight } from 'ramda';
 
+import type { StackProps } from '@mui/material';
 import type { MotionProps } from 'framer-motion';
 import type { ReactNode } from 'react';
 
@@ -14,8 +15,6 @@ export type ContentContainerProps = {
   accentBkg?: boolean;
   square?: boolean;
 } & MotionProps;
-
-const Container = styled(motion.div)();
 
 export const ContentContainer = ({
   direction = 'row',
@@ -40,7 +39,7 @@ export const ContentContainer = ({
   );
 
   return (
-    <Container
+    <motion.div
       {...rest}
       style={mergeDeepRight(
         {
@@ -58,5 +57,51 @@ export const ContentContainer = ({
         rest?.style ?? {},
       )}
     />
+  );
+};
+
+export type LogoProps = {
+  label: string;
+  revertColors?: boolean;
+} & StackProps;
+
+export const Logo = ({ children, label, revertColors, ...rest }: LogoProps) => {
+  return (
+    <Stack
+      direction="column"
+      alignItems="center"
+      alignContent="space-between"
+      {...rest}
+    >
+      <Box
+        sx={{
+          backgroundColor: revertColors
+            ? 'icons.revertedBackground'
+            : 'icons.background',
+          borderRadius: '50%',
+          width: 30,
+          height: 30,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          mb: 1,
+          svg: {
+            color: revertColors ? 'icons.revertedColor' : 'icons.color',
+          },
+        }}
+      >
+        {children}
+      </Box>
+      <Typography
+        sx={{
+          fontSize: 14,
+          fontWeight: 'medium',
+        }}
+        noWrap
+        color="text.secondary"
+      >
+        {label}
+      </Typography>
+    </Stack>
   );
 };

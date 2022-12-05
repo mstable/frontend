@@ -1,12 +1,5 @@
-import { Box, Stack, Typography } from '@mui/material';
-import {
-  ArrowsClockwise,
-  Bank,
-  ChartPieSlice,
-  Coin,
-  Coins,
-  Vault,
-} from 'phosphor-react';
+import { LiquidationFees, PerformanceFees } from '@frontend/mstable-shared-ui';
+import { Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import { useMetavault } from '../../../state';
@@ -31,87 +24,6 @@ const rateChipProps: TypographyProps = {
     minWidth: 36,
     mb: 3,
   }),
-};
-
-const logoContainerProps: StackProps = {
-  width: 1,
-  mt: 2,
-  direction: 'row',
-  flexWrap: 'wrap',
-  alignItems: 'center',
-};
-
-type LogoProps = {
-  first?: boolean;
-  last?: boolean;
-  label: string;
-} & StackProps;
-
-const Logo = ({ children, label, first, last, ...rest }: LogoProps) => {
-  return (
-    <Stack
-      direction="column"
-      alignItems="center"
-      alignContent="space-between"
-      {...rest}
-      {...(first && { mr: 2 })}
-      {...(last && { ml: 2 })}
-      mt={2}
-      sx={[
-        !first &&
-          !last && {
-            flexGrow: 1,
-            position: 'relative',
-            '::before': {
-              top: '50%',
-              width: 1,
-              height: 2,
-              content: '""',
-              position: 'absolute',
-              backgroundColor: 'divider',
-            },
-            '::after': {
-              display: 'block',
-              top: '50%',
-              width: 1 / 2,
-              height: 2,
-              content: '""',
-              position: 'absolute',
-              backgroundColor: 'background.paper',
-            },
-          },
-      ]}
-    >
-      <Box
-        sx={{
-          backgroundColor:
-            first || last ? 'icons.revertedBackground' : 'icons.background',
-          borderRadius: '50%',
-          width: 30,
-          height: 30,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          mb: 1,
-          svg: {
-            color: first || last ? 'icons.revertedColor' : 'icons.color',
-          },
-        }}
-      >
-        {children}
-      </Box>
-      <Typography
-        sx={{
-          fontSize: 14,
-          fontWeight: 'medium',
-        }}
-        noWrap
-        color="text.secondary"
-      >
-        {label}
-      </Typography>
-    </Stack>
-  );
 };
 
 export const Fees = (props: StackProps) => {
@@ -142,28 +54,7 @@ export const Fees = (props: StackProps) => {
             { fee: Math.round(performance * 100) },
           )}
         </Typography>
-        <Stack {...logoContainerProps}>
-          <Logo
-            label={intl.formatMessage({ defaultMessage: 'LP Position' })}
-            first
-          >
-            <Coin weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo label={intl.formatMessage({ defaultMessage: 'Swap fees' })}>
-            <Coins weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo
-            label={intl.formatMessage(
-              { defaultMessage: '{fee}%' },
-              { fee: Math.round(performance * 100) },
-            )}
-          >
-            <ChartPieSlice weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo last label={intl.formatMessage({ defaultMessage: 'DAO' })}>
-            <Bank weight="fill" width={16} height={16} />
-          </Logo>
-        </Stack>
+        <PerformanceFees fees={performance} width={1} />
       </Stack>
       <Stack {...feeCardProps}>
         <Typography {...rateChipProps}>
@@ -183,32 +74,7 @@ export const Fees = (props: StackProps) => {
             { fee: Math.round(liquidation * 100) },
           )}
         </Typography>
-        <Stack {...logoContainerProps}>
-          <Logo label={intl.formatMessage({ defaultMessage: 'Vault' })} first>
-            <Vault weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo
-            label={intl.formatMessage({ defaultMessage: 'Claim CVX & CRV' })}
-          >
-            <Coins weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo
-            label={intl.formatMessage({ defaultMessage: 'Swap to Stablecoin' })}
-          >
-            <ArrowsClockwise weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo
-            label={intl.formatMessage(
-              { defaultMessage: '{fee}%' },
-              { fee: Math.round(liquidation * 100) },
-            )}
-          >
-            <ChartPieSlice weight="fill" width={16} height={16} />
-          </Logo>
-          <Logo last label={intl.formatMessage({ defaultMessage: 'DAO' })}>
-            <Bank weight="fill" width={16} height={16} />
-          </Logo>
-        </Stack>
+        <LiquidationFees fees={liquidation} width={1} />
       </Stack>
     </Stack>
   );

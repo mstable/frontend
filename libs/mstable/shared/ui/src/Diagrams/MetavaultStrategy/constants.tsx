@@ -1,3 +1,4 @@
+import { ConvexProtocol, CurveProtocol } from '@frontend/shared-icons';
 import { defineMessage } from 'react-intl';
 
 export const stepsLabels = [
@@ -35,5 +36,20 @@ export const stepsLabels = [
       defaultMessage:
         'Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position.',
     }),
+  },
+];
+
+export const underLyingVaults = [
+  {
+    token: { label: 'mUSD/3CRV', icon: <CurveProtocol /> },
+    vault: { label: 'Convex', icon: <ConvexProtocol /> },
+  },
+  {
+    token: { label: 'BUSD/3CRV', icon: <CurveProtocol /> },
+    vault: { label: 'Convex', icon: <ConvexProtocol /> },
+  },
+  {
+    token: { label: 'Frax/3CRV', icon: <CurveProtocol /> },
+    vault: { label: 'Convex', icon: <ConvexProtocol /> },
   },
 ];
