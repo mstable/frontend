@@ -6,6 +6,9 @@ export const getDialogActions = (base: Theme): ThemeOptions => ({
       styleOverrides: {
         root: {
           padding: base.spacing(0, 4, 4),
+          [base.breakpoints.down('md')]: {
+            padding: base.spacing(0, 2, 2, 2),
+          },
         },
       },
     },

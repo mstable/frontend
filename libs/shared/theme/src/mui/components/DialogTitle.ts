@@ -8,6 +8,9 @@ export const getDialogTitle = (base: Theme): ThemeOptions => ({
           padding: base.spacing(4, 4, 2),
           ...base.typography.h5,
           textTransform: 'none',
+          [base.breakpoints.down('md')]: {
+            padding: base.spacing(2),
+          },
         },
       },
     },
