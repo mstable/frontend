@@ -6,7 +6,7 @@ import {
   TriplePurpleBkgIcon,
 } from '@frontend/shared-icons';
 import { Arrow, ContentContainer } from '@frontend/shared-ui';
-import { Stack, Typography, useTheme } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { User, Vault } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
@@ -18,12 +18,11 @@ import type { TypographyProps } from '@mui/material';
 
 const labelProps: TypographyProps = { variant: 'buttonSmall', noWrap: true };
 
-const arrowHeight = 32;
+const arrowHeight = 40;
 const containerHeight = 34;
 
 export const MobileDiagram = (props: StackProps) => {
   const intl = useIntl();
-  const theme = useTheme();
   const { step } = useSteps();
 
   return (
@@ -47,7 +46,7 @@ export const MobileDiagram = (props: StackProps) => {
               sx={{
                 position: 'absolute',
                 right: 36,
-                bottom: -arrowHeight - 4,
+                bottom: -containerHeight - 4,
               }}
             />
           </ContentContainer>
@@ -68,7 +67,7 @@ export const MobileDiagram = (props: StackProps) => {
               sx={{
                 position: 'absolute',
                 right: 36,
-                bottom: -arrowHeight - 4,
+                bottom: -containerHeight - 4,
               }}
             />
           </ContentContainer>

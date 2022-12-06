@@ -26,7 +26,7 @@ export const Controls = ({ onClose = () => null, ...rest }: ControlsProps) => {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      spacing={{ xs: 1, md: 4 }}
+      spacing={{ xs: 2, md: 4 }}
       {...rest}
     >
       {
