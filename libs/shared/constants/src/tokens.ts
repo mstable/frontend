@@ -1,5 +1,5 @@
 import { tokens as toks } from '@mstable/metavaults-web';
-import { chainId } from 'wagmi';
+import { goerli, mainnet, polygon, polygonMumbai } from 'wagmi/chains';
 
 import { DEAD_ADDRESS } from './utils';
 
@@ -21,12 +21,12 @@ const reduceFn = (acc, [key, val]) => ({
   },
 });
 
-const mainnet: Partial<Record<SupportedToken, Token>> = Object.entries(
-  toks[chainId.mainnet],
+const main: Partial<Record<SupportedToken, Token>> = Object.entries(
+  toks[mainnet.id],
 ).reduce(reduceFn, {});
 
-const goerli: Partial<Record<SupportedToken, Token>> = Object.entries(
-  toks[chainId.goerli],
+const goer: Partial<Record<SupportedToken, Token>> = Object.entries(
+  toks[goerli.id],
 ).reduce(reduceFn, {
   musd: {
     address: DEAD_ADDRESS,
@@ -85,16 +85,13 @@ const goerli: Partial<Record<SupportedToken, Token>> = Object.entries(
   },
 });
 
-const polygon = Object.entries(toks[chainId.polygon]).reduce(reduceFn, {});
+const poly = Object.entries(toks[polygon.id]).reduce(reduceFn, {});
 
-const polygonMumbai = Object.entries(toks[chainId.polygonMumbai]).reduce(
-  reduceFn,
-  {},
-);
+const polygonMum = Object.entries(toks[polygonMumbai.id]).reduce(reduceFn, {});
 
 export const tokens: Record<number, Partial<Record<SupportedToken, Token>>> = {
-  [chainId.mainnet]: mainnet,
-  [chainId.goerli]: goerli,
-  [chainId.polygon]: polygon,
-  [chainId.polygonMumbai]: polygonMumbai,
+  [mainnet.id]: main,
+  [goerli.id]: goer,
+  [polygon.id]: poly,
+  [polygonMumbai.id]: polygonMum,
 };

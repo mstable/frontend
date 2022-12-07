@@ -1,6 +1,6 @@
 /* eslint-disable formatjs/no-id */
 import { defineMessage } from 'react-intl';
-import { chainId } from 'wagmi';
+import { goerli, mainnet } from 'wagmi/chains';
 
 import { protocols } from '../protocols';
 import { tokens } from '../tokens';
@@ -8,10 +8,10 @@ import { vaults } from '../vaults';
 
 import type { Metavault } from './types';
 
-const mainnet: Metavault = {
+const main: Metavault = {
   id: 'mvusdc3pcv',
   primaryColor: '#2775CA',
-  address: tokens[chainId.mainnet]['mvusdc-3pcv'].address,
+  address: tokens[mainnet.id]['mvusdc-3pcv'].address,
   name: '3Pool Convex Meta Vault',
   tags: [
     defineMessage({
@@ -52,19 +52,19 @@ const mainnet: Metavault = {
     },
   ],
   vaults: [
-    vaults[chainId.mainnet].mvusdc3pcv,
-    vaults[chainId.mainnet].mv3crvcvx,
-    vaults[chainId.mainnet].vcx3crvbusd,
-    vaults[chainId.mainnet].vcx3crvfrax,
-    vaults[chainId.mainnet].vcx3crvmusd,
+    vaults[mainnet.id].mvusdc3pcv,
+    vaults[mainnet.id].mv3crvcvx,
+    vaults[mainnet.id].vcx3crvbusd,
+    vaults[mainnet.id].vcx3crvfrax,
+    vaults[mainnet.id].vcx3crvmusd,
   ],
   assets: [
-    tokens[chainId.mainnet].musd,
-    tokens[chainId.mainnet].busd,
-    tokens[chainId.mainnet].frax,
-    tokens[chainId.mainnet].dai,
-    tokens[chainId.mainnet].usdc,
-    tokens[chainId.mainnet].usdt,
+    tokens[mainnet.id].musd,
+    tokens[mainnet.id].busd,
+    tokens[mainnet.id].frax,
+    tokens[mainnet.id].dai,
+    tokens[mainnet.id].usdc,
+    tokens[mainnet.id].usdt,
   ],
   fees: {
     liquidation: 0.16,
@@ -78,28 +78,28 @@ const mainnet: Metavault = {
   firstBlock: 15946291,
 };
 
-const goerli: Metavault = {
-  ...mainnet,
-  address: tokens[chainId.goerli].tvg.address,
+const goer: Metavault = {
+  ...main,
+  address: tokens[goerli.id].tvg.address,
   vaults: [
-    vaults[chainId.goerli].mvusdc3pcv,
-    vaults[chainId.goerli].mv3crvcvx,
-    vaults[chainId.goerli].vcx3crvbusd,
-    vaults[chainId.goerli].vcx3crvfrax,
-    vaults[chainId.goerli].vcx3crvmusd,
+    vaults[goerli.id].mvusdc3pcv,
+    vaults[goerli.id].mv3crvcvx,
+    vaults[goerli.id].vcx3crvbusd,
+    vaults[goerli.id].vcx3crvfrax,
+    vaults[goerli.id].vcx3crvmusd,
   ],
   assets: [
-    tokens[chainId.goerli].musd,
-    tokens[chainId.goerli].busd,
-    tokens[chainId.goerli].lusd,
-    tokens[chainId.goerli].frax,
-    tokens[chainId.goerli].dai,
-    tokens[chainId.goerli].usdc,
-    tokens[chainId.goerli].usdt,
+    tokens[goerli.id].musd,
+    tokens[goerli.id].busd,
+    tokens[goerli.id].lusd,
+    tokens[goerli.id].frax,
+    tokens[goerli.id].dai,
+    tokens[goerli.id].usdc,
+    tokens[goerli.id].usdt,
   ],
 };
 
 export const mvusdc3pcv: Record<number, Metavault> = {
-  [chainId.mainnet]: mainnet,
-  [chainId.goerli]: goerli,
+  [mainnet.id]: main,
+  [goerli.id]: goer,
 };

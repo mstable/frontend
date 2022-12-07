@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { Check, ContentCopy, Error, OpenInNew } from '@mui/icons-material';
 import { IconButton, Link, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
-import { etherscanBlockExplorers } from 'wagmi';
+import {} from 'wagmi';
+import { mainnet } from 'wagmi/chains';
 
 import { MiddleTruncated } from '../Typography';
 
@@ -33,7 +34,7 @@ export const AddressLabel = ({
   hideEtherscan = false,
   small = false,
   link = false,
-  blockExplorerUrl = etherscanBlockExplorers.mainnet.url,
+  blockExplorerUrl = mainnet.blockExplorers.default.url,
   ...rest
 }: AddressLabelProps) => {
   const intl = useIntl();

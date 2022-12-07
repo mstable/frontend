@@ -2,7 +2,7 @@ import { Fragment, useEffect } from 'react';
 
 import { useQueryClient as useReactQueryQueryClient } from '@tanstack/react-query';
 import {
-  chainId,
+  mainnet,
   useNetwork,
   useQueryClient as useWagmiQueryClient,
 } from 'wagmi';
@@ -19,5 +19,5 @@ export const ChainRefresherProvider = ({ children }: Children) => {
     queryClientReactQuery.clear();
   }, [chain?.id, queryClientReactQuery, queryClientWagmi]);
 
-  return <Fragment key={chain?.id ?? chainId.mainnet}>{children}</Fragment>;
+  return <Fragment key={chain?.id ?? mainnet.id}>{children}</Fragment>;
 };

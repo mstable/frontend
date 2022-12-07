@@ -42,7 +42,7 @@ export const Assets = (props: StackProps) => {
                   small
                   address={address}
                   link
-                  blockExplorerUrl={chain?.blockExplorers?.etherscan?.url}
+                  blockExplorerUrl={chain?.blockExplorers?.['etherscan']?.url}
                   sx={{ maxWidth: 120 }}
                 />
               </Stack>

@@ -18,7 +18,8 @@ import {
 } from '@mui/material';
 import { ListDashes, SquaresFour } from 'phosphor-react';
 import { useIntl } from 'react-intl';
-import { chainId, useNetwork } from 'wagmi';
+import { useNetwork } from 'wagmi';
+import { mainnet } from 'wagmi/chains';
 
 import { ComingSoonCard, ComingSoonRow } from './ComingSoon';
 import { VaultCard } from './VaultCard';
@@ -32,7 +33,7 @@ export const Vaults = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { chain } = useNetwork();
 
-  const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
+  const metavaults = supportedMetavaults[chain?.id || mainnet.id];
 
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 

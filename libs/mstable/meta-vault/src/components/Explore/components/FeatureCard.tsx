@@ -15,7 +15,8 @@ import {
 import { useNavigate } from '@tanstack/react-location';
 import { GasPump, Vault } from 'phosphor-react';
 import { useIntl } from 'react-intl';
-import { chainId, useFeeData, useNetwork } from 'wagmi';
+import { useFeeData, useNetwork } from 'wagmi';
+import { mainnet } from 'wagmi/chains';
 
 import { useTotalTvl } from '../hooks';
 import { VaultCard } from './VaultCard';
@@ -41,7 +42,7 @@ export const FeatureCard = () => {
   const { data: feeData, isLoading: feeLoading } = useFeeData({
     formatUnits: 'gwei',
   });
-  const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
+  const metavaults = supportedMetavaults[chain?.id || mainnet.id];
   const featuredMv = metavaults.find((mv) => mv.featured);
   const { data: totalTvl, isLoading: totalTvlLoading } = useTotalTvl();
   const { currency } = usePrices();

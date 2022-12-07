@@ -12,7 +12,8 @@ import { useMatch, useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
 import { propEq } from 'ramda';
 import { useIntl } from 'react-intl';
-import { chainId, useNetwork } from 'wagmi';
+import { useNetwork } from 'wagmi';
+import { mainnet } from 'wagmi/chains';
 
 import { MobileBottomCard } from '../components/MobileBottomCard';
 import { Operations } from '../components/Operations';
@@ -35,10 +36,7 @@ export const Metavault = () => {
     params: { mvid },
   } = useMatch<MvGenerics>();
   const metavault = useMemo(
-    () =>
-      supportedMetavaults[chain?.id ?? chainId.mainnet].find(
-        propEq('id', mvid),
-      ),
+    () => supportedMetavaults[chain?.id ?? mainnet.id].find(propEq('id', mvid)),
     [chain?.id, mvid],
   );
 

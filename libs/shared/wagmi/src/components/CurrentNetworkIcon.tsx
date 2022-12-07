@@ -2,7 +2,8 @@ import { Ethereum, Polygon } from '@frontend/shared-icons';
 import { WarningAmberRounded } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import { Plugs } from 'phosphor-react';
-import { chainId, useNetwork } from 'wagmi';
+import { useNetwork } from 'wagmi';
+import { polygon, polygonMumbai } from 'wagmi/chains';
 
 import type { SvgIconProps } from '@mui/material';
 
@@ -16,9 +17,7 @@ export const CurrentNetworkIcon = (props: SvgIconProps) => {
   return chain?.id ? (
     chain?.unsupported ? (
       <WarningAmberRounded color="warning" {...props} />
-    ) : ([chainId.polygon, chainId.polygonMumbai] as number[]).includes(
-        chain?.id,
-      ) ? (
+    ) : ([polygon.id, polygonMumbai.id] as number[]).includes(chain?.id) ? (
       <Polygon {...props} sx={{ width: 24, height: 24, ...props?.sx }} />
     ) : (
       <Ethereum {...props} sx={{ width: 24, height: 24, ...props?.sx }} />

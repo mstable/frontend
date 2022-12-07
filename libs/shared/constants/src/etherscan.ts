@@ -1,7 +1,7 @@
-import { chainId } from 'wagmi';
+import { goerli, mainnet } from 'wagmi/chains';
 
 export const etherscanApiEndpoints: Record<number, string> = {
-  [chainId.mainnet]: 'https://api.etherscan.io',
+  [mainnet.id]: 'https://api.etherscan.io',
   // HACK: testnet does not have gas tracker module
-  [chainId.goerli]: 'https://api.etherscan.io',
+  [goerli.id]: 'https://api.etherscan.io',
 };

@@ -14,7 +14,8 @@ import {
   rainbowWallet,
   walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets';
-import { chain, configureChains, createClient } from 'wagmi';
+import { configureChains, createClient } from 'wagmi';
+import { goerli, mainnet } from 'wagmi/chains';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
 
@@ -22,7 +23,7 @@ import type { Wallet } from '@rainbow-me/rainbowkit';
 import type { Chain, Connector } from 'wagmi';
 
 export const { chains, provider, webSocketProvider } = configureChains(
-  [chain.mainnet, chain.goerli],
+  [mainnet, goerli],
   [
     infuraProvider({ apiKey: process.env['NX_INFURA_API_KEY'] }),
     publicProvider(),
