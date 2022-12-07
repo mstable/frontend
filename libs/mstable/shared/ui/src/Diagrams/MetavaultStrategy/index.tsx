@@ -26,14 +26,14 @@ const DiagramStrategyWrapped = ({ onClose }: DiagramStrategyProps) => {
   return (
     <Stack direction="column" minHeight="60vh" pt={isMobile ? 2 : 4} height={1}>
       {isMobile ? (
-        <MobileDiagram flexGrow={1} />
+        <MobileDiagram minHeight={300} />
       ) : (
-        <AnimatedDiagram flexGrow={1} />
+        <AnimatedDiagram minHeight={300} />
       )}
       <Stack direction="row" justifyContent="center" alignItems="center" my={3}>
         <StepIndicator />
       </Stack>
-      <StepLabel />
+      <StepLabel flexGrow={1} />
       <Controls onClose={onClose} py={3} />
     </Stack>
   );
