@@ -5,7 +5,7 @@ export const getCardHeader = (base: Theme): ThemeOptions => ({
     MuiCardHeader: {
       defaultProps: {
         titleTypographyProps: {
-          variant: 'h4',
+          variant: 'h3',
         },
       },
     },
