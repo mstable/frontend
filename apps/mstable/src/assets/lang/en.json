@@ -5,6 +5,12 @@
       "value": "Claim CVX & CRV"
     }
   ],
+  "+6JrYn": [
+    {
+      "type": 0,
+      "value": "Make sure your wallet is on Ethereum Mainnet network."
+    }
+  ],
   "+k7bPd": [
     {
       "type": 0,
@@ -77,12 +83,6 @@
     {
       "type": 0,
       "value": "Expand"
-    }
-  ],
-  "1O5/yX": [
-    {
-      "type": 0,
-      "value": "Make sure your wallet is on Ethereum Mainet network."
     }
   ],
   "1XVJUl": [
