@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "name": "mstable-shared-ui",
   "sourceRoot": "libs/mstable/shared/ui/src",
   "projectType": "library",
   "tags": [],
