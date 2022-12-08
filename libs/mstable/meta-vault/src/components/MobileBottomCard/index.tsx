@@ -81,7 +81,17 @@ export const MobileBottomCard = () => {
         open={isOperationOpen}
         onClose={() => setIsOperationOpen(false)}
         title={intl.formatMessage({ defaultMessage: 'Deposit/Withdraw' })}
-        content={<Operations />}
+        content={
+          <Operations
+            elevation={0}
+            sx={{
+              backgroundColor: 'transparent',
+              mt: 2,
+              border: 'none',
+              boxShadow: 0,
+            }}
+          />
+        }
       />
     </>
   );
