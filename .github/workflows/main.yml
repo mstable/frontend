@@ -29,7 +29,7 @@ jobs:
           mainnet: ${{ secrets.NX_THE_GRAPH_MV_MAINNET_URL }}
           goerli: ${{ secrets.NX_THE_GRAPH_MV_GOERLI_URL }}
           infura: ${{ secrets.INFURA_API_KEY }}
-        run: NX_THE_GRAPH_MV_MAINNET_URL=$mainnet NX_THE_GRAPH_MV_GOERLI_URL=$goerli NX_INFURA_API_KEY=$infura yarn build --no-cloud
+        run: NX_THE_GRAPH_MV_MAINNET_URL=$mainnet NX_THE_GRAPH_MV_GOERLI_URL=$goerli NX_INFURA_API_KEY=$infura yarn build
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         name: Firebase deploy
