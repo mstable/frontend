@@ -20,9 +20,11 @@ import {
 } from './hooks';
 import { Provider } from './state';
 
+import type { CardProps } from '@mui/material';
+
 import type { MvGenerics } from '../../types';
 
-const OperationsWrapped = () => {
+const OperationsWrapped = (props: CardProps) => {
   const intl = useIntl();
   const { isConnected } = useAccount();
   const navigate = useNavigate<MvGenerics>();
@@ -57,7 +59,7 @@ const OperationsWrapped = () => {
   ]);
 
   return (
-    <Card>
+    <Card {...props}>
       <CardContent>
         <Tabs
           value={tab}
@@ -99,8 +101,8 @@ const OperationsWrapped = () => {
   );
 };
 
-export const Operations = () => (
+export const Operations = (props: CardProps) => (
   <Provider>
-    <OperationsWrapped />
+    <OperationsWrapped {...props} />
   </Provider>
 );

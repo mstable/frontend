@@ -92,7 +92,7 @@ export const NetworkTips = (props: StackProps) => {
             })}
             secondary={intl.formatMessage({
               defaultMessage:
-                'Make sure your wallet is on Ethereum Mainet network.',
+                'Make sure your wallet is on Ethereum Mainnet network.',
             })}
           />
         </ListItem>

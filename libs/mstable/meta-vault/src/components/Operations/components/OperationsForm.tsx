@@ -199,19 +199,15 @@ export const OperationsForm = (props: StackProps) => {
   return (
     <Stack
       borderRadius={1}
-      p={isMobile ? 0 : 2}
+      p={2}
       direction="column"
       spacing={3}
       sx={{
-        border: isMobile
-          ? undefined
-          : (theme) =>
-              `1px solid ${
-                hasFocus ? theme.palette.primary.main : theme.palette.divider
-              }`,
-        ...(!isConnected && {
-          backgroundColor: 'background.highlight',
-        }),
+        border: (theme) =>
+          `1px solid ${
+            hasFocus ? theme.palette.primary.main : theme.palette.divider
+          }`,
+        backgroundColor: 'transparent',
         ...props?.sx,
       }}
       {...props}

@@ -1,6 +1,5 @@
 import { ErrorPageWithMessage, Topnav } from '@frontend/mstable-shared-ui';
 import { ErrorBoundary } from '@frontend/shared-ui';
-import { useUnsupportedNetworks } from '@frontend/shared-wagmi';
 import { Stack } from '@mui/material';
 import { Outlet } from '@tanstack/react-location';
 import { useEffectOnce } from 'react-use';
@@ -8,8 +7,6 @@ import { useEffectOnce } from 'react-use';
 import { registerCharts } from '../clients';
 
 export const App = () => {
-  useUnsupportedNetworks();
-
   useEffectOnce(() => {
     registerCharts();
   });
