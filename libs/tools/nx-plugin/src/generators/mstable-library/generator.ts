@@ -120,7 +120,7 @@ const updateTsConfig = (tree: Tree, options: NormalizedSchema) => {
     (json) => {
       json.files = [
         ...json.files,
-        `${offset}dist/libs/shared/theme/mui/types.d.ts`,
+        `${offset}dist/libs/shared/theme/src/mui/types.d.ts`,
       ];
 
       return json;
