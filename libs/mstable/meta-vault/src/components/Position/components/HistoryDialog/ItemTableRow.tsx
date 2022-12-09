@@ -40,9 +40,13 @@ export const ItemTableRow = ({ tx }: { tx: TxHistory }) => {
           <Stack direction="column" spacing={0.5}>
             <Typography variant="label2">
               {tx.type === TransactionType.Deposit
-                ? intl.formatMessage({ defaultMessage: 'Deposit' })
+                ? intl.formatMessage({
+                    defaultMessage: 'Deposit',
+                    id: 'dIgBOz',
+                  })
                 : intl.formatMessage({
                     defaultMessage: 'Withdraw',
+                    id: 'PXAur5',
                   })}
             </Typography>
             <Typography variant="value5" color="text.secondary">
@@ -73,14 +77,17 @@ export const ItemTableRow = ({ tx }: { tx: TxHistory }) => {
                 tx.shareAmount ?? constants.Zero,
                 mvToken?.decimals,
               ).simple,
-            )} ${intl.formatMessage({ defaultMessage: 'Shares' })}`}
+            )} ${intl.formatMessage({
+              defaultMessage: 'Shares',
+              id: 'mrwfXX',
+            })}`}
           </Typography>
         </Box>
       </TableCell>
       <TableCell>
         <Box display="flex" flexDirection="column">
           <Typography variant="label2" sx={{ mb: 0.5 }}>
-            {intl.formatMessage({ defaultMessage: 'Txn hash' })}
+            {intl.formatMessage({ defaultMessage: 'Txn hash', id: 'jHskc6' })}
           </Typography>
           <AddressLabel
             address={tx.hash}

@@ -57,7 +57,10 @@ export const VaultPerformance = () => {
   return (
     <Card sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}>
       <CardHeader
-        title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
+        title={intl.formatMessage({
+          defaultMessage: 'Vault Performance',
+          id: 'MqZGhr',
+        })}
         sx={{ paddingLeft: 0 }}
         action={
           !isMobile && (
@@ -74,7 +77,7 @@ export const VaultPerformance = () => {
               startIcon={<FrameCorners weight="regular" />}
               size="small"
             >
-              {intl.formatMessage({ defaultMessage: 'Expand' })}
+              {intl.formatMessage({ defaultMessage: 'Expand', id: '0oLj/t' })}
             </Button>
           )
         }
@@ -100,7 +103,10 @@ export const VaultPerformance = () => {
             }),
           });
         }}
-        title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
+        title={intl.formatMessage({
+          defaultMessage: 'Vault Performance',
+          id: 'MqZGhr',
+        })}
         content={
           <>
             <Controls />
@@ -114,7 +120,7 @@ export const VaultPerformance = () => {
         }
         actions={(onClose) => (
           <Button color="secondary" onClick={onClose}>
-            {intl.formatMessage({ defaultMessage: 'Close' })}
+            {intl.formatMessage({ defaultMessage: 'Close', id: 'rbrahO' })}
           </Button>
         )}
       />

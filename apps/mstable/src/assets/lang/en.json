@@ -195,6 +195,12 @@
       "value": "% fee upon liquidation of the earned rewards."
     }
   ],
+  "47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
   "4LNpZQ": [
     {
       "type": 0,
@@ -453,6 +459,12 @@
       "value": "This Strategy uses USDC to deposit into the 3CRV-Pool on Curve. The 3CRV token is then deposited in various Curve meta pools and staked in Convex. The earned CVX and CRV tokens are periodically claimed, swapped, and compounded."
     }
   ],
+  "EobEOB": [
+    {
+      "type": 0,
+      "value": "Please confirm to proceed"
+    }
+  ],
   "FApc0Y": [
     {
       "type": 0,
@@ -581,6 +593,12 @@
     {
       "type": 0,
       "value": "Net Value"
+    }
+  ],
+  "N2IrpM": [
+    {
+      "type": 0,
+      "value": "Confirm"
     }
   ],
   "OwO+Nr": [
@@ -903,24 +921,6 @@
       "value": "Deposit"
     }
   ],
-  "defaultCancel": [
-    {
-      "type": 0,
-      "value": "Cancel"
-    }
-  ],
-  "defaultConfirm": [
-    {
-      "type": 0,
-      "value": "Confirm"
-    }
-  ],
-  "defaultConfirmation": [
-    {
-      "type": 0,
-      "value": "Please confirm to proceed"
-    }
-  ],
   "djJp6c": [
     {
       "type": 0,
@@ -1073,12 +1073,6 @@
       "value": "Token Approval"
     }
   ],
-  "not_connected": [
-    {
-      "type": 0,
-      "value": "Not Connected"
-    }
-  ],
   "ovJ26C": [
     {
       "type": 0,
@@ -1211,6 +1205,12 @@
     {
       "type": 0,
       "value": "Wrong Network"
+    }
+  ],
+  "x8vY9w": [
+    {
+      "type": 0,
+      "value": "Not Connected"
     }
   ],
   "y1NA43": [

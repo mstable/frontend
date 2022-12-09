@@ -90,7 +90,10 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
           labels: pluck('label', series),
           datasets: [
             {
-              label: intl.formatMessage({ defaultMessage: 'Perf' }),
+              label: intl.formatMessage({
+                defaultMessage: 'Perf',
+                id: 'qNhf66',
+              }),
               data: pluck('value', series),
               borderColor: function (context) {
                 const chart = context.chart;

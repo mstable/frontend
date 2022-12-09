@@ -130,7 +130,10 @@ export const YieldCalculatorDialog = ({
       fullWidth
       open={open}
       onClose={onClose}
-      title={intl.formatMessage({ defaultMessage: 'Yield Calculator' })}
+      title={intl.formatMessage({
+        defaultMessage: 'Yield Calculator',
+        id: 'CGcoFj',
+      })}
       content={
         <>
           <Box
@@ -148,7 +151,10 @@ export const YieldCalculatorDialog = ({
               amount={amount}
               token={assetToken}
               max={assetBalance}
-              label={intl.formatMessage({ defaultMessage: 'Enter Amount' })}
+              label={intl.formatMessage({
+                defaultMessage: 'Enter Amount',
+                id: 'byXXyV',
+              })}
               onChange={setAmount}
               placeholder="0.00"
               isConnected={isConnected}
@@ -161,7 +167,10 @@ export const YieldCalculatorDialog = ({
             >
               <FormControl>
                 <InputLabel>
-                  {intl.formatMessage({ defaultMessage: 'Projected APY (%)' })}
+                  {intl.formatMessage({
+                    defaultMessage: 'Projected APY (%)',
+                    id: '2M9vCZ',
+                  })}
                 </InputLabel>
                 <InputBase
                   placeholder="0"
@@ -184,7 +193,10 @@ export const YieldCalculatorDialog = ({
               <Stack direction="row" alignItems="center">
                 <FormControl>
                   <InputLabel>
-                    {intl.formatMessage({ defaultMessage: 'Duration' })}
+                    {intl.formatMessage({
+                      defaultMessage: 'Duration',
+                      id: 'IuFETn',
+                    })}
                   </InputLabel>
                   <BigDecimalInput
                     placeholder="0"
@@ -202,13 +214,22 @@ export const YieldCalculatorDialog = ({
                   sx={{ mt: 2.5, minWidth: 100 }}
                 >
                   <MenuItem value={365}>
-                    {intl.formatMessage({ defaultMessage: 'Years' })}
+                    {intl.formatMessage({
+                      defaultMessage: 'Years',
+                      id: 'Jr5tMR',
+                    })}
                   </MenuItem>
                   <MenuItem value={30}>
-                    {intl.formatMessage({ defaultMessage: 'Months' })}
+                    {intl.formatMessage({
+                      defaultMessage: 'Months',
+                      id: 'AxDOiG',
+                    })}
                   </MenuItem>
                   <MenuItem value={1}>
-                    {intl.formatMessage({ defaultMessage: 'Days' })}
+                    {intl.formatMessage({
+                      defaultMessage: 'Days',
+                      id: 'd8EqQY',
+                    })}
                   </MenuItem>
                 </Select>
               </Stack>
@@ -222,7 +243,10 @@ export const YieldCalculatorDialog = ({
             >
               <Box display="flex" alignItems="center">
                 <Typography variant="label2" color="text.secondary">
-                  {intl.formatMessage({ defaultMessage: 'Gas Fee Estimation' })}
+                  {intl.formatMessage({
+                    defaultMessage: 'Gas Fee Estimation',
+                    id: 'dD8CJD',
+                  })}
                 </Typography>
                 <InfoTooltip
                   sx={{ ml: 1 }}
@@ -231,6 +255,7 @@ export const YieldCalculatorDialog = ({
                   label={intl.formatMessage({
                     defaultMessage:
                       'Gas fee estimation is based on the current gas price and average gas used',
+                    id: 'erCS/d',
                   })}
                   variant="exclamation"
                   color="text.secondary"
@@ -246,19 +271,19 @@ export const YieldCalculatorDialog = ({
               >
                 <MenuItem value="slow">
                   {intl.formatMessage(
-                    { defaultMessage: 'Slow - {value} GWEI' },
+                    { defaultMessage: 'Slow - {value} GWEI', id: 'BnptNt' },
                     { value: feeData.slow },
                   )}
                 </MenuItem>
                 <MenuItem value="average">
                   {intl.formatMessage(
-                    { defaultMessage: 'Average - {value} GWEI' },
+                    { defaultMessage: 'Average - {value} GWEI', id: 'ZefNbE' },
                     { value: feeData.average },
                   )}
                 </MenuItem>
                 <MenuItem value="fast">
                   {intl.formatMessage(
-                    { defaultMessage: 'Fast - {value} GWEI' },
+                    { defaultMessage: 'Fast - {value} GWEI', id: '0mHzVQ' },
                     { value: feeData.fast },
                   )}
                 </MenuItem>
@@ -273,7 +298,10 @@ export const YieldCalculatorDialog = ({
                 checked={isDepositGasFeeSelected}
                 onChange={() => setIsDepositGasFeeSelected(not)}
                 control={<Checkbox size="small" />}
-                label={intl.formatMessage({ defaultMessage: 'Deposit Gas' })}
+                label={intl.formatMessage({
+                  defaultMessage: 'Deposit Gas',
+                  id: 'b+LlHJ',
+                })}
                 componentsProps={{
                   typography: { variant: 'label2', color: 'text.secondary' },
                 }}
@@ -294,7 +322,10 @@ export const YieldCalculatorDialog = ({
                 checked={isWithdrawalGasFeeSelected}
                 onChange={() => setIsWithdrawalGasFeeSelected(not)}
                 control={<Checkbox size="small" />}
-                label={intl.formatMessage({ defaultMessage: 'Withdrawal Gas' })}
+                label={intl.formatMessage({
+                  defaultMessage: 'Withdrawal Gas',
+                  id: 'hRuz7F',
+                })}
                 componentsProps={{
                   typography: { variant: 'label2', color: 'text.secondary' },
                 }}
@@ -308,7 +339,10 @@ export const YieldCalculatorDialog = ({
             </Box>
           </Box>
           <Typography variant="buttonLarge">
-            {intl.formatMessage({ defaultMessage: 'Return Projection' })}
+            {intl.formatMessage({
+              defaultMessage: 'Return Projection',
+              id: 'tH0obk',
+            })}
           </Typography>
           <Box
             display="flex"
@@ -317,7 +351,10 @@ export const YieldCalculatorDialog = ({
             mt={3}
           >
             <Typography variant="label2" color="text.secondary">
-              {intl.formatMessage({ defaultMessage: 'Profit/Loss' })}
+              {intl.formatMessage({
+                defaultMessage: 'Profit/Loss',
+                id: 'rfzzi6',
+              })}
             </Typography>
             <Typography
               variant="value5"
@@ -333,7 +370,10 @@ export const YieldCalculatorDialog = ({
             mt={2}
           >
             <Typography variant="label2" color="text.secondary">
-              {intl.formatMessage({ defaultMessage: 'Total Value' })}
+              {intl.formatMessage({
+                defaultMessage: 'Total Value',
+                id: 'MoJx/h',
+              })}
             </Typography>
             <Typography variant="value5">
               {intl.formatNumber(totalValue)} {assetToken?.symbol || ''}
@@ -352,7 +392,10 @@ export const YieldCalculatorDialog = ({
             mt={2}
           >
             <Typography variant="label2" color="text.secondary">
-              {intl.formatMessage({ defaultMessage: 'Net Value' })}
+              {intl.formatMessage({
+                defaultMessage: 'Net Value',
+                id: 'N+SKIs',
+              })}
             </Typography>
             <Typography
               color={(theme) =>
@@ -375,11 +418,14 @@ export const YieldCalculatorDialog = ({
                 fullWidth
                 color="secondary"
               >
-                {intl.formatMessage({ defaultMessage: 'Close' })}
+                {intl.formatMessage({ defaultMessage: 'Close', id: 'rbrahO' })}
               </Button>
               {isConnected ? (
                 <Button color="secondary" onClick={handleDeposit} fullWidth>
-                  {intl.formatMessage({ defaultMessage: 'Make a Deposit' })}
+                  {intl.formatMessage({
+                    defaultMessage: 'Make a Deposit',
+                    id: 'MMRXim',
+                  })}
                 </Button>
               ) : (
                 <OpenAccountModalButton
@@ -396,11 +442,14 @@ export const YieldCalculatorDialog = ({
         isMobile ? undefined : (
           <>
             <Button variant="text" onClick={onClose}>
-              {intl.formatMessage({ defaultMessage: 'Close' })}
+              {intl.formatMessage({ defaultMessage: 'Close', id: 'rbrahO' })}
             </Button>
             {isConnected ? (
               <Button color="secondary" onClick={handleDeposit}>
-                {intl.formatMessage({ defaultMessage: 'Make a Deposit' })}
+                {intl.formatMessage({
+                  defaultMessage: 'Make a Deposit',
+                  id: 'MMRXim',
+                })}
               </Button>
             ) : (
               <OpenAccountModalButton variant="contained" color="primary" />

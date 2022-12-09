@@ -95,7 +95,12 @@ export const FeaturedVaultCard = (props: VaultCardProps) => {
           </Typography>
         </Stack>
       </ValueLabel>
-      <ValueLabel label={intl.formatMessage({ defaultMessage: 'Protocols' })}>
+      <ValueLabel
+        label={intl.formatMessage({
+          defaultMessage: 'Protocols',
+          id: 'zFNxtv',
+        })}
+      >
         <AvatarGroup max={6}>
           {metavault.strategies.map((strat) => (
             <Avatar key={strat.protocol.id}>

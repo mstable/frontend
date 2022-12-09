@@ -470,6 +470,9 @@
   "2zD+V+": {
     "defaultMessage": "Wrong network selected"
   },
+  "47FYwb": {
+    "defaultMessage": "Cancel"
+  },
   "6OuLVd": {
     "defaultMessage": "Tips"
   },
@@ -488,11 +491,17 @@
   "Ar5obI": {
     "defaultMessage": "No balance"
   },
+  "EobEOB": {
+    "defaultMessage": "Please confirm to proceed"
+  },
   "IdL95F": {
     "defaultMessage": "Make sure you are on the right URL."
   },
   "MSTVqC": {
     "defaultMessage": "Reload Page"
+  },
+  "N2IrpM": {
+    "defaultMessage": "Confirm"
   },
   "RnacAD": {
     "defaultMessage": "Make sure your internet connection is working."
@@ -512,20 +521,11 @@
   "XYEIBG": {
     "defaultMessage": "App supports Goerli Testnet."
   },
-  "defaultCancel": {
-    "defaultMessage": "Cancel"
-  },
-  "defaultConfirm": {
-    "defaultMessage": "Confirm"
-  },
-  "defaultConfirmation": {
-    "defaultMessage": "Please confirm to proceed"
-  },
-  "not_connected": {
-    "defaultMessage": "Not Connected"
-  },
   "p556q3": {
     "defaultMessage": "Copied"
+  },
+  "x8vY9w": {
+    "defaultMessage": "Not Connected"
   },
   "y1NA43": {
     "defaultMessage": "Check URL"

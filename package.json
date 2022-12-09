@@ -14,7 +14,7 @@
     "storybook": "yarn start-storybook -p 6006",
     "storybook:build": "yarn build-storybook -o dist/storybook",
     "lint": "nx lint",
-    "lint:fix": "nx lint --args=--fix"
+    "lint:fix": "nx run-many --target=lint -- --fix"
   },
   "private": true,
   "lint-staged": {
@@ -83,6 +83,7 @@
     "@nrwl/linter": "15.3.0",
     "@nrwl/nx-plugin": "^15.3.0",
     "@nrwl/react": "15.3.0",
+    "@nrwl/vite": "15.3.0",
     "@nrwl/web": "15.3.0",
     "@nrwl/workspace": "15.3.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
@@ -109,6 +110,9 @@
     "@types/react-dom": "^18.0.9",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",
+    "@vitejs/plugin-react": "^2.2.0",
+    "@vitest/coverage-c8": "~0.25.3",
+    "@vitest/ui": "^0.9.3",
     "babel-jest": "29.3.1",
     "babel-loader": "9.1.0",
     "babel-plugin-formatjs": "^10.3.35",
@@ -132,10 +136,12 @@
     "fs-extra": "^11.1.0",
     "husky": "^8.0.2",
     "jest": "^29.3.1",
+    "jsdom": "~20.0.3",
     "jsonc-eslint-parser": "^2.1.0",
     "lint-staged": "^13.1.0",
     "mustache": "^4.2.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
+    "node-stdlib-browser": "^1.2.0",
     "nx": "15.3.0",
     "prettier": "^2.8.1",
     "react-test-renderer": "18.2.0",
@@ -144,6 +150,13 @@
     "ts-node": "^10.9.1",
     "typescript": "4.9.4",
     "url-loader": "^4.1.1",
+    "vite": "^3.0.5",
+    "vite-plugin-dts": "~1.7.1",
+    "vite-plugin-eslint": "^1.6.0",
+    "vite-plugin-node-stdlib-browser": "^0.1.1",
+    "vite-plugin-svgr": "^2.2.2",
+    "vite-tsconfig-paths": "^3.5.2",
+    "vitest": "^0.25.1",
     "webpack": "^5.75.0"
   }
 }

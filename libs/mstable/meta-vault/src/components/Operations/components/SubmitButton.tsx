@@ -41,8 +41,8 @@ export const SubmitButton = () => {
   const operationLabel = useMemo(
     () =>
       tab === 0
-        ? intl.formatMessage({ defaultMessage: 'Deposit' })
-        : intl.formatMessage({ defaultMessage: 'Withdraw' }),
+        ? intl.formatMessage({ defaultMessage: 'Deposit', id: 'dIgBOz' })
+        : intl.formatMessage({ defaultMessage: 'Withdraw', id: 'PXAur5' }),
     [intl, tab],
   );
 
@@ -75,7 +75,7 @@ export const SubmitButton = () => {
     onSuccess: (data) => {
       pushNotification({
         title: intl.formatMessage(
-          { defaultMessage: '{operation}ing' },
+          { defaultMessage: '{operation}ing', id: 'm+DGTj' },
           {
             operation: operationLabel,
           },
@@ -95,7 +95,10 @@ export const SubmitButton = () => {
     onError: () => {
       setIsSubmitLoading(false);
       pushNotification({
-        title: intl.formatMessage({ defaultMessage: 'Transaction Cancelled' }),
+        title: intl.formatMessage({
+          defaultMessage: 'Transaction Cancelled',
+          id: '20X0BC',
+        }),
         severity: 'info',
       });
     },
@@ -104,7 +107,10 @@ export const SubmitButton = () => {
     hash: submitData?.hash,
     onSuccess: ({ blockNumber, transactionHash, from, to }) => {
       pushNotification({
-        title: intl.formatMessage({ defaultMessage: 'Transaction Confirmed' }),
+        title: intl.formatMessage({
+          defaultMessage: 'Transaction Confirmed',
+          id: 'rgdwQX',
+        }),
         content: (
           <ViewEtherscanLink
             hash={transactionHash}
@@ -126,7 +132,10 @@ export const SubmitButton = () => {
     },
     onError: () => {
       pushNotification({
-        title: intl.formatMessage({ defaultMessage: 'Transaction Error' }),
+        title: intl.formatMessage({
+          defaultMessage: 'Transaction Error',
+          id: 'p8bsw4',
+        }),
         content: (
           <ViewEtherscanLink
             hash={submitData?.hash}
@@ -154,7 +163,10 @@ export const SubmitButton = () => {
     return (
       <OpenAccountModalButton
         fullWidth
-        connectLabel={intl.formatMessage({ defaultMessage: 'Connect Wallet' })}
+        connectLabel={intl.formatMessage({
+          defaultMessage: 'Connect Wallet',
+          id: 'cg1VJ2',
+        })}
         {...buttonProps}
       />
     );
@@ -171,7 +183,10 @@ export const SubmitButton = () => {
   if (isWriteLoading) {
     return (
       <Button {...buttonProps} disabled>
-        {intl.formatMessage({ defaultMessage: 'Sign Transaction' })}
+        {intl.formatMessage({
+          defaultMessage: 'Sign Transaction',
+          id: 'w1LBDB',
+        })}
       </Button>
     );
   }
@@ -187,7 +202,10 @@ export const SubmitButton = () => {
   if (isError) {
     return (
       <Button {...buttonProps} disabled>
-        {intl.formatMessage({ defaultMessage: 'Insufficient balance' })}
+        {intl.formatMessage({
+          defaultMessage: 'Insufficient balance',
+          id: 'kaPKOB',
+        })}
       </Button>
     );
   }

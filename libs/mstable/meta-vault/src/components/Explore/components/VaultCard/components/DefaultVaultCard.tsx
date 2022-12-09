@@ -121,7 +121,10 @@ export const DefaultVaultCard = (props: VaultCardProps) => {
           </Stack>
         </ValueLabel>
         <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'Protocols' })}
+          label={intl.formatMessage({
+            defaultMessage: 'Protocols',
+            id: 'zFNxtv',
+          })}
           components={{
             valueContainer: { pb: 0.3 },
             label: { sx: { mb: 0.5 } },

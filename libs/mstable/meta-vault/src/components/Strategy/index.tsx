@@ -47,33 +47,38 @@ export const Strategy = () => {
 
   const collapseSections = [
     {
-      title: intl.formatMessage({ defaultMessage: 'Protocols' }),
+      title: intl.formatMessage({ defaultMessage: 'Protocols', id: 'zFNxtv' }),
       subtitle: intl.formatMessage({
         defaultMessage: 'Protocols that are used by this vault.',
+        id: '7jeKkk',
       }),
       component: <Protocols />,
     },
     {
       title: intl.formatMessage({
         defaultMessage: 'Contracts',
+        id: 'ZwpbZp',
       }),
       subtitle: intl.formatMessage({
         defaultMessage:
           'Vault contract and underlying vaults that are utilized.',
+        id: '3Dvp3q',
       }),
       component: <Vaults />,
     },
     {
-      title: intl.formatMessage({ defaultMessage: 'Fees' }),
+      title: intl.formatMessage({ defaultMessage: 'Fees', id: 'qZbedW' }),
       subtitle: intl.formatMessage({
         defaultMessage: 'Fees that are charged by this vault.',
+        id: 'Pk6qK4',
       }),
       component: <Fees />,
     },
     {
-      title: intl.formatMessage({ defaultMessage: 'Assets' }),
+      title: intl.formatMessage({ defaultMessage: 'Assets', id: 'd1uESJ' }),
       subtitle: intl.formatMessage({
         defaultMessage: 'Assets that are used by this vault.',
+        id: 'LDz7xI',
       }),
       component: <Assets />,
     },
@@ -86,7 +91,10 @@ export const Strategy = () => {
         sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}
       >
         <CardHeader
-          title={intl.formatMessage({ defaultMessage: 'Strategy & Risks' })}
+          title={intl.formatMessage({
+            defaultMessage: 'Strategy & Risks',
+            id: '9RAHhM',
+          })}
           sx={{ paddingLeft: 0 }}
           action={
             <Button
@@ -95,7 +103,10 @@ export const Strategy = () => {
                 setShowStrategy(true);
               }}
             >
-              {intl.formatMessage({ defaultMessage: 'Visualize Strategy' })}
+              {intl.formatMessage({
+                defaultMessage: 'Visualize Strategy',
+                id: '3QSP9N',
+              })}
             </Button>
           }
         />
@@ -137,7 +148,10 @@ export const Strategy = () => {
           onClose={() => {
             setShowStrategy(false);
           }}
-          title={intl.formatMessage({ defaultMessage: 'Visualize strategy' })}
+          title={intl.formatMessage({
+            defaultMessage: 'Visualize strategy',
+            id: 'u7a5FI',
+          })}
           content={
             <DiagramStrategy
               onClose={() => {

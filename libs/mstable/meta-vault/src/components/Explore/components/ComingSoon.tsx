@@ -44,7 +44,7 @@ export const ComingSoonCard = ({ token, ...rest }: ComingSoonCardProps) => {
     >
       <TokenIcon symbol={token} sx={{ height: 53, width: 53 }} />
       <Typography>
-        {intl.formatMessage({ defaultMessage: 'Coming Soon' })}
+        {intl.formatMessage({ defaultMessage: 'Coming Soon', id: 'LiHQih' })}
       </Typography>
     </Stack>
   );
@@ -65,7 +65,7 @@ export const ComingSoonRow = ({ token, ...rest }: ComingSoonRowProps) => {
       </TableCell>
       <TableCell colSpan={6}>
         <Typography variant="value4">
-          {intl.formatMessage({ defaultMessage: 'Coming Soon' })}
+          {intl.formatMessage({ defaultMessage: 'Coming Soon', id: 'LiHQih' })}
         </Typography>
       </TableCell>
     </TableRow>

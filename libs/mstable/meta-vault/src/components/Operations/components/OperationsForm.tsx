@@ -1,14 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { TokenInput } from '@frontend/shared-ui';
-import {
-  Divider,
-  Skeleton,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Divider, Skeleton, Stack, Typography, useTheme } from '@mui/material';
 import { Ticket } from 'phosphor-react';
 import { mergeAll } from 'ramda';
 import { useIntl } from 'react-intl';
@@ -43,7 +36,6 @@ export const OperationsForm = (props: StackProps) => {
     isError,
   } = useOperations();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
   const [hasFocus, setHasFocus] = useState(false);
@@ -102,7 +94,7 @@ export const OperationsForm = (props: StackProps) => {
           maxIcon: 'wallet',
           hideTokenBadge: !isConnected || !assetToken || tab === 1,
           hideBottomRow: tab === 1,
-          label: intl.formatMessage({ defaultMessage: 'Asset' }),
+          label: intl.formatMessage({ defaultMessage: 'Asset', id: 'WKCp0D' }),
           onChange: handlePrimaryChange,
           ref: primary,
         },
@@ -149,8 +141,11 @@ export const OperationsForm = (props: StackProps) => {
           maxIcon: 'vault',
           hideTokenBadge: !isConnected || !mvToken || tab === 0,
           hideBottomRow: tab === 0,
-          label: intl.formatMessage({ defaultMessage: 'Shares' }),
-          tokenLabel: intl.formatMessage({ defaultMessage: 'Shares' }),
+          label: intl.formatMessage({ defaultMessage: 'Shares', id: 'mrwfXX' }),
+          tokenLabel: intl.formatMessage({
+            defaultMessage: 'Shares',
+            id: 'mrwfXX',
+          }),
           tokenIcon: (
             <Ticket
               width={14}
@@ -217,7 +212,7 @@ export const OperationsForm = (props: StackProps) => {
         {assetsPerShare && assetToken ? (
           <Typography variant="value6">
             {intl.formatMessage(
-              { defaultMessage: '1 Share = {ratio} {asset}' },
+              { defaultMessage: '1 Share = {ratio} {asset}', id: '/e4KBT' },
               {
                 ratio: assetsPerShare?.simpleRounded ?? '-',
                 asset: assetToken?.symbol,

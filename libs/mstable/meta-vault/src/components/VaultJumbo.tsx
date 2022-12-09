@@ -126,10 +126,14 @@ export const VaultJumbo = (props: StackProps) => {
         divider={<Divider orientation="vertical" flexItem variant="middle" />}
       >
         <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'Share Price' })}
+          label={intl.formatMessage({
+            defaultMessage: 'Share Price',
+            id: 'TvzL+L',
+          })}
           hint={intl.formatMessage({
             defaultMessage:
               'The current price of 1 share. Return is represented as a increase in share price value.',
+            id: 'ULHfQE',
           })}
         >
           {isLoading ? (
@@ -144,9 +148,10 @@ export const VaultJumbo = (props: StackProps) => {
           )}
         </ValueLabel>
         <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'ROI' })}
+          label={intl.formatMessage({ defaultMessage: 'ROI', id: 'P8Xs51' })}
           hint={intl.formatMessage({
             defaultMessage: 'Return on investment since Vault inception.',
+            id: 'zKtTJT',
           })}
         >
           {isLoading ? (
@@ -161,8 +166,11 @@ export const VaultJumbo = (props: StackProps) => {
           )}
         </ValueLabel>
         <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'TVL' })}
-          hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
+          label={intl.formatMessage({ defaultMessage: 'TVL', id: 'SKB/G9' })}
+          hint={intl.formatMessage({
+            defaultMessage: 'Total Value Locked',
+            id: 'DUR59o',
+          })}
         >
           {isLoading || isPriceLoading || !assetToken ? (
             <Skeleton height={24} width={160} />
@@ -185,7 +193,10 @@ export const VaultJumbo = (props: StackProps) => {
           )}
         </ValueLabel>
         <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'Protocols Involved' })}
+          label={intl.formatMessage({
+            defaultMessage: 'Protocols Involved',
+            id: '65ThHj',
+          })}
           components={{
             valueContainer: { pb: 0.3 },
           }}

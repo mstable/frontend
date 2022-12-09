@@ -22,6 +22,7 @@ export const protocols: Record<SupportedProtocol, Protocol> = {
     description: defineMessage({
       defaultMessage:
         'mStable is a protocol for yield aggregation and diversification.',
+      id: '7CAm2s',
     }),
   },
   curve: {
@@ -30,6 +31,7 @@ export const protocols: Record<SupportedProtocol, Protocol> = {
     description: defineMessage({
       defaultMessage:
         'Curve is an exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers, without an opportunity cost.',
+      id: 'vS/YSY',
     }),
   },
   convex: {
@@ -38,6 +40,7 @@ export const protocols: Record<SupportedProtocol, Protocol> = {
     description: defineMessage({
       defaultMessage:
         'Convex is a platform that boosts rewards for CRV stakers and liquidity providers alike, all in a simple and easy to use interface.',
+      id: 'meocUp',
     }),
   },
   aave: {
@@ -46,6 +49,7 @@ export const protocols: Record<SupportedProtocol, Protocol> = {
     description: defineMessage({
       defaultMessage:
         'Aave is a decentralised non-custodial liquidity market protocol where users can participate as depositors or borrowers.',
+      id: 'ePxmfo',
     }),
   },
   uniswap: {
@@ -54,6 +58,7 @@ export const protocols: Record<SupportedProtocol, Protocol> = {
     description: defineMessage({
       defaultMessage:
         'The Uniswap Protocol is an open-source protocol for providing liquidity and trading ERC20 tokens on Ethereum.',
+      id: 'LMK5Bl',
     }),
   },
 };

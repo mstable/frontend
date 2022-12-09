@@ -40,14 +40,17 @@ export const useChartConfig = () => {
   const chartTypes = {
     APS: {
       id: 'APS' as ChartType,
-      label: intl.formatMessage({ defaultMessage: 'Share Price' }),
+      label: intl.formatMessage({
+        defaultMessage: 'Share Price',
+        id: 'TvzL+L',
+      }),
       chartMargin: 0.001,
       getValue: (v) => v.assetPerShare,
       getLabel: (v) => intl.formatNumber(v, { style: 'decimal' }),
     },
     APY: {
       id: 'APY' as ChartType,
-      label: intl.formatMessage({ defaultMessage: 'APY' }),
+      label: intl.formatMessage({ defaultMessage: 'APY', id: 'MLTKb6' }),
       chartMargin: 0.001,
       getValue: (v) => Number(v.apy),
       getLabel: (v) => (Number(v) * 100).toFixed(2) + '%',
@@ -55,7 +58,7 @@ export const useChartConfig = () => {
     TVL: {
       id: 'TVL' as ChartType,
       label: intl.formatMessage(
-        { defaultMessage: 'TVL ({symbol})' },
+        { defaultMessage: 'TVL ({symbol})', id: 'UMrrVX' },
         { symbol: mv?.assetToken?.symbol },
       ),
       chartMargin: 1e3,
@@ -68,17 +71,17 @@ export const useChartConfig = () => {
   const chartTimeframes = {
     '1W': {
       id: '1W' as ChartTimeframe,
-      label: intl.formatMessage({ defaultMessage: '1W' }),
+      label: intl.formatMessage({ defaultMessage: '1W', id: '6bJGds' }),
       days: 7,
     },
     '1M': {
       id: '1M' as ChartTimeframe,
-      label: intl.formatMessage({ defaultMessage: '1M' }),
+      label: intl.formatMessage({ defaultMessage: '1M', id: '1uz/I3' }),
       days: 30,
     },
     '1Y': {
       id: '1Y' as ChartTimeframe,
-      label: intl.formatMessage({ defaultMessage: '1Y' }),
+      label: intl.formatMessage({ defaultMessage: '1Y', id: '8lLHeh' }),
       days: 365,
     },
   };

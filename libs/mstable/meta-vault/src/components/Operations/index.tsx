@@ -70,11 +70,17 @@ const OperationsWrapped = (props: CardProps) => {
           variant="fullWidth"
         >
           <Tab
-            label={intl.formatMessage({ defaultMessage: 'DEPOSIT' })}
+            label={intl.formatMessage({
+              defaultMessage: 'DEPOSIT',
+              id: 'KYgRAc',
+            })}
             disabled={isSubmitLoading}
           />
           <Tab
-            label={intl.formatMessage({ defaultMessage: 'WITHDRAW' })}
+            label={intl.formatMessage({
+              defaultMessage: 'WITHDRAW',
+              id: 'zRbVmO',
+            })}
             disabled={isSubmitLoading}
           />
         </Tabs>

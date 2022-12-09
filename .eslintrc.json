@@ -51,9 +51,14 @@
           }
         ],
         "formatjs/enforce-default-message": ["error", "literal"],
-        "formatjs/no-id": "error",
         "formatjs/no-multiple-whitespaces": "error",
-        "formatjs/no-offset": "error"
+        "formatjs/no-offset": "error",
+        "formatjs/enforce-id": [
+          "error",
+          {
+            "idInterpolationPattern": "[sha512:contenthash:base64:6]"
+          }
+        ]
       }
     },
     {

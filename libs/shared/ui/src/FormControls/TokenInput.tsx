@@ -260,7 +260,10 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
                     }}
                     noWrap
                   >
-                    {intl.formatMessage({ defaultMessage: 'No balance' })}
+                    {intl.formatMessage({
+                      defaultMessage: 'No balance',
+                      id: 'Ar5obI',
+                    })}
                   </Typography>
                 </Stack>
               ) : (
@@ -309,7 +312,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
               >
                 {intl.formatMessage({
                   defaultMessage: 'Not Connected',
-                  id: 'not_connected',
+                  id: 'x8vY9w',
                 })}
               </Typography>
             )}
