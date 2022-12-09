@@ -13,12 +13,14 @@ import { Linter } from '@nrwl/linter';
 import { libraryGenerator } from '@nrwl/react/src/generators/library/library';
 
 import type { Tree } from '@nrwl/devkit';
-import type { NormalizedSchema } from '@nrwl/react/src/generators/library/library';
-import type { Schema } from '@nrwl/react/src/generators/library/schema';
+import type {
+  NormalizedSchema,
+  Schema,
+} from '@nrwl/react/src/generators/library/schema';
 
 const defaultSchema: Omit<Schema, 'name' | 'directory'> = {
   buildable: true,
-  compiler: 'babel',
+  bundler: 'vite',
   component: false,
   globalCss: false,
   js: false,
@@ -74,8 +76,6 @@ const updateProject = (tree: Tree, options: NormalizedSchema) => {
   const projectConfig = readProjectConfiguration(tree, options.name);
   const projectRootKebabCase = options.projectRoot.replace(/\//g, '-');
 
-  projectConfig.targets['build'].options.rollupConfig = 'rollup.config.js';
-
   projectConfig.targets['i18n-extract'] = {
     executor: 'nx:run-commands',
     options: {
@@ -109,19 +109,6 @@ const updateTsConfig = (tree: Tree, options: NormalizedSchema) => {
         resolveJsonModule: true,
         strict: false,
       };
-
-      return json;
-    },
-  );
-
-  updateJson(
-    tree,
-    joinPathFragments(options.projectRoot, 'tsconfig.lib.json'),
-    (json) => {
-      json.files = [
-        ...json.files,
-        `${offset}dist/libs/shared/theme/src/mui/types.d.ts`,
-      ];
 
       return json;
     },

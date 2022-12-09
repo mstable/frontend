@@ -1,27 +1,15 @@
 {
+  "name": "mstable-meta-vault",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/mstable/meta-vault/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/vite:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/mstable/meta-vault",
-        "tsConfig": "libs/mstable/meta-vault/tsconfig.lib.json",
-        "project": "libs/mstable/meta-vault/package.json",
-        "entryFile": "libs/mstable/meta-vault/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "libs/mstable/meta-vault/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "outputPath": "dist/libs/mstable/meta-vault"
       }
     },
     "lint": {

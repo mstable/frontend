@@ -1,27 +1,15 @@
 {
+  "name": "shared-wagmi",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/wagmi/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/vite:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/shared/wagmi",
-        "tsConfig": "libs/shared/wagmi/tsconfig.lib.json",
-        "project": "libs/shared/wagmi/package.json",
-        "entryFile": "libs/shared/wagmi/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "libs/shared/wagmi/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "outputPath": "dist/libs/shared/wagmi"
       }
     },
     "lint": {

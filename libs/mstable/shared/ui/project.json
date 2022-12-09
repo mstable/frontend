@@ -1,28 +1,15 @@
 {
-  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "name": "mstable-shared-ui",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/mstable/shared/ui/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/vite:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/mstable/shared/ui",
-        "tsConfig": "libs/mstable/shared/ui/tsconfig.lib.json",
-        "project": "libs/mstable/shared/ui/package.json",
-        "entryFile": "libs/mstable/shared/ui/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "rollup.config.js",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "libs/mstable/shared/ui/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "outputPath": "dist/libs/mstable/shared/ui"
       }
     },
     "lint": {
