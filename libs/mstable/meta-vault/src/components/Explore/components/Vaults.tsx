@@ -40,7 +40,7 @@ export const Vaults = () => {
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Typography mt={5} mb={3} variant="h3">
-          {intl.formatMessage({ defaultMessage: 'Vaults' })}
+          {intl.formatMessage({ defaultMessage: 'Vaults', id: 's2zphO' })}
         </Typography>
         <ToggleButtonGroup
           size="large"
@@ -84,28 +84,46 @@ export const Vaults = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>
-                    {intl.formatMessage({ defaultMessage: 'Asset' })}
+                    {intl.formatMessage({
+                      defaultMessage: 'Asset',
+                      id: 'WKCp0D',
+                    })}
                   </TableCell>
                   <TableCell>
-                    {intl.formatMessage({ defaultMessage: 'Vault name' })}
+                    {intl.formatMessage({
+                      defaultMessage: 'Vault name',
+                      id: 'g6UhRO',
+                    })}
                   </TableCell>
                   {!isMobile && (
                     <TableCell>
-                      {intl.formatMessage({ defaultMessage: 'Strategy' })}
+                      {intl.formatMessage({
+                        defaultMessage: 'Strategy',
+                        id: 'zGHadw',
+                      })}
                     </TableCell>
                   )}
                   {!isMobile && (
                     <TableCell>
-                      {intl.formatMessage({ defaultMessage: 'Protocols' })}
+                      {intl.formatMessage({
+                        defaultMessage: 'Protocols',
+                        id: 'zFNxtv',
+                      })}
                     </TableCell>
                   )}
                   {!isMobile && (
                     <TableCell>
-                      {intl.formatMessage({ defaultMessage: 'TVL' })}
+                      {intl.formatMessage({
+                        defaultMessage: 'TVL',
+                        id: 'SKB/G9',
+                      })}
                     </TableCell>
                   )}
                   <TableCell>
-                    {intl.formatMessage({ defaultMessage: 'ROI' })}
+                    {intl.formatMessage({
+                      defaultMessage: 'ROI',
+                      id: 'P8Xs51',
+                    })}
                   </TableCell>
                   {!isMobile && <TableCell />}
                 </TableRow>

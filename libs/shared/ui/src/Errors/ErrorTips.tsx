@@ -30,6 +30,7 @@ export const ConnectionTips = (props: StackProps) => {
       <Typography variant="h4" color="grey.600">
         {intl.formatMessage({
           defaultMessage: 'Tips',
+          id: '6OuLVd',
         })}
       </Typography>
       <List>
@@ -38,9 +39,13 @@ export const ConnectionTips = (props: StackProps) => {
             <Browsers color={theme.palette.icons.color} size={24} />
           </ListItemIcon>
           <ListItemText
-            primary={intl.formatMessage({ defaultMessage: 'Check URL' })}
+            primary={intl.formatMessage({
+              defaultMessage: 'Check URL',
+              id: 'y1NA43',
+            })}
             secondary={intl.formatMessage({
               defaultMessage: 'Make sure you are on the right URL.',
+              id: 'IdL95F',
             })}
           />
         </ListItem>
@@ -52,9 +57,11 @@ export const ConnectionTips = (props: StackProps) => {
           <ListItemText
             primary={intl.formatMessage({
               defaultMessage: 'Check connectivity',
+              id: '/p1GSi',
             })}
             secondary={intl.formatMessage({
               defaultMessage: 'Make sure your internet connection is working.',
+              id: 'RnacAD',
             })}
           />
         </ListItem>
@@ -79,6 +86,7 @@ export const NetworkTips = (props: StackProps) => {
       <Typography variant="h4" color="grey.600">
         {intl.formatMessage({
           defaultMessage: 'Tips',
+          id: '6OuLVd',
         })}
       </Typography>
       <List>
@@ -89,10 +97,12 @@ export const NetworkTips = (props: StackProps) => {
           <ListItemText
             primary={intl.formatMessage({
               defaultMessage: 'Wrong network selected',
+              id: '2zD+V+',
             })}
             secondary={intl.formatMessage({
               defaultMessage:
                 'Make sure your wallet is on Ethereum Mainnet network.',
+              id: '+6JrYn',
             })}
           />
         </ListItem>
@@ -106,9 +116,11 @@ export const NetworkTips = (props: StackProps) => {
           <ListItemText
             primary={intl.formatMessage({
               defaultMessage: 'Want to use a testnet?',
+              id: '6z2ptx',
             })}
             secondary={intl.formatMessage({
               defaultMessage: 'App supports Goerli Testnet.',
+              id: 'XYEIBG',
             })}
           />
         </ListItem>

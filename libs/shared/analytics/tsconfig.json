@@ -1,18 +1,12 @@
 {
-  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
+    "allowJs": false,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
     "jsxImportSource": "@emotion/react",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "resolveJsonModule": true,
-    "strict": false
+    "types": ["vite/client"]
   },
   "files": [],
   "include": [],
@@ -20,5 +14,6 @@
     {
       "path": "./tsconfig.lib.json"
     }
-  ]
+  ],
+  "extends": "../../../tsconfig.base.json"
 }

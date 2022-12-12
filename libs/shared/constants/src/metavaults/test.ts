@@ -17,20 +17,24 @@ const mainnet: Metavault = {
   tags: [
     defineMessage({
       defaultMessage: 'Super good looking',
+      id: 'B4cMY/',
     }),
     defineMessage({
       defaultMessage: 'Hot',
+      id: 'Bj2fLF',
     }),
   ],
   strategyDescription: defineMessage({
     defaultMessage:
       'This Strategy is super cool, I would even dare to say, HOT. Stay tune for more awesomeness!',
+    id: 'fDjDFf',
   }),
   strategies: [
     {
       protocol: protocols.mstable,
       strategy: defineMessage({
         defaultMessage: 'Yeah only mStable baby!',
+        id: 'il6pe+',
       }),
     },
   ],

@@ -43,6 +43,7 @@ export const Fees = (props: StackProps) => {
         <Typography variant="h5" gutterBottom pt={2}>
           {intl.formatMessage({
             defaultMessage: 'Performance Fee',
+            id: 'fJjSsb',
           })}
         </Typography>
         <Typography sx={{ typography: 'subtitle2', paddingBottom: 2 }}>
@@ -50,6 +51,7 @@ export const Fees = (props: StackProps) => {
             {
               defaultMessage:
                 'The Meta Vault charges a {fee}% performance upon underlying asset appreciation.',
+              id: 'tvpAhG',
             },
             { fee: Math.round(performance * 100) },
           )}
@@ -63,6 +65,7 @@ export const Fees = (props: StackProps) => {
         <Typography variant="h5" gutterBottom pt={2}>
           {intl.formatMessage({
             defaultMessage: 'Liquidation Fee',
+            id: 'tTCSmN',
           })}
         </Typography>
         <Typography sx={{ typography: 'subtitle2', paddingBottom: 2 }}>
@@ -70,6 +73,7 @@ export const Fees = (props: StackProps) => {
             {
               defaultMessage:
                 'The underlying vaults charge a {fee}% fee upon liquidation of the earned rewards.',
+              id: '4/JAsV',
             },
             { fee: Math.round(liquidation * 100) },
           )}

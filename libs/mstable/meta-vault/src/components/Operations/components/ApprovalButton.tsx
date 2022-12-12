@@ -61,7 +61,10 @@ export const ApprovalButton = (props: ButtonProps) => {
     ...config,
     onSuccess: (data) => {
       pushNotification({
-        title: intl.formatMessage({ defaultMessage: 'Approving Token' }),
+        title: intl.formatMessage({
+          defaultMessage: 'Approving Token',
+          id: '/54G9d',
+        }),
         content: (
           <ViewEtherscanLink
             hash={data?.hash}
@@ -77,7 +80,10 @@ export const ApprovalButton = (props: ButtonProps) => {
     onError: () => {
       setIsSubmitLoading(false);
       pushNotification({
-        title: intl.formatMessage({ defaultMessage: 'Transaction Cancelled' }),
+        title: intl.formatMessage({
+          defaultMessage: 'Transaction Cancelled',
+          id: '20X0BC',
+        }),
         severity: 'info',
       });
     },
@@ -89,6 +95,7 @@ export const ApprovalButton = (props: ButtonProps) => {
         pushNotification({
           title: intl.formatMessage({
             defaultMessage: 'Transaction Confirmed',
+            id: 'rgdwQX',
           }),
           content: (
             <ViewEtherscanLink
@@ -111,7 +118,10 @@ export const ApprovalButton = (props: ButtonProps) => {
       },
       onError: () => {
         pushNotification({
-          title: intl.formatMessage({ defaultMessage: 'Transaction Error' }),
+          title: intl.formatMessage({
+            defaultMessage: 'Transaction Error',
+            id: 'p8bsw4',
+          }),
           content: (
             <ViewEtherscanLink
               hash={approveData?.hash}
@@ -137,7 +147,10 @@ export const ApprovalButton = (props: ButtonProps) => {
   if (isWriteLoading) {
     return (
       <Button {...buttonProps} {...props} disabled>
-        {intl.formatMessage({ defaultMessage: 'Sign Transaction' })}
+        {intl.formatMessage({
+          defaultMessage: 'Sign Transaction',
+          id: 'w1LBDB',
+        })}
       </Button>
     );
   }
@@ -152,7 +165,7 @@ export const ApprovalButton = (props: ButtonProps) => {
 
   return (
     <Button {...buttonProps} {...props} onClick={approve}>
-      {intl.formatMessage({ defaultMessage: 'Approve' })}
+      {intl.formatMessage({ defaultMessage: 'Approve', id: 'WCaf5C' })}
     </Button>
   );
 };

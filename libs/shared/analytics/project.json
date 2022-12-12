@@ -5,26 +5,6 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@nrwl/web:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/shared/analytics",
-        "tsConfig": "libs/shared/analytics/tsconfig.lib.json",
-        "project": "libs/shared/analytics/package.json",
-        "entryFile": "libs/shared/analytics/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "rollup.config.js",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "libs/shared/analytics/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

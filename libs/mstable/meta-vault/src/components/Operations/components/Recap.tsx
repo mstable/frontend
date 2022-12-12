@@ -108,10 +108,10 @@ const DepositRecap = (props: StackProps) => {
       </Stack>
       <Stack {...rowProps}>
         <Typography variant="label2">
-          {intl.formatMessage({ defaultMessage: 'You Deposit' })}
+          {intl.formatMessage({ defaultMessage: 'You Deposit', id: '3wMm/H' })}
         </Typography>
         <Typography variant="label2">
-          {intl.formatMessage({ defaultMessage: 'You Receive' })}
+          {intl.formatMessage({ defaultMessage: 'You Receive', id: 'Gh1Vm9' })}
         </Typography>
       </Stack>
       <Stack {...rowProps}>
@@ -125,7 +125,7 @@ const DepositRecap = (props: StackProps) => {
                 : amount?.simpleRounded.toString() ?? '0.00'
             } ${
               assetToken?.symbol ??
-              intl.formatMessage({ defaultMessage: 'Assets' })
+              intl.formatMessage({ defaultMessage: 'Assets', id: 'd1uESJ' })
             }`
           )}
         </Typography>
@@ -134,7 +134,7 @@ const DepositRecap = (props: StackProps) => {
             <Skeleton width={100} />
           ) : (
             intl.formatMessage(
-              { defaultMessage: '{value} Shares' },
+              { defaultMessage: '{value} Shares', id: '7d2ri8' },
               {
                 value:
                   operation === 'deposit'
@@ -195,10 +195,10 @@ const WithdrawRecap = (props: StackProps) => {
       </Stack>
       <Stack {...rowProps}>
         <Typography variant="label2">
-          {intl.formatMessage({ defaultMessage: 'You Burn' })}
+          {intl.formatMessage({ defaultMessage: 'You Burn', id: 'FaoPNm' })}
         </Typography>
         <Typography variant="label2">
-          {intl.formatMessage({ defaultMessage: 'You Receive' })}
+          {intl.formatMessage({ defaultMessage: 'You Receive', id: 'Gh1Vm9' })}
         </Typography>
       </Stack>
       <Stack {...rowProps}>
@@ -207,7 +207,7 @@ const WithdrawRecap = (props: StackProps) => {
             <Skeleton width={100} />
           ) : (
             intl.formatMessage(
-              { defaultMessage: '{value} Shares' },
+              { defaultMessage: '{value} Shares', id: '7d2ri8' },
               {
                 value:
                   operation === 'withdraw'
@@ -227,7 +227,7 @@ const WithdrawRecap = (props: StackProps) => {
                 : amount?.simpleRounded.toString() ?? '0.00'
             } ${
               assetToken?.symbol ??
-              intl.formatMessage({ defaultMessage: 'Assets' })
+              intl.formatMessage({ defaultMessage: 'Assets', id: 'd1uESJ' })
             }`
           )}
         </Typography>
@@ -325,14 +325,17 @@ const GasFeesRecap = (props: StackProps) => {
     <Stack {...props} direction="column">
       <Stack {...rowProps} pb={2}>
         <Typography variant="label2" color="text.secondary">
-          {intl.formatMessage({ defaultMessage: 'Current Base Fee' })}
+          {intl.formatMessage({
+            defaultMessage: 'Current Base Fee',
+            id: 'bnF8kf',
+          })}
         </Typography>
         <Typography variant="value5">
           {feeLoading ? (
             <Skeleton width={85} />
           ) : (
             intl.formatMessage(
-              { defaultMessage: '{value} GWEI' },
+              { defaultMessage: '{value} GWEI', id: '7ynb1z' },
               { value: new BigDecimal(feeData?.gasPrice, 9).format(2) },
             )
           )}
@@ -341,9 +344,12 @@ const GasFeesRecap = (props: StackProps) => {
       <Stack {...rowProps} pb={1}>
         <Typography variant="label2" color="text.secondary">
           {needsApproval
-            ? intl.formatMessage({ defaultMessage: 'Approval Cost' })
+            ? intl.formatMessage({
+                defaultMessage: 'Approval Cost',
+                id: '9ALsvc',
+              })
             : intl.formatMessage(
-                { defaultMessage: '{operationLabel} Cost' },
+                { defaultMessage: '{operationLabel} Cost', id: 'fcBYFp' },
                 { operationLabel },
               )}
         </Typography>

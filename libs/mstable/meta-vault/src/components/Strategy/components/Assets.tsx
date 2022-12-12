@@ -20,6 +20,7 @@ export const Assets = (props: StackProps) => {
         {intl.formatMessage({
           defaultMessage:
             'The following assets are used in this strategy and therefore are exposed (partially) to their risk:',
+          id: 'korbaG',
         })}
       </Typography>
       <Box>

@@ -1,29 +1,10 @@
 {
+  "name": "mstable-settings",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/mstable/settings/src",
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@nrwl/web:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/mstable/settings",
-        "tsConfig": "libs/mstable/settings/tsconfig.lib.json",
-        "project": "libs/mstable/settings/package.json",
-        "entryFile": "libs/mstable/settings/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "rollup.config.js",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "libs/mstable/settings/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

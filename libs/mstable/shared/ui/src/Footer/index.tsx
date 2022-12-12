@@ -17,27 +17,27 @@ export const Footer = (props: StackProps) => {
 
   const socialIcons = [
     {
-      title: intl.formatMessage({ defaultMessage: 'Github' }),
+      title: intl.formatMessage({ defaultMessage: 'Github', id: 'Vn76qV' }),
       icon: <Github />,
       href: GITHUB,
     },
     {
-      title: intl.formatMessage({ defaultMessage: 'Discord' }),
+      title: intl.formatMessage({ defaultMessage: 'Discord', id: 'FvmV6q' }),
       icon: <Discord />,
       href: DISCORD,
     },
     {
-      title: intl.formatMessage({ defaultMessage: 'Twitter' }),
+      title: intl.formatMessage({ defaultMessage: 'Twitter', id: '8ywLSf' }),
       icon: <Twitter />,
       href: TWITTER,
     },
     {
-      title: intl.formatMessage({ defaultMessage: 'Medium' }),
+      title: intl.formatMessage({ defaultMessage: 'Medium', id: 'ovJ26C' }),
       icon: <MediumLogo size={24} weight="fill" />,
       href: MEDIUM,
     },
     {
-      title: intl.formatMessage({ defaultMessage: 'Email' }),
+      title: intl.formatMessage({ defaultMessage: 'Email', id: 'sy+pv5' }),
       icon: <Email />,
       href: EMAIL,
     },
@@ -53,6 +53,7 @@ export const Footer = (props: StackProps) => {
       <Typography>
         {intl.formatMessage({
           defaultMessage: '<strong>Yield app</strong> by mStable',
+          id: 'EhET/Q',
         })}
       </Typography>
       <Stack

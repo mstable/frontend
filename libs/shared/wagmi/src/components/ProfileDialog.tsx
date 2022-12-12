@@ -18,6 +18,7 @@ const Content = () => {
         responsive={false}
         namePlaceholder={intl.formatMessage({
           defaultMessage: 'Connected User',
+          id: 'X0zKZO',
         })}
         components={{
           avatar: { sx: { width: 36, height: 36 } },
@@ -45,7 +46,7 @@ const Actions = ({ onClose }: ActionsProps) => {
         disconnect();
       }}
     >
-      {intl.formatMessage({ defaultMessage: 'Disconnect' })}
+      {intl.formatMessage({ defaultMessage: 'Disconnect', id: 'qj1uhz' })}
     </Button>
   );
 };

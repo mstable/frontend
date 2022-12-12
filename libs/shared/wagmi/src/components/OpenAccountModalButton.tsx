@@ -44,7 +44,7 @@ export const OpenAccountModalButton = ({
           return (
             <Button {...buttonProps} onClick={handleClick(openConnectModal)}>
               {connectLabel ||
-                intl.formatMessage({ defaultMessage: 'Connect' })}
+                intl.formatMessage({ defaultMessage: 'Connect', id: '+vVZ/G' })}
             </Button>
           );
         }
@@ -56,7 +56,10 @@ export const OpenAccountModalButton = ({
               onClick={handleClick(openChainModal)}
               color="warning"
             >
-              {intl.formatMessage({ defaultMessage: 'Wrong Network' })}
+              {intl.formatMessage({
+                defaultMessage: 'Wrong Network',
+                id: 'wqlXwW',
+              })}
             </Button>
           );
         }

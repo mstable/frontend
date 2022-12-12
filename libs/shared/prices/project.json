@@ -1,29 +1,10 @@
 {
+  "name": "shared-prices",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/prices/src",
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
-      "executor": "@nrwl/web:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/shared/prices",
-        "tsConfig": "libs/shared/prices/tsconfig.lib.json",
-        "project": "libs/shared/prices/package.json",
-        "entryFile": "libs/shared/prices/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "rollup.config.js",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "libs/shared/prices/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

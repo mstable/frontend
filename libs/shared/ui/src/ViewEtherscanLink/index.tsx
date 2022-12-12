@@ -31,6 +31,7 @@ export const ViewEtherscanLink = ({
       {intl.formatMessage(
         {
           defaultMessage: 'View on {name}',
+          id: 'W87PYU',
         },
         { name: blockExplorer?.name ?? 'Etherscan' },
       )}

@@ -46,9 +46,10 @@ export const ItemMobile = ({ tx }: { tx: TxHistory }) => {
           </Box>
           <Typography variant="label2">
             {tx.type === TransactionType.Deposit
-              ? intl.formatMessage({ defaultMessage: 'Deposit' })
+              ? intl.formatMessage({ defaultMessage: 'Deposit', id: 'dIgBOz' })
               : intl.formatMessage({
                   defaultMessage: 'Withdraw',
+                  id: 'PXAur5',
                 })}
           </Typography>
         </Stack>
@@ -77,7 +78,10 @@ export const ItemMobile = ({ tx }: { tx: TxHistory }) => {
             {`${intl.formatNumber(
               new BigDecimal(tx.shareAmount ?? constants.Zero, mvToken.decimals)
                 .simple,
-            )} ${intl.formatMessage({ defaultMessage: 'Shares' })}`}
+            )} ${intl.formatMessage({
+              defaultMessage: 'Shares',
+              id: 'mrwfXX',
+            })}`}
           </Typography>
         </Box>
       </Stack>
@@ -88,7 +92,7 @@ export const ItemMobile = ({ tx }: { tx: TxHistory }) => {
         mt={3}
       >
         <Typography variant="label2" sx={{ mb: 0.5 }}>
-          {intl.formatMessage({ defaultMessage: 'Txn hash' })}
+          {intl.formatMessage({ defaultMessage: 'Txn hash', id: 'jHskc6' })}
         </Typography>
         <Box width={120}>
           <AddressLabel

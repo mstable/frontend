@@ -1,4 +1,5 @@
 {
+  "name": "shared-constants",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/constants/src",
   "projectType": "library",
@@ -6,26 +7,22 @@
   "targets": {
     "build": {
       "inputs": [
-        { "env": "NX_THE_GRAPH_MV_MAINNET_URL" },
-        { "env": "NX_THE_GRAPH_MV_GOERLI_URL" }
+        {
+          "env": "NX_THE_GRAPH_MV_MAINNET_URL"
+        },
+        {
+          "env": "NX_THE_GRAPH_MV_GOERLI_URL"
+        }
       ],
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/vite:build",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/libs/shared/constants",
-        "tsConfig": "libs/shared/constants/tsconfig.lib.json",
-        "project": "libs/shared/constants/package.json",
-        "entryFile": "libs/shared/constants/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "rollup.config.js",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "libs/shared/constants/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "outputPath": "dist/libs/shared/constants"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
       }
     },
     "lint": {

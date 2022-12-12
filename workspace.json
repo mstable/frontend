@@ -3,7 +3,6 @@
   "version": 2,
   "projects": {
     "mstable": "apps/mstable",
-    "mstable-e2e": "apps/mstable-e2e",
     "mstable-meta-vault": "libs/mstable/meta-vault",
     "mstable-settings": "libs/mstable/settings",
     "mstable-shared-data-access": "libs/mstable/shared/data-access",

@@ -63,7 +63,7 @@ export const Metavault = () => {
         >
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <ArrowLeft width={16} height={16} />
-            {intl.formatMessage({ defaultMessage: 'Explore' })}
+            {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}
           </Stack>
         </Button>
         <MVIcon

@@ -1,4 +1,7 @@
 {
+  "+1GGs7": {
+    "defaultMessage": "Claim CVX & CRV"
+  },
   "+k7bPd": {
     "defaultMessage": "The selected network is not supported by this application."
   },
@@ -7,6 +10,9 @@
   },
   "4tvRCp": {
     "defaultMessage": "Start Again"
+  },
+  "5fjd4K": {
+    "defaultMessage": "{fee}%"
   },
   "8ywLSf": {
     "defaultMessage": "Twitter"
@@ -17,11 +23,17 @@
   "Bak2Yy": {
     "defaultMessage": "Select from supported list"
   },
+  "BwwISd": {
+    "defaultMessage": "Vault"
+  },
   "CiONZE": {
     "defaultMessage": "Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position."
   },
   "DRXWXB": {
     "defaultMessage": "404"
+  },
+  "EWa1Fv": {
+    "defaultMessage": "LP Position"
   },
   "EhET/Q": {
     "defaultMessage": "<strong>Yield app</strong> by mStable"
@@ -41,6 +53,12 @@
   "Vn76qV": {
     "defaultMessage": "Github"
   },
+  "WKF4Gx": {
+    "defaultMessage": "Swap to Stablecoin"
+  },
+  "aPi9xt": {
+    "defaultMessage": "Swap fees"
+  },
   "aad9T5": {
     "defaultMessage": "Start Tour"
   },
@@ -58,6 +76,9 @@
   },
   "kdIIDL": {
     "defaultMessage": "User withdraws USDC"
+  },
+  "lLuyem": {
+    "defaultMessage": "DAO"
   },
   "ovJ26C": {
     "defaultMessage": "Medium"
