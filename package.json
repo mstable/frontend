@@ -58,7 +58,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
-    "@emotion/babel-plugin": "11.10.5",
+    "@emotion/babel-plugin": "^11.10.5",
     "@formatjs/cli": "^5.1.7",
     "@graphprotocol/graph-cli": "^0.37.1",
     "@graphprotocol/graph-ts": "^0.29.0",

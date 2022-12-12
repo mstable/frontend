@@ -16,8 +16,13 @@
       ],
       "executor": "@nrwl/vite:build",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/libs/shared/constants"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
       }
     },
     "lint": {

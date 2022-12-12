@@ -2,7 +2,6 @@ import react from '@vitejs/plugin-react';
 import { join } from 'path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
-import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
@@ -13,7 +12,6 @@ export default defineConfig({
       skipDiagnostics: true,
     }),
     react(),
-    svgr(),
     tsconfigPaths({
       root: '../../../',
       projects: ['tsconfig.base.json'],

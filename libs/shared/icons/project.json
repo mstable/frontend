@@ -8,8 +8,13 @@
     "build": {
       "executor": "@nrwl/vite:build",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/libs/shared/icons"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
       }
     },
     "lint": {
