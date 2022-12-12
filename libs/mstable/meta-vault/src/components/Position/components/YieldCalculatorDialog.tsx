@@ -72,9 +72,9 @@ export const YieldCalculatorDialog = ({
   useEffect(() => {
     if (data?.vault?.apy) {
       setApy(
-        intl.formatNumber(Number(data?.vault?.apy) * 100, {
+        Intl.NumberFormat('en-US', {
           maximumFractionDigits: 2,
-        }),
+        }).format(Number(data?.vault?.apy) * 100),
       );
     }
   }, [data?.vault?.apy, intl]);
@@ -307,10 +307,10 @@ export const YieldCalculatorDialog = ({
                 }}
               />
               <Typography variant="value5">
-                {intl.formatNumber(depositGasFee, {
+                {Intl.NumberFormat('en-US', {
                   style: 'currency',
                   currency,
-                })}
+                }).format(depositGasFee)}
               </Typography>
             </Box>
             <Box
@@ -331,10 +331,10 @@ export const YieldCalculatorDialog = ({
                 }}
               />
               <Typography variant="value5">
-                {intl.formatNumber(withdrawlGasFee, {
+                {Intl.NumberFormat('en-US', {
                   style: 'currency',
                   currency,
-                })}
+                }).format(withdrawlGasFee)}
               </Typography>
             </Box>
           </Box>
@@ -360,7 +360,8 @@ export const YieldCalculatorDialog = ({
               variant="value5"
               color={(theme) => theme.palette.success.main}
             >
-              {intl.formatNumber(profitOrLoss)} {assetToken?.symbol || ''}
+              {Intl.NumberFormat('en-US').format(profitOrLoss)}&nbsp;
+              {assetToken?.symbol || ''}
             </Typography>
           </Box>
           <Box
@@ -376,7 +377,8 @@ export const YieldCalculatorDialog = ({
               })}
             </Typography>
             <Typography variant="value5">
-              {intl.formatNumber(totalValue)} {assetToken?.symbol || ''}
+              {Intl.NumberFormat('en-US').format(totalValue)}&nbsp;
+              {assetToken?.symbol || ''}
             </Typography>
           </Box>
           {/* TODO: calculate PnL in dollar value */}
@@ -405,9 +407,9 @@ export const YieldCalculatorDialog = ({
               }
               variant="value5"
             >
-              {`${intl.formatNumber(totalValue - totalGasFee)} ${
-                assetToken?.symbol ?? ''
-              }`}
+              {`${Intl.NumberFormat('en-US').format(
+                totalValue - totalGasFee,
+              )}&nbsp;${assetToken?.symbol ?? ''}`}
             </Typography>
           </Box>
           {isMobile && (

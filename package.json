@@ -33,7 +33,6 @@
     "axios": "^1.2.1",
     "chart.js": "^4.0.1",
     "core-js": "^3.26.1",
-    "date-fns": "^2.29.3",
     "ethers": "^5.7.2",
     "framer-motion": "^7.6.19",
     "graphql": "^16.6.0",

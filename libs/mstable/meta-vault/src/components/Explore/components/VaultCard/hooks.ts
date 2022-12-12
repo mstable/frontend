@@ -82,12 +82,12 @@ export const useVaultCardProps = ({
   );
   const sharePrice = useMemo(
     () =>
-      intl.formatNumber(data?.vault?.assetPerShare ?? 0, {
+      Intl.NumberFormat('en-US', {
         maximumFractionDigits: 2,
         style: 'currency',
         currency,
-      }),
-    [currency, data?.vault?.assetPerShare, intl],
+      }).format(data?.vault?.assetPerShare ?? 0),
+    [currency, data?.vault?.assetPerShare],
   );
   const roiLabel = useMemo(
     () => intl.formatMessage({ defaultMessage: 'ROI', id: 'P8Xs51' }),
@@ -103,16 +103,15 @@ export const useVaultCardProps = ({
   );
   const roi = useMemo(
     () =>
-      intl.formatNumber(
+      Intl.NumberFormat('en-US', {
+        style: 'percent',
+        minimumFractionDigits: 2,
+      }).format(
         data?.vault?.assetPerShare /
           (data?.vault?.first?.[0]?.assetPerShare ?? 1) -
           1 ?? 0,
-        {
-          style: 'percent',
-          minimumFractionDigits: 2,
-        },
       ),
-    [data?.vault?.assetPerShare, data?.vault?.first, intl],
+    [data?.vault?.assetPerShare, data?.vault?.first],
   );
   const tvlLabel = useMemo(
     () => intl.formatMessage({ defaultMessage: 'TVL', id: 'SKB/G9' }),
@@ -128,14 +127,13 @@ export const useVaultCardProps = ({
   );
   const tvl = useMemo(
     () =>
-      intl.formatNumber(
+      Intl.NumberFormat('en-US', { notation: 'compact' }).format(
         new BigDecimal(
           data?.vault?.totalAssets ?? constants.Zero,
           assetDecimal ?? 18,
         ).simple,
-        { notation: 'compact' },
       ),
-    [assetDecimal, data?.vault?.totalAssets, intl],
+    [assetDecimal, data?.vault?.totalAssets],
   );
 
   return {

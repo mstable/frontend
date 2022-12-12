@@ -2,7 +2,6 @@ import { TransactionType } from '@frontend/mstable-shared-data-access';
 import { AddressLabel, TokenIcon } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import { Box, Stack, Typography } from '@mui/material';
-import { format } from 'date-fns';
 import { constants } from 'ethers';
 import { DownloadSimple, UploadSimple } from 'phosphor-react';
 import { useIntl } from 'react-intl';
@@ -55,7 +54,11 @@ export const ItemMobile = ({ tx }: { tx: TxHistory }) => {
         </Stack>
 
         <Typography variant="value5" color="text.secondary">
-          {format(Number(tx.timestamp) * 1000, 'MMM dd, yyyy')}
+          {Intl.DateTimeFormat('en-US', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+          }).format(Number(tx.timestamp) * 1000)}
         </Typography>
       </Stack>
       <Stack alignItems="flex-end" mt={3}>
@@ -66,7 +69,7 @@ export const ItemMobile = ({ tx }: { tx: TxHistory }) => {
               sx={{ height: 14, width: 14, mr: 1 }}
             />
             <Typography variant="value5">
-              {`${intl.formatNumber(
+              {`${Intl.NumberFormat('en-US').format(
                 new BigDecimal(
                   tx.assetAmount ?? constants.Zero,
                   assetToken?.decimals,
@@ -75,7 +78,7 @@ export const ItemMobile = ({ tx }: { tx: TxHistory }) => {
             </Typography>
           </Box>
           <Typography variant="value5" color="text.secondary">
-            {`${intl.formatNumber(
+            {`${Intl.NumberFormat('en-US').format(
               new BigDecimal(tx.shareAmount ?? constants.Zero, mvToken.decimals)
                 .simple,
             )} ${intl.formatMessage({
