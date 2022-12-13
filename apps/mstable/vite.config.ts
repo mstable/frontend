@@ -1,6 +1,8 @@
+/* eslint-disable new-cap */
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import react from '@vitejs/plugin-react';
+import rollupNodePolyFill from 'rollup-plugin-node-polyfills';
 import { defineConfig } from 'vite';
-import nodePolyfills from 'vite-plugin-node-stdlib-browser';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -10,7 +12,6 @@ export default defineConfig({
     host: 'localhost',
   },
   define: {
-    global: {},
     'process.env': Object.entries(process.env).reduce(
       (acc, [key, value]) => ({
         ...acc,
@@ -21,8 +22,25 @@ export default defineConfig({
       {},
     ),
   },
+  optimizeDeps: {
+    esbuildOptions: {
+      define: {
+        global: 'globalThis',
+      },
+      plugins: [
+        NodeGlobalsPolyfillPlugin({
+          process: true,
+          buffer: true,
+        }),
+      ],
+    },
+  },
+  build: {
+    rollupOptions: {
+      plugins: [rollupNodePolyFill()],
+    },
+  },
   plugins: [
-    nodePolyfills(),
     svgr(),
     react(),
     tsconfigPaths({
