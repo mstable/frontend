@@ -11,14 +11,14 @@ import { useNetwork, useSwitchNetwork } from 'wagmi';
 import type { ErrorCardProps, ErrorPageProps } from '@frontend/shared-ui';
 import type { EventOptions } from 'plausible-tracker';
 
-export type ErrorCardWithMessageProps = {
+export type ErrorCardWithTrackingProps = {
   errorProps?: EventOptions['props'];
 } & ErrorCardProps;
 
-export const ErrorCardWithMessage = ({
+export const ErrorCardWithTracking = ({
   errorProps,
   ...rest
-}: ErrorCardWithMessageProps) => {
+}: ErrorCardWithTrackingProps) => {
   const track = useTrack();
 
   useEffect(() => {
@@ -28,14 +28,14 @@ export const ErrorCardWithMessage = ({
   return <ErrorCard {...rest} />;
 };
 
-export type ErrorPageWithMessageProps = {
+export type ErrorPageWithTrackingProps = {
   errorProps?: EventOptions['props'];
 } & ErrorPageProps;
 
-export const ErrorPageWithMessage = ({
+export const ErrorPageWithTracking = ({
   errorProps,
   ...rest
-}: ErrorPageWithMessageProps) => {
+}: ErrorPageWithTrackingProps) => {
   const track = useTrack();
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export const UnsupportedMvPage = () => {
   const intl = useIntl();
 
   return (
-    <ErrorPageWithMessage
+    <ErrorPageWithTracking
       hideSupport
       title={intl.formatMessage({ defaultMessage: '404', id: 'DRXWXB' })}
       message={
@@ -70,7 +70,7 @@ export const WrongNetworkPage = () => {
   const { switchNetwork } = useSwitchNetwork();
 
   return (
-    <ErrorPageWithMessage
+    <ErrorPageWithTracking
       hideSupport
       title={intl.formatMessage({
         defaultMessage: 'Unsupported Network',
