@@ -10,6 +10,7 @@ export default defineConfig({
     host: 'localhost',
   },
   define: {
+    global: {},
     'process.env': Object.entries(process.env).reduce(
       (acc, [key, value]) => ({
         ...acc,
