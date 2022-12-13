@@ -5,9 +5,9 @@ import {
   coingeckoEndpoint,
 } from '@frontend/shared-constants';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import produce from 'immer';
 import { prop } from 'ramda';
+import axios from 'redaxios';
 import { chainId, useNetwork } from 'wagmi';
 
 import { useTrackedState, useUpdate } from './state';
