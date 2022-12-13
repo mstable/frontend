@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 
 import {
-  ErrorCardWithMessage,
+  ErrorCardWithTracking,
   UnsupportedMvPage,
   useTransitionBackgroundColor,
 } from '@frontend/mstable-shared-ui';
@@ -72,7 +72,7 @@ export const Metavault = () => {
         />
         <ErrorBoundary
           ErrorComponent={
-            <ErrorCardWithMessage
+            <ErrorCardWithTracking
               sx={{ py: 8 }}
               errorProps={{ name: 'Vault Jumbo' }}
             />
@@ -85,7 +85,7 @@ export const Metavault = () => {
             <Stack direction="column" spacing={2}>
               <ErrorBoundary
                 ErrorComponent={
-                  <ErrorCardWithMessage
+                  <ErrorCardWithTracking
                     errorProps={{ name: 'Vault Performance' }}
                   />
                 }
@@ -94,7 +94,7 @@ export const Metavault = () => {
               </ErrorBoundary>
               <ErrorBoundary
                 ErrorComponent={
-                  <ErrorCardWithMessage errorProps={{ name: 'Strategy' }} />
+                  <ErrorCardWithTracking errorProps={{ name: 'Strategy' }} />
                 }
               >
                 <Strategy />
@@ -106,14 +106,16 @@ export const Metavault = () => {
               <Stack direction="column" spacing={2}>
                 <ErrorBoundary
                   ErrorComponent={
-                    <ErrorCardWithMessage errorProps={{ name: 'Position' }} />
+                    <ErrorCardWithTracking errorProps={{ name: 'Position' }} />
                   }
                 >
                   <Position />
                 </ErrorBoundary>
                 <ErrorBoundary
                   ErrorComponent={
-                    <ErrorCardWithMessage errorProps={{ name: 'Operations' }} />
+                    <ErrorCardWithTracking
+                      errorProps={{ name: 'Operations' }}
+                    />
                   }
                 >
                   <Operations />

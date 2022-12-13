@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import {
-  ErrorCardWithMessage,
+  ErrorCardWithTracking,
   useTransitionBackgroundColor,
 } from '@frontend/mstable-shared-ui';
 import { ErrorBoundary } from '@frontend/shared-ui';
@@ -20,14 +20,14 @@ export const Explore = () => {
     <Stack direction="column" pt={{ xs: 2, md: 5 }} spacing={4}>
       <ErrorBoundary
         ErrorComponent={
-          <ErrorCardWithMessage errorProps={{ name: 'Feature Card' }} />
+          <ErrorCardWithTracking errorProps={{ name: 'Feature Card' }} />
         }
       >
         <FeatureCard />
       </ErrorBoundary>
       <ErrorBoundary
         ErrorComponent={
-          <ErrorCardWithMessage errorProps={{ name: 'Vaults' }} />
+          <ErrorCardWithTracking errorProps={{ name: 'Vaults' }} />
         }
       >
         <Vaults />

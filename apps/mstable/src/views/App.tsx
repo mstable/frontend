@@ -1,4 +1,4 @@
-import { ErrorPageWithMessage, Topnav } from '@frontend/mstable-shared-ui';
+import { ErrorPageWithTracking, Topnav } from '@frontend/mstable-shared-ui';
 import { ErrorBoundary } from '@frontend/shared-ui';
 import { Stack } from '@mui/material';
 import { Outlet } from '@tanstack/react-location';
@@ -22,7 +22,7 @@ export const App = () => {
       <Topnav />
       <ErrorBoundary
         ErrorComponent={
-          <ErrorPageWithMessage
+          <ErrorPageWithTracking
             height={1}
             width={1}
             sx={(theme) => theme.mixins.paddings.page}
