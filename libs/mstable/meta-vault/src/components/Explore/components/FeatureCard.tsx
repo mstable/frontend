@@ -157,11 +157,11 @@ export const FeatureCard = () => {
           {totalTvlLoading ? (
             <Skeleton width={60} height={14} />
           ) : (
-            intl.formatNumber(totalTvl, {
+            Intl.NumberFormat('en-US', {
               style: 'currency',
               currency,
               notation: 'compact',
-            })
+            }).format(totalTvl)
           )}
         </Typography>
         <Divider orientation="vertical" variant="middle" flexItem />
@@ -304,11 +304,11 @@ export const FeatureCard = () => {
               {totalTvlLoading ? (
                 <Skeleton width={60} height={14} />
               ) : (
-                intl.formatNumber(totalTvl, {
+                Intl.NumberFormat('en-US', {
                   style: 'currency',
                   currency,
                   notation: 'compact',
-                })
+                }).format(totalTvl)
               )}
             </Typography>
             <Divider orientation="vertical" variant="middle" flexItem />

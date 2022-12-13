@@ -4,7 +4,6 @@ import { useMemo } from 'react';
 import { useDataSource } from '@frontend/mstable-shared-data-access';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import { alpha, useTheme } from '@mui/material';
-import { intlFormat } from 'date-fns';
 import { ascend, pluck, prop, sort } from 'ramda';
 import { useIntl } from 'react-intl';
 
@@ -46,7 +45,8 @@ export const useChartConfig = () => {
       }),
       chartMargin: 0.001,
       getValue: (v) => v.assetPerShare,
-      getLabel: (v) => intl.formatNumber(v, { style: 'decimal' }),
+      getLabel: (v) =>
+        Intl.NumberFormat('en-US', { style: 'decimal' }).format(v),
     },
     APY: {
       id: 'APY' as ChartType,
@@ -64,7 +64,8 @@ export const useChartConfig = () => {
       chartMargin: 1e3,
       getValue: (v) =>
         new BigDecimal(v.totalAssets, mv?.assetToken?.decimals).simple,
-      getLabel: (v) => intl.formatNumber(v, { notation: 'compact' }),
+      getLabel: (v) =>
+        Intl.NumberFormat('en-US', { notation: 'compact' }).format(v),
     },
   };
 
@@ -100,7 +101,7 @@ const getBackgroundColor =
 
     gradient?.addColorStop(0, alpha(tone, 0.4));
     gradient?.addColorStop(0.25, alpha(tone, 0.2));
-    gradient?.addColorStop(0.65, alpha(tone, 0));
+    gradient?.addColorStop(1, alpha(tone, 0));
 
     return gradient;
   };
@@ -137,14 +138,11 @@ export const useChartData = (
             ascend(prop('timestamp')),
             data?.vault?.DailyVaultStats || [],
           ).map((d) => ({
-            label: intlFormat(Number(d.timestamp) * 1000, {
+            label: Intl.DateTimeFormat('en-GB', {
               timeZone: 'UTC',
               day: 'numeric',
               month: 'short',
-            })
-              .split(' ')
-              .reverse()
-              .join(' '),
+            }).format(Number(d.timestamp) * 1000),
             value: chartTypes[chartType].getValue(d),
           }))
         : [],

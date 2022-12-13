@@ -140,10 +140,10 @@ export const VaultJumbo = (props: StackProps) => {
             <Skeleton height={24} width={60} />
           ) : (
             <Typography variant="value2">
-              {intl.formatNumber(data?.vault?.assetPerShare ?? 0, {
+              {Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency,
-              })}
+              }).format(data?.vault?.assetPerShare ?? 0)}
             </Typography>
           )}
         </ValueLabel>
@@ -158,10 +158,10 @@ export const VaultJumbo = (props: StackProps) => {
             <Skeleton height={24} width={60} />
           ) : (
             <Typography variant="value2">
-              {intl.formatNumber(roi, {
+              {Intl.NumberFormat('en-US', {
                 style: 'percent',
                 minimumFractionDigits: 2,
-              })}
+              }).format(roi)}
             </Typography>
           )}
         </ValueLabel>
@@ -177,13 +177,16 @@ export const VaultJumbo = (props: StackProps) => {
           ) : (
             <Stack direction="row" spacing={1} alignItems="baseline">
               <Typography variant="value2">
-                {intl.formatNumber(
+                {Intl.NumberFormat('en-us', {
+                  style: 'currency',
+                  currency,
+                  notation: 'compact',
+                }).format(
                   new BigDecimal(
                     data?.vault?.totalAssets ?? constants.Zero,
                     assetToken?.decimals,
                   ).simple *
                     Number(pathOr(1, [currency.toLowerCase()], prices)),
-                  { style: 'currency', currency, notation: 'compact' },
                 )}
               </Typography>
               <Typography variant="value5" sx={{ color: tvlTrend.color }}>

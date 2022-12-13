@@ -31,7 +31,7 @@ export const GasImpact = ({
             }
             variant="value5"
           >
-            {intl.formatNumber(gasImpact, { style: 'percent' })}
+            {Intl.NumberFormat('en-US', { style: 'percent' }).format(gasImpact)}
           </Typography>
         </Box>
         <Box
@@ -48,9 +48,7 @@ export const GasImpact = ({
           <Box
             height={4}
             bgcolor={(theme) => theme.palette.error.main}
-            width={intl.formatNumber(Math.min(1, gasImpact), {
-              style: 'percent',
-            })}
+            width={`${Math.min(1, gasImpact) / 100}%`}
           />
         </Box>
         <Box display="flex" alignItems="center" mb={3}>

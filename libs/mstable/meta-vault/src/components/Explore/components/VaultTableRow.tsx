@@ -111,12 +111,11 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
             {assetLoading ? (
               <Skeleton width={50} />
             ) : (
-              intl.formatNumber(
+              Intl.NumberFormat('en-US', { notation: 'compact' }).format(
                 new BigDecimal(
                   data?.vault?.totalAssets ?? constants.Zero,
                   assetDecimal ?? 18,
                 ).simple,
-                { notation: 'compact' },
               )
             )}
           </Typography>
@@ -125,14 +124,13 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
       <TableCell>
         <Stack direction="row">
           <Typography variant="value4">
-            {intl.formatNumber(
+            {Intl.NumberFormat('en-US', {
+              style: 'percent',
+              minimumFractionDigits: 2,
+            }).format(
               data?.vault?.assetPerShare /
                 (data?.vault?.first?.[0]?.assetPerShare ?? 1) -
                 1 ?? 0,
-              {
-                style: 'percent',
-                minimumFractionDigits: 2,
-              },
             )}
           </Typography>
         </Stack>
