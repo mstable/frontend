@@ -104,7 +104,7 @@ export const ItemMobile = ({ tx }: { tx: TxHistory }) => {
             link
             small
             hideCopyToClipboard
-            blockExplorerUrl={chain?.blockExplorers?.etherscan?.url}
+            blockExplorerUrl={chain?.blockExplorers?.['etherscan']?.url}
           />
         </Box>
       </Stack>

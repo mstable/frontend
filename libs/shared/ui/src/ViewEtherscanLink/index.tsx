@@ -1,6 +1,7 @@
 import { Link } from '@mui/material';
 import { useIntl } from 'react-intl';
-import { etherscanBlockExplorers } from 'wagmi';
+import {} from 'wagmi';
+import { mainnet } from 'wagmi/chains';
 
 import type { LinkProps } from '@mui/material';
 
@@ -22,7 +23,7 @@ export const ViewEtherscanLink = ({
   return (
     <Link
       {...rest}
-      href={`${blockExplorer?.url ?? etherscanBlockExplorers.mainnet.url}/tx/${
+      href={`${blockExplorer?.url ?? mainnet.blockExplorers.default.url}/tx/${
         hash ?? ''
       }`}
       target="_blank"

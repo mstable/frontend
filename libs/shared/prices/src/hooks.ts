@@ -8,7 +8,8 @@ import { useQuery } from '@tanstack/react-query';
 import produce from 'immer';
 import { prop } from 'ramda';
 import axios from 'redaxios';
-import { chainId, useNetwork } from 'wagmi';
+import { useNetwork } from 'wagmi';
+import { mainnet } from 'wagmi/chains';
 
 import { useTrackedState, useUpdate } from './state';
 
@@ -56,14 +57,14 @@ export const useGetPrices = (addresses: HexAddress[]) => {
   return useQuery({
     queryKey: [
       'getTokenPrice',
-      coingeckoCoinIds[chain?.id ?? chainId.mainnet],
+      coingeckoCoinIds[chain?.id ?? mainnet.id],
       addresses ?? [],
       currency,
     ],
     queryFn: () =>
       axios.get(
         `${coingeckoEndpoint}/simple/token_price/${
-          coingeckoCoinIds[chain?.id ?? chainId.mainnet]
+          coingeckoCoinIds[chain?.id ?? mainnet.id]
         }?contract_addresses=${(addresses ?? []).join(
           ',',
         )}&vs_currencies=${currency}`,

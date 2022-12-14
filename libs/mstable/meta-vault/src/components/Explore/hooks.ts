@@ -9,9 +9,9 @@ import { constants } from 'ethers';
 import { ascend, pathOr, pluck, prop, propEq, sort } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
-  chainId,
   erc20ABI,
   erc4626ABI,
+  mainnet,
   useContractReads,
   useNetwork,
 } from 'wagmi';
@@ -39,7 +39,7 @@ const getGradient =
 export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
   const intl = useIntl();
   const { chain } = useNetwork();
-  const mv = supportedMetavaults[chain?.id ?? chainId.mainnet].find(
+  const mv = supportedMetavaults[chain?.id ?? mainnet.id].find(
     propEq('address', address),
   );
   const dataSource = useDataSource();
@@ -148,7 +148,7 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
 export const useTotalTvl = () => {
   const { chain } = useNetwork();
   const { currency } = usePrices();
-  const metavaults = supportedMetavaults[chain?.id || chainId.mainnet];
+  const metavaults = supportedMetavaults[chain?.id || mainnet.id];
   const { data: assets, isLoading: assetLoading } = useContractReads({
     contracts: metavaults.map((mv) => ({
       address: mv.address,

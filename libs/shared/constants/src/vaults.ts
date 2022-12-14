@@ -1,5 +1,5 @@
 import { tokens } from '@mstable/metavaults-web';
-import { chainId } from 'wagmi';
+import { goerli, mainnet } from 'wagmi/chains';
 
 export type Vault = {
   address: string;
@@ -14,23 +14,23 @@ export type SupportedVault =
   | 'vcx3crvfrax'
   | 'vcx3crvbusd';
 
-const mainnet: Record<SupportedVault, Vault> = {
-  mvusdc3pcv: tokens[chainId.mainnet]['mvusdc-3pcv'],
-  mv3crvcvx: tokens[chainId.mainnet]['mv3crv-cvx'],
-  vcx3crvmusd: tokens[chainId.mainnet]['vcx3crv-musd'],
-  vcx3crvfrax: tokens[chainId.mainnet]['vcx3crv-frax'],
-  vcx3crvbusd: tokens[chainId.mainnet]['vcx3crv-busd'],
+const main: Record<SupportedVault, Vault> = {
+  mvusdc3pcv: tokens[mainnet.id]['mvusdc-3pcv'],
+  mv3crvcvx: tokens[mainnet.id]['mv3crv-cvx'],
+  vcx3crvmusd: tokens[mainnet.id]['vcx3crv-musd'],
+  vcx3crvfrax: tokens[mainnet.id]['vcx3crv-frax'],
+  vcx3crvbusd: tokens[mainnet.id]['vcx3crv-busd'],
 };
 
-const goerli: Record<SupportedVault, Vault> = {
-  mvusdc3pcv: tokens[chainId.mainnet]['mvusdc-3pcv'],
-  mv3crvcvx: tokens[chainId.mainnet]['mv3crv-cvx'],
-  vcx3crvmusd: tokens[chainId.mainnet]['vcx3crv-musd'],
-  vcx3crvfrax: tokens[chainId.mainnet]['vcx3crv-frax'],
-  vcx3crvbusd: tokens[chainId.mainnet]['vcx3crv-busd'],
+const goer: Record<SupportedVault, Vault> = {
+  mvusdc3pcv: tokens[mainnet.id]['mvusdc-3pcv'],
+  mv3crvcvx: tokens[mainnet.id]['mv3crv-cvx'],
+  vcx3crvmusd: tokens[mainnet.id]['vcx3crv-musd'],
+  vcx3crvfrax: tokens[mainnet.id]['vcx3crv-frax'],
+  vcx3crvbusd: tokens[mainnet.id]['vcx3crv-busd'],
 };
 
 export const vaults: Record<number, Record<SupportedVault, Vault>> = {
-  [chainId.mainnet]: mainnet,
-  [chainId.goerli]: goerli,
+  [mainnet.id]: main,
+  [goerli.id]: goer,
 };

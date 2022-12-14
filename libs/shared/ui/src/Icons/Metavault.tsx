@@ -2,7 +2,8 @@ import { MvUSDC } from '@frontend/shared-icons';
 import { tokens } from '@mstable/metavaults-web';
 import { SvgIcon } from '@mui/material';
 import { CurrencyCircleDollar } from 'phosphor-react';
-import { chainId } from 'wagmi';
+import {} from 'wagmi';
+import { mainnet } from 'wagmi/chains';
 
 import type { SvgIconProps } from '@mui/material';
 
@@ -13,7 +14,7 @@ export type MVIconProps = {
 export const supportedMVs: Partial<
   Record<string, (props: SvgIconProps) => JSX.Element>
 > = {
-  [tokens[chainId.mainnet]['mvusdc-3pcv'].address]: MvUSDC,
+  [tokens[mainnet.id]['mvusdc-3pcv'].address]: MvUSDC,
 };
 
 export const MVIcon = ({ address, ...rest }: MVIconProps) => {

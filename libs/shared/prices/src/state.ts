@@ -9,7 +9,8 @@ import produce from 'immer';
 import { path } from 'ramda';
 import { createContainer } from 'react-tracked';
 import axios from 'redaxios';
-import { chainId, useNetwork } from 'wagmi';
+import { useNetwork } from 'wagmi';
+import { mainnet } from 'wagmi/chains';
 
 import type { Children } from '@frontend/shared-utils';
 import type { Dispatch, SetStateAction } from 'react';
@@ -34,7 +35,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   });
   const { chain } = useNetwork();
   const coingeckoCoinId = useMemo(
-    () => coingeckoCoinIds[chain?.id ?? chainId.mainnet],
+    () => coingeckoCoinIds[chain?.id ?? mainnet.id],
     [chain?.id],
   );
   useQuery(

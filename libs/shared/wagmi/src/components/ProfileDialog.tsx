@@ -27,7 +27,7 @@ const Content = () => {
       />
       <AddressLabel
         address={address}
-        blockExplorerUrl={chain?.blockExplorers?.etherscan?.url}
+        blockExplorerUrl={chain?.blockExplorers?.['etherscan']?.url}
       />
     </Stack>
   );

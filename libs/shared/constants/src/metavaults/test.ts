@@ -1,6 +1,6 @@
 /* eslint-disable formatjs/no-id */
 import { defineMessage } from 'react-intl';
-import { chainId } from 'wagmi';
+import { goerli, mainnet } from 'wagmi/chains';
 
 import { protocols } from '../protocols';
 import { tokens } from '../tokens';
@@ -9,7 +9,7 @@ import { vaults } from '../vaults';
 
 import type { Metavault } from './types';
 
-const mainnet: Metavault = {
+const main: Metavault = {
   id: 'test',
   address: DEAD_ADDRESS,
   primaryColor: '#000000',
@@ -38,8 +38,8 @@ const mainnet: Metavault = {
       }),
     },
   ],
-  vaults: [vaults[chainId.mainnet].vcx3crvmusd],
-  assets: [tokens[chainId.mainnet].musd, tokens[chainId.mainnet].usdc],
+  vaults: [vaults[mainnet.id].vcx3crvmusd],
+  assets: [tokens[mainnet.id].musd, tokens[mainnet.id].usdc],
   fees: {
     liquidation: 0.17,
     performance: 0.15,
@@ -51,14 +51,14 @@ const mainnet: Metavault = {
   firstBlock: 15890000,
 };
 
-const goerli: Metavault = {
-  ...mainnet,
+const goer: Metavault = {
+  ...main,
   address: DEAD_ADDRESS,
-  vaults: [vaults[chainId.goerli].vcx3crvmusd],
-  assets: [tokens[chainId.goerli].musd, tokens[chainId.goerli].usdc],
+  vaults: [vaults[goerli.id].vcx3crvmusd],
+  assets: [tokens[goerli.id].musd, tokens[goerli.id].usdc],
 };
 
 export const test: Record<number, Metavault> = {
-  [chainId.mainnet]: mainnet,
-  [chainId.goerli]: goerli,
+  [mainnet.id]: main,
+  [goerli.id]: goer,
 };

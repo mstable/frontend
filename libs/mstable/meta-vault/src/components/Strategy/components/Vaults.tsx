@@ -54,7 +54,7 @@ const VaultCard = ({ address, name, featured, ...rest }: VaultCardProps) => {
           small
           address={address}
           link
-          blockExplorerUrl={chain?.blockExplorers?.etherscan?.url}
+          blockExplorerUrl={chain?.blockExplorers?.['etherscan']?.url}
           sx={{ maxWidth: 120 }}
         />
       </Stack>

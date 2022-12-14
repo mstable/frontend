@@ -6,7 +6,8 @@ import produce from 'immer';
 import { pathOr } from 'ramda';
 import { createContainer } from 'react-tracked';
 import axios from 'redaxios';
-import { chainId, useNetwork } from 'wagmi';
+import { useNetwork } from 'wagmi';
+import { mainnet } from 'wagmi/chains';
 
 import type { Children } from '@frontend/shared-utils';
 import type { Dispatch, SetStateAction } from 'react';
@@ -33,7 +34,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     () =>
       axios.get(
         `${
-          etherscanApiEndpoints[chain?.id ?? chainId.mainnet]
+          etherscanApiEndpoints[chain?.id ?? mainnet.id]
         }/api?module=gastracker&action=gasoracle`,
       ),
     {

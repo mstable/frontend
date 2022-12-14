@@ -8,7 +8,7 @@ import { Button, CircularProgress } from '@mui/material';
 import { useIntl } from 'react-intl';
 import {
   erc4626ABI,
-  etherscanBlockExplorers,
+  mainnet,
   useAccount,
   useContractWrite,
   useNetwork,
@@ -84,8 +84,8 @@ export const SubmitButton = () => {
           <ViewEtherscanLink
             hash={data?.hash}
             blockExplorer={
-              chain?.blockExplorers?.etherscan ??
-              etherscanBlockExplorers.mainnet
+              chain?.blockExplorers?.['etherscan'] ??
+              mainnet.blockExplorers.default
             }
           />
         ),
@@ -115,8 +115,8 @@ export const SubmitButton = () => {
           <ViewEtherscanLink
             hash={transactionHash}
             blockExplorer={
-              chain?.blockExplorers?.etherscan ??
-              etherscanBlockExplorers.mainnet
+              chain?.blockExplorers?.['etherscan'] ??
+              mainnet.blockExplorers.default
             }
           />
         ),
@@ -140,8 +140,8 @@ export const SubmitButton = () => {
           <ViewEtherscanLink
             hash={submitData?.hash}
             blockExplorer={
-              chain?.blockExplorers?.etherscan ??
-              etherscanBlockExplorers.mainnet
+              chain?.blockExplorers?.['etherscan'] ??
+              mainnet.blockExplorers.default
             }
           />
         ),
