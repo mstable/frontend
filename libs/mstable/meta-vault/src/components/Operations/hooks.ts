@@ -83,10 +83,16 @@ export const useOperationLabel = () => {
   return useMemo(
     () =>
       ({
-        deposit: intl.formatMessage({ defaultMessage: 'Deposit' }),
-        mint: intl.formatMessage({ defaultMessage: 'Mint' }),
-        withdraw: intl.formatMessage({ defaultMessage: 'Withdraw' }),
-        redeem: intl.formatMessage({ defaultMessage: 'Redeem' }),
+        deposit: intl.formatMessage({
+          defaultMessage: 'Deposit',
+          id: 'dIgBOz',
+        }),
+        mint: intl.formatMessage({ defaultMessage: 'Mint', id: 'OwO+Nr' }),
+        withdraw: intl.formatMessage({
+          defaultMessage: 'Withdraw',
+          id: 'PXAur5',
+        }),
+        redeem: intl.formatMessage({ defaultMessage: 'Redeem', id: 'XSdWHA' }),
       }[operation]),
     [intl, operation],
   );

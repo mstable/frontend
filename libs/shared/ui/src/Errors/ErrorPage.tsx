@@ -47,12 +47,14 @@ export const ErrorPage = ({
           {title ??
             intl.formatMessage({
               defaultMessage: 'Unhandled Error!',
+              id: '9ghOJK',
             })}
         </Typography>
         <Typography variant="h4" pb={8} color="grey.600">
           {subtitle ??
             intl.formatMessage({
               defaultMessage: 'Oops, something went wrong.',
+              id: 'STj9QY',
             })}
         </Typography>
         {message}
@@ -63,6 +65,7 @@ export const ErrorPage = ({
                 {
                   defaultMessage:
                     'If the problem persists, you can contact us through our {support}.',
+                  id: 'UkXeBW',
                 },
                 {
                   support: (
@@ -73,6 +76,7 @@ export const ErrorPage = ({
                     >
                       {intl.formatMessage({
                         defaultMessage: 'Discord support channel',
+                        id: '9lt7g1',
                       })}
                     </Link>
                   ),
@@ -84,7 +88,10 @@ export const ErrorPage = ({
                 window.location.reload();
               }}
             >
-              {intl.formatMessage({ defaultMessage: 'Reload Page' })}
+              {intl.formatMessage({
+                defaultMessage: 'Reload Page',
+                id: 'MSTVqC',
+              })}
             </Button>
           </Stack>
         )}

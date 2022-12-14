@@ -1,6 +1,5 @@
-import { ErrorPageWithMessage, Topnav } from '@frontend/mstable-shared-ui';
+import { ErrorPageWithTracking, Topnav } from '@frontend/mstable-shared-ui';
 import { ErrorBoundary } from '@frontend/shared-ui';
-import { useUnsupportedNetworks } from '@frontend/shared-wagmi';
 import { Stack } from '@mui/material';
 import { Outlet } from '@tanstack/react-location';
 import { useEffectOnce } from 'react-use';
@@ -8,8 +7,6 @@ import { useEffectOnce } from 'react-use';
 import { registerCharts } from '../clients';
 
 export const App = () => {
-  useUnsupportedNetworks();
-
   useEffectOnce(() => {
     registerCharts();
   });
@@ -25,7 +22,7 @@ export const App = () => {
       <Topnav />
       <ErrorBoundary
         ErrorComponent={
-          <ErrorPageWithMessage
+          <ErrorPageWithTracking
             height={1}
             width={1}
             sx={(theme) => theme.mixins.paddings.page}

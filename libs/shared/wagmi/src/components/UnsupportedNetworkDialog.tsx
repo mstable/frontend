@@ -8,7 +8,14 @@ import type { DialogOptions } from '@frontend/shared-modals';
 const Title = () => {
   const intl = useIntl();
 
-  return <>{intl.formatMessage({ defaultMessage: 'Unsupported Network' })}</>;
+  return (
+    <>
+      {intl.formatMessage({
+        defaultMessage: 'Unsupported Network',
+        id: 'PmkP1H',
+      })}
+    </>
+  );
 };
 
 const Content = () => {
@@ -20,6 +27,7 @@ const Content = () => {
         {intl.formatMessage({
           defaultMessage:
             'The selected network is not supported by the application.',
+          id: '6GZbSi',
         })}
       </Typography>
       <NetworkTips />
@@ -37,7 +45,7 @@ const Actions = ({ onClose }: ActionsProps) => {
   return (
     <>
       <Button color="secondary" onClick={onClose}>
-        {intl.formatMessage({ defaultMessage: 'Close' })}
+        {intl.formatMessage({ defaultMessage: 'Close', id: 'rbrahO' })}
       </Button>
       <Button
         color="primary"
@@ -49,7 +57,7 @@ const Actions = ({ onClose }: ActionsProps) => {
         }}
       >
         {intl.formatMessage(
-          { defaultMessage: 'Switch to {defaultChain}' },
+          { defaultMessage: 'Switch to {defaultChain}', id: '1XVJUl' },
           { defaultChain: chains[0].name },
         )}
       </Button>

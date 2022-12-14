@@ -19,7 +19,7 @@ import type {
 
 const defaultSchema: Omit<Schema, 'name' | 'directory'> = {
   classComponent: false,
-  compiler: 'babel',
+  bundler: 'vite',
   e2eTestRunner: 'cypress',
   globalCss: false,
   js: false,
@@ -39,7 +39,6 @@ const updateProject = (tree: Tree, options: NormalizedSchema) => {
   const projectConfig = readProjectConfiguration(tree, options.projectName);
   const appProjectRootKebabCase = options.appProjectRoot.replace(/\//g, '-');
 
-  projectConfig.targets['build'].options.webpackConfig = 'webpack.config.js';
   projectConfig.targets['build'].options.dependsOn = ['^build'];
   projectConfig.targets['build'].options.styles = [
     'node_modules/@rainbow-me/rainbowkit/dist/index.css',
@@ -101,7 +100,7 @@ const updateTsConfigs = (tree: Tree, options: NormalizedSchema) => {
     (json) => {
       json.files = [
         ...json.files,
-        `${offset}dist/libs/shared/theme/mui/types.d.ts`,
+        `${offset}dist/libs/shared/theme/src/mui/types.d.ts`,
       ];
 
       return json;

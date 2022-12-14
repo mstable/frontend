@@ -1,27 +1,20 @@
 {
+  "name": "shared-theme",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/theme/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/vite:build",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/libs/shared/theme",
-        "tsConfig": "libs/shared/theme/tsconfig.lib.json",
-        "project": "libs/shared/theme/package.json",
-        "entryFile": "libs/shared/theme/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "rollup.config.js",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "libs/shared/theme/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "outputPath": "dist/libs/shared/theme"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
       }
     },
     "lint": {

@@ -48,7 +48,10 @@ export const LineChart = ({
         >
           <Stack borderTop={`2px dashed ${color}`} flex={1} />
           <Typography variant="value5" color={color} mx={1}>
-            {intl.formatMessage({ defaultMessage: 'No Data Available' })}
+            {intl.formatMessage({
+              defaultMessage: 'No Data Available',
+              id: 'Imiiiv',
+            })}
           </Typography>
           <Stack borderTop={`2px dashed ${color}`} flex={1} />
         </Stack>

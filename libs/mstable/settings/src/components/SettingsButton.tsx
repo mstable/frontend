@@ -56,7 +56,10 @@ export const SettingsButton = (props: ButtonProps) => {
           sx={{ minWidth: { xs: '94vw', sm: 300 } }}
         >
           <Typography>
-            {intl.formatMessage({ defaultMessage: 'General Settings' })}
+            {intl.formatMessage({
+              defaultMessage: 'General Settings',
+              id: 'yuiyES',
+            })}
           </Typography>
           <FormControlLabel
             value={dark}
@@ -64,7 +67,10 @@ export const SettingsButton = (props: ButtonProps) => {
             label={
               <Stack direction="row" spacing={1} flexGrow={1}>
                 <Typography variant="label2">
-                  {intl.formatMessage({ defaultMessage: 'Dark Mode' })}
+                  {intl.formatMessage({
+                    defaultMessage: 'Dark Mode',
+                    id: '5ObBlW',
+                  })}
                 </Typography>
               </Stack>
             }
@@ -77,7 +83,10 @@ export const SettingsButton = (props: ButtonProps) => {
           />
           <Divider flexItem />
           <Typography>
-            {intl.formatMessage({ defaultMessage: 'Token Approval' })}
+            {intl.formatMessage({
+              defaultMessage: 'Token Approval',
+              id: 'n9CFUs',
+            })}
           </Typography>
           <FormControlLabel
             value={!exactApproval}
@@ -90,12 +99,16 @@ export const SettingsButton = (props: ButtonProps) => {
                 flexGrow={1}
               >
                 <Typography variant="label2">
-                  {intl.formatMessage({ defaultMessage: 'Set As Infinite' })}
+                  {intl.formatMessage({
+                    defaultMessage: 'Set As Infinite',
+                    id: 'Gtmi1D',
+                  })}
                 </Typography>
                 <InfoTooltip
                   label={intl.formatMessage({
                     defaultMessage:
                       'A deposit into a vault requires an approval transaction.<br></br><br></br>Set as infinite to avoid approving multiple times and save gas on subsequent deposits.<br></br><br></br>Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost.',
+                    id: '2fed1y',
                   })}
                 />
               </Stack>

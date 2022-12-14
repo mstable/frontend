@@ -33,10 +33,13 @@ export const Controls = ({ onClose = () => null, ...rest }: ControlsProps) => {
         [
           <>
             <Button color="secondary" onClick={onClose} {...actionButtonProps}>
-              {intl.formatMessage({ defaultMessage: 'Close' })}
+              {intl.formatMessage({ defaultMessage: 'Close', id: 'rbrahO' })}
             </Button>
             <Button color="primary" onClick={handleNext} {...actionButtonProps}>
-              {intl.formatMessage({ defaultMessage: 'Start Tour' })}
+              {intl.formatMessage({
+                defaultMessage: 'Start Tour',
+                id: 'aad9T5',
+              })}
             </Button>
           </>,
           <>
@@ -46,7 +49,7 @@ export const Controls = ({ onClose = () => null, ...rest }: ControlsProps) => {
               {...actionButtonProps}
               startIcon={<ArrowLeft size={16} />}
             >
-              {intl.formatMessage({ defaultMessage: 'Back' })}
+              {intl.formatMessage({ defaultMessage: 'Back', id: 'cyR7Kh' })}
             </Button>
             <Button
               color="primary"
@@ -54,7 +57,7 @@ export const Controls = ({ onClose = () => null, ...rest }: ControlsProps) => {
               {...actionButtonProps}
               endIcon={<ArrowRight size={16} />}
             >
-              {intl.formatMessage({ defaultMessage: 'Next' })}
+              {intl.formatMessage({ defaultMessage: 'Next', id: '9+Ddtu' })}
             </Button>
           </>,
           <>
@@ -64,7 +67,7 @@ export const Controls = ({ onClose = () => null, ...rest }: ControlsProps) => {
               {...actionButtonProps}
               startIcon={<ArrowLeft size={16} />}
             >
-              {intl.formatMessage({ defaultMessage: 'Back' })}
+              {intl.formatMessage({ defaultMessage: 'Back', id: 'cyR7Kh' })}
             </Button>
             <Button
               color="primary"
@@ -72,7 +75,7 @@ export const Controls = ({ onClose = () => null, ...rest }: ControlsProps) => {
               {...actionButtonProps}
               endIcon={<ArrowRight size={16} />}
             >
-              {intl.formatMessage({ defaultMessage: 'Next' })}
+              {intl.formatMessage({ defaultMessage: 'Next', id: '9+Ddtu' })}
             </Button>
           </>,
           <>
@@ -82,7 +85,7 @@ export const Controls = ({ onClose = () => null, ...rest }: ControlsProps) => {
               {...actionButtonProps}
               startIcon={<ArrowLeft size={16} />}
             >
-              {intl.formatMessage({ defaultMessage: 'Back' })}
+              {intl.formatMessage({ defaultMessage: 'Back', id: 'cyR7Kh' })}
             </Button>
             <Button
               color="primary"
@@ -90,7 +93,10 @@ export const Controls = ({ onClose = () => null, ...rest }: ControlsProps) => {
               {...actionButtonProps}
               endIcon={<ArrowCounterClockwise size={16} />}
             >
-              {intl.formatMessage({ defaultMessage: 'Start Again' })}
+              {intl.formatMessage({
+                defaultMessage: 'Start Again',
+                id: '4tvRCp',
+              })}
             </Button>
           </>,
         ][step]

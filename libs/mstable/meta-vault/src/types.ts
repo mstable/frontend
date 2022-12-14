@@ -14,6 +14,7 @@ export type MvGenerics = MakeGenerics<{
   Search: {
     chartType?: ChartType;
     chartTimeframe?: ChartTimeframe;
+    chartExpand?: boolean;
     input?: {
       amount: number;
       operation: SupportedOperation;

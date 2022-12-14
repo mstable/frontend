@@ -5,10 +5,10 @@ import {
   coingeckoEndpoint,
 } from '@frontend/shared-constants';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import produce from 'immer';
 import { path } from 'ramda';
 import { createContainer } from 'react-tracked';
+import axios from 'redaxios';
 import { useNetwork } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 

@@ -18,6 +18,7 @@ export const Protocols = (props: StackProps) => {
         {intl.formatMessage({
           defaultMessage:
             'The following protocols are used in the strategies and are therefore exposed to their risk:',
+          id: 'bvmoAt',
         })}
       </Typography>
       <Stack direction="column" spacing={2}>

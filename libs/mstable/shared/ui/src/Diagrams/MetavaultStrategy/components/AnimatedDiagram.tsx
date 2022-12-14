@@ -224,7 +224,10 @@ export const AnimatedDiagram = (props: StackProps) => {
             >
               <SimplePurpleBkgIcon icon={<Vault />} />
               <Typography {...labelProps}>
-                {intl.formatMessage({ defaultMessage: 'Meta Vault' })}
+                {intl.formatMessage({
+                  defaultMessage: 'Meta Vault',
+                  id: 'qEnyZU',
+                })}
               </Typography>
             </ContentContainer>
           </HBox>

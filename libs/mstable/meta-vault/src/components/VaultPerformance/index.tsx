@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { useTrack } from '@frontend/shared-analytics';
 import { Dialog } from '@frontend/shared-ui';
@@ -10,7 +10,8 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useSearch } from '@tanstack/react-location';
+import { useNavigate, useSearch } from '@tanstack/react-location';
+import produce from 'immer';
 import { FrameCorners } from 'phosphor-react';
 import { Line } from 'react-chartjs-2';
 import { useIntl } from 'react-intl';
@@ -32,16 +33,17 @@ export const VaultPerformance = () => {
   const { address } = useAccount();
   const { chain } = useNetwork();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [expand, setExpand] = useState(false);
   const { defaultChartTimeframe, defaultChartType } = useChartConfig();
   const {
     chartType = defaultChartType,
     chartTimeframe = defaultChartTimeframe,
+    chartExpand = false,
   } = useSearch<MvGenerics>();
+  const navigate = useNavigate<MvGenerics>();
   const chartData = useChartData(chartTimeframe, chartType);
 
   useEffect(() => {
-    if (expand) {
+    if (chartExpand) {
       track('view_expand_chart', {
         chartType,
         chartTimeframe,
@@ -50,22 +52,32 @@ export const VaultPerformance = () => {
         chain: chain?.id,
       });
     }
-  }, [address, chain?.id, chartTimeframe, chartType, expand, id, track]);
+  }, [address, chain?.id, chartExpand, chartTimeframe, chartType, id, track]);
 
   return (
     <Card sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}>
       <CardHeader
-        title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
+        title={intl.formatMessage({
+          defaultMessage: 'Vault Performance',
+          id: 'MqZGhr',
+        })}
         sx={{ paddingLeft: 0 }}
         action={
           !isMobile && (
             <Button
-              onClick={() => setExpand(true)}
+              onClick={() => {
+                navigate({
+                  replace: true,
+                  search: produce((draft) => {
+                    draft.chartExpand = true;
+                  }),
+                });
+              }}
               color="secondary"
-              startIcon={<FrameCorners />}
+              startIcon={<FrameCorners weight="regular" />}
               size="small"
             >
-              {intl.formatMessage({ defaultMessage: 'Expand' })}
+              {intl.formatMessage({ defaultMessage: 'Expand', id: '0oLj/t' })}
             </Button>
           )
         }
@@ -82,11 +94,19 @@ export const VaultPerformance = () => {
       <Dialog
         maxWidth="lg"
         fullWidth
-        open={expand}
+        open={chartExpand}
         onClose={() => {
-          setExpand(false);
+          navigate({
+            replace: true,
+            search: produce((draft) => {
+              draft.chartExpand = false;
+            }),
+          });
         }}
-        title={intl.formatMessage({ defaultMessage: 'Vault Performance' })}
+        title={intl.formatMessage({
+          defaultMessage: 'Vault Performance',
+          id: 'MqZGhr',
+        })}
         content={
           <>
             <Controls />
@@ -100,7 +120,7 @@ export const VaultPerformance = () => {
         }
         actions={(onClose) => (
           <Button color="secondary" onClick={onClose}>
-            {intl.formatMessage({ defaultMessage: 'Close' })}
+            {intl.formatMessage({ defaultMessage: 'Close', id: 'rbrahO' })}
           </Button>
         )}
       />

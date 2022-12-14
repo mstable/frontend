@@ -126,56 +126,67 @@ export const VaultJumbo = (props: StackProps) => {
         divider={<Divider orientation="vertical" flexItem variant="middle" />}
       >
         <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'Share Price' })}
+          label={intl.formatMessage({
+            defaultMessage: 'Share Price',
+            id: 'TvzL+L',
+          })}
           hint={intl.formatMessage({
             defaultMessage:
               'The current price of 1 share. Return is represented as a increase in share price value.',
+            id: 'ULHfQE',
           })}
         >
           {isLoading ? (
             <Skeleton height={24} width={60} />
           ) : (
             <Typography variant="value2">
-              {intl.formatNumber(data?.vault?.assetPerShare ?? 0, {
+              {Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency,
-              })}
+              }).format(data?.vault?.assetPerShare ?? 0)}
             </Typography>
           )}
         </ValueLabel>
         <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'ROI' })}
+          label={intl.formatMessage({ defaultMessage: 'ROI', id: 'P8Xs51' })}
           hint={intl.formatMessage({
             defaultMessage: 'Return on investment since Vault inception.',
+            id: 'zKtTJT',
           })}
         >
           {isLoading ? (
             <Skeleton height={24} width={60} />
           ) : (
             <Typography variant="value2">
-              {intl.formatNumber(roi, {
+              {Intl.NumberFormat('en-US', {
                 style: 'percent',
                 minimumFractionDigits: 2,
-              })}
+              }).format(roi)}
             </Typography>
           )}
         </ValueLabel>
         <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'TVL' })}
-          hint={intl.formatMessage({ defaultMessage: 'Total Value Locked' })}
+          label={intl.formatMessage({ defaultMessage: 'TVL', id: 'SKB/G9' })}
+          hint={intl.formatMessage({
+            defaultMessage: 'Total Value Locked',
+            id: 'DUR59o',
+          })}
         >
           {isLoading || isPriceLoading || !assetToken ? (
             <Skeleton height={24} width={160} />
           ) : (
             <Stack direction="row" spacing={1} alignItems="baseline">
               <Typography variant="value2">
-                {intl.formatNumber(
+                {Intl.NumberFormat('en-us', {
+                  style: 'currency',
+                  currency,
+                  notation: 'compact',
+                }).format(
                   new BigDecimal(
                     data?.vault?.totalAssets ?? constants.Zero,
                     assetToken?.decimals,
                   ).simple *
                     Number(pathOr(1, [currency.toLowerCase()], prices)),
-                  { style: 'currency', currency, notation: 'compact' },
                 )}
               </Typography>
               <Typography variant="value5" sx={{ color: tvlTrend.color }}>
@@ -185,7 +196,10 @@ export const VaultJumbo = (props: StackProps) => {
           )}
         </ValueLabel>
         <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'Protocols Involved' })}
+          label={intl.formatMessage({
+            defaultMessage: 'Protocols Involved',
+            id: '65ThHj',
+          })}
           components={{
             valueContainer: { pb: 0.3 },
           }}

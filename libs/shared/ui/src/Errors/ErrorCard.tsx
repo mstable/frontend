@@ -38,6 +38,7 @@ export const ErrorCard = ({
         {title ??
           intl.formatMessage({
             defaultMessage: 'Unhandled Error!',
+            id: '9ghOJK',
           })}
       </Typography>
       <Typography pb={2}>
@@ -45,6 +46,7 @@ export const ErrorCard = ({
           intl.formatMessage({
             defaultMessage:
               'There was an error while loading this component, you can try to reload.',
+            id: '8XZjyW',
           })}
       </Typography>
       {message}
@@ -54,6 +56,7 @@ export const ErrorCard = ({
             {
               defaultMessage:
                 'If the problem persists, contact us on our {support}.',
+              id: 'UlMgTq',
             },
             {
               support: (
@@ -64,6 +67,7 @@ export const ErrorCard = ({
                 >
                   {intl.formatMessage({
                     defaultMessage: 'Discord support channel',
+                    id: '9lt7g1',
                   })}
                 </Link>
               ),

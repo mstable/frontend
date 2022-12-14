@@ -68,7 +68,7 @@ export const useVaultCardProps = ({
   }, [metavault.id, navigate, onClick, to]);
 
   const sharePriceLabel = useMemo(
-    () => intl.formatMessage({ defaultMessage: 'Share price' }),
+    () => intl.formatMessage({ defaultMessage: 'Share price', id: 'YC/ZXg' }),
     [intl],
   );
   const sharePriceHint = useMemo(
@@ -76,63 +76,64 @@ export const useVaultCardProps = ({
       intl.formatMessage({
         defaultMessage:
           'The current price of 1 share. Return is represented as a increase in share price value.',
+        id: 'ULHfQE',
       }),
     [intl],
   );
   const sharePrice = useMemo(
     () =>
-      intl.formatNumber(data?.vault?.assetPerShare ?? 0, {
+      Intl.NumberFormat('en-US', {
         maximumFractionDigits: 2,
         style: 'currency',
         currency,
-      }),
-    [currency, data?.vault?.assetPerShare, intl],
+      }).format(data?.vault?.assetPerShare ?? 0),
+    [currency, data?.vault?.assetPerShare],
   );
   const roiLabel = useMemo(
-    () => intl.formatMessage({ defaultMessage: 'ROI' }),
+    () => intl.formatMessage({ defaultMessage: 'ROI', id: 'P8Xs51' }),
     [intl],
   );
   const roiHint = useMemo(
     () =>
       intl.formatMessage({
         defaultMessage: 'Return on investment since Vault inception.',
+        id: 'zKtTJT',
       }),
     [intl],
   );
   const roi = useMemo(
     () =>
-      intl.formatNumber(
+      Intl.NumberFormat('en-US', {
+        style: 'percent',
+        minimumFractionDigits: 2,
+      }).format(
         data?.vault?.assetPerShare /
           (data?.vault?.first?.[0]?.assetPerShare ?? 1) -
           1 ?? 0,
-        {
-          style: 'percent',
-          minimumFractionDigits: 2,
-        },
       ),
-    [data?.vault?.assetPerShare, data?.vault?.first, intl],
+    [data?.vault?.assetPerShare, data?.vault?.first],
   );
   const tvlLabel = useMemo(
-    () => intl.formatMessage({ defaultMessage: 'TVL' }),
+    () => intl.formatMessage({ defaultMessage: 'TVL', id: 'SKB/G9' }),
     [intl],
   );
   const tvlHint = useMemo(
     () =>
       intl.formatMessage({
         defaultMessage: 'Total Value Locked in vault',
+        id: 'PxG1Yq',
       }),
     [intl],
   );
   const tvl = useMemo(
     () =>
-      intl.formatNumber(
+      Intl.NumberFormat('en-US', { notation: 'compact' }).format(
         new BigDecimal(
           data?.vault?.totalAssets ?? constants.Zero,
           assetDecimal ?? 18,
         ).simple,
-        { notation: 'compact' },
       ),
-    [assetDecimal, data?.vault?.totalAssets, intl],
+    [assetDecimal, data?.vault?.totalAssets],
   );
 
   return {

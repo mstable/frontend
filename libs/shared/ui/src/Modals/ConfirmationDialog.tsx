@@ -58,7 +58,7 @@ export const ConfirmationDialog = ({
   const msg =
     content ??
     intl.formatMessage({
-      id: 'defaultConfirmation',
+      id: 'EobEOB',
       defaultMessage: 'Please confirm to proceed',
     });
 
@@ -90,7 +90,7 @@ export const ConfirmationDialog = ({
         <Button variant="text" {...cancelProps} onClick={handleCancel}>
           {isNilOrEmpty(cancelLabel)
             ? intl.formatMessage({
-                id: 'defaultCancel',
+                id: '47FYwb',
                 defaultMessage: 'Cancel',
               })
             : cancelLabel}
@@ -98,7 +98,7 @@ export const ConfirmationDialog = ({
         <Button color="primary" {...confirmProps} onClick={handleConfirm}>
           {isNilOrEmpty(confirmLabel)
             ? intl.formatMessage({
-                id: 'defaultConfirm',
+                id: 'N2IrpM',
                 defaultMessage: 'Confirm',
               })
             : confirmLabel}

@@ -23,7 +23,7 @@ export const GasImpact = ({
             }
             variant="label2"
           >
-            {intl.formatMessage({ defaultMessage: 'Gas Impact' })}
+            {intl.formatMessage({ defaultMessage: 'Gas Impact', id: 'eO0C1d' })}
           </Typography>
           <Typography
             color={(theme) =>
@@ -31,7 +31,7 @@ export const GasImpact = ({
             }
             variant="value5"
           >
-            {intl.formatNumber(gasImpact, { style: 'percent' })}
+            {Intl.NumberFormat('en-US', { style: 'percent' }).format(gasImpact)}
           </Typography>
         </Box>
         <Box
@@ -48,9 +48,7 @@ export const GasImpact = ({
           <Box
             height={4}
             bgcolor={(theme) => theme.palette.error.main}
-            width={intl.formatNumber(Math.min(1, gasImpact), {
-              style: 'percent',
-            })}
+            width={`${Math.min(1, gasImpact) / 100}%`}
           />
         </Box>
         <Box display="flex" alignItems="center" mb={3}>
@@ -67,7 +65,7 @@ export const GasImpact = ({
             }
             variant="hint"
           >
-            {intl.formatMessage({ defaultMessage: 'Return' })}
+            {intl.formatMessage({ defaultMessage: 'Return', id: '0WJNP/' })}
           </Typography>
           <Box
             bgcolor={(theme) => theme.palette.error.main}
@@ -83,7 +81,7 @@ export const GasImpact = ({
             }
             variant="hint"
           >
-            {intl.formatMessage({ defaultMessage: 'Gas Impact' })}
+            {intl.formatMessage({ defaultMessage: 'Gas Impact', id: 'eO0C1d' })}
           </Typography>
         </Box>
         <Box display="flex" justifyContent="space-between" mb={2}>
@@ -95,6 +93,7 @@ export const GasImpact = ({
           >
             {intl.formatMessage({
               defaultMessage: 'Profitable position after',
+              id: '93OUn6',
             })}
           </Typography>
           <Typography
@@ -104,7 +103,7 @@ export const GasImpact = ({
             variant="value5"
           >
             {intl.formatMessage(
-              { defaultMessage: '{days} Days' },
+              { defaultMessage: '{days} Days', id: 'MgN8gK' },
               { days: Math.ceil(daysTillProfitable || 0) },
             )}
           </Typography>

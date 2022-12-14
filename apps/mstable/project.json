@@ -1,35 +1,24 @@
 {
+  "name": "mstable",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/mstable/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/web:webpack",
+      "executor": "@nrwl/vite:build",
       "inputs": [
-        { "env": "NX_THE_GRAPH_MV_MAINNET_URL" },
-        { "env": "NX_THE_GRAPH_MV_GOERLI_URL" }
+        {
+          "env": "NX_THE_GRAPH_MV_MAINNET_URL"
+        },
+        {
+          "env": "NX_THE_GRAPH_MV_GOERLI_URL"
+        }
       ],
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "dependsOn": ["^build"],
       "options": {
-        "compiler": "babel",
-        "outputPath": "dist/apps/mstable",
-        "index": "apps/mstable/src/index.html",
-        "baseHref": "/",
-        "main": "apps/mstable/src/main.tsx",
-        "polyfills": "apps/mstable/src/polyfills.ts",
-        "tsConfig": "apps/mstable/tsconfig.app.json",
-        "assets": [
-          "apps/mstable/src/favicon.ico",
-          "apps/mstable/src/ipfs-404.html",
-          "apps/mstable/src/manifest.json",
-          "apps/mstable/src/robots.txt",
-          "apps/mstable/src/assets"
-        ],
-        "styles": ["node_modules/@rainbow-me/rainbowkit/dist/index.css"],
-        "scripts": [],
-        "webpackConfig": "webpack.config.js"
+        "outputPath": "dist/apps/mstable"
       },
       "configurations": {
         "development": {
@@ -55,11 +44,10 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/web:dev-server",
+      "executor": "@nrwl/vite:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "mstable:build",
-        "hmr": true
+        "buildTarget": "mstable:build"
       },
       "configurations": {
         "development": {

@@ -1,7 +1,4 @@
 {
-  "+1GGs7": {
-    "defaultMessage": "Claim CVX & CRV"
-  },
   "/54G9d": {
     "defaultMessage": "Approving Token"
   },
@@ -44,9 +41,6 @@
   "4LNpZQ": {
     "defaultMessage": "Current value of your position. Includes earned amount."
   },
-  "5fjd4K": {
-    "defaultMessage": "{fee}%"
-  },
   "65ThHj": {
     "defaultMessage": "Protocols Involved"
   },
@@ -83,17 +77,11 @@
   "BnptNt": {
     "defaultMessage": "Slow - {value} GWEI"
   },
-  "BwwISd": {
-    "defaultMessage": "Vault"
-  },
   "CGcoFj": {
     "defaultMessage": "Yield Calculator"
   },
   "DUR59o": {
     "defaultMessage": "Total Value Locked"
-  },
-  "EWa1Fv": {
-    "defaultMessage": "LP Position"
   },
   "FaoPNm": {
     "defaultMessage": "You Burn"
@@ -185,9 +173,6 @@
   "WKCp0D": {
     "defaultMessage": "Asset"
   },
-  "WKF4Gx": {
-    "defaultMessage": "Swap to Stablecoin"
-  },
   "X1WPwl": {
     "defaultMessage": "Nothing here yet, make your first deposit"
   },
@@ -202,9 +187,6 @@
   },
   "ZwpbZp": {
     "defaultMessage": "Contracts"
-  },
-  "aPi9xt": {
-    "defaultMessage": "Swap fees"
   },
   "b+LlHJ": {
     "defaultMessage": "Deposit Gas"
@@ -268,9 +250,6 @@
   },
   "korbaG": {
     "defaultMessage": "The following assets are used in this strategy and therefore are exposed (partially) to their risk:"
-  },
-  "lLuyem": {
-    "defaultMessage": "DAO"
   },
   "m+DGTj": {
     "defaultMessage": "{operation}ing"

@@ -101,7 +101,10 @@ export const MobileVaultCard = (props: VaultCardProps) => {
         </ValueLabel>
         <ValueLabel
           disableResponsive
-          label={intl.formatMessage({ defaultMessage: 'Protocols' })}
+          label={intl.formatMessage({
+            defaultMessage: 'Protocols',
+            id: 'zFNxtv',
+          })}
         >
           <AvatarGroup max={6}>
             {metavault.strategies.map((strat) => (

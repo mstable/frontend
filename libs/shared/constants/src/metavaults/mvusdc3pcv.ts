@@ -16,17 +16,21 @@ const main: Metavault = {
   tags: [
     defineMessage({
       defaultMessage: 'Stablecoin Strategy',
+      id: 'VlABxn',
     }),
     defineMessage({
       defaultMessage: 'Market Neutral',
+      id: '2JVe1j',
     }),
     defineMessage({
       defaultMessage: 'Diversified',
+      id: 's47Z6j',
     }),
   ],
   strategyDescription: defineMessage({
     defaultMessage:
       'This Strategy uses USDC to deposit into the 3CRV-Pool on Curve. The 3CRV token is then deposited in various Curve meta pools and staked in Convex. The earned CVX and CRV tokens are periodically claimed, swapped, and compounded.',
+    id: 'EibIVS',
   }),
   strategies: [
     {
@@ -34,6 +38,7 @@ const main: Metavault = {
       strategy: defineMessage({
         defaultMessage:
           'The Strategy uses Meta Vault and Vault contracts and combines and wraps the underlying strategies into one contract.',
+        id: 'MPUuRK',
       }),
     },
     {
@@ -41,6 +46,7 @@ const main: Metavault = {
       strategy: defineMessage({
         defaultMessage:
           'The Strategy uses Curves 3CRV Pools and Factory pools. The strategy is exposed to the risk of the Curve smart contracts.',
+        id: 'D/hLNw',
       }),
     },
     {
@@ -48,6 +54,7 @@ const main: Metavault = {
       strategy: defineMessage({
         defaultMessage:
           'The Strategy uses Convex to stake liquidity tokens from Curve to earn additional rewards. The strategy is exposed to the risk of the Convex smart contracts.',
+        id: 'f4vYF8',
       }),
     },
   ],

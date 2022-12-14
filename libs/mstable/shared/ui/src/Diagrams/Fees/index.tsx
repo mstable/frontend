@@ -36,26 +36,37 @@ export const PerformanceFees = ({ fees, ...rest }: FeesProps) => {
       {...rest}
     >
       <Logo
-        label={intl.formatMessage({ defaultMessage: 'LP Position' })}
+        label={intl.formatMessage({
+          defaultMessage: 'LP Position',
+          id: 'EWa1Fv',
+        })}
         revertColors
       >
         <Coin weight="fill" width={16} height={16} />
       </Logo>
       <Arrow {...arrowProps} />
-      <Logo label={intl.formatMessage({ defaultMessage: 'Swap fees' })}>
+      <Logo
+        label={intl.formatMessage({
+          defaultMessage: 'Swap fees',
+          id: 'aPi9xt',
+        })}
+      >
         <Coins weight="fill" width={16} height={16} />
       </Logo>
       <Arrow {...arrowProps} />
       <Logo
         label={intl.formatMessage(
-          { defaultMessage: '{fee}%' },
+          { defaultMessage: '{fee}%', id: '5fjd4K' },
           { fee: Math.round(fees * 100) },
         )}
       >
         <ChartPieSlice weight="fill" width={16} height={16} />
       </Logo>
       <Arrow {...arrowProps} />
-      <Logo label={intl.formatMessage({ defaultMessage: 'DAO' })} revertColors>
+      <Logo
+        label={intl.formatMessage({ defaultMessage: 'DAO', id: 'lLuyem' })}
+        revertColors
+      >
         <Bank weight="fill" width={16} height={16} />
       </Logo>
     </Stack>
@@ -83,32 +94,43 @@ export const LiquidationFees = ({ fees, ...rest }: FeesProps) => {
       {...rest}
     >
       <Logo
-        label={intl.formatMessage({ defaultMessage: 'Vault' })}
+        label={intl.formatMessage({ defaultMessage: 'Vault', id: 'BwwISd' })}
         revertColors
       >
         <Vault weight="fill" width={16} height={16} />
       </Logo>
       <Arrow {...arrowProps} />
-      <Logo label={intl.formatMessage({ defaultMessage: 'Claim CVX & CRV' })}>
+      <Logo
+        label={intl.formatMessage({
+          defaultMessage: 'Claim CVX & CRV',
+          id: '+1GGs7',
+        })}
+      >
         <Coins weight="fill" width={16} height={16} />
       </Logo>
       <Arrow {...arrowProps} />
       <Logo
-        label={intl.formatMessage({ defaultMessage: 'Swap to Stablecoin' })}
+        label={intl.formatMessage({
+          defaultMessage: 'Swap to Stablecoin',
+          id: 'WKF4Gx',
+        })}
       >
         <ArrowsClockwise weight="fill" width={16} height={16} />
       </Logo>
       <Arrow {...arrowProps} />
       <Logo
         label={intl.formatMessage(
-          { defaultMessage: '{fee}%' },
+          { defaultMessage: '{fee}%', id: '5fjd4K' },
           { fee: Math.round(fees * 100) },
         )}
       >
         <ChartPieSlice weight="fill" width={16} height={16} />
       </Logo>
       <Arrow {...arrowProps} />
-      <Logo label={intl.formatMessage({ defaultMessage: 'DAO' })} revertColors>
+      <Logo
+        label={intl.formatMessage({ defaultMessage: 'DAO', id: 'lLuyem' })}
+        revertColors
+      >
         <Bank weight="fill" width={16} height={16} />
       </Logo>
     </Stack>

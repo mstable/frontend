@@ -50,7 +50,7 @@ export const HistoryDialog = ({ onClose }: { onClose: () => void }) => {
       onClose={onClose}
       maxWidth="sm"
       fullWidth
-      title={intl.formatMessage({ defaultMessage: 'History' })}
+      title={intl.formatMessage({ defaultMessage: 'History', id: 'djJp6c' })}
       content={
         isLoading ? (
           <Spinner sx={{ minWidth: 500, minHeight: 150 }} />
@@ -72,6 +72,7 @@ export const HistoryDialog = ({ onClose }: { onClose: () => void }) => {
             <Typography variant="h4" color="text.secondary">
               {intl.formatMessage({
                 defaultMessage: 'Nothing here yet, make your first deposit',
+                id: 'X1WPwl',
               })}
             </Typography>
           </Box>
@@ -86,7 +87,7 @@ export const HistoryDialog = ({ onClose }: { onClose: () => void }) => {
               onClick={onClose}
               fullWidth
             >
-              {intl.formatMessage({ defaultMessage: 'Close' })}
+              {intl.formatMessage({ defaultMessage: 'Close', id: 'rbrahO' })}
             </Button>
           </>
         ) : (
@@ -104,7 +105,7 @@ export const HistoryDialog = ({ onClose }: { onClose: () => void }) => {
           ? undefined
           : (onClose) => (
               <Button color="secondary" onClick={onClose}>
-                {intl.formatMessage({ defaultMessage: 'Close' })}
+                {intl.formatMessage({ defaultMessage: 'Close', id: 'rbrahO' })}
               </Button>
             )
       }

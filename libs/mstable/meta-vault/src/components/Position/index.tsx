@@ -45,7 +45,10 @@ export const PositionContent = () => {
       >
         <Box display="flex" alignItems="center">
           <Typography variant="body2" color="text.secondary">
-            {intl.formatMessage({ defaultMessage: 'Position Value' })}
+            {intl.formatMessage({
+              defaultMessage: 'Position Value',
+              id: 'TL3yAY',
+            })}
           </Typography>
           <InfoTooltip
             sx={{ ml: 1 }}
@@ -53,6 +56,7 @@ export const PositionContent = () => {
             label={intl.formatMessage({
               defaultMessage:
                 'Current value of your position. Includes earned amount.',
+              id: '4LNpZQ',
             })}
             color="text.secondary"
             variant="exclamation"
@@ -68,7 +72,7 @@ export const PositionContent = () => {
           />
           <Typography variant="value5" color="text.secondary">
             {intl.formatMessage(
-              { defaultMessage: '{val} Shares' },
+              { defaultMessage: '{val} Shares', id: 'T3hbuQ' },
               { val: mvBalance?.format() ?? '0.00' },
             )}
           </Typography>
@@ -82,7 +86,10 @@ export const PositionContent = () => {
       >
         <Box display="flex" alignItems="center">
           <Typography variant="body2" color="text.secondary">
-            {intl.formatMessage({ defaultMessage: 'Profit/Loss' })}
+            {intl.formatMessage({
+              defaultMessage: 'Profit/Loss',
+              id: 'rfzzi6',
+            })}
           </Typography>
           <InfoTooltip
             sx={{ ml: 1 }}
@@ -90,6 +97,7 @@ export const PositionContent = () => {
             label={intl.formatMessage({
               defaultMessage:
                 'Profit or Losses accumulated since deposit. Fluctuations possible due to liquidity provision position.',
+              id: 'eyJuTX',
             })}
             color="text.secondary"
             variant="exclamation"
@@ -110,7 +118,7 @@ export const PositionContent = () => {
           </Typography>
           <Typography variant="value5" color="text.secondary">
             {intl.formatMessage(
-              { defaultMessage: '{roi}% ROI' },
+              { defaultMessage: '{roi}% ROI', id: 'TVrR/z' },
               {
                 roi: roi.format() ?? '0.00',
               },
@@ -141,7 +149,10 @@ export const Position = () => {
           pb={1}
         >
           <Typography variant="h5">
-            {intl.formatMessage({ defaultMessage: 'My Position' })}
+            {intl.formatMessage({
+              defaultMessage: 'My Position',
+              id: '0NMLMN',
+            })}
           </Typography>
           <Button
             size="small"
@@ -150,7 +161,7 @@ export const Position = () => {
             disabled={!address || !metavault?.address}
             onClick={() => setIsHistoryDialogOpen(true)}
           >
-            {intl.formatMessage({ defaultMessage: 'History' })}
+            {intl.formatMessage({ defaultMessage: 'History', id: 'djJp6c' })}
           </Button>
         </Box>
         <CardContent>

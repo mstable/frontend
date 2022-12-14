@@ -132,16 +132,18 @@ export const FeatureCard = () => {
           pb: 1,
         }}
       >
-        {intl.formatMessage({ defaultMessage: 'Explore' })}
+        {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}
       </Typography>
       <Typography className="title" mb={3}>
         {intl.formatMessage({
           defaultMessage: 'Meta Vaults',
+          id: 'SRo6uF',
         })}
       </Typography>
       <Typography className="subtitle" mb={3}>
         {intl.formatMessage({
           defaultMessage: 'Earn diversified yield across DeFi.',
+          id: 'P1xtEU',
         })}
       </Typography>
       <Stack
@@ -156,11 +158,11 @@ export const FeatureCard = () => {
           {totalTvlLoading ? (
             <Skeleton width={60} height={14} />
           ) : (
-            intl.formatNumber(totalTvl, {
+            Intl.NumberFormat('en-US', {
               style: 'currency',
               currency,
               notation: 'compact',
-            })
+            }).format(totalTvl)
           )}
         </Typography>
         <Divider orientation="vertical" variant="middle" flexItem />
@@ -170,7 +172,7 @@ export const FeatureCard = () => {
             <Skeleton width={75} />
           ) : (
             intl.formatMessage(
-              { defaultMessage: '{value} GWEI' },
+              { defaultMessage: '{value} GWEI', id: '7ynb1z' },
               { value: new BigDecimal(feeData?.gasPrice, 9).simpleRounded },
             )
           )}
@@ -269,11 +271,12 @@ export const FeatureCard = () => {
               pb: 1,
             }}
           >
-            {intl.formatMessage({ defaultMessage: 'Explore' })}
+            {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}
           </Typography>
           <Typography className="title" mb={3}>
             {intl.formatMessage({
               defaultMessage: 'Meta Vaults',
+              id: 'SRo6uF',
             })}
           </Typography>
           <Typography
@@ -288,6 +291,7 @@ export const FeatureCard = () => {
           >
             {intl.formatMessage({
               defaultMessage: 'Earn diversified yield across DeFi.',
+              id: 'P1xtEU',
             })}
           </Typography>
           <Stack
@@ -301,11 +305,11 @@ export const FeatureCard = () => {
               {totalTvlLoading ? (
                 <Skeleton width={60} height={14} />
               ) : (
-                intl.formatNumber(totalTvl, {
+                Intl.NumberFormat('en-US', {
                   style: 'currency',
                   currency,
                   notation: 'compact',
-                })
+                }).format(totalTvl)
               )}
             </Typography>
             <Divider orientation="vertical" variant="middle" flexItem />
@@ -315,7 +319,7 @@ export const FeatureCard = () => {
                 <Skeleton width={75} />
               ) : (
                 intl.formatMessage(
-                  { defaultMessage: '{value} GWEI' },
+                  { defaultMessage: '{value} GWEI', id: '7ynb1z' },
                   { value: new BigDecimal(feeData?.gasPrice, 9).simpleRounded },
                 )
               )}

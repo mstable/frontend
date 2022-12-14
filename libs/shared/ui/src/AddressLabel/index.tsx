@@ -146,7 +146,7 @@ export const AddressLabel = ({
                 color="success"
                 sx={{ fontSize: small ? 14 : 16, mr: 0.5 }}
               />
-              {intl.formatMessage({ defaultMessage: 'Copied' })}
+              {intl.formatMessage({ defaultMessage: 'Copied', id: 'p556q3' })}
             </Typography>
           ) : (
             <Error color="error" sx={{ fontSize: small ? 14 : 16 }} />

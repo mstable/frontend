@@ -36,7 +36,10 @@ export const MobileBottomCard = () => {
         >
           <CollapsibleSection
             iconPosition="end"
-            title={intl.formatMessage({ defaultMessage: 'My Position' })}
+            title={intl.formatMessage({
+              defaultMessage: 'My Position',
+              id: '0NMLMN',
+            })}
             components={{
               title: { sx: { typography: 'body1' } },
             }}
@@ -52,7 +55,10 @@ export const MobileBottomCard = () => {
                 startIcon={<Receipt weight="fill" size={14} />}
                 onClick={() => setIsHistoryDialogOpen(true)}
               >
-                {intl.formatMessage({ defaultMessage: 'History' })}
+                {intl.formatMessage({
+                  defaultMessage: 'History',
+                  id: 'djJp6c',
+                })}
               </Button>
               {/* <Button
                 fullWidth
@@ -66,7 +72,10 @@ export const MobileBottomCard = () => {
         </Box>
         <Box m={2} mt={3}>
           <Button fullWidth onClick={() => setIsOperationOpen(true)}>
-            {intl.formatMessage({ defaultMessage: 'Deposit/Withdraw' })}
+            {intl.formatMessage({
+              defaultMessage: 'Deposit/Withdraw',
+              id: 'in6iXe',
+            })}
           </Button>
         </Box>
       </Card>
@@ -80,8 +89,21 @@ export const MobileBottomCard = () => {
       <Dialog
         open={isOperationOpen}
         onClose={() => setIsOperationOpen(false)}
-        title={intl.formatMessage({ defaultMessage: 'Deposit/Withdraw' })}
-        content={<Operations />}
+        title={intl.formatMessage({
+          defaultMessage: 'Deposit/Withdraw',
+          id: 'in6iXe',
+        })}
+        content={
+          <Operations
+            elevation={0}
+            sx={{
+              backgroundColor: 'transparent',
+              mt: 2,
+              border: 'none',
+              boxShadow: 0,
+            }}
+          />
+        }
       />
     </>
   );
