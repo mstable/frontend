@@ -13,10 +13,11 @@ import {
 import { useIntl } from 'react-intl';
 
 import { useMetavault } from '../../state';
+import { Allocations } from './components/Allocations';
 import { Assets } from './components/Assets';
+import { Contracts } from './components/Contracts';
 import { Fees } from './components/Fees';
 import { Protocols } from './components/Protocols';
-import { Vaults } from './components/Vaults';
 
 import type { CollapsibleSectionProps } from '@frontend/shared-ui';
 
@@ -47,6 +48,17 @@ export const Strategy = () => {
 
   const collapseSections = [
     {
+      title: intl.formatMessage({
+        defaultMessage: 'Allocations',
+        id: 'YYu/aL',
+      }),
+      subtitle: intl.formatMessage({
+        defaultMessage: 'Allocations of deposited funds in underlying vaults',
+        id: 'bfACwi',
+      }),
+      component: <Allocations />,
+    },
+    {
       title: intl.formatMessage({ defaultMessage: 'Protocols', id: 'zFNxtv' }),
       subtitle: intl.formatMessage({
         defaultMessage: 'Protocols that are used by this vault.',
@@ -64,7 +76,7 @@ export const Strategy = () => {
           'Vault contract and underlying vaults that are utilized.',
         id: '3Dvp3q',
       }),
-      component: <Vaults />,
+      component: <Contracts />,
     },
     {
       title: intl.formatMessage({ defaultMessage: 'Fees', id: 'qZbedW' }),

@@ -1,8 +1,16 @@
+/* eslint-disable no-empty */
 import { useEffect, useState } from 'react';
 
 import { useDataSource } from '@frontend/mstable-shared-data-access';
 import { BigDecimal } from '@frontend/shared-utils';
-import { constants } from 'ethers';
+import {
+  Curve3CrvBasicMetaVaultABI,
+  ERC20ABI,
+  PeriodicAllocationPerfFeeMetaVaultABI,
+} from '@mstable/metavaults-web';
+import { useQuery } from '@tanstack/react-query';
+import { getContract } from '@wagmi/core';
+import { BigNumber, constants } from 'ethers';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import {
@@ -11,6 +19,7 @@ import {
   useBalance,
   useContractRead,
   useContractReads,
+  useProvider,
   useToken,
 } from 'wagmi';
 
@@ -25,6 +34,8 @@ import type { FetchTokenResult } from '@wagmi/core';
 import type { BigNumberish } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
 
+import type { Vault } from './types';
+
 type MetaVaultState = {
   metavault: Metavault | null;
   mvToken: FetchTokenResult | null;
@@ -37,6 +48,11 @@ type MetaVaultState = {
   assetBalance: BigDecimal | null;
   assetBalanceInShare: BigDecimal | null;
   roi: number | null;
+  structure: {
+    proxiedVault: Vault;
+    underlyingVaults: Vault[];
+  } | null;
+  allocations: { address: HexAddress; name: string; balance: number }[] | null;
 };
 
 export const {
@@ -49,13 +65,13 @@ export const {
   { initialState: { metavault: Metavault } }
 >(({ initialState }) => {
   const { address: walletAddress, isConnected } = useAccount();
+  const provider = useProvider();
   const [state, setState] = useState<MetaVaultState>({
     metavault: {
       address: '',
       name: '',
       tags: [],
       strategies: [],
-      vaults: [],
       assets: [],
       fees: { liquidation: 0, performance: 0 },
       ...initialState.metavault,
@@ -70,6 +86,8 @@ export const {
     assetBalance: null,
     assetBalanceInShare: null,
     roi: null,
+    structure: null,
+    allocations: null,
   });
 
   const {
@@ -230,6 +248,149 @@ export const {
       );
     },
   });
+
+  useQuery(
+    ['structure'],
+    async () => {
+      const proxiedVault = (await getContract({
+        address,
+        abi: Curve3CrvBasicMetaVaultABI,
+        signerOrProvider: provider,
+      }).metaVault()) as HexAddress;
+
+      const [uvIdx, asset, shareDecimals, proxiedName] = await Promise.all([
+        getContract({
+          address: proxiedVault,
+          abi: PeriodicAllocationPerfFeeMetaVaultABI,
+          signerOrProvider: provider,
+        }).totalUnderlyingVaults(),
+        getContract({
+          address: proxiedVault,
+          abi: PeriodicAllocationPerfFeeMetaVaultABI,
+          signerOrProvider: provider,
+        }).asset(),
+        getContract({
+          address: proxiedVault,
+          abi: PeriodicAllocationPerfFeeMetaVaultABI,
+          signerOrProvider: provider,
+        }).decimals(),
+        getContract({
+          address: proxiedVault,
+          abi: PeriodicAllocationPerfFeeMetaVaultABI,
+          signerOrProvider: provider,
+        }).name(),
+      ]);
+
+      const assetDecimals = await getContract({
+        address: asset,
+        abi: ERC20ABI,
+        signerOrProvider: provider,
+      }).decimals();
+
+      const uvs = [];
+      let indexes = 0;
+      try {
+        indexes = BigNumber.from(uvIdx).toNumber();
+      } catch {}
+
+      for (let i = 0; i < indexes; i++) {
+        try {
+          const address = await getContract({
+            address: proxiedVault,
+            abi: PeriodicAllocationPerfFeeMetaVaultABI,
+            signerOrProvider: provider,
+          }).resolveVaultIndex(i);
+          uvs.push(address);
+        } catch {}
+      }
+
+      const bals = await Promise.all(
+        uvs.map((v) =>
+          getContract({
+            address: v,
+            abi: ERC20ABI,
+            signerOrProvider: provider,
+          }).balanceOf(proxiedVault),
+        ),
+      );
+      const decimals = await Promise.all(
+        uvs.map((v) =>
+          getContract({
+            address: v,
+            abi: ERC20ABI,
+            signerOrProvider: provider,
+          }).decimals(),
+        ),
+      );
+      const names = await Promise.all(
+        uvs.map((v) =>
+          getContract({
+            address: v,
+            abi: ERC20ABI,
+            signerOrProvider: provider,
+          }).symbol(),
+        ),
+      );
+      const converted = await Promise.all(
+        uvs.map((v, i) =>
+          getContract({
+            address: v,
+            abi: erc4626ABI,
+            signerOrProvider: provider,
+          }).convertToAssets(bals[i]),
+        ),
+      );
+      const unallocated = await getContract({
+        address: asset,
+        abi: erc4626ABI,
+        signerOrProvider: provider,
+      }).balanceOf(proxiedVault);
+
+      return {
+        structure: {
+          proxiedVault: {
+            address: proxiedVault,
+            decimals: shareDecimals,
+            name: proxiedName,
+          },
+          underlyingVaults: uvs.map((v, i) => ({
+            address: v,
+            name: names[i],
+            decimals: decimals[i],
+          })),
+        },
+        allocations: [
+          {
+            name: 'Unallocated',
+            balance: new BigDecimal(unallocated, assetDecimals).simple,
+          },
+          ...uvs.reduce(
+            (acc, curr, i) => [
+              ...acc,
+              {
+                address: curr,
+                name: names[i],
+                balance: new BigDecimal(converted[i], decimals[i]).simple,
+              },
+            ],
+            [],
+          ),
+        ],
+      };
+    },
+    {
+      cacheTime: Infinity,
+      staleTime: Infinity,
+      onSuccess: (data) => {
+        setState(
+          produce((draft) => {
+            draft.allocations = data.allocations;
+            draft.structure = data.structure;
+          }),
+        );
+      },
+    },
+  );
 
   useEffect(() => {
     if (address) {

@@ -1,4 +1,5 @@
 import type { TransactionType } from '@frontend/mstable-shared-data-access';
+import type { HexAddress } from '@frontend/shared-utils';
 import type { MakeGenerics } from '@tanstack/react-location';
 import type { BigNumber } from 'ethers';
 
@@ -21,6 +22,12 @@ export type MvGenerics = MakeGenerics<{
     };
   };
 }>;
+
+export type Vault = {
+  address: HexAddress;
+  name: string;
+  decimals: number;
+};
 
 export type TxHistory = {
   timestamp: string;

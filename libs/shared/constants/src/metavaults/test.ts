@@ -5,7 +5,6 @@ import { goerli, mainnet } from 'wagmi/chains';
 import { protocols } from '../protocols';
 import { tokens } from '../tokens';
 import { DEAD_ADDRESS } from '../utils';
-import { vaults } from '../vaults';
 
 import type { Metavault } from './types';
 
@@ -38,7 +37,6 @@ const main: Metavault = {
       }),
     },
   ],
-  vaults: [vaults[mainnet.id].vcx3crvmusd],
   assets: [tokens[mainnet.id].musd, tokens[mainnet.id].usdc],
   fees: {
     liquidation: 0.17,
@@ -54,7 +52,6 @@ const main: Metavault = {
 const goer: Metavault = {
   ...main,
   address: DEAD_ADDRESS,
-  vaults: [vaults[goerli.id].vcx3crvmusd],
   assets: [tokens[goerli.id].musd, tokens[goerli.id].usdc],
 };
 

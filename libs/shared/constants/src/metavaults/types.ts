@@ -3,7 +3,6 @@ import type { MessageDescriptor } from 'react-intl';
 
 import type { Protocol } from '../protocols';
 import type { Token } from '../tokens';
-import type { Vault } from '../vaults';
 
 export type SupportedMetavault = 'mvusdc3pcv' | 'test';
 
@@ -19,7 +18,6 @@ export type Metavault = {
   tags: MessageDescriptor[];
   strategyDescription?: MessageDescriptor;
   strategies: Strategy[];
-  vaults: Vault[];
   assets: Token[];
   fees: {
     liquidation: number;
