@@ -53,8 +53,8 @@ export const Strategy = () => {
         id: 'YYu/aL',
       }),
       subtitle: intl.formatMessage({
-        defaultMessage: 'Allocations of deposited funds in underlying vaults',
-        id: 'bfACwi',
+        defaultMessage: 'Distribution of deposited funds in underlying vaults',
+        id: 'RpPskj',
       }),
       component: <Allocations />,
     },
