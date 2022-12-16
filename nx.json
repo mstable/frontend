@@ -20,8 +20,22 @@
       }
     }
   },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*"]
+  },
   "targetDefaults": {
     "build": {
+      "inputs": [
+        {
+          "env": "NX_THE_GRAPH_MV_MAINNET_URL"
+        },
+        {
+          "env": "NX_THE_GRAPH_MV_GOERLI_URL"
+        },
+        {
+          "env": "NX_INFURA_KEY"
+        }
+      ],
       "dependsOn": ["^build"]
     }
   },
