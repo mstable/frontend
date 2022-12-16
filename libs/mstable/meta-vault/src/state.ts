@@ -250,7 +250,7 @@ export const {
   });
 
   useQuery(
-    ['structure'],
+    ['structure', address],
     async () => {
       const proxiedVault = (await getContract({
         address,
@@ -380,7 +380,6 @@ export const {
     },
     {
       cacheTime: Infinity,
-      staleTime: Infinity,
       onSuccess: (data) => {
         setState(
           produce((draft) => {
