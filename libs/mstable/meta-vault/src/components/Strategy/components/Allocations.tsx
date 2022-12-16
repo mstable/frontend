@@ -1,6 +1,6 @@
-import { Spinner } from '@frontend/shared-ui';
 import { isNilOrEmpty } from '@frontend/shared-utils';
-import { Box, Grid, Stack, Typography } from '@mui/material';
+import { Box, Grid, Skeleton, Stack, Typography } from '@mui/material';
+import { times } from 'ramda';
 
 import { useMetavault } from '../../../state';
 
@@ -8,12 +8,30 @@ import type { StackProps } from '@mui/material';
 
 const colors = ['#A7A9CE', '#FFB359', '#CA59FF', '#8ED6FF'];
 
+const Loader = (props: StackProps) => (
+  <Stack {...props}>
+    <Stack margin={2} direction="row" alignItems="center">
+      <Skeleton variant="rounded" width="100%" height={2} />
+    </Stack>
+    <Box p={2}>
+      <Grid container spacing={2}>
+        {times(
+          (n) => (
+            <Grid item xs={12} sm={6} lg={3} key={`loader-${n}`}>
+              <Skeleton variant="rounded" width="100%" height={80} />
+            </Grid>
+          ),
+          4,
+        )}
+      </Grid>
+    </Box>
+  </Stack>
+);
+
 export const Allocations = (props: StackProps) => {
   const { allocations } = useMetavault();
 
-  console.log(allocations);
-
-  if (isNilOrEmpty(allocations)) return <Spinner />;
+  if (isNilOrEmpty(allocations)) return <Loader {...props} />;
 
   const total = allocations.reduce((acc, curr) => acc + curr.balance, 0);
 
