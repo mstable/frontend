@@ -4,7 +4,6 @@ import { goerli, mainnet } from 'wagmi/chains';
 
 import { protocols } from '../protocols';
 import { tokens } from '../tokens';
-import { vaults } from '../vaults';
 
 import type { Metavault } from './types';
 
@@ -58,13 +57,6 @@ const main: Metavault = {
       }),
     },
   ],
-  vaults: [
-    vaults[mainnet.id].mvusdc3pcv,
-    vaults[mainnet.id].mv3crvcvx,
-    vaults[mainnet.id].vcx3crvbusd,
-    vaults[mainnet.id].vcx3crvfrax,
-    vaults[mainnet.id].vcx3crvmusd,
-  ],
   assets: [
     tokens[mainnet.id].musd,
     tokens[mainnet.id].busd,
@@ -88,13 +80,6 @@ const main: Metavault = {
 const goer: Metavault = {
   ...main,
   address: tokens[goerli.id].tvg.address,
-  vaults: [
-    vaults[goerli.id].mvusdc3pcv,
-    vaults[goerli.id].mv3crvcvx,
-    vaults[goerli.id].vcx3crvbusd,
-    vaults[goerli.id].vcx3crvfrax,
-    vaults[goerli.id].vcx3crvmusd,
-  ],
   assets: [
     tokens[goerli.id].musd,
     tokens[goerli.id].busd,

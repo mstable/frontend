@@ -655,6 +655,12 @@
       "value": "Make sure your internet connection is working."
     }
   ],
+  "RpPskj": [
+    {
+      "type": 0,
+      "value": "Distribution of deposited funds in underlying vaults"
+    }
+  ],
   "SKB/G9": [
     {
       "type": 0,
@@ -821,6 +827,12 @@
     {
       "type": 0,
       "value": "Share price"
+    }
+  ],
+  "YYu/aL": [
+    {
+      "type": 0,
+      "value": "Allocations"
     }
   ],
   "ZefNbE": [

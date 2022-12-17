@@ -1,14 +1,17 @@
 import { AddressLabel } from '@frontend/shared-ui';
-import { Grid, Stack, Typography, useTheme } from '@mui/material';
+import { isNilOrEmpty } from '@frontend/shared-utils';
+import { Grid, Skeleton, Stack, Typography, useTheme } from '@mui/material';
 import { Sparkle } from 'phosphor-react';
+import { times } from 'ramda';
 import { erc20ABI, useContractRead, useNetwork } from 'wagmi';
 
 import { useMetavault } from '../../../state';
 
-import type { Vault } from '@frontend/shared-constants';
 import type { StackProps } from '@mui/material';
 
-type VaultCardProps = { featured: boolean } & Omit<Vault, 'decimals'> &
+import type { Vault } from '../../../types';
+
+type VaultCardProps = { featured?: boolean } & Omit<Vault, 'decimals'> &
   StackProps;
 
 const VaultCard = ({ address, name, featured, ...rest }: VaultCardProps) => {
@@ -43,7 +46,7 @@ const VaultCard = ({ address, name, featured, ...rest }: VaultCardProps) => {
           color={theme.palette.info.main}
         />
       )}
-      <Stack direction="column">
+      <Stack direction="column" overflow="hidden">
         <Typography variant="h5" gutterBottom noWrap>
           {data as string}
         </Typography>
@@ -62,23 +65,48 @@ const VaultCard = ({ address, name, featured, ...rest }: VaultCardProps) => {
   );
 };
 
-export const Vaults = (props: StackProps) => {
-  const {
-    metavault: { vaults },
-  } = useMetavault();
+const Loader = (props: StackProps) => (
+  <Stack {...props}>
+    <Grid container spacing={2}>
+      <Grid item xs={12} zeroMinWidth>
+        <Skeleton variant="rounded" width="100%" height={100} />
+      </Grid>
+      {times(
+        (n) => (
+          <Grid item key={`loader-${n}`} xs={12} sm={6} zeroMinWidth>
+            <Skeleton variant="rounded" width="100%" height={100} />
+          </Grid>
+        ),
+        4,
+      )}
+    </Grid>
+  </Stack>
+);
+
+export const Contracts = (props: StackProps) => {
+  const { structure, metavault } = useMetavault();
+
+  if (isNilOrEmpty(structure)) return <Loader {...props} />;
 
   return (
     <Stack {...props}>
       <Grid container spacing={2}>
-        {vaults.map(({ address, name }, idx) => (
-          <Grid
-            item
-            key={`${address}-${name}`}
-            xs={12}
-            {...(idx > 0 && { sm: 6 })}
-            zeroMinWidth
-          >
-            <VaultCard address={address} name={name} featured={idx === 0} />
+        <Grid item xs={12} zeroMinWidth>
+          <VaultCard
+            address={metavault.address}
+            name={metavault.name}
+            featured
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} zeroMinWidth>
+          <VaultCard
+            address={structure.proxiedVault.address}
+            name={structure.proxiedVault.name}
+          />
+        </Grid>
+        {structure?.underlyingVaults?.map(({ address, name }, idx) => (
+          <Grid item key={`${address}-${name}`} xs={12} sm={6} zeroMinWidth>
+            <VaultCard address={address} name={name} />
           </Grid>
         ))}
       </Grid>

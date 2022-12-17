@@ -143,6 +143,9 @@
   "PxG1Yq": {
     "defaultMessage": "Total Value Locked in vault"
   },
+  "RpPskj": {
+    "defaultMessage": "Distribution of deposited funds in underlying vaults"
+  },
   "SKB/G9": {
     "defaultMessage": "TVL"
   },
@@ -181,6 +184,9 @@
   },
   "YC/ZXg": {
     "defaultMessage": "Share price"
+  },
+  "YYu/aL": {
+    "defaultMessage": "Allocations"
   },
   "ZefNbE": {
     "defaultMessage": "Average - {value} GWEI"

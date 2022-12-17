@@ -15,13 +15,24 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "cacheableOperations": ["lint", "test", "e2e"],
         "accessToken": "OTc4ODQwMGQtZmNlMS00Y2ZlLThiMmItMzFmYjFiNTNiZTFmfHJlYWQ="
       }
     }
   },
   "targetDefaults": {
     "build": {
+      "inputs": [
+        {
+          "env": "NX_THE_GRAPH_MV_MAINNET_URL"
+        },
+        {
+          "env": "NX_THE_GRAPH_MV_GOERLI_URL"
+        },
+        {
+          "env": "NX_INFURA_KEY"
+        }
+      ],
       "dependsOn": ["^build"]
     }
   },
