@@ -17,7 +17,7 @@ const Loader = (props: StackProps) => (
       <Grid container spacing={2}>
         {times(
           (n) => (
-            <Grid item xs={12} sm={6} lg={3} key={`loader-${n}`}>
+            <Grid item xs={12} md={6} key={`loader-${n}`}>
               <Skeleton variant="rounded" width="100%" height={80} />
             </Grid>
           ),
@@ -59,7 +59,7 @@ export const Allocations = (props: StackProps) => {
             const percentage = alloc.balance / total;
 
             return (
-              <Grid item xs={12} sm={6} lg={3} key={alloc.name}>
+              <Grid item xs={12} md={6} key={alloc.name}>
                 <Stack
                   spacing={2}
                   justifyContent="center"

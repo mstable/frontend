@@ -328,7 +328,7 @@ export const {
             address: v,
             abi: ERC20ABI,
             signerOrProvider: provider,
-          }).symbol(),
+          }).name(),
         ),
       );
       const converted = await Promise.all(
