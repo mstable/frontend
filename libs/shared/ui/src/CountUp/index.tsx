@@ -37,12 +37,12 @@ export const CountUp = ({
     <Typography {...rest}>
       {prefix ? `${prefix} ` : ''}
       <CountUpLib
+        end={isNilOrEmpty(end) ? 0 : end}
         {...(!isNilOrEmpty(className) && { className })}
         {...(!isNilOrEmpty(decimal) && { decimal })}
         {...(!isNilOrEmpty(decimals) && { decimals })}
         {...(!isNilOrEmpty(delay) && { delay })}
         {...(!isNilOrEmpty(duration) && { duration })}
-        {...(!isNilOrEmpty(end) && { end })}
         {...(!isNilOrEmpty(redraw) && { redraw })}
         {...(!isNilOrEmpty(preserveValue) && { preserveValue })}
         {...(!isNilOrEmpty(separator) && { separator })}

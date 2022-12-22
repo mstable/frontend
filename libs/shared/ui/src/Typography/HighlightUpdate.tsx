@@ -73,7 +73,7 @@ export const HighlightUpdate = ({
     </Typography>
   ) : (
     <CountUp
-      end={value?.simple}
+      end={value?.simple ?? 0}
       decimals={decimalPlaces}
       preserveValue
       {...(suffix && { suffix })}

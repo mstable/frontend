@@ -105,13 +105,12 @@ export const {
     {
       enabled: !!address && !!walletAddress && !!state.mvBalanceInAsset,
       refetchInterval: 15000,
-      onSuccess: (userVaultBalanceData) => {
-        if (userVaultBalanceData) {
+      onSuccess: (data) => {
+        if (data) {
           setState(
             produce((draft) => {
               const mvDeposited = new BigDecimal(
-                userVaultBalanceData.vaultBalances[0]?.assetDeposited ||
-                  constants.Zero,
+                data.vaultBalances[0]?.assetDeposited || constants.Zero,
               );
               draft.mvDeposited = mvDeposited;
               draft.profitOrLoss =
@@ -406,12 +405,12 @@ export const {
   useEffect(() => {
     setState(
       produce((draft) => {
-        draft.mvBalance = BigDecimal.ZERO;
-        draft.mvBalanceInAsset = BigDecimal.ZERO;
-        draft.assetBalance = BigDecimal.ZERO;
-        draft.assetBalanceInShare = BigDecimal.ZERO;
-        draft.mvDeposited = BigDecimal.ZERO;
-        draft.profitOrLoss = BigDecimal.ZERO;
+        draft.mvBalance = null;
+        draft.mvBalanceInAsset = null;
+        draft.assetBalance = null;
+        draft.assetBalanceInShare = null;
+        draft.mvDeposited = null;
+        draft.profitOrLoss = null;
       }),
     );
   }, [walletAddress]);
