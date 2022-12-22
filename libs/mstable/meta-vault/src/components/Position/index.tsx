@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { HighlightUpdate, InfoTooltip } from '@frontend/shared-ui';
+import { CountUp, HighlightUpdate } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
   Box,
@@ -35,98 +35,63 @@ export const PositionContent = () => {
             ? profitOrLoss.divPrecisely(mvDeposited).exact.mul(100)
             : 0,
         );
+
   return (
-    <>
-      <Stack
-        direction="row"
-        mb={3}
-        justifyContent="space-between"
-        alignItems="flex-start"
-      >
-        <Box display="flex" alignItems="center">
-          <Typography variant="body2" color="text.secondary">
-            {intl.formatMessage({
-              defaultMessage: 'Position Value',
-              id: 'TL3yAY',
-            })}
-          </Typography>
-          <InfoTooltip
-            sx={{ ml: 1 }}
-            size={14}
-            label={intl.formatMessage({
-              defaultMessage:
-                'Current value of your position. Includes earned amount.',
-              id: '4LNpZQ',
-            })}
-            color="text.secondary"
-            variant="exclamation"
-          />
-        </Box>
-        <Stack direction="column" alignItems="flex-end" spacing={1}>
-          <HighlightUpdate
-            variant="value5"
-            value={mvBalanceInAsset}
-            suffix={assetToken?.symbol}
-            commas
-            color="text.secondary"
-          />
-          <Typography variant="value5" color="text.secondary">
-            {intl.formatMessage(
-              { defaultMessage: '{val} Shares', id: 'T3hbuQ' },
-              { val: mvBalance?.format() ?? '0.00' },
-            )}
-          </Typography>
-        </Stack>
-      </Stack>
-      <Stack
-        direction="row"
-        mb={3}
-        justifyContent="space-between"
-        alignItems="flex-start"
-      >
-        <Box display="flex" alignItems="center">
-          <Typography variant="body2" color="text.secondary">
-            {intl.formatMessage({
-              defaultMessage: 'Profit/Loss',
-              id: 'rfzzi6',
-            })}
-          </Typography>
-          <InfoTooltip
-            sx={{ ml: 1 }}
-            size={14}
-            label={intl.formatMessage({
-              defaultMessage:
-                'Profit or Losses accumulated since deposit. Fluctuations possible due to liquidity provision position.',
-              id: 'eyJuTX',
-            })}
-            color="text.secondary"
-            variant="exclamation"
-          />
-        </Box>
-        <Stack direction="column" alignItems="flex-end" spacing={1}>
-          <Typography
-            variant="value5"
-            color={
-              isConnected && profitOrLoss
-                ? profitOrLoss.simpleRounded >= 0
-                  ? 'success.main'
-                  : 'error.main'
-                : 'text.secondary'
-            }
-          >
-            {`${profitOrLoss?.format() ?? '0.00'} ${assetToken?.symbol || ''}`}
-          </Typography>
-          <Typography variant="value5" color="text.secondary">
-            {intl.formatMessage(
-              { defaultMessage: '{roi}% ROI', id: 'TVrR/z' },
-              {
-                roi: roi.format() ?? '0.00',
-              },
-            )}
-          </Typography>
-        </Stack>
-      </Stack>
-    </>
+    <Stack direction="column">
+      <Typography variant="body2" color="text.secondary" mb={2}>
+        {intl.formatMessage({
+          defaultMessage: 'Position Value',
+          id: 'TL3yAY',
+        })}
+      </Typography>
+      <HighlightUpdate
+        variant="value1"
+        value={mvBalanceInAsset}
+        suffix={assetToken?.symbol}
+        commas
+        color="text.secondary"
+        mb={1}
+      />
+      <CountUp
+        variant="value5"
+        color="text.secondary"
+        end={mvBalance?.simple}
+        suffix={intl.formatMessage({
+          defaultMessage: 'Shares',
+          id: 'mrwfXX',
+        })}
+      />
+      <Divider flexItem sx={{ my: 3 }} />
+      <Typography variant="body2" color="text.secondary" mb={2}>
+        {intl.formatMessage({
+          defaultMessage: 'Profit/Loss',
+          id: 'rfzzi6',
+        })}
+      </Typography>
+      <CountUp
+        variant="value1"
+        mb={1}
+        color={
+          isConnected && profitOrLoss
+            ? profitOrLoss.simpleRounded >= 0
+              ? 'success.main'
+              : 'error.main'
+            : 'text.secondary'
+        }
+        end={profitOrLoss?.simple}
+        suffix={assetToken?.symbol}
+      />
+      <CountUp
+        variant="value5"
+        color="text.secondary"
+        end={roi?.simple}
+        prefix={intl.formatMessage({ defaultMessage: 'ROI', id: 'P8Xs51' })}
+        suffix={intl.formatMessage({
+          defaultMessage: '%',
+          id: 'kZcqo0',
+        })}
+      />
+    </Stack>
   );
 };
 
@@ -135,7 +100,6 @@ export const Position = () => {
   const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
   // const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);
   const { metavault } = useMetavault();
-
   const { address } = useAccount();
 
   return (

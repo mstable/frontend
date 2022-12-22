@@ -1,6 +1,7 @@
 export * from './AddressLabel';
 export * from './Cards';
 export * from './CollapsibleSection';
+export * from './CountUp';
 export * from './Diagrams';
 export * from './ErrorBoundary';
 export * from './Errors';

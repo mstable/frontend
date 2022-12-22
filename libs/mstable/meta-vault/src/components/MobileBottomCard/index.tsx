@@ -47,7 +47,7 @@ export const MobileBottomCard = () => {
             onToggle={() => setIsMyPositionOpen((o) => !o)}
           >
             <PositionContent />
-            <Stack direction="row" spacing={2} mb={1}>
+            <Stack direction="row" spacing={2} mt={3} mb={1}>
               <Button
                 fullWidth
                 variant="outlined"

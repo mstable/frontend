@@ -5,6 +5,8 @@ import { BigDecimal } from '@frontend/shared-utils';
 import { Typography } from '@mui/material';
 import { useInterval } from 'react-use';
 
+import { CountUp } from '../CountUp';
+
 import type { SxProps, Theme, TypographyProps } from '@mui/material';
 
 export type HighlightUpdateProps = {
@@ -13,7 +15,8 @@ export type HighlightUpdateProps = {
   decimalPlaces?: number;
   commas?: boolean;
   suffix?: string;
-} & TypographyProps;
+  disableCount?: boolean;
+} & Omit<TypographyProps, 'children'>;
 
 const incStyles: SxProps<Theme> = {
   color: 'success.main',
@@ -29,6 +32,8 @@ export const HighlightUpdate = ({
   decimalPlaces = 2,
   commas = false,
   suffix = '',
+  onReset,
+  disableCount,
   ...rest
 }: HighlightUpdateProps) => {
   const [val, setVal] = useState(value ?? BigDecimal.ZERO);
@@ -52,7 +57,7 @@ export const HighlightUpdate = ({
     setDel(null);
   }, del);
 
-  return (
+  return disableCount ? (
     <Typography
       sx={{
         ...highlight,
@@ -61,9 +66,26 @@ export const HighlightUpdate = ({
             duration: theme.transitions.duration.short,
           }),
       }}
+      {...(onReset && { onReset })}
       {...rest}
     >
       {val.format(decimalPlaces, commas, suffix)}
     </Typography>
+  ) : (
+    <CountUp
+      end={value?.simple}
+      decimals={decimalPlaces}
+      preserveValue
+      {...(suffix && { suffix })}
+      {...(commas && { separator: ',' })}
+      sx={{
+        ...highlight,
+        transition: (theme) =>
+          theme.transitions.create('all', {
+            duration: theme.transitions.duration.short,
+          }),
+      }}
+      {...rest}
+    />
   );
 };
