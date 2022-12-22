@@ -406,12 +406,12 @@ export const {
   useEffect(() => {
     setState(
       produce((draft) => {
-        draft.mvBalance = null;
-        draft.mvBalanceInAsset = null;
-        draft.assetBalance = null;
-        draft.assetBalanceInShare = null;
-        draft.mvDeposited = null;
-        draft.profitOrLoss = null;
+        draft.mvBalance = BigDecimal.ZERO;
+        draft.mvBalanceInAsset = BigDecimal.ZERO;
+        draft.assetBalance = BigDecimal.ZERO;
+        draft.assetBalanceInShare = BigDecimal.ZERO;
+        draft.mvDeposited = BigDecimal.ZERO;
+        draft.profitOrLoss = BigDecimal.ZERO;
       }),
     );
   }, [walletAddress]);

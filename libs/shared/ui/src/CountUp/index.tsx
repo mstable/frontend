@@ -1,3 +1,4 @@
+import { isNilOrEmpty } from '@frontend/shared-utils';
 import { Typography } from '@mui/material';
 import CountUpLib from 'react-countup';
 
@@ -36,27 +37,27 @@ export const CountUp = ({
     <Typography {...rest}>
       {prefix ? `${prefix} ` : ''}
       <CountUpLib
-        {...(className && { className })}
-        {...(decimal && { decimal })}
-        {...(decimals && { decimals })}
-        {...(delay && { delay })}
-        {...(duration && { duration })}
-        {...(end && { end })}
-        {...(redraw && { redraw })}
-        {...(preserveValue && { preserveValue })}
-        {...(separator && { separator })}
-        {...(start && { start })}
-        {...(useEasing && { useEasing })}
-        {...(easingFn && { easingFn })}
-        {...(formattingFn && { formattingFn })}
-        {...(enableScrollSpy && { enableScrollSpy })}
-        {...(scrollSpyDelay && { scrollSpyDelay })}
-        {...(scrollSpyOnce && { scrollSpyOnce })}
-        {...(onEnd && { onEnd })}
-        {...(onStart && { onStart })}
-        {...(onPauseResume && { onPauseResume })}
-        {...(onReset && { onReset })}
-        {...(onUpdate && { onUpdate })}
+        {...(!isNilOrEmpty(className) && { className })}
+        {...(!isNilOrEmpty(decimal) && { decimal })}
+        {...(!isNilOrEmpty(decimals) && { decimals })}
+        {...(!isNilOrEmpty(delay) && { delay })}
+        {...(!isNilOrEmpty(duration) && { duration })}
+        {...(!isNilOrEmpty(end) && { end })}
+        {...(!isNilOrEmpty(redraw) && { redraw })}
+        {...(!isNilOrEmpty(preserveValue) && { preserveValue })}
+        {...(!isNilOrEmpty(separator) && { separator })}
+        {...(!isNilOrEmpty(start) && { start })}
+        {...(!isNilOrEmpty(useEasing) && { useEasing })}
+        {...(!isNilOrEmpty(easingFn) && { easingFn })}
+        {...(!isNilOrEmpty(formattingFn) && { formattingFn })}
+        {...(!isNilOrEmpty(enableScrollSpy) && { enableScrollSpy })}
+        {...(!isNilOrEmpty(scrollSpyDelay) && { scrollSpyDelay })}
+        {...(!isNilOrEmpty(scrollSpyOnce) && { scrollSpyOnce })}
+        {...(!isNilOrEmpty(onEnd) && { onEnd })}
+        {...(!isNilOrEmpty(onStart) && { onStart })}
+        {...(!isNilOrEmpty(onPauseResume) && { onPauseResume })}
+        {...(!isNilOrEmpty(onReset) && { onReset })}
+        {...(!isNilOrEmpty(onUpdate) && { onUpdate })}
       />
       {suffix ? ` ${suffix}` : ''}
     </Typography>

@@ -35,7 +35,6 @@ export const PositionContent = () => {
             ? profitOrLoss.divPrecisely(mvDeposited).exact.mul(100)
             : 0,
         );
-
   return (
     <Stack direction="column">
       <Typography variant="body2" color="text.secondary" mb={2}>
