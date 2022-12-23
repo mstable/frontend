@@ -35,7 +35,7 @@ export const ApprovalButton = (props: ButtonProps) => {
   const { exactApproval } = useSettings();
   const {
     metavault: { address },
-    asset,
+    assetToken,
   } = useMetavault();
   const { amount, needsApproval } = useOperations();
   const setIsSubmitLoading = useSetIsSubmitLoading();
@@ -46,11 +46,11 @@ export const ApprovalButton = (props: ButtonProps) => {
   );
 
   const { config } = usePrepareContractWrite({
-    address: asset,
+    address: assetToken?.address,
     abi: erc20ABI,
     functionName: 'approve',
     args,
-    enabled: !!asset && needsApproval,
+    enabled: needsApproval,
   });
   const {
     data: approveData,

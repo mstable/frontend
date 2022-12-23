@@ -61,7 +61,6 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   const { address: walletAddress, isConnected } = useAccount();
   const {
     metavault: { address },
-    asset,
     assetToken,
     assetBalance,
     mvToken,
@@ -72,11 +71,11 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   const { amount, operation, allowance, preview } = state;
 
   useContractRead({
-    address: asset,
+    address: assetToken?.address,
     abi: erc20ABI,
     functionName: 'allowance',
     args: [walletAddress, address],
-    enabled: !!asset && isConnected,
+    enabled: isConnected,
     watch: true,
     cacheOnBlock: true,
     onSuccess: (data) => {

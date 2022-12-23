@@ -244,7 +244,7 @@ const GasFeesRecap = (props: StackProps) => {
   const { symbol } = usePrices();
   const {
     metavault: { address },
-    asset,
+    assetToken,
   } = useMetavault();
   const { amount, needsApproval, operation } = useOperations();
   const { price } = usePrices();
@@ -280,7 +280,7 @@ const GasFeesRecap = (props: StackProps) => {
     isLoading: approveLoading,
     isError: approveError,
   } = usePrepareContractWrite({
-    address: asset,
+    address: assetToken?.address,
     abi: erc20ABI,
     functionName: 'approve',
     args: [address, constants.MaxUint256],
@@ -312,14 +312,20 @@ const GasFeesRecap = (props: StackProps) => {
   );
 
   useEffect(() => {
-    if (asset && amount && amount?.exact.gt(constants.Zero)) {
+    if (assetToken?.address && amount && amount?.exact.gt(constants.Zero)) {
       if (needsApproval) {
         fetchApprovalConfig();
       } else {
         fetchSubmitConfig();
       }
     }
-  }, [amount, asset, fetchApprovalConfig, fetchSubmitConfig, needsApproval]);
+  }, [
+    amount,
+    assetToken?.address,
+    fetchApprovalConfig,
+    fetchSubmitConfig,
+    needsApproval,
+  ]);
 
   return (
     <Stack {...props} direction="column">
