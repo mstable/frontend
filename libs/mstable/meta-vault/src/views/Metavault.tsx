@@ -1,12 +1,7 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
-import {
-  ErrorCardWithTracking,
-  UnsupportedMvPage,
-  useTransitionBackgroundColor,
-} from '@frontend/mstable-shared-ui';
 import { supportedMetavaults } from '@frontend/shared-constants';
-import { ErrorBoundary, MVIcon } from '@frontend/shared-ui';
+import { MVIcon } from '@frontend/shared-ui';
 import { Button, Grid, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
@@ -23,34 +18,29 @@ import { VaultJumbo } from '../components/VaultJumbo';
 import { VaultPerformance } from '../components/VaultPerformance';
 import { MetavaultProvider } from '../state';
 
-import type { MvGenerics } from '../types';
+import type { StackProps } from '@mui/material';
 
-export const Metavault = () => {
+import type { MvRoute } from '../types';
+
+export const Metavault = (props: StackProps) => {
   const intl = useIntl();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { chain } = useNetwork();
   const navigate = useNavigate();
-  const updateBkgColor = useTransitionBackgroundColor();
   const {
     params: { mvid },
-  } = useMatch<MvGenerics>();
+  } = useMatch<MvRoute>();
   const metavault = useMemo(
     () => supportedMetavaults[chain?.id ?? mainnet.id].find(propEq('id', mvid)),
     [chain?.id, mvid],
   );
 
-  useEffect(() => {
-    if (metavault) {
-      updateBkgColor(metavault.primaryColor);
-    }
-  }, [metavault, updateBkgColor]);
-
-  if (!metavault) return <UnsupportedMvPage />;
+  if (!metavault) return null;
 
   return (
     <MetavaultProvider initialState={{ metavault }}>
-      <Stack direction="column" alignItems="flex-start" pt={{ xs: 2, md: 5 }}>
+      <Stack direction="column" alignItems="flex-start" {...props}>
         <Button
           variant="text"
           size="small"
@@ -68,56 +58,19 @@ export const Metavault = () => {
           address={metavault.address}
           sx={{ height: 64, width: 64, mb: 2 }}
         />
-        <ErrorBoundary
-          ErrorComponent={
-            <ErrorCardWithTracking
-              sx={{ py: 8 }}
-              errorProps={{ name: 'Vault Jumbo' }}
-            />
-          }
-        >
-          <VaultJumbo pb={8} />
-        </ErrorBoundary>
+        <VaultJumbo pb={8} />
         <Grid container spacing={2}>
           <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
             <Stack direction="column" spacing={2}>
-              <ErrorBoundary
-                ErrorComponent={
-                  <ErrorCardWithTracking
-                    errorProps={{ name: 'Vault Performance' }}
-                  />
-                }
-              >
-                <VaultPerformance />
-              </ErrorBoundary>
-              <ErrorBoundary
-                ErrorComponent={
-                  <ErrorCardWithTracking errorProps={{ name: 'Strategy' }} />
-                }
-              >
-                <Strategy />
-              </ErrorBoundary>
+              <VaultPerformance />
+              <Strategy />
             </Stack>
           </Grid>
           {!isMobile && (
             <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
               <Stack direction="column" spacing={2}>
-                <ErrorBoundary
-                  ErrorComponent={
-                    <ErrorCardWithTracking errorProps={{ name: 'Position' }} />
-                  }
-                >
-                  <Position />
-                </ErrorBoundary>
-                <ErrorBoundary
-                  ErrorComponent={
-                    <ErrorCardWithTracking
-                      errorProps={{ name: 'Operations' }}
-                    />
-                  }
-                >
-                  <Operations />
-                </ErrorBoundary>
+                <Position />
+                <Operations />
               </Stack>
             </Grid>
           )}

@@ -10,11 +10,11 @@ import { Operations } from '../Operations';
 import { PositionContent } from '../Position';
 import { HistoryDialog } from '../Position/components/HistoryDialog';
 
-import type { MvGenerics } from '../../types';
+import type { MvRoute } from '../../types';
 
 export const MobileBottomCard = () => {
   const intl = useIntl();
-  const { input } = useSearch<MvGenerics>();
+  const { input } = useSearch<MvRoute>();
   const [isMyPositionOpen, setIsMyPositionOpen] = useState(false);
   const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false);
   // const [isYieldCalculatorOpen, setIsYieldCalculatorOpen] = useState(false);

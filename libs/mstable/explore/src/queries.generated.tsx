@@ -21,22 +21,6 @@ function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, 
     return json.data;
   }
 }
-export type UserVaultBalanceQueryVariables = Types.Exact<{
-  owner: Types.Scalars['Bytes'];
-  vault: Types.Scalars['String'];
-}>;
-
-
-export type UserVaultBalanceQuery = { __typename?: 'Query', vaultBalances: Array<{ __typename?: 'VaultBalance', owner: any, timestamp: any, shareBalance: any, assetBalance: any, assetDeposited: any, vault: { __typename?: 'Vault', id: string, asset: { __typename?: 'Asset', address: any } } }> };
-
-export type UserTxHistoryQueryVariables = Types.Exact<{
-  owner: Types.Scalars['Bytes'];
-  vault: Types.Scalars['String'];
-}>;
-
-
-export type UserTxHistoryQuery = { __typename?: 'Query', transactions: Array<{ __typename?: 'Transaction', timestamp: any, type: Types.TransactionType, shareAmount: any, assetAmount: any, hash: any, to: any, from: any, vault: { __typename?: 'Vault', id: string } }> };
-
 export type MetavaultQueryVariables = Types.Exact<{
   id: Types.Scalars['ID'];
   firstBlock: Types.Scalars['BigInt'];
@@ -52,69 +36,6 @@ export type MetavaultsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 export type MetavaultsQuery = { __typename?: 'Query', vaults: Array<{ __typename?: 'Vault', address: any }> };
 
 
-export const UserVaultBalanceDocument = `
-    query userVaultBalance($owner: Bytes!, $vault: String!) {
-  vaultBalances(where: {owner: $owner, vault: $vault}, first: 1) {
-    owner
-    vault {
-      id
-      asset {
-        address
-      }
-    }
-    timestamp
-    shareBalance
-    assetBalance
-    assetDeposited
-  }
-}
-    `;
-export const useUserVaultBalanceQuery = <
-      TData = UserVaultBalanceQuery,
-      TError = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables: UserVaultBalanceQueryVariables,
-      options?: UseQueryOptions<UserVaultBalanceQuery, TError, TData>
-    ) =>
-    useQuery<UserVaultBalanceQuery, TError, TData>(
-      ['userVaultBalance', variables],
-      fetcher<UserVaultBalanceQuery, UserVaultBalanceQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, UserVaultBalanceDocument, variables),
-      options
-    );
-export const UserTxHistoryDocument = `
-    query userTxHistory($owner: Bytes!, $vault: String!) {
-  transactions(
-    where: {to: $owner, vault: $vault}
-    orderBy: timestamp
-    orderDirection: desc
-  ) {
-    vault {
-      id
-    }
-    timestamp
-    type
-    shareAmount
-    assetAmount
-    hash
-    to
-    from
-  }
-}
-    `;
-export const useUserTxHistoryQuery = <
-      TData = UserTxHistoryQuery,
-      TError = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables: UserTxHistoryQueryVariables,
-      options?: UseQueryOptions<UserTxHistoryQuery, TError, TData>
-    ) =>
-    useQuery<UserTxHistoryQuery, TError, TData>(
-      ['userTxHistory', variables],
-      fetcher<UserTxHistoryQuery, UserTxHistoryQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, UserTxHistoryDocument, variables),
-      options
-    );
 export const MetavaultDocument = `
     query metavault($id: ID!, $firstBlock: BigInt!, $days: Int = 7) {
   vault(id: $id) {

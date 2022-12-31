@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useDataSource } from '@frontend/mstable-shared-data-access';
+import { useDataSource } from '@frontend/mstable-data-access';
 import { useTrack } from '@frontend/shared-analytics';
 import { Dialog, Spinner } from '@frontend/shared-ui';
 import { isNilOrEmpty } from '@frontend/shared-utils';

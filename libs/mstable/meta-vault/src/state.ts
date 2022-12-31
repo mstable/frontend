@@ -1,7 +1,7 @@
 /* eslint-disable no-empty */
 import { useEffect, useState } from 'react';
 
-import { useDataSource } from '@frontend/mstable-shared-data-access';
+import { useDataSource } from '@frontend/mstable-data-access';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
   Curve3CrvBasicMetaVaultABI,

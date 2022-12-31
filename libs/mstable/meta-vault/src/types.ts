@@ -1,16 +1,11 @@
-import type { TransactionType } from '@frontend/mstable-shared-data-access';
+import type { TransactionType } from '@frontend/mstable-data-access';
 import type { HexAddress } from '@frontend/shared-utils';
 import type { MakeGenerics } from '@tanstack/react-location';
 import type { BigNumber } from 'ethers';
 
-import type {
-  ChartTimeframe,
-  ChartType,
-} from './components/VaultPerformance/types';
-
 export type SupportedOperation = 'deposit' | 'mint' | 'withdraw' | 'redeem';
 
-export type MvGenerics = MakeGenerics<{
+export type MvRoute = MakeGenerics<{
   Params: { mvid?: string };
   Search: {
     chartType?: ChartType;
@@ -22,6 +17,10 @@ export type MvGenerics = MakeGenerics<{
     };
   };
 }>;
+
+export type ChartType = 'APY' | 'TVL' | 'APS';
+
+export type ChartTimeframe = '1W' | '1M' | '1Y';
 
 export type Vault = {
   address: HexAddress;

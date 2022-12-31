@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { DiagramStrategy } from '@frontend/mstable-shared-ui';
 import { CollapsibleSection, Dialog } from '@frontend/shared-ui';
 import {
   Button,
@@ -13,6 +12,7 @@ import {
 import { useIntl } from 'react-intl';
 
 import { useMetavault } from '../../state';
+import { DiagramStrategy } from '../Diagrams';
 import { Allocations } from './components/Allocations';
 import { Assets } from './components/Assets';
 import { Contracts } from './components/Contracts';

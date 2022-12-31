@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useDataSource } from '@frontend/mstable-shared-data-access';
+import { useDataSource } from '@frontend/mstable-data-access';
 import { useGasFee } from '@frontend/shared-gas-fee';
 import { usePrices } from '@frontend/shared-prices';
 import {
@@ -39,7 +39,7 @@ import { GasImpact } from './GasImpact';
 
 import type { GasPriceConfig } from '@frontend/shared-gas-fee';
 
-import type { MvGenerics } from '../../../types';
+import type { MvRoute } from '../../../types';
 
 export const YieldCalculatorDialog = ({
   open,
@@ -51,7 +51,7 @@ export const YieldCalculatorDialog = ({
   const intl = useIntl();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const navigate = useNavigate<MvGenerics>();
+  const navigate = useNavigate<MvRoute>();
   const { assetToken, assetBalance, metavault } = useMetavault();
   const { isConnected } = useAccount();
   const [amount, setAmount] = useState<BigDecimal>();

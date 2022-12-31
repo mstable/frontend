@@ -22,8 +22,8 @@ import {
   reactQueryClient,
   wagmiClient,
 } from './clients';
+import { App } from './components/App';
 import { routes } from './routes';
-import { App } from './views/App';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
