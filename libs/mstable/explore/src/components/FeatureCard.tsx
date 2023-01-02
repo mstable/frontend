@@ -1,5 +1,5 @@
 import { supportedMetavaults } from '@frontend/shared-constants';
-import { usePrices } from '@frontend/shared-prices';
+import { usePrices } from '@frontend/shared-providers';
 import { hoverPrimarySx } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import {

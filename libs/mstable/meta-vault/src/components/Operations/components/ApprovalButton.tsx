@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 
 import { useSettings } from '@frontend/mstable-settings';
-import { useTrack } from '@frontend/shared-analytics';
-import { usePushNotification } from '@frontend/shared-notifications';
+import { usePushNotification, useTrack } from '@frontend/shared-providers';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { Button, CircularProgress } from '@mui/material';
 import { constants } from 'ethers';

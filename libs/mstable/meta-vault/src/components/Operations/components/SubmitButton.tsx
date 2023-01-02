@@ -1,9 +1,11 @@
 import { useMemo } from 'react';
 
-import { useTrack } from '@frontend/shared-analytics';
-import { usePushNotification } from '@frontend/shared-notifications';
+import {
+  OpenAccountModalButton,
+  usePushNotification,
+  useTrack,
+} from '@frontend/shared-providers';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
-import { OpenAccountModalButton } from '@frontend/shared-wagmi';
 import { Button, CircularProgress } from '@mui/material';
 import { useIntl } from 'react-intl';
 import {

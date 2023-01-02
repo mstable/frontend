@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { useDataSource } from '@frontend/mstable-data-access';
-import { useGasFee } from '@frontend/shared-gas-fee';
-import { usePrices } from '@frontend/shared-prices';
+import {
+  OpenAccountModalButton,
+  useGasFee,
+  usePrices,
+} from '@frontend/shared-providers';
 import {
   BigDecimalInput,
   Dialog,
@@ -10,7 +13,6 @@ import {
   TokenInput,
 } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
-import { OpenAccountModalButton } from '@frontend/shared-wagmi';
 import {
   Box,
   Button,
@@ -37,7 +39,7 @@ import { useMetavaultQuery } from '../../../queries.generated';
 import { useMetavault } from '../../../state';
 import { GasImpact } from './GasImpact';
 
-import type { GasPriceConfig } from '@frontend/shared-gas-fee';
+import type { GasPriceConfig } from '@frontend/shared-providers';
 
 import type { MvRoute } from '../../../types';
 

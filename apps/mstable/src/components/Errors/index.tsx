@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 
-import { useTrack } from '@frontend/shared-analytics';
+import { OpenNetworkModalButton, useTrack } from '@frontend/shared-providers';
 import { ErrorPage, NetworkTips, RouterLink } from '@frontend/shared-ui';
 import { ErrorCard } from '@frontend/shared-ui';
-import { OpenNetworkModalButton } from '@frontend/shared-wagmi';
 import { Button, Stack } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useNetwork, useSwitchNetwork } from 'wagmi';

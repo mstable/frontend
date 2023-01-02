@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { useDataSource } from '@frontend/mstable-data-access';
 import { supportedMetavaults } from '@frontend/shared-constants';
-import { useGetPrices, usePrices } from '@frontend/shared-prices';
+import { useGetPrices, usePrices } from '@frontend/shared-providers';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import { alpha } from '@mui/material';
 import { constants } from 'ethers';

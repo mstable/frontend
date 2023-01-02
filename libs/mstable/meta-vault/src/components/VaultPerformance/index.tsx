@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useTrack } from '@frontend/shared-analytics';
+import { useTrack } from '@frontend/shared-providers';
 import { Dialog } from '@frontend/shared-ui';
 import {
   Button,

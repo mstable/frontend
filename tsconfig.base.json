@@ -23,20 +23,12 @@
       "@frontend/mstable-explore": ["libs/mstable/explore/src/index.ts"],
       "@frontend/mstable-metavault": ["libs/mstable/meta-vault/src/index.ts"],
       "@frontend/mstable-settings": ["libs/mstable/settings/src/index.ts"],
-      "@frontend/shared-analytics": ["libs/shared/analytics/src/index.ts"],
+      "@frontend/mstable-theme": ["libs/mstable/theme/src/index.ts"],
       "@frontend/shared-constants": ["libs/shared/constants/src/index.ts"],
-      "@frontend/shared-gas-fee": ["libs/shared/gas-fee/src/index.ts"],
-      "@frontend/shared-i18n": ["libs/shared/i18n/src/index.ts"],
       "@frontend/shared-icons": ["libs/shared/icons/src/index.ts"],
-      "@frontend/shared-modals": ["libs/shared/modals/src/index.ts"],
-      "@frontend/shared-notifications": [
-        "libs/shared/notifications/src/index.ts"
-      ],
-      "@frontend/shared-prices": ["libs/shared/prices/src/index.ts"],
-      "@frontend/shared-theme": ["libs/shared/theme/src/index.ts"],
+      "@frontend/shared-providers": ["libs/shared/providers/src/index.ts"],
       "@frontend/shared-ui": ["libs/shared/ui/src/index.ts"],
       "@frontend/shared-utils": ["libs/shared/utils/src/index.ts"],
-      "@frontend/shared-wagmi": ["libs/shared/wagmi/src/index.ts"],
       "@frontend/tools-nx-plugin": ["libs/tools/nx-plugin/src/index.ts"],
       "@frontend/tools-storybook": ["libs/tools/storybook/src/index.ts"]
     }

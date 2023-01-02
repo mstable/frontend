@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
 import { useDataSource } from '@frontend/mstable-data-access';
-import { usePrices } from '@frontend/shared-prices';
+import { usePrices } from '@frontend/shared-providers';
 import { BigDecimal } from '@frontend/shared-utils';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';

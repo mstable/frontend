@@ -1,6 +1,6 @@
 import { SettingsButton } from '@frontend/mstable-settings';
 import { MStable, MStableShort } from '@frontend/shared-icons';
-import { OpenAccountModalButton } from '@frontend/shared-wagmi';
+import { OpenAccountModalButton } from '@frontend/shared-providers';
 import {
   alpha,
   AppBar,
