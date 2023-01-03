@@ -1,15 +1,14 @@
-import { useEffect } from 'react';
-
 import { Explore } from '@frontend/mstable-explore';
+import { useMount } from 'react-use';
 
 import { useTransitionBackgroundColor } from '../components/Backgrounds';
 
 export const Home = () => {
   const updateBkgColor = useTransitionBackgroundColor();
 
-  useEffect(() => {
+  useMount(() => {
     updateBkgColor(null);
-  }, [updateBkgColor]);
+  });
 
-  return <Explore pt={{ xs: 2, md: 5 }} />;
+  return <Explore />;
 };

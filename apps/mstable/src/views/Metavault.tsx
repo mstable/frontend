@@ -1,9 +1,10 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { Metavault as Mv } from '@frontend/mstable-metavault';
 import { supportedMetavaults } from '@frontend/shared-constants';
 import { useMatch } from '@tanstack/react-location';
 import { propEq } from 'ramda';
+import { useMount } from 'react-use';
 import { useNetwork } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
@@ -23,13 +24,13 @@ export const Metavault = () => {
     [chain?.id, mvid],
   );
 
-  useEffect(() => {
+  useMount(() => {
     if (metavault) {
       updateBkgColor(metavault.primaryColor);
     }
-  }, [metavault, updateBkgColor]);
+  });
 
   if (!metavault) return <UnsupportedMvPage />;
 
-  return <Mv pt={{ xs: 2, md: 5 }} />;
+  return <Mv />;
 };

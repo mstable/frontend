@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 
 import { supportedMetavaults } from '@frontend/shared-constants';
-import { MVIcon } from '@frontend/shared-ui';
+import { useTrack } from '@frontend/shared-providers';
+import { ErrorBoundary, ErrorCard, MVIcon } from '@frontend/shared-ui';
 import { Button, Grid, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
@@ -25,6 +26,7 @@ import type { MvRoute } from '../types';
 export const Metavault = (props: StackProps) => {
   const intl = useIntl();
   const theme = useTheme();
+  const track = useTrack();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { chain } = useNetwork();
   const navigate = useNavigate();
@@ -58,19 +60,81 @@ export const Metavault = (props: StackProps) => {
           address={metavault.address}
           sx={{ height: 64, width: 64, mb: 2 }}
         />
-        <VaultJumbo pb={8} />
+        <ErrorBoundary
+          ErrorComponent={
+            <ErrorCard
+              pb={8}
+              onMount={() => {
+                track('error', {
+                  name: 'Unhandled Error Metavault: Vault Jumbo',
+                });
+              }}
+            />
+          }
+        >
+          <VaultJumbo pb={8} />
+        </ErrorBoundary>
+
         <Grid container spacing={2}>
           <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
             <Stack direction="column" spacing={2}>
-              <VaultPerformance />
-              <Strategy />
+              <ErrorBoundary
+                ErrorComponent={
+                  <ErrorCard
+                    onMount={() => {
+                      track('error', {
+                        name: 'Unhandled Error Metavault: Performance Card',
+                      });
+                    }}
+                  />
+                }
+              >
+                <VaultPerformance />
+              </ErrorBoundary>
+              <ErrorBoundary
+                ErrorComponent={
+                  <ErrorCard
+                    onMount={() => {
+                      track('error', {
+                        name: 'Unhandled Error Metavault: Strategy Card',
+                      });
+                    }}
+                  />
+                }
+              >
+                <Strategy />
+              </ErrorBoundary>
             </Stack>
           </Grid>
           {!isMobile && (
             <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
               <Stack direction="column" spacing={2}>
-                <Position />
-                <Operations />
+                <ErrorBoundary
+                  ErrorComponent={
+                    <ErrorCard
+                      onMount={() => {
+                        track('error', {
+                          name: 'Unhandled Error Metavault: Position Card',
+                        });
+                      }}
+                    />
+                  }
+                >
+                  <Position />
+                </ErrorBoundary>
+                <ErrorBoundary
+                  ErrorComponent={
+                    <ErrorCard
+                      onMount={() => {
+                        track('error', {
+                          name: 'Unhandled Error Metavault: Operation Card',
+                        });
+                      }}
+                    />
+                  }
+                >
+                  <Operations />
+                </ErrorBoundary>
               </Stack>
             </Grid>
           )}

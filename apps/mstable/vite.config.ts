@@ -36,6 +36,7 @@ export default defineConfig({
     },
   },
   build: {
+    chunkSizeWarningLimit: 2500,
     rollupOptions: {
       plugins: [rollupNodePolyFill()],
     },

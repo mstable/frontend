@@ -1,54 +1,15 @@
-import { useEffect } from 'react';
-
 import { OpenNetworkModalButton, useTrack } from '@frontend/shared-providers';
 import { ErrorPage, NetworkTips, RouterLink } from '@frontend/shared-ui';
-import { ErrorCard } from '@frontend/shared-ui';
 import { Button, Stack } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useNetwork, useSwitchNetwork } from 'wagmi';
 
-import type { ErrorCardProps, ErrorPageProps } from '@frontend/shared-ui';
-import type { EventOptions } from 'plausible-tracker';
-
-export type ErrorCardWithTrackingProps = {
-  errorProps?: EventOptions['props'];
-} & ErrorCardProps;
-
-export const ErrorCardWithTracking = ({
-  errorProps,
-  ...rest
-}: ErrorCardWithTrackingProps) => {
-  const track = useTrack();
-
-  useEffect(() => {
-    track('error', errorProps);
-  }, [errorProps, track]);
-
-  return <ErrorCard {...rest} />;
-};
-
-export type ErrorPageWithTrackingProps = {
-  errorProps?: EventOptions['props'];
-} & ErrorPageProps;
-
-export const ErrorPageWithTracking = ({
-  errorProps,
-  ...rest
-}: ErrorPageWithTrackingProps) => {
-  const track = useTrack();
-
-  useEffect(() => {
-    track('error', errorProps);
-  }, [errorProps, track]);
-
-  return <ErrorPage {...rest} />;
-};
-
 export const UnsupportedMvPage = () => {
   const intl = useIntl();
+  const track = useTrack();
 
   return (
-    <ErrorPageWithTracking
+    <ErrorPage
       hideSupport
       title={intl.formatMessage({ defaultMessage: '404', id: 'DRXWXB' })}
       message={
@@ -58,18 +19,21 @@ export const UnsupportedMvPage = () => {
           </Button>
         </Stack>
       }
-      errorProps={{ name: 'Unsupported Meta Vault' }}
+      onMount={() => {
+        track('error', { name: 'Unsupported Meta Vault' });
+      }}
     />
   );
 };
 
 export const WrongNetworkPage = () => {
   const intl = useIntl();
+  const track = useTrack();
   const { chains, chain } = useNetwork();
   const { switchNetwork } = useSwitchNetwork();
 
   return (
-    <ErrorPageWithTracking
+    <ErrorPage
       hideSupport
       title={intl.formatMessage({
         defaultMessage: 'Unsupported Network',
@@ -108,9 +72,11 @@ export const WrongNetworkPage = () => {
         </Stack>
       }
       tips={<NetworkTips />}
-      errorProps={{
-        name: 'Unsupported Network',
-        chain: chain?.id ?? 'undefined',
+      onMount={() => {
+        track('error', {
+          name: 'Unsupported Network',
+          chain: chain?.id ?? 'undefined',
+        });
       }}
     />
   );

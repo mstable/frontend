@@ -1,15 +1,17 @@
 import { DISCORD_SUPPORT } from '@frontend/shared-constants';
 import { alpha, Link, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
+import { useMount } from 'react-use';
 
 import type { StackProps } from '@mui/material';
-import type { ReactNode } from 'react';
+import type { Dispatch, ReactNode } from 'react';
 
 export type ErrorCardProps = {
   title?: string;
   subtitle?: string;
   message?: ReactNode;
   hideSupport?: boolean;
+  onMount?: Dispatch<void>;
 } & StackProps;
 
 export const ErrorCard = ({
@@ -17,9 +19,14 @@ export const ErrorCard = ({
   subtitle,
   message,
   hideSupport,
+  onMount,
   ...rest
 }: ErrorCardProps) => {
   const intl = useIntl();
+
+  useMount(() => {
+    if (onMount) onMount();
+  });
 
   return (
     <Stack
