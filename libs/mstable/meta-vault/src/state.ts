@@ -9,7 +9,7 @@ import {
   PeriodicAllocationPerfFeeMetaVaultABI,
 } from '@mstable/metavaults-web';
 import { useQuery } from '@tanstack/react-query';
-import { fetchToken, multicall, readContract } from '@wagmi/core';
+import { erc20ABI, fetchToken, multicall, readContract } from '@wagmi/core';
 import { BigNumber, constants } from 'ethers';
 import produce from 'immer';
 import { splitEvery, transpose } from 'ramda';
@@ -20,7 +20,6 @@ import {
   useBalance,
   useContractReads,
   useNetwork,
-  useToken,
 } from 'wagmi';
 
 import {
@@ -30,16 +29,15 @@ import {
 
 import type { Metavault } from '@frontend/shared-constants';
 import type { HexAddress } from '@frontend/shared-utils';
-import type { FetchTokenResult } from '@wagmi/core';
 import type { BigNumberish } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
 
-import type { Vault } from './types';
+import type { MvToken, Vault } from './types';
 
 type MetaVaultState = {
   metavault: Metavault | null;
-  mvToken: FetchTokenResult | null;
-  assetToken: FetchTokenResult | null;
+  mvToken: MvToken | null;
+  assetToken: MvToken | null;
   mvBalance: BigDecimal | null;
   mvBalanceInAsset: BigDecimal | null;
   mvDeposited: BigDecimal | null;
@@ -54,6 +52,21 @@ type MetaVaultState = {
   allocations: { address: HexAddress; name: string; balance: number }[] | null;
 };
 
+const emptyToken: MvToken = {
+  address: null,
+  decimals: null,
+  name: null,
+  symbol: null,
+  totalSupply: {
+    formatted: null,
+    value: null,
+  },
+  totalAssets: {
+    formatted: null,
+    value: null,
+  },
+};
+
 export const {
   Provider: MetavaultProvider,
   useUpdate: useUpdateMetavault,
@@ -63,6 +76,7 @@ export const {
   Dispatch<SetStateAction<MetaVaultState>>,
   { initialState: { metavault: Metavault } }
 >(({ initialState }) => {
+  const dataSource = useDataSource();
   const { chain } = useNetwork();
   const { address: walletAddress, isConnected } = useAccount();
   const [state, setState] = useState<MetaVaultState>({
@@ -75,8 +89,8 @@ export const {
       fees: { liquidation: 0, performance: 0 },
       ...initialState.metavault,
     },
-    mvToken: null,
-    assetToken: null,
+    mvToken: { ...emptyToken, address: initialState.metavault.address },
+    assetToken: emptyToken,
     mvBalance: null,
     mvBalanceInAsset: null,
     mvDeposited: null,
@@ -93,7 +107,114 @@ export const {
     assetToken,
   } = state;
 
-  const dataSource = useDataSource();
+  useContractReads({
+    contracts: [
+      { address, abi: erc4626ABI, functionName: 'asset' },
+      { address, abi: erc20ABI, functionName: 'name' },
+      { address, abi: erc20ABI, functionName: 'decimals' },
+      { address, abi: erc20ABI, functionName: 'symbol' },
+    ],
+    cacheTime: Infinity,
+    onSuccess: (data) => {
+      setState(
+        produce((draft) => {
+          draft.assetToken.address = data[0];
+          draft.mvToken.name = data[1];
+          draft.mvToken.decimals = data[2];
+          draft.mvToken.symbol = data[3];
+        }),
+      );
+    },
+  });
+
+  useContractReads({
+    contracts: [
+      { address, abi: erc20ABI, functionName: 'totalSupply' },
+      { address, abi: erc4626ABI, functionName: 'totalAssets' },
+    ],
+    cacheOnBlock: true,
+    watch: true,
+    onSuccess: (data) => {
+      setState(
+        produce((draft) => {
+          draft.mvToken.totalSupply.value = data[0];
+          draft.mvToken.totalAssets.value = data[1];
+        }),
+      );
+    },
+  });
+
+  useContractReads({
+    contracts: [
+      { address: assetToken?.address, abi: erc20ABI, functionName: 'name' },
+      { address: assetToken?.address, abi: erc20ABI, functionName: 'decimals' },
+      { address: assetToken?.address, abi: erc20ABI, functionName: 'symbol' },
+    ],
+    cacheTime: Infinity,
+    enabled: !!assetToken?.address,
+    onSuccess: (data) => {
+      setState(
+        produce((draft) => {
+          draft.assetToken.name = data[0];
+          draft.assetToken.decimals = data[1];
+          draft.assetToken.symbol = data[2];
+        }),
+      );
+    },
+  });
+
+  useContractReads({
+    contracts: [
+      {
+        address: assetToken?.address,
+        abi: erc20ABI,
+        functionName: 'totalSupply',
+      },
+    ],
+    cacheOnBlock: true,
+    watch: true,
+    enabled: !!assetToken?.address,
+    onSuccess: (data) => {
+      setState(
+        produce((draft) => {
+          draft.assetToken.totalSupply.value = data[0];
+        }),
+      );
+    },
+  });
+
+  useBalance({
+    address: walletAddress,
+    token: address,
+    watch: true,
+    enabled: !!walletAddress && !!address,
+    onSuccess: (data) => {
+      setState(
+        produce((draft) => {
+          draft.mvBalance = data
+            ? new BigDecimal(data.value, data.decimals)
+            : BigDecimal.ZERO;
+        }),
+      );
+    },
+  });
+
+  useBalance({
+    address: walletAddress,
+    token: assetToken?.address,
+    watch: true,
+    enabled: !!walletAddress && !!assetToken?.address,
+    onSuccess: (data) => {
+      setState(
+        produce((draft) => {
+          draft.assetBalance = data
+            ? new BigDecimal(data.value, data.decimals)
+            : BigDecimal.ZERO;
+        }),
+      );
+    },
+  });
+
   useUserVaultBalanceQuery(
     dataSource,
     {
@@ -137,49 +258,6 @@ export const {
     },
   );
 
-  useToken({
-    address,
-    onSuccess: (data) => {
-      setState(
-        produce((draft) => {
-          draft.mvToken = data;
-        }),
-      );
-    },
-  });
-
-  useBalance({
-    address: walletAddress,
-    token: address,
-    watch: true,
-    enabled: !!walletAddress && !!address,
-    onSuccess: (data) => {
-      setState(
-        produce((draft) => {
-          draft.mvBalance = data
-            ? new BigDecimal(data.value, data.decimals)
-            : BigDecimal.ZERO;
-        }),
-      );
-    },
-  });
-
-  useBalance({
-    address: walletAddress,
-    token: assetToken?.address,
-    watch: true,
-    enabled: !!walletAddress,
-    onSuccess: (data) => {
-      setState(
-        produce((draft) => {
-          draft.assetBalance = data
-            ? new BigDecimal(data.value, data.decimals)
-            : BigDecimal.ZERO;
-        }),
-      );
-    },
-  });
-
   useContractReads({
     contracts: [
       {
@@ -199,12 +277,12 @@ export const {
     cacheOnBlock: true,
     watch: true,
     enabled:
-      !!address &&
       isConnected &&
-      !!state.mvBalance &&
-      !!state.assetToken &&
-      !!state.assetBalance &&
-      !!state.mvToken,
+      !!address &&
+      !!state.mvToken?.decimals &&
+      !!state.assetToken?.decimals &&
+      !!state.mvBalance?.exact &&
+      !!state.assetBalance?.exact,
     onSettled: (data) => {
       setState(
         produce((draft) => {
@@ -222,24 +300,13 @@ export const {
   useQuery(
     ['structure', address, chain?.id],
     async () => {
-      const [asset, proxiedVault] = await multicall({
-        contracts: [
-          {
-            address,
-            abi: Curve3CrvBasicMetaVaultABI,
-            functionName: 'asset',
-          },
-          {
-            address,
-            abi: Curve3CrvBasicMetaVaultABI,
-            functionName: 'metaVault',
-          },
-        ],
+      const proxiedVault = await readContract({
+        address,
+        abi: Curve3CrvBasicMetaVaultABI,
+        functionName: 'metaVault',
+        args: [],
       });
 
-      const assetToken = await fetchToken({
-        address: asset as unknown as HexAddress,
-      });
       const proxyToken = await fetchToken({
         address: proxiedVault as unknown as HexAddress,
       });
@@ -250,11 +317,13 @@ export const {
             address: proxiedVault as unknown as HexAddress,
             abi: PeriodicAllocationPerfFeeMetaVaultABI,
             functionName: 'totalUnderlyingVaults',
+            args: [],
           },
           {
             address: proxiedVault as unknown as HexAddress,
             abi: PeriodicAllocationPerfFeeMetaVaultABI,
             functionName: 'name',
+            args: [],
           },
         ],
       });
@@ -313,14 +382,13 @@ export const {
       });
 
       const unallocated = await readContract({
-        address: asset as unknown as HexAddress,
+        address: assetToken?.address,
         abi: erc4626ABI,
         functionName: 'balanceOf',
         args: [proxiedVault as unknown as HexAddress],
       });
 
       return {
-        assetToken,
         structure: {
           proxiedVault: {
             address: proxiedVault as unknown as HexAddress,
@@ -356,11 +424,11 @@ export const {
       };
     },
     {
+      enabled: !!assetToken?.address,
       cacheTime: Infinity,
       onSuccess: (data) => {
         setState(
           produce((draft) => {
-            draft.assetToken = data.assetToken;
             draft.allocations = data.allocations;
             draft.structure = data.structure;
           }),

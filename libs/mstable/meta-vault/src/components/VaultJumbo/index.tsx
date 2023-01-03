@@ -17,8 +17,8 @@ import { constants } from 'ethers';
 import { pathOr } from 'ramda';
 import { useIntl } from 'react-intl';
 
-import { useMetavaultQuery } from '../queries.generated';
-import { useMetavault } from '../state';
+import { useMetavaultQuery } from '../../queries.generated';
+import { useMetavault } from '../../state';
 
 import type { StackProps, TypographyProps } from '@mui/material';
 
@@ -50,6 +50,7 @@ export const VaultJumbo = (props: StackProps) => {
   const theme = useTheme();
   const {
     metavault: { address, name, tags, strategies, firstBlock },
+    mvToken,
     assetToken,
     roi,
   } = useMetavault();
@@ -73,7 +74,7 @@ export const VaultJumbo = (props: StackProps) => {
     );
 
     const current = new BigDecimal(
-      data?.vault?.DailyVaultStats?.[0]?.totalAssets ?? constants.One,
+      mvToken?.totalAssets?.value ?? constants.One,
     );
 
     const diff = 100 - (oneWeekAgo.simple / current.simple) * 100;
@@ -88,11 +89,22 @@ export const VaultJumbo = (props: StackProps) => {
           : theme.palette.text.primary,
     };
   }, [
-    data,
+    data?.vault?.DailyVaultStats,
+    mvToken?.totalAssets?.value,
     theme.palette.error.main,
     theme.palette.success.dark,
     theme.palette.text.primary,
   ]);
+  const tvl = useMemo(() => {
+    if (!mvToken?.totalAssets?.value || !assetToken?.decimals || !prices) {
+      return null;
+    }
+
+    return (
+      new BigDecimal(mvToken.totalAssets.value, assetToken.decimals).simple *
+      Number(pathOr(1, [currency.toLowerCase()], prices))
+    );
+  }, [assetToken?.decimals, currency, mvToken?.totalAssets?.value, prices]);
 
   return (
     <Stack
@@ -172,7 +184,7 @@ export const VaultJumbo = (props: StackProps) => {
             id: 'DUR59o',
           })}
         >
-          {isLoading || isPriceLoading || !assetToken ? (
+          {isPriceLoading || !tvl ? (
             <Skeleton height={24} width={160} />
           ) : (
             <Stack direction="row" spacing={1} alignItems="baseline">
@@ -181,13 +193,7 @@ export const VaultJumbo = (props: StackProps) => {
                   style: 'currency',
                   currency,
                   notation: 'compact',
-                }).format(
-                  new BigDecimal(
-                    data?.vault?.totalAssets ?? constants.Zero,
-                    assetToken?.decimals,
-                  ).simple *
-                    Number(pathOr(1, [currency.toLowerCase()], prices)),
-                )}
+                }).format(tvl)}
               </Typography>
               <Typography variant="value5" sx={{ color: tvlTrend.color }}>
                 {tvlTrend.label}

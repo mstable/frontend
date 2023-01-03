@@ -1,6 +1,7 @@
 import type { TransactionType } from '@frontend/mstable-data-access';
 import type { HexAddress } from '@frontend/shared-utils';
 import type { MakeGenerics } from '@tanstack/react-location';
+import type { FetchTokenResult } from '@wagmi/core';
 import type { BigNumber } from 'ethers';
 
 export type SupportedOperation = 'deposit' | 'mint' | 'withdraw' | 'redeem';
@@ -37,3 +38,10 @@ export type TxHistory = {
   to: string;
   from: string;
 };
+
+export type MvToken = {
+  totalAssets: {
+    formatted: string;
+    value: BigNumber;
+  };
+} & FetchTokenResult;

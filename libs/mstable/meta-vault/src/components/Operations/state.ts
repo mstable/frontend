@@ -91,8 +91,8 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     address,
     abi: erc4626ABI,
     functionName: 'convertToAssets',
-    enabled: !!assetToken && !!mvToken,
-    args: [BigDecimal.ONE.scale(mvToken?.decimals).exact],
+    enabled: !!assetToken?.decimals && !!mvToken?.decimals,
+    args: [BigDecimal.ONE.scale(mvToken?.decimals ?? 18).exact],
     watch: true,
     cacheOnBlock: true,
     onSuccess: (data) => {
@@ -100,7 +100,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
         produce((draft) => {
           draft.assetsPerShare = new BigDecimal(
             data as unknown as BigNumberish,
-            assetToken?.decimals,
+            assetToken.decimals,
           );
         }),
       );
@@ -126,8 +126,8 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     enabled: false,
     onSuccess: (data: BigNumberish) => {
       const dec = ['deposit', 'withdraw'].includes(operation)
-        ? mvToken.decimals
-        : assetToken.decimals;
+        ? mvToken?.decimals
+        : assetToken?.decimals;
       setState(
         produce((draft) => {
           draft.preview = data ? new BigDecimal(data, dec) : null;
