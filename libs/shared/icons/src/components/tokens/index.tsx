@@ -7,7 +7,7 @@ import { ReactComponent as BalancerSvg } from './Balancer.svg';
 import { ReactComponent as BptMtaEthSvg } from './BPT-MTA-ETH.svg';
 import { ReactComponent as BUSDSvg } from './BUSD.svg';
 import { ReactComponent as CreamSvg } from './Cream.svg';
-import { ReactComponent as CRVSvg } from './CRV.svg';
+import CRVWebp from './crv.webp';
 import { ReactComponent as DAISvg } from './DAI.svg';
 import { ReactComponent as EtherSvg } from './Ether.svg';
 import { ReactComponent as FAKESvg } from './FAKE.svg';
@@ -69,7 +69,9 @@ export const Cream = (props: SvgIconProps) => (
   <SvgIcon {...props} component={CreamSvg} viewBox="0 0 500 500" />
 );
 export const CRV = (props: SvgIconProps) => (
-  <SvgIcon {...props} component={CRVSvg} viewBox="0 0 460 460" />
+  <SvgIcon {...props} viewBox="0 0 100 100">
+    <image href={CRVWebp} height="100" width="100" />
+  </SvgIcon>
 );
 export const DAI = (props: SvgIconProps) => (
   <SvgIcon {...props} component={DAISvg} viewBox="0 0 177 177" />
