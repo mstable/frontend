@@ -80,6 +80,7 @@ const main: Metavault = {
 const goer: Metavault = {
   ...main,
   address: tokens[goerli.id].tvg.address,
+  firstBlock: 7956400,
   assets: [
     tokens[goerli.id].musd,
     tokens[goerli.id].busd,
