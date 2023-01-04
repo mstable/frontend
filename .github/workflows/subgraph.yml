@@ -34,7 +34,7 @@ jobs:
           yarn install
           yarn run nx prepare subgraph --network=mainnet
           yarn run nx build subgraph
-          cd libs/subgraph && yarn run graph deploy --studio mstable-meta-vaults --deploy-key $THE_GRAPH_API_KEY --version-label $COMMIT_HASH
+          yarn graph deploy --studio mstable-metavault -o ./libs/subgraph/build --deploy-key $THE_GRAPH_API_KEY --version-label $COMMIT_HASH ./libs/subgraph/subgraph.yaml
 
       - name: Discord notification
         env:
