@@ -1,4 +1,4 @@
-import { Close } from '@mui/icons-material';
+import Close from '@mui/icons-material/Close';
 import { Box, Fade, IconButton, Stack } from '@mui/material';
 import { useHover } from 'react-use';
 

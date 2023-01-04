@@ -1,4 +1,4 @@
-import { TransactionType } from '@frontend/mstable-shared-data-access';
+import { TransactionType } from '@frontend/mstable-data-access';
 import { AddressLabel, TokenIcon } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import { Box, Stack, Typography } from '@mui/material';
@@ -79,8 +79,10 @@ export const ItemMobile = ({ tx }: { tx: TxHistory }) => {
           </Box>
           <Typography variant="value5" color="text.secondary">
             {`${Intl.NumberFormat('en-US').format(
-              new BigDecimal(tx.shareAmount ?? constants.Zero, mvToken.decimals)
-                .simple,
+              new BigDecimal(
+                tx.shareAmount ?? constants.Zero,
+                mvToken?.decimals,
+              ).simple,
             )} ${intl.formatMessage({
               defaultMessage: 'Shares',
               id: 'mrwfXX',

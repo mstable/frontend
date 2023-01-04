@@ -1,9 +1,7 @@
-import {
-  CheckCircleOutline,
-  ErrorOutline,
-  HelpOutline,
-  WarningAmber,
-} from '@mui/icons-material';
+import CheckCircleOutline from '@mui/icons-material/CheckCircleOutline';
+import ErrorOutline from '@mui/icons-material/ErrorOutline';
+import HelpOutline from '@mui/icons-material/HelpOutline';
+import WarningAmber from '@mui/icons-material/WarningAmber';
 
 import type { AlertColor, SvgIconProps } from '@mui/material';
 

@@ -1,4 +1,4 @@
-import { TransactionType } from '@frontend/mstable-shared-data-access';
+import { TransactionType } from '@frontend/mstable-data-access';
 import { AddressLabel, TokenIcon } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import { Box, Stack, TableCell, TableRow, Typography } from '@mui/material';

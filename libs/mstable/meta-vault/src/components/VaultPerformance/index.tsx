@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useTrack } from '@frontend/shared-analytics';
+import { useTrack } from '@frontend/shared-providers';
 import { Dialog } from '@frontend/shared-ui';
 import {
   Button,
@@ -21,7 +21,7 @@ import { useMetavault } from '../../state';
 import { Controls } from './components/Controls';
 import { useChartConfig, useChartData } from './hooks';
 
-import type { MvGenerics } from '../../types';
+import type { MvRoute } from '../../types';
 
 export const VaultPerformance = () => {
   const intl = useIntl();
@@ -38,8 +38,8 @@ export const VaultPerformance = () => {
     chartType = defaultChartType,
     chartTimeframe = defaultChartTimeframe,
     chartExpand = false,
-  } = useSearch<MvGenerics>();
-  const navigate = useNavigate<MvGenerics>();
+  } = useSearch<MvRoute>();
+  const navigate = useNavigate<MvRoute>();
   const chartData = useChartData(chartTimeframe, chartType);
 
   useEffect(() => {

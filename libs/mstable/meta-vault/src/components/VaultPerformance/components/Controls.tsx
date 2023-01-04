@@ -6,7 +6,7 @@ import { useChartConfig } from '../hooks';
 
 import type { BoxProps } from '@mui/material';
 
-import type { MvGenerics } from '../../../types';
+import type { MvRoute } from '../../../types';
 
 export const Controls = (props: BoxProps) => {
   const {
@@ -18,8 +18,8 @@ export const Controls = (props: BoxProps) => {
   const {
     chartType = defaultChartType,
     chartTimeframe = defaultChartTimeframe,
-  } = useSearch<MvGenerics>();
-  const navigate = useNavigate<MvGenerics>();
+  } = useSearch<MvRoute>();
+  const navigate = useNavigate<MvRoute>();
 
   return (
     <Box {...props} display="flex" justifyContent="space-between" mb={3}>

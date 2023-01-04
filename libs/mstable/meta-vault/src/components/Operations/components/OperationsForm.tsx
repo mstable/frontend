@@ -45,7 +45,11 @@ export const OperationsForm = (props: StackProps) => {
   const input = useMemo(
     () => ({
       placeholder: '0.00',
-      disabled: !isConnected || isSubmitLoading,
+      disabled:
+        !isConnected ||
+        isSubmitLoading ||
+        !mvToken?.decimals ||
+        !assetToken?.decimals,
       isConnected: isConnected,
       error: isError,
       components: {
@@ -59,7 +63,13 @@ export const OperationsForm = (props: StackProps) => {
         },
       },
     }),
-    [isConnected, isError, isSubmitLoading],
+    [
+      assetToken?.decimals,
+      isConnected,
+      isError,
+      isSubmitLoading,
+      mvToken?.decimals,
+    ],
   );
 
   const handlePrimaryChange = useCallback(

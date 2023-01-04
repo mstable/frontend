@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { Check, ContentCopy, Error, OpenInNew } from '@mui/icons-material';
+import Check from '@mui/icons-material/Check';
+import ContentCopy from '@mui/icons-material/ContentCopy';
+import Error from '@mui/icons-material/Error';
+import OpenInNew from '@mui/icons-material/OpenInNew';
 import { IconButton, Link, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import {} from 'wagmi';

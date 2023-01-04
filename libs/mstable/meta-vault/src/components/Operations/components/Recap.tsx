@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import { usePrices } from '@frontend/shared-prices';
+import { usePrices } from '@frontend/shared-providers';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
   Box,

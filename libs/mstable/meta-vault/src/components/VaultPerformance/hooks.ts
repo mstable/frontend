@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMemo } from 'react';
 
-import { useDataSource } from '@frontend/mstable-shared-data-access';
+import { useDataSource } from '@frontend/mstable-data-access';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import { alpha, useTheme } from '@mui/material';
 import { ascend, pluck, prop, sort } from 'ramda';
@@ -12,7 +12,7 @@ import { useMetavault } from '../../state';
 
 import type { ChartData, ChartOptions, ScriptableContext } from 'chart.js';
 
-import type { ChartTimeframe, ChartType } from './types';
+import type { ChartTimeframe, ChartType } from '../../types';
 
 type Serie = { label: string; value: any };
 

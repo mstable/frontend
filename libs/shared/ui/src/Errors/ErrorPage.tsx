@@ -1,11 +1,12 @@
 import { DISCORD_SUPPORT } from '@frontend/shared-constants';
 import { Button, Link, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
+import { useMount } from 'react-use';
 
 import { ConnectionTips } from './ErrorTips';
 
 import type { PaletteMode, StackProps } from '@mui/material';
-import type { ReactNode } from 'react';
+import type { Dispatch, ReactNode } from 'react';
 
 export type ErrorPageProps = {
   title?: string;
@@ -13,6 +14,7 @@ export type ErrorPageProps = {
   message?: ReactNode;
   hideSupport?: boolean;
   tips?: ReactNode;
+  onMount?: Dispatch<void>;
 } & StackProps;
 
 const colorGradient = (mode: PaletteMode) =>
@@ -26,9 +28,14 @@ export const ErrorPage = ({
   message,
   hideSupport,
   tips,
+  onMount,
   ...rest
 }: ErrorPageProps) => {
   const intl = useIntl();
+
+  useMount(() => {
+    if (onMount) onMount();
+  });
 
   return (
     <Stack direction="row" py={18} {...rest}>

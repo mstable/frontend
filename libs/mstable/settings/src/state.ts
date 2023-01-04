@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect } from 'react';
 
-import { useToggleThemeMode } from '@frontend/shared-theme';
+import { useToggleThemeMode } from '@frontend/shared-providers';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { createContainer } from 'react-tracked';
 import { useLocalStorage } from 'react-use';

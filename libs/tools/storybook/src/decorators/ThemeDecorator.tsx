@@ -1,4 +1,4 @@
-import { dark, light } from '@frontend/shared-theme';
+import { dark, light } from '@frontend/mstable-theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import type { DecoratorFunction } from '@storybook/addons';

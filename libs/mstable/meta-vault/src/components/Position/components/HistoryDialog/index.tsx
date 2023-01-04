@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import { useDataSource } from '@frontend/mstable-shared-data-access';
-import { useTrack } from '@frontend/shared-analytics';
+import { useDataSource } from '@frontend/mstable-data-access';
+import { useTrack } from '@frontend/shared-providers';
 import { Dialog, Spinner } from '@frontend/shared-ui';
 import { isNilOrEmpty } from '@frontend/shared-utils';
 import {

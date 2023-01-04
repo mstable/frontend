@@ -1,8 +1,8 @@
-import { LiquidationFees, PerformanceFees } from '@frontend/mstable-shared-ui';
 import { Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import { useMetavault } from '../../../state';
+import { LiquidationFees, PerformanceFees } from '../../Diagrams';
 
 import type { StackProps, TypographyProps } from '@mui/material';
 

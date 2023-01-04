@@ -22,13 +22,13 @@ import { Provider } from './state';
 
 import type { CardProps } from '@mui/material';
 
-import type { MvGenerics } from '../../types';
+import type { MvRoute } from '../../types';
 
 const OperationsWrapped = (props: CardProps) => {
   const intl = useIntl();
   const { isConnected } = useAccount();
-  const navigate = useNavigate<MvGenerics>();
-  const { input } = useSearch<MvGenerics>();
+  const navigate = useNavigate<MvRoute>();
+  const { input } = useSearch<MvRoute>();
   const changeTab = useChangeTab();
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
