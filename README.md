@@ -50,7 +50,7 @@ Follow the [Contributing Guide](./docs/CONTRIBUTING.md) for information regardin
 
 ## Subgraph
 
-Learn more on our [Meta Vault Subgraph](./docs/SUBGRAPH.md.md).
+Learn more on our [Meta Vault Subgraph](./docs/SUBGRAPH.md).
 
 ## Contact us
 
