@@ -42,11 +42,15 @@ yarn storybook
 
 ## Developing
 
-Follow the [Developing Guide](./DEVELOPING.md) for detailed instructions and information regarding local development!
+Follow the [Developing Guide](./docs/DEVELOPING.md) for detailed instructions and information regarding local development!
 
 ## Contributing
 
-Follow the [Contributing Guide](./CONTRIBUTING.md) for information regarding contribution guidelines!
+Follow the [Contributing Guide](./docs/CONTRIBUTING.md) for information regarding contribution guidelines!
+
+## Subgraph
+
+Learn more on our [Meta Vault Subgraph](./docs/SUBGRAPH.md.md).
 
 ## Contact us
 
