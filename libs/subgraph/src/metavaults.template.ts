@@ -16,6 +16,14 @@ import {
   VaultBalance,
 } from '../generated/schema';
 
+/**
+ * Computes the annualized APY from the previous Vault
+ *
+ * @param prevVault The original vault to compute the APY from
+ * @param assetPerShare The current assetPerShare value
+ * @param timestamp The current timestamp
+ * @returns the annualized APY
+ */
 function calculateApy(
   prevVault: DailyVaultStat | null,
   assetPerShare: BigDecimal,
@@ -31,6 +39,12 @@ function calculateApy(
     .div(timestamp.minus(prevVault.timestamp).toBigDecimal());
 }
 
+/**
+ * Update or create the Meta Vault asset data
+ *
+ * @param address The address of the Meta Vault asset
+ * @returns the asset address and decimals
+ */
 function updateOrCreateAsset(address: Address): Asset {
   let assetContract = erc20.bind(address);
   let asset = Asset.load(address.toHex());
@@ -49,6 +63,13 @@ function updateOrCreateAsset(address: Address): Asset {
   return asset;
 }
 
+/**
+ * Update or create the Meta Vault data
+ *
+ * @param address The Meta Vault address
+ * @param timestamp The current timestamp
+ * @returns the Meta Vault data
+ */
 function updateOrCreateVault(address: Address, timestamp: BigInt): Vault {
   let vaultContract = erc4626.bind(address);
   let vault = Vault.load(address.toHex());
@@ -79,9 +100,19 @@ function updateOrCreateVault(address: Address, timestamp: BigInt): Vault {
   );
   vault.apy = calculateApy(prevVaultStat, vault.assetPerShare, timestamp);
   vault.save();
+
   return vault;
 }
 
+/**
+ * Update or create the daily stats of the Meta Vault
+ *
+ * @param address The Meta Vault address
+ * @param timestamp The current timestamp
+ * @param blockNumber The current block number
+ * @param forceUpdate Flag to force the recording of the daily stat
+ * @returns the daily stat
+ */
 function updateOrCreateDailyStat(
   address: Address,
   timestamp: BigInt,
@@ -93,6 +124,8 @@ function updateOrCreateDailyStat(
   let days = timestamp.div(BigInt.fromString('86400'));
   let dailyVaultStatId = address.toHex() + '-' + days.toString();
   let dailyVaultStat = DailyVaultStat.load(dailyVaultStatId);
+
+  // This ensures that the daily stat is only recorded once a day or if the force flag is set
   if (forceUpdate || dailyVaultStat === null) {
     dailyVaultStat = new DailyVaultStat(dailyVaultStatId);
     let prevVaultStat = DailyVaultStat.load(
@@ -146,9 +179,19 @@ function updateOrCreateDailyStat(
       vault.save();
     }
   }
+
   return dailyVaultStat;
 }
 
+/**
+ * Update or create the Meta Vault balance data
+ *
+ * @param address The Meta Vault address
+ * @param owner The address of the owner wallet
+ * @param timestamp The current timestamp
+ * @param assetsDeposited The amount of deposited assets
+ * @returns
+ */
 function updateOrCreateVaultBalance(
   address: Address,
   owner: Address,
@@ -188,9 +231,25 @@ function updateOrCreateVaultBalance(
   dailyVaultBalance.assetBalance = vaultBalance.assetBalance;
   dailyVaultBalance.assetDeposited = vaultBalance.assetDeposited;
   dailyVaultBalance.save();
+
   return vaultBalance;
 }
 
+/**
+ * Create the transaction record on deposit or withdraw event
+ *
+ * @param vaultAddress
+ * @param hash
+ * @param timestamp
+ * @param type
+ * @param to
+ * @param from
+ * @param shareAmount
+ * @param assetAmount
+ * @param gasLimit
+ * @param gasPrice
+ * @returns the transaction data
+ */
 function createTransaction(
   vaultAddress: Address,
   hash: Bytes,
@@ -215,6 +274,7 @@ function createTransaction(
   transaction.gasLimit = gasLimit;
   transaction.gasPrice = gasPrice;
   transaction.save();
+
   return transaction;
 }
 
