@@ -201,12 +201,6 @@
       "value": "Cancel"
     }
   ],
-  "4LNpZQ": [
-    {
-      "type": 0,
-      "value": "Current value of your position. Includes earned amount."
-    }
-  ],
   "4tvRCp": [
     {
       "type": 0,
@@ -679,30 +673,10 @@
       "value": "Oops, something went wrong."
     }
   ],
-  "T3hbuQ": [
-    {
-      "type": 1,
-      "value": "val"
-    },
-    {
-      "type": 0,
-      "value": " Shares"
-    }
-  ],
   "TL3yAY": [
     {
       "type": 0,
       "value": "Position Value"
-    }
-  ],
-  "TVrR/z": [
-    {
-      "type": 1,
-      "value": "roi"
-    },
-    {
-      "type": 0,
-      "value": "% ROI"
     }
   ],
   "TvzL+L": [
@@ -957,12 +931,6 @@
       "value": "Gas fee estimation is based on the current gas price and average gas used"
     }
   ],
-  "eyJuTX": [
-    {
-      "type": 0,
-      "value": "Profit or Losses accumulated since deposit. Fluctuations possible due to liquidity provision position."
-    }
-  ],
   "f4vYF8": [
     {
       "type": 0,
@@ -1031,6 +999,12 @@
     {
       "type": 0,
       "value": "How does the 3Pool Convex Meta Vault works?"
+    }
+  ],
+  "kZcqo0": [
+    {
+      "type": 0,
+      "value": "%"
     }
   ],
   "kaPKOB": [

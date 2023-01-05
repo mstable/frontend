@@ -1,4 +1,97 @@
 {
+  "+k7bPd": {
+    "defaultMessage": "The selected network is not supported by this application."
+  },
+  "1XVJUl": {
+    "defaultMessage": "Switch to {defaultChain}"
+  },
+  "8ywLSf": {
+    "defaultMessage": "Twitter"
+  },
+  "Bak2Yy": {
+    "defaultMessage": "Select from supported list"
+  },
+  "DRXWXB": {
+    "defaultMessage": "404"
+  },
+  "EhET/Q": {
+    "defaultMessage": "<strong>Yield app</strong> by mStable"
+  },
+  "FvmV6q": {
+    "defaultMessage": "Discord"
+  },
+  "PmkP1H": {
+    "defaultMessage": "Unsupported Network"
+  },
+  "Vn76qV": {
+    "defaultMessage": "Github"
+  },
+  "cyR7Kh": {
+    "defaultMessage": "Back"
+  },
+  "ovJ26C": {
+    "defaultMessage": "Medium"
+  },
+  "sy+pv5": {
+    "defaultMessage": "Email"
+  },
+  "7JlauX": {
+    "defaultMessage": "Explore"
+  },
+  "7ynb1z": {
+    "defaultMessage": "{value} GWEI"
+  },
+  "Imiiiv": {
+    "defaultMessage": "No Data Available"
+  },
+  "LiHQih": {
+    "defaultMessage": "Coming Soon"
+  },
+  "P1xtEU": {
+    "defaultMessage": "Earn diversified yield across DeFi."
+  },
+  "P8Xs51": {
+    "defaultMessage": "ROI"
+  },
+  "PxG1Yq": {
+    "defaultMessage": "Total Value Locked in vault"
+  },
+  "SKB/G9": {
+    "defaultMessage": "TVL"
+  },
+  "SRo6uF": {
+    "defaultMessage": "Meta Vaults"
+  },
+  "ULHfQE": {
+    "defaultMessage": "The current price of 1 share. Return is represented as a increase in share price value."
+  },
+  "WKCp0D": {
+    "defaultMessage": "Asset"
+  },
+  "YC/ZXg": {
+    "defaultMessage": "Share price"
+  },
+  "g6UhRO": {
+    "defaultMessage": "Vault name"
+  },
+  "qNhf66": {
+    "defaultMessage": "Perf"
+  },
+  "s2zphO": {
+    "defaultMessage": "Vaults"
+  },
+  "zFNxtv": {
+    "defaultMessage": "Protocols"
+  },
+  "zGHadw": {
+    "defaultMessage": "Strategy"
+  },
+  "zKtTJT": {
+    "defaultMessage": "Return on investment since Vault inception."
+  },
+  "+1GGs7": {
+    "defaultMessage": "Claim CVX & CRV"
+  },
   "/54G9d": {
     "defaultMessage": "Approving Token"
   },
@@ -38,8 +131,11 @@
   "4/JAsV": {
     "defaultMessage": "The underlying vaults charge a {fee}% fee upon liquidation of the earned rewards."
   },
-  "4LNpZQ": {
-    "defaultMessage": "Current value of your position. Includes earned amount."
+  "4tvRCp": {
+    "defaultMessage": "Start Again"
+  },
+  "5fjd4K": {
+    "defaultMessage": "{fee}%"
   },
   "65ThHj": {
     "defaultMessage": "Protocols Involved"
@@ -47,20 +143,17 @@
   "6bJGds": {
     "defaultMessage": "1W"
   },
-  "7JlauX": {
-    "defaultMessage": "Explore"
-  },
   "7d2ri8": {
     "defaultMessage": "{value} Shares"
   },
   "7jeKkk": {
     "defaultMessage": "Protocols that are used by this vault."
   },
-  "7ynb1z": {
-    "defaultMessage": "{value} GWEI"
-  },
   "8lLHeh": {
     "defaultMessage": "1Y"
+  },
+  "9+Ddtu": {
+    "defaultMessage": "Next"
   },
   "93OUn6": {
     "defaultMessage": "Profitable position after"
@@ -77,20 +170,29 @@
   "BnptNt": {
     "defaultMessage": "Slow - {value} GWEI"
   },
+  "BwwISd": {
+    "defaultMessage": "Vault"
+  },
   "CGcoFj": {
     "defaultMessage": "Yield Calculator"
   },
+  "CiONZE": {
+    "defaultMessage": "Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position."
+  },
   "DUR59o": {
     "defaultMessage": "Total Value Locked"
+  },
+  "EWa1Fv": {
+    "defaultMessage": "LP Position"
+  },
+  "FApc0Y": {
+    "defaultMessage": "Need more light on the strategy?"
   },
   "FaoPNm": {
     "defaultMessage": "You Burn"
   },
   "Gh1Vm9": {
     "defaultMessage": "You Receive"
-  },
-  "Imiiiv": {
-    "defaultMessage": "No Data Available"
   },
   "IuFETn": {
     "defaultMessage": "Duration"
@@ -103,9 +205,6 @@
   },
   "LDz7xI": {
     "defaultMessage": "Assets that are used by this vault."
-  },
-  "LiHQih": {
-    "defaultMessage": "Coming Soon"
   },
   "MLTKb6": {
     "defaultMessage": "APY"
@@ -128,44 +227,23 @@
   "OwO+Nr": {
     "defaultMessage": "Mint"
   },
-  "P1xtEU": {
-    "defaultMessage": "Earn diversified yield across DeFi."
-  },
-  "P8Xs51": {
-    "defaultMessage": "ROI"
-  },
   "PXAur5": {
     "defaultMessage": "Withdraw"
   },
   "Pk6qK4": {
     "defaultMessage": "Fees that are charged by this vault."
   },
-  "PxG1Yq": {
-    "defaultMessage": "Total Value Locked in vault"
+  "QS3Tk3": {
+    "defaultMessage": "The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded."
   },
   "RpPskj": {
     "defaultMessage": "Distribution of deposited funds in underlying vaults"
   },
-  "SKB/G9": {
-    "defaultMessage": "TVL"
-  },
-  "SRo6uF": {
-    "defaultMessage": "Meta Vaults"
-  },
-  "T3hbuQ": {
-    "defaultMessage": "{val} Shares"
-  },
   "TL3yAY": {
     "defaultMessage": "Position Value"
   },
-  "TVrR/z": {
-    "defaultMessage": "{roi}% ROI"
-  },
   "TvzL+L": {
     "defaultMessage": "Share Price"
-  },
-  "ULHfQE": {
-    "defaultMessage": "The current price of 1 share. Return is represented as a increase in share price value."
   },
   "UMrrVX": {
     "defaultMessage": "TVL ({symbol})"
@@ -173,17 +251,14 @@
   "WCaf5C": {
     "defaultMessage": "Approve"
   },
-  "WKCp0D": {
-    "defaultMessage": "Asset"
+  "WKF4Gx": {
+    "defaultMessage": "Swap to Stablecoin"
   },
   "X1WPwl": {
     "defaultMessage": "Nothing here yet, make your first deposit"
   },
   "XSdWHA": {
     "defaultMessage": "Redeem"
-  },
-  "YC/ZXg": {
-    "defaultMessage": "Share price"
   },
   "YYu/aL": {
     "defaultMessage": "Allocations"
@@ -194,6 +269,12 @@
   "ZwpbZp": {
     "defaultMessage": "Contracts"
   },
+  "aPi9xt": {
+    "defaultMessage": "Swap fees"
+  },
+  "aad9T5": {
+    "defaultMessage": "Start Tour"
+  },
   "b+LlHJ": {
     "defaultMessage": "Deposit Gas"
   },
@@ -202,6 +283,9 @@
   },
   "bvmoAt": {
     "defaultMessage": "The following protocols are used in the strategies and are therefore exposed to their risk:"
+  },
+  "bxTM3Z": {
+    "defaultMessage": "This Meta Vault accepts USDC. Anyone can deposit and receive vault shares."
   },
   "byXXyV": {
     "defaultMessage": "Enter Amount"
@@ -230,20 +314,17 @@
   "erCS/d": {
     "defaultMessage": "Gas fee estimation is based on the current gas price and average gas used"
   },
-  "eyJuTX": {
-    "defaultMessage": "Profit or Losses accumulated since deposit. Fluctuations possible due to liquidity provision position."
-  },
   "fJjSsb": {
     "defaultMessage": "Performance Fee"
   },
   "fcBYFp": {
     "defaultMessage": "{operationLabel} Cost"
   },
-  "g6UhRO": {
-    "defaultMessage": "Vault name"
-  },
   "hRuz7F": {
     "defaultMessage": "Withdrawal Gas"
+  },
+  "iYgKR9": {
+    "defaultMessage": "User deposits USDC"
   },
   "in6iXe": {
     "defaultMessage": "Deposit/Withdraw"
@@ -251,11 +332,23 @@
   "jHskc6": {
     "defaultMessage": "Txn hash"
   },
+  "k6yAtR": {
+    "defaultMessage": "How does the 3Pool Convex Meta Vault works?"
+  },
+  "kZcqo0": {
+    "defaultMessage": "%"
+  },
   "kaPKOB": {
     "defaultMessage": "Insufficient balance"
   },
+  "kdIIDL": {
+    "defaultMessage": "User withdraws USDC"
+  },
   "korbaG": {
     "defaultMessage": "The following assets are used in this strategy and therefore are exposed (partially) to their risk:"
+  },
+  "lLuyem": {
+    "defaultMessage": "DAO"
   },
   "m+DGTj": {
     "defaultMessage": "{operation}ing"
@@ -266,11 +359,14 @@
   "p8bsw4": {
     "defaultMessage": "Transaction Error"
   },
-  "qNhf66": {
-    "defaultMessage": "Perf"
+  "qEnyZU": {
+    "defaultMessage": "Meta Vault"
   },
   "qZbedW": {
     "defaultMessage": "Fees"
+  },
+  "qm/wiV": {
+    "defaultMessage": "Start the tour and get more insight."
   },
   "rbrahO": {
     "defaultMessage": "Close"
@@ -280,9 +376,6 @@
   },
   "rgdwQX": {
     "defaultMessage": "Transaction Confirmed"
-  },
-  "s2zphO": {
-    "defaultMessage": "Vaults"
   },
   "tH0obk": {
     "defaultMessage": "Return Projection"
@@ -298,15 +391,6 @@
   },
   "w1LBDB": {
     "defaultMessage": "Sign Transaction"
-  },
-  "zFNxtv": {
-    "defaultMessage": "Protocols"
-  },
-  "zGHadw": {
-    "defaultMessage": "Strategy"
-  },
-  "zKtTJT": {
-    "defaultMessage": "Return on investment since Vault inception."
   },
   "zRbVmO": {
     "defaultMessage": "WITHDRAW"
@@ -325,99 +409,6 @@
   },
   "yuiyES": {
     "defaultMessage": "General Settings"
-  },
-  "+1GGs7": {
-    "defaultMessage": "Claim CVX & CRV"
-  },
-  "+k7bPd": {
-    "defaultMessage": "The selected network is not supported by this application."
-  },
-  "1XVJUl": {
-    "defaultMessage": "Switch to {defaultChain}"
-  },
-  "4tvRCp": {
-    "defaultMessage": "Start Again"
-  },
-  "5fjd4K": {
-    "defaultMessage": "{fee}%"
-  },
-  "8ywLSf": {
-    "defaultMessage": "Twitter"
-  },
-  "9+Ddtu": {
-    "defaultMessage": "Next"
-  },
-  "Bak2Yy": {
-    "defaultMessage": "Select from supported list"
-  },
-  "BwwISd": {
-    "defaultMessage": "Vault"
-  },
-  "CiONZE": {
-    "defaultMessage": "Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position."
-  },
-  "DRXWXB": {
-    "defaultMessage": "404"
-  },
-  "EWa1Fv": {
-    "defaultMessage": "LP Position"
-  },
-  "EhET/Q": {
-    "defaultMessage": "<strong>Yield app</strong> by mStable"
-  },
-  "FApc0Y": {
-    "defaultMessage": "Need more light on the strategy?"
-  },
-  "FvmV6q": {
-    "defaultMessage": "Discord"
-  },
-  "PmkP1H": {
-    "defaultMessage": "Unsupported Network"
-  },
-  "QS3Tk3": {
-    "defaultMessage": "The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded."
-  },
-  "Vn76qV": {
-    "defaultMessage": "Github"
-  },
-  "WKF4Gx": {
-    "defaultMessage": "Swap to Stablecoin"
-  },
-  "aPi9xt": {
-    "defaultMessage": "Swap fees"
-  },
-  "aad9T5": {
-    "defaultMessage": "Start Tour"
-  },
-  "bxTM3Z": {
-    "defaultMessage": "This Meta Vault accepts USDC. Anyone can deposit and receive vault shares."
-  },
-  "cyR7Kh": {
-    "defaultMessage": "Back"
-  },
-  "iYgKR9": {
-    "defaultMessage": "User deposits USDC"
-  },
-  "k6yAtR": {
-    "defaultMessage": "How does the 3Pool Convex Meta Vault works?"
-  },
-  "kdIIDL": {
-    "defaultMessage": "User withdraws USDC"
-  },
-  "lLuyem": {
-    "defaultMessage": "DAO"
-  },
-  "ovJ26C": {
-    "defaultMessage": "Medium"
-  },
-  "qEnyZU": {
-    "defaultMessage": "Meta Vault"
-  },
-  "qm/wiV": {
-    "defaultMessage": "Start the tour and get more insight."
-  },
-  "sy+pv5": {
-    "defaultMessage": "Email"
   },
   "2JVe1j": {
     "defaultMessage": "Market Neutral"
