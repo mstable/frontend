@@ -28,8 +28,8 @@ npm i -g nx
 You can create a `.env.local` file to override defaults with your own credentials. Possible variables are
 
 - `NX_CLOUD_ACCESS_TOKEN`: allows pushing local build files to nx cloud
-- `NX_THE_GRAPH_MV_MAINNET_URL`: TheGraph endpoint for mainnet metavault subgraph
-- `NX_THE_GRAPH_MV_GOERLI_URL`: TheGraph endpoint for goerli metavault subgraph
+- `NX_THE_GRAPH_MV_MAINNET_URL`: TheGraph endpoint for mainnet Meta Vault subgraph
+- `NX_THE_GRAPH_MV_GOERLI_URL`: TheGraph endpoint for goerli Meta Vault subgraph
 - `NX_INFURA_API_KEY`: use your own infura api key
 
 ## Nx
