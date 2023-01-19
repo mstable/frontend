@@ -30,6 +30,11 @@ jobs:
           node-version: 16
           cache: "yarn"
 
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq
+
       - run: yarn install --frozen-lockfile
         name: Install dependencies
 

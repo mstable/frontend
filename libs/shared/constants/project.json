@@ -36,7 +36,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "yarn run formatjs extract 'libs/shared/constants/**/*.{ts,tsx}' --out-file i18n-extractions/libs-shared-constants.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+          "yarn run formatjs extract 'libs/shared/constants/src/**/*.{ts,tsx}' --out-file i18n-extractions/libs-shared-constants.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
         ]
       }
     }

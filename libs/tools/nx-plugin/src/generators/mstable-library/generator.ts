@@ -4,7 +4,6 @@ import {
   installPackagesTask,
   joinPathFragments,
   names,
-  offsetFromRoot,
   readProjectConfiguration,
   updateJson,
   updateProjectConfiguration,
@@ -19,14 +18,14 @@ import type {
 } from '@nrwl/react/src/generators/library/schema';
 
 const defaultSchema: Omit<Schema, 'name' | 'directory'> = {
-  buildable: true,
+  buildable: false,
   bundler: 'vite',
   component: false,
   globalCss: false,
   js: false,
   linter: Linter.EsLint,
   pascalCaseFiles: true,
-  publishable: true,
+  publishable: false,
   routing: false,
   setParserOptionsProject: false,
   skipFormat: false,
@@ -80,7 +79,7 @@ const updateProject = (tree: Tree, options: NormalizedSchema) => {
     executor: 'nx:run-commands',
     options: {
       commands: [
-        `yarn run formatjs extract '${options.projectRoot}/**/*.{ts,tsx}' --out-file i18n-extractions/${projectRootKebabCase}.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'`,
+        `yarn run formatjs extract '${options.projectRoot}/src/**/*.{ts,tsx}' --out-file i18n-extractions/${projectRootKebabCase}.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'`,
       ],
     },
   };
@@ -89,8 +88,6 @@ const updateProject = (tree: Tree, options: NormalizedSchema) => {
 };
 
 const updateTsConfig = (tree: Tree, options: NormalizedSchema) => {
-  const offset = offsetFromRoot(options.projectRoot);
-
   updateJson(
     tree,
     joinPathFragments(options.projectRoot, 'tsconfig.json'),

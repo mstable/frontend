@@ -11,6 +11,14 @@
       "options": {
         "lintFilePatterns": ["libs/shared/providers/**/*.{ts,tsx,js,jsx}"]
       }
+    },
+    "i18n-extract": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "yarn run formatjs extract 'libs/shared/providers/src/**/*.{ts,tsx}' --out-file i18n-extractions/libs-shared-providers.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+        ]
+      }
     }
   }
 }

@@ -8,7 +8,7 @@
       "executor": "@nrwl/vite:build",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "i18n-compile"],
       "options": {
         "outputPath": "dist/apps/mstable"
       },
@@ -62,17 +62,24 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "yarn run formatjs extract 'apps/mstable/**/*.{ts,tsx}' --out-file i18n-extractions/apps-mstable.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+          "yarn run formatjs extract 'apps/mstable/src/**/*.{ts,tsx}' --out-file i18n-extractions/apps-mstable.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
         ]
+      }
+    },
+    "i18n-clear": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["yarn rimraf i18n-extractions"]
       }
     },
     "i18n-compile": {
       "executor": "nx:run-commands",
+      "dependsOn": ["i18n-clear", "i18n-extract", "^i18n-extract"],
       "options": {
         "commands": [
-          "jq -rs 'reduce .[] as $item ({}; . * $item)' i18n-extractions/* > i18n-aggregated-extractions/en.json",
-          "yarn run formatjs compile i18n-aggregated-extractions/en.json --ast --out-file apps/mstable/src/assets/lang/en.json",
-          "yarn run nx format:write --files libs/mstable/shared/i18n/src/lang/*.json"
+          "jq -rs 'reduce .[] as $item ({}; . * $item)' i18n-extractions/* > apps/mstable/i18n/en.json",
+          "yarn run formatjs compile apps/mstable/i18n/en.json --ast --out-file apps/mstable/src/assets/lang/en.json",
+          "yarn run nx format:write --files apps/mstable/src/assets/lang/en.json"
         ],
         "parallel": false
       }
