@@ -16,7 +16,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "yarn run formatjs extract 'libs/mstable/explore/**/*.{ts,tsx}' --out-file i18n-extractions/libs-mstable-explore.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+          "yarn run formatjs extract 'libs/mstable/explore/src/**/*.{ts,tsx}' --out-file i18n-extractions/libs-mstable-explore.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
         ]
       }
     }
