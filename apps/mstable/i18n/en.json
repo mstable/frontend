@@ -458,6 +458,21 @@
   "vS/YSY": {
     "defaultMessage": "Curve is an exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers, without an opportunity cost."
   },
+  "+vVZ/G": {
+    "defaultMessage": "Connect"
+  },
+  "6GZbSi": {
+    "defaultMessage": "The selected network is not supported by the application."
+  },
+  "X0zKZO": {
+    "defaultMessage": "Connected User"
+  },
+  "qj1uhz": {
+    "defaultMessage": "Disconnect"
+  },
+  "wqlXwW": {
+    "defaultMessage": "Wrong Network"
+  },
   "+6JrYn": {
     "defaultMessage": "Make sure your wallet is on Ethereum Mainnet network."
   },
@@ -526,20 +541,5 @@
   },
   "y1NA43": {
     "defaultMessage": "Check URL"
-  },
-  "+vVZ/G": {
-    "defaultMessage": "Connect"
-  },
-  "6GZbSi": {
-    "defaultMessage": "The selected network is not supported by the application."
-  },
-  "X0zKZO": {
-    "defaultMessage": "Connected User"
-  },
-  "qj1uhz": {
-    "defaultMessage": "Disconnect"
-  },
-  "wqlXwW": {
-    "defaultMessage": "Wrong Network"
   }
 }

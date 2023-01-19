@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/i18n-extractions
 
 # dependencies
 node_modules

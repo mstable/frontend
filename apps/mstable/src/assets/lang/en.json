@@ -125,14 +125,12 @@
       "value": "A deposit into a vault requires an approval transaction."
     },
     {
-      "children": [
-      ],
+      "children": [],
       "type": 8,
       "value": "br"
     },
     {
-      "children": [
-      ],
+      "children": [],
       "type": 8,
       "value": "br"
     },
@@ -141,14 +139,12 @@
       "value": "Set as infinite to avoid approving multiple times and save gas on subsequent deposits."
     },
     {
-      "children": [
-      ],
+      "children": [],
       "type": 8,
       "value": "br"
     },
     {
-      "children": [
-      ],
+      "children": [],
       "type": 8,
       "value": "br"
     },
