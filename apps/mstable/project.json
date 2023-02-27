@@ -66,15 +66,9 @@
         ]
       }
     },
-    "i18n-clear": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["yarn rimraf i18n-extractions"]
-      }
-    },
     "i18n-compile": {
       "executor": "nx:run-commands",
-      "dependsOn": ["i18n-clear", "i18n-extract", "^i18n-extract"],
+      "dependsOn": ["i18n-extract", "^i18n-extract"],
       "options": {
         "commands": [
           "jq -rs 'reduce .[] as $item ({}; . * $item)' i18n-extractions/* > apps/mstable/i18n/en.json",
