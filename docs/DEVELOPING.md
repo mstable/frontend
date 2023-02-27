@@ -68,6 +68,8 @@ The applications can consume those files at build time by using the `i18n-compil
 - It aggregates all files in `i18n-extractions` folder into one json file located in `apps/MY-APP/i18n/en.json`
 - It compiles the translation files to `apps/MY-APP/src/assets/lang/en.json`
 
+> ❗When generating the translation files locally, empty out the `i18n-extractions` folder before i18n compiling task. 
+
 ## Nx generators
 
 To ease up the creation of a new library or a new application, we use 2 custom generators. You can call them directly through cli
@@ -82,8 +84,6 @@ yarn nx generate @frontend/tools-nx-plugin:mstable-library my-lib --directory=sh
 or use the NX plugin in your IDE. They are under `generate > @frontend/tools-nx-plugin`
 
 They will take care of creating a ready-to-use folder containing all necessary configuration files and integrate with typescript monorepo aliases.
-
-> ❗Always use the generators to create new `apps` or `libs`
 
 ## Linting and Code Style
 
