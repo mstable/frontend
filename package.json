@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nx serve mstable",
     "build": "nx build mstable",
-    "i18n:all": "nx run-many --target=i18n-extract --all",
+    "i18n:clear": "rimraf i18n-extractions",
     "codegen": "nx run mstable-data-access:codegen",
     "lint": "nx lint",
     "lint:fix": "nx run-many --target=lint -- --fix",
@@ -130,7 +130,7 @@
     "typescript": "4.9.5",
     "vite": "^4.1.4",
     "vite-plugin-dts": "~2.0.2",
-    "vite-plugin-eslint": "^1.6.0",
+    "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^2.2.2",
     "vite-tsconfig-paths": "^4.0.5",
     "vitest": "^0.29.1"

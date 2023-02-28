@@ -7,6 +7,8 @@ import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
+  cacheDir: '../../node_modules/.vite/mstable',
+
   server: {
     port: 4200,
     host: 'localhost',
@@ -14,6 +16,12 @@ export default defineConfig({
       strict: false,
     },
   },
+
+  preview: {
+    port: 4300,
+    host: 'localhost',
+  },
+
   define: {
     'process.env': Object.entries(process.env).reduce(
       (acc, [key, value]) => ({

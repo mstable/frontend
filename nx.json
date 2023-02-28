@@ -44,6 +44,7 @@
       "application": {
         "style": "@emotion/styled",
         "linter": "eslint",
+        "bundler": "vite",
         "babel": true
       },
       "component": {

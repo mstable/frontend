@@ -43,11 +43,27 @@
       },
       "configurations": {
         "development": {
-          "buildTarget": "mstable:build:development"
+          "buildTarget": "mstable:build:development",
+          "hmr": true
         },
         "production": {
           "buildTarget": "mstable:build:production",
           "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nrwl/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "mstable:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mstable:build:development"
+        },
+        "production": {
+          "buildTarget": "mstable:build:production"
         }
       }
     },
@@ -79,5 +95,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["mv"]
 }

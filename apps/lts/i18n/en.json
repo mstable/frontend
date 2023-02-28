@@ -1,0 +1,41 @@
+{
+  "2fed1y": {
+    "defaultMessage": "A deposit into a vault requires an approval transaction.<br></br><br></br>Set as infinite to avoid approving multiple times and save gas on subsequent deposits.<br></br><br></br>Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost."
+  },
+  "5ObBlW": {
+    "defaultMessage": "Dark Mode"
+  },
+  "Gtmi1D": {
+    "defaultMessage": "Set As Infinite"
+  },
+  "n9CFUs": {
+    "defaultMessage": "Token Approval"
+  },
+  "yuiyES": {
+    "defaultMessage": "General Settings"
+  },
+  "+vVZ/G": {
+    "defaultMessage": "Connect"
+  },
+  "1XVJUl": {
+    "defaultMessage": "Switch to {defaultChain}"
+  },
+  "6GZbSi": {
+    "defaultMessage": "The selected network is not supported by the application."
+  },
+  "PmkP1H": {
+    "defaultMessage": "Unsupported Network"
+  },
+  "X0zKZO": {
+    "defaultMessage": "Connected User"
+  },
+  "qj1uhz": {
+    "defaultMessage": "Disconnect"
+  },
+  "rbrahO": {
+    "defaultMessage": "Close"
+  },
+  "wqlXwW": {
+    "defaultMessage": "Wrong Network"
+  }
+}
