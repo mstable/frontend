@@ -17,7 +17,7 @@ import {
   WagmiProvider,
 } from '@frontend/shared-providers';
 import { composeContexts } from '@frontend/shared-utils';
-import { Outlet, Router } from '@tanstack/react-location';
+import { Router } from '@tanstack/react-location';
 import { QueryClientProvider } from '@tanstack/react-query';
 
 import en from './assets/lang/en.json';
@@ -28,6 +28,7 @@ import {
   reactQueryClient,
   wagmiClient,
 } from './clients';
+import { App } from './components/App';
 import { routes } from './routes';
 
 const root = ReactDOM.createRoot(
@@ -54,6 +55,6 @@ root.render(
       [ModalsProvider],
       [SettingsProvider],
     ],
-    <Outlet />,
+    <App />,
   ),
 );
