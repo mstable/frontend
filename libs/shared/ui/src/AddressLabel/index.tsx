@@ -6,7 +6,6 @@ import Error from '@mui/icons-material/Error';
 import OpenInNew from '@mui/icons-material/OpenInNew';
 import { IconButton, Link, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
-import {} from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
 import { MiddleTruncated } from '../Typography';

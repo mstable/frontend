@@ -2,7 +2,6 @@ import { MvUSDC } from '@frontend/shared-icons';
 import { tokens } from '@mstable/metavaults-web';
 import { SvgIcon } from '@mui/material';
 import { CurrencyCircleDollar } from 'phosphor-react';
-import {} from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
 import type { SvgIconProps } from '@mui/material';
