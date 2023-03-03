@@ -1,4 +1,4 @@
-name: mstable Dev
+name: lts Dev
 
 on:
   push:
