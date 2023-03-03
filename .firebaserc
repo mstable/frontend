@@ -1,5 +1,6 @@
 {
   "projects": {
+    "lts": "apps-lts",
     "mstable": "frontend-7e17f"
   }
 }

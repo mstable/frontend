@@ -74,6 +74,28 @@
         "lintFilePatterns": ["apps/mstable/**/*.{ts,tsx,js,jsx}"]
       }
     },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "commands": [
+          "yarn firebase use mstable",
+          "yarn firebase deploy -c ./firebase.mstable.json --only hosting"
+        ],
+        "parallel": false
+      }
+    },
+    "deploy:dev": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "commands": [
+          "yarn firebase use mstable",
+          "yarn firebase hosting:channel:deploy dev -c ./firebase.mstable.json --expires 7d"
+        ],
+        "parallel": false
+      }
+    },
     "i18n-extract": {
       "executor": "nx:run-commands",
       "options": {
@@ -95,5 +117,5 @@
       }
     }
   },
-  "tags": ["mv"]
+  "tags": ["mstable"]
 }
