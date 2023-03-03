@@ -42,7 +42,7 @@ jobs:
       - name: Build
         env:
           infura: ${{ secrets.INFURA_API_KEY }}
-        run: NX_INFURA_API_KEY=$infura yarn build
+        run: NX_INFURA_API_KEY=$infura yarn nx build mstable
 
       - name: Firebase deploy
         env:
