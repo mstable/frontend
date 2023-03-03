@@ -4,9 +4,10 @@ on:
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - "**/*.@(md|mdx)"
-      - "libs/subgraph/**"
+    paths:
+      - "apps/mstable/**"
+      - "libs/mstable/**"
+      - "libs/shared/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -43,19 +44,20 @@ jobs:
           infura: ${{ secrets.INFURA_API_KEY }}
         run: NX_INFURA_API_KEY=$infura yarn build
 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        name: Firebase deploy
+      - name: Firebase deploy
         id: deploy
-        with:
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_FRONTEND_7E17F }}"
-          projectId: frontend-7e17f
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_FRONTEND_7E17F }}
+          PR_NAME: ${{ github.head_ref }}
+        run: |
+          yarn firebase use mstable
+          echo "yarn firebase hosting:channel:deploy {{ PR_NAME }} -c ./firebase.mstable.json --expires 30d" >> $GITHUB_OUTPUT
 
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           PR_NAME: ${{ github.head_ref }}
-          DEPLOY_URL: ${{ steps.deploy.outputs.details_url }}
+          OUTPUT: ${{ join(steps.deploy.outputs.*, '\n') }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "✨ PR **{{ PR_NAME }}** created/updated 🚀 Deploy url: {{ DEPLOY_URL }}"
+          args: "✨ PR **{{ PR_NAME }}** created/updated 🚀 {{ OUTPUT }}"
