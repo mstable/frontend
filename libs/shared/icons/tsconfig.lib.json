@@ -21,7 +21,9 @@
     "**/*.stories.js",
     "**/*.stories.jsx",
     "**/*.stories.tsx",
-    "**/*.stories.mdx"
+    "**/*.stories.mdx",
+    "**/stories.ts",    
+    "**/stories.tsx"
   ],
   "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
 }

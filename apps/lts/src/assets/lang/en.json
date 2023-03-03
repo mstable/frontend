@@ -1,0 +1,112 @@
+{
+  "+vVZ/G": [
+    {
+      "type": 0,
+      "value": "Connect"
+    }
+  ],
+  "1XVJUl": [
+    {
+      "type": 0,
+      "value": "Switch to "
+    },
+    {
+      "type": 1,
+      "value": "defaultChain"
+    }
+  ],
+  "2fed1y": [
+    {
+      "type": 0,
+      "value": "A deposit into a vault requires an approval transaction."
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": "Set as infinite to avoid approving multiple times and save gas on subsequent deposits."
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": "Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost."
+    }
+  ],
+  "5ObBlW": [
+    {
+      "type": 0,
+      "value": "Dark Mode"
+    }
+  ],
+  "6GZbSi": [
+    {
+      "type": 0,
+      "value": "The selected network is not supported by the application."
+    }
+  ],
+  "Gtmi1D": [
+    {
+      "type": 0,
+      "value": "Set As Infinite"
+    }
+  ],
+  "PmkP1H": [
+    {
+      "type": 0,
+      "value": "Unsupported Network"
+    }
+  ],
+  "X0zKZO": [
+    {
+      "type": 0,
+      "value": "Connected User"
+    }
+  ],
+  "n9CFUs": [
+    {
+      "type": 0,
+      "value": "Token Approval"
+    }
+  ],
+  "qj1uhz": [
+    {
+      "type": 0,
+      "value": "Disconnect"
+    }
+  ],
+  "rbrahO": [
+    {
+      "type": 0,
+      "value": "Close"
+    }
+  ],
+  "wqlXwW": [
+    {
+      "type": 0,
+      "value": "Wrong Network"
+    }
+  ],
+  "yuiyES": [
+    {
+      "type": 0,
+      "value": "General Settings"
+    }
+  ]
+}

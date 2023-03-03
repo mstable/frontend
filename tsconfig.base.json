@@ -17,6 +17,7 @@
     "strict": false,
     "noPropertyAccessFromIndexSignature": false,
     "paths": {
+      "@frontend/lts-constants": ["libs/lts/constants/src/index.ts"],
       "@frontend/mstable-data-access": [
         "libs/mstable/data-access/src/index.ts"
       ],

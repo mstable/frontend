@@ -43,11 +43,27 @@
       },
       "configurations": {
         "development": {
-          "buildTarget": "mstable:build:development"
+          "buildTarget": "mstable:build:development",
+          "hmr": true
         },
         "production": {
           "buildTarget": "mstable:build:production",
           "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nrwl/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "mstable:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mstable:build:development"
+        },
+        "production": {
+          "buildTarget": "mstable:build:production"
         }
       }
     },
@@ -56,6 +72,28 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/mstable/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "commands": [
+          "yarn firebase use mstable",
+          "yarn firebase deploy -c ./firebase.mstable.json --only hosting"
+        ],
+        "parallel": false
+      }
+    },
+    "deploy:dev": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "commands": [
+          "yarn firebase use mstable",
+          "yarn firebase hosting:channel:deploy dev -c ./firebase.mstable.json --expires 7d"
+        ],
+        "parallel": false
       }
     },
     "i18n-extract": {
@@ -79,5 +117,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["mstable"]
 }

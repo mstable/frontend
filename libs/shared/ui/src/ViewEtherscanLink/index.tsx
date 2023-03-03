@@ -1,6 +1,5 @@
 import { Link } from '@mui/material';
 import { useIntl } from 'react-intl';
-import {} from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
 import type { LinkProps } from '@mui/material';
