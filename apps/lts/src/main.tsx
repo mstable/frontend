@@ -17,19 +17,16 @@ import {
   WagmiProvider,
 } from '@frontend/shared-providers';
 import { composeContexts } from '@frontend/shared-utils';
-import { Router } from '@tanstack/react-location';
 import { QueryClientProvider } from '@tanstack/react-query';
 
 import en from './assets/lang/en.json';
 import {
   chains,
   plausibleClient,
-  reactLocationClient,
   reactQueryClient,
   wagmiClient,
 } from './clients';
 import { App } from './components/App';
-import { routes } from './routes';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -42,7 +39,6 @@ root.render(
       [QueryClientProvider, { client: reactQueryClient }],
       [I18nProvider, { messages: { en } }],
       [ThemeProvider, { themes: { light, dark } }],
-      [Router, { location: reactLocationClient, routes }],
       [NotificationsProvider],
       [
         WagmiProvider,

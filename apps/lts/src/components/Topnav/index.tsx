@@ -9,10 +9,8 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useNavigate } from '@tanstack/react-location';
 
 export const Topnav = () => {
-  const navigate = useNavigate();
   const theme = useTheme();
   const wide = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -36,7 +34,7 @@ export const Topnav = () => {
           variant="text"
           color="inherit"
           onClick={() => {
-            navigate({ to: '/' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           sx={{ ml: -2 }}
         >
