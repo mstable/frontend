@@ -9,7 +9,7 @@ export const Home = () => {
         height: 1,
       }}
     >
-      <Typography>Home</Typography>
+      <Typography>Home test</Typography>
     </Stack>
   );
 };
