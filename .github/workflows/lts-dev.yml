@@ -49,7 +49,7 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_FRONTEND_7E17F }}
         run: |
           yarn firebase use lts
-          yarn firebase hosting:channel:deploy dev -c ./firebase.mstable.json --expires 30d
+          yarn firebase hosting:channel:deploy dev -c ./firebase.lts.json --expires 30d
 
       - name: Discord notification
         env:
