@@ -1,4 +1,4 @@
-import { SettingsButton } from '@frontend/mstable-settings';
+import { SettingsButton } from '@frontend/lts-settings';
 import { MStable, MStableShort } from '@frontend/shared-icons';
 import { OpenAccountModalButton } from '@frontend/shared-providers';
 import {

@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { CollapsibleSection } from '@frontend/shared-ui';
 import { Stack } from '@mui/material';
+import { remove } from 'ramda';
+import { defineMessage, useIntl } from 'react-intl';
+import { useAccount } from 'wagmi';
 
 import { ContractList } from './components/ContractList';
 
@@ -9,7 +12,13 @@ import type { ContractType } from '@frontend/lts-constants';
 import type { CollapsibleSectionProps } from '@frontend/shared-ui';
 import type { StackProps } from '@mui/material';
 
-const categories: ContractType[] = ['musd', 'feederpool', 'mbtc', 'metavault'];
+const categories: ContractType[] = [
+  'save',
+  'pool',
+  'vault',
+  'legacypool',
+  'metavault',
+];
 
 const collapsibleProps: Partial<CollapsibleSectionProps> = {
   iconPosition: 'end',
@@ -20,7 +29,8 @@ const collapsibleProps: Partial<CollapsibleSectionProps> = {
   }),
   components: {
     titleContainer: {
-      padding: 2,
+      paddingX: 2,
+      paddingY: 4,
     },
     childrenContainer: {
       sx: {
@@ -30,11 +40,34 @@ const collapsibleProps: Partial<CollapsibleSectionProps> = {
   },
 };
 
+const getTitle = (cat: ContractType) =>
+  ({
+    save: defineMessage({ defaultMessage: 'Save', id: 'jvo0vs' }),
+    pool: defineMessage({ defaultMessage: 'Feeder Pools', id: 'sk4xVe' }),
+    vault: defineMessage({ defaultMessage: 'Vaults', id: 's2zphO' }),
+    legacypool: defineMessage({ defaultMessage: 'Legacy Pools', id: 'cA+gxG' }),
+    metavault: defineMessage({ defaultMessage: 'Meta Vaults', id: 'SRo6uF' }),
+  }[cat]);
+
 export const ContractAccordion = (props: StackProps) => {
-  const [sel, setSel] = useState<ContractType | 'null'>('feederpool');
+  const intl = useIntl();
+  const { isConnected } = useAccount();
+  const [sel, setSel] = useState<ContractType[]>(isConnected ? categories : []);
+
+  useEffect(() => {
+    setSel(isConnected ? categories : []);
+  }, [isConnected]);
 
   const handleToggle = (ct: ContractType) => () => {
-    setSel((prev) => (prev === ct ? null : ct));
+    setSel((prev) => {
+      if (!isConnected) return prev;
+      const idx = prev.indexOf(ct);
+      if (idx > -1) {
+        return remove(idx, 1, prev);
+      } else {
+        return [...prev, ct];
+      }
+    });
   };
 
   return (
@@ -51,8 +84,8 @@ export const ContractAccordion = (props: StackProps) => {
         <CollapsibleSection
           {...collapsibleProps}
           key={cat}
-          title={cat}
-          open={cat === sel}
+          title={intl.formatMessage(getTitle(cat))}
+          open={sel.includes(cat)}
           onToggle={handleToggle(cat)}
         >
           <ContractList contractType={cat} />

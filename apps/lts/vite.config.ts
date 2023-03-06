@@ -1,4 +1,5 @@
-/// <reference types="vitest" />
+/* eslint-disable new-cap */
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
@@ -30,6 +31,20 @@ export default defineConfig({
       }),
       {},
     ),
+  },
+
+  optimizeDeps: {
+    esbuildOptions: {
+      define: {
+        global: 'globalThis',
+      },
+      plugins: [
+        NodeGlobalsPolyfillPlugin({
+          process: true,
+          buffer: true,
+        }),
+      ],
+    },
   },
 
   build: {
