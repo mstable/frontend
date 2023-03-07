@@ -29,6 +29,12 @@
       "value": "Approving Token"
     }
   ],
+  "/b/fRE": [
+    {
+      "type": 0,
+      "value": "mStable Withdraw"
+    }
+  ],
   "/e4KBT": [
     {
       "type": 0,
@@ -579,6 +585,16 @@
       "value": "Vault Performance"
     }
   ],
+  "MtpzgV": [
+    {
+      "type": 0,
+      "value": "Exit "
+    },
+    {
+      "type": 1,
+      "value": "pool"
+    }
+  ],
   "N+SKIs": [
     {
       "type": 0,
@@ -805,6 +821,12 @@
       "value": "Allocations"
     }
   ],
+  "Zab6JA": [
+    {
+      "type": 0,
+      "value": "Withdraw Cost"
+    }
+  ],
   "ZefNbE": [
     {
       "type": 0,
@@ -843,6 +865,12 @@
       "value": "Deposit Gas"
     }
   ],
+  "bAqUW1": [
+    {
+      "type": 0,
+      "value": "Withdrawing"
+    }
+  ],
   "bnF8kf": [
     {
       "type": 0,
@@ -865,6 +893,12 @@
     {
       "type": 0,
       "value": "Enter Amount"
+    }
+  ],
+  "cA+gxG": [
+    {
+      "type": 0,
+      "value": "Legacy Pools"
     }
   ],
   "cg1VJ2": [
@@ -961,10 +995,26 @@
       "value": "Vault name"
     }
   ],
+  "hPs6J+": [
+    {
+      "type": 0,
+      "value": "Exit Position"
+    }
+  ],
   "hRuz7F": [
     {
       "type": 0,
       "value": "Withdrawal Gas"
+    }
+  ],
+  "hesDHZ": [
+    {
+      "type": 1,
+      "value": "fee"
+    },
+    {
+      "type": 0,
+      "value": " GWEI"
     }
   ],
   "iYgKR9": [
@@ -989,6 +1039,12 @@
     {
       "type": 0,
       "value": "Txn hash"
+    }
+  ],
+  "jvo0vs": [
+    {
+      "type": 0,
+      "value": "Save"
     }
   ],
   "k6yAtR": [
@@ -1053,12 +1109,6 @@
     {
       "type": 0,
       "value": "Token Approval"
-    }
-  ],
-  "n9ca9R": [
-    {
-      "type": 0,
-      "value": "Long Term Support"
     }
   ],
   "ovJ26C": [
@@ -1137,6 +1187,12 @@
     {
       "type": 0,
       "value": "Diversified"
+    }
+  ],
+  "sk4xVe": [
+    {
+      "type": 0,
+      "value": "Feeder Pools"
     }
   ],
   "sy+pv5": [

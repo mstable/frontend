@@ -15,7 +15,6 @@ import { constants } from 'ethers';
 import { pathOr } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
-  erc4626ABI,
   useAccount,
   useBalance,
   useContractRead,
@@ -29,11 +28,13 @@ import {
 
 import { ContractHeader } from './ContractHeader';
 
-import type { Metavault } from '@frontend/lts-constants';
+import type { Contract } from '@frontend/lts-constants';
+import type { HexAddress } from '@frontend/shared-utils';
 import type { StackProps } from '@mui/material';
+import type { BigNumberish } from 'ethers';
 
 export type MetavaultCardProps = {
-  contract: Metavault;
+  contract: Contract;
 } & StackProps;
 
 const rowProps: StackProps = {
@@ -55,10 +56,12 @@ export const MetavaultCard = ({ contract, ...rest }: MetavaultCardProps) => {
   });
   const { data: assetAddress } = useContractRead({
     address: contract.address,
-    abi: erc4626ABI,
+    abi: contract.abi,
     functionName: 'asset',
   });
-  const { data: asset } = useToken({ address: assetAddress });
+  const { data: asset } = useToken({
+    address: assetAddress as unknown as HexAddress,
+  });
   const { data: mvBal, isLoading: mvBalLoading } = useBalance({
     address: walletAddress,
     token: contract.address,
@@ -66,7 +69,7 @@ export const MetavaultCard = ({ contract, ...rest }: MetavaultCardProps) => {
   });
   const { data: assetBal, isLoading: assetBalLoading } = useContractRead({
     address: contract.address,
-    abi: erc4626ABI,
+    abi: contract.abi,
     functionName: 'convertToAssets',
     args: [mvBal?.value ?? constants.Zero],
     enabled: !mvBalLoading,
@@ -74,14 +77,19 @@ export const MetavaultCard = ({ contract, ...rest }: MetavaultCardProps) => {
   const { config: submitConfig, isLoading: isPrepareLoading } =
     usePrepareContractWrite({
       address: contract.address,
-      abi: erc4626ABI,
-      functionName: 'withdraw',
-      args: [assetBal, walletAddress, walletAddress],
+      abi: contract.abi,
+      functionName: 'redeem',
+      args: [
+        new BigDecimal(mvBal?.value, asset?.decimals).exact,
+        walletAddress,
+        walletAddress,
+      ],
       enabled: !!assetBal,
     });
   const {
     data: submitData,
     write: submit,
+    reset,
     isLoading: isWriteLoading,
     isSuccess: isWriteSuccess,
   } = useContractWrite({
@@ -162,7 +170,7 @@ export const MetavaultCard = ({ contract, ...rest }: MetavaultCardProps) => {
     price * nativeTokenGasPrice?.simple,
   );
   const assetBalance = assetBal
-    ? new BigDecimal(assetBal, asset?.decimals)
+    ? new BigDecimal(assetBal as unknown as BigNumberish, asset?.decimals)
     : BigDecimal.ZERO;
 
   return (
@@ -212,13 +220,14 @@ export const MetavaultCard = ({ contract, ...rest }: MetavaultCardProps) => {
         open={open}
         onClose={() => {
           setOpen(false);
+          reset();
         }}
         title={intl.formatMessage(
           { defaultMessage: 'Exit {pool}', id: 'MtpzgV' },
           { pool: contract.name },
         )}
         content={
-          <Stack spacing={2} pt={4}>
+          <Stack spacing={2} pt={4} pb={2} px={4}>
             <Stack {...rowProps}>
               <Typography variant="label2" color="text.secondary">
                 {intl.formatMessage({

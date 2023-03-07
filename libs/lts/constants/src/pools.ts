@@ -2,9 +2,9 @@ import { FeederPoolABI } from '@frontend/shared-constants';
 import { MBTC, MUSD } from '@frontend/shared-icons';
 import { mainnet, polygon } from 'wagmi/chains';
 
-import type { Pool } from './types';
+import type { Contract } from './types';
 
-export const main: Pool[] = [
+export const main: Contract[] = [
   {
     name: 'mUSD/BUSD',
     address: '0xfE842e95f8911dcc21c943a1dAA4bd641a1381c6',
@@ -63,7 +63,7 @@ export const main: Pool[] = [
   },
 ];
 
-const poly: Pool[] = [
+const poly: Contract[] = [
   {
     name: 'mUSD/FRAX',
     address: '0xb30a907084ac8a0d25dddab4e364827406fd09f0',

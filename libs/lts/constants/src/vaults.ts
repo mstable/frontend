@@ -1,18 +1,21 @@
 import { FeederPoolVaultABI } from '@frontend/shared-constants';
-import { MUSD, Vault } from '@frontend/shared-icons';
+import { Vault } from '@frontend/shared-icons';
 import { mainnet, polygon } from 'wagmi/chains';
 
 const main = [
-  {
-    name: 'mUSD Save Vault',
-    address: '0x78befca7de27d07dc6e71da295cc2946681a6c7b',
-    type: 'save',
-    icon: MUSD,
-  },
+  // TODO verify address and abi
+  // {
+  //   name: 'mUSD Save Vault',
+  //   address: '0x78befca7de27d07dc6e71da295cc2946681a6c7b',
+  //   type: 'vault',
+  //   abi: FeederPoolVaultABI,
+  //   icon: Vault,
+  // },
   {
     name: 'mBTC Save Vault',
     address: '0xf38522f63f40f9dd81abafd2b8efc2ec958a3016',
     type: 'vault',
+    abi: FeederPoolVaultABI,
     icon: Vault,
   },
   {

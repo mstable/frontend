@@ -1,78 +1,172 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
-import {
-  BalancerPoolTokenABI,
-  StakingABI,
-  UniswapStakedContractABI,
-  vmtaABI,
-} from '@frontend/shared-constants';
-import { CountUp, Dialog } from '@frontend/shared-ui';
+import { usePrices, usePushNotification } from '@frontend/shared-providers';
+import { CountUp, Dialog, ViewEtherscanLink } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
-import { alpha, Button, Skeleton, Stack, Typography } from '@mui/material';
+import {
+  alpha,
+  Button,
+  CircularProgress,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material';
+import { constants } from 'ethers';
+import { pathOr } from 'ramda';
 import { useIntl } from 'react-intl';
-import { useAccount, useContractReads } from 'wagmi';
+import {
+  useAccount,
+  useContractReads,
+  useContractWrite,
+  useFeeData,
+  useNetwork,
+  usePrepareContractWrite,
+  useToken,
+  useWaitForTransaction,
+} from 'wagmi';
 
 import { ContractHeader } from './ContractHeader';
 
-import type { LegacyPool } from '@frontend/lts-constants';
+import type { Contract } from '@frontend/lts-constants';
+import type { HexAddress } from '@frontend/shared-utils';
 import type { StackProps } from '@mui/material';
+import type { BigNumberish } from 'ethers';
 
 export type LegacyPoolCardProps = {
-  contract: LegacyPool;
+  contract: Contract;
 } & StackProps;
+
+const rowProps: StackProps = {
+  width: 1,
+  direction: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+};
 
 export const LegacyPoolCard = ({ contract, ...rest }: LegacyPoolCardProps) => {
   const intl = useIntl();
+  const pushNotification = usePushNotification();
+  const { price, symbol } = usePrices();
   const [open, setOpen] = useState(false);
-  const { address: account, isConnected } = useAccount();
+  const { chain } = useNetwork();
+  const { address: walletAddress, isConnected } = useAccount();
+  const { data: feeData } = useFeeData({
+    formatUnits: 'gwei',
+  });
 
-  const { data: uniContract, isLoading: balLoading } = useContractReads({
+  const { data, isLoading: balLoading } = useContractReads({
     contracts: [
       {
         address: contract.address,
-        abi: StakingABI,
+        abi: contract.abi,
         functionName: 'stakingToken',
       },
       {
         address: contract.address,
-        abi: contract.poolType === 'vmta' ? vmtaABI : StakingABI,
-        functionName:
-          contract.poolType === 'vmta' ? 'staticBalanceOf' : 'balanceOf',
-        args: [account],
+        abi: contract.abi,
+        functionName: contract?.balanceFn ?? 'balanceOf',
+        args: [walletAddress],
       },
     ],
     enabled: isConnected,
   });
-  const abi =
-    contract.poolType === 'uni'
-      ? UniswapStakedContractABI
-      : BalancerPoolTokenABI;
-  const { data: stakedToken, isLoading: staLoading } = useContractReads({
-    contracts: [
-      {
-        address: uniContract?.[0],
-        abi,
-        functionName: 'name',
-      },
-      {
-        address: uniContract?.[0],
-        abi,
-        functionName: 'decimals',
-      },
-      {
-        address: uniContract?.[0],
-        abi,
-        functionName: 'symbol',
-      },
-    ],
-    enabled: !!uniContract?.[0],
+  const { data: stakingToken } = useToken({
+    address: data?.[0] as unknown as HexAddress,
   });
-  const balance = useMemo(() => {
-    if (!uniContract?.[1] || !stakedToken?.[1] || !stakedToken?.[2])
-      return BigDecimal.ZERO;
+  const bal = new BigDecimal(
+    data?.[1] as unknown as BigNumberish,
+    stakingToken?.decimals,
+  );
+  const { config: submitConfig, isLoading: isPrepareLoading } =
+    usePrepareContractWrite({
+      address: contract.address,
+      abi: contract.abi,
+      functionName: 'exit',
+      enabled: !balLoading && bal?.exact.gt(constants.Zero),
+    });
+  const {
+    data: submitData,
+    write: submit,
+    reset,
+    isLoading: isWriteLoading,
+    isSuccess: isWriteSuccess,
+  } = useContractWrite({
+    ...submitConfig,
+    onSuccess: (data) => {
+      pushNotification({
+        title: intl.formatMessage({
+          defaultMessage: 'Withdrawing',
+          id: 'bAqUW1',
+        }),
+        content: (
+          <ViewEtherscanLink
+            hash={data?.hash}
+            blockExplorer={chain?.blockExplorers?.['etherscan']}
+          />
+        ),
+        severity: 'info',
+      });
+    },
+    onError: () => {
+      pushNotification({
+        title: intl.formatMessage({
+          defaultMessage: 'Transaction Cancelled',
+          id: '20X0BC',
+        }),
+        severity: 'info',
+      });
+    },
+  });
+  const { isSuccess: isSubmitSuccess } = useWaitForTransaction({
+    hash: submitData?.hash,
+    onSuccess: ({ transactionHash }) => {
+      pushNotification({
+        title: intl.formatMessage({
+          defaultMessage: 'Transaction Confirmed',
+          id: 'rgdwQX',
+        }),
+        content: (
+          <ViewEtherscanLink
+            hash={transactionHash}
+            blockExplorer={chain?.blockExplorers?.['etherscan']}
+          />
+        ),
+        severity: 'success',
+      });
+    },
+    onError: () => {
+      pushNotification({
+        title: intl.formatMessage({
+          defaultMessage: 'Transaction Error',
+          id: 'p8bsw4',
+        }),
+        content: (
+          <ViewEtherscanLink
+            hash={submitData?.hash}
+            blockExplorer={chain?.blockExplorers?.['etherscan']}
+          />
+        ),
+        severity: 'error',
+      });
+    },
+  });
 
-    return new BigDecimal(uniContract[1], stakedToken[1]);
-  }, [stakedToken, uniContract]);
+  const estimatedGas = pathOr(
+    constants.Zero,
+    ['request', 'gasLimit'],
+    submitConfig,
+  ).mul(
+    (feeData?.gasPrice ?? constants.Zero).add(
+      feeData?.maxPriorityFeePerGas ?? constants.Zero,
+    ),
+  );
+  const nativeTokenGasPrice = new BigDecimal(
+    estimatedGas,
+    chain?.nativeCurrency?.decimals,
+  );
+  const fiatGasPrice = BigDecimal.fromSimple(
+    price * nativeTokenGasPrice?.simple,
+  );
 
   return (
     <>
@@ -97,13 +191,13 @@ export const LegacyPoolCard = ({ contract, ...rest }: LegacyPoolCardProps) => {
         >
           <ContractHeader contract={contract} />
           <Typography variant="value4">
-            {balLoading || staLoading ? (
+            {balLoading ? (
               <Skeleton width={60} />
             ) : (
               <CountUp
                 variant="value4"
-                end={balance.simple}
-                suffix={stakedToken?.[2]}
+                end={bal?.simple}
+                suffix={stakingToken?.symbol}
               />
             )}
           </Typography>
@@ -124,19 +218,67 @@ export const LegacyPoolCard = ({ contract, ...rest }: LegacyPoolCardProps) => {
         open={open}
         onClose={() => {
           setOpen(false);
+          reset();
         }}
         title={intl.formatMessage(
           { defaultMessage: 'Exit {pool}', id: 'MtpzgV' },
           { pool: contract.name },
         )}
         content={
-          <Stack>
-            <Typography>
-              {intl.formatMessage({
-                defaultMessage: 'Exit with ETH',
-                id: 'WYr7Hj',
-              })}
-            </Typography>
+          <Stack spacing={2} pt={4} pb={2} px={4}>
+            <Stack {...rowProps} pb={4}>
+              <Typography variant="label2" color="text.secondary">
+                {intl.formatMessage({
+                  defaultMessage: 'Withdraw',
+                  id: 'PXAur5',
+                })}
+              </Typography>
+              <CountUp
+                variant="value5"
+                end={bal.simple}
+                suffix={stakingToken?.symbol}
+              />
+            </Stack>
+            <Stack {...rowProps}>
+              <Typography variant="label2" color="text.secondary">
+                {intl.formatMessage({
+                  defaultMessage: 'Current Base Fee',
+                  id: 'bnF8kf',
+                })}
+              </Typography>
+              <Typography variant="value5">
+                {intl.formatMessage(
+                  {
+                    defaultMessage: '{fee} GWEI',
+                    id: 'hesDHZ',
+                  },
+                  { fee: new BigDecimal(feeData?.gasPrice, 9).format(2) },
+                )}
+              </Typography>
+            </Stack>
+            <Stack {...rowProps}>
+              <Typography variant="label2" color="text.secondary">
+                {intl.formatMessage({
+                  defaultMessage: 'Withdraw Cost',
+                  id: 'Zab6JA',
+                })}
+              </Typography>
+              <Typography variant="value5">
+                {!fiatGasPrice
+                  ? '-'
+                  : `${nativeTokenGasPrice?.format(4) ?? '-'} ${
+                      chain?.nativeCurrency?.symbol
+                    }`}
+              </Typography>
+            </Stack>
+            <Stack {...rowProps} justifyContent="flex-end">
+              <CountUp
+                variant="value5"
+                end={fiatGasPrice?.simple}
+                suffix={symbol}
+                color="text.secondary"
+              />
+            </Stack>
           </Stack>
         }
         actions={(onClose) => (
@@ -144,11 +286,27 @@ export const LegacyPoolCard = ({ contract, ...rest }: LegacyPoolCardProps) => {
             <Button color="secondary" onClick={onClose}>
               {intl.formatMessage({ defaultMessage: 'Cancel', id: '47FYwb' })}
             </Button>
-            <Button onClick={onClose}>
-              {intl.formatMessage({
-                defaultMessage: 'Close Position',
-                id: '9R+8FN',
-              })}
+            <Button
+              disabled={
+                isPrepareLoading ||
+                isWriteLoading ||
+                (isWriteSuccess && !isSubmitSuccess)
+              }
+              onClick={submit}
+            >
+              {isWriteLoading ? (
+                intl.formatMessage({
+                  defaultMessage: 'Sign Transaction',
+                  id: 'w1LBDB',
+                })
+              ) : isWriteSuccess && !isSubmitSuccess ? (
+                <CircularProgress size={20} />
+              ) : (
+                intl.formatMessage({
+                  defaultMessage: 'Withdraw',
+                  id: 'PXAur5',
+                })
+              )}
             </Button>
           </>
         )}
