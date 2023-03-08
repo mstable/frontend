@@ -8,19 +8,23 @@ import { useAccount } from 'wagmi';
 
 import type { SetStateAction } from 'react';
 
-export type Flag = 'dark';
-
-export type SettingsState = Record<Flag, boolean>;
+export type SettingsState = {
+  dark: boolean;
+  showEmpty: boolean;
+  slippage: number;
+};
 
 export const {
   Provider: SettingsProvider,
-  useUpdate,
+  useUpdate: useUpdateSettings,
   useTrackedState: useSettings,
 } = createContainer(() => {
   const { address = 'disconnected' } = useAccount();
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [ls, setLs] = useLocalStorage<SettingsState>('settings', {
     dark: prefersDarkMode,
+    showEmpty: false,
+    slippage: 0.001,
   });
   const {
     palette: { mode },

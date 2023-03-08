@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import { ClickAwayMenu } from '@frontend/shared-ui';
+import { ClickAwayMenu, SlippageButtonGroup } from '@frontend/shared-ui';
 import {
   Button,
   FormControlLabel,
@@ -8,13 +8,13 @@ import {
   Switch,
   Typography,
 } from '@mui/material';
+import produce from 'immer';
 import { Gear } from 'phosphor-react';
 import { not } from 'ramda';
 import { useIntl } from 'react-intl';
 import { useNetwork } from 'wagmi';
 
-import { useToggleSettings } from '../hooks';
-import { useSettings } from '../state';
+import { useSettings, useUpdateSettings } from '../state';
 
 import type { ButtonProps } from '@mui/material';
 
@@ -23,8 +23,8 @@ export const SettingsButton = (props: ButtonProps) => {
   const anchorEl = useRef(null);
   const { chain } = useNetwork();
   const intl = useIntl();
-  const { dark } = useSettings();
-  const toggleSettings = useToggleSettings();
+  const { dark, showEmpty, slippage } = useSettings();
+  const updateSettings = useUpdateSettings();
 
   return (
     <>
@@ -75,10 +75,61 @@ export const SettingsButton = (props: ButtonProps) => {
             labelPlacement="start"
             disableTypography
             onChange={() => {
-              toggleSettings('dark');
+              updateSettings(
+                produce((state) => {
+                  state.dark = !state.dark;
+                }),
+              );
             }}
             sx={{ width: 1 }}
           />
+          <FormControlLabel
+            value={showEmpty}
+            control={<Switch checked={showEmpty} />}
+            label={
+              <Stack direction="row" spacing={1} flexGrow={1}>
+                <Typography variant="label2">
+                  {intl.formatMessage({
+                    defaultMessage: 'Show Empty',
+                    id: 'mqpAbT',
+                  })}
+                </Typography>
+              </Stack>
+            }
+            labelPlacement="start"
+            disableTypography
+            onChange={() => {
+              updateSettings(
+                produce((state) => {
+                  state.showEmpty = !state.showEmpty;
+                }),
+              );
+            }}
+            sx={{ width: 1 }}
+          />
+          <Stack
+            width={1}
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Typography variant="label2">
+              {intl.formatMessage({
+                defaultMessage: 'Slippage',
+                id: 'mQHAsW',
+              })}
+            </Typography>
+            <SlippageButtonGroup
+              value={slippage}
+              onChange={(slip: number) => {
+                updateSettings(
+                  produce((state) => {
+                    state.slippage = slip;
+                  }),
+                );
+              }}
+            />
+          </Stack>
         </Stack>
       </ClickAwayMenu>
     </>
