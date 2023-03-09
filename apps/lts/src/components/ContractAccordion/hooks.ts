@@ -264,7 +264,9 @@ export const useContractPrepareConfig = (contract: Contract) => {
         mins = preview.map((p) => {
           const m = p.value as BigNumber;
 
-          return m.sub(m.div(BigNumber.from(1 / slippage)));
+          return BigNumber.isBigNumber(m) && slippage > 0
+            ? m.sub(m.div(BigNumber.from(1 / slippage)))
+            : constants.Zero;
         });
       }
 
@@ -286,7 +288,9 @@ export const useContractPrepareConfig = (contract: Contract) => {
         mins = preview.map((p) => {
           const m = p.value as BigNumber;
 
-          return m.sub(m.div(BigNumber.from(1 / slippage)));
+          return BigNumber.isBigNumber(m) && slippage > 0
+            ? m.sub(m.div(BigNumber.from(1 / slippage)))
+            : constants.Zero;
         });
       }
 
