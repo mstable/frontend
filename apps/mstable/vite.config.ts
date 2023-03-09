@@ -33,6 +33,7 @@ export default defineConfig({
       {},
     ),
   },
+
   optimizeDeps: {
     esbuildOptions: {
       define: {
@@ -46,12 +47,14 @@ export default defineConfig({
       ],
     },
   },
+
   build: {
     chunkSizeWarningLimit: 2500,
     rollupOptions: {
       plugins: [rollupNodePolyFill()],
     },
   },
+
   plugins: [
     svgr(),
     react(),
