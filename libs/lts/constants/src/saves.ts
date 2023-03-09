@@ -5,18 +5,6 @@ import { mainnet, polygon } from 'wagmi/chains';
 import type { Contract } from './types';
 
 const main: Contract[] = [
-  // {
-  //   name: 'mUSD',
-  //   address: '0xe2f2a5C287993345a840Db3B0845fbC70f5935a5',
-  //   type: 'save',
-  //   icon: MUSD,
-  // },
-  // {
-  //   name: 'mBTC',
-  //   address: '0x945Facb997494CC2570096c74b5F66A3507330a1',
-  //   type: 'save',
-  //   icon: MBTC,
-  // },
   {
     name: 'mUSD Save',
     address: '0x30647a72Dc82d7Fbb1123EA74716aB8A317Eac19',

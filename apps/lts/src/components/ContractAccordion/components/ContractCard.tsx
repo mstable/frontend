@@ -2,7 +2,12 @@ import { useState } from 'react';
 
 import { useSettings } from '@frontend/lts-settings';
 import { usePrices, usePushNotification } from '@frontend/shared-providers';
-import { CountUp, Dialog, ViewEtherscanLink } from '@frontend/shared-ui';
+import {
+  AddressLabel,
+  CountUp,
+  Dialog,
+  ViewEtherscanLink,
+} from '@frontend/shared-ui';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import {
   alpha,
@@ -14,6 +19,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { constants } from 'ethers';
 import { ArrowDown } from 'phosphor-react';
 import { pathOr } from 'ramda';
@@ -31,14 +37,14 @@ import {
   useContractPrepareConfig,
   useContractPreview,
 } from '../hooks';
-import { ContractHeader } from './ContractHeader';
+import { useSetFlag } from '../state';
 
 import type { Contract } from '@frontend/lts-constants';
-import type { StackProps } from '@mui/material';
+import type { Grid2Props, StackProps } from '@mui/material';
 
 export type ContractCardProps = {
   contract: Contract;
-} & StackProps;
+} & Grid2Props;
 
 const rowProps: StackProps = {
   width: 1,
@@ -49,7 +55,8 @@ const rowProps: StackProps = {
 
 export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
   const intl = useIntl();
-  const { showEmpty } = useSettings();
+  const { showEmpty, slippage } = useSettings();
+  const setFlag = useSetFlag();
   const { chain } = useNetwork();
   const pushNotification = usePushNotification();
   const { price, symbol } = usePrices();
@@ -57,13 +64,20 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
     formatUnits: 'gwei',
   });
   const [open, setOpen] = useState(false);
-  const { data: bal, isLoading: balLoading } = useContractBalance(contract);
-  const { data: preview } = useContractPreview(contract);
+  const { data: bal, isLoading: balLoading } = useContractBalance(contract, {
+    onSuccess: (data) => {
+      if (data?.value.gt(constants.Zero)) {
+        setFlag(contract.type);
+      }
+    },
+  });
+  const { data: preview, isLoading: previewLoading } =
+    useContractPreview(contract);
   const config = useContractPrepareConfig(contract);
   const { config: submitConfig, isLoading: isPrepareLoading } =
     usePrepareContractWrite({
       ...config,
-      enabled: !balLoading && bal?.value.gt(constants.Zero),
+      enabled: !balLoading && !previewLoading && bal?.value.gt(constants.Zero),
     });
   const {
     data: submitData,
@@ -154,18 +168,16 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
   }
 
   return (
-    <>
+    <Grid2 {...rest}>
       <Stack
         direction="column"
         spacing={3}
-        {...rest}
         sx={{
           p: 2,
           border: (theme) => `1px solid ${theme.palette.divider}`,
           backgroundColor: (theme) =>
             alpha(theme.palette.background.highlight, 0.5),
           borderRadius: 1,
-          ...rest?.sx,
         }}
       >
         <Stack
@@ -173,7 +185,18 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <ContractHeader contract={contract} />
+          <Stack direction="row" spacing={2} alignItems="center" {...rest}>
+            <contract.icon sx={{ width: 44, height: 44 }} />
+            <Stack>
+              <Typography fontWeight="bold">{contract.name}</Typography>
+              <AddressLabel
+                address={contract.address}
+                small
+                link
+                maxWidth={120}
+              />
+            </Stack>
+          </Stack>
           {balLoading ? (
             <Skeleton width={60} />
           ) : (
@@ -184,16 +207,18 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
             />
           )}
         </Stack>
-        <Button
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          {intl.formatMessage({
-            defaultMessage: 'Exit Position',
-            id: 'hPs6J+',
-          })}
-        </Button>
+        {bal?.value.gt(constants.Zero) && (
+          <Button
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            {intl.formatMessage({
+              defaultMessage: 'Exit Position',
+              id: 'hPs6J+',
+            })}
+          </Button>
+        )}
       </Stack>
       <Dialog
         open={open}
@@ -247,6 +272,24 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
                   </Stack>
                 ))}
               </>
+            )}
+            {['pool', 'stable'].includes(contract.type) && (
+              <Stack {...rowProps} justifyContent="flex-end">
+                <Typography variant="value5" color="text.secondary">
+                  {intl.formatMessage(
+                    {
+                      defaultMessage: 'Allow {slippage} of slippage',
+                      id: 'zS899f',
+                    },
+                    {
+                      slippage: intl.formatNumber(slippage, {
+                        style: 'percent',
+                        minimumSignificantDigits: 1,
+                      }),
+                    },
+                  )}
+                </Typography>
+              </Stack>
             )}
             <Stack {...rowProps} pt={4}>
               <Typography variant="label2" color="text.secondary">
@@ -322,6 +365,6 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
           </>
         )}
       />
-    </>
+    </Grid2>
   );
 };

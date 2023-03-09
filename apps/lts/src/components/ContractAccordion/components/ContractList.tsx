@@ -21,9 +21,12 @@ export const ContractList = ({ contractType, ...rest }: ContractListProps) => {
     <Stack {...rest}>
       <Grid2 container rowSpacing={2} columnSpacing={2}>
         {cons.filter(propEq('type', contractType)).map((contract) => (
-          <Grid2 xs={12} sm={6} xl={4} key={contract.address}>
-            <ContractCard contract={contract} />
-          </Grid2>
+          <ContractCard
+            xs={12}
+            sm={6}
+            key={contract.address}
+            contract={contract}
+          />
         ))}
       </Grid2>
     </Stack>

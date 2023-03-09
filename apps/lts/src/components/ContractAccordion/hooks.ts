@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSettings } from '@frontend/lts-settings';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
@@ -45,22 +46,56 @@ const legacyBalance = async ({ queryKey }) => {
   };
 };
 
-export const useContractBalance = (contract: Contract) => {
+type Options = { onSuccess?: (data) => void; onError?: (err) => void };
+
+export const useContractBalance = (contract: Contract, options?: Options) => {
   const { address: walletAddress } = useAccount();
   const bhook = useBalance({
     address: walletAddress,
     token: contract.address,
-    enabled: ['vault', 'save', 'pool', 'metavault'].includes(contract.type),
+    enabled: contract.type !== 'legacypool',
+    ...options,
   });
   const blp = useQuery(
     ['legacyBalance', contract, walletAddress],
     legacyBalance,
     {
       enabled: contract.type === 'legacypool',
+      ...options,
     },
   );
 
   return contract.type === 'legacypool' ? blp : bhook;
+};
+
+const stablePreview = async ({ queryKey }) => {
+  const [_, contract, walletAddress, bal] = queryKey;
+  const signer = await fetchSigner();
+  const con = getContract({
+    address: contract.address,
+    abi: contract.abi,
+    signerOrProvider: signer,
+  });
+  const bAssets = await readContract({
+    address: contract.address,
+    abi: contract.abi,
+    functionName: 'getBassets',
+    args: undefined,
+  });
+  const tokenProms = (bAssets?.[0] as any[]).map((b) =>
+    fetchToken({ address: pathOr(null, [0], b) }),
+  );
+  const tokens = await Promise.all(tokenProms);
+  let cs = tokens.map(() => constants.Zero);
+  if (con?.callStatic && bal?.value) {
+    cs = await con.callStatic.redeemMasset(
+      bal?.value,
+      tokens.map(() => constants.Zero),
+      walletAddress,
+    );
+  }
+
+  return cs.map((value, i) => ({ value, token: tokens[i] }));
 };
 
 const savePreview = async ({ queryKey }) => {
@@ -194,6 +229,7 @@ export const useContractPreview = (contract: Contract) => {
 
   const name = {
     save: 'savePreview',
+    stable: 'stablePreview',
     pool: 'poolPreview',
     vault: 'vaultPreview',
     legacypool: 'legacyPoolPreview',
@@ -202,6 +238,7 @@ export const useContractPreview = (contract: Contract) => {
 
   const fn = {
     save: savePreview,
+    stable: stablePreview,
     pool: poolPreview,
     vault: vaultPreview,
     legacypool: legacyPoolPreview,
@@ -219,9 +256,24 @@ export const useContractPrepareConfig = (contract: Contract) => {
   const { data: preview } = useContractPreview(contract);
   const { slippage } = useSettings();
 
-  let mins = [constants.Zero, constants.Zero];
+  let mins = [];
 
   switch (contract.type) {
+    case 'stable':
+      if (preview?.length > 0) {
+        mins = preview.map((p) => {
+          const m = p.value as BigNumber;
+
+          return m.sub(m.div(BigNumber.from(1 / slippage)));
+        });
+      }
+
+      return {
+        address: contract.address,
+        abi: contract.abi,
+        functionName: 'redeemMasset',
+        args: [bal?.value, mins, walletAddress],
+      };
     case 'save':
       return {
         address: contract.address,

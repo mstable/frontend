@@ -4,6 +4,7 @@ import type { SvgIconProps } from '@mui/material';
 import type { ComponentType } from 'react';
 
 export type ContractType =
+  | 'stable'
   | 'save'
   | 'pool'
   | 'vault'

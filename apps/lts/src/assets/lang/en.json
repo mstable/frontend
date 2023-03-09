@@ -585,16 +585,6 @@
       "value": "Vault Performance"
     }
   ],
-  "MtpzgV": [
-    {
-      "type": 0,
-      "value": "Exit "
-    },
-    {
-      "type": 1,
-      "value": "pool"
-    }
-  ],
   "N+SKIs": [
     {
       "type": 0,
@@ -943,6 +933,16 @@
       "value": "History"
     }
   ],
+  "djdjSw": [
+    {
+      "type": 0,
+      "value": "Exit "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
   "eO0C1d": [
     {
       "type": 0,
@@ -1093,10 +1093,22 @@
       "value": "ing"
     }
   ],
+  "mQHAsW": [
+    {
+      "type": 0,
+      "value": "Slippage"
+    }
+  ],
   "meocUp": [
     {
       "type": 0,
       "value": "Convex is a platform that boosts rewards for CRV stakers and liquidity providers alike, all in a simple and easy to use interface."
+    }
+  ],
+  "mqpAbT": [
+    {
+      "type": 0,
+      "value": "Show Empty"
     }
   ],
   "mrwfXX": [
@@ -1109,6 +1121,12 @@
     {
       "type": 0,
       "value": "Token Approval"
+    }
+  ],
+  "nt8uTP": [
+    {
+      "type": 0,
+      "value": "Stables"
     }
   ],
   "ovJ26C": [
@@ -1291,6 +1309,20 @@
     {
       "type": 0,
       "value": "WITHDRAW"
+    }
+  ],
+  "zS899f": [
+    {
+      "type": 0,
+      "value": "Allow "
+    },
+    {
+      "type": 1,
+      "value": "slippage"
+    },
+    {
+      "type": 0,
+      "value": " of slippage"
     }
   ]
 }

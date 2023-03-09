@@ -14,9 +14,6 @@
   "FvmV6q": {
     "defaultMessage": "Discord"
   },
-  "MtpzgV": {
-    "defaultMessage": "Exit {pool}"
-  },
   "PXAur5": {
     "defaultMessage": "Withdraw"
   },
@@ -38,6 +35,9 @@
   "cA+gxG": {
     "defaultMessage": "Legacy Pools"
   },
+  "djdjSw": {
+    "defaultMessage": "Exit {name}"
+  },
   "hPs6J+": {
     "defaultMessage": "Exit Position"
   },
@@ -47,8 +47,8 @@
   "jvo0vs": {
     "defaultMessage": "Save"
   },
-  "mrwfXX": {
-    "defaultMessage": "Shares"
+  "nt8uTP": {
+    "defaultMessage": "Stables"
   },
   "ovJ26C": {
     "defaultMessage": "Medium"
@@ -70,6 +70,9 @@
   },
   "w1LBDB": {
     "defaultMessage": "Sign Transaction"
+  },
+  "zS899f": {
+    "defaultMessage": "Allow {slippage} of slippage"
   },
   "+k7bPd": {
     "defaultMessage": "The selected network is not supported by this application."
@@ -94,6 +97,12 @@
   },
   "5ObBlW": {
     "defaultMessage": "Dark Mode"
+  },
+  "mQHAsW": {
+    "defaultMessage": "Slippage"
+  },
+  "mqpAbT": {
+    "defaultMessage": "Show Empty"
   },
   "yuiyES": {
     "defaultMessage": "General Settings"
@@ -400,6 +409,9 @@
   },
   "m+DGTj": {
     "defaultMessage": "{operation}ing"
+  },
+  "mrwfXX": {
+    "defaultMessage": "Shares"
   },
   "qEnyZU": {
     "defaultMessage": "Meta Vault"

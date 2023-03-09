@@ -1,18 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { CollapsibleSection } from '@frontend/shared-ui';
 import { Stack } from '@mui/material';
-import { remove } from 'ramda';
 import { defineMessage, useIntl } from 'react-intl';
+import { usePrevious } from 'react-use';
 import { useAccount } from 'wagmi';
 
 import { ContractList } from './components/ContractList';
+import {
+  FlagsProvider,
+  useFlags,
+  useSetAllFlags,
+  useToggleFlag,
+} from './state';
 
 import type { ContractType } from '@frontend/lts-constants';
-import type { CollapsibleSectionProps } from '@frontend/shared-ui';
 import type { StackProps } from '@mui/material';
 
 const categories: ContractType[] = [
+  'stable',
   'save',
   'pool',
   'vault',
@@ -20,28 +26,9 @@ const categories: ContractType[] = [
   'metavault',
 ];
 
-const collapsibleProps: Partial<CollapsibleSectionProps> = {
-  iconPosition: 'end',
-  sx: (theme) => ({
-    '&:not(:last-of-type)': {
-      borderBottom: `1px solid ${theme.palette.divider}`,
-    },
-  }),
-  components: {
-    titleContainer: {
-      paddingX: 2,
-      paddingY: 4,
-    },
-    childrenContainer: {
-      sx: {
-        padding: 2,
-      },
-    },
-  },
-};
-
 const getTitle = (cat: ContractType) =>
   ({
+    stable: defineMessage({ defaultMessage: 'Stables', id: 'nt8uTP' }),
     save: defineMessage({ defaultMessage: 'Save', id: 'jvo0vs' }),
     pool: defineMessage({ defaultMessage: 'Feeder Pools', id: 'sk4xVe' }),
     vault: defineMessage({ defaultMessage: 'Vaults', id: 's2zphO' }),
@@ -49,26 +36,19 @@ const getTitle = (cat: ContractType) =>
     metavault: defineMessage({ defaultMessage: 'Meta Vaults', id: 'SRo6uF' }),
   }[cat]);
 
-export const ContractAccordion = (props: StackProps) => {
+const ContractAccordionWrapped = (props: StackProps) => {
   const intl = useIntl();
-  const { isConnected } = useAccount();
-  const [sel, setSel] = useState<ContractType[]>(isConnected ? categories : []);
+  const flags = useFlags();
+  const { isConnected, address } = useAccount();
+  const prevAddress = usePrevious(address);
+  const toggleFlag = useToggleFlag();
+  const setAllFlags = useSetAllFlags();
 
   useEffect(() => {
-    setSel(isConnected ? categories : []);
-  }, [isConnected]);
-
-  const handleToggle = (ct: ContractType) => () => {
-    setSel((prev) => {
-      if (!isConnected) return prev;
-      const idx = prev.indexOf(ct);
-      if (idx > -1) {
-        return remove(idx, 1, prev);
-      } else {
-        return [...prev, ct];
-      }
-    });
-  };
+    if (!isConnected || prevAddress !== address) {
+      setAllFlags(false);
+    }
+  }, [address, isConnected, prevAddress, setAllFlags]);
 
   return (
     <Stack
@@ -82,11 +62,29 @@ export const ContractAccordion = (props: StackProps) => {
     >
       {categories.map((cat) => (
         <CollapsibleSection
-          {...collapsibleProps}
           key={cat}
           title={intl.formatMessage(getTitle(cat))}
-          open={sel.includes(cat)}
-          onToggle={handleToggle(cat)}
+          open={flags[cat]}
+          onToggle={() => {
+            toggleFlag(cat);
+          }}
+          iconPosition="end"
+          sx={(theme) => ({
+            '&:not(:last-of-type)': {
+              borderBottom: `1px solid ${theme.palette.divider}`,
+            },
+          })}
+          components={{
+            titleContainer: {
+              paddingX: 2,
+              paddingY: 3,
+            },
+            childrenContainer: {
+              sx: {
+                padding: 2,
+              },
+            },
+          }}
         >
           <ContractList contractType={cat} />
         </CollapsibleSection>
@@ -94,3 +92,9 @@ export const ContractAccordion = (props: StackProps) => {
     </Stack>
   );
 };
+
+export const ContractAccordion = (props: StackProps) => (
+  <FlagsProvider>
+    <ContractAccordionWrapped {...props} />
+  </FlagsProvider>
+);
