@@ -64,6 +64,28 @@ export const createFlagsContainer = <F extends string>(
     );
   };
 
+  const useSetAllFlags = () => {
+    const update = useUpdate();
+    return useCallback(
+      (value: boolean) => {
+        update(
+          (state) =>
+            Object.fromEntries(
+              Object.keys(state).map((key) => [key, value]),
+            ) as FlagsState<F>,
+        );
+      },
+      [update],
+    );
+  };
+
+  const useReset = () => {
+    const update = useUpdate();
+    return useCallback(() => {
+      update(initialState);
+    }, [update]);
+  };
+
   return {
     FlagsProvider: Provider,
     useFlagsState: [useTrackedState, useSetFlag, useClearFlag, useToggleFlag],
@@ -71,5 +93,7 @@ export const createFlagsContainer = <F extends string>(
     useSetFlag,
     useClearFlag,
     useToggleFlag,
+    useSetAllFlags,
+    useReset,
   };
 };

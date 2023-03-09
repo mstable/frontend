@@ -56,7 +56,7 @@ const NotificationsWrapped = ({
             position: 'fixed',
             top: (theme) => theme.spacing(10),
             right: (theme) => theme.spacing(2),
-            zIndex: (theme) => theme.zIndex.drawer + 1,
+            zIndex: (theme) => theme.zIndex.modal + 1,
             ...sx,
           }}
           {...rest}
