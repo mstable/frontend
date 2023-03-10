@@ -11,7 +11,7 @@ export type CollapsibleSectionProps = {
   title: string;
   subtitle?: string;
   open: boolean;
-  onToggle: () => void;
+  onToggle?: () => void;
   children:
     | ReactNode
     | ((open: boolean, onToggle: (event?: MouseEvent) => void) => ReactNode);
@@ -41,7 +41,9 @@ export const CollapsibleSection = ({
       if (handler) {
         handler(event);
       }
-      onToggle();
+      if (onToggle) {
+        onToggle();
+      }
     };
 
   return (
@@ -57,10 +59,12 @@ export const CollapsibleSection = ({
         tabIndex={0}
         onClick={handleToggle(components?.titleContainer?.onClick)}
         sx={{
-          cursor: 'pointer',
-          ':hover': {
-            color: 'primary.main',
-          },
+          ...(onToggle && {
+            ':hover': {
+              cursor: 'pointer',
+              color: 'primary.main',
+            },
+          }),
           ...components?.titleContainer?.sx,
         }}
       >

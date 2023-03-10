@@ -22,6 +22,20 @@ export const createFlagsContainer = <F extends string>(
     useState({ ...initialState, ...providerInitialState }),
   );
 
+  const useUpdateFlag = () => {
+    const update = useUpdate();
+    return useCallback(
+      (flag: F, value: boolean) => {
+        update(
+          produce((draft) => {
+            draft[flag] = value;
+          }),
+        );
+      },
+      [update],
+    );
+  };
+
   const useSetFlag = () => {
     const update = useUpdate();
     return useCallback(
@@ -90,6 +104,7 @@ export const createFlagsContainer = <F extends string>(
     FlagsProvider: Provider,
     useFlagsState: [useTrackedState, useSetFlag, useClearFlag, useToggleFlag],
     useFlags: useTrackedState,
+    useUpdateFlag,
     useSetFlag,
     useClearFlag,
     useToggleFlag,
