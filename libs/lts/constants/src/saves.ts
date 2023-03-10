@@ -4,13 +4,14 @@ import { mainnet, polygon } from 'wagmi/chains';
 
 import type { Contract } from './types';
 
-const main: Contract[] = [
+export const saves: Contract[] = [
   {
     name: 'mUSD Save',
     address: '0x30647a72Dc82d7Fbb1123EA74716aB8A317Eac19',
     type: 'save',
     icon: MUSD,
     abi: SaveABI,
+    chain: mainnet.id,
   },
   {
     name: 'mBTC Save',
@@ -18,17 +19,14 @@ const main: Contract[] = [
     type: 'save',
     icon: MBTC,
     abi: SaveABI,
+    chain: mainnet.id,
   },
-];
-
-const poly: Contract[] = [
   {
-    name: 'mUSD',
+    name: 'mUSD Save',
     address: '0x5290Ad3d83476CA6A2b178Cd9727eE1EF72432af',
     type: 'save',
     icon: MUSD,
     abi: SaveABI,
+    chain: polygon.id,
   },
 ];
-
-export const saves = { [mainnet.id]: main, [polygon.id]: poly };

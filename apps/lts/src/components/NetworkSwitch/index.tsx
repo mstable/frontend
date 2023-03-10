@@ -1,18 +1,39 @@
+import { useEffect } from 'react';
+
+import { useSettings, useUpdateSettings } from '@frontend/lts-settings';
+import { useSetPricesChain } from '@frontend/shared-providers';
 import { ChainIcon } from '@frontend/shared-ui';
 import { Button, Collapse, Divider, Stack } from '@mui/material';
-import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
+import produce from 'immer';
+import { useAccount } from 'wagmi';
 import { mainnet, polygon } from 'wagmi/chains';
 
 import type { StackProps } from '@mui/material';
 
 export const NetworkSwitch = (props: StackProps) => {
   const { isConnected } = useAccount();
-  const { chain } = useNetwork();
-  const { isLoading, switchNetwork } = useSwitchNetwork();
+  const { chain } = useSettings();
+  const updateSettings = useUpdateSettings();
+  const setPricesChain = useSetPricesChain();
+
+  useEffect(() => {
+    if (!isConnected) {
+      updateSettings(
+        produce((state) => {
+          state.chain = mainnet.id;
+        }),
+      );
+    }
+  }, [isConnected, updateSettings]);
 
   const handleClick = (chainId: number) => () => {
-    if (chain && chain.id !== chainId) {
-      switchNetwork(chainId);
+    if (chain !== chainId) {
+      setPricesChain(chainId);
+      updateSettings(
+        produce((state) => {
+          state.chain = chainId;
+        }),
+      );
     }
   };
 
@@ -40,7 +61,7 @@ export const NetworkSwitch = (props: StackProps) => {
                   height: 24,
                 },
               },
-              chain?.id === c.id && {
+              chain === c.id && {
                 backgroundColor: (theme) => theme.palette.action.selected,
               },
               i === 0 && {
@@ -52,7 +73,6 @@ export const NetworkSwitch = (props: StackProps) => {
                 borderBottomLeftRadius: 0,
               },
             ]}
-            disabled={isLoading || !chain}
           >
             <ChainIcon id={c.id} />
           </Button>

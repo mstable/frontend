@@ -23,6 +23,7 @@ const stablePreview = async ({ queryKey }) => {
     address: contract.address,
     abi: contract.abi,
     functionName: 'getBassets',
+    chainId: contract.chain,
     args: [],
   });
 
@@ -31,10 +32,10 @@ const stablePreview = async ({ queryKey }) => {
   }
 
   const tokenProms = (bAssets[0] as any[]).map((b) =>
-    fetchToken({ address: pathOr(null, [0], b) }),
+    fetchToken({ address: pathOr(null, [0], b), chainId: contract.chain }),
   );
   const tokens = await Promise.all(tokenProms);
-  const signer = await fetchSigner();
+  const signer = await fetchSigner({ chainId: contract.chain });
   const con = getContract({
     address: contract.address,
     abi: contract.abi,
@@ -55,6 +56,7 @@ const poolPreview = async ({ queryKey }) => {
     address: contract.address,
     abi: contract.abi,
     functionName: 'getBassets',
+    chainId: contract.chain,
     args: [],
   });
 
@@ -63,10 +65,10 @@ const poolPreview = async ({ queryKey }) => {
   }
 
   const tokenProms = (bAssets[0] as any[]).map((b) =>
-    fetchToken({ address: pathOr(null, [0], b) }),
+    fetchToken({ address: pathOr(null, [0], b), chainId: contract.chain }),
   );
   const tokens = await Promise.all(tokenProms);
-  const signer = await fetchSigner();
+  const signer = await fetchSigner({ chainId: contract.chain });
   const con = getContract({
     address: contract.address,
     abi: contract.abi,
@@ -89,18 +91,21 @@ const savePreview = async ({ queryKey }) => {
         address: contract.address,
         abi: contract.abi,
         functionName: 'previewRedeem',
+        chainId: contract.chain,
         args: [contract.balance],
       },
       {
         address: contract.address,
         abi: contract.abi,
         functionName: 'asset',
+        chainId: contract.chain,
         args: [],
       },
     ],
   });
   const token = await fetchToken({
     address: pathOr(null, [1], infos),
+    chainId: contract.chain,
   });
 
   return [
@@ -117,10 +122,12 @@ const vaultPreview = async ({ queryKey }) => {
     address: contract.address,
     abi: contract.abi,
     functionName: 'stakingToken',
+    chainId: contract.chain,
     args: [],
   });
   const token = await fetchToken({
     address: stakingTokenAddress as unknown as HexAddress,
+    chainId: contract.chain,
   });
 
   return [
@@ -141,15 +148,18 @@ const metavaultPreview = async ({ queryKey }) => {
     address: contract.address,
     abi: contract.abi,
     functionName: 'asset',
+    chainId: contract.chain,
     args: [],
   });
   const token = await fetchToken({
     address: assetAddress as unknown as HexAddress,
+    chainId: contract.chain,
   });
   const assetBal = await readContract({
     address: contract.address,
     abi: contract.abi,
     functionName: 'convertToAssets',
+    chainId: contract.chain,
     args: [contract.balance],
   });
 
@@ -192,7 +202,13 @@ export const useContractPrepareConfig = (contract: LTSContract) => {
   const { data: preview } = useContractPreview(contract);
   const { slippage } = useSettings();
 
-  let mins;
+  let mins: any[];
+  const config = {
+    address: contract.address,
+    abi: contract.abi,
+    chainId: contract.chain,
+    enabled: contract.balance.gt(constants.Zero),
+  };
 
   switch (contract.type) {
     case 'stable':
@@ -207,19 +223,16 @@ export const useContractPrepareConfig = (contract: LTSContract) => {
       }
 
       return {
-        address: contract.address,
-        abi: contract.abi,
+        ...config,
         functionName: 'redeemMasset',
         args: [contract.balance, mins, walletAddress],
-        enabled: preview?.length > 0 && contract.balance.gt(constants.Zero),
+        enabled: preview?.length > 0 && config.enabled,
       };
     case 'save':
       return {
-        address: contract.address,
-        abi: contract.abi,
+        ...config,
         functionName: 'redeem',
         args: [contract.balance],
-        enabled: contract.balance.gt(constants.Zero),
       };
     case 'pool':
       if (!isNilOrEmpty(preview)) {
@@ -233,33 +246,26 @@ export const useContractPrepareConfig = (contract: LTSContract) => {
       }
 
       return {
-        address: contract.address,
-        abi: contract.abi,
+        ...config,
         functionName: 'redeemProportionately',
         args: [contract.balance, mins, walletAddress],
-        enabled: preview?.length > 0 && contract.balance.gt(constants.Zero),
+        enabled: preview?.length > 0 && config.enabled,
       };
     case 'vault':
       return {
-        address: contract.address,
-        abi: contract.abi,
+        ...config,
         functionName: 'exit',
-        enabled: contract.balance.gt(constants.Zero),
       };
     case 'legacypool':
       return {
-        address: contract.address,
-        abi: contract.abi,
+        ...config,
         functionName: 'exit',
-        enabled: contract.balance.gt(constants.Zero),
       };
     case 'metavault':
       return {
-        address: contract.address,
-        abi: contract.abi,
+        ...config,
         functionName: 'redeem',
         args: [contract.balance, walletAddress, walletAddress],
-        enabled: contract.balance.gt(constants.Zero),
       };
   }
 };

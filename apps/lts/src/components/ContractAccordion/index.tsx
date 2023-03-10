@@ -5,6 +5,7 @@ import { Stack } from '@mui/material';
 import { constants } from 'ethers';
 import { filter, groupBy, pipe, prop } from 'ramda';
 import { defineMessage, useIntl } from 'react-intl';
+import { useAccount } from 'wagmi';
 
 import { ContractList } from './components/ContractList';
 import { Provider, useTrackedState } from './state';
@@ -35,11 +36,17 @@ const getTitle = (cat: ContractType) =>
 
 const ContractAccordionWrapped = (props: StackProps) => {
   const intl = useIntl();
-  const { showEmpty } = useSettings();
+  const { isConnected } = useAccount();
+  const { showEmpty, chain } = useSettings();
   const contracts = useTrackedState();
 
   const display = pipe(
-    filter<LTSContract>((c) => showEmpty || c.balance.gt(constants.Zero)),
+    filter<LTSContract>(
+      (c) =>
+        (showEmpty || c.balance.gt(constants.Zero)) &&
+        c.chain === chain &&
+        isConnected,
+    ),
     groupBy<LTSContract, ContractType>(prop('type')),
   )(contracts);
 

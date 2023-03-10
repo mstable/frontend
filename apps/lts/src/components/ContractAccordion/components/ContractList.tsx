@@ -22,7 +22,7 @@ export const ContractList = ({ contracts, ...rest }: ContractListProps) => {
           <ContractCard
             xs={12}
             sm={6}
-            key={contract.address}
+            key={`${contract.address}-${contract.chain}`}
             contract={contract}
           />
         ))}

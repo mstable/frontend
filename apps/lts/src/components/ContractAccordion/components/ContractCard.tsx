@@ -21,9 +21,10 @@ import {
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { constants } from 'ethers';
 import { ArrowDown } from 'phosphor-react';
-import { pathOr } from 'ramda';
+import { pathOr, propEq } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
+  mainnet,
   useContractWrite,
   useFeeData,
   useNetwork,
@@ -50,12 +51,15 @@ const rowProps: StackProps = {
 
 export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
   const intl = useIntl();
+  const { chains } = useNetwork();
+  const contractChain = chains.find(propEq('id', contract.chain)) ?? mainnet;
+  const blockExplorer = contractChain.blockExplorers.default;
   const { slippage } = useSettings();
-  const { chain } = useNetwork();
   const pushNotification = usePushNotification();
   const { price, symbol } = usePrices();
   const { data: feeData } = useFeeData({
     formatUnits: 'gwei',
+    chainId: contract.chain,
   });
   const [open, setOpen] = useState(false);
   const { data: preview } = useContractPreview(contract);
@@ -77,10 +81,7 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
           id: 'bAqUW1',
         }),
         content: (
-          <ViewEtherscanLink
-            hash={data?.hash}
-            blockExplorer={chain?.blockExplorers?.['etherscan']}
-          />
+          <ViewEtherscanLink hash={data?.hash} blockExplorer={blockExplorer} />
         ),
         severity: 'info',
       });
@@ -106,7 +107,7 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
         content: (
           <ViewEtherscanLink
             hash={transactionHash}
-            blockExplorer={chain?.blockExplorers?.['etherscan']}
+            blockExplorer={blockExplorer}
           />
         ),
         severity: 'success',
@@ -121,7 +122,7 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
         content: (
           <ViewEtherscanLink
             hash={submitData?.hash}
-            blockExplorer={chain?.blockExplorers?.['etherscan']}
+            blockExplorer={blockExplorer}
           />
         ),
         severity: 'error',
@@ -140,7 +141,7 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
   );
   const nativeTokenGasPrice = new BigDecimal(
     estimatedGas,
-    chain?.nativeCurrency?.decimals,
+    contractChain.nativeCurrency.decimals,
   );
   const fiatGasPrice = BigDecimal.fromSimple(
     price * nativeTokenGasPrice?.simple,
@@ -173,6 +174,7 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
                 small
                 link
                 maxWidth={120}
+                blockExplorerUrl={blockExplorer.url}
               />
             </Stack>
           </Stack>
@@ -182,6 +184,8 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
               new BigDecimal(contract.balance, contract.token?.decimals).simple
             }
             suffix={contract.token?.symbol}
+            maxWidth={250}
+            noWrap
           />
         </Stack>
         {contract.balance.gt(constants.Zero) && (
@@ -223,6 +227,8 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
                     .simple
                 }
                 suffix={contract.token?.symbol}
+                maxWidth={250}
+                noWrap
               />
             </Stack>
             {!isNilOrEmpty(preview) && (
@@ -299,7 +305,7 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
                 {!fiatGasPrice
                   ? '-'
                   : `${nativeTokenGasPrice?.format(4) ?? '-'} ${
-                      chain?.nativeCurrency?.symbol
+                      contractChain.nativeCurrency.symbol
                     }`}
               </Typography>
             </Stack>

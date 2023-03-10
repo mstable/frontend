@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import {
   coingeckoCoinIds,
@@ -18,6 +18,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import type { SupportedCurrency } from './types';
 
 type PricesState = {
+  chain: number;
   currency: SupportedCurrency;
   symbol: '$' | '€';
   price: number | null;
@@ -26,23 +27,23 @@ type PricesState = {
 export const { Provider, useUpdate, useTrackedState } = createContainer<
   PricesState,
   Dispatch<SetStateAction<PricesState>>,
-  Children
->(() => {
+  Children & { chainId?: number }
+>(({ chainId }) => {
+  const { chain } = useNetwork();
   const [state, setState] = useState<PricesState>({
+    chain: chainId ?? chain?.id ?? mainnet.id,
     currency: 'USD',
     symbol: '$',
     price: null,
   });
-  const { chain } = useNetwork();
-  const coingeckoCoinId = useMemo(
-    () => coingeckoCoinIds[chain?.id ?? mainnet.id],
-    [chain?.id],
-  );
+
   useQuery(
-    ['prices', state.currency, chain?.id],
+    ['prices', state.currency, state.chain],
     () =>
       axios.get(
-        `${coingeckoEndpoint}/simple/price?ids=${coingeckoCoinId}&vs_currencies=${state.currency}`,
+        `${coingeckoEndpoint}/simple/price?ids=${
+          coingeckoCoinIds[state.chain]
+        }&vs_currencies=${state.currency}`,
       ),
     {
       refetchInterval: 30e3,
@@ -51,7 +52,11 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
           produce((draft) => {
             draft.price = parseFloat(
               path(
-                ['data', coingeckoCoinId, state.currency.toLowerCase()],
+                [
+                  'data',
+                  coingeckoCoinIds[state.chain],
+                  state.currency.toLowerCase(),
+                ],
                 data,
               ),
             );

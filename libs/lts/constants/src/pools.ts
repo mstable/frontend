@@ -4,13 +4,14 @@ import { mainnet, polygon } from 'wagmi/chains';
 
 import type { Contract } from './types';
 
-export const main: Contract[] = [
+export const pools: Contract[] = [
   {
     name: 'mUSD/BUSD',
     address: '0xfE842e95f8911dcc21c943a1dAA4bd641a1381c6',
     type: 'pool',
     icon: MUSD,
     abi: FeederPoolABI,
+    chain: mainnet.id,
   },
   {
     name: 'mUSD/alUSD',
@@ -18,6 +19,7 @@ export const main: Contract[] = [
     type: 'pool',
     icon: MUSD,
     abi: FeederPoolABI,
+    chain: mainnet.id,
   },
   {
     name: 'mUSD/FEI',
@@ -25,6 +27,7 @@ export const main: Contract[] = [
     type: 'pool',
     icon: MUSD,
     abi: FeederPoolABI,
+    chain: mainnet.id,
   },
   {
     name: 'mUSD/GUSD',
@@ -32,6 +35,7 @@ export const main: Contract[] = [
     type: 'pool',
     icon: MUSD,
     abi: FeederPoolABI,
+    chain: mainnet.id,
   },
   {
     name: 'mUSD/RAI',
@@ -39,12 +43,14 @@ export const main: Contract[] = [
     type: 'pool',
     icon: MUSD,
     abi: FeederPoolABI,
+    chain: mainnet.id,
   },
   {
     name: 'mBTC/HBTC',
     address: '0x48c59199Da51B7E30Ea200a74Ea07974e62C4bA7',
     type: 'pool',
     abi: FeederPoolABI,
+    chain: mainnet.id,
     icon: MBTC,
   },
   {
@@ -52,6 +58,7 @@ export const main: Contract[] = [
     address: '0xb61A6F928B3f069A68469DDb670F20eEeB4921e0',
     type: 'pool',
     abi: FeederPoolABI,
+    chain: mainnet.id,
     icon: MBTC,
   },
   {
@@ -59,18 +66,15 @@ export const main: Contract[] = [
     address: '0xc3280306b6218031E61752d060b091278d45c329',
     type: 'pool',
     abi: FeederPoolABI,
+    chain: mainnet.id,
     icon: MBTC,
   },
-];
-
-const poly: Contract[] = [
   {
     name: 'mUSD/FRAX',
     address: '0xb30a907084ac8a0d25dddab4e364827406fd09f0',
     type: 'pool',
     abi: FeederPoolABI,
+    chain: polygon.id,
     icon: MBTC,
   },
 ];
-
-export const pools = { [mainnet.id]: main, [polygon.id]: poly };
