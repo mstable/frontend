@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSettings } from '@frontend/lts-settings';
-import { BigDecimal } from '@frontend/shared-utils';
+import { isNilOrEmpty } from '@frontend/shared-utils';
 import {
-  fetchBalance,
   fetchSigner,
   fetchToken,
   getContract,
@@ -12,107 +11,91 @@ import {
 import { constants } from 'ethers';
 import { BigNumber } from 'ethers';
 import { pathOr } from 'ramda';
-import { useAccount, useBalance, useQuery } from 'wagmi';
+import { useAccount, useQuery } from 'wagmi';
 
-import type { Contract } from '@frontend/lts-constants';
 import type { HexAddress } from '@frontend/shared-utils';
 
-const legacyBalance = async ({ queryKey }) => {
-  const [_, contract, walletAddress] = queryKey;
-  const data = await readContracts({
-    contracts: [
-      {
-        address: contract.address,
-        abi: contract.abi,
-        functionName: 'stakingToken',
-        args: undefined,
-      },
-      {
-        address: contract.address,
-        abi: contract.abi,
-        functionName: contract?.balanceFn ?? 'balanceOf',
-        args: [walletAddress],
-      },
-    ],
-  });
-  const stakingToken = await fetchToken({
-    address: data?.[0] as unknown as HexAddress,
-  });
-
-  return {
-    value: (data?.[1] as unknown as BigNumber) ?? constants.Zero,
-    decimals: stakingToken?.decimals,
-    symbol: stakingToken?.symbol,
-  };
-};
-
-type Options = { onSuccess?: (data) => void; onError?: (err) => void };
-
-export const useContractBalance = (contract: Contract, options?: Options) => {
-  const { address: walletAddress } = useAccount();
-  const bhook = useBalance({
-    address: walletAddress,
-    token: contract.address,
-    enabled: contract.type !== 'legacypool',
-    ...options,
-  });
-  const blp = useQuery(
-    ['legacyBalance', contract, walletAddress],
-    legacyBalance,
-    {
-      enabled: contract.type === 'legacypool',
-      ...options,
-    },
-  );
-
-  return contract.type === 'legacypool' ? blp : bhook;
-};
+import type { LTSContract } from './types';
 
 const stablePreview = async ({ queryKey }) => {
-  const [_, contract, walletAddress, bal] = queryKey;
+  const [_, contract, walletAddress] = queryKey;
+  const bAssets = await readContract({
+    address: contract.address,
+    abi: contract.abi,
+    functionName: 'getBassets',
+    args: [],
+  });
+
+  if (isNilOrEmpty(bAssets?.[0])) {
+    return [];
+  }
+
+  const tokenProms = (bAssets[0] as any[]).map((b) =>
+    fetchToken({ address: pathOr(null, [0], b) }),
+  );
+  const tokens = await Promise.all(tokenProms);
   const signer = await fetchSigner();
   const con = getContract({
     address: contract.address,
     abi: contract.abi,
     signerOrProvider: signer,
   });
+  const sim = await con.callStatic.redeemMasset(
+    contract.balance,
+    (bAssets[0] as any[]).map(() => constants.Zero),
+    walletAddress,
+  );
+
+  return sim.map((value, i) => ({ value, token: tokens[i] }));
+};
+
+const poolPreview = async ({ queryKey }) => {
+  const [_, contract, walletAddress] = queryKey;
   const bAssets = await readContract({
     address: contract.address,
     abi: contract.abi,
     functionName: 'getBassets',
-    args: undefined,
+    args: [],
   });
-  const tokenProms = (bAssets?.[0] as any[]).map((b) =>
+
+  if (isNilOrEmpty(bAssets?.[0])) {
+    return [];
+  }
+
+  const tokenProms = (bAssets[0] as any[]).map((b) =>
     fetchToken({ address: pathOr(null, [0], b) }),
   );
   const tokens = await Promise.all(tokenProms);
-  let cs = tokens.map(() => constants.Zero);
-  if (con?.callStatic && bal?.value) {
-    cs = await con.callStatic.redeemMasset(
-      bal?.value,
-      tokens.map(() => constants.Zero),
-      walletAddress,
-    );
-  }
+  const signer = await fetchSigner();
+  const con = getContract({
+    address: contract.address,
+    abi: contract.abi,
+    signerOrProvider: signer,
+  });
+  const sim = await con.callStatic.redeemProportionately(
+    contract.balance,
+    (bAssets[0] as any[]).map(() => constants.Zero),
+    walletAddress,
+  );
 
-  return cs.map((value, i) => ({ value, token: tokens[i] }));
+  return sim.map((value, i) => ({ value, token: tokens[i] }));
 };
 
 const savePreview = async ({ queryKey }) => {
-  const [_, contract, __, bal] = queryKey;
+  const [_, contract] = queryKey;
   const infos = await readContracts({
     contracts: [
       {
         address: contract.address,
         abi: contract.abi,
         functionName: 'previewRedeem',
-        args: [new BigDecimal(bal?.value, bal?.decimals).exact],
+        args: [contract.balance],
       },
       {
         address: contract.address,
         abi: contract.abi,
         functionName: 'asset',
-        args: undefined,
+        args: [],
       },
     ],
   });
@@ -128,54 +111,13 @@ const savePreview = async ({ queryKey }) => {
   ];
 };
 
-const poolPreview = async ({ queryKey }) => {
-  const [_, contract, walletAddress, bal] = queryKey;
-  const signer = await fetchSigner();
-  const con = getContract({
-    address: contract.address,
-    abi: contract.abi,
-    signerOrProvider: signer,
-  });
-  const bAssets = await readContract({
-    address: contract.address,
-    abi: contract.abi,
-    functionName: 'getBassets',
-    args: undefined,
-  });
-  const a = await fetchToken({
-    address: pathOr(null, [0, 0, 0], bAssets),
-  });
-  const b = await fetchToken({
-    address: pathOr(null, [0, 1, 0], bAssets),
-  });
-  let cs = [constants.Zero, constants.Zero];
-  if (con?.callStatic && bal?.value) {
-    cs = await con.callStatic.redeemProportionately(
-      bal?.value,
-      [constants.Zero, constants.Zero],
-      walletAddress,
-    );
-  }
-
-  return [
-    {
-      value: cs[0] as BigNumber,
-      token: a,
-    },
-    {
-      value: cs[1] as BigNumber,
-      token: b,
-    },
-  ];
-};
-
 const vaultPreview = async ({ queryKey }) => {
-  const [_, contract, __, bal] = queryKey;
+  const [_, contract] = queryKey;
   const stakingTokenAddress = await readContract({
     address: contract.address,
     abi: contract.abi,
     functionName: 'stakingToken',
-    args: undefined,
+    args: [],
   });
   const token = await fetchToken({
     address: stakingTokenAddress as unknown as HexAddress,
@@ -183,7 +125,7 @@ const vaultPreview = async ({ queryKey }) => {
 
   return [
     {
-      value: bal?.value,
+      value: contract.balance,
       token,
     },
   ];
@@ -194,25 +136,21 @@ const legacyPoolPreview = async ({ queryKey }) => {
 };
 
 const metavaultPreview = async ({ queryKey }) => {
-  const [_, contract, walletAddress] = queryKey;
+  const [_, contract] = queryKey;
   const assetAddress = await readContract({
     address: contract.address,
     abi: contract.abi,
     functionName: 'asset',
-    args: undefined,
+    args: [],
   });
   const token = await fetchToken({
     address: assetAddress as unknown as HexAddress,
-  });
-  const mvBal = await fetchBalance({
-    address: walletAddress,
-    token: contract.address,
   });
   const assetBal = await readContract({
     address: contract.address,
     abi: contract.abi,
     functionName: 'convertToAssets',
-    args: [mvBal?.value ?? constants.Zero],
+    args: [contract.balance],
   });
 
   return [
@@ -223,9 +161,8 @@ const metavaultPreview = async ({ queryKey }) => {
   ];
 };
 
-export const useContractPreview = (contract: Contract) => {
+export const useContractPreview = (contract: LTSContract) => {
   const { address: walletAddress } = useAccount();
-  const { data: bal } = useContractBalance(contract);
 
   const name = {
     save: 'savePreview',
@@ -245,22 +182,21 @@ export const useContractPreview = (contract: Contract) => {
     metavault: metavaultPreview,
   }[contract.type];
 
-  return useQuery([name, contract, walletAddress, bal], fn, {
-    enabled: bal?.value.gt(constants.Zero),
+  return useQuery([name, contract, walletAddress], fn, {
+    enabled: contract.balance.gt(constants.Zero),
   });
 };
 
-export const useContractPrepareConfig = (contract: Contract) => {
+export const useContractPrepareConfig = (contract: LTSContract) => {
   const { address: walletAddress } = useAccount();
-  const { data: bal } = useContractBalance(contract);
   const { data: preview } = useContractPreview(contract);
   const { slippage } = useSettings();
 
-  let mins = [];
+  let mins;
 
   switch (contract.type) {
     case 'stable':
-      if (preview?.length > 0) {
+      if (!isNilOrEmpty(preview)) {
         mins = preview.map((p) => {
           const m = p.value as BigNumber;
 
@@ -274,17 +210,19 @@ export const useContractPrepareConfig = (contract: Contract) => {
         address: contract.address,
         abi: contract.abi,
         functionName: 'redeemMasset',
-        args: [bal?.value, mins, walletAddress],
+        args: [contract.balance, mins, walletAddress],
+        enabled: preview?.length > 0 && contract.balance.gt(constants.Zero),
       };
     case 'save':
       return {
         address: contract.address,
         abi: contract.abi,
         functionName: 'redeem',
-        args: [new BigDecimal(bal?.value, bal?.decimals).exact],
+        args: [contract.balance],
+        enabled: contract.balance.gt(constants.Zero),
       };
     case 'pool':
-      if (preview?.length > 0) {
+      if (!isNilOrEmpty(preview)) {
         mins = preview.map((p) => {
           const m = p.value as BigNumber;
 
@@ -298,26 +236,30 @@ export const useContractPrepareConfig = (contract: Contract) => {
         address: contract.address,
         abi: contract.abi,
         functionName: 'redeemProportionately',
-        args: [bal?.value, mins, walletAddress],
+        args: [contract.balance, mins, walletAddress],
+        enabled: preview?.length > 0 && contract.balance.gt(constants.Zero),
       };
     case 'vault':
       return {
         address: contract.address,
         abi: contract.abi,
         functionName: 'exit',
+        enabled: contract.balance.gt(constants.Zero),
       };
     case 'legacypool':
       return {
         address: contract.address,
         abi: contract.abi,
         functionName: 'exit',
+        enabled: contract.balance.gt(constants.Zero),
       };
     case 'metavault':
       return {
         address: contract.address,
         abi: contract.abi,
         functionName: 'redeem',
-        args: [bal?.value, walletAddress, walletAddress],
+        args: [contract.balance, walletAddress, walletAddress],
+        enabled: contract.balance.gt(constants.Zero),
       };
   }
 };

@@ -15,7 +15,6 @@ import {
   Button,
   CircularProgress,
   Divider,
-  Skeleton,
   Stack,
   Typography,
 } from '@mui/material';
@@ -32,18 +31,14 @@ import {
   useWaitForTransaction,
 } from 'wagmi';
 
-import {
-  useContractBalance,
-  useContractPrepareConfig,
-  useContractPreview,
-} from '../hooks';
-import { useSetFlag } from '../state';
+import { useContractPrepareConfig, useContractPreview } from '../hooks';
 
-import type { Contract } from '@frontend/lts-constants';
 import type { Grid2Props, StackProps } from '@mui/material';
 
+import type { LTSContract } from '../types';
+
 export type ContractCardProps = {
-  contract: Contract;
+  contract: LTSContract;
 } & Grid2Props;
 
 const rowProps: StackProps = {
@@ -55,8 +50,7 @@ const rowProps: StackProps = {
 
 export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
   const intl = useIntl();
-  const { showEmpty, slippage } = useSettings();
-  const setFlag = useSetFlag();
+  const { slippage } = useSettings();
   const { chain } = useNetwork();
   const pushNotification = usePushNotification();
   const { price, symbol } = usePrices();
@@ -64,21 +58,10 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
     formatUnits: 'gwei',
   });
   const [open, setOpen] = useState(false);
-  const { data: bal, isLoading: balLoading } = useContractBalance(contract, {
-    onSuccess: (data) => {
-      if (data?.value.gt(constants.Zero)) {
-        setFlag(contract.type);
-      }
-    },
-  });
-  const { data: preview, isLoading: previewLoading } =
-    useContractPreview(contract);
+  const { data: preview } = useContractPreview(contract);
   const config = useContractPrepareConfig(contract);
   const { config: submitConfig, isLoading: isPrepareLoading } =
-    usePrepareContractWrite({
-      ...config,
-      enabled: !balLoading && !previewLoading && bal?.value.gt(constants.Zero),
-    });
+    usePrepareContractWrite(config);
   const {
     data: submitData,
     write: submit,
@@ -163,10 +146,6 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
     price * nativeTokenGasPrice?.simple,
   );
 
-  if (!showEmpty && (balLoading || bal?.value.isZero())) {
-    return null;
-  }
-
   return (
     <Grid2 {...rest}>
       <Stack
@@ -197,17 +176,15 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
               />
             </Stack>
           </Stack>
-          {balLoading ? (
-            <Skeleton width={60} />
-          ) : (
-            <CountUp
-              variant="value4"
-              end={new BigDecimal(bal?.value, bal?.decimals).simple}
-              suffix={bal?.symbol}
-            />
-          )}
+          <CountUp
+            variant="value4"
+            end={
+              new BigDecimal(contract.balance, contract.token?.decimals).simple
+            }
+            suffix={contract.token?.symbol}
+          />
         </Stack>
-        {bal?.value.gt(constants.Zero) && (
+        {contract.balance.gt(constants.Zero) && (
           <Button
             onClick={() => {
               setOpen(true);
@@ -240,9 +217,12 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
                 })}
               </Typography>
               <CountUp
-                variant="value5"
-                end={new BigDecimal(bal?.value, bal?.decimals).simple}
-                suffix={bal?.symbol}
+                variant="value4"
+                end={
+                  new BigDecimal(contract.balance, contract.token?.decimals)
+                    .simple
+                }
+                suffix={contract.token?.symbol}
               />
             </Stack>
             {!isNilOrEmpty(preview) && (
@@ -262,12 +242,12 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
                 {preview?.map((p, i) => (
                   <Stack {...rowProps} key={`prev-${i}`}>
                     <Typography variant="label2" color="text.secondary">
-                      {p?.token.name}
+                      {p.token.name}
                     </Typography>
                     <CountUp
                       variant="value5"
-                      end={new BigDecimal(p?.value, p?.token.decimals).simple}
-                      suffix={p?.token.symbol}
+                      end={new BigDecimal(p.value, p.token.decimals).simple}
+                      suffix={p.token.symbol}
                     />
                   </Stack>
                 ))}

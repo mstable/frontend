@@ -1,21 +1,18 @@
-import { useEffect } from 'react';
-
+import { useSettings } from '@frontend/lts-settings';
 import { CollapsibleSection } from '@frontend/shared-ui';
+import { isNilOrEmpty } from '@frontend/shared-utils';
 import { Stack } from '@mui/material';
+import { constants } from 'ethers';
+import { filter, groupBy, pipe, prop } from 'ramda';
 import { defineMessage, useIntl } from 'react-intl';
-import { usePrevious } from 'react-use';
-import { useAccount } from 'wagmi';
 
 import { ContractList } from './components/ContractList';
-import {
-  FlagsProvider,
-  useFlags,
-  useSetAllFlags,
-  useToggleFlag,
-} from './state';
+import { Provider, useTrackedState } from './state';
 
 import type { ContractType } from '@frontend/lts-constants';
 import type { StackProps } from '@mui/material';
+
+import type { LTSContract } from './types';
 
 const categories: ContractType[] = [
   'stable',
@@ -38,17 +35,13 @@ const getTitle = (cat: ContractType) =>
 
 const ContractAccordionWrapped = (props: StackProps) => {
   const intl = useIntl();
-  const flags = useFlags();
-  const { isConnected, address } = useAccount();
-  const prevAddress = usePrevious(address);
-  const toggleFlag = useToggleFlag();
-  const setAllFlags = useSetAllFlags();
+  const { showEmpty } = useSettings();
+  const contracts = useTrackedState();
 
-  useEffect(() => {
-    if (!isConnected || prevAddress !== address) {
-      setAllFlags(false);
-    }
-  }, [address, isConnected, prevAddress, setAllFlags]);
+  const display = pipe(
+    filter<LTSContract>((c) => showEmpty || c.balance.gt(constants.Zero)),
+    groupBy<LTSContract, ContractType>(prop('type')),
+  )(contracts);
 
   return (
     <Stack
@@ -64,11 +57,8 @@ const ContractAccordionWrapped = (props: StackProps) => {
         <CollapsibleSection
           key={cat}
           title={intl.formatMessage(getTitle(cat))}
-          open={flags[cat]}
-          onToggle={() => {
-            toggleFlag(cat);
-          }}
-          iconPosition="end"
+          open={!isNilOrEmpty(display[cat])}
+          iconPosition="none"
           sx={(theme) => ({
             '&:not(:last-of-type)': {
               borderBottom: `1px solid ${theme.palette.divider}`,
@@ -86,7 +76,7 @@ const ContractAccordionWrapped = (props: StackProps) => {
             },
           }}
         >
-          <ContractList contractType={cat} />
+          <ContractList contracts={display[cat]} />
         </CollapsibleSection>
       ))}
     </Stack>
@@ -94,7 +84,7 @@ const ContractAccordionWrapped = (props: StackProps) => {
 };
 
 export const ContractAccordion = (props: StackProps) => (
-  <FlagsProvider>
+  <Provider>
     <ContractAccordionWrapped {...props} />
-  </FlagsProvider>
+  </Provider>
 );
