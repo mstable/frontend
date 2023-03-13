@@ -61,6 +61,14 @@ const ContractAccordionWrapped = (props: StackProps) => {
         <CollapsibleSection
           key={cat}
           title={intl.formatMessage(getTitle(cat))}
+          subtitle={intl.formatMessage(
+            {
+              defaultMessage:
+                '{gtBal, plural, =0 {No Balance} =1 {# Item} other {# Items}}',
+              id: 'hk3oTU',
+            },
+            { gtBal: display[cat]?.length ?? 0 },
+          )}
           open={!isNilOrEmpty(display[cat])}
           iconPosition="none"
           sx={(theme) => ({
@@ -72,6 +80,15 @@ const ContractAccordionWrapped = (props: StackProps) => {
             titleContainer: {
               paddingX: 2,
               paddingY: 3,
+              ...(!display[cat] && {
+                color: 'text.secondary',
+              }),
+            },
+            subtitle: {
+              color: 'text.primary',
+              ...(!display[cat] && {
+                color: 'text.secondary',
+              }),
             },
             childrenContainer: {
               sx: {
