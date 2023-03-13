@@ -12,6 +12,7 @@ export const pools: Contract[] = [
     icon: MUSD,
     abi: FeederPoolABI,
     chain: mainnet.id,
+    vaultAddress: '0xd124b55f70d374f58455c8aedf308e52cf2a6207',
   },
   {
     name: 'mUSD/alUSD',
@@ -20,6 +21,7 @@ export const pools: Contract[] = [
     icon: MUSD,
     abi: FeederPoolABI,
     chain: mainnet.id,
+    vaultAddress: '0x0997dddc038c8a958a3a3d00425c16f8eca87deb',
   },
   {
     name: 'mUSD/FEI',
@@ -28,6 +30,7 @@ export const pools: Contract[] = [
     icon: MUSD,
     abi: FeederPoolABI,
     chain: mainnet.id,
+    vaultAddress: '0xd24099eb4cd604198071958655e4f2d263a5539b',
   },
   {
     name: 'mUSD/GUSD',
@@ -36,6 +39,7 @@ export const pools: Contract[] = [
     icon: MUSD,
     abi: FeederPoolABI,
     chain: mainnet.id,
+    vaultAddress: '0xadeedd3e5768f7882572ad91065f93ba88343c99',
   },
   {
     name: 'mUSD/RAI',
@@ -44,6 +48,7 @@ export const pools: Contract[] = [
     icon: MUSD,
     abi: FeederPoolABI,
     chain: mainnet.id,
+    vaultAddress: '0xf93e0dde0f7c48108abbd880db7697a86169f13b',
   },
   {
     name: 'mBTC/HBTC',
@@ -52,6 +57,7 @@ export const pools: Contract[] = [
     abi: FeederPoolABI,
     chain: mainnet.id,
     icon: MBTC,
+    vaultAddress: '0xF65D53AA6e2E4A5f4F026e73cb3e22C22D75E35C',
   },
   {
     name: 'mBTC/TBTC',
@@ -60,6 +66,7 @@ export const pools: Contract[] = [
     abi: FeederPoolABI,
     chain: mainnet.id,
     icon: MBTC,
+    vaultAddress: '0x760ea8CfDcC4e78d8b9cA3088ECD460246DC0731',
   },
   {
     name: 'mBTC/tBTCv2',
@@ -68,6 +75,7 @@ export const pools: Contract[] = [
     abi: FeederPoolABI,
     chain: mainnet.id,
     icon: MBTC,
+    vaultAddress: '0x97E2a2F97A2E9a4cFB462a49Ab7c8D205aBB9ed9',
   },
   {
     name: 'mUSD/FRAX',

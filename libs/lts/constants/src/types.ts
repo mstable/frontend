@@ -20,4 +20,5 @@ export type Contract = {
   icon: ComponentType<SvgIconProps>;
   balanceFn?: string;
   stakingTokenAddress?: HexAddress;
+  vaultAddress?: HexAddress;
 };

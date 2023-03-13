@@ -20,6 +20,7 @@ export const saves: Contract[] = [
     icon: MBTC,
     abi: SaveABI,
     chain: mainnet.id,
+    vaultAddress: '0xf38522f63f40f9dd81abafd2b8efc2ec958a3016',
   },
   {
     name: 'mUSD Save',
