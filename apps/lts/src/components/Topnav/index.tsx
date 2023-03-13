@@ -9,10 +9,15 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import { useNavigate } from '@tanstack/react-location';
+import produce from 'immer';
+
+import type { LTSRoute } from '../../routes';
 
 export const Topnav = () => {
   const theme = useTheme();
   const wide = useMediaQuery(theme.breakpoints.up('sm'));
+  const navigate = useNavigate<LTSRoute>();
 
   return (
     <AppBar position="sticky" color="transparent">
@@ -34,6 +39,11 @@ export const Topnav = () => {
           variant="text"
           color="inherit"
           onClick={() => {
+            navigate({
+              search: produce((draft) => {
+                delete draft.address;
+              }),
+            });
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           sx={{ ml: -2 }}
