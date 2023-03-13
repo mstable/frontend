@@ -1,17 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSettings } from '@frontend/lts-settings';
-import { isNilOrEmpty } from '@frontend/shared-utils';
+import { usePrices, usePushNotification } from '@frontend/shared-providers';
+import { ViewEtherscanLink } from '@frontend/shared-ui';
+import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import {
   fetchSigner,
   fetchToken,
   getContract,
+  mainnet,
   readContract,
   readContracts,
 } from '@wagmi/core';
 import { constants } from 'ethers';
 import { BigNumber } from 'ethers';
-import { pathOr } from 'ramda';
-import { useAccount, useQuery } from 'wagmi';
+import { pathOr, propEq } from 'ramda';
+import { useIntl } from 'react-intl';
+import {
+  useAccount,
+  useContractWrite,
+  useFeeData,
+  useNetwork,
+  usePrepareContractWrite,
+  useQuery,
+  useWaitForTransaction,
+} from 'wagmi';
 
 import type { HexAddress } from '@frontend/shared-utils';
 
@@ -268,4 +280,113 @@ export const useContractPrepareConfig = (contract: LTSContract) => {
         args: [contract.balance, walletAddress, walletAddress],
       };
   }
+};
+
+export const useContractSubmit = (contract: LTSContract) => {
+  const intl = useIntl();
+  const { chains } = useNetwork();
+  const contractChain = chains.find(propEq('id', contract.chain)) ?? mainnet;
+  const blockExplorer = contractChain.blockExplorers.default;
+  const pushNotification = usePushNotification();
+  const { price } = usePrices();
+  const { data: feeData } = useFeeData({
+    formatUnits: 'gwei',
+    chainId: contract.chain,
+  });
+  const config = useContractPrepareConfig(contract);
+  const { config: submitConfig, isLoading: isPrepareLoading } =
+    usePrepareContractWrite(config);
+  const {
+    data: submitData,
+    write: submit,
+    reset,
+    isLoading: isWriteLoading,
+    isSuccess: isWriteSuccess,
+  } = useContractWrite({
+    ...submitConfig,
+    onSuccess: (data) => {
+      pushNotification({
+        title: intl.formatMessage({
+          defaultMessage: 'Withdrawing',
+          id: 'bAqUW1',
+        }),
+        content: (
+          <ViewEtherscanLink hash={data?.hash} blockExplorer={blockExplorer} />
+        ),
+        severity: 'info',
+      });
+    },
+    onError: () => {
+      pushNotification({
+        title: intl.formatMessage({
+          defaultMessage: 'Transaction Cancelled',
+          id: '20X0BC',
+        }),
+        severity: 'info',
+      });
+    },
+  });
+  const { isSuccess: isSubmitSuccess } = useWaitForTransaction({
+    hash: submitData?.hash,
+    onSuccess: ({ transactionHash }) => {
+      pushNotification({
+        title: intl.formatMessage({
+          defaultMessage: 'Transaction Confirmed',
+          id: 'rgdwQX',
+        }),
+        content: (
+          <ViewEtherscanLink
+            hash={transactionHash}
+            blockExplorer={blockExplorer}
+          />
+        ),
+        severity: 'success',
+      });
+    },
+    onError: () => {
+      pushNotification({
+        title: intl.formatMessage({
+          defaultMessage: 'Transaction Error',
+          id: 'p8bsw4',
+        }),
+        content: (
+          <ViewEtherscanLink
+            hash={submitData?.hash}
+            blockExplorer={blockExplorer}
+          />
+        ),
+        severity: 'error',
+      });
+    },
+  });
+
+  const estimatedGas = pathOr(
+    constants.Zero,
+    ['request', 'gasLimit'],
+    submitConfig,
+  ).mul(
+    (feeData?.gasPrice ?? constants.Zero).add(
+      feeData?.maxPriorityFeePerGas ?? constants.Zero,
+    ),
+  );
+  const nativeTokenGasPrice = new BigDecimal(
+    estimatedGas,
+    contractChain.nativeCurrency.decimals,
+  );
+  const fiatGasPrice = BigDecimal.fromSimple(
+    price * nativeTokenGasPrice?.simple,
+  );
+
+  return {
+    submit,
+    reset,
+    isPrepareLoading,
+    isWriteLoading,
+    isWriteSuccess,
+    isSubmitSuccess,
+    estimatedGas,
+    nativeTokenGasPrice,
+    fiatGasPrice,
+    feeData,
+  };
 };

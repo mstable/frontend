@@ -1,8 +1,11 @@
+import { Fragment } from 'react';
+
 import { isNilOrEmpty } from '@frontend/shared-utils';
 import { Stack } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
 import { ContractCard } from './ContractCard';
+import { ContractDialog } from './ContractDialog';
 
 import type { StackProps } from '@mui/material';
 
@@ -19,12 +22,10 @@ export const ContractList = ({ contracts, ...rest }: ContractListProps) => {
     <Stack {...rest}>
       <Grid2 container rowSpacing={2} columnSpacing={2}>
         {contracts.map((contract) => (
-          <ContractCard
-            xs={12}
-            sm={6}
-            key={`${contract.address}-${contract.chain}`}
-            contract={contract}
-          />
+          <Fragment key={`${contract.address}-${contract.chain}`}>
+            <ContractCard xs={12} sm={6} contract={contract} />
+            <ContractDialog contract={contract} />
+          </Fragment>
         ))}
       </Grid2>
     </Stack>

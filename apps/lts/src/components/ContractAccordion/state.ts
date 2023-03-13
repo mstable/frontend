@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react';
 import { contracts } from '@frontend/lts-constants';
 import { fetchToken } from '@wagmi/core';
 import { constants } from 'ethers';
+import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { useAccount, useContractReads, useQuery } from 'wagmi';
 
+import type { FetchTokenResult } from '@wagmi/core';
 import type { BigNumber } from 'ethers';
 
 import type { LTSContract } from './types';
@@ -19,8 +21,6 @@ export const { Provider, useTrackedState } = createContainer(() => {
   const [state, setState] = useState<LTSContract[]>(initialState);
   const { address: walletAddress, isConnected } = useAccount();
 
-  console.log('state ', initialState, state);
-
   useContractReads({
     contracts: initialState.map((c) => ({
       address: c.address,
@@ -31,14 +31,13 @@ export const { Provider, useTrackedState } = createContainer(() => {
     })),
     enabled: !!walletAddress,
     onSuccess: (data) => {
-      console.log('success balances', data);
-      setState((prev) => {
-        console.log('prev ', prev);
-        return prev.map((c, i) => ({
-          ...c,
-          balance: data[i] as unknown as BigNumber,
-        }));
-      });
+      setState(
+        produce((draft) => {
+          draft.forEach((c, i) => {
+            c.balance = data[i] as unknown as BigNumber;
+          });
+        }),
+      );
     },
   });
 
@@ -52,20 +51,44 @@ export const { Provider, useTrackedState } = createContainer(() => {
         }),
       );
 
-      return await Promise.all(promises);
+      return await Promise.allSettled(promises);
     },
     {
       cacheTime: Infinity,
-      staleTime: Infinity,
+      keepPreviousData: true,
       onSuccess: (data) => {
-        setState((prev) => prev.map((c, i) => ({ ...c, token: data[i] })));
+        setState(
+          produce((draft) => {
+            draft.forEach((c, i) => {
+              c.token =
+                data[i].status === 'fulfilled'
+                  ? (data[i] as PromiseFulfilledResult<FetchTokenResult>).value
+                  : {
+                      address: initialState[i].address,
+                      decimals: 18,
+                      name: initialState[i].name,
+                      symbol: 'UNKNOWN',
+                      totalSupply: {
+                        formatted: '',
+                        value: constants.Zero,
+                      },
+                    };
+            });
+          }),
+        );
       },
     },
   );
 
   useEffect(() => {
     if (!isConnected) {
-      setState((prev) => prev.map((c) => ({ ...c, balance: constants.Zero })));
+      setState(
+        produce((draft) => {
+          draft.forEach((c) => {
+            c.balance = constants.Zero;
+          });
+        }),
+      );
     }
   }, [isConnected, walletAddress]);
 
