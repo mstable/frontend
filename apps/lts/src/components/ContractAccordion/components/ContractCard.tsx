@@ -60,6 +60,7 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
           </Stack>
           <CountUp
             variant="value4"
+            duration={1}
             end={
               new BigDecimal(contract.balance, contract.token?.decimals).simple
             }

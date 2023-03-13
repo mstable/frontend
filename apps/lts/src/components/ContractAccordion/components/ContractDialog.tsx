@@ -91,6 +91,7 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
               })}
             </Typography>
             <CountUp
+              duration={1}
               variant="value4"
               end={
                 new BigDecimal(contract.balance, contract.token?.decimals)
@@ -115,12 +116,21 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
                   <ArrowDown />
                 </Box>
               </Divider>
+              <Stack {...rowProps}>
+                <Typography variant="label2" color="text.secondary" pb={1}>
+                  {intl.formatMessage({
+                    defaultMessage: 'Redeem',
+                    id: 'XSdWHA',
+                  })}
+                </Typography>
+              </Stack>
               {preview?.map((p, i) => (
-                <Stack {...rowProps} key={`prev-${i}`}>
+                <Stack {...rowProps} key={`prev-${i}`} pl={1}>
                   <Typography variant="label2" color="text.secondary">
                     {p.token.name}
                   </Typography>
                   <CountUp
+                    duration={1}
                     variant="value5"
                     end={new BigDecimal(p.value, p.token.decimals).simple}
                     suffix={p.token.symbol}
@@ -181,6 +191,7 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
           </Stack>
           <Stack {...rowProps} justifyContent="flex-end">
             <CountUp
+              duration={1}
               variant="value5"
               end={fiatGasPrice?.simple}
               suffix={symbol}
