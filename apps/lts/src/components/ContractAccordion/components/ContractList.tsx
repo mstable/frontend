@@ -1,32 +1,31 @@
-import { contracts } from '@frontend/lts-constants';
+import { Fragment } from 'react';
+
+import { isNilOrEmpty } from '@frontend/shared-utils';
 import { Stack } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import { propEq } from 'ramda';
-import { useNetwork } from 'wagmi';
 
 import { ContractCard } from './ContractCard';
+import { ContractDialog } from './ContractDialog';
 
-import type { ContractType } from '@frontend/lts-constants';
 import type { StackProps } from '@mui/material';
 
+import type { LTSContract } from '../types';
+
 export type ContractListProps = {
-  contractType: ContractType;
+  contracts: LTSContract[];
 } & StackProps;
 
-export const ContractList = ({ contractType, ...rest }: ContractListProps) => {
-  const { chain } = useNetwork();
-  const cons = contracts[chain?.id] ?? [];
+export const ContractList = ({ contracts, ...rest }: ContractListProps) => {
+  if (isNilOrEmpty(contracts)) return null;
 
   return (
     <Stack {...rest}>
       <Grid2 container rowSpacing={2} columnSpacing={2}>
-        {cons.filter(propEq('type', contractType)).map((contract) => (
-          <ContractCard
-            xs={12}
-            sm={6}
-            key={contract.address}
-            contract={contract}
-          />
+        {contracts.map((contract) => (
+          <Fragment key={`${contract.address}-${contract.chain}`}>
+            <ContractCard xs={12} sm={6} contract={contract} />
+            <ContractDialog contract={contract} />
+          </Fragment>
         ))}
       </Grid2>
     </Stack>

@@ -8,8 +8,6 @@ import { useQuery } from '@tanstack/react-query';
 import produce from 'immer';
 import { prop } from 'ramda';
 import axios from 'redaxios';
-import { useNetwork } from 'wagmi';
-import { mainnet } from 'wagmi/chains';
 
 import { useTrackedState, useUpdate } from './state';
 
@@ -18,6 +16,21 @@ import type { HexAddress } from '@frontend/shared-utils';
 import type { SupportedCurrency } from './types';
 
 export const usePrices = () => useTrackedState();
+
+export const useSetPricesChain = () => {
+  const update = useUpdate();
+
+  return useCallback(
+    (chain: number) => {
+      update(
+        produce((state) => {
+          state.chain = chain;
+        }),
+      );
+    },
+    [update],
+  );
+};
 
 export const useSetPrice = () => {
   const update = useUpdate();
@@ -51,20 +64,19 @@ export const useSetCurrency = () => {
 };
 
 export const useGetPrices = (addresses: HexAddress[]) => {
-  const { currency } = useTrackedState();
-  const { chain } = useNetwork();
+  const { currency, chain } = useTrackedState();
 
   return useQuery({
     queryKey: [
       'getTokenPrice',
-      coingeckoCoinIds[chain?.id ?? mainnet.id],
+      coingeckoCoinIds[chain],
       addresses ?? [],
       currency,
     ],
     queryFn: () =>
       axios.get(
         `${coingeckoEndpoint}/simple/token_price/${
-          coingeckoCoinIds[chain?.id ?? mainnet.id]
+          coingeckoCoinIds[chain]
         }?contract_addresses=${(addresses ?? []).join(
           ',',
         )}&vs_currencies=${currency}`,

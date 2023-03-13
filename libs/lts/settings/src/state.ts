@@ -4,7 +4,7 @@ import { useToggleThemeMode } from '@frontend/shared-providers';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { createContainer } from 'react-tracked';
 import { useLocalStorage } from 'react-use';
-import { useAccount } from 'wagmi';
+import { mainnet, useAccount } from 'wagmi';
 
 import type { SetStateAction } from 'react';
 
@@ -12,6 +12,7 @@ export type SettingsState = {
   dark: boolean;
   showEmpty: boolean;
   slippage: number;
+  chain: number;
 };
 
 export const {
@@ -25,6 +26,7 @@ export const {
     dark: prefersDarkMode,
     showEmpty: false,
     slippage: 0.001,
+    chain: mainnet.id,
   });
   const {
     palette: { mode },

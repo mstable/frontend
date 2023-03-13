@@ -1,10 +1,10 @@
 import { useRef } from 'react';
 
-import { useShowDialog } from '../../modals';
 import { Button } from '@mui/material';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useIntl } from 'react-intl';
 
+import { useShowDialog } from '../../modals';
 import { AccountLabel } from './AccountLabel';
 import { ProfileDialog } from './ProfileDialog';
 
