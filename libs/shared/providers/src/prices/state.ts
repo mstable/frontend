@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   coingeckoCoinIds,
   coingeckoEndpoint,
 } from '@frontend/shared-constants';
-import { useQuery } from '@tanstack/react-query';
 import produce from 'immer';
 import { path } from 'ramda';
 import { createContainer } from 'react-tracked';
@@ -37,34 +36,32 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     price: null,
   });
 
-  useQuery(
-    ['prices', state.currency, state.chain],
-    () =>
-      axios.get(
+  useEffect(() => {
+    const exec = async () => {
+      const res = await axios.get(
         `${coingeckoEndpoint}/simple/price?ids=${
           coingeckoCoinIds[state.chain]
         }&vs_currencies=${state.currency}`,
-      ),
-    {
-      refetchInterval: 30e3,
-      onSuccess: (data) => {
-        setState(
-          produce((draft) => {
-            draft.price = parseFloat(
-              path(
-                [
-                  'data',
-                  coingeckoCoinIds[state.chain],
-                  state.currency.toLowerCase(),
-                ],
-                data,
-              ),
-            );
-          }),
-        );
-      },
-    },
-  );
+      );
+
+      setState(
+        produce((draft) => {
+          draft.price = parseFloat(
+            path(
+              [
+                'data',
+                coingeckoCoinIds[state.chain],
+                state.currency.toLowerCase(),
+              ],
+              res,
+            ),
+          );
+        }),
+      );
+    };
+
+    exec();
+  }, [state.chain, state.currency]);
 
   return [state, setState];
 });
