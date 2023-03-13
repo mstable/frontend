@@ -6,6 +6,7 @@ import { constants } from 'ethers';
 import { filter, groupBy, pipe, prop } from 'ramda';
 import { defineMessage, useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
+import { mainnet, polygon } from 'wagmi/chains';
 
 import { ContractList } from './components/ContractList';
 import { Provider, useTrackedState } from './state';
@@ -15,18 +16,14 @@ import type { StackProps } from '@mui/material';
 
 import type { LTSContract } from './types';
 
-const categories: ContractType[] = [
-  'stable',
-  'save',
-  'pool',
-  'vault',
-  'legacypool',
-  'metavault',
-];
+const categories: Record<number, ContractType[]> = {
+  [mainnet.id]: ['stable', 'save', 'pool', 'vault', 'legacypool', 'metavault'],
+  [polygon.id]: ['stable', 'save', 'pool', 'vault'],
+};
 
 const getTitle = (cat: ContractType) =>
   ({
-    stable: defineMessage({ defaultMessage: 'Stables', id: 'nt8uTP' }),
+    stable: defineMessage({ defaultMessage: 'mAssets', id: '8q2nwN' }),
     save: defineMessage({ defaultMessage: 'Save', id: 'jvo0vs' }),
     pool: defineMessage({ defaultMessage: 'Feeder Pools', id: 'sk4xVe' }),
     vault: defineMessage({ defaultMessage: 'Vaults', id: 's2zphO' }),
@@ -60,7 +57,7 @@ const ContractAccordionWrapped = (props: StackProps) => {
         ...props?.sx,
       }}
     >
-      {categories.map((cat) => (
+      {categories[chain].map((cat) => (
         <CollapsibleSection
           key={cat}
           title={intl.formatMessage(getTitle(cat))}
