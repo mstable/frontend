@@ -1,5 +1,5 @@
 import { AddressLabel, CountUp } from '@frontend/shared-ui';
-import { BigDecimal } from '@frontend/shared-utils';
+import { BigDecimal, countFirstDecimal } from '@frontend/shared-utils';
 import { alpha, Button, Stack, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { useNavigate } from '@tanstack/react-location';
@@ -31,6 +31,9 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
   const contractChain = chains.find(propEq('id', contract.chain)) ?? mainnet;
   const blockExplorer = contractChain.blockExplorers.default;
 
+  const bal = new BigDecimal(contract.balance, contract.token?.decimals).simple;
+  const decimals = Math.max(2, countFirstDecimal(bal));
+
   return (
     <Grid2 {...rest}>
       <Stack
@@ -60,12 +63,14 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
           </Stack>
           <CountUp
             variant="value4"
+            duration={1}
             end={
               new BigDecimal(contract.balance, contract.token?.decimals).simple
             }
             suffix={contract.token?.symbol}
             maxWidth={250}
             noWrap
+            decimals={decimals}
           />
         </Stack>
         {contract.balance.gt(constants.Zero) && (

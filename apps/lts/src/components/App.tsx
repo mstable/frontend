@@ -3,7 +3,6 @@ import { useIntl } from 'react-intl';
 
 import { ContractAccordion } from './ContractAccordion';
 import { Footer } from './Footer';
-import { NetworkSwitch } from './NetworkSwitch';
 import { Topnav } from './Topnav';
 
 export const App = () => {
@@ -35,9 +34,6 @@ export const App = () => {
               id: '/b/fRE',
             })}
           </Typography>
-        </Stack>
-        <Stack justifyContent="center" alignItems="center" py={4}>
-          <NetworkSwitch />
         </Stack>
         <ContractAccordion width={1} />
       </Stack>

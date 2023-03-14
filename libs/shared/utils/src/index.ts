@@ -6,4 +6,5 @@ export * from './createLoadersContainer';
 export * from './envHelpers';
 export * from './formatters';
 export * from './isNilOrEmpty';
+export * from './maths';
 export * from './types';
