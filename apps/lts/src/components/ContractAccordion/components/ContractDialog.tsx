@@ -1,7 +1,11 @@
 import { useSettings } from '@frontend/lts-settings';
 import { usePrices } from '@frontend/shared-providers';
 import { CountUp, Dialog } from '@frontend/shared-ui';
-import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
+import {
+  BigDecimal,
+  countFirstDecimal,
+  isNilOrEmpty,
+} from '@frontend/shared-utils';
 import {
   Box,
   Button,
@@ -65,6 +69,9 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
     isSubmitSuccess,
   } = useContractSubmit(contract);
 
+  const bal = new BigDecimal(contract.balance, contract.token?.decimals).simple;
+  const decimals = Math.max(2, countFirstDecimal(bal));
+
   return (
     <Dialog
       {...rest}
@@ -93,10 +100,8 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
             <CountUp
               duration={1}
               variant="value4"
-              end={
-                new BigDecimal(contract.balance, contract.token?.decimals)
-                  .simple
-              }
+              end={bal}
+              decimals={decimals}
               suffix={contract.token?.symbol}
               maxWidth={250}
               noWrap
@@ -124,19 +129,25 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
                   })}
                 </Typography>
               </Stack>
-              {preview?.map((p, i) => (
-                <Stack {...rowProps} key={`prev-${i}`} pl={1}>
-                  <Typography variant="label2" color="text.secondary">
-                    {p.token.name}
-                  </Typography>
-                  <CountUp
-                    duration={1}
-                    variant="value5"
-                    end={new BigDecimal(p.value, p.token.decimals).simple}
-                    suffix={p.token.symbol}
-                  />
-                </Stack>
-              ))}
+              {preview?.map((p, i) => {
+                const val = new BigDecimal(p.value, p.token.decimals).simple;
+                const dec = Math.max(2, countFirstDecimal(val));
+
+                return (
+                  <Stack {...rowProps} key={`prev-${i}`} pl={1}>
+                    <Typography variant="label2" color="text.secondary">
+                      {p.token.name}
+                    </Typography>
+                    <CountUp
+                      duration={1}
+                      variant="value5"
+                      end={new BigDecimal(p.value, p.token.decimals).simple}
+                      decimals={dec}
+                      suffix={p.token.symbol}
+                    />
+                  </Stack>
+                );
+              })}
             </>
           )}
           {['pool', 'stable'].includes(contract.type) && (
