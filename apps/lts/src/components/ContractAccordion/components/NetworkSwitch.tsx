@@ -6,6 +6,7 @@ import { ChainIcon } from '@frontend/shared-ui';
 import { Badge, Button, Collapse, Divider, Stack } from '@mui/material';
 import { constants } from 'ethers';
 import produce from 'immer';
+import { usePrevious } from 'react-use';
 import { useAccount } from 'wagmi';
 import { mainnet, polygon } from 'wagmi/chains';
 
@@ -14,21 +15,22 @@ import { useTrackedState } from '../state';
 import type { StackProps } from '@mui/material';
 
 export const NetworkSwitch = (props: StackProps) => {
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
+  const prev = usePrevious(address);
   const { chain } = useSettings();
   const updateSettings = useUpdateSettings();
   const setPricesChain = useSetPricesChain();
   const contracts = useTrackedState();
 
   useEffect(() => {
-    if (!isConnected) {
+    if (!isConnected || prev !== address) {
       updateSettings(
         produce((state) => {
           state.chain = mainnet.id;
         }),
       );
     }
-  }, [isConnected, updateSettings]);
+  }, [address, isConnected, prev, updateSettings]);
 
   const handleClick = (chainId: number) => () => {
     if (chain !== chainId) {

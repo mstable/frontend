@@ -23,7 +23,7 @@ export const ContractList = ({ contracts, ...rest }: ContractListProps) => {
       <Grid2 container rowSpacing={2} columnSpacing={2}>
         {contracts.map((contract) => (
           <Fragment key={`${contract.address}-${contract.chain}`}>
-            <ContractCard xs={12} sm={6} contract={contract} />
+            <ContractCard xs={12} md={6} contract={contract} />
             <ContractDialog contract={contract} />
           </Fragment>
         ))}
