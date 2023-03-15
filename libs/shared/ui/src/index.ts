@@ -12,6 +12,7 @@ export * from './Icons';
 export * from './HoverDeleteButton';
 export * from './Menus';
 export * from './Modals';
+export * from './motion';
 export * from './Notifications';
 export * from './RouterLink';
 export * from './Typography';

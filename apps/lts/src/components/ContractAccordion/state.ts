@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { contracts } from '@frontend/lts-constants';
 import { fetchToken } from '@wagmi/core';
@@ -12,17 +12,34 @@ import type { BigNumber } from 'ethers';
 
 import type { LTSContract } from './types';
 
+type ContractState = {
+  contracts: LTSContract[];
+  isLoading: boolean;
+  refetch: () => void;
+};
+
 export const { Provider, useTrackedState } = createContainer(() => {
-  const initialState = contracts.map((c) => ({
-    ...c,
-    balance: constants.Zero,
-    token: null,
-  }));
-  const [state, setState] = useState<LTSContract[]>(initialState);
+  const initialState: ContractState = useMemo(
+    () => ({
+      contracts: contracts.map((c) => ({
+        ...c,
+        balance: constants.Zero,
+        token: null,
+      })),
+      isLoading: true,
+      refetch: null,
+    }),
+    [],
+  );
+  const [state, setState] = useState<ContractState>(initialState);
   const { address: walletAddress, isConnected } = useAccount();
 
-  useContractReads({
-    contracts: initialState.map((c) => ({
+  const {
+    data: bal,
+    isLoading: balLoading,
+    refetch,
+  } = useContractReads({
+    contracts: initialState.contracts.map((c) => ({
       address: c.address,
       functionName: c?.balanceFn ?? 'balanceOf',
       abi: c.abi,
@@ -30,21 +47,13 @@ export const { Provider, useTrackedState } = createContainer(() => {
       args: [walletAddress],
     })),
     enabled: !!walletAddress,
-    onSuccess: (data) => {
-      setState(
-        produce((draft) => {
-          draft.forEach((c, i) => {
-            c.balance = data[i] as unknown as BigNumber;
-          });
-        }),
-      );
-    },
+    watch: true,
   });
 
-  useQuery(
+  const { data: tok, isLoading: tokLoading } = useQuery(
     ['tokens'],
     async () => {
-      const promises = initialState.map((c) =>
+      const promises = initialState.contracts.map((c) =>
         fetchToken({
           address: c?.stakingTokenAddress ?? c.address,
           chainId: c.chain,
@@ -56,27 +65,6 @@ export const { Provider, useTrackedState } = createContainer(() => {
     {
       cacheTime: Infinity,
       keepPreviousData: true,
-      onSuccess: (data) => {
-        setState(
-          produce((draft) => {
-            draft.forEach((c, i) => {
-              c.token =
-                data[i].status === 'fulfilled'
-                  ? (data[i] as PromiseFulfilledResult<FetchTokenResult>).value
-                  : {
-                      address: initialState[i].address,
-                      decimals: 18,
-                      name: initialState[i].name,
-                      symbol: 'UNKNOWN',
-                      totalSupply: {
-                        formatted: '',
-                        value: constants.Zero,
-                      },
-                    };
-            });
-          }),
-        );
-      },
     },
   );
 
@@ -84,13 +72,67 @@ export const { Provider, useTrackedState } = createContainer(() => {
     if (!isConnected) {
       setState(
         produce((draft) => {
-          draft.forEach((c) => {
+          draft.contracts.forEach((c) => {
             c.balance = constants.Zero;
           });
         }),
       );
     }
   }, [isConnected, walletAddress]);
+
+  useEffect(() => {
+    if (bal) {
+      setState(
+        produce((draft) => {
+          draft.contracts.forEach((c, i) => {
+            c.balance = bal[i] as unknown as BigNumber;
+          });
+        }),
+      );
+    }
+  }, [bal]);
+
+  useEffect(() => {
+    if (refetch) {
+      setState(
+        produce((draft) => {
+          draft.refetch = refetch;
+        }),
+      );
+    }
+  }, [refetch]);
+
+  useEffect(() => {
+    if (tok) {
+      setState(
+        produce((draft) => {
+          draft.contracts.forEach((c, i) => {
+            c.token =
+              tok[i].status === 'fulfilled'
+                ? (tok[i] as PromiseFulfilledResult<FetchTokenResult>).value
+                : {
+                    address: initialState[i].address,
+                    decimals: 18,
+                    name: initialState[i].name,
+                    symbol: 'UNKNOWN',
+                    totalSupply: {
+                      formatted: '',
+                      value: constants.Zero,
+                    },
+                  };
+          });
+        }),
+      );
+    }
+  }, [initialState, tok]);
+
+  useEffect(() => {
+    setState(
+      produce((draft) => {
+        draft.isLoading = balLoading || tokLoading;
+      }),
+    );
+  }, [balLoading, tokLoading]);
 
   return [state, setState];
 });

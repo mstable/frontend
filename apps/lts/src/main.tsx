@@ -13,7 +13,6 @@ import {
   I18nProvider,
   ModalsProvider,
   NotificationsProvider,
-  PricesProvider,
   ThemeProvider,
   WagmiProvider,
 } from '@frontend/shared-providers';
@@ -43,7 +42,7 @@ root.render(
       [I18nProvider, { messages: { en } }],
       [ThemeProvider, { themes: { light, dark } }],
       [Router, { location: reactLocationClient, routes }],
-      [NotificationsProvider, { autoHideDuration: 3000 }],
+      [NotificationsProvider],
       [
         WagmiProvider,
         {
@@ -52,7 +51,6 @@ root.render(
           rbkThemes: { dark: rbkDarkTheme, light: rbkLightTheme },
         },
       ],
-      [PricesProvider],
       [ModalsProvider],
       [SettingsProvider],
     ],

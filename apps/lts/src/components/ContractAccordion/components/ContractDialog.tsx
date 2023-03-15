@@ -1,5 +1,4 @@
 import { useSettings } from '@frontend/lts-settings';
-import { usePrices } from '@frontend/shared-providers';
 import { CountUp, Dialog } from '@frontend/shared-ui';
 import {
   BigDecimal,
@@ -10,6 +9,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  Collapse,
   Divider,
   Stack,
   Typography,
@@ -49,15 +49,16 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
   const { chains } = useNetwork();
   const contractChain = chains.find(propEq('id', contract.chain)) ?? mainnet;
   const { slippage } = useSettings();
-  const { symbol } = usePrices();
   const { data: feeData } = useFeeData({
     formatUnits: 'gwei',
     chainId: contract.chain,
   });
-  const vaultContract = useTrackedState().find(
+  const { contracts } = useTrackedState();
+  const vaultContract = contracts.find(
     propEq('address', contract?.vaultAddress),
   );
-  const { data: preview } = useContractPreview(contract);
+  const { data: preview, isLoading: previewLoading } =
+    useContractPreview(contract);
   const {
     submit,
     reset,
@@ -70,7 +71,6 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
   } = useContractSubmit(contract);
 
   const bal = new BigDecimal(contract.balance, contract.token?.decimals).simple;
-  const decimals = Math.max(2, countFirstDecimal(bal));
 
   return (
     <Dialog
@@ -91,24 +91,24 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
       content={
         <Stack spacing={2} pt={4} pb={2} px={4}>
           <Stack {...rowProps}>
-            <Typography variant="label2" color="text.secondary">
+            <Typography variant="label1">
               {intl.formatMessage({
-                defaultMessage: 'Withdraw',
-                id: 'PXAur5',
+                defaultMessage: 'Position',
+                id: 'U6qGuO',
               })}
             </Typography>
             <CountUp
               duration={1}
               variant="value4"
               end={bal}
-              decimals={decimals}
+              decimals={Math.max(2, countFirstDecimal(bal))}
               suffix={contract.token?.symbol}
               maxWidth={250}
               noWrap
             />
           </Stack>
-          {!isNilOrEmpty(preview) && (
-            <>
+          <Collapse in={!previewLoading && !isNilOrEmpty(preview)}>
+            <Stack spacing={2}>
               <Divider>
                 <Box
                   bgcolor="divider"
@@ -122,7 +122,7 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
                 </Box>
               </Divider>
               <Stack {...rowProps}>
-                <Typography variant="label2" color="text.secondary" pb={1}>
+                <Typography variant="label1" pb={1}>
                   {intl.formatMessage({
                     defaultMessage: 'Redeem',
                     id: 'XSdWHA',
@@ -134,7 +134,7 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
                 const dec = Math.max(2, countFirstDecimal(val));
 
                 return (
-                  <Stack {...rowProps} key={`prev-${i}`} pl={1}>
+                  <Stack {...rowProps} key={`prev-${i}`}>
                     <Typography variant="label2" color="text.secondary">
                       {p.token.name}
                     </Typography>
@@ -148,8 +148,8 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
                   </Stack>
                 );
               })}
-            </>
-          )}
+            </Stack>
+          </Collapse>
           {['pool', 'stable'].includes(contract.type) && (
             <Stack {...rowProps} justifyContent="flex-end">
               <Typography variant="value5" color="text.secondary">
@@ -192,20 +192,25 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
                 id: 'Zab6JA',
               })}
             </Typography>
-            <Typography variant="value5">
-              {!fiatGasPrice
-                ? '-'
-                : `${nativeTokenGasPrice?.format(4) ?? '-'} ${
-                    contractChain.nativeCurrency.symbol
-                  }`}
-            </Typography>
+            <CountUp
+              duration={1}
+              variant="value5"
+              end={nativeTokenGasPrice?.simple}
+              decimals={Math.max(
+                2,
+                countFirstDecimal(nativeTokenGasPrice?.simple),
+              )}
+              suffix={contractChain.nativeCurrency.symbol}
+              color="text.secondary"
+            />
           </Stack>
           <Stack {...rowProps} justifyContent="flex-end">
             <CountUp
               duration={1}
               variant="value5"
               end={fiatGasPrice?.simple}
-              suffix={symbol}
+              decimals={Math.max(2, countFirstDecimal(fiatGasPrice?.simple))}
+              suffix="$"
               color="text.secondary"
             />
           </Stack>
@@ -213,7 +218,7 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
       }
       actions={(onClose) => (
         <>
-          <Button color="secondary" onClick={onClose}>
+          <Button color="secondary" onClick={onClose} sx={{ minWidth: '16ch' }}>
             {intl.formatMessage({ defaultMessage: 'Cancel', id: '47FYwb' })}
           </Button>
           {contract?.vaultAddress &&
@@ -240,6 +245,7 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
               (isWriteSuccess && !isSubmitSuccess)
             }
             onClick={submit}
+            sx={{ minWidth: '16ch' }}
           >
             {isWriteLoading ? (
               intl.formatMessage({
@@ -247,7 +253,7 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
                 id: 'w1LBDB',
               })
             ) : isWriteSuccess && !isSubmitSuccess ? (
-              <CircularProgress size={20} />
+              <CircularProgress color="primary" size={16} />
             ) : (
               intl.formatMessage({
                 defaultMessage: 'Withdraw',
