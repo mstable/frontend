@@ -12,7 +12,7 @@ import {
 import { useNavigate } from '@tanstack/react-location';
 import produce from 'immer';
 
-import type { LTSRoute } from '../../routes';
+import type { LTSRoute } from '../routes';
 
 export const Topnav = () => {
   const theme = useTheme();

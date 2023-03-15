@@ -9,6 +9,7 @@ import type { AlertColor } from '@mui/material';
 import type { ReactNode } from 'react';
 
 type NotificationOptions = {
+  id?: string;
   severity?: AlertColor;
   title: string;
   message?: string;
@@ -28,8 +29,8 @@ export const usePushNotification = () => {
             severity: 'info',
             visible: true,
             hideDuration: state.autoHideDuration,
-            ...options,
             id: Date.now().toString(),
+            ...options,
             createdOn: Date.now(),
             read: false,
           });

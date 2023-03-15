@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 
 import { useSettings, useUpdateSettings } from '@frontend/lts-settings';
-import { useSetPricesChain } from '@frontend/shared-providers';
 import { ChainIcon } from '@frontend/shared-ui';
-import { Badge, Button, Collapse, Divider, Stack } from '@mui/material';
+import { Button, Collapse, Divider, Stack } from '@mui/material';
 import { constants } from 'ethers';
 import produce from 'immer';
-import { usePrevious } from 'react-use';
+import { filter, groupBy, pipe, prop } from 'ramda';
 import { useAccount } from 'wagmi';
 import { mainnet, polygon } from 'wagmi/chains';
 
@@ -14,27 +13,37 @@ import { useTrackedState } from '../state';
 
 import type { StackProps } from '@mui/material';
 
+import type { LTSContract } from '../types';
+
 export const NetworkSwitch = (props: StackProps) => {
-  const { isConnected, address } = useAccount();
-  const prev = usePrevious(address);
-  const { chain } = useSettings();
+  const { isConnected } = useAccount();
+  const { chain, showEmpty } = useSettings();
   const updateSettings = useUpdateSettings();
-  const setPricesChain = useSetPricesChain();
-  const contracts = useTrackedState();
+  const { contracts } = useTrackedState();
+
+  const grouped = pipe(
+    filter<LTSContract>((c) => showEmpty || c.balance.gt(constants.Zero)),
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    groupBy<LTSContract, number>(prop('chain')),
+  )(contracts);
 
   useEffect(() => {
-    if (!isConnected || prev !== address) {
+    const newChain =
+      isConnected && Object.keys(grouped)?.length === 1
+        ? Number(Object.keys(grouped)[0])
+        : chain;
+    if (newChain !== chain) {
       updateSettings(
         produce((state) => {
-          state.chain = mainnet.id;
+          state.chain = newChain;
         }),
       );
     }
-  }, [address, isConnected, prev, updateSettings]);
+  }, [chain, grouped, isConnected, updateSettings]);
 
   const handleClick = (chainId: number) => () => {
     if (chain !== chainId) {
-      setPricesChain(chainId);
       updateSettings(
         produce((state) => {
           state.chain = chainId;
@@ -43,12 +52,8 @@ export const NetworkSwitch = (props: StackProps) => {
     }
   };
 
-  const polygonCount = contracts.filter(
-    (c) => c.chain === polygon.id && c.balance.gt(constants.Zero),
-  ).length;
-
   return (
-    <Collapse in={isConnected && polygonCount > 0}>
+    <Collapse in={isConnected && Object.keys(grouped).length > 1}>
       <Stack
         direction="row"
         border={(theme) => `1px solid ${theme.palette.divider}`}
@@ -57,41 +62,35 @@ export const NetworkSwitch = (props: StackProps) => {
         {...props}
       >
         {[mainnet, polygon].map((c, i) => (
-          <Badge
+          <Button
+            variant="text"
             key={c.id}
-            badgeContent={polygonCount}
-            invisible={c.id === mainnet.id}
-            color="info"
-          >
-            <Button
-              variant="text"
-              onClick={handleClick(c.id)}
-              sx={[
-                {
-                  width: 56,
-                  height: 56,
+            onClick={handleClick(c.id)}
+            sx={[
+              {
+                width: 56,
+                height: 56,
 
-                  svg: {
-                    width: 24,
-                    height: 24,
-                  },
+                svg: {
+                  width: 24,
+                  height: 24,
                 },
-                chain === c.id && {
-                  backgroundColor: (theme) => theme.palette.action.selected,
-                },
-                i === 0 && {
-                  borderTopRightRadius: 0,
-                  borderBottomRightRadius: 0,
-                },
-                i === 1 && {
-                  borderTopLeftRadius: 0,
-                  borderBottomLeftRadius: 0,
-                },
-              ]}
-            >
-              <ChainIcon id={c.id} />
-            </Button>
-          </Badge>
+              },
+              chain === c.id && {
+                backgroundColor: (theme) => theme.palette.action.selected,
+              },
+              i === 0 && {
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
+              },
+              i === 1 && {
+                borderTopLeftRadius: 0,
+                borderBottomLeftRadius: 0,
+              },
+            ]}
+          >
+            <ChainIcon id={c.id} />
+          </Button>
         ))}
       </Stack>
     </Collapse>

@@ -1,3 +1,4 @@
+import { usePushNotification } from '@frontend/shared-providers';
 import { AddressLabel, CountUp } from '@frontend/shared-ui';
 import { BigDecimal, countFirstDecimal } from '@frontend/shared-utils';
 import { alpha, Button, Stack, Typography } from '@mui/material';
@@ -6,7 +7,7 @@ import { useNavigate } from '@tanstack/react-location';
 import { constants } from 'ethers';
 import { propEq } from 'ramda';
 import { useIntl } from 'react-intl';
-import { mainnet, useNetwork } from 'wagmi';
+import { mainnet, useNetwork, useSwitchNetwork } from 'wagmi';
 
 import type { Grid2Props, StackProps } from '@mui/material';
 
@@ -26,11 +27,38 @@ const rowProps: StackProps = {
 
 export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
   const intl = useIntl();
+  const pushNotification = usePushNotification();
   const navigate = useNavigate<LTSRoute>();
-  const { chains } = useNetwork();
+  const { chains, chain } = useNetwork();
   const contractChain = chains.find(propEq('id', contract.chain)) ?? mainnet;
-  const blockExplorer = contractChain.blockExplorers.default;
+  const { switchNetwork } = useSwitchNetwork({
+    onError: () => {
+      pushNotification({
+        title: intl.formatMessage(
+          {
+            defaultMessage:
+              'Switch your wallet to {name} to use this contract.',
+            id: 'sLLUMv',
+          },
+          { name: contractChain.name },
+        ),
+        severity: 'info',
+      });
+    },
+    onSuccess: () => {
+      navigate({ search: { address: `"${contract.address}"` } });
+    },
+  });
 
+  const handleExitClick = async () => {
+    if (chain?.id !== contract.chain) {
+      switchNetwork(contract.chain);
+    } else {
+      navigate({ search: { address: `"${contract.address}"` } });
+    }
+  };
+
+  const blockExplorer = contractChain.blockExplorers.default;
   const bal = new BigDecimal(contract.balance, contract.token?.decimals).simple;
   const decimals = Math.max(2, countFirstDecimal(bal));
 
@@ -74,15 +102,16 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
           />
         </Stack>
         {contract.balance.gt(constants.Zero) && (
-          <Button
-            onClick={() => {
-              navigate({ search: { address: `"${contract.address}"` } });
-            }}
-          >
-            {intl.formatMessage({
-              defaultMessage: 'Exit Position',
-              id: 'hPs6J+',
-            })}
+          <Button onClick={handleExitClick}>
+            {chain?.id === contract.chain
+              ? intl.formatMessage({
+                  defaultMessage: 'Exit Position',
+                  id: 'hPs6J+',
+                })
+              : intl.formatMessage({
+                  defaultMessage: 'Switch Network',
+                  id: 'rSsD3z',
+                })}
           </Button>
         )}
       </Stack>

@@ -1,33 +1,46 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSettings } from '@frontend/lts-settings';
-import { usePrices, usePushNotification } from '@frontend/shared-providers';
+import { coingeckoEndpoint } from '@frontend/shared-constants';
+import {
+  useDeleteNotification,
+  usePushNotification,
+} from '@frontend/shared-providers';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
+import { isDev } from '@frontend/shared-utils';
+import { useNavigate } from '@tanstack/react-location';
+import { useQuery } from '@tanstack/react-query';
 import {
   fetchSigner,
   fetchToken,
   getContract,
-  mainnet,
   readContract,
   readContracts,
 } from '@wagmi/core';
 import { constants } from 'ethers';
 import { BigNumber } from 'ethers';
+import produce from 'immer';
 import { pathOr, propEq } from 'ramda';
 import { useIntl } from 'react-intl';
+import axios from 'redaxios';
 import {
   useAccount,
   useContractWrite,
   useFeeData,
   useNetwork,
   usePrepareContractWrite,
-  useQuery,
   useWaitForTransaction,
 } from 'wagmi';
+import { mainnet, polygon } from 'wagmi/chains';
+
+import { useTrackedState } from './state';
 
 import type { HexAddress } from '@frontend/shared-utils';
+import type { UseQueryOptions } from '@tanstack/react-query';
 
 import type { LTSContract } from './types';
+
+const pendingId = 'pendingNotification';
 
 const stablePreview = async ({ queryKey }) => {
   const [_, contract, walletAddress] = queryKey;
@@ -284,11 +297,14 @@ export const useContractPrepareConfig = (contract: LTSContract) => {
 
 export const useContractSubmit = (contract: LTSContract) => {
   const intl = useIntl();
+  const navigate = useNavigate();
   const { chains } = useNetwork();
+  const { refetch } = useTrackedState();
   const contractChain = chains.find(propEq('id', contract.chain)) ?? mainnet;
   const blockExplorer = contractChain.blockExplorers.default;
   const pushNotification = usePushNotification();
-  const { price } = usePrices();
+  const deleteNotification = useDeleteNotification();
+  const { data: prices } = usePrices();
   const { data: feeData } = useFeeData({
     formatUnits: 'gwei',
     chainId: contract.chain,
@@ -313,10 +329,13 @@ export const useContractSubmit = (contract: LTSContract) => {
         content: (
           <ViewEtherscanLink hash={data?.hash} blockExplorer={blockExplorer} />
         ),
+        id: pendingId,
         severity: 'info',
+        hideDuration: null,
       });
     },
     onError: () => {
+      deleteNotification(pendingId);
       pushNotification({
         title: intl.formatMessage({
           defaultMessage: 'Transaction Cancelled',
@@ -329,6 +348,8 @@ export const useContractSubmit = (contract: LTSContract) => {
   const { isSuccess: isSubmitSuccess } = useWaitForTransaction({
     hash: submitData?.hash,
     onSuccess: ({ transactionHash }) => {
+      refetch();
+      deleteNotification(pendingId);
       pushNotification({
         title: intl.formatMessage({
           defaultMessage: 'Transaction Confirmed',
@@ -342,8 +363,14 @@ export const useContractSubmit = (contract: LTSContract) => {
         ),
         severity: 'success',
       });
+      navigate({
+        search: produce((draft) => {
+          delete draft.address;
+        }),
+      });
     },
     onError: () => {
+      deleteNotification(pendingId);
       pushNotification({
         title: intl.formatMessage({
           defaultMessage: 'Transaction Error',
@@ -356,6 +383,7 @@ export const useContractSubmit = (contract: LTSContract) => {
           />
         ),
         severity: 'error',
+        hideDuration: null,
       });
     },
   });
@@ -374,7 +402,7 @@ export const useContractSubmit = (contract: LTSContract) => {
     contractChain.nativeCurrency.decimals,
   );
   const fiatGasPrice = BigDecimal.fromSimple(
-    price * nativeTokenGasPrice?.simple,
+    prices[contract.chain] * nativeTokenGasPrice?.simple,
   );
 
   return {
@@ -390,3 +418,30 @@ export const useContractSubmit = (contract: LTSContract) => {
     feeData,
   };
 };
+
+export const usePrices = (options?: UseQueryOptions) =>
+  useQuery(
+    ['prices'],
+    () =>
+      axios.get(
+        `${coingeckoEndpoint}/simple/price?ids=ethereum,matic-network&vs_currencies=USD`,
+      ),
+    {
+      initialData: {
+        [mainnet.id]: 0,
+        [polygon.id]: 0,
+      },
+      select: (res) => ({
+        [mainnet.id]: pathOr(0, ['data', 'ethereum', 'usd'], res),
+        [polygon.id]: pathOr(0, ['data', 'matic-network', 'usd'], res),
+      }),
+      ...(isDev
+        ? {
+            cacheTime: Infinity,
+          }
+        : {
+            refetchInterval: 30e3,
+          }),
+      ...options,
+    },
+  );

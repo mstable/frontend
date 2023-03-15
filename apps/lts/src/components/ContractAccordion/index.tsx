@@ -1,5 +1,5 @@
 import { useSettings } from '@frontend/lts-settings';
-import { CollapsibleSection } from '@frontend/shared-ui';
+import { CollapsibleSection, MotionStack } from '@frontend/shared-ui';
 import { isNilOrEmpty } from '@frontend/shared-utils';
 import { Stack } from '@mui/material';
 import { constants } from 'ethers';
@@ -13,7 +13,7 @@ import { NetworkSwitch } from './components/NetworkSwitch';
 import { Provider, useTrackedState } from './state';
 
 import type { ContractType } from '@frontend/lts-constants';
-import type { StackProps } from '@mui/material';
+import type { MotionStackProps } from '@frontend/shared-ui';
 
 import type { LTSContract } from './types';
 
@@ -32,11 +32,11 @@ const getTitle = (cat: ContractType) =>
     metavault: defineMessage({ defaultMessage: 'Meta Vaults', id: 'SRo6uF' }),
   }[cat]);
 
-const ContractAccordionWrapped = (props: StackProps) => {
+const ContractAccordionWrapped = (props: MotionStackProps) => {
   const intl = useIntl();
   const { isConnected } = useAccount();
   const { showEmpty, chain } = useSettings();
-  const contracts = useTrackedState();
+  const { contracts } = useTrackedState();
 
   const display = pipe(
     filter<LTSContract>(
@@ -49,20 +49,19 @@ const ContractAccordionWrapped = (props: StackProps) => {
   )(contracts);
 
   return (
-    <>
+    <MotionStack {...props}>
       <Stack justifyContent="center" alignItems="center" py={4}>
         <NetworkSwitch />
       </Stack>
       <Stack
         direction="column"
-        {...props}
         sx={{
           border: (theme) => `1px solid ${theme.palette.divider}`,
           borderRadius: 1,
           ...props?.sx,
         }}
       >
-        {categories[chain].map((cat) => (
+        {categories[chain]?.map((cat) => (
           <CollapsibleSection
             key={cat}
             title={intl.formatMessage(getTitle(cat))}
@@ -111,11 +110,11 @@ const ContractAccordionWrapped = (props: StackProps) => {
           </CollapsibleSection>
         ))}
       </Stack>
-    </>
+    </MotionStack>
   );
 };
 
-export const ContractAccordion = (props: StackProps) => (
+export const ContractAccordion = (props: MotionStackProps) => (
   <Provider>
     <ContractAccordionWrapped {...props} />
   </Provider>
