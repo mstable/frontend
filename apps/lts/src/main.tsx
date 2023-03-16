@@ -19,6 +19,7 @@ import {
 import { composeContexts } from '@frontend/shared-utils';
 import { Outlet, Router } from '@tanstack/react-location';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { setAutoFreeze } from 'immer';
 
 import en from './assets/lang/en.json';
 import {
@@ -29,6 +30,9 @@ import {
   wagmiClient,
 } from './clients';
 import { routes } from './routes';
+
+// https://github.com/dai-shi/proxy-compare/pull/8
+setAutoFreeze(false);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
