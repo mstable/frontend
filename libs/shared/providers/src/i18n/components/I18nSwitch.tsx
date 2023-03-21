@@ -1,9 +1,9 @@
 import { MenuItem, Select } from '@mui/material';
+import produce from 'immer';
 
 import { useTrackedState, useUpdate } from '../state';
 
 import type { SelectChangeEvent, SelectProps } from '@mui/material';
-import produce from 'immer';
 
 export interface I18nSwitchProps
   extends Omit<SelectProps, 'value' | 'onChange'> {

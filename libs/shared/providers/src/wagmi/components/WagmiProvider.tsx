@@ -11,9 +11,8 @@ import { WalletAnalyticsProvider } from './WalletAnalyticsProvider';
 
 import type { Children } from '@frontend/shared-utils';
 import type { BoxProps } from '@mui/material';
-import type { Chain, Client } from 'wagmi';
-
 import type { Theme } from '@rainbow-me/rainbowkit';
+import type { Chain, Client } from 'wagmi';
 
 export type WagmiProviderProps = {
   client: Client;

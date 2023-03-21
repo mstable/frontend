@@ -1,8 +1,8 @@
 import { useLayoutEffect } from 'react';
 
 import { useNetwork } from 'wagmi';
-import { useHideDialog, useShowDialog } from '../modals';
 
+import { useHideDialog, useShowDialog } from '../modals';
 import { UnsupportedNetworkDialog } from './components/UnsupportedNetworkDialog';
 
 export const useUnsupportedNetworks = () => {
