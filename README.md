@@ -12,9 +12,9 @@ This repository contains the latest frontend applications of mStable. It is a mo
 The following table lists the mStable apps included in this repository
 
 | Status | Name              | Nx project | Port | Public hosts                                            |
-| ------ | ----------------- | ---------- | ---- | ------------------------------------------------------- |
-| ✅     | Meta Vaults       | `mstable`  | 4200 | [Google Cloud](https://yield.mstable.org/)              |
-| 🚧 Dev | Long Term Support | `lts`      | 4201 | [Google Cloud](https://apps-lts--dev-vite2x32.web.app/) |
+| :---: | :---------------- | :--------- | :--- | :------------------------------------------------------ |
+| ✅    | Meta Vaults       | `mstable`  | 4200 | [Google Cloud](https://yield.mstable.org/)              |
+| 🚧    | Long Term Support | `lts`      | 4201 | [Google Cloud](https://apps-lts--dev-vite2x32.web.app/) |
 
 ## Quickstart
 To get started with this repository, run the following commands:
