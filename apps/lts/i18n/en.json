@@ -8,6 +8,9 @@
   "47FYwb": {
     "defaultMessage": "Cancel"
   },
+  "8q2nwN": {
+    "defaultMessage": "mAssets"
+  },
   "8ywLSf": {
     "defaultMessage": "Twitter"
   },
@@ -20,8 +23,14 @@
   "SRo6uF": {
     "defaultMessage": "Meta Vaults"
   },
+  "U6qGuO": {
+    "defaultMessage": "Position"
+  },
   "Vn76qV": {
     "defaultMessage": "Github"
+  },
+  "XSdWHA": {
+    "defaultMessage": "Redeem"
   },
   "Zab6JA": {
     "defaultMessage": "Withdraw Cost"
@@ -44,11 +53,11 @@
   "hesDHZ": {
     "defaultMessage": "{fee} GWEI"
   },
+  "hk3oTU": {
+    "defaultMessage": "{gtBal, plural, =0 {No Balance} =1 {# Item} other {# Items}}"
+  },
   "jvo0vs": {
     "defaultMessage": "Save"
-  },
-  "nt8uTP": {
-    "defaultMessage": "Stables"
   },
   "ovJ26C": {
     "defaultMessage": "Medium"
@@ -56,11 +65,17 @@
   "p8bsw4": {
     "defaultMessage": "Transaction Error"
   },
+  "rSsD3z": {
+    "defaultMessage": "Switch Network"
+  },
   "rgdwQX": {
     "defaultMessage": "Transaction Confirmed"
   },
   "s2zphO": {
     "defaultMessage": "Vaults"
+  },
+  "sLLUMv": {
+    "defaultMessage": "Switch your wallet to {name} to use this contract."
   },
   "sk4xVe": {
     "defaultMessage": "Feeder Pools"
@@ -319,9 +334,6 @@
   },
   "X1WPwl": {
     "defaultMessage": "Nothing here yet, make your first deposit"
-  },
-  "XSdWHA": {
-    "defaultMessage": "Redeem"
   },
   "YYu/aL": {
     "defaultMessage": "Allocations"

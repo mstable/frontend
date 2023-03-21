@@ -2,7 +2,8 @@ import { NetworkTips } from '@frontend/shared-ui';
 import { Button, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useNetwork, useSwitchNetwork } from 'wagmi';
-import { DialogOptions } from '../../modals';
+
+import type { DialogOptions } from '../../modals';
 
 const Title = () => {
   const intl = useIntl();

@@ -1,5 +1,6 @@
-import produce from 'immer';
 import { useCallback } from 'react';
+
+import produce from 'immer';
 
 import { useTrackedState, useUpdate } from './state';
 import { formatLocale } from './utils';
@@ -22,6 +23,6 @@ export const useChangeLanguage = () => {
         );
       }
     },
-    [update],
+    [supportedLocales, update],
   );
 };

@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 
-import { useTrack } from '@frontend/shared-providers';
 import { usePrevious } from 'react-use';
 import { useAccount, useNetwork } from 'wagmi';
+
+import { useTrack } from '../../analytics';
 
 import type { Children } from '@frontend/shared-utils';
 

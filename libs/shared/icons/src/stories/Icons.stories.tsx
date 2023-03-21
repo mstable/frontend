@@ -1,3 +1,4 @@
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { IconsView } from '@frontend/tools-storybook';
 
 import * as chainIcons from '../components/chains';

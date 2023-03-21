@@ -2,9 +2,10 @@ import { AddressLabel } from '@frontend/shared-ui';
 import { Button, Stack } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useAccount, useDisconnect, useNetwork } from 'wagmi';
-import { DialogOptions } from '../../modals';
 
 import { AccountLabel } from './AccountLabel';
+
+import type { DialogOptions } from '../../modals';
 
 const Content = () => {
   const { address } = useAccount();
