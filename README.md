@@ -24,7 +24,7 @@ git clone https://github.com/mstable/frontend.git
 cd frontend
 yarn
 ```
-If you encounter any issues during the installation process, please refer to the [environment setup guide](./DEVELOPING.md#environment-setup).
+If you encounter any issues during the installation process, please refer to the [environment setup guide](./docs/DEVELOPING.md#environment-setup).
 
 ### Running an app
 
