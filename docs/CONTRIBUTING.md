@@ -1,28 +1,23 @@
 # How to Contribute to Frontend
 
-Thank you for contributing to this repository 👏
+Thank you for contributing to this repository! 👏
 
 ## Git conventions
 
 ### Commits
 
-The release process follows semantic versionning and use conventional commits rules to detect version bumps.
-
-#### Commit Message Format
-
-Each commit message consists of a **header**, a **body** and a **footer**. The header has a special
-format that includes a **type** and a **subject**. We will not be using a scope for this project.
+We use conventional commits and follow semantic versioning for our release process. Please ensure that your commit messages follow the format below:
 
 ```text
 <type>: <subject>
-<BLANK LINE>
+
 <optional body>
-<BLANK LINE>
+
 <optional footer(s)>
 ```
 
-> Any line of the commit message cannot be longer than 100 characters!
-> This allows the message to be easier to read on GitHub as well as in various git tools.
+The message consists of a header, a body, and a footer. The header has a special format that includes a type and a subject. The body and footer are optional.
+
 
 #### Type
 
@@ -41,22 +36,16 @@ Must be one of the following:
 
 #### Subject
 
-The subject contains succinct description of the change:
+The subject contains a brief description of the change. Use the imperative mood, present tense, and do not capitalize the first letter or use a period at the end.
 
-- use the imperative, present tense: "change" not "changed" nor "changes"
-- don't capitalize first letter
-- no dot (.) at the end
+#### Body
 
-#### Body (optional)
+The body is optional and should provide more detail about the change. Use the same imperative mood and present tense as in the subject.
 
-Just as in the **subject**, use the imperative, present tense: "change" not "changed" nor "changes".
-The body should include the motivation for the change and contrast this with previous behavior.
+#### Footer
 
-#### Footer (optional)
+The footer is optional and should be used to provide any additional information, such as breaking changes. If there are breaking changes, start the footer with the phrase `BREAKING CHANGE:` followed by a description of the changes.
 
-The footer should contain any information about **Breaking Changes**.
+Please note that each line of the commit message cannot be longer than 100 characters.
 
-**Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines.
-The rest of the commit message is then used for this.
-
-More information [here](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines).
+For more information, refer to [AngularJS Git Commit Guidelines](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines).
