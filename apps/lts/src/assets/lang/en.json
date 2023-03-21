@@ -305,6 +305,12 @@
       "value": "1Y"
     }
   ],
+  "8q2nwN": [
+    {
+      "type": 0,
+      "value": "mAssets"
+    }
+  ],
   "8ywLSf": [
     {
       "type": 0,
@@ -687,6 +693,12 @@
       "value": "Share Price"
     }
   ],
+  "U6qGuO": [
+    {
+      "type": 0,
+      "value": "Position"
+    }
+  ],
   "ULHfQE": [
     {
       "type": 0,
@@ -1017,6 +1029,46 @@
       "value": " GWEI"
     }
   ],
+  "hk3oTU": [
+    {
+      "offset": 0,
+      "options": {
+        "=0": {
+          "value": [
+            {
+              "type": 0,
+              "value": "No Balance"
+            }
+          ]
+        },
+        "=1": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " Item"
+            }
+          ]
+        },
+        "other": {
+          "value": [
+            {
+              "type": 7
+            },
+            {
+              "type": 0,
+              "value": " Items"
+            }
+          ]
+        }
+      },
+      "pluralType": "cardinal",
+      "type": 6,
+      "value": "gtBal"
+    }
+  ],
   "iYgKR9": [
     {
       "type": 0,
@@ -1123,12 +1175,6 @@
       "value": "Token Approval"
     }
   ],
-  "nt8uTP": [
-    {
-      "type": 0,
-      "value": "Stables"
-    }
-  ],
   "ovJ26C": [
     {
       "type": 0,
@@ -1177,6 +1223,12 @@
       "value": "Start the tour and get more insight."
     }
   ],
+  "rSsD3z": [
+    {
+      "type": 0,
+      "value": "Switch Network"
+    }
+  ],
   "rbrahO": [
     {
       "type": 0,
@@ -1205,6 +1257,20 @@
     {
       "type": 0,
       "value": "Diversified"
+    }
+  ],
+  "sLLUMv": [
+    {
+      "type": 0,
+      "value": "Switch your wallet to "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " to use this contract."
     }
   ],
   "sk4xVe": [
