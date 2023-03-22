@@ -1,11 +1,10 @@
-import { useEffect } from 'react';
-
 import { useSettings, useUpdateSettings } from '@frontend/lts-settings';
 import { ChainIcon } from '@frontend/shared-ui';
-import { Button, Collapse, Divider, Stack } from '@mui/material';
+import { Button, Divider, Stack } from '@mui/material';
 import { constants } from 'ethers';
 import produce from 'immer';
 import { filter, groupBy, pipe, prop } from 'ramda';
+import { useEffectOnce } from 'react-use';
 import { useAccount } from 'wagmi';
 import { mainnet, polygon } from 'wagmi/chains';
 
@@ -28,7 +27,7 @@ export const NetworkSwitch = (props: StackProps) => {
     groupBy<LTSContract, number>(prop('chain')),
   )(contracts);
 
-  useEffect(() => {
+  useEffectOnce(() => {
     const newChain =
       isConnected && Object.keys(grouped)?.length === 1
         ? Number(Object.keys(grouped)[0])
@@ -40,7 +39,7 @@ export const NetworkSwitch = (props: StackProps) => {
         }),
       );
     }
-  }, [chain, grouped, isConnected, updateSettings]);
+  });
 
   const handleClick = (chainId: number) => () => {
     if (chain !== chainId) {
@@ -53,46 +52,44 @@ export const NetworkSwitch = (props: StackProps) => {
   };
 
   return (
-    <Collapse in={isConnected && Object.keys(grouped).length > 1}>
-      <Stack
-        direction="row"
-        border={(theme) => `1px solid ${theme.palette.divider}`}
-        borderRadius={1}
-        divider={<Divider orientation="vertical" />}
-        {...props}
-      >
-        {[mainnet, polygon].map((c, i) => (
-          <Button
-            variant="text"
-            key={c.id}
-            onClick={handleClick(c.id)}
-            sx={[
-              {
-                width: 56,
-                height: 56,
+    <Stack
+      direction="row"
+      border={(theme) => `1px solid ${theme.palette.divider}`}
+      borderRadius={1}
+      divider={<Divider orientation="vertical" />}
+      {...props}
+    >
+      {[mainnet, polygon].map((c, i) => (
+        <Button
+          variant="text"
+          key={c.id}
+          onClick={handleClick(c.id)}
+          sx={[
+            {
+              width: 56,
+              height: 56,
 
-                svg: {
-                  width: 24,
-                  height: 24,
-                },
+              svg: {
+                width: 24,
+                height: 24,
               },
-              chain === c.id && {
-                backgroundColor: (theme) => theme.palette.action.selected,
-              },
-              i === 0 && {
-                borderTopRightRadius: 0,
-                borderBottomRightRadius: 0,
-              },
-              i === 1 && {
-                borderTopLeftRadius: 0,
-                borderBottomLeftRadius: 0,
-              },
-            ]}
-          >
-            <ChainIcon id={c.id} />
-          </Button>
-        ))}
-      </Stack>
-    </Collapse>
+            },
+            chain === c.id && {
+              backgroundColor: (theme) => theme.palette.action.selected,
+            },
+            i === 0 && {
+              borderTopRightRadius: 0,
+              borderBottomRightRadius: 0,
+            },
+            i === 1 && {
+              borderTopLeftRadius: 0,
+              borderBottomLeftRadius: 0,
+            },
+          ]}
+        >
+          <ChainIcon id={c.id} />
+        </Button>
+      ))}
+    </Stack>
   );
 };

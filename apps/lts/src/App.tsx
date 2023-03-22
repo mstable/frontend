@@ -32,7 +32,7 @@ export const App = () => {
         <Hero minHeight="25vh" />
         <Stack
           sx={{
-            minHeight: '50vh',
+            minHeight: '56vh',
           }}
         >
           <AnimatePresence>
