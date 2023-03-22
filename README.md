@@ -5,55 +5,53 @@
 
 # mStable Frontend
 
-Monorepo of latest frontend applications of mStable
+This repository contains the latest frontend applications of mStable. It is a monorepo comprising multiple mStable apps, all built using common libraries and a common UI.
+
+## Apps
+
+The following table lists the mStable apps included in this repository
+
+| Status | Name              | Nx project | Port | Public hosts                                            |
+| :---: | :---------------- | :--------- | :--- | :------------------------------------------------------ |
+| ✅    | Meta Vaults       | `mstable`  | 4200 | [Google Cloud](https://yield.mstable.org/)              |
+| 🚧    | Long Term Support | `lts`      | 4201 | [Google Cloud](https://apps-lts--dev-vite2x32.web.app/) |
 
 ## Quickstart
-
-### Clone repository
+To get started with this repository, run the following commands:
 
 ```bash
 git clone https://github.com/mstable/frontend.git
 cd frontend
-```
-
-### Install dependencies
-
-```bash
 yarn
 ```
+If you encounter any issues during the installation process, please refer to the [environment setup guide](./docs/DEVELOPING.md#environment-setup).
 
-> Any trouble installing? Check the [environment setup](./DEVELOPING.md#environment-setup) guide
-
-### Run main app
-
-```bash
-yarn start
-```
-
-> By default the app is accessible on [http://localhost:4200](http://localhost:4200)
-
-### Run storybook
+### Running an app
 
 ```bash
-yarn storybook
+yarn nx serve mstable
+yarn nx serve lts
 ```
 
-> By default the storybook is accessible on [http://localhost:6006](http://localhost:6006)
+### Building an app
+
+```bash
+yarn nx run build mstable
+yarn nx run build lts
+```
 
 ## Developing
 
-Follow the [Developing Guide](./docs/DEVELOPING.md) for detailed instructions and information regarding local development!
+For detailed instructions and information on local development, please refer to the [Developing Guide](./docs/DEVELOPING.md).
 
 ## Contributing
 
-Follow the [Contributing Guide](./docs/CONTRIBUTING.md) for information regarding contribution guidelines!
+If you would like to contribute to this repository, please refer to the [Contributing Guide](./docs/CONTRIBUTING.md).
 
 ## Subgraph
 
-Learn more on our [Meta Vault Subgraph](./docs/SUBGRAPH.md).
+To learn more about our Meta Vault Subgraph, please refer to the [Meta Vault Subgraph](./docs/SUBGRAPH.md).
 
 ## Contact us
 
-<br />
-
-[![Discord](https://img.shields.io/discord/525087739801239552?color=7289DA&label=discord%20)](https://discordapp.com/channels/525087739801239552/)
+If you have any questions or concerns, please join our [Discord server](https://discordapp.com/channels/525087739801239552/).
