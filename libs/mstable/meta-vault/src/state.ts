@@ -107,7 +107,7 @@ export const {
     assetToken,
   } = state;
 
-  useContractReads({
+  const { data: mvTo } = useContractReads({
     contracts: [
       { address, abi: erc4626ABI, functionName: 'asset' },
       { address, abi: erc20ABI, functionName: 'name' },
@@ -115,36 +115,42 @@ export const {
       { address, abi: erc20ABI, functionName: 'symbol' },
     ],
     cacheTime: Infinity,
-    onSuccess: (data) => {
-      setState(
-        produce((draft) => {
-          draft.assetToken.address = data[0];
-          draft.mvToken.name = data[1];
-          draft.mvToken.decimals = data[2];
-          draft.mvToken.symbol = data[3];
-        }),
-      );
-    },
   });
 
-  useContractReads({
+  useEffect(() => {
+    if (mvTo) {
+      setState(
+        produce((draft) => {
+          draft.assetToken.address = mvTo[0];
+          draft.mvToken.name = mvTo[1];
+          draft.mvToken.decimals = mvTo[2];
+          draft.mvToken.symbol = mvTo[3];
+        }),
+      );
+    }
+  }, [mvTo]);
+
+  const { data: tot } = useContractReads({
     contracts: [
       { address, abi: erc20ABI, functionName: 'totalSupply' },
       { address, abi: erc4626ABI, functionName: 'totalAssets' },
     ],
     cacheOnBlock: true,
     watch: true,
-    onSuccess: (data) => {
-      setState(
-        produce((draft) => {
-          draft.mvToken.totalSupply.value = data[0];
-          draft.mvToken.totalAssets.value = data[1];
-        }),
-      );
-    },
   });
 
-  useContractReads({
+  useEffect(() => {
+    if (tot) {
+      setState(
+        produce((draft) => {
+          draft.mvToken.totalSupply.value = tot[0];
+          draft.mvToken.totalAssets.value = tot[1];
+        }),
+      );
+    }
+  }, [tot]);
+
+  const { data: asTo } = useContractReads({
     contracts: [
       { address: assetToken?.address, abi: erc20ABI, functionName: 'name' },
       { address: assetToken?.address, abi: erc20ABI, functionName: 'decimals' },
@@ -152,18 +158,21 @@ export const {
     ],
     cacheTime: Infinity,
     enabled: !!assetToken?.address,
-    onSuccess: (data) => {
-      setState(
-        produce((draft) => {
-          draft.assetToken.name = data[0];
-          draft.assetToken.decimals = data[1];
-          draft.assetToken.symbol = data[2];
-        }),
-      );
-    },
   });
 
-  useContractReads({
+  useEffect(() => {
+    if (asTo) {
+      setState(
+        produce((draft) => {
+          draft.assetToken.name = asTo[0];
+          draft.assetToken.decimals = asTo[1];
+          draft.assetToken.symbol = asTo[2];
+        }),
+      );
+    }
+  }, [asTo]);
+
+  const { data: asTot } = useContractReads({
     contracts: [
       {
         address: assetToken?.address,
@@ -174,48 +183,57 @@ export const {
     cacheOnBlock: true,
     watch: true,
     enabled: !!assetToken?.address,
-    onSuccess: (data) => {
-      setState(
-        produce((draft) => {
-          draft.assetToken.totalSupply.value = data[0];
-        }),
-      );
-    },
   });
 
-  useBalance({
+  useEffect(() => {
+    if (asTot) {
+      setState(
+        produce((draft) => {
+          draft.assetToken.totalSupply.value = asTot[0];
+        }),
+      );
+    }
+  }, [asTot]);
+
+  const { data: mvBa } = useBalance({
     address: walletAddress,
     token: address,
     watch: true,
     enabled: !!walletAddress && !!address,
-    onSuccess: (data) => {
+  });
+
+  useEffect(() => {
+    if (mvBa) {
       setState(
         produce((draft) => {
-          draft.mvBalance = data
-            ? new BigDecimal(data.value, data.decimals)
+          draft.mvBalance = mvBa?.value
+            ? new BigDecimal(mvBa.value, mvBa.decimals)
             : BigDecimal.ZERO;
         }),
       );
-    },
-  });
+    }
+  }, [mvBa]);
 
-  useBalance({
+  const { data: asBa } = useBalance({
     address: walletAddress,
     token: assetToken?.address,
     watch: true,
     enabled: !!walletAddress && !!assetToken?.address,
-    onSuccess: (data) => {
+  });
+
+  useEffect(() => {
+    if (asBa) {
       setState(
         produce((draft) => {
-          draft.assetBalance = data
-            ? new BigDecimal(data.value, data.decimals)
+          draft.assetBalance = asBa?.value
+            ? new BigDecimal(asBa.value, asBa.decimals)
             : BigDecimal.ZERO;
         }),
       );
-    },
-  });
+    }
+  }, [asBa]);
 
-  useUserVaultBalanceQuery(
+  const { data: usBa } = useUserVaultBalanceQuery(
     dataSource,
     {
       owner: walletAddress,
@@ -224,41 +242,43 @@ export const {
     {
       enabled: !!address && !!walletAddress && !!state.mvBalanceInAsset,
       refetchInterval: 15000,
-      onSuccess: (data) => {
-        if (data) {
-          setState(
-            produce((draft) => {
-              const mvDeposited = new BigDecimal(
-                data.vaultBalances[0]?.assetDeposited || constants.Zero,
-              );
-              draft.mvDeposited = mvDeposited;
-              draft.profitOrLoss =
-                draft.mvBalanceInAsset?.sub(mvDeposited) ?? BigDecimal.ZERO;
-            }),
+    },
+  );
+
+  useEffect(() => {
+    if (usBa) {
+      setState(
+        produce((draft) => {
+          const mvDeposited = new BigDecimal(
+            usBa.vaultBalances[0]?.assetDeposited || constants.Zero,
           );
-        }
-      },
-    },
-  );
+          draft.mvDeposited = mvDeposited;
+          draft.profitOrLoss =
+            draft.mvBalanceInAsset?.sub(mvDeposited) ?? BigDecimal.ZERO;
+        }),
+      );
+    }
+  }, [usBa]);
 
-  useMetavaultQuery(
-    dataSource,
-    { id: address, firstBlock },
-    {
-      onSuccess: (data) => {
-        setState(
-          produce((draft) => {
-            draft.roi =
-              data?.vault?.assetPerShare /
-                (data?.vault?.first?.[0]?.assetPerShare ?? 1) -
-                1 ?? 0;
-          }),
-        );
-      },
-    },
-  );
+  const { data: roi } = useMetavaultQuery(dataSource, {
+    id: address,
+    firstBlock,
+  });
 
-  useContractReads({
+  useEffect(() => {
+    if (roi) {
+      setState(
+        produce((draft) => {
+          draft.roi =
+            roi?.vault?.assetPerShare /
+              (roi?.vault?.first?.[0]?.assetPerShare ?? 1) -
+              1 ?? 0;
+        }),
+      );
+    }
+  }, [roi]);
+
+  const { data: pre } = useContractReads({
     contracts: [
       {
         address,
@@ -283,21 +303,24 @@ export const {
       !!state.assetToken?.decimals &&
       !!state.mvBalance?.exact &&
       !!state.assetBalance?.exact,
-    onSettled: (data) => {
+  });
+
+  useEffect(() => {
+    if (pre && state.assetToken.decimals && state.mvToken.decimals) {
       setState(
         produce((draft) => {
-          draft.mvBalanceInAsset = data?.[0]
-            ? new BigDecimal(data[0] as BigNumberish, state.assetToken.decimals)
+          draft.mvBalanceInAsset = pre?.[0]
+            ? new BigDecimal(pre[0] as BigNumberish, state.assetToken.decimals)
             : BigDecimal.ZERO;
-          draft.assetBalanceInShare = data?.[1]
-            ? new BigDecimal(data[1] as BigNumberish, state.mvToken.decimals)
+          draft.assetBalanceInShare = pre?.[1]
+            ? new BigDecimal(pre[1] as BigNumberish, state.mvToken.decimals)
             : BigDecimal.ZERO;
         }),
       );
-    },
-  });
+    }
+  }, [pre, state.assetToken.decimals, state.mvToken.decimals]);
 
-  useQuery(
+  const { data: mvSt } = useQuery(
     ['structure', address, chain?.id],
     async () => {
       const proxiedVault = await readContract({
@@ -426,16 +449,19 @@ export const {
     {
       enabled: !!assetToken?.address,
       cacheTime: Infinity,
-      onSuccess: (data) => {
-        setState(
-          produce((draft) => {
-            draft.allocations = data.allocations;
-            draft.structure = data.structure;
-          }),
-        );
-      },
     },
   );
+
+  useEffect(() => {
+    if (mvSt) {
+      setState(
+        produce((draft) => {
+          draft.allocations = mvSt.allocations;
+          draft.structure = mvSt.structure;
+        }),
+      );
+    }
+  }, [mvSt]);
 
   useEffect(() => {
     setState(

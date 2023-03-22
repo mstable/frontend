@@ -70,7 +70,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
 
   const { amount, operation, allowance, preview } = state;
 
-  useContractRead({
+  const { data: all } = useContractRead({
     address: assetToken?.address,
     abi: erc20ABI,
     functionName: 'allowance',
@@ -78,16 +78,19 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     enabled: isConnected,
     watch: true,
     cacheOnBlock: true,
-    onSuccess: (data) => {
-      setState(
-        produce((draft) => {
-          draft.allowance = data as unknown as BigNumber;
-        }),
-      );
-    },
   });
 
-  useContractRead({
+  useEffect(() => {
+    if (all) {
+      setState(
+        produce((draft) => {
+          draft.allowance = all as unknown as BigNumber;
+        }),
+      );
+    }
+  }, [all]);
+
+  const { data: pre } = useContractRead({
     address,
     abi: erc4626ABI,
     functionName: 'convertToAssets',
@@ -95,17 +98,20 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     args: [BigDecimal.ONE.scale(mvToken?.decimals ?? 18).exact],
     watch: true,
     cacheOnBlock: true,
-    onSuccess: (data) => {
+  });
+
+  useEffect(() => {
+    if (pre && assetToken?.decimals) {
       setState(
         produce((draft) => {
           draft.assetsPerShare = new BigDecimal(
-            data as unknown as BigNumberish,
+            pre as unknown as BigNumberish,
             assetToken.decimals,
           );
         }),
       );
-    },
-  });
+    }
+  }, [assetToken?.decimals, pre]);
 
   type PreviewOperation =
     | 'previewDeposit'
