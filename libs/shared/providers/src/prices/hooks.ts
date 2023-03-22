@@ -1,51 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback } from 'react';
 
 import {
   coingeckoCoinIds,
   coingeckoEndpoint,
 } from '@frontend/shared-constants';
+import { isDev } from '@frontend/shared-utils';
 import { useQuery } from '@tanstack/react-query';
 import produce from 'immer';
-import { prop } from 'ramda';
+import { pathOr, prop } from 'ramda';
 import axios from 'redaxios';
+import { mainnet, useNetwork } from 'wagmi';
 
-import { useTrackedState, useUpdate } from './state';
+import { usePrices, useUpdate } from './state';
 
 import type { HexAddress } from '@frontend/shared-utils';
+import type { UseQueryOptions } from '@tanstack/react-query';
 
 import type { SupportedCurrency } from './types';
-
-export const usePrices = () => useTrackedState();
-
-export const useSetPricesChain = () => {
-  const update = useUpdate();
-
-  return useCallback(
-    (chain: number) => {
-      update(
-        produce((state) => {
-          state.chain = chain;
-        }),
-      );
-    },
-    [update],
-  );
-};
-
-export const useSetPrice = () => {
-  const update = useUpdate();
-
-  return useCallback(
-    (price: number) => {
-      update(
-        produce((state) => {
-          state.price = price;
-        }),
-      );
-    },
-    [update],
-  );
-};
 
 export const useSetCurrency = () => {
   const update = useUpdate();
@@ -63,24 +35,69 @@ export const useSetCurrency = () => {
   );
 };
 
-export const useGetPrices = (addresses: HexAddress[]) => {
-  const { currency, chain } = useTrackedState();
+export const useGetNativePrice = (
+  chainId?: number,
+  options?: UseQueryOptions,
+) => {
+  const { chain } = useNetwork();
+  const { currency } = usePrices();
 
-  return useQuery({
-    queryKey: [
-      'getTokenPrice',
-      coingeckoCoinIds[chain],
-      addresses ?? [],
-      currency,
-    ],
-    queryFn: () =>
+  const ch = chainId ?? chain?.id ?? mainnet.id;
+  const coinId = coingeckoCoinIds[ch];
+
+  return useQuery<any, Error, number>({
+    ...options,
+    queryKey: ['getNativePrice', coinId, currency],
+    initialData: 0,
+    queryFn: ({ queryKey }) =>
+      axios.get(
+        `${coingeckoEndpoint}/simple/price?ids=${queryKey[1]}&vs_currencies=${queryKey[2]}`,
+      ),
+    select: pathOr(0, ['data', coinId, currency.toLowerCase()]),
+    ...(isDev
+      ? {
+          cacheTime: Infinity,
+        }
+      : {
+          refetchInterval: 30e3,
+        }),
+  });
+};
+
+export const useGetPrices = (
+  addresses: HexAddress[],
+  chainId?: number,
+  options?: UseQueryOptions,
+) => {
+  const { chain } = useNetwork();
+  const { currency } = usePrices();
+
+  const ch = chainId ?? chain?.id ?? mainnet.id;
+  const coinId = coingeckoCoinIds[ch];
+
+  return useQuery<
+    any,
+    Error,
+    Record<string, number>,
+    [string, string, HexAddress[], string]
+  >({
+    ...options,
+    queryKey: ['getTokenPrice', coinId, addresses, currency],
+    queryFn: ({ queryKey }) =>
       axios.get(
         `${coingeckoEndpoint}/simple/token_price/${
-          coingeckoCoinIds[chain]
-        }?contract_addresses=${(addresses ?? []).join(
-          ',',
-        )}&vs_currencies=${currency}`,
+          queryKey[1]
+        }?contract_addresses=${(queryKey[2] ?? []).join(',')}&vs_currencies=${
+          queryKey[3]
+        }`,
       ),
     select: prop('data'),
+    ...(isDev
+      ? {
+          cacheTime: Infinity,
+        }
+      : {
+          refetchInterval: 30e3,
+        }),
   });
 };
