@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { etherscanApiEndpoints } from '@frontend/shared-constants';
 import { useQuery } from '@tanstack/react-query';
@@ -29,7 +29,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     slow: '0',
   });
   const { chain } = useNetwork();
-  useQuery(
+  const { data } = useQuery(
     ['gas-fee', chain?.id],
     () =>
       axios.get(
@@ -39,29 +39,32 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
       ),
     {
       refetchInterval: 30e3,
-      onSuccess: (data) => {
-        setState(
-          produce((draft) => {
-            draft.fast = pathOr(
-              draft.fast,
-              ['data', 'result', 'FastGasPrice'],
-              data,
-            );
-            draft.average = pathOr(
-              draft.average,
-              ['data', 'result', 'ProposeGasPrice'],
-              data,
-            );
-            draft.slow = pathOr(
-              draft.slow,
-              ['data', 'result', 'SafeGasPrice'],
-              data,
-            );
-          }),
-        );
-      },
     },
   );
+
+  useEffect(() => {
+    if (data) {
+      setState(
+        produce((draft) => {
+          draft.fast = pathOr(
+            draft.fast,
+            ['data', 'result', 'FastGasPrice'],
+            data,
+          );
+          draft.average = pathOr(
+            draft.average,
+            ['data', 'result', 'ProposeGasPrice'],
+            data,
+          );
+          draft.slow = pathOr(
+            draft.slow,
+            ['data', 'result', 'SafeGasPrice'],
+            data,
+          );
+        }),
+      );
+    }
+  }, [data]);
 
   return [state, setState];
 });

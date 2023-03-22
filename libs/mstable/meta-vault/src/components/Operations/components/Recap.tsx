@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import { usePrices } from '@frontend/shared-providers';
+import { useGetNativePrice, usePrices } from '@frontend/shared-providers';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
   Box,
@@ -247,7 +247,7 @@ const GasFeesRecap = (props: StackProps) => {
     assetToken,
   } = useMetavault();
   const { amount, needsApproval, operation } = useOperations();
-  const { price } = usePrices();
+  const { data: price } = useGetNativePrice();
   const { data: feeData, isLoading: feeLoading } = useFeeData({
     formatUnits: 'gwei',
   });

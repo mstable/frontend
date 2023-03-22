@@ -4,6 +4,7 @@ import { useDataSource } from '@frontend/mstable-data-access';
 import {
   OpenAccountModalButton,
   useGasFee,
+  useGetNativePrice,
   usePrices,
 } from '@frontend/shared-providers';
 import {
@@ -63,7 +64,8 @@ export const YieldCalculatorDialog = ({
   const [gasPriceConfig, setGasPriceConfig] =
     useState<GasPriceConfig>('average');
   const feeData = useGasFee();
-  const { price, currency } = usePrices();
+  const { currency } = usePrices();
+  const { data: price } = useGetNativePrice();
 
   const dataSource = useDataSource();
   const { data } = useMetavaultQuery(
