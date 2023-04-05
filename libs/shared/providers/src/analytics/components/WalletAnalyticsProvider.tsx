@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { usePrevious } from 'react-use';
 import { useAccount, useNetwork } from 'wagmi';
 
-import { useTrack } from '../../analytics';
+import { useTrack } from '..';
 
 import type { Children } from '@frontend/shared-utils';
 
