@@ -6,8 +6,6 @@ import { Box, useTheme } from '@mui/material';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { WagmiConfig } from 'wagmi';
 
-import { WalletAnalyticsProvider } from './WalletAnalyticsProvider';
-
 import type { Children } from '@frontend/shared-utils';
 import type { BoxProps } from '@mui/material';
 import type { Theme } from '@rainbow-me/rainbowkit';
@@ -52,7 +50,6 @@ export const WagmiProvider = ({
           theme: mode === 'dark' ? rbkThemes.dark : rbkThemes.light,
         },
       ],
-      [WalletAnalyticsProvider],
     ],
     children,
   );

@@ -17,6 +17,7 @@ import {
   PricesProvider,
   ThemeProvider,
   WagmiProvider,
+  WalletAnalyticsProvider,
 } from '@frontend/shared-providers';
 import { composeContexts } from '@frontend/shared-utils';
 import { Router } from '@tanstack/react-location';
@@ -54,6 +55,7 @@ root.render(
           rbkThemes: { dark: rbkDarkTheme, light: rbkLightTheme },
         },
       ],
+      [WalletAnalyticsProvider],
       [PricesProvider],
       [GasFeeProvider],
       [ModalsProvider],
