@@ -133,7 +133,7 @@ export const Metavault = (props: StackProps) => {
                     />
                   }
                 >
-                  <Operations disabled />
+                  <Operations />
                 </ErrorBoundary>
               </Stack>
             </Grid>
