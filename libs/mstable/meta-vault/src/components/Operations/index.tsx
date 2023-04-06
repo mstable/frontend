@@ -1,7 +1,16 @@
 import { useEffect } from 'react';
 
 import { BigDecimal } from '@frontend/shared-utils';
-import { Card, CardContent, Collapse, Stack, Tab, Tabs } from '@mui/material';
+import {
+  alpha,
+  Card,
+  CardContent,
+  Collapse,
+  Stack,
+  Tab,
+  Tabs,
+  Typography,
+} from '@mui/material';
 import { useNavigate, useSearch } from '@tanstack/react-location';
 import produce from 'immer';
 import { useIntl } from 'react-intl';
@@ -24,7 +33,11 @@ import type { CardProps } from '@mui/material';
 
 import type { MvRoute } from '../../types';
 
-const OperationsWrapped = (props: CardProps) => {
+export type OperationsProps = CardProps & {
+  disabled?: boolean;
+};
+
+const OperationsWrapped = ({ disabled, ...rest }: OperationsProps) => {
   const intl = useIntl();
   const { isConnected } = useAccount();
   const navigate = useNavigate<MvRoute>();
@@ -59,7 +72,32 @@ const OperationsWrapped = (props: CardProps) => {
   ]);
 
   return (
-    <Card {...props}>
+    <Card {...rest} sx={{ position: 'relative', ...rest?.sx }}>
+      {disabled && (
+        <Stack
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: 1,
+            height: 1,
+            zIndex: 100,
+            backgroundColor: (theme) =>
+              alpha(theme.palette.background.default, 0.5),
+            backdropFilter: 'blur(5px)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Typography variant="h4" textAlign="center">
+            {intl.formatMessage({
+              defaultMessage: 'Operations are momentarily disabled',
+              id: 'VMhVlJ',
+            })}
+          </Typography>
+        </Stack>
+      )}
       <CardContent>
         <Tabs
           value={tab}
@@ -97,9 +135,9 @@ const OperationsWrapped = (props: CardProps) => {
           >
             <Recap pb={2} />
             <Collapse in={needsApproval}>
-              <ApprovalButton fullWidth />
+              <ApprovalButton fullWidth disabled={disabled} />
             </Collapse>
-            <SubmitButton />
+            <SubmitButton disabled={disabled} />
           </Stack>
         </Stack>
       </CardContent>
@@ -107,7 +145,7 @@ const OperationsWrapped = (props: CardProps) => {
   );
 };
 
-export const Operations = (props: CardProps) => (
+export const Operations = (props: OperationsProps) => (
   <Provider>
     <OperationsWrapped {...props} />
   </Provider>

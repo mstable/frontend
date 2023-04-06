@@ -23,11 +23,15 @@ import { useOperations, useReset, useSetIsSubmitLoading } from '../hooks';
 
 import type { ButtonProps } from '@mui/material';
 
+export type SubmitButtonProps = {
+  disabled?: boolean;
+};
+
 const buttonProps: ButtonProps = {
   size: 'large',
 };
 
-export const SubmitButton = () => {
+export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
   const intl = useIntl();
   const track = useTrack();
   const { chain } = useNetwork();
@@ -213,7 +217,7 @@ export const SubmitButton = () => {
   }
 
   return (
-    <Button {...buttonProps} onClick={handleSubmit}>
+    <Button {...buttonProps} onClick={handleSubmit} disabled={disabled}>
       {operationLabel}
     </Button>
   );
