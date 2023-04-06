@@ -45,7 +45,7 @@ const initialState: OperationsState = {
   allowance: null,
   balance: null,
   assetsPerShare: null,
-  tab: 0,
+  tab: 1,
   needsApproval: false,
   isInputLoading: false,
   isSubmitLoading: false,
