@@ -300,7 +300,7 @@ export const useContractSubmit = (contract: LTSContract) => {
   const navigate = useNavigate();
   const { chains } = useNetwork();
   const { refetch } = useTrackedState();
-  const contractChain = chains.find(propEq('id', contract.chain)) ?? mainnet;
+  const contractChain = chains.find(propEq(contract.chain, 'id')) ?? mainnet;
   const blockExplorer = contractChain.blockExplorers.default;
   const pushNotification = usePushNotification();
   const deleteNotification = useDeleteNotification();

@@ -7,6 +7,8 @@ import {
   CardContent,
   Collapse,
   Stack,
+  Tab,
+  Tabs,
   Typography,
 } from '@mui/material';
 import { useNavigate, useSearch } from '@tanstack/react-location';
@@ -19,7 +21,12 @@ import { ApprovalButton } from './components/ApprovalButton';
 import { OperationsForm } from './components/OperationsForm';
 import { Recap } from './components/Recap';
 import { SubmitButton } from './components/SubmitButton';
-import { useChangeOperation, useOperations, useSetAmount } from './hooks';
+import {
+  useChangeOperation,
+  useChangeTab,
+  useOperations,
+  useSetAmount,
+} from './hooks';
 import { Provider } from './state';
 
 import type { CardProps } from '@mui/material';
@@ -35,10 +42,11 @@ const OperationsWrapped = ({ disabled, ...rest }: OperationsProps) => {
   const { isConnected } = useAccount();
   const navigate = useNavigate<MvRoute>();
   const { input } = useSearch<MvRoute>();
+  const changeTab = useChangeTab();
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
   const { assetToken } = useMetavault();
-  const { operation, needsApproval } = useOperations();
+  const { operation, needsApproval, isSubmitLoading } = useOperations();
 
   useEffect(() => {
     if (input && isConnected) {
@@ -91,8 +99,8 @@ const OperationsWrapped = ({ disabled, ...rest }: OperationsProps) => {
         </Stack>
       )}
       <CardContent>
-        {/* <Tabs
-          value={tab}
+        <Tabs
+          value={1}
           onChange={(_, tab: 0 | 1) => {
             changeTab(tab);
           }}
@@ -104,7 +112,7 @@ const OperationsWrapped = ({ disabled, ...rest }: OperationsProps) => {
               defaultMessage: 'DEPOSIT',
               id: 'KYgRAc',
             })}
-            disabled={isSubmitLoading}
+            disabled
           />
           <Tab
             label={intl.formatMessage({
@@ -113,7 +121,7 @@ const OperationsWrapped = ({ disabled, ...rest }: OperationsProps) => {
             })}
             disabled={isSubmitLoading}
           />
-        </Tabs> */}
+        </Tabs>
         <Stack pt={2} spacing={2}>
           <OperationsForm />
           <Stack

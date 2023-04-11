@@ -30,8 +30,8 @@ export const LineChart = ({
   const intl = useIntl();
   const { chain } = useNetwork();
   const color = supportedMetavaults[chain?.id ?? mainnet.id].find(
-    propEq('id', id),
-  ).primaryColor;
+    propEq(id, 'id'),
+  )?.primaryColor;
 
   return (
     <Stack {...rest} position="relative">

@@ -393,7 +393,9 @@ export const {
           [],
         ),
       });
-      const [bals, decimals, names] = transpose(splitEvery(uvs.length, res));
+      const [bals, decimals, names] = uvs.length
+        ? transpose(splitEvery(uvs.length, res))
+        : [[], [], []];
 
       const converted = await multicall({
         contracts: uvs.map((v, i) => ({

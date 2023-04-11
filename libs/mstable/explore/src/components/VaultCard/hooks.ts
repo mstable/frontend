@@ -32,7 +32,7 @@ export const useVaultCardProps = ({
     id: metavault.address,
     firstBlock: metavault.firstBlock,
   });
-  const chartData = useChartData(metavault.address);
+  const chartData = useChartData(metavault);
   const { data: asset } = useContractRead({
     address: metavault.address,
     abi: erc4626ABI,

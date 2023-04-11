@@ -30,7 +30,7 @@ const NotificationsWrapped = ({
       take(
         maxVisible,
         notifications
-          .filter(propEq('visible', true))
+          .filter(propEq(true, 'visible'))
           .sort(descend(prop('createdOn'))),
       ),
     [maxVisible, notifications],

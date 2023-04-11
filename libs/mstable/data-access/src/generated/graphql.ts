@@ -27,10 +27,15 @@ export type Asset_Filter = {
   _change_block?: InputMaybe<BlockChangedFilter>;
   address?: InputMaybe<Scalars['Bytes']>;
   address_contains?: InputMaybe<Scalars['Bytes']>;
+  address_gt?: InputMaybe<Scalars['Bytes']>;
+  address_gte?: InputMaybe<Scalars['Bytes']>;
   address_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  address_lt?: InputMaybe<Scalars['Bytes']>;
+  address_lte?: InputMaybe<Scalars['Bytes']>;
   address_not?: InputMaybe<Scalars['Bytes']>;
   address_not_contains?: InputMaybe<Scalars['Bytes']>;
   address_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  and?: InputMaybe<Array<InputMaybe<Asset_Filter>>>;
   decimals?: InputMaybe<Scalars['Int']>;
   decimals_gt?: InputMaybe<Scalars['Int']>;
   decimals_gte?: InputMaybe<Scalars['Int']>;
@@ -47,6 +52,7 @@ export type Asset_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  or?: InputMaybe<Array<InputMaybe<Asset_Filter>>>;
 };
 
 export enum Asset_OrderBy {
@@ -78,6 +84,7 @@ export type DailyVaultBalance = {
 export type DailyVaultBalance_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<DailyVaultBalance_Filter>>>;
   assetBalance?: InputMaybe<Scalars['BigInt']>;
   assetBalance_gt?: InputMaybe<Scalars['BigInt']>;
   assetBalance_gte?: InputMaybe<Scalars['BigInt']>;
@@ -102,6 +109,7 @@ export type DailyVaultBalance_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  or?: InputMaybe<Array<InputMaybe<DailyVaultBalance_Filter>>>;
   shareBalance?: InputMaybe<Scalars['BigInt']>;
   shareBalance_gt?: InputMaybe<Scalars['BigInt']>;
   shareBalance_gte?: InputMaybe<Scalars['BigInt']>;
@@ -147,7 +155,13 @@ export enum DailyVaultBalance_OrderBy {
   Id = 'id',
   ShareBalance = 'shareBalance',
   Timestamp = 'timestamp',
-  VaultBalance = 'vaultBalance'
+  VaultBalance = 'vaultBalance',
+  VaultBalanceAssetBalance = 'vaultBalance__assetBalance',
+  VaultBalanceAssetDeposited = 'vaultBalance__assetDeposited',
+  VaultBalanceId = 'vaultBalance__id',
+  VaultBalanceOwner = 'vaultBalance__owner',
+  VaultBalanceShareBalance = 'vaultBalance__shareBalance',
+  VaultBalanceTimestamp = 'vaultBalance__timestamp'
 }
 
 export type DailyVaultStat = {
@@ -165,6 +179,7 @@ export type DailyVaultStat = {
 export type DailyVaultStat_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<DailyVaultStat_Filter>>>;
   apy?: InputMaybe<Scalars['BigDecimal']>;
   apy_gt?: InputMaybe<Scalars['BigDecimal']>;
   apy_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -197,6 +212,7 @@ export type DailyVaultStat_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  or?: InputMaybe<Array<InputMaybe<DailyVaultStat_Filter>>>;
   timestamp?: InputMaybe<Scalars['BigInt']>;
   timestamp_gt?: InputMaybe<Scalars['BigInt']>;
   timestamp_gte?: InputMaybe<Scalars['BigInt']>;
@@ -252,7 +268,15 @@ export enum DailyVaultStat_OrderBy {
   Timestamp = 'timestamp',
   TotalAssets = 'totalAssets',
   TotalSupply = 'totalSupply',
-  Vault = 'vault'
+  Vault = 'vault',
+  VaultAddress = 'vault__address',
+  VaultApy = 'vault__apy',
+  VaultAssetPerShare = 'vault__assetPerShare',
+  VaultDecimals = 'vault__decimals',
+  VaultId = 'vault__id',
+  VaultTimestamp = 'vault__timestamp',
+  VaultTotalAssets = 'vault__totalAssets',
+  VaultTotalSupply = 'vault__totalSupply'
 }
 
 /** Defines the order direction, either ascending or descending */
@@ -546,6 +570,7 @@ export enum TransactionType {
 export type Transaction_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<Transaction_Filter>>>;
   assetAmount?: InputMaybe<Scalars['BigInt']>;
   assetAmount_gt?: InputMaybe<Scalars['BigInt']>;
   assetAmount_gte?: InputMaybe<Scalars['BigInt']>;
@@ -556,7 +581,11 @@ export type Transaction_Filter = {
   assetAmount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   from?: InputMaybe<Scalars['Bytes']>;
   from_contains?: InputMaybe<Scalars['Bytes']>;
+  from_gt?: InputMaybe<Scalars['Bytes']>;
+  from_gte?: InputMaybe<Scalars['Bytes']>;
   from_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  from_lt?: InputMaybe<Scalars['Bytes']>;
+  from_lte?: InputMaybe<Scalars['Bytes']>;
   from_not?: InputMaybe<Scalars['Bytes']>;
   from_not_contains?: InputMaybe<Scalars['Bytes']>;
   from_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
@@ -578,7 +607,11 @@ export type Transaction_Filter = {
   gasPrice_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   hash?: InputMaybe<Scalars['Bytes']>;
   hash_contains?: InputMaybe<Scalars['Bytes']>;
+  hash_gt?: InputMaybe<Scalars['Bytes']>;
+  hash_gte?: InputMaybe<Scalars['Bytes']>;
   hash_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  hash_lt?: InputMaybe<Scalars['Bytes']>;
+  hash_lte?: InputMaybe<Scalars['Bytes']>;
   hash_not?: InputMaybe<Scalars['Bytes']>;
   hash_not_contains?: InputMaybe<Scalars['Bytes']>;
   hash_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
@@ -590,6 +623,7 @@ export type Transaction_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  or?: InputMaybe<Array<InputMaybe<Transaction_Filter>>>;
   shareAmount?: InputMaybe<Scalars['BigInt']>;
   shareAmount_gt?: InputMaybe<Scalars['BigInt']>;
   shareAmount_gte?: InputMaybe<Scalars['BigInt']>;
@@ -608,7 +642,11 @@ export type Transaction_Filter = {
   timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   to?: InputMaybe<Scalars['Bytes']>;
   to_contains?: InputMaybe<Scalars['Bytes']>;
+  to_gt?: InputMaybe<Scalars['Bytes']>;
+  to_gte?: InputMaybe<Scalars['Bytes']>;
   to_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  to_lt?: InputMaybe<Scalars['Bytes']>;
+  to_lte?: InputMaybe<Scalars['Bytes']>;
   to_not?: InputMaybe<Scalars['Bytes']>;
   to_not_contains?: InputMaybe<Scalars['Bytes']>;
   to_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
@@ -650,7 +688,15 @@ export enum Transaction_OrderBy {
   Timestamp = 'timestamp',
   To = 'to',
   Type = 'type',
-  Vault = 'vault'
+  Vault = 'vault',
+  VaultAddress = 'vault__address',
+  VaultApy = 'vault__apy',
+  VaultAssetPerShare = 'vault__assetPerShare',
+  VaultDecimals = 'vault__decimals',
+  VaultId = 'vault__id',
+  VaultTimestamp = 'vault__timestamp',
+  VaultTotalAssets = 'vault__totalAssets',
+  VaultTotalSupply = 'vault__totalSupply'
 }
 
 export type Vault = {
@@ -700,6 +746,7 @@ export type VaultBalanceDailyVaultBalancesArgs = {
 export type VaultBalance_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<VaultBalance_Filter>>>;
   assetBalance?: InputMaybe<Scalars['BigInt']>;
   assetBalance_gt?: InputMaybe<Scalars['BigInt']>;
   assetBalance_gte?: InputMaybe<Scalars['BigInt']>;
@@ -725,9 +772,14 @@ export type VaultBalance_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  or?: InputMaybe<Array<InputMaybe<VaultBalance_Filter>>>;
   owner?: InputMaybe<Scalars['Bytes']>;
   owner_contains?: InputMaybe<Scalars['Bytes']>;
+  owner_gt?: InputMaybe<Scalars['Bytes']>;
+  owner_gte?: InputMaybe<Scalars['Bytes']>;
   owner_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  owner_lt?: InputMaybe<Scalars['Bytes']>;
+  owner_lte?: InputMaybe<Scalars['Bytes']>;
   owner_not?: InputMaybe<Scalars['Bytes']>;
   owner_not_contains?: InputMaybe<Scalars['Bytes']>;
   owner_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
@@ -778,7 +830,15 @@ export enum VaultBalance_OrderBy {
   Owner = 'owner',
   ShareBalance = 'shareBalance',
   Timestamp = 'timestamp',
-  Vault = 'vault'
+  Vault = 'vault',
+  VaultAddress = 'vault__address',
+  VaultApy = 'vault__apy',
+  VaultAssetPerShare = 'vault__assetPerShare',
+  VaultDecimals = 'vault__decimals',
+  VaultId = 'vault__id',
+  VaultTimestamp = 'vault__timestamp',
+  VaultTotalAssets = 'vault__totalAssets',
+  VaultTotalSupply = 'vault__totalSupply'
 }
 
 export type Vault_Filter = {
@@ -787,10 +847,15 @@ export type Vault_Filter = {
   _change_block?: InputMaybe<BlockChangedFilter>;
   address?: InputMaybe<Scalars['Bytes']>;
   address_contains?: InputMaybe<Scalars['Bytes']>;
+  address_gt?: InputMaybe<Scalars['Bytes']>;
+  address_gte?: InputMaybe<Scalars['Bytes']>;
   address_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  address_lt?: InputMaybe<Scalars['Bytes']>;
+  address_lte?: InputMaybe<Scalars['Bytes']>;
   address_not?: InputMaybe<Scalars['Bytes']>;
   address_not_contains?: InputMaybe<Scalars['Bytes']>;
   address_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  and?: InputMaybe<Array<InputMaybe<Vault_Filter>>>;
   apy?: InputMaybe<Scalars['BigDecimal']>;
   apy_gt?: InputMaybe<Scalars['BigDecimal']>;
   apy_gte?: InputMaybe<Scalars['BigDecimal']>;
@@ -844,6 +909,7 @@ export type Vault_Filter = {
   id_lte?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  or?: InputMaybe<Array<InputMaybe<Vault_Filter>>>;
   timestamp?: InputMaybe<Scalars['BigInt']>;
   timestamp_gt?: InputMaybe<Scalars['BigInt']>;
   timestamp_gte?: InputMaybe<Scalars['BigInt']>;
@@ -876,6 +942,9 @@ export enum Vault_OrderBy {
   Apy = 'apy',
   Asset = 'asset',
   AssetPerShare = 'assetPerShare',
+  AssetAddress = 'asset__address',
+  AssetDecimals = 'asset__decimals',
+  AssetId = 'asset__id',
   Decimals = 'decimals',
   Id = 'id',
   Timestamp = 'timestamp',

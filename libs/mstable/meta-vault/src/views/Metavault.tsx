@@ -34,7 +34,7 @@ export const Metavault = (props: StackProps) => {
     params: { mvid },
   } = useMatch<MvRoute>();
   const metavault = useMemo(
-    () => supportedMetavaults[chain?.id ?? mainnet.id].find(propEq('id', mvid)),
+    () => supportedMetavaults[chain?.id ?? mainnet.id].find(propEq(mvid, 'id')),
     [chain?.id, mvid],
   );
 
