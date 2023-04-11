@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 
 import type { StackProps } from '@mui/material';
 
-export const Banner = (props: StackProps) => {
+export const SunsetBanner = (props: StackProps) => {
   const intl = useIntl();
 
   return (

@@ -1,8 +1,8 @@
+import { SunsetBanner } from '@frontend/shared-ui';
 import { Stack } from '@mui/material';
 import { AnimatePresence } from 'framer-motion';
 import { useAccount } from 'wagmi';
 
-import { Banner } from './components/Banner';
 import { ContractAccordion } from './components/ContractAccordion';
 import { Footer } from './components/Footer';
 import { Hero } from './components/Hero';
@@ -32,7 +32,7 @@ export const App = () => {
         })}
       >
         <Hero my={4} />
-        <Banner my={4} />
+        <SunsetBanner my={4} />
         <Stack>
           <AnimatePresence>
             {isConnected ? (
