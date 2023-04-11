@@ -43,7 +43,7 @@ export const useChartConfig = () => {
         defaultMessage: 'Share Price',
         id: 'TvzL+L',
       }),
-      chartMargin: 0.001,
+      chartMargin: 0.05,
       getValue: (v) => v.assetPerShare,
       getLabel: (v) =>
         Intl.NumberFormat('en-US', { style: 'decimal' }).format(v),
@@ -61,7 +61,7 @@ export const useChartConfig = () => {
         { defaultMessage: 'TVL ({symbol})', id: 'UMrrVX' },
         { symbol: mv?.assetToken?.symbol },
       ),
-      chartMargin: 1e3,
+      chartMargin: 1e4,
       getValue: (v) =>
         new BigDecimal(v.totalAssets, mv?.assetToken?.decimals).simple,
       getLabel: (v) =>
