@@ -47,7 +47,7 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
   const { address } = useSearch<LTSRoute>();
   const navigate = useNavigate<LTSRoute>();
   const { chains } = useNetwork();
-  const contractChain = chains.find(propEq('id', contract.chain)) ?? mainnet;
+  const contractChain = chains.find(propEq(contract.chain, 'id')) ?? mainnet;
   const { slippage } = useSettings();
   const { data: feeData } = useFeeData({
     formatUnits: 'gwei',
@@ -55,7 +55,7 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
   });
   const { contracts } = useTrackedState();
   const vaultContract = contracts.find(
-    propEq('address', contract?.vaultAddress),
+    propEq(contract?.vaultAddress, 'address'),
   );
   const { data: preview, isLoading: previewLoading } =
     useContractPreview(contract);

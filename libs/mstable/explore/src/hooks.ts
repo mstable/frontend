@@ -6,7 +6,7 @@ import { useGetPrices, usePrices } from '@frontend/shared-providers';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import { alpha } from '@mui/material';
 import { constants } from 'ethers';
-import { ascend, pathOr, pluck, prop, propEq, sort } from 'ramda';
+import { ascend, pathOr, pluck, prop, sort } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
   erc20ABI,
@@ -18,6 +18,7 @@ import {
 
 import { useMetavaultQuery } from './queries.generated';
 
+import type { Metavault } from '@frontend/shared-constants';
 import type { HexAddress } from '@frontend/shared-utils';
 import type { ChartArea, ChartData, ChartOptions } from 'chart.js';
 import type { BigNumberish } from 'ethers';
@@ -30,22 +31,18 @@ const getGradient =
       chartArea?.right || 0,
       0,
     );
-    gradient?.addColorStop(0, alpha(tone, 0));
-    gradient?.addColorStop(1, alpha(tone, 1));
+    gradient?.addColorStop(0, alpha(tone ?? '#2F5FEE', 0));
+    gradient?.addColorStop(1, alpha(tone ?? '#2F5FEE', 1));
 
     return gradient;
   };
 
-export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
+export const useChartData = (metavault: Metavault, isSmallChart?: boolean) => {
   const intl = useIntl();
-  const { chain } = useNetwork();
-  const mv = supportedMetavaults[chain?.id ?? mainnet.id].find(
-    propEq('address', address),
-  );
   const dataSource = useDataSource();
   const { data } = useMetavaultQuery(dataSource, {
-    id: address,
-    firstBlock: mv.firstBlock,
+    id: metavault.address,
+    firstBlock: metavault.firstBlock,
   });
 
   const series = useMemo(
@@ -98,12 +95,12 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
               borderColor: function (context) {
                 const chart = context.chart;
                 const { ctx, chartArea } = chart;
-                return getGradient(mv.primaryColor)(ctx, chartArea);
+                return getGradient(metavault?.primaryColor)(ctx, chartArea);
               },
               borderWidth: isSmallChart ? 2 : 3,
               backgroundColor: 'transparent',
               fill: true,
-              pointBackgroundColor: mv.primaryColor,
+              pointBackgroundColor: metavault?.primaryColor,
               pointRadius: 0,
             },
           ],
@@ -139,7 +136,7 @@ export const useChartData = (address: HexAddress, isSmallChart?: boolean) => {
           },
         },
       }),
-      [intl, isSmallChart, max, min, mv.primaryColor, series],
+      [intl, isSmallChart, max, min, metavault?.primaryColor, series],
     );
 
   return chartData;

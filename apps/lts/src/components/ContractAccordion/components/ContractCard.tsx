@@ -30,7 +30,7 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
   const pushNotification = usePushNotification();
   const navigate = useNavigate<LTSRoute>();
   const { chains, chain } = useNetwork();
-  const contractChain = chains.find(propEq('id', contract.chain)) ?? mainnet;
+  const contractChain = chains.find(propEq(contract.chain, 'id')) ?? mainnet;
   const { switchNetwork } = useSwitchNetwork({
     onError: () => {
       pushNotification({

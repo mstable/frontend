@@ -54,7 +54,7 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
     id: metavault.address,
     firstBlock: metavault.firstBlock,
   });
-  const chartData = useChartData(metavault.address, true);
+  const chartData = useChartData(metavault, true);
   const { data: asset } = useContractRead({
     address: metavault.address,
     abi: erc4626ABI,

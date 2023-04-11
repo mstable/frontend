@@ -13,7 +13,6 @@ import { useIntl } from 'react-intl';
 
 import { useMetavault } from '../../state';
 import { DiagramStrategy } from '../Diagrams';
-import { Allocations } from './components/Allocations';
 import { Assets } from './components/Assets';
 import { Contracts } from './components/Contracts';
 import { Fees } from './components/Fees';
@@ -47,17 +46,17 @@ export const Strategy = () => {
   const [showStrategy, setShowStrategy] = useState(false);
 
   const collapseSections = [
-    {
-      title: intl.formatMessage({
-        defaultMessage: 'Allocations',
-        id: 'YYu/aL',
-      }),
-      subtitle: intl.formatMessage({
-        defaultMessage: 'Distribution of deposited funds in underlying vaults',
-        id: 'RpPskj',
-      }),
-      component: <Allocations />,
-    },
+    // {
+    //   title: intl.formatMessage({
+    //     defaultMessage: 'Allocations',
+    //     id: 'YYu/aL',
+    //   }),
+    //   subtitle: intl.formatMessage({
+    //     defaultMessage: 'Distribution of deposited funds in underlying vaults',
+    //     id: 'RpPskj',
+    //   }),
+    //   component: <Allocations />,
+    // },
     {
       title: intl.formatMessage({ defaultMessage: 'Protocols', id: 'zFNxtv' }),
       subtitle: intl.formatMessage({

@@ -48,7 +48,7 @@ export const useSetNotificationInvisible = () => {
     (id: string) => {
       update(
         produce((state) => {
-          const idx = state.notifications.findIndex(propEq('id', id));
+          const idx = state.notifications.findIndex(propEq(id, 'id'));
           if (idx > -1) {
             state.notifications[idx].visible = false;
           }
@@ -66,7 +66,7 @@ export const useSetNotificationRead = () => {
     (id: string) => {
       update(
         produce((state) => {
-          const idx = state.notifications.findIndex(propEq('id', id));
+          const idx = state.notifications.findIndex(propEq(id, 'id'));
           if (idx > -1) {
             state.notifications[idx].read = true;
           }
@@ -98,7 +98,7 @@ export const useDeleteNotification = () => {
     (id: string) => {
       update(
         produce((state) => {
-          const idx = state.notifications.findIndex(propEq('id', id));
+          const idx = state.notifications.findIndex(propEq(id, 'id'));
           if (idx > -1) {
             state.notifications.splice(idx, 1);
           }

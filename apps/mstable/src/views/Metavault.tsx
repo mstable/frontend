@@ -20,7 +20,7 @@ export const Metavault = () => {
     params: { mvid },
   } = useMatch<MstableRoute>();
   const metavault = useMemo(
-    () => supportedMetavaults[chain?.id ?? mainnet.id].find(propEq('id', mvid)),
+    () => supportedMetavaults[chain?.id ?? mainnet.id].find(propEq(mvid, 'id')),
     [chain?.id, mvid],
   );
 
