@@ -2,6 +2,7 @@ import { Stack } from '@mui/material';
 import { AnimatePresence } from 'framer-motion';
 import { useAccount } from 'wagmi';
 
+import { Banner } from './components/Banner';
 import { ContractAccordion } from './components/ContractAccordion';
 import { Footer } from './components/Footer';
 import { Hero } from './components/Hero';
@@ -27,14 +28,12 @@ export const App = () => {
           height: 1,
           pb: { xs: 2, md: 4 },
           px: theme.mixins.paddings.page.paddingX,
+          minHeight: '84vh',
         })}
       >
-        <Hero minHeight="25vh" />
-        <Stack
-          sx={{
-            minHeight: '56vh',
-          }}
-        >
+        <Hero my={4} />
+        <Banner my={4} />
+        <Stack>
           <AnimatePresence>
             {isConnected ? (
               <ContractAccordion
@@ -47,6 +46,7 @@ export const App = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                my={4}
               />
             )}
           </AnimatePresence>

@@ -14,8 +14,11 @@ export const Hero = (props: StackProps) => {
           id: '/b/fRE',
         })}
       </Typography>
-      <Typography>
-        Collect all your <strong>mStable</strong> assets, easily.
+      <Typography textAlign="center">
+        {intl.formatMessage({
+          defaultMessage: `This app simplifies the process of exiting all mStable products and positions.<br></br>By connecting your wallet, you can easily access your remaining balances and initiate the withdrawal process.`,
+          id: 'R0V7vk',
+        })}
       </Typography>
     </Stack>
   );
