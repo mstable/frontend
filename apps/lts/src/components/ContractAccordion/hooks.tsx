@@ -223,7 +223,7 @@ export const useContractPreview = (contract: LTSContract) => {
     governance: governancePreview,
   }[contract.type];
 
-  return useQuery([name, contract.address, walletAddress], fn, {
+  return useQuery([name, contract, walletAddress], fn, {
     enabled: contract.balance.gt(constants.Zero),
   });
 };
