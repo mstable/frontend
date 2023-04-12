@@ -1,3 +1,4 @@
+import { SunsetBanner } from '@frontend/shared-ui';
 import { Stack } from '@mui/material';
 import { AnimatePresence } from 'framer-motion';
 import { useAccount } from 'wagmi';
@@ -27,14 +28,12 @@ export const App = () => {
           height: 1,
           pb: { xs: 2, md: 4 },
           px: theme.mixins.paddings.page.paddingX,
+          minHeight: '84vh',
         })}
       >
-        <Hero minHeight="25vh" />
-        <Stack
-          sx={{
-            minHeight: '56vh',
-          }}
-        >
+        <Hero my={4} />
+        <SunsetBanner my={4} />
+        <Stack>
           <AnimatePresence>
             {isConnected ? (
               <ContractAccordion
@@ -47,6 +46,7 @@ export const App = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                my={4}
               />
             )}
           </AnimatePresence>
