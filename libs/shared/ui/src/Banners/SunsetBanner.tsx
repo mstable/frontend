@@ -20,13 +20,13 @@ export const SunsetBanner = (props: StackProps) => {
       <Warning sx={{ width: 28, height: 28 }} />
       <Typography textAlign="center">
         {intl.formatMessage({
-          defaultMessage: `With the mStable protocol sunset, it's important to withdraw your funds.<br></br>The contracts will always remain live and allow for withdrawals, however this App remains for only 6 months online. Or run it locally afterwards.`,
+          defaultMessage: `mStable has been aquired by dHedge. Following the outlined aquisition update, certain mStable products will be sunset.`,
           id: 'Yi52g+',
         })}
       </Typography>
       <Typography textAlign="center">
         {intl.formatMessage({
-          defaultMessage: `DIMITRI NEEDS TO WORK ON THE WORDING HERE`,
+          defaultMessage: `The contracts will always remain live and allow for withdrawals. However, it is recommended to withdraw remaining assets from the contracts since value accrual has been disabled.`,
           id: 'bkwgp4',
         })}
       </Typography>
