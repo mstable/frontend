@@ -18,7 +18,15 @@ import type { MotionStackProps } from '@frontend/shared-ui';
 import type { LTSContract } from './types';
 
 const categories: Record<number, ContractType[]> = {
-  [mainnet.id]: ['stable', 'save', 'pool', 'vault', 'legacypool', 'metavault'],
+  [mainnet.id]: [
+    'stable',
+    'save',
+    'pool',
+    'vault',
+    'legacypool',
+    'governance',
+    'metavault',
+  ],
   [polygon.id]: ['stable', 'save', 'pool', 'vault'],
 };
 
@@ -29,6 +37,10 @@ const getTitle = (cat: ContractType) =>
     pool: defineMessage({ defaultMessage: 'Feeder Pools', id: 'sk4xVe' }),
     vault: defineMessage({ defaultMessage: 'Vaults', id: 's2zphO' }),
     legacypool: defineMessage({ defaultMessage: 'Legacy Pools', id: 'cA+gxG' }),
+    governance: defineMessage({
+      defaultMessage: 'MTA Governance',
+      id: 'yzP6XU',
+    }),
     metavault: defineMessage({ defaultMessage: 'Meta Vaults', id: 'SRo6uF' }),
   }[cat]);
 

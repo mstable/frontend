@@ -196,6 +196,10 @@ const metavaultPreview = async ({ queryKey }) => {
   ];
 };
 
+const governancePreview = async ({ queryKey }) => {
+  return [];
+};
+
 export const useContractPreview = (contract: LTSContract) => {
   const { address: walletAddress } = useAccount();
 
@@ -206,6 +210,7 @@ export const useContractPreview = (contract: LTSContract) => {
     vault: 'vaultPreview',
     legacypool: 'legacyPoolPreview',
     metavault: 'metavaultPreview',
+    governance: 'governancePreview',
   }[contract.type];
 
   const fn = {
@@ -215,9 +220,10 @@ export const useContractPreview = (contract: LTSContract) => {
     vault: vaultPreview,
     legacypool: legacyPoolPreview,
     metavault: metavaultPreview,
+    governance: governancePreview,
   }[contract.type];
 
-  return useQuery([name, contract, walletAddress], fn, {
+  return useQuery([name, contract.address, walletAddress], fn, {
     enabled: contract.balance.gt(constants.Zero),
   });
 };
@@ -285,6 +291,12 @@ export const useContractPrepareConfig = (contract: LTSContract) => {
       return {
         ...config,
         functionName: 'exit',
+      };
+    case 'governance':
+      return {
+        ...config,
+        functionName: 'withdraw',
+        args: [contract.balance, walletAddress, false, false],
       };
     case 'metavault':
       return {
