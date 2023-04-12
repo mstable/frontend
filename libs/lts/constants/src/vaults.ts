@@ -1,6 +1,6 @@
 import { FeederPoolVaultABI } from '@frontend/shared-constants';
 import { Vault } from '@frontend/shared-icons';
-import { mainnet } from 'wagmi/chains';
+import { mainnet, polygon } from 'wagmi/chains';
 
 import type { Contract } from './types';
 
@@ -84,6 +84,14 @@ export const vaults: Contract[] = [
     type: 'vault',
     abi: FeederPoolVaultABI,
     chain: mainnet.id,
+    icon: Vault,
+  },
+  {
+    name: 'imUSD Vault',
+    address: '0x32aBa856Dc5fFd5A56Bcd182b13380e5C855aa29',
+    type: 'vault',
+    abi: FeederPoolVaultABI,
+    chain: polygon.id,
     icon: Vault,
   },
 ];

@@ -46,6 +46,13 @@ export const { Provider, useTrackedState } = createContainer(() => {
       chainId: c.chain,
       args: [walletAddress],
     })),
+    select(res) {
+      return res.map((r, i) =>
+        initialState.contracts[i]?.balanceSelect
+          ? initialState.contracts[i].balanceSelect(r)
+          : r,
+      );
+    },
     enabled: !!walletAddress,
     watch: true,
   });

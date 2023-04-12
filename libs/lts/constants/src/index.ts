@@ -1,3 +1,4 @@
+import { governances } from './governance';
 import { legacyPools } from './legacyPools';
 import { metavaults } from './metavaults';
 import { pools } from './pools';
@@ -22,4 +23,5 @@ export const contracts: Contract[] = [
   ...legacyPools,
   ...vaults,
   ...metavaults,
+  ...governances,
 ];

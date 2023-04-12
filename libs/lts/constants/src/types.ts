@@ -9,7 +9,8 @@ export type ContractType =
   | 'pool'
   | 'vault'
   | 'legacypool'
-  | 'metavault';
+  | 'metavault'
+  | 'governance';
 
 export type Contract = {
   address: HexAddress;
@@ -19,6 +20,7 @@ export type Contract = {
   chain: number;
   icon: ComponentType<SvgIconProps>;
   balanceFn?: string;
+  balanceSelect?: (res: any) => any;
   stakingTokenAddress?: HexAddress;
   vaultAddress?: HexAddress;
 };
