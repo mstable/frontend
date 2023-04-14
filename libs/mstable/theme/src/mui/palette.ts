@@ -99,7 +99,7 @@ const light: ThemeOptions = {
 
 const dark: ThemeOptions = mergeDeepRight(light, {
   palette: {
-    mode: 'dark',
+    mode: 'dark' as PaletteMode,
     secondary: {
       light: colors.white,
       main: colors.black50,

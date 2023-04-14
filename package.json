@@ -20,6 +20,8 @@
     "@emotion/styled": "11.10.6",
     "@fontsource/plus-jakarta-sans": "^4.5.11",
     "@fontsource/red-hat-mono": "^4.5.12",
+    "@fontsource/roboto": "^4.5.8",
+    "@fontsource/roboto-mono": "^4.5.10",
     "@gnosis.pm/safe-apps-wagmi": "^2.1.0",
     "@mstable/metavaults-web": "^0.0.6",
     "@mui/icons-material": "^5.11.16",
