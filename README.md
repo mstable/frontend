@@ -1,8 +1,3 @@
-<br/>
-<img src="https://mstable.org/assets/img/email/mstable_logo_horizontal_black.png" width="420" >
-
-<br />
-
 # e-Horizon Demo
 
 ## Quickstart
