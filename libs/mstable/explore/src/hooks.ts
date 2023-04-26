@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { useDataSource } from '@frontend/mstable-data-access';
-import { supportedMetavaults } from '@frontend/shared-constants';
+import { metavaults } from '@frontend/shared-constants';
 import { useGetPrices, usePrices } from '@frontend/shared-providers';
 import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import { alpha } from '@mui/material';
@@ -145,16 +145,16 @@ export const useChartData = (metavault: Metavault, isSmallChart?: boolean) => {
 export const useTotalTvl = () => {
   const { chain } = useNetwork();
   const { currency } = usePrices();
-  const metavaults = supportedMetavaults[chain?.id || mainnet.id];
+  const mvs = metavaults[chain?.id || mainnet.id];
   const { data: assets, isLoading: assetLoading } = useContractReads({
-    contracts: metavaults.map((mv) => ({
+    contracts: mvs.map((mv) => ({
       address: mv.address,
       abi: erc4626ABI,
       functionName: 'asset',
     })),
   });
   const { data: tvls, isLoading: tvlsLoading } = useContractReads({
-    contracts: metavaults.map((mv) => ({
+    contracts: mvs.map((mv) => ({
       address: mv.address,
       abi: erc4626ABI,
       functionName: 'totalAssets',
@@ -176,7 +176,7 @@ export const useTotalTvl = () => {
       data:
         assetLoading || tvlsLoading || decimalsLoading || priceLoading
           ? 0
-          : assets.reduce((acc, curr, idx) => {
+          : (assets as string[]).reduce((acc, curr, idx) => {
               const price = pathOr(1, [curr, currency.toLowerCase()], prices);
               const totalAssets = new BigDecimal(
                 (tvls?.[idx] as unknown as BigNumberish) ?? constants.One,

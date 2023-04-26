@@ -1,8 +1,9 @@
-import type { HexAddress } from '@frontend/shared-utils';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { MessageDescriptor } from 'react-intl';
 
 import type { Protocol } from '../protocols';
 import type { Token } from '../tokens';
+import type { Contract } from '../types';
 
 export type SupportedMetavault = 'mvusdc3pcv' | 'test';
 
@@ -11,10 +12,8 @@ export type Strategy = {
   strategy: MessageDescriptor;
 };
 
-export type Metavault = {
+export type Metavault = Contract & {
   id: SupportedMetavault;
-  address: HexAddress;
-  name: string;
   tags: MessageDescriptor[];
   strategyDescription?: MessageDescriptor;
   strategies: Strategy[];

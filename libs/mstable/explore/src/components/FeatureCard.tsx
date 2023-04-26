@@ -1,4 +1,4 @@
-import { supportedMetavaults } from '@frontend/shared-constants';
+import { metavaults } from '@frontend/shared-constants';
 import { usePrices } from '@frontend/shared-providers';
 import { hoverPrimarySx } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
@@ -42,8 +42,8 @@ export const FeatureCard = () => {
   const { data: feeData, isLoading: feeLoading } = useFeeData({
     formatUnits: 'gwei',
   });
-  const metavaults = supportedMetavaults[chain?.id || mainnet.id];
-  const featuredMv = metavaults.find((mv) => mv.featured);
+  const mvs = metavaults[chain?.id || mainnet.id];
+  const featuredMv = mvs.find((mv) => mv.featured);
   const { data: totalTvl, isLoading: totalTvlLoading } = useTotalTvl();
   const { currency } = usePrices();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));

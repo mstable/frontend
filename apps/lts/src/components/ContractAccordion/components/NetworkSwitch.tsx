@@ -87,7 +87,7 @@ export const NetworkSwitch = (props: StackProps) => {
             },
           ]}
         >
-          <ChainIcon id={c.id} />
+          <ChainIcon chainId={c.id} />
         </Button>
       ))}
     </Stack>

@@ -1,33 +1,25 @@
-import {
-  Arbitrum,
-  Ethereum,
-  Nightfall,
-  Optimism,
-  Polygon,
-  Zk,
-} from '@frontend/shared-icons';
+import { Arbitrum, Ethereum, Optimism, Polygon } from '@frontend/shared-icons';
 import { SvgIcon } from '@mui/material';
 import { Link } from 'phosphor-react';
-import { arbitrum, mainnet, polygon } from 'wagmi/chains';
+import { arbitrum, mainnet, optimism, polygon } from 'wagmi/chains';
 
-import type { SupportedChain } from '@frontend/shared-constants';
 import type { SvgIconProps } from '@mui/material';
 
 export type ChainIconProps = {
-  id?: number;
+  chainId?: number;
   name?: SupportedChain | string;
-} & Omit<SvgIconProps, 'id'>;
+} & SvgIconProps;
 
-export const supportedChains: Record<
+export type SupportedChain = 'mainnet' | 'polygon' | 'optimism' | 'arbitrum';
+
+export const supportedChainName: Record<
   SupportedChain,
   (props: SvgIconProps) => JSX.Element
 > = {
   arbitrum: Arbitrum,
-  ethereum: Ethereum,
-  nightfall: Nightfall,
+  mainnet: Ethereum,
   optimism: Optimism,
   polygon: Polygon,
-  zk: Zk,
 };
 
 export const supportedChainId: Record<
@@ -37,10 +29,13 @@ export const supportedChainId: Record<
   [arbitrum.id]: Arbitrum,
   [mainnet.id]: Ethereum,
   [polygon.id]: Polygon,
+  [optimism.id]: Optimism,
 };
 
-export const ChainIcon = ({ id, name, ...rest }: ChainIconProps) => {
-  const Icon = id ? supportedChainId[id] : supportedChains[name?.toLowerCase()];
+export const ChainIcon = ({ chainId, name, ...rest }: ChainIconProps) => {
+  const Icon = chainId
+    ? supportedChainId[chainId]
+    : supportedChainName[name?.toLowerCase()];
 
   return Icon ? (
     <Icon {...rest} />

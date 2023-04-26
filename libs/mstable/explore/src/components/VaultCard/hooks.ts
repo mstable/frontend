@@ -31,6 +31,7 @@ export const useVaultCardProps = ({
   const { data, isLoading } = useMetavaultQuery(dataSource, {
     id: metavault.address,
     firstBlock: metavault.firstBlock,
+    days: 7,
   });
   const chartData = useChartData(metavault);
   const { data: asset } = useContractRead({
