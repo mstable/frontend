@@ -1,3 +1,32 @@
+import {
+  AaveProtocol,
+  ALCX,
+  AlUSD,
+  Balancer,
+  BUSD,
+  ConvexProtocol,
+  CurveProtocol,
+  DAI,
+  FEI,
+  FLX,
+  FRAX,
+  GUSD,
+  HBTC,
+  ImUSD,
+  LUSD,
+  MBTC,
+  MTA,
+  MUSD,
+  RAI,
+  RenBTC,
+  SBTC,
+  SUSD,
+  TBTC,
+  USDC,
+  USDT,
+  VMTA,
+  WBTC,
+} from '@frontend/shared-icons';
 import { erc20ABI } from 'wagmi';
 
 import type { Token } from './types';
@@ -9,6 +38,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: AaveProtocol,
   },
   {
     address: '0x4da27a545c0c5B758a6BA100e3a049001de870f5',
@@ -16,6 +46,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: AaveProtocol,
   },
   {
     address: '0xc00e94Cb662C3520282E6f5717214004A7f26888',
@@ -30,6 +61,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: CurveProtocol,
   },
   {
     address: '0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B',
@@ -37,6 +69,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: ConvexProtocol,
   },
   {
     address: '0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490',
@@ -44,6 +77,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: CurveProtocol,
   },
   {
     address: '0xa3BeD4E1c75D00fa6f4E5E6922DB7261B5E9AcD2',
@@ -51,6 +85,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: MTA,
   },
   {
     address: '0xaE8bC96DA4F9A9613c323478BE181FDb2Aa0E1BF',
@@ -58,6 +93,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: VMTA,
   },
   {
     address: '0xe2f2a5C287993345a840Db3B0845fbC70f5935a5',
@@ -65,6 +101,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: MUSD,
   },
   {
     address: '0x30647a72Dc82d7Fbb1123EA74716aB8A317Eac19',
@@ -72,6 +109,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: ImUSD,
   },
   {
     address: '0x945Facb997494CC2570096c74b5F66A3507330a1',
@@ -79,6 +117,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: MBTC,
   },
   {
     address: '0x57Ab1ec28D129707052df4dF418D58a2D46d5f51',
@@ -86,6 +125,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: SUSD,
   },
   {
     address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
@@ -93,6 +133,7 @@ export const toksMainnet: Token[] = [
     decimals: 6,
     chainId: 1,
     abi: erc20ABI,
+    icon: USDC,
   },
   {
     address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
@@ -100,6 +141,7 @@ export const toksMainnet: Token[] = [
     decimals: 6,
     chainId: 1,
     abi: erc20ABI,
+    icon: USDT,
   },
   {
     address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
@@ -107,6 +149,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: DAI,
   },
   {
     address: '0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd',
@@ -114,6 +157,7 @@ export const toksMainnet: Token[] = [
     decimals: 2,
     chainId: 1,
     abi: erc20ABI,
+    icon: GUSD,
   },
   {
     address: '0x4Fabb145d64652a948d72533023f6E7A623C7C53',
@@ -121,6 +165,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: BUSD,
   },
   {
     address: '0x5f98805A4E8be255a32880FDeC7F6728C6568bA0',
@@ -128,6 +173,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: LUSD,
   },
   {
     address: '0x03ab458634910aad20ef5f1c8ee96f1d6ac54919',
@@ -135,6 +181,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: RAI,
   },
   {
     address: '0x6243d8cea23066d098a15582d81a598b4e8391f4',
@@ -142,6 +189,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: FLX,
   },
   {
     address: '0x956F47F50A910163D8BF957Cf5846D573E7f87CA',
@@ -149,6 +197,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: FEI,
   },
   {
     address: '0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B',
@@ -163,6 +212,7 @@ export const toksMainnet: Token[] = [
     decimals: 8,
     chainId: 1,
     abi: erc20ABI,
+    icon: RenBTC,
   },
   {
     address: '0xfE18be6b3Bd88A2D2A7f928d00292E7a9963CfC6',
@@ -170,6 +220,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: SBTC,
   },
   {
     address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
@@ -177,6 +228,7 @@ export const toksMainnet: Token[] = [
     decimals: 8,
     chainId: 1,
     abi: erc20ABI,
+    icon: WBTC,
   },
   {
     address: '0x0316EB71485b0Ab14103307bf65a021042c6d380',
@@ -184,6 +236,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: HBTC,
   },
   {
     address: '0x8dAEBADE922dF735c38C80C7eBD708Af50815fAa',
@@ -191,6 +244,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: TBTC,
   },
   {
     address: '0x18084fbA666a33d37592fA2633fD49a74DD93a88',
@@ -198,6 +252,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: TBTC,
   },
   {
     address: '0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9',
@@ -205,6 +260,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: AlUSD,
   },
   {
     address: '0xdBdb4d16EdA451D0503b854CF79D55697F90c8DF',
@@ -212,6 +268,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: ALCX,
   },
   {
     address: '0x853d955aCEf822Db058eb8505911ED77F175b99e',
@@ -219,6 +276,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: FRAX,
   },
 
   {
@@ -227,6 +285,7 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
+    icon: MBTC,
   },
   {
     address: '0xba100000625a3754423978a60c9317c58a424e3D',
@@ -234,54 +293,6 @@ export const toksMainnet: Token[] = [
     decimals: 18,
     chainId: 1,
     abi: erc20ABI,
-  },
-  {
-    address: '0x1AEf73d49Dedc4b1778d0706583995958Dc862e6',
-    symbol: 'musd3CRV',
-    decimals: 18,
-    chainId: 1,
-    abi: erc20ABI,
-  },
-  {
-    address: '0xB30dA2376F63De30b42dC055C93fa474F31330A5',
-    symbol: 'alUSDFRAXB3CRV-f',
-    decimals: 18,
-    chainId: 1,
-    abi: erc20ABI,
-  },
-  {
-    address: '0xB9B47E72819934d7A5d60Bf08cD2C78072383EBb',
-    symbol: 'vcx3CRV-mUSD',
-    decimals: 18,
-    chainId: 1,
-    abi: erc20ABI,
-  },
-  {
-    address: '0x98c5910823C2E67d54e4e0C03de44043DbfA7ca8',
-    symbol: 'vcx3CRV-FRAX',
-    decimals: 18,
-    chainId: 1,
-    abi: erc20ABI,
-  },
-  {
-    address: '0x87Ed92648fAE3b3930577c92c8A247b127ED8949',
-    symbol: 'vcx3CRV-BUSD',
-    decimals: 18,
-    chainId: 1,
-    abi: erc20ABI,
-  },
-  {
-    address: '0x9614a4C61E45575b56c7e0251f63DCDe797d93C5',
-    symbol: 'mv3CRV-CVX',
-    decimals: 18,
-    chainId: 1,
-    abi: erc20ABI,
-  },
-  {
-    address: '0x455fB969dC06c4Aa77e7db3f0686CC05164436d2',
-    symbol: 'mvUSDC-3PCV',
-    decimals: 18,
-    chainId: 1,
-    abi: erc20ABI,
+    icon: Balancer,
   },
 ];

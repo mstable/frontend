@@ -1,6 +1,7 @@
 /* eslint-disable formatjs/no-id */
+import { ConvexProtocol, CurveProtocol, MvUSDC } from '@frontend/shared-icons';
 import { defineMessage } from 'react-intl';
-import { erc4626ABI } from 'wagmi';
+import { erc20ABI, erc4626ABI } from 'wagmi';
 import { goerli, mainnet } from 'wagmi/chains';
 
 import { protocols } from '../protocols';
@@ -16,10 +17,57 @@ const main: Metavault = {
   decimals: 18,
   chainId: mainnet.id,
   abi: erc4626ABI,
+  icon: MvUSDC,
+  asset: tokens[mainnet.id].find(
+    // USDC
+    (token) => token.address === '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+  ),
+  underlyings: [
+    {
+      address: '0xB9B47E72819934d7A5d60Bf08cD2C78072383EBb',
+      symbol: 'vcx3CRV-mUSD',
+      decimals: 18,
+      chainId: mainnet.id,
+      abi: erc20ABI,
+      icon: CurveProtocol,
+    },
+    {
+      address: '0x98c5910823C2E67d54e4e0C03de44043DbfA7ca8',
+      symbol: 'vcx3CRV-FRAX',
+      decimals: 18,
+      chainId: mainnet.id,
+      abi: erc20ABI,
+      icon: CurveProtocol,
+    },
+    {
+      address: '0x87Ed92648fAE3b3930577c92c8A247b127ED8949',
+      symbol: 'vcx3CRV-BUSD',
+      decimals: 18,
+      chainId: mainnet.id,
+      abi: erc20ABI,
+      icon: CurveProtocol,
+    },
+  ],
+  proxy: {
+    address: '0x9614a4C61E45575b56c7e0251f63DCDe797d93C5',
+    symbol: 'mv3CRV-CVX',
+    decimals: 18,
+    chainId: mainnet.id,
+    abi: erc20ABI,
+    icon: ConvexProtocol,
+  },
   name: '3Pool Convex Meta Vault',
   primaryColor: '#2775CA',
   featured: true,
   firstBlock: 15946291,
+  fees: {
+    liquidation: 0.16,
+    performance: 0.04,
+  },
+  gases: {
+    deposit: 500000,
+    withdraw: 500000,
+  },
   tags: [
     defineMessage({
       defaultMessage: 'Stablecoin Strategy',
@@ -81,14 +129,6 @@ const main: Metavault = {
       '0xdAC17F958D2ee523a2206206994597C13D831ec7',
     ].includes(tok.address),
   ),
-  fees: {
-    liquidation: 0.16,
-    performance: 0.04,
-  },
-  gases: {
-    deposit: 500000,
-    withdraw: 500000,
-  },
 };
 
 const goer: Metavault = {

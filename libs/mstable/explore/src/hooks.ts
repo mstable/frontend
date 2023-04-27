@@ -43,6 +43,7 @@ export const useChartData = (metavault: Metavault, isSmallChart?: boolean) => {
   const { data } = useMetavaultQuery(dataSource, {
     id: metavault.address,
     firstBlock: metavault.firstBlock,
+    days: 7,
   });
 
   const series = useMemo(

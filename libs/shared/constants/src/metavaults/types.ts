@@ -14,10 +14,12 @@ export type Strategy = {
 
 export type Metavault = Contract & {
   id: SupportedMetavault;
-  tags: MessageDescriptor[];
-  strategyDescription?: MessageDescriptor;
-  strategies: Strategy[];
-  assets: Token[];
+  asset: Token;
+  underlyings: Token[];
+  proxy: Contract;
+  primaryColor: string;
+  featured?: boolean;
+  firstBlock: number;
   fees: {
     liquidation: number;
     performance: number;
@@ -26,7 +28,10 @@ export type Metavault = Contract & {
     deposit: number;
     withdraw: number;
   };
-  primaryColor: string;
-  featured?: boolean;
-  firstBlock: number;
+
+  // labels and doc
+  tags: MessageDescriptor[];
+  strategyDescription?: MessageDescriptor;
+  strategies: Strategy[];
+  assets: Token[];
 };
