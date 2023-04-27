@@ -1,0 +1,59 @@
+name: burn Dev
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/burn/**"
+      - "libs/burn/**"
+      - "libs/shared/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout [main]
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+        name: Setup node
+        with:
+          node-version: 16
+          cache: "yarn"
+
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq
+
+      - run: yarn install --frozen-lockfile
+        name: Install dependencies
+
+      - name: Build
+        env:
+          infura: ${{ secrets.INFURA_API_KEY }}
+        run: NX_INFURA_API_KEY=$infura yarn nx build burn
+
+      - name: Firebase deploy
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_FRONTEND_7E17F }}
+        run: |
+          yarn firebase use burn
+          yarn firebase hosting:channel:deploy dev -c ./firebase.burn.json --expires 30d
+
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "✨ New DEV version of Burn 🚀 Deploy url: https://burn-ec6bb--dev-f9ivvgmp.web.app/"

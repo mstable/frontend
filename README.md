@@ -14,7 +14,8 @@ The following table lists the mStable apps included in this repository
 | Status | Name              | Nx project | Port | Public hosts                                            |
 | :---: | :---------------- | :--------- | :--- | :------------------------------------------------------ |
 | ✅    | Meta Vaults       | `mstable`  | 4200 | [Google Cloud](https://yield.mstable.org/)              |
-| 🚧    | Long Term Support | `lts`      | 4201 | [Google Cloud](https://apps-lts--dev-vite2x32.web.app/) |
+| ✅    | Long Term Support | `lts`      | 4201 | [Google Cloud](https://withdraw.mstable.org/) |
+| 🚧    | Burn              | `burn`     | 4202 | [Google Cloud](https://burn-ec6bb--dev-f9ivvgmp.web.app/) |
 
 ## Quickstart
 To get started with this repository, run the following commands:
@@ -31,6 +32,7 @@ If you encounter any issues during the installation process, please refer to the
 ```bash
 yarn nx serve mstable
 yarn nx serve lts
+yarn nx serve burn
 ```
 
 ### Building an app
@@ -38,6 +40,7 @@ yarn nx serve lts
 ```bash
 yarn nx run build mstable
 yarn nx run build lts
+yarn nx run build burn
 ```
 
 ## Developing
