@@ -9,7 +9,6 @@ import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { Button, CircularProgress } from '@mui/material';
 import { useIntl } from 'react-intl';
 import {
-  erc4626ABI,
   mainnet,
   useAccount,
   useContractWrite,
@@ -38,7 +37,7 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
   const pushNotification = usePushNotification();
   const { address: walletAddress } = useAccount();
   const {
-    metavault: { address },
+    metavault: { address, abi },
   } = useMetavault();
   const { amount, operation, needsApproval, isError, tab } = useOperations();
   const reset = useReset();
@@ -66,7 +65,7 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
 
   const { config: submitConfig } = usePrepareContractWrite({
     address,
-    abi: erc4626ABI,
+    abi,
     functionName: operation,
     args,
     enabled: !!amount?.exact && !!walletAddress && !needsApproval,

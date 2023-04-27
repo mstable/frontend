@@ -21,8 +21,13 @@ import { HistoryDialog } from './components/HistoryDialog';
 
 export const PositionContent = () => {
   const intl = useIntl();
-  const { mvBalance, mvBalanceInAsset, assetToken, mvDeposited, profitOrLoss } =
-    useMetavault();
+  const {
+    mvBalance,
+    mvBalanceInAsset,
+    mvDeposited,
+    profitOrLoss,
+    metavault: { asset },
+  } = useMetavault();
   const { isConnected } = useAccount();
 
   const roi =
@@ -49,7 +54,7 @@ export const PositionContent = () => {
       <HighlightUpdate
         variant="value1"
         value={mvBalanceInAsset}
-        suffix={assetToken?.symbol}
+        suffix={asset.symbol}
         commas
         color="text.secondary"
         mb={1}
@@ -81,7 +86,7 @@ export const PositionContent = () => {
             : 'text.secondary'
         }
         end={profitOrLoss?.simple}
-        suffix={assetToken?.symbol}
+        suffix={asset.symbol}
       />
       <CountUp
         variant="value5"

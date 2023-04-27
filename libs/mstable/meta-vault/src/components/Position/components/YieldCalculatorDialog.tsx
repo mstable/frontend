@@ -55,7 +55,10 @@ export const YieldCalculatorDialog = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate<MvRoute>();
-  const { assetToken, assetBalance, metavault } = useMetavault();
+  const {
+    assetBalance,
+    metavault: { asset, address, firstBlock, decimals, symbol, gases },
+  } = useMetavault();
   const { isConnected } = useAccount();
   const [amount, setAmount] = useState<BigDecimal>();
   const [apy, setApy] = useState<string>();
@@ -68,11 +71,7 @@ export const YieldCalculatorDialog = ({
   const { data: price } = useGetNativePrice();
 
   const dataSource = useDataSource();
-  const { data } = useMetavaultQuery(
-    dataSource,
-    { id: metavault.address, firstBlock: metavault.firstBlock },
-    { enabled: !!metavault.address },
-  );
+  const { data } = useMetavaultQuery(dataSource, { id: address, firstBlock });
   useEffect(() => {
     if (data?.vault?.apy) {
       setApy(
@@ -84,16 +83,10 @@ export const YieldCalculatorDialog = ({
   }, [data?.vault?.apy, intl]);
 
   const depositGasFee =
-    (price *
-      (metavault.gases?.deposit || 0) *
-      Number(feeData[gasPriceConfig])) /
-    10e9;
+    (price * (gases?.deposit || 0) * Number(feeData[gasPriceConfig])) / 10e9;
 
   const withdrawlGasFee =
-    (price *
-      (metavault.gases?.withdraw || 0) *
-      Number(feeData[gasPriceConfig])) /
-    10e9;
+    (price * (gases?.withdraw || 0) * Number(feeData[gasPriceConfig])) / 10e9;
 
   const totalValue =
     (amount?.simple || 0) *
@@ -153,7 +146,7 @@ export const YieldCalculatorDialog = ({
           >
             <TokenInput
               amount={amount}
-              token={assetToken}
+              token={asset}
               max={assetBalance}
               label={intl.formatMessage({
                 defaultMessage: 'Enter Amount',
@@ -365,7 +358,7 @@ export const YieldCalculatorDialog = ({
               color={(theme) => theme.palette.success.main}
             >
               {Intl.NumberFormat('en-US').format(profitOrLoss)}&nbsp;
-              {assetToken?.symbol || ''}
+              {asset.symbol || ''}
             </Typography>
           </Box>
           <Box
@@ -382,7 +375,7 @@ export const YieldCalculatorDialog = ({
             </Typography>
             <Typography variant="value5">
               {Intl.NumberFormat('en-US').format(totalValue)}&nbsp;
-              {assetToken?.symbol || ''}
+              {asset.symbol || ''}
             </Typography>
           </Box>
           {/* TODO: calculate PnL in dollar value */}
@@ -413,7 +406,7 @@ export const YieldCalculatorDialog = ({
             >
               {`${Intl.NumberFormat('en-US').format(
                 totalValue - totalGasFee,
-              )}&nbsp;${assetToken?.symbol ?? ''}`}
+              )}&nbsp;${asset.symbol ?? ''}`}
             </Typography>
           </Box>
           {isMobile && (

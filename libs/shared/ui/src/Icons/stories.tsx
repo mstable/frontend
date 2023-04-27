@@ -1,6 +1,6 @@
 import { Grid, Stack, Typography } from '@mui/material';
 
-import { ChainIcon as ChIcon, supportedChains } from './Chain';
+import { ChainIcon as ChIcon, supportedChainName } from './Chain';
 import { ExpandIcon as ExIcon } from './ExpandIcon';
 import { MVIcon as MvIcon, supportedMVs } from './Metavault';
 import { ProtocolIcon as PrIcon, supportedProtocols } from './Protocol';
@@ -50,7 +50,7 @@ const IconGrid = ({ children }: Children) => (
 
 export const ChainIcon = () => (
   <IconGrid>
-    {Object.keys(supportedChains).map((key) => (
+    {Object.keys(supportedChainName).map((key) => (
       <IconCard key={key} label={key}>
         <ChIcon name={key} {...iconProps} />
       </IconCard>

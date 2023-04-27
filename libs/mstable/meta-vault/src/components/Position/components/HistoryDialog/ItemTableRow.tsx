@@ -13,7 +13,9 @@ import type { TxHistory } from '../../../../types';
 
 export const ItemTableRow = ({ tx }: { tx: TxHistory }) => {
   const intl = useIntl();
-  const { assetToken, mvToken } = useMetavault();
+  const {
+    metavault: { asset, decimals },
+  } = useMetavault();
   const { chain } = useNetwork();
 
   return (
@@ -62,24 +64,19 @@ export const ItemTableRow = ({ tx }: { tx: TxHistory }) => {
         <Box display="flex" flexDirection="column">
           <Box display="flex" alignItems="center" mb={1}>
             <TokenIcon
-              symbol={assetToken?.symbol}
+              symbol={asset.symbol}
               sx={{ height: 14, width: 14, mr: 1 }}
             />
             <Typography variant="value5">
               {`${Intl.NumberFormat('en-US').format(
-                new BigDecimal(
-                  tx.assetAmount ?? constants.Zero,
-                  assetToken?.decimals,
-                ).simple,
-              )} ${assetToken?.symbol}`}
+                new BigDecimal(tx.assetAmount ?? constants.Zero, asset.decimals)
+                  .simple,
+              )} ${asset.symbol}`}
             </Typography>
           </Box>
           <Typography variant="value5" color="text.secondary">
             {`${Intl.NumberFormat('en-US').format(
-              new BigDecimal(
-                tx.shareAmount ?? constants.Zero,
-                mvToken?.decimals,
-              ).simple,
+              new BigDecimal(tx.shareAmount ?? constants.Zero, decimals).simple,
             )} ${intl.formatMessage({
               defaultMessage: 'Shares',
               id: 'mrwfXX',

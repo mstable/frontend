@@ -5,13 +5,7 @@ import { constants } from 'ethers';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { useDebounce } from 'react-use';
-import {
-  erc20ABI,
-  erc4626ABI,
-  useAccount,
-  useContractRead,
-  useNetwork,
-} from 'wagmi';
+import { useAccount, useContractRead, useNetwork } from 'wagmi';
 
 import { useMetavault } from '../../state';
 
@@ -60,10 +54,8 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   const { chain } = useNetwork();
   const { address: walletAddress, isConnected } = useAccount();
   const {
-    metavault: { address },
-    assetToken,
+    metavault: { address, asset, abi, decimals },
     assetBalance,
-    mvToken,
     mvBalance,
   } = useMetavault();
   const [state, setState] = useState<OperationsState>(initialState);
@@ -71,8 +63,8 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
   const { amount, operation, allowance, preview } = state;
 
   const { data: all } = useContractRead({
-    address: assetToken?.address,
-    abi: erc20ABI,
+    address: asset.address,
+    abi: asset.abi,
     functionName: 'allowance',
     args: [walletAddress, address],
     enabled: isConnected,
@@ -92,26 +84,25 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
 
   const { data: pre } = useContractRead({
     address,
-    abi: erc4626ABI,
+    abi,
     functionName: 'convertToAssets',
-    enabled: !!assetToken?.decimals && !!mvToken?.decimals,
-    args: [BigDecimal.ONE.scale(mvToken?.decimals ?? 18).exact],
+    args: [BigDecimal.ONE.scale(decimals).exact],
     watch: true,
     cacheOnBlock: true,
   });
 
   useEffect(() => {
-    if (pre && assetToken?.decimals) {
+    if (pre) {
       setState(
         produce((draft) => {
           draft.assetsPerShare = new BigDecimal(
             pre as unknown as BigNumberish,
-            assetToken.decimals,
+            asset.decimals,
           );
         }),
       );
     }
-  }, [assetToken?.decimals, pre]);
+  }, [asset.decimals, pre]);
 
   type PreviewOperation =
     | 'previewDeposit'
@@ -121,7 +112,7 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
 
   const { refetch: fetchPreview } = useContractRead({
     address,
-    abi: erc4626ABI,
+    abi,
     functionName: {
       deposit: 'previewDeposit',
       mint: 'previewMint',
@@ -132,8 +123,8 @@ export const { Provider, useUpdate, useTrackedState } = createContainer<
     enabled: false,
     onSuccess: (data: BigNumberish) => {
       const dec = ['deposit', 'withdraw'].includes(operation)
-        ? mvToken?.decimals
-        : assetToken?.decimals;
+        ? decimals
+        : asset.decimals;
       setState(
         produce((draft) => {
           draft.preview = data ? new BigDecimal(data, dec) : null;

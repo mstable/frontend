@@ -15,8 +15,6 @@ import { ArrowsClockwise, Fire, Ticket, Vault, Wallet } from 'phosphor-react';
 import { pathOr } from 'ramda';
 import { useIntl } from 'react-intl';
 import {
-  erc20ABI,
-  erc4626ABI,
   useAccount,
   useFeeData,
   useNetwork,
@@ -65,7 +63,9 @@ const logoBoxProps: BoxProps = {
 const DepositRecap = (props: StackProps) => {
   const intl = useIntl();
   const { amount, preview, isInputLoading, operation } = useOperations();
-  const { assetToken } = useMetavault();
+  const {
+    metavault: { asset },
+  } = useMetavault();
 
   return (
     <Stack {...props} direction="column" spacing={2}>
@@ -124,7 +124,7 @@ const DepositRecap = (props: StackProps) => {
                 ? preview?.simpleRounded.toString() ?? '0.00'
                 : amount?.simpleRounded.toString() ?? '0.00'
             } ${
-              assetToken?.symbol ??
+              asset.symbol ??
               intl.formatMessage({ defaultMessage: 'Assets', id: 'd1uESJ' })
             }`
           )}
@@ -152,7 +152,9 @@ const DepositRecap = (props: StackProps) => {
 const WithdrawRecap = (props: StackProps) => {
   const intl = useIntl();
   const { amount, preview, isInputLoading, operation } = useOperations();
-  const { assetToken } = useMetavault();
+  const {
+    metavault: { asset },
+  } = useMetavault();
 
   return (
     <Stack {...props} direction="column" spacing={2}>
@@ -226,7 +228,7 @@ const WithdrawRecap = (props: StackProps) => {
                 ? preview?.simpleRounded.toString() ?? '0.00'
                 : amount?.simpleRounded.toString() ?? '0.00'
             } ${
-              assetToken?.symbol ??
+              asset.symbol ??
               intl.formatMessage({ defaultMessage: 'Assets', id: 'd1uESJ' })
             }`
           )}
@@ -243,8 +245,7 @@ const GasFeesRecap = (props: StackProps) => {
   const { chain } = useNetwork();
   const { symbol } = usePrices();
   const {
-    metavault: { address },
-    assetToken,
+    metavault: { address, abi, asset },
   } = useMetavault();
   const { amount, needsApproval, operation } = useOperations();
   const { data: price } = useGetNativePrice();
@@ -269,7 +270,7 @@ const GasFeesRecap = (props: StackProps) => {
     isError: submitError,
   } = usePrepareContractWrite({
     address,
-    abi: erc4626ABI,
+    abi,
     functionName: operation,
     args,
     enabled: false,
@@ -280,8 +281,8 @@ const GasFeesRecap = (props: StackProps) => {
     isLoading: approveLoading,
     isError: approveError,
   } = usePrepareContractWrite({
-    address: assetToken?.address,
-    abi: erc20ABI,
+    address: asset.address,
+    abi: asset.abi,
     functionName: 'approve',
     args: [address, constants.MaxUint256],
     enabled: false,
@@ -312,7 +313,7 @@ const GasFeesRecap = (props: StackProps) => {
   );
 
   useEffect(() => {
-    if (assetToken?.address && amount && amount?.exact.gt(constants.Zero)) {
+    if (asset.address && amount && amount?.exact.gt(constants.Zero)) {
       if (needsApproval) {
         fetchApprovalConfig();
       } else {
@@ -321,7 +322,7 @@ const GasFeesRecap = (props: StackProps) => {
     }
   }, [
     amount,
-    assetToken?.address,
+    asset.address,
     fetchApprovalConfig,
     fetchSubmitConfig,
     needsApproval,

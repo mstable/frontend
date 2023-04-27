@@ -1,4 +1,4 @@
-import { supportedMetavaults } from '@frontend/shared-constants';
+import { metavaults } from '@frontend/shared-constants';
 import { isNilOrEmpty } from '@frontend/shared-utils';
 import { Stack, Typography } from '@mui/material';
 import { propEq } from 'ramda';
@@ -29,7 +29,7 @@ export const LineChart = ({
 }: LineChartProps) => {
   const intl = useIntl();
   const { chain } = useNetwork();
-  const color = supportedMetavaults[chain?.id ?? mainnet.id].find(
+  const color = metavaults[chain?.id ?? mainnet.id].find(
     propEq(id, 'id'),
   )?.primaryColor;
 

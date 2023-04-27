@@ -7,7 +7,6 @@ import { Button, CircularProgress } from '@mui/material';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
 import {
-  erc20ABI,
   mainnet,
   useContractWrite,
   useNetwork,
@@ -33,8 +32,7 @@ export const ApprovalButton = (props: ButtonProps) => {
   const pushNotification = usePushNotification();
   const { exactApproval } = useSettings();
   const {
-    metavault: { address },
-    assetToken,
+    metavault: { address, asset, decimals, abi },
   } = useMetavault();
   const { amount, needsApproval } = useOperations();
   const setIsSubmitLoading = useSetIsSubmitLoading();
@@ -45,8 +43,8 @@ export const ApprovalButton = (props: ButtonProps) => {
   );
 
   const { config } = usePrepareContractWrite({
-    address: assetToken?.address,
-    abi: erc20ABI,
+    address: asset.address,
+    abi: asset.abi,
     functionName: 'approve',
     args,
     enabled: needsApproval,

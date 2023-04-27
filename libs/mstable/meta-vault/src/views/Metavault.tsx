@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { supportedMetavaults } from '@frontend/shared-constants';
+import { metavaults } from '@frontend/shared-constants';
 import { useTrack } from '@frontend/shared-providers';
 import { ErrorBoundary, ErrorCard, MVIcon } from '@frontend/shared-ui';
 import { Button, Grid, Stack, useMediaQuery, useTheme } from '@mui/material';
@@ -34,7 +34,7 @@ export const Metavault = (props: StackProps) => {
     params: { mvid },
   } = useMatch<MvRoute>();
   const metavault = useMemo(
-    () => supportedMetavaults[chain?.id ?? mainnet.id].find(propEq(mvid, 'id')),
+    () => metavaults[chain?.id ?? mainnet.id].find(propEq(mvid, 'id')),
     [chain?.id, mvid],
   );
 

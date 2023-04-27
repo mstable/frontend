@@ -49,9 +49,8 @@ export const VaultJumbo = (props: StackProps) => {
   const intl = useIntl();
   const theme = useTheme();
   const {
-    metavault: { address, name, tags, strategies, firstBlock },
+    metavault: { address, name, tags, strategies, firstBlock, asset },
     mvToken,
-    assetToken,
     roi,
   } = useMetavault();
   const dataSource = useDataSource();
@@ -62,7 +61,7 @@ export const VaultJumbo = (props: StackProps) => {
   );
   const { currency } = usePrices();
   const { data: prices, isLoading: isPriceLoading } = useGetPrices([
-    assetToken?.address,
+    asset.address,
   ]);
   const tvlTrend = useMemo(() => {
     if (isNilOrEmpty(data?.vault?.DailyVaultStats)) {
@@ -96,15 +95,15 @@ export const VaultJumbo = (props: StackProps) => {
     theme.palette.text.primary,
   ]);
   const tvl = useMemo(() => {
-    if (!mvToken?.totalAssets?.value || !assetToken?.decimals || !prices) {
+    if (!mvToken?.totalAssets?.value || !prices) {
       return null;
     }
 
     return (
-      new BigDecimal(mvToken.totalAssets.value, assetToken.decimals).simple *
+      new BigDecimal(mvToken.totalAssets.value, asset.decimals).simple *
       Number(pathOr(1, [currency.toLowerCase()], prices))
     );
-  }, [assetToken?.decimals, currency, mvToken?.totalAssets?.value, prices]);
+  }, [asset.decimals, currency, mvToken.totalAssets.value, prices]);
 
   return (
     <Stack

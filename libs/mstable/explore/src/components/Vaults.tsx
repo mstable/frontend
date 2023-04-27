@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { supportedMetavaults } from '@frontend/shared-constants';
+import { metavaults } from '@frontend/shared-constants';
 import {
   Box,
   Grid,
@@ -33,7 +33,7 @@ export const Vaults = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { chain } = useNetwork();
 
-  const metavaults = supportedMetavaults[chain?.id || mainnet.id];
+  const mvs = metavaults[chain?.id || mainnet.id];
 
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 
@@ -64,7 +64,7 @@ export const Vaults = () => {
       <Box pb={4}>
         {viewMode === 'grid' ? (
           <Grid container spacing={{ xs: 2, md: 3 }}>
-            {metavaults.map((mv) => (
+            {mvs.map((mv) => (
               <Grid key={mv.id} item xs={12} sm={6} lg={4}>
                 <VaultCard metavault={mv} to={`./${mv.id}`} />
               </Grid>
@@ -130,12 +130,12 @@ export const Vaults = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {metavaults.map((mv, i) => (
+                {mvs.map((mv, i) => (
                   <VaultTableRow
                     key={mv.id}
                     metavault={mv}
                     to={`./${mv.id}`}
-                    isLast={i === metavaults.length - 1}
+                    isLast={i === mvs.length - 1}
                   />
                 ))}
                 {COMING_SOON.map((cs) => (

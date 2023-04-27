@@ -18,8 +18,7 @@ export const OperationsForm = (props: StackProps) => {
   const intl = useIntl();
   const { isConnected } = useAccount();
   const {
-    assetToken,
-    mvToken,
+    metavault,
     assetBalance,
     mvBalance,
     assetBalanceInShare,
@@ -45,11 +44,7 @@ export const OperationsForm = (props: StackProps) => {
   const input = useMemo(
     () => ({
       placeholder: '0.00',
-      disabled:
-        !isConnected ||
-        isSubmitLoading ||
-        !mvToken?.decimals ||
-        !assetToken?.decimals,
+      disabled: !isConnected || isSubmitLoading,
       isConnected: isConnected,
       error: isError,
       components: {
@@ -63,13 +58,7 @@ export const OperationsForm = (props: StackProps) => {
         },
       },
     }),
-    [
-      assetToken?.decimals,
-      isConnected,
-      isError,
-      isSubmitLoading,
-      mvToken?.decimals,
-    ],
+    [isConnected, isError, isSubmitLoading],
   );
 
   const handlePrimaryChange = useCallback(
@@ -99,10 +88,10 @@ export const OperationsForm = (props: StackProps) => {
       mergeAll([
         input,
         {
-          token: assetToken,
+          token: metavault.asset,
           max: tab === 0 ? assetBalance : mvBalanceInAsset,
           maxIcon: 'wallet',
-          hideTokenBadge: !isConnected || !assetToken || tab === 1,
+          hideTokenBadge: !isConnected || tab === 1,
           hideBottomRow: tab === 1,
           label: intl.formatMessage({ defaultMessage: 'Asset', id: 'WKCp0D' }),
           onChange: handlePrimaryChange,
@@ -127,8 +116,8 @@ export const OperationsForm = (props: StackProps) => {
       ]) as TokenInputProps,
     [
       amount,
+      metavault.asset,
       assetBalance,
-      assetToken,
       handlePrimaryChange,
       input,
       intl,
@@ -146,10 +135,10 @@ export const OperationsForm = (props: StackProps) => {
       mergeAll([
         input,
         {
-          token: mvToken,
+          token: metavault,
           max: tab === 0 ? assetBalanceInShare : mvBalance,
           maxIcon: 'vault',
-          hideTokenBadge: !isConnected || !mvToken || tab === 0,
+          hideTokenBadge: !isConnected || tab === 0,
           hideBottomRow: tab === 0,
           label: intl.formatMessage({ defaultMessage: 'Shares', id: 'mrwfXX' }),
           tokenLabel: intl.formatMessage({
@@ -192,8 +181,8 @@ export const OperationsForm = (props: StackProps) => {
       intl,
       isConnected,
       isInputLoading,
+      metavault,
       mvBalance,
-      mvToken,
       operation,
       preview,
       tab,
@@ -219,13 +208,13 @@ export const OperationsForm = (props: StackProps) => {
     >
       <TokenInput {...primaryInput} />
       <Divider role="presentation" light={!isConnected}>
-        {assetsPerShare && assetToken ? (
+        {assetsPerShare ? (
           <Typography variant="value6">
             {intl.formatMessage(
               { defaultMessage: '1 Share = {ratio} {asset}', id: '/e4KBT' },
               {
                 ratio: assetsPerShare?.simpleRounded ?? '-',
-                asset: assetToken?.symbol,
+                asset: metavault.asset.symbol,
               },
             )}
           </Typography>

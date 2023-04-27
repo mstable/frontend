@@ -3,24 +3,12 @@ import { useEffect, useState } from 'react';
 
 import { useDataSource } from '@frontend/mstable-data-access';
 import { BigDecimal } from '@frontend/shared-utils';
-import {
-  Curve3CrvBasicMetaVaultABI,
-  ERC20ABI,
-  PeriodicAllocationPerfFeeMetaVaultABI,
-} from '@mstable/metavaults-web';
 import { useQuery } from '@tanstack/react-query';
-import { erc20ABI, fetchToken, multicall, readContract } from '@wagmi/core';
-import { BigNumber, constants } from 'ethers';
+import { multicall, readContract } from '@wagmi/core';
+import { constants } from 'ethers';
 import produce from 'immer';
-import { splitEvery, transpose } from 'ramda';
 import { createContainer } from 'react-tracked';
-import {
-  erc4626ABI,
-  useAccount,
-  useBalance,
-  useContractReads,
-  useNetwork,
-} from 'wagmi';
+import { useAccount, useBalance, useContractReads, useNetwork } from 'wagmi';
 
 import {
   useMetavaultQuery,
@@ -29,15 +17,14 @@ import {
 
 import type { Metavault } from '@frontend/shared-constants';
 import type { HexAddress } from '@frontend/shared-utils';
-import type { BigNumberish } from 'ethers';
+import type { BigNumber, BigNumberish } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
 
-import type { MvToken, Vault } from './types';
+import type { MvToken } from './types';
 
 type MetaVaultState = {
   metavault: Metavault | null;
   mvToken: MvToken | null;
-  assetToken: MvToken | null;
   mvBalance: BigDecimal | null;
   mvBalanceInAsset: BigDecimal | null;
   mvDeposited: BigDecimal | null;
@@ -45,26 +32,7 @@ type MetaVaultState = {
   assetBalance: BigDecimal | null;
   assetBalanceInShare: BigDecimal | null;
   roi: number | null;
-  structure: {
-    proxiedVault: Vault;
-    underlyingVaults: Vault[];
-  } | null;
   allocations: { address: HexAddress; name: string; balance: number }[] | null;
-};
-
-const emptyToken: MvToken = {
-  address: null,
-  decimals: null,
-  name: null,
-  symbol: null,
-  totalSupply: {
-    formatted: null,
-    value: null,
-  },
-  totalAssets: {
-    formatted: null,
-    value: null,
-  },
 };
 
 export const {
@@ -80,17 +48,21 @@ export const {
   const { chain } = useNetwork();
   const { address: walletAddress, isConnected } = useAccount();
   const [state, setState] = useState<MetaVaultState>({
-    metavault: {
-      address: '',
-      name: '',
-      tags: [],
-      strategies: [],
-      assets: [],
-      fees: { liquidation: 0, performance: 0 },
-      ...initialState.metavault,
+    metavault: initialState.metavault,
+    mvToken: {
+      address: initialState.metavault.address,
+      decimals: initialState.metavault.decimals,
+      name: initialState.metavault.name,
+      symbol: initialState.metavault.symbol,
+      totalSupply: {
+        formatted: null,
+        value: null,
+      },
+      totalAssets: {
+        formatted: null,
+        value: null,
+      },
     },
-    mvToken: { ...emptyToken, address: initialState.metavault.address },
-    assetToken: emptyToken,
     mvBalance: null,
     mvBalanceInAsset: null,
     mvDeposited: null,
@@ -98,42 +70,25 @@ export const {
     assetBalance: null,
     assetBalanceInShare: null,
     roi: null,
-    structure: null,
     allocations: null,
   });
 
   const {
-    metavault: { address, firstBlock },
-    assetToken,
+    metavault: {
+      address,
+      abi,
+      firstBlock,
+      asset,
+      proxy,
+      underlyings,
+      decimals,
+    },
   } = state;
-
-  const { data: mvTo } = useContractReads({
-    contracts: [
-      { address, abi: erc4626ABI, functionName: 'asset' },
-      { address, abi: erc20ABI, functionName: 'name' },
-      { address, abi: erc20ABI, functionName: 'decimals' },
-      { address, abi: erc20ABI, functionName: 'symbol' },
-    ],
-    cacheTime: Infinity,
-  });
-
-  useEffect(() => {
-    if (mvTo) {
-      setState(
-        produce((draft) => {
-          draft.assetToken.address = mvTo[0];
-          draft.mvToken.name = mvTo[1];
-          draft.mvToken.decimals = mvTo[2];
-          draft.mvToken.symbol = mvTo[3];
-        }),
-      );
-    }
-  }, [mvTo]);
 
   const { data: tot } = useContractReads({
     contracts: [
-      { address, abi: erc20ABI, functionName: 'totalSupply' },
-      { address, abi: erc4626ABI, functionName: 'totalAssets' },
+      { address, abi, functionName: 'totalSupply' },
+      { address, abi, functionName: 'totalAssets' },
     ],
     cacheOnBlock: true,
     watch: true,
@@ -143,63 +98,18 @@ export const {
     if (tot) {
       setState(
         produce((draft) => {
-          draft.mvToken.totalSupply.value = tot[0];
-          draft.mvToken.totalAssets.value = tot[1];
+          draft.mvToken.totalSupply.value = tot[0] as unknown as BigNumber;
+          draft.mvToken.totalAssets.value = tot[1] as unknown as BigNumber;
         }),
       );
     }
   }, [tot]);
 
-  const { data: asTo } = useContractReads({
-    contracts: [
-      { address: assetToken?.address, abi: erc20ABI, functionName: 'name' },
-      { address: assetToken?.address, abi: erc20ABI, functionName: 'decimals' },
-      { address: assetToken?.address, abi: erc20ABI, functionName: 'symbol' },
-    ],
-    cacheTime: Infinity,
-    enabled: !!assetToken?.address,
-  });
-
-  useEffect(() => {
-    if (asTo) {
-      setState(
-        produce((draft) => {
-          draft.assetToken.name = asTo[0];
-          draft.assetToken.decimals = asTo[1];
-          draft.assetToken.symbol = asTo[2];
-        }),
-      );
-    }
-  }, [asTo]);
-
-  const { data: asTot } = useContractReads({
-    contracts: [
-      {
-        address: assetToken?.address,
-        abi: erc20ABI,
-        functionName: 'totalSupply',
-      },
-    ],
-    cacheOnBlock: true,
-    watch: true,
-    enabled: !!assetToken?.address,
-  });
-
-  useEffect(() => {
-    if (asTot) {
-      setState(
-        produce((draft) => {
-          draft.assetToken.totalSupply.value = asTot[0];
-        }),
-      );
-    }
-  }, [asTot]);
-
   const { data: mvBa } = useBalance({
     address: walletAddress,
     token: address,
     watch: true,
-    enabled: !!walletAddress && !!address,
+    enabled: !!walletAddress,
   });
 
   useEffect(() => {
@@ -216,9 +126,9 @@ export const {
 
   const { data: asBa } = useBalance({
     address: walletAddress,
-    token: assetToken?.address,
+    token: asset.address,
     watch: true,
-    enabled: !!walletAddress && !!assetToken?.address,
+    enabled: !!walletAddress,
   });
 
   useEffect(() => {
@@ -282,13 +192,13 @@ export const {
     contracts: [
       {
         address,
-        abi: erc4626ABI,
+        abi,
         functionName: 'convertToAssets',
         args: [state.mvBalance?.exact],
       },
       {
         address,
-        abi: erc4626ABI,
+        abi,
         functionName: 'convertToShares',
         args: [state.assetBalance?.exact],
       },
@@ -299,171 +209,91 @@ export const {
     enabled:
       isConnected &&
       !!address &&
-      !!state.mvToken?.decimals &&
-      !!state.assetToken?.decimals &&
       !!state.mvBalance?.exact &&
       !!state.assetBalance?.exact,
   });
 
   useEffect(() => {
-    if (pre && state.assetToken.decimals && state.mvToken.decimals) {
+    if (pre) {
       setState(
         produce((draft) => {
           draft.mvBalanceInAsset = pre?.[0]
-            ? new BigDecimal(pre[0] as BigNumberish, state.assetToken.decimals)
+            ? new BigDecimal(pre[0] as BigNumberish, asset.decimals)
             : BigDecimal.ZERO;
           draft.assetBalanceInShare = pre?.[1]
-            ? new BigDecimal(pre[1] as BigNumberish, state.mvToken.decimals)
+            ? new BigDecimal(pre[1] as BigNumberish, decimals)
             : BigDecimal.ZERO;
         }),
       );
     }
-  }, [pre, state.assetToken.decimals, state.mvToken.decimals]);
+  }, [asset.decimals, decimals, pre]);
 
-  const { data: mvSt } = useQuery(
-    ['structure', address, chain?.id],
+  const { data: mvAll } = useQuery(
+    ['allocations', address, chain?.id],
     async () => {
-      const proxiedVault = await readContract({
-        address,
-        abi: Curve3CrvBasicMetaVaultABI,
-        functionName: 'metaVault',
-        args: [],
+      const bals = await multicall({
+        contracts: underlyings.map((uv) => ({
+          address: uv.address,
+          abi: uv.abi,
+          functionName: 'balanceOf',
+          args: [proxy.address],
+        })),
       });
-
-      const proxyToken = await fetchToken({
-        address: proxiedVault as unknown as HexAddress,
-      });
-
-      const [uvIdx, proxiedName] = await multicall({
-        contracts: [
-          {
-            address: proxiedVault as unknown as HexAddress,
-            abi: PeriodicAllocationPerfFeeMetaVaultABI,
-            functionName: 'totalUnderlyingVaults',
-            args: [],
-          },
-          {
-            address: proxiedVault as unknown as HexAddress,
-            abi: PeriodicAllocationPerfFeeMetaVaultABI,
-            functionName: 'name',
-            args: [],
-          },
-        ],
-      });
-
-      const uvs = [];
-      let indexes = 0;
-      try {
-        indexes = BigNumber.from(uvIdx).toNumber();
-      } catch {}
-
-      for (let i = 0; i < indexes; i++) {
-        try {
-          const address = await readContract({
-            address: proxiedVault as unknown as HexAddress,
-            abi: PeriodicAllocationPerfFeeMetaVaultABI,
-            functionName: 'resolveVaultIndex',
-            args: [i],
-          });
-          uvs.push(address);
-        } catch {}
-      }
-
-      const res = await multicall({
-        contracts: uvs.reduce(
-          (acc, uv) => [
-            ...acc,
-            {
-              address: uv,
-              abi: ERC20ABI,
-              functionName: 'balanceOf',
-              args: [proxiedVault],
-            },
-            {
-              address: uv,
-              abi: ERC20ABI,
-              functionName: 'decimals',
-            },
-            {
-              address: uv,
-              abi: ERC20ABI,
-              functionName: 'name',
-            },
-          ],
-          [],
-        ),
-      });
-      const [bals, decimals, names] = uvs.length
-        ? transpose(splitEvery(uvs.length, res))
-        : [[], [], []];
 
       const converted = await multicall({
-        contracts: uvs.map((v, i) => ({
-          address: v,
-          abi: erc4626ABI,
+        contracts: underlyings.map((v, i) => ({
+          address: v.address,
+          abi: v.abi,
           functionName: 'convertToAssets',
           args: [bals[i]],
         })),
       });
 
       const unallocated = await readContract({
-        address: assetToken?.address,
-        abi: erc4626ABI,
+        address: asset.address,
+        abi: asset.abi,
         functionName: 'balanceOf',
-        args: [proxiedVault as unknown as HexAddress],
+        args: [proxy.address],
       });
 
-      return {
-        structure: {
-          proxiedVault: {
-            address: proxiedVault as unknown as HexAddress,
-            decimals: proxyToken.decimals,
-            name: proxiedName as unknown as string,
-          },
-          underlyingVaults: uvs.map((v, i) => ({
-            address: v,
-            name: names[i] as unknown as string,
-            decimals: decimals[i] as unknown as number,
-          })),
+      return [
+        {
+          name: 'Unallocated',
+          balance: new BigDecimal(
+            unallocated as unknown as BigNumberish,
+            proxy.decimals,
+          ).simple,
         },
-        allocations: [
-          {
-            name: 'Unallocated',
-            balance: new BigDecimal(unallocated, proxyToken.decimals).simple,
-          },
-          ...uvs.reduce(
-            (acc, curr, i) => [
-              ...acc,
-              {
-                address: curr,
-                name: names[i] as unknown as string,
-                balance: new BigDecimal(
-                  converted[i] as unknown as BigNumber,
-                  decimals[i] as unknown as number,
-                ).simple,
-              },
-            ],
-            [],
-          ),
-        ],
-      };
+        ...underlyings.reduce(
+          (acc, curr, i) => [
+            ...acc,
+            {
+              address: curr.address,
+              name: curr.name,
+              balance: new BigDecimal(
+                converted[i] as unknown as BigNumber,
+                decimals[i] as unknown as number,
+              ).simple,
+            },
+          ],
+          [],
+        ),
+      ];
     },
     {
-      enabled: !!assetToken?.address,
       cacheTime: Infinity,
     },
   );
 
   useEffect(() => {
-    if (mvSt) {
+    if (mvAll) {
       setState(
         produce((draft) => {
-          draft.allocations = mvSt.allocations;
-          draft.structure = mvSt.structure;
+          draft.allocations = mvAll;
         }),
       );
     }
-  }, [mvSt]);
+  }, [mvAll]);
 
   useEffect(() => {
     setState(

@@ -1,5 +1,4 @@
 import type { TransactionType } from '@frontend/mstable-data-access';
-import type { HexAddress } from '@frontend/shared-utils';
 import type { MakeGenerics } from '@tanstack/react-location';
 import type { FetchTokenResult } from '@wagmi/core';
 import type { BigNumber } from 'ethers';
@@ -22,12 +21,6 @@ export type MvRoute = MakeGenerics<{
 export type ChartType = 'APY' | 'TVL' | 'APS';
 
 export type ChartTimeframe = '1W' | '1M' | '1Y';
-
-export type Vault = {
-  address: HexAddress;
-  name: string;
-  decimals: number;
-};
 
 export type TxHistory = {
   timestamp: string;

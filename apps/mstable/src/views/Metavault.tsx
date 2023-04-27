@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { Metavault as Mv } from '@frontend/mstable-metavault';
-import { supportedMetavaults } from '@frontend/shared-constants';
+import { metavaults } from '@frontend/shared-constants';
 import { useMatch } from '@tanstack/react-location';
 import { propEq } from 'ramda';
 import { useMount } from 'react-use';
@@ -20,7 +20,7 @@ export const Metavault = () => {
     params: { mvid },
   } = useMatch<MstableRoute>();
   const metavault = useMemo(
-    () => supportedMetavaults[chain?.id ?? mainnet.id].find(propEq(mvid, 'id')),
+    () => metavaults[chain?.id ?? mainnet.id].find(propEq(mvid, 'id')),
     [chain?.id, mvid],
   );
 
