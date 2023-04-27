@@ -17,6 +17,7 @@
     "strict": false,
     "noPropertyAccessFromIndexSignature": false,
     "paths": {
+      "@frontend/burn-settings": ["libs/burn/settings/src/index.ts"],
       "@frontend/lts-constants": ["libs/lts/constants/src/index.ts"],
       "@frontend/lts-settings": ["libs/lts/settings/src/index.ts"],
       "@frontend/mstable-data-access": [
