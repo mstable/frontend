@@ -9,13 +9,11 @@ import {
   rbkLightTheme,
 } from '@frontend/mstable-theme';
 import {
-  AnalyticsProvider,
   I18nProvider,
   ModalsProvider,
   NotificationsProvider,
   ThemeProvider,
   WagmiProvider,
-  WalletAnalyticsProvider,
 } from '@frontend/shared-providers';
 import { composeContexts } from '@frontend/shared-utils';
 import { Outlet, Router } from '@tanstack/react-location';
@@ -25,7 +23,6 @@ import { setAutoFreeze } from 'immer';
 import en from './assets/lang/en.json';
 import {
   chains,
-  plausibleClient,
   reactLocationClient,
   reactQueryClient,
   wagmiClient,
@@ -42,7 +39,6 @@ root.render(
   composeContexts(
     [
       [StrictMode],
-      [AnalyticsProvider, { client: plausibleClient }],
       [QueryClientProvider, { client: reactQueryClient }],
       [I18nProvider, { messages: { en } }],
       [ThemeProvider, { themes: { light, dark } }],
@@ -56,7 +52,6 @@ root.render(
           rbkThemes: { dark: rbkDarkTheme, light: rbkLightTheme },
         },
       ],
-      [WalletAnalyticsProvider],
       [ModalsProvider],
       [SettingsProvider],
     ],
