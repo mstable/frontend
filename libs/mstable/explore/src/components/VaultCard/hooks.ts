@@ -7,12 +7,10 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
-import { erc20ABI, erc4626ABI, useContractRead } from 'wagmi';
 
 import { useChartData } from '../../hooks';
 import { useMetavaultQuery } from '../../queries.generated';
 
-import type { HexAddress } from '@frontend/shared-utils';
 import type { TypographyProps } from '@mui/material';
 
 import type { VaultCardProps } from './types';
@@ -34,16 +32,6 @@ export const useVaultCardProps = ({
     days: 7,
   });
   const chartData = useChartData(metavault);
-  const { data: asset } = useContractRead({
-    address: metavault.address,
-    abi: erc4626ABI,
-    functionName: 'asset',
-  });
-  const { data: assetDecimal, isLoading: assetLoading } = useContractRead({
-    address: asset as HexAddress,
-    abi: erc20ABI,
-    functionName: 'decimals',
-  });
 
   const tagProps: TypographyProps = {
     display: 'flex',
@@ -130,10 +118,10 @@ export const useVaultCardProps = ({
       Intl.NumberFormat('en-US', { notation: 'compact' }).format(
         new BigDecimal(
           data?.vault?.totalAssets ?? constants.Zero,
-          assetDecimal ?? 18,
+          metavault.asset.decimals,
         ).simple,
       ),
-    [assetDecimal, data?.vault?.totalAssets],
+    [data?.vault?.totalAssets, metavault.asset.decimals],
   );
 
   return {
@@ -141,7 +129,6 @@ export const useVaultCardProps = ({
     isMobile,
     isLoading,
     chartData,
-    assetLoading,
     handleClick,
     tagProps,
     sharePriceLabel,

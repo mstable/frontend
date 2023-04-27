@@ -1,5 +1,5 @@
 import { useTrack } from '@frontend/shared-providers';
-import { ErrorBoundary, ErrorPage, SunsetBanner } from '@frontend/shared-ui';
+import { ErrorBoundary, ErrorPage } from '@frontend/shared-ui';
 import { Box, Stack } from '@mui/material';
 import { Outlet } from '@tanstack/react-location';
 import { useEffectOnce } from 'react-use';
@@ -51,7 +51,7 @@ export const App = () => {
           }}
         >
           <Box minHeight="80vh" pt={{ xs: 2, md: 5 }}>
-            <SunsetBanner borderRadius={3} my={4} />
+            {/* <SunsetBanner borderRadius={3} my={4} /> */}
             {chain?.unsupported ? <WrongNetworkPage /> : <Outlet />}
           </Box>
           <Footer py={4} />

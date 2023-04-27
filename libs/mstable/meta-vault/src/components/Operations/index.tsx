@@ -45,7 +45,9 @@ const OperationsWrapped = ({ disabled, ...rest }: OperationsProps) => {
   const changeTab = useChangeTab();
   const setAmount = useSetAmount();
   const changeOperation = useChangeOperation();
-  const { assetToken } = useMetavault();
+  const {
+    metavault: { asset },
+  } = useMetavault();
   const { operation, needsApproval, isSubmitLoading } = useOperations();
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const OperationsWrapped = ({ disabled, ...rest }: OperationsProps) => {
       if (operation !== input.operation) {
         changeOperation(input.operation);
       }
-      setAmount(BigDecimal.fromSimple(input.amount, assetToken?.decimals));
+      setAmount(BigDecimal.fromSimple(input.amount, asset.decimals));
       navigate({
         replace: true,
         search: produce((draft) => {
@@ -62,7 +64,7 @@ const OperationsWrapped = ({ disabled, ...rest }: OperationsProps) => {
       });
     }
   }, [
-    assetToken?.decimals,
+    asset.decimals,
     changeOperation,
     input,
     isConnected,

@@ -31,6 +31,8 @@ const Loader = (props: StackProps) => (
 export const Allocations = (props: StackProps) => {
   const { allocations } = useMetavault();
 
+  console.log(allocations);
+
   if (isNilOrEmpty(allocations)) return <Loader {...props} />;
 
   const total = allocations.reduce((acc, curr) => acc + curr.balance, 0);

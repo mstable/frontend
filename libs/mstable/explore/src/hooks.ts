@@ -8,13 +8,7 @@ import { alpha } from '@mui/material';
 import { constants } from 'ethers';
 import { ascend, pathOr, pluck, prop, sort } from 'ramda';
 import { useIntl } from 'react-intl';
-import {
-  erc20ABI,
-  erc4626ABI,
-  mainnet,
-  useContractReads,
-  useNetwork,
-} from 'wagmi';
+import { mainnet, useContractReads, useNetwork } from 'wagmi';
 
 import { useMetavaultQuery } from './queries.generated';
 
@@ -147,25 +141,13 @@ export const useTotalTvl = () => {
   const { chain } = useNetwork();
   const { currency } = usePrices();
   const mvs = metavaults[chain?.id || mainnet.id];
-  const { data: assets, isLoading: assetLoading } = useContractReads({
-    contracts: mvs.map((mv) => ({
-      address: mv.address,
-      abi: erc4626ABI,
-      functionName: 'asset',
-    })),
-  });
+  const assets = mvs.map((mv) => mv.asset.address);
+  const decimals = mvs.map((mv) => mv.asset.decimals);
   const { data: tvls, isLoading: tvlsLoading } = useContractReads({
     contracts: mvs.map((mv) => ({
       address: mv.address,
-      abi: erc4626ABI,
+      abi: mv.abi,
       functionName: 'totalAssets',
-    })),
-  });
-  const { data: decimals, isLoading: decimalsLoading } = useContractReads({
-    contracts: assets?.map((asset) => ({
-      address: asset as HexAddress,
-      abi: erc20ABI,
-      functionName: 'decimals',
     })),
   });
   const { data: prices, isLoading: priceLoading } = useGetPrices(
@@ -175,7 +157,7 @@ export const useTotalTvl = () => {
   return useMemo(
     () => ({
       data:
-        assetLoading || tvlsLoading || decimalsLoading || priceLoading
+        tvlsLoading || priceLoading
           ? 0
           : (assets as string[]).reduce((acc, curr, idx) => {
               const price = pathOr(1, [curr, currency.toLowerCase()], prices);
@@ -187,18 +169,8 @@ export const useTotalTvl = () => {
 
               return acc + currPrice;
             }, 0),
-      isLoading: assetLoading || tvlsLoading || decimalsLoading || priceLoading,
+      isLoading: tvlsLoading || priceLoading,
     }),
-    [
-      assetLoading,
-      assets,
-      currency,
-      decimals,
-      decimalsLoading,
-      priceLoading,
-      prices,
-      tvls,
-      tvlsLoading,
-    ],
+    [assets, currency, decimals, priceLoading, prices, tvls, tvlsLoading],
   );
 };

@@ -1,7 +1,11 @@
 /* eslint-disable formatjs/no-id */
 import { ConvexProtocol, CurveProtocol, MvUSDC } from '@frontend/shared-icons';
+import {
+  Curve3CrvBasicMetaVaultABI,
+  PeriodicAllocationPerfFeeMetaVaultABI,
+} from '@mstable/metavaults-web';
 import { defineMessage } from 'react-intl';
-import { erc20ABI, erc4626ABI } from 'wagmi';
+import { erc4626ABI } from 'wagmi';
 import { goerli, mainnet } from 'wagmi/chains';
 
 import { protocols } from '../protocols';
@@ -26,34 +30,38 @@ const main: Metavault = {
     {
       address: '0xB9B47E72819934d7A5d60Bf08cD2C78072383EBb',
       symbol: 'vcx3CRV-mUSD',
+      name: '3Crv Convex mUSD Vault',
       decimals: 18,
       chainId: mainnet.id,
-      abi: erc20ABI,
+      abi: PeriodicAllocationPerfFeeMetaVaultABI,
       icon: CurveProtocol,
     },
     {
       address: '0x98c5910823C2E67d54e4e0C03de44043DbfA7ca8',
       symbol: 'vcx3CRV-FRAX',
+      name: '3Crv Convex FRAX Vault',
       decimals: 18,
       chainId: mainnet.id,
-      abi: erc20ABI,
+      abi: PeriodicAllocationPerfFeeMetaVaultABI,
       icon: CurveProtocol,
     },
     {
       address: '0x87Ed92648fAE3b3930577c92c8A247b127ED8949',
       symbol: 'vcx3CRV-BUSD',
+      name: '3Crv Convex BUSD Vault',
       decimals: 18,
       chainId: mainnet.id,
-      abi: erc20ABI,
+      abi: PeriodicAllocationPerfFeeMetaVaultABI,
       icon: CurveProtocol,
     },
   ],
   proxy: {
     address: '0x9614a4C61E45575b56c7e0251f63DCDe797d93C5',
     symbol: 'mv3CRV-CVX',
+    name: '3CRV Convex Meta Vault',
     decimals: 18,
     chainId: mainnet.id,
-    abi: erc20ABI,
+    abi: Curve3CrvBasicMetaVaultABI,
     icon: ConvexProtocol,
   },
   name: '3Pool Convex Meta Vault',

@@ -4,7 +4,6 @@ import { BigDecimal } from '@frontend/shared-utils';
 import {
   Avatar,
   AvatarGroup,
-  Skeleton,
   Stack,
   TableCell,
   TableRow,
@@ -15,14 +14,12 @@ import {
 import { useNavigate } from '@tanstack/react-location';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
-import { erc20ABI, erc4626ABI, useContractRead } from 'wagmi';
 
 import { useChartData } from '../hooks';
 import { useMetavaultQuery } from '../queries.generated';
 import { LineChart } from './LineChart';
 
 import type { Metavault } from '@frontend/shared-constants';
-import type { HexAddress } from '@frontend/shared-utils';
 import type { TypographyProps } from '@mui/material';
 
 interface Props {
@@ -55,16 +52,6 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
     firstBlock: metavault.firstBlock,
   });
   const chartData = useChartData(metavault, true);
-  const { data: asset } = useContractRead({
-    address: metavault.address,
-    abi: erc4626ABI,
-    functionName: 'asset',
-  });
-  const { data: assetDecimal, isLoading: assetLoading } = useContractRead({
-    address: asset as HexAddress,
-    abi: erc20ABI,
-    functionName: 'decimals',
-  });
 
   return (
     <TableRow
@@ -108,15 +95,11 @@ export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
       {!isMobile && (
         <TableCell>
           <Typography variant="value4">
-            {assetLoading ? (
-              <Skeleton width={50} />
-            ) : (
-              Intl.NumberFormat('en-US', { notation: 'compact' }).format(
-                new BigDecimal(
-                  data?.vault?.totalAssets ?? constants.Zero,
-                  assetDecimal ?? 18,
-                ).simple,
-              )
+            {Intl.NumberFormat('en-US', { notation: 'compact' }).format(
+              new BigDecimal(
+                data?.vault?.totalAssets ?? constants.Zero,
+                metavault.asset.decimals,
+              ).simple,
             )}
           </Typography>
         </TableCell>

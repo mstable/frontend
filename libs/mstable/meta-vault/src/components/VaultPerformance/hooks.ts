@@ -35,7 +35,9 @@ const getRange = (margin: number, series: Serie[]) =>
 
 export const useChartConfig = () => {
   const intl = useIntl();
-  const mv = useMetavault();
+  const {
+    metavault: { asset },
+  } = useMetavault();
   const chartTypes = {
     APS: {
       id: 'APS' as ChartType,
@@ -59,11 +61,10 @@ export const useChartConfig = () => {
       id: 'TVL' as ChartType,
       label: intl.formatMessage(
         { defaultMessage: 'TVL ({symbol})', id: 'UMrrVX' },
-        { symbol: mv?.assetToken?.symbol },
+        { symbol: asset.symbol },
       ),
       chartMargin: 1e4,
-      getValue: (v) =>
-        new BigDecimal(v.totalAssets, mv?.assetToken?.decimals).simple,
+      getValue: (v) => new BigDecimal(v.totalAssets, asset.decimals).simple,
       getLabel: (v) =>
         Intl.NumberFormat('en-US', { notation: 'compact' }).format(v),
     },
@@ -113,7 +114,6 @@ export const useChartData = (
   const {
     metavault: { address, primaryColor, firstBlock },
     mvBalance,
-    assetToken,
   } = useMetavault();
   const theme = useTheme();
   const { chartTimeframes, chartTypes } = useChartConfig();
@@ -133,20 +133,17 @@ export const useChartData = (
 
   const series = useMemo(
     () =>
-      assetToken
-        ? sort(
-            ascend(prop('timestamp')),
-            data?.vault?.DailyVaultStats || [],
-          ).map((d) => ({
-            label: Intl.DateTimeFormat('en-GB', {
-              timeZone: 'UTC',
-              day: 'numeric',
-              month: 'short',
-            }).format(Number(d.timestamp) * 1000),
-            value: chartTypes[chartType].getValue(d),
-          }))
-        : [],
-    [assetToken, chartType, chartTypes, data?.vault?.DailyVaultStats],
+      sort(ascend(prop('timestamp')), data?.vault?.DailyVaultStats || []).map(
+        (d) => ({
+          label: Intl.DateTimeFormat('en-GB', {
+            timeZone: 'UTC',
+            day: 'numeric',
+            month: 'short',
+          }).format(Number(d.timestamp) * 1000),
+          value: chartTypes[chartType].getValue(d),
+        }),
+      ),
+    [chartType, chartTypes, data?.vault?.DailyVaultStats],
   );
   const minMax = useMemo(
     () =>

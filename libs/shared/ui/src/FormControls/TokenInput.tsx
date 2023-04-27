@@ -19,8 +19,8 @@ import { useIntl } from 'react-intl';
 import { TokenIcon } from '../Icons';
 import { BigDecimalInput } from './BigDecimalInput';
 
+import type { Token } from '@frontend/shared-constants';
 import type { ButtonProps, StackProps, SxProps } from '@mui/material';
-import type { FetchTokenResult } from '@wagmi/core';
 import type { ReactNode } from 'react';
 
 import type { BigDecimalInputProps } from './BigDecimalInput';
@@ -33,7 +33,7 @@ export type TokenInputProps = {
   isLoading?: boolean;
   isConnected?: boolean;
   amount: BigDecimal;
-  token: FetchTokenResult;
+  token: Token;
   tokenLabel?: string;
   tokenIcon?: ReactNode;
   max?: BigDecimal;
@@ -188,9 +188,16 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
                   maxWidth: 100,
                 }}
               >
-                {tokenIcon ?? (
+                {tokenIcon ?? token?.icon ? (
+                  <token.icon
+                    sx={{
+                      width: 14,
+                      height: 14,
+                    }}
+                  />
+                ) : (
                   <TokenIcon
-                    symbol={token?.symbol}
+                    symbol={token.symbol}
                     sx={{
                       width: 14,
                       height: 14,
@@ -198,7 +205,7 @@ export const TokenInput = forwardRef<HTMLInputElement, TokenInputProps>(
                   />
                 )}
                 <Typography variant="buttonMedium" color="inherit" noWrap>
-                  {tokenLabel ?? token?.symbol}
+                  {tokenLabel ?? token.symbol}
                 </Typography>
               </Stack>
             </Fade>
