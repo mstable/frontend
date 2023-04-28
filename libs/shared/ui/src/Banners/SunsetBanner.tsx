@@ -21,17 +21,17 @@ export const SunsetBanner = (props: StackProps) => {
       <Typography textAlign="center">
         {intl.formatMessage({
           defaultMessage: `mStable has been aquired by dHedge. Following the outlined aquisition update, certain mStable products will be sunset.`,
-          id: 'Yi52g+',
+          id: 'VXQPtq',
         })}
       </Typography>
       <Typography textAlign="center">
         {intl.formatMessage({
           defaultMessage: `The contracts will always remain live and allow for withdrawals. However, it is recommended to withdraw remaining assets from the contracts since value accrual has been disabled.`,
-          id: 'bkwgp4',
+          id: '5Jlmp5',
         })}
       </Typography>
       <Button
-        href="https://forum.mstable.org/t/dhedge-acquisition-update/1024"
+        href="https://medium.com/mstable/mstable-acquisition-completed-by-dhedge-the-next-chapter-of-defi-yield-vaults-begins-79a326157132"
         target="_blank"
         rel="noopener noreferrer"
       >
