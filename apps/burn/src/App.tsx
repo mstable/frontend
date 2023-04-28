@@ -1,5 +1,6 @@
 import { Stack } from '@mui/material';
 
+import { BurnForm } from './components/BurnForm';
 import { Footer } from './components/Footer';
 import { Hero } from './components/Hero';
 import { Topnav } from './components/Topnav';
@@ -25,6 +26,7 @@ export const App = () => {
         })}
       >
         <Hero my={4} />
+        <BurnForm my={4} />
       </Stack>
       <Footer
         sx={(theme) => ({ py: 4, px: theme.mixins.paddings.page.paddingX })}
