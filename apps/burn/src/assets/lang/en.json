@@ -45,10 +45,22 @@
       "value": "Cancel"
     }
   ],
+  "4K2D1N": [
+    {
+      "type": 0,
+      "value": "Withdraw to stablecoins"
+    }
+  ],
   "5ObBlW": [
     {
       "type": 0,
       "value": "Dark Mode"
+    }
+  ],
+  "5WragJ": [
+    {
+      "type": 0,
+      "value": "Burn your MTA tokens to receive mStable Treasury Yield tokens"
     }
   ],
   "5jgNhr": [
@@ -94,6 +106,12 @@
     {
       "type": 0,
       "value": "There was an error while loading this component, you can try to reload."
+    }
+  ],
+  "8cv9D4": [
+    {
+      "type": 0,
+      "value": "Next Step"
     }
   ],
   "8ywLSf": [
@@ -186,6 +204,12 @@
       "value": "Confirm"
     }
   ],
+  "NnFu82": [
+    {
+      "type": 0,
+      "value": "Withdraw your mStable Treasury Yield tokens to stables"
+    }
+  ],
   "PmkP1H": [
     {
       "type": 0,
@@ -202,6 +226,12 @@
     {
       "type": 0,
       "value": "Oops, something went wrong."
+    }
+  ],
+  "URTaZg": [
+    {
+      "type": 0,
+      "value": "If you burned MTA from Ethereum, please wait while the bridge issues your MTy tokens."
     }
   ],
   "UkXeBW": [
@@ -278,10 +308,31 @@
       "value": "mStable has been aquired by dHedge. Following the outlined aquisition update, certain mStable products will be sunset."
     }
   ],
+  "a42kxt": [
+    {
+      "type": 0,
+      "value": "Your mStable Treasury Yield tokens are earning yield and you can hold on to them."
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": "Optionally you can go to dHEDGE app to withdraw your MTy tokens to stablecoins."
+    }
+  ],
   "bkwgp4": [
     {
       "type": 0,
       "value": "The contracts will always remain live and allow for withdrawals. However, it is recommended to withdraw remaining assets from the contracts since value accrual has been disabled."
+    }
+  ],
+  "cyR7Kh": [
+    {
+      "type": 0,
+      "value": "Back"
     }
   ],
   "d7AHfy": [
@@ -306,6 +357,12 @@
     {
       "type": 0,
       "value": "This Strategy is super cool, I would even dare to say, HOT. Stay tune for more awesomeness!"
+    }
+  ],
+  "iD4mN7": [
+    {
+      "type": 0,
+      "value": "mStable roadmap"
     }
   ],
   "il6pe+": [
@@ -344,6 +401,37 @@
       "value": "Copied"
     }
   ],
+  "p6MoDc": [
+    {
+      "type": 0,
+      "value": "Burn MTA to receive "
+    },
+    {
+      "type": 1,
+      "value": "yield"
+    },
+    {
+      "type": 0,
+      "value": " vault tokens on Optimism at a value of $0.0318 per MTA."
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": "Here is the "
+    },
+    {
+      "type": 1,
+      "value": "roadmap"
+    },
+    {
+      "type": 0,
+      "value": " to help you make a better informed decision."
+    }
+  ],
   "qj1uhz": [
     {
       "type": 0,
@@ -360,6 +448,12 @@
     {
       "type": 0,
       "value": "Diversified"
+    }
+  ],
+  "sUIPLS": [
+    {
+      "type": 0,
+      "value": "Burn"
     }
   ],
   "sy+pv5": [
@@ -386,10 +480,22 @@
       "value": "Not Connected"
     }
   ],
+  "xfMpIF": [
+    {
+      "type": 0,
+      "value": "Withdraw to stables"
+    }
+  ],
   "y1NA43": [
     {
       "type": 0,
       "value": "Check URL"
+    }
+  ],
+  "yNEh8X": [
+    {
+      "type": 0,
+      "value": "mStable Treasury Yield"
     }
   ],
   "yuiyES": [

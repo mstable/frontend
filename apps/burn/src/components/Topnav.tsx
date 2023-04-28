@@ -12,12 +12,12 @@ import {
 import { useNavigate } from '@tanstack/react-location';
 import produce from 'immer';
 
-import type { LTSRoute } from '../routes';
+import type { BurnRoute } from '../routes';
 
 export const Topnav = () => {
   const theme = useTheme();
   const wide = useMediaQuery(theme.breakpoints.up('sm'));
-  const navigate = useNavigate<LTSRoute>();
+  const navigate = useNavigate<BurnRoute>();
 
   return (
     <AppBar position="sticky" color="transparent">
