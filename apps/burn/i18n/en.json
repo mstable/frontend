@@ -17,6 +17,9 @@
   "FvmV6q": {
     "defaultMessage": "Discord"
   },
+  "H5+NAX": {
+    "defaultMessage": "Balance"
+  },
   "NnFu82": {
     "defaultMessage": "Withdraw your mStable Treasury Yield tokens to stables"
   },
@@ -28,6 +31,9 @@
   },
   "a42kxt": {
     "defaultMessage": "Your mStable Treasury Yield tokens are earning yield and you can hold on to them.<br></br>Optionally you can go to dHEDGE app to withdraw your MTy tokens to stablecoins."
+  },
+  "b1zuN9": {
+    "defaultMessage": "Price"
   },
   "cyR7Kh": {
     "defaultMessage": "Back"
@@ -61,12 +67,6 @@
   },
   "yuiyES": {
     "defaultMessage": "General Settings"
-  },
-  "mQHAsW": {
-    "defaultMessage": "Slippage"
-  },
-  "mqpAbT": {
-    "defaultMessage": "Show Empty"
   },
   "2JVe1j": {
     "defaultMessage": "Market Neutral"
@@ -152,6 +152,9 @@
   "47FYwb": {
     "defaultMessage": "Cancel"
   },
+  "5Jlmp5": {
+    "defaultMessage": "The contracts will always remain live and allow for withdrawals. However, it is recommended to withdraw remaining assets from the contracts since value accrual has been disabled."
+  },
   "6OuLVd": {
     "defaultMessage": "Tips"
   },
@@ -194,6 +197,9 @@
   "UlMgTq": {
     "defaultMessage": "If the problem persists, contact us on our {support}."
   },
+  "VXQPtq": {
+    "defaultMessage": "mStable has been aquired by dHedge. Following the outlined aquisition update, certain mStable products will be sunset."
+  },
   "W87PYU": {
     "defaultMessage": "View on {name}"
   },
@@ -202,12 +208,6 @@
   },
   "YP4aoM": {
     "defaultMessage": "Read the Announcement"
-  },
-  "Yi52g+": {
-    "defaultMessage": "mStable has been aquired by dHedge. Following the outlined aquisition update, certain mStable products will be sunset."
-  },
-  "bkwgp4": {
-    "defaultMessage": "The contracts will always remain live and allow for withdrawals. However, it is recommended to withdraw remaining assets from the contracts since value accrual has been disabled."
   },
   "p556q3": {
     "defaultMessage": "Copied"

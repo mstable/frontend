@@ -1,9 +1,11 @@
+import { OpenAccountModalButton } from '@frontend/shared-providers';
 import { MotionStack, TokenInput } from '@frontend/shared-ui';
-import { Box, Button, Link, Stack, Typography } from '@mui/material';
+import { Box, Button, Link, Skeleton, Stack, Typography } from '@mui/material';
 import { ArrowFatDown } from 'phosphor-react';
 import { useIntl } from 'react-intl';
+import { useAccount } from 'wagmi';
 
-import { useSetAmount, useSetStep } from '../hooks';
+import { usePrepareMTABuyback, useSetMTAAmount, useSetStep } from '../hooks';
 import { useTrackedState } from '../state';
 
 import type { MotionStackProps } from '@frontend/shared-ui';
@@ -27,9 +29,12 @@ const ArrowDown = (props: StackProps) => {
 
 export const InputStep = (props: MotionStackProps) => {
   const intl = useIntl();
-  const { amount, preview, input } = useTrackedState();
+  const { isConnected } = useAccount();
+  const { mta, mty, isLoading } = useTrackedState();
   const setStep = useSetStep();
-  const setAmount = useSetAmount();
+  const setMTAAmount = useSetMTAAmount();
+
+  const { config } = usePrepareMTABuyback();
 
   return (
     <MotionStack alignItems="flex-start" {...props}>
@@ -88,6 +93,58 @@ export const InputStep = (props: MotionStackProps) => {
             borderRadius: 1,
           }}
         >
+          <TokenInput
+            amount={mta.amount}
+            onChange={setMTAAmount}
+            token={mta.contract}
+            hideBottomRow
+            components={{
+              container: {
+                width: 1,
+                padding: (theme) => theme.spacing(0.5, 2, 0.5, 2),
+              },
+            }}
+          />
+          <Stack
+            direction="row"
+            sx={{
+              justifyContent: 'space-between',
+              width: 1,
+              padding: (theme) => theme.spacing(0.5, 2, 2, 2),
+              borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+            }}
+          >
+            <Typography variant="label2" color="text.secondary">
+              {isLoading ? (
+                <Skeleton width={60} />
+              ) : (
+                Intl.NumberFormat('en-US', {
+                  currency: 'USD',
+                  style: 'currency',
+                  maximumSignificantDigits: 2,
+                }).format(mta.price)
+              )}
+            </Typography>
+            {isConnected && (
+              <Typography variant="label2" color="text.secondary">
+                {isLoading ? (
+                  <Skeleton width={60} />
+                ) : (
+                  intl.formatMessage(
+                    {
+                      defaultMessage: 'Balance: {balance}',
+                      id: 'vclhrb',
+                    },
+                    {
+                      balance: Intl.NumberFormat('en-US', {
+                        maximumSignificantDigits: 2,
+                      }).format(mta.balance.simple),
+                    },
+                  )
+                )}
+              </Typography>
+            )}
+          </Stack>
           <ArrowDown
             sx={{
               position: 'absolute',
@@ -97,30 +154,66 @@ export const InputStep = (props: MotionStackProps) => {
             }}
           />
           <TokenInput
-            amount={amount}
-            onChange={setAmount}
-            token={input}
+            amount={mty.amount}
+            token={mty.contract}
             hideBottomRow
             components={{
               container: {
                 width: 1,
-                padding: 2,
-                borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
+                padding: (theme) => theme.spacing(0.5, 2, 0.5, 2),
+              },
+              input: {
+                InputProps: {
+                  tabIndex: -1,
+                  disabled: true,
+                },
               },
             }}
           />
-          <TokenInput
-            amount={preview}
-            token={input}
-            hideBottomRow
-            components={{
-              container: {
-                width: 1,
-                padding: 2,
-              },
+          <Stack
+            direction="row"
+            sx={{
+              justifyContent: 'space-between',
+              width: 1,
+              padding: (theme) => theme.spacing(0.5, 2, 2, 2),
             }}
-          />
+          >
+            <Typography variant="label2" color="text.secondary">
+              $12.34
+            </Typography>
+            {isConnected && (
+              <Typography variant="label2" color="text.secondary">
+                {isLoading ? (
+                  <Skeleton width={60} />
+                ) : (
+                  intl.formatMessage(
+                    {
+                      defaultMessage: 'Balance: {balance}',
+                      id: 'vclhrb',
+                    },
+                    {
+                      balance: Intl.NumberFormat('en-US', {
+                        maximumSignificantDigits: 2,
+                      }).format(mty.balance.simple),
+                    },
+                  )
+                )}
+              </Typography>
+            )}
+          </Stack>
         </Box>
+        <Stack width={3 / 4} justifyContent="center" alignItems="center" pt={2}>
+          {isConnected ? (
+            <Button fullWidth size="large">
+              {intl.formatMessage({
+                defaultMessage: 'Burn MTA and receive MTy on Optimism',
+                id: 'WZwD4F',
+              })}
+            </Button>
+          ) : (
+            <OpenAccountModalButton fullWidth size="large" />
+          )}
+        </Stack>
       </Stack>
       <Stack
         width={1}

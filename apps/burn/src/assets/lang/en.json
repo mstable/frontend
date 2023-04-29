@@ -51,6 +51,12 @@
       "value": "Withdraw to stablecoins"
     }
   ],
+  "5Jlmp5": [
+    {
+      "type": 0,
+      "value": "The contracts will always remain live and allow for withdrawals. However, it is recommended to withdraw remaining assets from the contracts since value accrual has been disabled."
+    }
+  ],
   "5ObBlW": [
     {
       "type": 0,
@@ -174,6 +180,12 @@
       "value": "Discord"
     }
   ],
+  "H5+NAX": [
+    {
+      "type": 0,
+      "value": "Balance"
+    }
+  ],
   "IdL95F": [
     {
       "type": 0,
@@ -262,6 +274,12 @@
       "value": "."
     }
   ],
+  "VXQPtq": [
+    {
+      "type": 0,
+      "value": "mStable has been aquired by dHedge. Following the outlined aquisition update, certain mStable products will be sunset."
+    }
+  ],
   "VlABxn": [
     {
       "type": 0,
@@ -302,12 +320,6 @@
       "value": "Read the Announcement"
     }
   ],
-  "Yi52g+": [
-    {
-      "type": 0,
-      "value": "mStable has been aquired by dHedge. Following the outlined aquisition update, certain mStable products will be sunset."
-    }
-  ],
   "a42kxt": [
     {
       "type": 0,
@@ -323,10 +335,10 @@
       "value": "Optionally you can go to dHEDGE app to withdraw your MTy tokens to stablecoins."
     }
   ],
-  "bkwgp4": [
+  "b1zuN9": [
     {
       "type": 0,
-      "value": "The contracts will always remain live and allow for withdrawals. However, it is recommended to withdraw remaining assets from the contracts since value accrual has been disabled."
+      "value": "Price"
     }
   ],
   "cyR7Kh": [
@@ -371,22 +383,10 @@
       "value": "Yeah only mStable baby!"
     }
   ],
-  "mQHAsW": [
-    {
-      "type": 0,
-      "value": "Slippage"
-    }
-  ],
   "meocUp": [
     {
       "type": 0,
       "value": "Convex is a platform that boosts rewards for CRV stakers and liquidity providers alike, all in a simple and easy to use interface."
-    }
-  ],
-  "mqpAbT": [
-    {
-      "type": 0,
-      "value": "Show Empty"
     }
   ],
   "ovJ26C": [
