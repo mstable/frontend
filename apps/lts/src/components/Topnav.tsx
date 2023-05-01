@@ -1,6 +1,7 @@
 import { SettingsButton } from '@frontend/lts-settings';
 import { MStable, MStableShort } from '@frontend/shared-icons';
 import { OpenAccountModalButton } from '@frontend/shared-providers';
+import { RouterLink } from '@frontend/shared-ui';
 import {
   alpha,
   AppBar,
@@ -11,10 +12,14 @@ import {
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import produce from 'immer';
+import { useIntl } from 'react-intl';
+
+import { routes } from '../routes';
 
 import type { LTSRoute } from '../routes';
 
 export const Topnav = () => {
+  const intl = useIntl();
   const theme = useTheme();
   const wide = useMediaQuery(theme.breakpoints.up('sm'));
   const navigate = useNavigate<LTSRoute>();
@@ -57,6 +62,11 @@ export const Topnav = () => {
           alignItems="center"
           spacing={2}
         >
+          {routes.map((route) => (
+            <RouterLink key={route.path} to={route.path}>
+              {intl.formatMessage(route.meta.label)}
+            </RouterLink>
+          ))}
           <OpenAccountModalButton
             sx={{ maxWidth: 180, maxHeight: 36, px: 1 }}
           />

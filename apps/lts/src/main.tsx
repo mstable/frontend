@@ -16,10 +16,11 @@ import {
   WagmiProvider,
 } from '@frontend/shared-providers';
 import { composeContexts } from '@frontend/shared-utils';
-import { Outlet, Router } from '@tanstack/react-location';
+import { Router } from '@tanstack/react-location';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { setAutoFreeze } from 'immer';
 
+import { App } from './App';
 import en from './assets/lang/en.json';
 import {
   chains,
@@ -55,6 +56,6 @@ root.render(
       [ModalsProvider],
       [SettingsProvider],
     ],
-    <Outlet />,
+    <App />,
   ),
 );
