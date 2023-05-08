@@ -20,6 +20,12 @@
   "sy+pv5": {
     "defaultMessage": "Email"
   },
+  "/54G9d": {
+    "defaultMessage": "Approving Token"
+  },
+  "20X0BC": {
+    "defaultMessage": "Transaction Cancelled"
+  },
   "4K2D1N": {
     "defaultMessage": "Withdraw to stablecoins"
   },
@@ -29,6 +35,9 @@
   "8cv9D4": {
     "defaultMessage": "Next Step"
   },
+  "Au/yTc": {
+    "defaultMessage": "MTA Buyback"
+  },
   "J7Y4Ey": {
     "defaultMessage": "Exchange rate {price} USD per MTA. This is the floor price for the MTA token, backed by the mStable Treasury Yield.<br></br> If burning MTA from Ethereum, it may take a few minutes to be issued yield tokens on Optimism."
   },
@@ -37,6 +46,9 @@
   },
   "URTaZg": {
     "defaultMessage": "If you burned MTA from Ethereum, please wait while the bridge issues your MTy tokens."
+  },
+  "WCaf5C": {
+    "defaultMessage": "Approve"
   },
   "WZwD4F": {
     "defaultMessage": "Burn MTA and receive MTy on Optimism"
@@ -56,11 +68,23 @@
   "iD4mN7": {
     "defaultMessage": "mStable roadmap"
   },
+  "kaPKOB": {
+    "defaultMessage": "Insufficient balance"
+  },
+  "p8bsw4": {
+    "defaultMessage": "Transaction Error"
+  },
+  "rgdwQX": {
+    "defaultMessage": "Transaction Confirmed"
+  },
   "sUIPLS": {
     "defaultMessage": "Burn"
   },
   "vclhrb": {
     "defaultMessage": "Balance: {balance}"
+  },
+  "w1LBDB": {
+    "defaultMessage": "Sign Transaction"
   },
   "xfMpIF": {
     "defaultMessage": "Withdraw to stables"
@@ -82,9 +106,6 @@
   },
   "/b/fRE": {
     "defaultMessage": "mStable Withdraw"
-  },
-  "20X0BC": {
-    "defaultMessage": "Transaction Cancelled"
   },
   "47FYwb": {
     "defaultMessage": "Cancel"
@@ -134,14 +155,8 @@
   "jvo0vs": {
     "defaultMessage": "Save"
   },
-  "p8bsw4": {
-    "defaultMessage": "Transaction Error"
-  },
   "rSsD3z": {
     "defaultMessage": "Switch Network"
-  },
-  "rgdwQX": {
-    "defaultMessage": "Transaction Confirmed"
   },
   "s2zphO": {
     "defaultMessage": "Vaults"
@@ -154,9 +169,6 @@
   },
   "vsI1HY": {
     "defaultMessage": "Redeem Vault"
-  },
-  "w1LBDB": {
-    "defaultMessage": "Sign Transaction"
   },
   "yzP6XU": {
     "defaultMessage": "MTA Governance"

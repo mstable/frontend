@@ -70,8 +70,9 @@ export const Topnav = () => {
               key={route.path}
               to={route.path}
               getActiveProps={() => ({
-                style: { color: 'white' },
+                style: { color: theme.palette.info.dark },
               })}
+              sx={{ color: 'text.primary' }}
             >
               {intl.formatMessage(route.meta.label)}
             </Link>

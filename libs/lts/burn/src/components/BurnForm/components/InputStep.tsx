@@ -1,6 +1,7 @@
 import { OpenAccountModalButton } from '@frontend/shared-providers';
 import { MotionStack, TokenInput } from '@frontend/shared-ui';
 import { Box, Button, Link, Skeleton, Stack, Typography } from '@mui/material';
+import { constants } from 'ethers';
 import { ArrowFatDown } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
@@ -195,7 +196,6 @@ export const InputStep = (props: MotionStackProps) => {
                 Intl.NumberFormat('en-US', {
                   currency: 'USD',
                   style: 'currency',
-                  maximumSignificantDigits: 2,
                 }).format(mty.price)
               )}
             </Typography>
@@ -242,6 +242,7 @@ export const InputStep = (props: MotionStackProps) => {
           onClick={() => {
             setStep(1);
           }}
+          disabled={mty.balance.exact.eq(constants.Zero)}
         >
           {intl.formatMessage({ defaultMessage: 'Next Step', id: '8cv9D4' })}
         </Button>

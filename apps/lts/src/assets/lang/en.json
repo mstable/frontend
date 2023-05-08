@@ -11,6 +11,12 @@
       "value": "Connect"
     }
   ],
+  "/54G9d": [
+    {
+      "type": 0,
+      "value": "Approving Token"
+    }
+  ],
   "/b/fRE": [
     {
       "type": 0,
@@ -151,6 +157,12 @@
     {
       "type": 0,
       "value": "No balance"
+    }
+  ],
+  "Au/yTc": [
+    {
+      "type": 0,
+      "value": "MTA Buyback"
     }
   ],
   "B4cMY/": [
@@ -359,6 +371,12 @@
     {
       "type": 1,
       "value": "name"
+    }
+  ],
+  "WCaf5C": [
+    {
+      "type": 0,
+      "value": "Approve"
     }
   ],
   "WZwD4F": [
@@ -587,6 +605,12 @@
     {
       "type": 0,
       "value": "Save"
+    }
+  ],
+  "kaPKOB": [
+    {
+      "type": 0,
+      "value": "Insufficient balance"
     }
   ],
   "mQHAsW": [
