@@ -26,11 +26,11 @@
   "5WragJ": {
     "defaultMessage": "Burn your MTA tokens to receive mStable Treasury Yield tokens"
   },
-  "5jgNhr": {
-    "defaultMessage": "Exchange rate $0.0318 USD per MTA. This is the floor price for the MTA token, backed by the mStable Treasury Yield.<br></br> If burning MTA from Ethereum, it may take a few minutes to be issued yield tokens on Optimism."
-  },
   "8cv9D4": {
     "defaultMessage": "Next Step"
+  },
+  "J7Y4Ey": {
+    "defaultMessage": "Exchange rate {price} USD per MTA. This is the floor price for the MTA token, backed by the mStable Treasury Yield.<br></br> If burning MTA from Ethereum, it may take a few minutes to be issued yield tokens on Optimism."
   },
   "NnFu82": {
     "defaultMessage": "Withdraw your mStable Treasury Yield tokens to stables"
@@ -40,6 +40,9 @@
   },
   "WZwD4F": {
     "defaultMessage": "Burn MTA and receive MTy on Optimism"
+  },
+  "ZVjb/P": {
+    "defaultMessage": "Burn MTA to receive {yield} vault tokens on Optimism at a value of {price} per MTA.<br></br>Here is the {roadmap} to help you make a better informed decision."
   },
   "a42kxt": {
     "defaultMessage": "Your mStable Treasury Yield tokens are earning yield and you can hold on to them.<br></br>Optionally you can go to dHEDGE app to withdraw your MTy tokens to stablecoins."
@@ -52,9 +55,6 @@
   },
   "iD4mN7": {
     "defaultMessage": "mStable roadmap"
-  },
-  "p6MoDc": {
-    "defaultMessage": "Burn MTA to receive {yield} vault tokens on Optimism at a value of $0.0318 per MTA.<br></br>Here is the {roadmap} to help you make a better informed decision."
   },
   "sUIPLS": {
     "defaultMessage": "Burn"
