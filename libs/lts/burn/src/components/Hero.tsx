@@ -7,7 +7,7 @@ import type { StackProps } from '@mui/material';
 
 export const Hero = (props: StackProps) => {
   const intl = useIntl();
-  const { isLoading, mta } = useTrackedState();
+  const { isLoading, mtaBuybackPrice } = useTrackedState();
 
   return (
     <Stack justifyContent="center" alignItems="center" {...props}>
@@ -32,7 +32,7 @@ export const Hero = (props: StackProps) => {
                   currency: 'USD',
                   style: 'currency',
                   maximumSignificantDigits: 4,
-                }).format(mta.price),
+                }).format(mtaBuybackPrice),
           },
         )}
       </Typography>

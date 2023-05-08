@@ -7,6 +7,8 @@ import { useAccount } from 'wagmi';
 
 import { useSetMTAAmount, useSetStep } from '../../../hooks';
 import { useTrackedState } from '../../../state';
+import { ApprovalButton } from './ApprovalButton';
+import { SubmitButton } from './SubmitButton';
 
 import type { MotionStackProps } from '@frontend/shared-ui';
 import type { StackProps } from '@mui/material';
@@ -31,7 +33,8 @@ const ArrowDown = (props: StackProps) => {
 export const InputStep = (props: MotionStackProps) => {
   const intl = useIntl();
   const { isConnected } = useAccount();
-  const { mta, mty, isLoading, isError } = useTrackedState();
+  const { mta, mty, isLoading, isError, needsApproval, mtaBuybackPrice } =
+    useTrackedState();
   const setStep = useSetStep();
   const setMTAAmount = useSetMTAAmount();
 
@@ -64,13 +67,11 @@ export const InputStep = (props: MotionStackProps) => {
                 })}
               </Link>
             ),
-            price: isLoading
-              ? '-'
-              : Intl.NumberFormat('en-US', {
-                  currency: 'USD',
-                  style: 'currency',
-                  maximumSignificantDigits: 4,
-                }).format(mta.price),
+            price: Intl.NumberFormat('en-US', {
+              currency: 'USD',
+              style: 'currency',
+              maximumSignificantDigits: 4,
+            }).format(mtaBuybackPrice),
             roadmap: (
               <Link
                 href="https://medium.com/mstable/some-article"
@@ -221,12 +222,11 @@ export const InputStep = (props: MotionStackProps) => {
         </Box>
         <Stack width={3 / 4} justifyContent="center" alignItems="center" pt={2}>
           {isConnected ? (
-            <Button fullWidth size="large">
-              {intl.formatMessage({
-                defaultMessage: 'Burn MTA and receive MTy on Optimism',
-                id: 'WZwD4F',
-              })}
-            </Button>
+            needsApproval ? (
+              <ApprovalButton />
+            ) : (
+              <SubmitButton />
+            )
           ) : (
             <OpenAccountModalButton fullWidth size="large" />
           )}

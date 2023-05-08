@@ -28,7 +28,7 @@ import { useTrackedState } from '../state';
 import type { DialogProps } from '@frontend/shared-ui';
 import type { StackProps } from '@mui/material';
 
-import type { LTSRoute } from '../../../routes';
+import type { WithdrawRoute } from '../../../types';
 import type { LTSContract } from '../types';
 
 export type ContractDialogProps = {
@@ -44,8 +44,8 @@ const rowProps: StackProps = {
 
 export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
   const intl = useIntl();
-  const { address } = useSearch<LTSRoute>();
-  const navigate = useNavigate<LTSRoute>();
+  const { address } = useSearch<WithdrawRoute>();
+  const navigate = useNavigate<WithdrawRoute>();
   const { chains } = useNetwork();
   const contractChain = chains.find(propEq(contract.chain, 'id')) ?? mainnet;
   const { slippage } = useSettings();

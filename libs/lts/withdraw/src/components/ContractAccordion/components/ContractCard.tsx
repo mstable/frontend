@@ -11,7 +11,7 @@ import { mainnet, useNetwork, useSwitchNetwork } from 'wagmi';
 
 import type { Grid2Props, StackProps } from '@mui/material';
 
-import type { LTSRoute } from '../../../routes';
+import type { WithdrawRoute } from '../../../types';
 import type { LTSContract } from '../types';
 
 export type ContractCardProps = {
@@ -28,7 +28,7 @@ const rowProps: StackProps = {
 export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
-  const navigate = useNavigate<LTSRoute>();
+  const navigate = useNavigate<WithdrawRoute>();
   const { chains, chain } = useNetwork();
   const contractChain = chains.find(propEq(contract.chain, 'id')) ?? mainnet;
   const { switchNetwork } = useSwitchNetwork({

@@ -2,17 +2,15 @@ import { Burn } from '@frontend/lts-burn';
 import { Withdraw } from '@frontend/lts-withdraw';
 import { defineMessage } from 'react-intl';
 
-import type { MakeGenerics, Route } from '@tanstack/react-location';
+import type { WithdrawRoute } from '@frontend/lts-withdraw';
+import type { Route } from '@tanstack/react-location';
 import type { MessageDescriptor } from 'react-intl';
 
-export type LTSRoute = MakeGenerics<{
-  Search: {
-    address: string;
-  };
+export type LTSRoute = WithdrawRoute & {
   RouteMeta: {
     label: MessageDescriptor;
   };
-}>;
+};
 
 export const routes: Route<LTSRoute>[] = [
   {

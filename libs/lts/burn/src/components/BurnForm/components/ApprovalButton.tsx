@@ -1,7 +1,4 @@
-import { useMemo } from 'react';
-
-import { useSettings } from '@frontend/mstable-settings';
-import { usePushNotification, useTrack } from '@frontend/shared-providers';
+import { usePushNotification } from '@frontend/shared-providers';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { Button, CircularProgress } from '@mui/material';
 import { constants } from 'ethers';
@@ -14,39 +11,27 @@ import {
   useWaitForTransaction,
 } from 'wagmi';
 
-import { useMetavault } from '../../../state';
-import { useOperations, useSetIsSubmitLoading } from '../hooks';
+import { useTrackedState } from '../../../state';
 
-import type { HexAddress } from '@frontend/shared-utils';
 import type { ButtonProps } from '@mui/material';
-import type { BigNumber } from 'ethers';
 
 const buttonProps: ButtonProps = {
   size: 'large',
+  fullWidth: true,
 };
 
 export const ApprovalButton = (props: ButtonProps) => {
   const intl = useIntl();
-  const track = useTrack();
   const { chain } = useNetwork();
   const pushNotification = usePushNotification();
-  const { exactApproval } = useSettings();
-  const {
-    metavault: { address, asset },
-  } = useMetavault();
-  const { amount, needsApproval } = useOperations();
-  const setIsSubmitLoading = useSetIsSubmitLoading();
-
-  const args = useMemo<[HexAddress, BigNumber]>(
-    () => [address, exactApproval ? amount?.exact : constants.MaxUint256],
-    [address, amount?.exact, exactApproval],
-  );
+  const { mta, mty, needsApproval } = useTrackedState();
 
   const { config } = usePrepareContractWrite({
-    address: asset.address,
-    abi: asset.abi,
+    address: mta.contract.address,
+    abi: mta.contract.abi,
     functionName: 'approve',
-    args,
+    args: [mty.contract.address, constants.MaxUint256],
+    chainId: mta.contract.chainId,
     enabled: needsApproval,
   });
   const {
@@ -75,7 +60,6 @@ export const ApprovalButton = (props: ButtonProps) => {
       });
     },
     onError: () => {
-      setIsSubmitLoading(false);
       pushNotification({
         title: intl.formatMessage({
           defaultMessage: 'Transaction Cancelled',
@@ -105,13 +89,6 @@ export const ApprovalButton = (props: ButtonProps) => {
           ),
           severity: 'success',
         });
-        track('approve', {
-          transactionHash,
-          from,
-          to,
-          blockNumber,
-          chain: chain?.id,
-        });
       },
       onError: () => {
         pushNotification({
@@ -131,15 +108,7 @@ export const ApprovalButton = (props: ButtonProps) => {
           severity: 'error',
         });
       },
-      onSettled: () => {
-        setIsSubmitLoading(false);
-      },
     });
-
-  const approve = () => {
-    write();
-    setIsSubmitLoading(true);
-  };
 
   if (isWriteLoading) {
     return (
@@ -161,7 +130,7 @@ export const ApprovalButton = (props: ButtonProps) => {
   }
 
   return (
-    <Button {...buttonProps} {...props} onClick={approve}>
+    <Button {...buttonProps} {...props} onClick={write}>
       {intl.formatMessage({ defaultMessage: 'Approve', id: 'WCaf5C' })}
     </Button>
   );

@@ -26,6 +26,8 @@ type StateProps = {
   step: number;
   isLoading: boolean;
   isError: boolean;
+  needsApproval: boolean;
+  mtaBuybackPrice: number;
   mta: InputProps;
   mty: InputProps;
 };
@@ -34,10 +36,19 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
   const { chain } = useNetwork();
   const { address: walletAddress, isConnected } = useAccount();
 
+  const MTyPool =
+    cons[optimism.id]['0x0F6eAe52ae1f94Bc759ed72B201A2fDb14891485'];
+  const L1Comptroller =
+    cons[mainnet.id]['0x3509816328cf50Fed7631c2F5C9a18c75cd601F0'];
+  const L2Comptroller =
+    cons[optimism.id]['0x3509816328cf50Fed7631c2F5C9a18c75cd601F0'];
+
   const [state, setState] = useState<StateProps>({
     step: 0,
     isLoading: true,
     isError: false,
+    needsApproval: true,
+    mtaBuybackPrice: 0.0318,
     mta: {
       amount: BigDecimal.ZERO,
       balance: BigDecimal.ZERO,
@@ -53,6 +64,34 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
       contract: tokens[optimism.id].find((token) => token.symbol === 'MTy'),
     },
   });
+
+  const { data: all } = useContractRead({
+    address: state.mta.contract.address,
+    abi: state.mta.contract.abi,
+    functionName: 'allowance',
+    args: [
+      walletAddress,
+      chain?.id === mainnet.id ? L1Comptroller.address : L2Comptroller.address,
+    ],
+    enabled: isConnected,
+    watch: true,
+    cacheOnBlock: true,
+  });
+
+  useEffect(() => {
+    if (all) {
+      setState(
+        produce((draft) => {
+          draft.needsApproval = state.mta.amount.exact.gt(
+            new BigDecimal(
+              all as unknown as BigNumberish,
+              state.mta.contract.decimals,
+            ).exact,
+          );
+        }),
+      );
+    }
+  }, [all, state.mta.amount.exact, state.mta.contract.decimals]);
 
   const { data: balMTA, isLoading: balMTALoading } = useContractRead({
     address: state.mta.contract.address,
@@ -116,11 +155,9 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
   }, [balMTy, state.mty.contract.decimals]);
 
   const { data: mtyPrice, isLoading: mtyPriceLoading } = useContractRead({
-    address:
-      cons[optimism.id]['0x0F6eAe52ae1f94Bc759ed72B201A2fDb14891485'].address,
-    abi: cons[optimism.id]['0x0F6eAe52ae1f94Bc759ed72B201A2fDb14891485'].abi,
-    chainId:
-      cons[optimism.id]['0x0F6eAe52ae1f94Bc759ed72B201A2fDb14891485'].chainId,
+    address: MTyPool.address,
+    abi: MTyPool.abi,
+    chainId: MTyPool.chainId,
     functionName: 'tokenPrice',
   });
 
@@ -162,6 +199,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
           draft.mta.balance = BigDecimal.ZERO;
           draft.mty.balance = BigDecimal.ZERO;
           draft.mty.balance = BigDecimal.ZERO;
+          draft.needsApproval = true;
           draft.isError = false;
         }),
       );
