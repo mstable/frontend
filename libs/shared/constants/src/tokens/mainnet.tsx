@@ -80,7 +80,7 @@ export const toksMainnet: Token[] = [
     icon: CurveProtocol,
   },
   {
-    address: '0xa3BeD4E1c75D00fa6f4E5E6922DB7261B5E9AcD2',
+    address: '0xa3bed4e1c75d00fa6f4e5e6922db7261b5e9acd2',
     symbol: 'MTA',
     decimals: 18,
     chainId: 1,

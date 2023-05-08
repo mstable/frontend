@@ -5,8 +5,8 @@ import { ArrowFatDown } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 import { useAccount } from 'wagmi';
 
-import { useSetMTAAmount, useSetStep } from '../hooks';
-import { useTrackedState } from '../state';
+import { useSetMTAAmount, useSetStep } from '../../../hooks';
+import { useTrackedState } from '../../../state';
 
 import type { MotionStackProps } from '@frontend/shared-ui';
 import type { StackProps } from '@mui/material';
@@ -19,8 +19,9 @@ const ArrowDown = (props: StackProps) => {
       p={1.5}
       border={(theme) => `1px solid ${theme.palette.divider}`}
       borderRadius={1}
-      bgcolor="grey.800"
+      bgcolor="divider"
       {...props}
+      sx={{ svg: { color: 'text.primary' }, ...props?.sx }}
     >
       <ArrowFatDown size={20} />
     </Stack>
@@ -30,7 +31,7 @@ const ArrowDown = (props: StackProps) => {
 export const InputStep = (props: MotionStackProps) => {
   const intl = useIntl();
   const { isConnected } = useAccount();
-  const { mta, mty, isLoading } = useTrackedState();
+  const { mta, mty, isLoading, isError } = useTrackedState();
   const setStep = useSetStep();
   const setMTAAmount = useSetMTAAmount();
 
@@ -47,8 +48,8 @@ export const InputStep = (props: MotionStackProps) => {
         {intl.formatMessage(
           {
             defaultMessage:
-              'Burn MTA to receive {yield} vault tokens on Optimism at a value of $0.0318 per MTA.<br></br>Here is the {roadmap} to help you make a better informed decision.',
-            id: 'p6MoDc',
+              'Burn MTA to receive {yield} vault tokens on Optimism at a value of {price} per MTA.<br></br>Here is the {roadmap} to help you make a better informed decision.',
+            id: 'ZVjb/P',
           },
           {
             yield: (
@@ -63,6 +64,13 @@ export const InputStep = (props: MotionStackProps) => {
                 })}
               </Link>
             ),
+            price: isLoading
+              ? '-'
+              : Intl.NumberFormat('en-US', {
+                  currency: 'USD',
+                  style: 'currency',
+                  maximumSignificantDigits: 4,
+                }).format(mta.price),
             roadmap: (
               <Link
                 href="https://medium.com/mstable/some-article"
@@ -93,9 +101,12 @@ export const InputStep = (props: MotionStackProps) => {
         >
           <TokenInput
             amount={mta.amount}
+            max={mta.balance}
+            error={isError}
             onChange={setMTAAmount}
             token={mta.contract}
             hideBottomRow
+            disabled={!isConnected || mta.balance.exact.isZero()}
             components={{
               container: {
                 width: 1,
@@ -134,9 +145,9 @@ export const InputStep = (props: MotionStackProps) => {
                       id: 'vclhrb',
                     },
                     {
-                      balance: Intl.NumberFormat('en-US', {
-                        maximumSignificantDigits: 2,
-                      }).format(mta.balance.simple),
+                      balance: Intl.NumberFormat('en-US').format(
+                        mta.balance.simple,
+                      ),
                     },
                   )
                 )}
@@ -177,7 +188,15 @@ export const InputStep = (props: MotionStackProps) => {
             }}
           >
             <Typography variant="label2" color="text.secondary">
-              $12.34
+              {isLoading ? (
+                <Skeleton width={60} />
+              ) : (
+                Intl.NumberFormat('en-US', {
+                  currency: 'USD',
+                  style: 'currency',
+                  maximumSignificantDigits: 2,
+                }).format(mty.price)
+              )}
             </Typography>
             {isConnected && (
               <Typography variant="label2" color="text.secondary">
@@ -190,9 +209,9 @@ export const InputStep = (props: MotionStackProps) => {
                       id: 'vclhrb',
                     },
                     {
-                      balance: Intl.NumberFormat('en-US', {
-                        maximumSignificantDigits: 2,
-                      }).format(mty.balance.simple),
+                      balance: Intl.NumberFormat('en-US').format(
+                        mty.balance.simple,
+                      ),
                     },
                   )
                 )}

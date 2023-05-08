@@ -6,6 +6,7 @@ import {
   alpha,
   AppBar,
   Button,
+  Link,
   Stack,
   useMediaQuery,
   useTheme,
@@ -45,6 +46,7 @@ export const Topnav = () => {
           color="inherit"
           onClick={() => {
             navigate({
+              to: '/',
               search: produce((draft) => {
                 delete draft.address;
               }),
@@ -63,9 +65,16 @@ export const Topnav = () => {
           spacing={2}
         >
           {routes.map((route) => (
-            <RouterLink key={route.path} to={route.path}>
+            <Link
+              component={RouterLink}
+              key={route.path}
+              to={route.path}
+              getActiveProps={() => ({
+                style: { color: 'white' },
+              })}
+            >
               {intl.formatMessage(route.meta.label)}
-            </RouterLink>
+            </Link>
           ))}
           <OpenAccountModalButton
             sx={{ maxWidth: 180, maxHeight: 36, px: 1 }}

@@ -6,7 +6,7 @@ import type { Token } from './types';
 
 export const toksOptimism: Token[] = [
   {
-    address: '0x0f6eae52ae1f94bc759ed72b201a2fdb14891485',
+    address: '0x929b939f8524c3be977af57a4a0ad3fb1e374b50',
     symbol: 'MTA',
     icon: MTA,
     decimals: 18,

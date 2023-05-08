@@ -1,10 +1,10 @@
 import { Stack } from '@mui/material';
 import { AnimatePresence } from 'framer-motion';
 
+import { useTrackedState } from '../../state';
 import { InputStep } from './components/InputStep';
 import { StepIndicator } from './components/StepIndicator';
 import { WithdrawStep } from './components/WithdrawStep';
-import { Provider, useTrackedState } from './state';
 
 import type { StackProps, SxProps, Theme } from '@mui/material';
 
@@ -14,7 +14,7 @@ const cardSx: SxProps<Theme> = (theme) => ({
   border: `1px solid ${theme.palette.divider}`,
 });
 
-const BurnFormWrapped = (props: StackProps) => {
+export const BurnForm = (props: StackProps) => {
   const { step } = useTrackedState();
 
   return (
@@ -40,9 +40,3 @@ const BurnFormWrapped = (props: StackProps) => {
     </Stack>
   );
 };
-
-export const BurnForm = (props: StackProps) => (
-  <Provider>
-    <BurnFormWrapped {...props} />
-  </Provider>
-);

@@ -32,6 +32,8 @@ export const useSetMTAAmount = () => {
       update(
         produce((draft) => {
           draft.mta.amount = amount;
+          // TODO compute preview
+          draft.mty.amount = amount;
         }),
       );
     },
@@ -47,6 +49,7 @@ export const usePrepareMTABuyback = () => {
   const configMainnet = {
     address: cons[mainnet.id]['L1Comptroller'].address,
     abi: cons[mainnet.id]['L1Comptroller'].abi,
+    chainId: cons[mainnet.id]['L1Comptroller'].chainId,
     functionName: 'buyBackOnL2',
     args: [address, mta.amount.exact],
   };
@@ -54,6 +57,7 @@ export const usePrepareMTABuyback = () => {
   const configOptimism = {
     address: cons[optimism.id]['L2Comptroller'].address,
     abi: cons[optimism.id]['L2Comptroller'].abi,
+    chainId: cons[optimism.id]['L2Comptroller'].chainId,
     functionName: 'buyback',
     args: [address, mta.amount.exact],
   };

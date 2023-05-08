@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
-import { useTrackedState } from '../state';
+import { useTrackedState } from '../../../state';
 
 import type { StackProps } from '@mui/material';
 
@@ -21,7 +21,7 @@ const Indicator = ({ step, label, visited, ...rest }: IndicatorProps) => (
       width={40}
       height={40}
       border={(theme) => `1px solid ${theme.palette.divider}`}
-      bgcolor={visited ? 'info.main' : 'grey.800'}
+      bgcolor={visited ? 'info.main' : 'divider'}
     >
       <Typography variant="h4">{step}</Typography>
     </Box>
@@ -54,7 +54,7 @@ export const StepIndicator = (props: StackProps) => {
           height: 2,
           width: '90%',
           background:
-            step > 0 ? theme.palette.info.main : theme.palette.grey['800'],
+            step > 0 ? theme.palette.info.main : theme.palette.divider,
         },
       })}
       {...props}

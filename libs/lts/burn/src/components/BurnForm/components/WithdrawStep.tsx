@@ -2,7 +2,7 @@ import { MotionStack } from '@frontend/shared-ui';
 import { Button, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
-import { useSetStep } from '../hooks';
+import { useSetStep } from '../../../hooks';
 
 import type { MotionStackProps } from '@frontend/shared-ui';
 
