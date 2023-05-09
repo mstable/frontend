@@ -1,13 +1,12 @@
 import { Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
-import { useTrackedState } from '../state';
+import { mtaBuybackPrice } from '../constants';
 
 import type { StackProps } from '@mui/material';
 
 export const Hero = (props: StackProps) => {
   const intl = useIntl();
-  const { isLoading, mtaBuybackPrice } = useTrackedState();
 
   return (
     <Stack justifyContent="center" alignItems="center" {...props}>
@@ -20,19 +19,17 @@ export const Hero = (props: StackProps) => {
       <Typography textAlign="center">
         {intl.formatMessage(
           {
-            defaultMessage: `Exchange rate {price} USD per MTA. This is the floor price for the MTA token, backed by the mStable Treasury Yield.<br></br>
+            defaultMessage: `Exchange rate <b>{price} USD</b> per MTA. This is the floor price for the MTA token, backed by the mStable Treasury Yield.<br></br>
           If burning MTA from Ethereum, it may take a few minutes to be issued yield tokens on Optimism.
           `,
-            id: 'J7Y4Ey',
+            id: 'v1vY2k',
           },
           {
-            price: isLoading
-              ? '-'
-              : Intl.NumberFormat('en-US', {
-                  currency: 'USD',
-                  style: 'currency',
-                  maximumSignificantDigits: 4,
-                }).format(mtaBuybackPrice),
+            price: Intl.NumberFormat('en-US', {
+              currency: 'USD',
+              style: 'currency',
+              maximumSignificantDigits: 4,
+            }).format(mtaBuybackPrice),
           },
         )}
       </Typography>

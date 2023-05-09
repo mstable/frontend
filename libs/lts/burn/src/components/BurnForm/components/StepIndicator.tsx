@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
-import { useTrackedState } from '../../../state';
+import { useTrackedState } from '../state';
 
 import type { StackProps } from '@mui/material';
 

@@ -1,7 +1,6 @@
 import { usePushNotification } from '@frontend/shared-providers';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { Button, CircularProgress } from '@mui/material';
-import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
 import {
   mainnet,
@@ -11,6 +10,7 @@ import {
   useWaitForTransaction,
 } from 'wagmi';
 
+import { l1Comptroller, l2Comptroller } from '../../../../../constants';
 import { useTrackedState } from '../../../state';
 
 import type { ButtonProps } from '@mui/material';
@@ -24,8 +24,7 @@ export const ApprovalButton = (props: ButtonProps) => {
   const intl = useIntl();
   const { chain } = useNetwork();
   const pushNotification = usePushNotification();
-  const { mta, needsApproval, l1Comptroller, l2Comptroller, refetch } =
-    useTrackedState();
+  const { mta, needsApproval, isError, refetch } = useTrackedState();
 
   const { config } = usePrepareContractWrite({
     address: mta.contract.address,
@@ -33,7 +32,7 @@ export const ApprovalButton = (props: ButtonProps) => {
     functionName: 'approve',
     args: [
       chain?.id === mainnet.id ? l1Comptroller.address : l2Comptroller.address,
-      constants.MaxUint256,
+      mta.balance.exact,
     ],
     chainId: chain?.id,
     enabled: needsApproval,
@@ -76,7 +75,7 @@ export const ApprovalButton = (props: ButtonProps) => {
   const { isSuccess: isWaitSuccess, isLoading: isWaitLoading } =
     useWaitForTransaction({
       hash: approveData?.hash,
-      onSuccess: ({ transactionHash, from, to, blockNumber }) => {
+      onSuccess: ({ transactionHash }) => {
         pushNotification({
           title: intl.formatMessage({
             defaultMessage: 'Transaction Confirmed',
@@ -119,6 +118,17 @@ export const ApprovalButton = (props: ButtonProps) => {
     return (
       <Button {...buttonProps} {...props} disabled>
         {intl.formatMessage({ defaultMessage: 'Approve', id: 'WCaf5C' })}
+      </Button>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Button {...buttonProps} disabled>
+        {intl.formatMessage({
+          defaultMessage: 'Insufficient balance',
+          id: 'kaPKOB',
+        })}
       </Button>
     );
   }

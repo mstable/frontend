@@ -2,7 +2,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
-  cons,
   tokens,
   VELODROME_PAIRS_API_ENDPOINT,
 } from '@frontend/shared-constants';
@@ -13,7 +12,14 @@ import { createContainer } from 'react-tracked';
 import { useAccount, useContractReads, useNetwork } from 'wagmi';
 import { mainnet, optimism } from 'wagmi/chains';
 
-import type { Contract, Token } from '@frontend/shared-constants';
+import {
+  l1Comptroller,
+  l2Comptroller,
+  mtaBuybackPrice,
+  mtyPool,
+} from '../../constants';
+
+import type { Token } from '@frontend/shared-constants';
 import type { BigNumberish } from 'ethers';
 
 type InputProps = {
@@ -28,12 +34,8 @@ type StateProps = {
   isLoading: boolean;
   isError: boolean;
   needsApproval: boolean;
-  mtaBuybackPrice: number;
   mta: InputProps;
   mty: InputProps;
-  l1Comptroller: Contract;
-  l2Comptroller: Contract;
-  mtyPool: Contract;
   refetch: () => void;
   reset: () => void;
 };
@@ -47,7 +49,6 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
     isLoading: true,
     isError: false,
     needsApproval: true,
-    mtaBuybackPrice: 0.0318,
     mta: {
       amount: BigDecimal.ZERO,
       balance: BigDecimal.ZERO,
@@ -62,11 +63,6 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
       price: 0,
       contract: tokens[optimism.id].find((token) => token.symbol === 'MTy'),
     },
-    mtyPool: cons[optimism.id]['0x0F6eAe52ae1f94Bc759ed72B201A2fDb14891485'],
-    l1Comptroller:
-      cons[mainnet.id]['0x3509816328cf50Fed7631c2F5C9a18c75cd601F0'],
-    l2Comptroller:
-      cons[optimism.id]['0x3509816328cf50Fed7631c2F5C9a18c75cd601F0'],
     refetch: () => null,
     reset: () => null,
   });
@@ -74,16 +70,9 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
   const allArgs = useMemo(
     () => [
       walletAddress,
-      chain?.id === mainnet.id
-        ? state.l1Comptroller.address
-        : state.l2Comptroller.address,
+      chain?.id === mainnet.id ? l1Comptroller.address : l2Comptroller.address,
     ],
-    [
-      chain?.id,
-      state.l1Comptroller.address,
-      state.l2Comptroller.address,
-      walletAddress,
-    ],
+    [chain?.id, walletAddress],
   );
 
   const { data: velo, isLoading: veloLoading } = useQuery(
@@ -128,9 +117,9 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
         args: [walletAddress],
       },
       {
-        address: state.mtyPool.address,
-        abi: state.mtyPool.abi,
-        chainId: state.mtyPool.chainId,
+        address: mtyPool.address,
+        abi: mtyPool.abi,
+        chainId: mtyPool.chainId,
         functionName: 'tokenPrice',
       },
     ],
@@ -169,6 +158,17 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
     state.mta.contract.decimals,
     state.mty.contract.decimals,
   ]);
+
+  useEffect(() => {
+    setState(
+      produce((draft) => {
+        draft.mty.amount = BigDecimal.fromSimple(
+          (draft.mta.amount.simple * mtaBuybackPrice) /
+            (draft.mty.price === 0 ? 1 : draft.mty.price),
+        );
+      }),
+    );
+  }, [state.mta.amount.exact]);
 
   useEffect(() => {
     setState(

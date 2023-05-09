@@ -1,9 +1,10 @@
 import { useCallback } from 'react';
 
-import { BigDecimal } from '@frontend/shared-utils';
 import produce from 'immer';
 
 import { useUpdate } from './state';
+
+import type { BigDecimal } from '@frontend/shared-utils';
 
 export const useSetStep = () => {
   const update = useUpdate();
@@ -28,9 +29,6 @@ export const useSetMTAAmount = () => {
       update(
         produce((draft) => {
           draft.mta.amount = amount;
-          draft.mty.amount = BigDecimal.fromSimple(
-            (amount.simple * draft.mtaBuybackPrice) / draft.mty.price,
-          );
         }),
       );
     },

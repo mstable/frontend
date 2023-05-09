@@ -87,6 +87,51 @@
       "value": "Burn your MTA tokens to receive mStable Treasury Yield tokens"
     }
   ],
+  "5eoReb": [
+    {
+      "type": 0,
+      "value": "Burn MTA to receive "
+    },
+    {
+      "type": 1,
+      "value": "yield"
+    },
+    {
+      "type": 0,
+      "value": " vault tokens on Optimism at a value of "
+    },
+    {
+      "children": [
+        {
+          "type": 1,
+          "value": "price"
+        }
+      ],
+      "type": 8,
+      "value": "b"
+    },
+    {
+      "type": 0,
+      "value": " per MTA."
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": "Here is the "
+    },
+    {
+      "type": 1,
+      "value": "roadmap"
+    },
+    {
+      "type": 0,
+      "value": " to help you make a better informed decision."
+    }
+  ],
   "6GZbSi": [
     {
       "type": 0,
@@ -177,6 +222,12 @@
       "value": "Hot"
     }
   ],
+  "CuTvKy": [
+    {
+      "type": 0,
+      "value": "Swap on Velodrome"
+    }
+  ],
   "D/hLNw": [
     {
       "type": 0,
@@ -207,27 +258,10 @@
       "value": "Make sure you are on the right URL."
     }
   ],
-  "J7Y4Ey": [
+  "K1NWSN": [
     {
       "type": 0,
-      "value": "Exchange rate "
-    },
-    {
-      "type": 1,
-      "value": "price"
-    },
-    {
-      "type": 0,
-      "value": " USD per MTA. This is the floor price for the MTA token, backed by the mStable Treasury Yield."
-    },
-    {
-      "children": [],
-      "type": 8,
-      "value": "br"
-    },
-    {
-      "type": 0,
-      "value": " If burning MTA from Ethereum, it may take a few minutes to be issued yield tokens on Optimism."
+      "value": "Price is more favorable on Velodrome"
     }
   ],
   "LMK5Bl": [
@@ -407,45 +441,6 @@
     {
       "type": 0,
       "value": "Read the Announcement"
-    }
-  ],
-  "ZVjb/P": [
-    {
-      "type": 0,
-      "value": "Burn MTA to receive "
-    },
-    {
-      "type": 1,
-      "value": "yield"
-    },
-    {
-      "type": 0,
-      "value": " vault tokens on Optimism at a value of "
-    },
-    {
-      "type": 1,
-      "value": "price"
-    },
-    {
-      "type": 0,
-      "value": " per MTA."
-    },
-    {
-      "children": [],
-      "type": 8,
-      "value": "br"
-    },
-    {
-      "type": 0,
-      "value": "Here is the "
-    },
-    {
-      "type": 1,
-      "value": "roadmap"
-    },
-    {
-      "type": 0,
-      "value": " to help you make a better informed decision."
     }
   ],
   "Zab6JA": [
@@ -715,6 +710,39 @@
     {
       "type": 0,
       "value": "Email"
+    }
+  ],
+  "v1vY2k": [
+    {
+      "type": 0,
+      "value": "Exchange rate "
+    },
+    {
+      "children": [
+        {
+          "type": 1,
+          "value": "price"
+        },
+        {
+          "type": 0,
+          "value": " USD"
+        }
+      ],
+      "type": 8,
+      "value": "b"
+    },
+    {
+      "type": 0,
+      "value": " per MTA. This is the floor price for the MTA token, backed by the mStable Treasury Yield."
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": " If burning MTA from Ethereum, it may take a few minutes to be issued yield tokens on Optimism."
     }
   ],
   "vS/YSY": [

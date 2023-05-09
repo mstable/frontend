@@ -14,6 +14,7 @@ import {
 } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
+import { l1Comptroller, l2Comptroller } from '../../../../../constants';
 import { useTrackedState } from '../../../state';
 
 import type { ButtonProps } from '@mui/material';
@@ -32,8 +33,7 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
   const { chain } = useNetwork();
   const pushNotification = usePushNotification();
   const { address: walletAddress } = useAccount();
-  const { mta, isError, needsApproval, l1Comptroller, l2Comptroller, reset } =
-    useTrackedState();
+  const { mta, isError, needsApproval, reset } = useTrackedState();
 
   const config = useMemo(
     () =>
@@ -54,18 +54,7 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
             args: [walletAddress, mta.amount.exact],
             enabled: !isError && mta.amount.exact.gt(constants.Zero),
           },
-    [
-      chain?.id,
-      isError,
-      l1Comptroller.abi,
-      l1Comptroller.address,
-      l1Comptroller.chainId,
-      l2Comptroller.abi,
-      l2Comptroller.address,
-      l2Comptroller.chainId,
-      mta.amount.exact,
-      walletAddress,
-    ],
+    [chain?.id, isError, mta.amount.exact, walletAddress],
   );
 
   const { data: submitConfig } = usePrepareContractWrite(config);
@@ -107,7 +96,7 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
   });
   const { isSuccess: isSubmitSuccess } = useWaitForTransaction({
     hash: submitData?.hash,
-    onSuccess: ({ blockNumber, transactionHash, from, to }) => {
+    onSuccess: ({ transactionHash }) => {
       pushNotification({
         title: intl.formatMessage({
           defaultMessage: 'Transaction Confirmed',
