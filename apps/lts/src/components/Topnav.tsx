@@ -1,6 +1,9 @@
 import { SettingsButton } from '@frontend/lts-settings';
 import { MStable, MStableShort } from '@frontend/shared-icons';
-import { OpenAccountModalButton } from '@frontend/shared-providers';
+import {
+  OpenAccountModalButton,
+  OpenNetworkModalButton,
+} from '@frontend/shared-providers';
 import { RouterLink } from '@frontend/shared-ui';
 import {
   alpha,
@@ -77,9 +80,9 @@ export const Topnav = () => {
               {intl.formatMessage(route.meta.label)}
             </Link>
           ))}
-          <OpenAccountModalButton
-            sx={{ maxWidth: 180, maxHeight: 36, px: 1 }}
-          />
+
+          <OpenAccountModalButton sx={{ maxWidth: 180, maxHeight: 36 }} />
+          <OpenNetworkModalButton sx={{ height: 36, width: 36 }} />
           <SettingsButton sx={{ height: 36, width: 36 }} />
         </Stack>
       </Stack>
