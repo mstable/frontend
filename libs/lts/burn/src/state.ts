@@ -190,6 +190,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
     setState(
       produce((draft) => {
         draft.mta.amount = BigDecimal.ZERO;
+        draft.mta.amount = BigDecimal.ZERO;
         draft.mta.balance = BigDecimal.ZERO;
         draft.mty.balance = BigDecimal.ZERO;
         draft.mty.balance = BigDecimal.ZERO;

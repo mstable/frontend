@@ -29,7 +29,7 @@ export const useSetMTAAmount = () => {
         produce((draft) => {
           draft.mta.amount = amount;
           draft.mty.amount = BigDecimal.fromSimple(
-            amount.simple * draft.mtaBuybackPrice * draft.mty.price,
+            (amount.simple * draft.mtaBuybackPrice) / draft.mty.price,
           );
         }),
       );
