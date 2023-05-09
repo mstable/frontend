@@ -24,7 +24,7 @@ export const ApprovalButton = (props: ButtonProps) => {
   const intl = useIntl();
   const { chain } = useNetwork();
   const pushNotification = usePushNotification();
-  const { mta, needsApproval, l1Comptroller, l2Comptroller, reset } =
+  const { mta, needsApproval, l1Comptroller, l2Comptroller, refetch } =
     useTrackedState();
 
   const { config } = usePrepareContractWrite({
@@ -112,7 +112,7 @@ export const ApprovalButton = (props: ButtonProps) => {
           severity: 'error',
         });
       },
-      onSettled: reset,
+      onSettled: refetch,
     });
 
   if (!chain?.id) {

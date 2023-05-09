@@ -34,6 +34,7 @@ type StateProps = {
   l1Comptroller: Contract;
   l2Comptroller: Contract;
   mtyPool: Contract;
+  refetch: () => void;
   reset: () => void;
 };
 
@@ -66,6 +67,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
       cons[mainnet.id]['0x3509816328cf50Fed7631c2F5C9a18c75cd601F0'],
     l2Comptroller:
       cons[optimism.id]['0x3509816328cf50Fed7631c2F5C9a18c75cd601F0'],
+    refetch: () => null,
     reset: () => null,
   });
 
@@ -201,13 +203,14 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
   useEffect(() => {
     setState(
       produce((draft) => {
+        draft.refetch = refetch;
         draft.reset = reset;
       }),
     );
     if (!isConnected) {
       reset();
     }
-  }, [isConnected, reset]);
+  }, [isConnected, refetch, reset]);
 
   return [state, setState];
 });
