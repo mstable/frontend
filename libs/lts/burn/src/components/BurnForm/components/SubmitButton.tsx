@@ -1,4 +1,5 @@
-import { cons } from '@frontend/shared-constants';
+import { useMemo } from 'react';
+
 import { usePushNotification } from '@frontend/shared-providers';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { Button, CircularProgress } from '@mui/material';
@@ -11,7 +12,7 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi';
-import { mainnet, optimism } from 'wagmi/chains';
+import { mainnet } from 'wagmi/chains';
 
 import { useTrackedState } from '../../../state';
 
@@ -31,30 +32,43 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
   const { chain } = useNetwork();
   const pushNotification = usePushNotification();
   const { address: walletAddress } = useAccount();
-  const { mta, isError, needsApproval } = useTrackedState();
+  const { mta, isError, needsApproval, l1Comptroller, l2Comptroller, reset } =
+    useTrackedState();
 
-  const configMainnet = {
-    address:
-      cons[mainnet.id]['0x3509816328cf50Fed7631c2F5C9a18c75cd601F0'].address,
-    abi: cons[mainnet.id]['0x3509816328cf50Fed7631c2F5C9a18c75cd601F0'].abi,
-    chainId: mainnet.id,
-    functionName: 'buyBackOnL2',
-    args: [walletAddress, mta.amount.exact],
-  };
+  const config = useMemo(
+    () =>
+      chain?.id === mainnet.id
+        ? {
+            address: l1Comptroller.address,
+            abi: l1Comptroller.abi,
+            chainId: l1Comptroller.chainId,
+            functionName: 'buyBackOnL2',
+            args: [walletAddress, mta.amount.exact],
+            enabled: !isError && mta.amount.exact.gt(constants.Zero),
+          }
+        : {
+            address: l2Comptroller.address,
+            abi: l2Comptroller.abi,
+            chainId: l2Comptroller.chainId,
+            functionName: 'buyBack',
+            args: [walletAddress, mta.amount.exact],
+            enabled: !isError && mta.amount.exact.gt(constants.Zero),
+          },
+    [
+      chain?.id,
+      isError,
+      l1Comptroller.abi,
+      l1Comptroller.address,
+      l1Comptroller.chainId,
+      l2Comptroller.abi,
+      l2Comptroller.address,
+      l2Comptroller.chainId,
+      mta.amount.exact,
+      walletAddress,
+    ],
+  );
 
-  const configOptimism = {
-    address:
-      cons[optimism.id]['0x3509816328cf50Fed7631c2F5C9a18c75cd601F0'].address,
-    abi: cons[optimism.id]['0x3509816328cf50Fed7631c2F5C9a18c75cd601F0'].abi,
-    chainId: optimism.id,
-    functionName: 'buyback',
-    args: [walletAddress, mta.amount.exact],
-  };
-
-  const { data: submitConfig } = usePrepareContractWrite({
-    ...(chain?.id === optimism.id ? configOptimism : configMainnet),
-    enabled: !isError && mta.amount.exact.gt(constants.Zero),
-  });
+  const { data: submitConfig } = usePrepareContractWrite(config);
 
   const {
     data: submitData,
@@ -129,6 +143,7 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
         severity: 'error',
       });
     },
+    onSettled: reset,
   });
 
   if (!mta.amount || needsApproval || mta.amount.exact.eq(constants.Zero)) {

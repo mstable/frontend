@@ -9,6 +9,7 @@ import {
   rbkLightTheme,
 } from '@frontend/mstable-theme';
 import {
+  ChainRefresherProvider,
   I18nProvider,
   ModalsProvider,
   NotificationsProvider,
@@ -55,6 +56,7 @@ root.render(
       ],
       [ModalsProvider],
       [SettingsProvider],
+      [ChainRefresherProvider],
     ],
     <App />,
   ),

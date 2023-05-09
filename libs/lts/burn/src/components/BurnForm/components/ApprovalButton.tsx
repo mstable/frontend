@@ -24,14 +24,18 @@ export const ApprovalButton = (props: ButtonProps) => {
   const intl = useIntl();
   const { chain } = useNetwork();
   const pushNotification = usePushNotification();
-  const { mta, mty, needsApproval } = useTrackedState();
+  const { mta, needsApproval, l1Comptroller, l2Comptroller, reset } =
+    useTrackedState();
 
   const { config } = usePrepareContractWrite({
     address: mta.contract.address,
     abi: mta.contract.abi,
     functionName: 'approve',
-    args: [mty.contract.address, constants.MaxUint256],
-    chainId: mta.contract.chainId,
+    args: [
+      chain?.id === mainnet.id ? l1Comptroller.address : l2Comptroller.address,
+      constants.MaxUint256,
+    ],
+    chainId: chain?.id,
     enabled: needsApproval,
   });
   const {
@@ -108,7 +112,16 @@ export const ApprovalButton = (props: ButtonProps) => {
           severity: 'error',
         });
       },
+      onSettled: reset,
     });
+
+  if (!chain?.id) {
+    return (
+      <Button {...buttonProps} {...props} disabled>
+        {intl.formatMessage({ defaultMessage: 'Approve', id: 'WCaf5C' })}
+      </Button>
+    );
+  }
 
   if (isWriteLoading) {
     return (
