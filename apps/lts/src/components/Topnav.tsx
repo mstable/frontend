@@ -4,12 +4,10 @@ import {
   OpenAccountModalButton,
   OpenNetworkModalButton,
 } from '@frontend/shared-providers';
-import { RouterLink } from '@frontend/shared-ui';
 import {
   alpha,
   AppBar,
   Button,
-  Link,
   Stack,
   useMediaQuery,
   useTheme,
@@ -17,8 +15,6 @@ import {
 import { useNavigate } from '@tanstack/react-location';
 import produce from 'immer';
 import { useIntl } from 'react-intl';
-
-import { routes } from '../routes';
 
 import type { LTSRoute } from '../routes';
 
@@ -67,7 +63,7 @@ export const Topnav = () => {
           alignItems="center"
           spacing={2}
         >
-          {routes.map((route) => (
+          {/* {routes.map((route) => (
             <Link
               component={RouterLink}
               key={route.path}
@@ -79,8 +75,7 @@ export const Topnav = () => {
             >
               {intl.formatMessage(route.meta.label)}
             </Link>
-          ))}
-
+          ))} */}
           <OpenAccountModalButton sx={{ maxWidth: 180, maxHeight: 36 }} />
           <OpenNetworkModalButton sx={{ height: 36, width: 36 }} />
           <SettingsButton sx={{ height: 36, width: 36 }} />

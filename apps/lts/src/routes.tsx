@@ -1,4 +1,3 @@
-import { Burn } from '@frontend/lts-burn';
 import { Withdraw } from '@frontend/lts-withdraw';
 import { defineMessage } from 'react-intl';
 
@@ -21,12 +20,12 @@ export const routes: Route<LTSRoute>[] = [
     path: '/',
     element: <Withdraw />,
   },
-  {
-    id: 'burn',
-    meta: {
-      label: defineMessage({ defaultMessage: 'BuyBack MTA', id: '6T7RIi' }),
-    },
-    path: '/burn',
-    element: <Burn />,
-  },
+  // {
+  //   id: 'burn',
+  //   meta: {
+  //     label: defineMessage({ defaultMessage: 'BuyBack MTA', id: '6T7RIi' }),
+  //   },
+  //   path: '/burn',
+  //   element: <Burn />,
+  // },
 ];
