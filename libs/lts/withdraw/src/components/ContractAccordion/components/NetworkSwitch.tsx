@@ -1,13 +1,13 @@
-import { useSettings, useUpdateSettings } from '@frontend/lts-settings';
+import { useSettings } from '@frontend/lts-settings';
 import { ChainIcon } from '@frontend/shared-ui';
 import { Button, Divider, Stack } from '@mui/material';
 import { constants } from 'ethers';
-import produce from 'immer';
 import { filter, groupBy, pipe, prop } from 'ramda';
 import { useEffectOnce } from 'react-use';
 import { useAccount } from 'wagmi';
 import { mainnet, polygon } from 'wagmi/chains';
 
+import { useSetChainId } from '../hooks';
 import { useTrackedState } from '../state';
 
 import type { StackProps } from '@mui/material';
@@ -16,39 +16,27 @@ import type { LTSContract } from '../types';
 
 export const NetworkSwitch = (props: StackProps) => {
   const { isConnected } = useAccount();
-  const { chain, showEmpty } = useSettings();
-  const updateSettings = useUpdateSettings();
-  const { contracts } = useTrackedState();
+  const { showEmpty } = useSettings();
+  const setChainId = useSetChainId();
+  const { contracts, chainId } = useTrackedState();
 
   const grouped = pipe(
     filter<LTSContract>((c) => showEmpty || c.balance.gt(constants.Zero)),
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    groupBy<LTSContract, number>(prop('chain')),
+    groupBy<LTSContract, number>(prop('chainId')),
   )(contracts);
 
   useEffectOnce(() => {
-    const newChain =
+    const newChainId =
       isConnected && Object.keys(grouped)?.length === 1
         ? Number(Object.keys(grouped)[0])
-        : chain;
-    if (newChain !== chain) {
-      updateSettings(
-        produce((state) => {
-          state.chain = newChain;
-        }),
-      );
-    }
+        : chainId;
+    setChainId(newChainId);
   });
 
-  const handleClick = (chainId: number) => () => {
-    if (chain !== chainId) {
-      updateSettings(
-        produce((state) => {
-          state.chain = chainId;
-        }),
-      );
-    }
+  const handleClick = (newChainId: number) => () => {
+    setChainId(newChainId);
   };
 
   return (
@@ -74,7 +62,7 @@ export const NetworkSwitch = (props: StackProps) => {
                 height: 24,
               },
             },
-            chain === c.id && {
+            chainId === c.id && {
               backgroundColor: (theme) => theme.palette.action.selected,
             },
             i === 0 && {

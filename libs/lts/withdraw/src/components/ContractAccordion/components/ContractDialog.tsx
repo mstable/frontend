@@ -47,11 +47,11 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
   const { address } = useSearch<WithdrawRoute>();
   const navigate = useNavigate<WithdrawRoute>();
   const { chains } = useNetwork();
-  const contractChain = chains.find(propEq(contract.chain, 'id')) ?? mainnet;
+  const contractChain = chains.find(propEq(contract.chainId, 'id')) ?? mainnet;
   const { slippage } = useSettings();
   const { data: feeData } = useFeeData({
     formatUnits: 'gwei',
-    chainId: contract.chain,
+    chainId: contract.chainId,
   });
   const { contracts } = useTrackedState();
   const vaultContract = contracts.find(

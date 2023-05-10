@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useCallback } from 'react';
+
 import { useSettings } from '@frontend/lts-settings';
 import { coingeckoEndpoint } from '@frontend/shared-constants';
 import {
@@ -33,7 +35,7 @@ import {
 } from 'wagmi';
 import { mainnet, polygon } from 'wagmi/chains';
 
-import { useTrackedState } from './state';
+import { useTrackedState, useUpdate } from './state';
 
 import type { HexAddress } from '@frontend/shared-utils';
 import type { UseQueryOptions } from '@tanstack/react-query';
@@ -48,7 +50,7 @@ const stablePreview = async ({ queryKey }) => {
     address: contract.address,
     abi: contract.abi,
     functionName: 'getBassets',
-    chainId: contract.chain,
+    chainId: contract.chainId,
     args: [],
   });
 
@@ -57,10 +59,10 @@ const stablePreview = async ({ queryKey }) => {
   }
 
   const tokenProms = (bAssets[0] as any[]).map((b) =>
-    fetchToken({ address: pathOr(null, [0], b), chainId: contract.chain }),
+    fetchToken({ address: pathOr(null, [0], b), chainId: contract.chainId }),
   );
   const tokens = await Promise.all(tokenProms);
-  const signer = await fetchSigner({ chainId: contract.chain });
+  const signer = await fetchSigner({ chainId: contract.chainId });
   const con = getContract({
     address: contract.address,
     abi: contract.abi,
@@ -81,7 +83,7 @@ const poolPreview = async ({ queryKey }) => {
     address: contract.address,
     abi: contract.abi,
     functionName: 'getBassets',
-    chainId: contract.chain,
+    chainId: contract.chainId,
     args: [],
   });
 
@@ -90,10 +92,10 @@ const poolPreview = async ({ queryKey }) => {
   }
 
   const tokenProms = (bAssets[0] as any[]).map((b) =>
-    fetchToken({ address: pathOr(null, [0], b), chainId: contract.chain }),
+    fetchToken({ address: pathOr(null, [0], b), chainId: contract.chainId }),
   );
   const tokens = await Promise.all(tokenProms);
-  const signer = await fetchSigner({ chainId: contract.chain });
+  const signer = await fetchSigner({ chainId: contract.chainId });
   const con = getContract({
     address: contract.address,
     abi: contract.abi,
@@ -116,21 +118,21 @@ const savePreview = async ({ queryKey }) => {
         address: contract.address,
         abi: contract.abi,
         functionName: 'previewRedeem',
-        chainId: contract.chain,
+        chainId: contract.chainId,
         args: [contract.balance],
       },
       {
         address: contract.address,
         abi: contract.abi,
         functionName: 'asset',
-        chainId: contract.chain,
+        chainId: contract.chainId,
         args: [],
       },
     ],
   });
   const token = await fetchToken({
     address: pathOr(null, [1], infos),
-    chainId: contract.chain,
+    chainId: contract.chainId,
   });
 
   return [
@@ -147,12 +149,12 @@ const vaultPreview = async ({ queryKey }) => {
     address: contract.address,
     abi: contract.abi,
     functionName: 'stakingToken',
-    chainId: contract.chain,
+    chainId: contract.chainId,
     args: [],
   });
   const token = await fetchToken({
     address: stakingTokenAddress as unknown as HexAddress,
-    chainId: contract.chain,
+    chainId: contract.chainId,
   });
 
   return [
@@ -173,18 +175,18 @@ const metavaultPreview = async ({ queryKey }) => {
     address: contract.address,
     abi: contract.abi,
     functionName: 'asset',
-    chainId: contract.chain,
+    chainId: contract.chainId,
     args: [],
   });
   const token = await fetchToken({
     address: assetAddress as unknown as HexAddress,
-    chainId: contract.chain,
+    chainId: contract.chainId,
   });
   const assetBal = await readContract({
     address: contract.address,
     abi: contract.abi,
     functionName: 'convertToAssets',
-    chainId: contract.chain,
+    chainId: contract.chainId,
     args: [contract.balance],
   });
 
@@ -237,7 +239,7 @@ export const useContractPrepareConfig = (contract: LTSContract) => {
   const config = {
     address: contract.address,
     abi: contract.abi,
-    chainId: contract.chain,
+    chainId: contract.chainId,
     enabled: contract.balance.gt(constants.Zero),
   };
 
@@ -312,14 +314,14 @@ export const useContractSubmit = (contract: LTSContract) => {
   const navigate = useNavigate();
   const { chains } = useNetwork();
   const { refetch } = useTrackedState();
-  const contractChain = chains.find(propEq(contract.chain, 'id')) ?? mainnet;
+  const contractChain = chains.find(propEq(contract.chainId, 'id')) ?? mainnet;
   const blockExplorer = contractChain.blockExplorers.default;
   const pushNotification = usePushNotification();
   const deleteNotification = useDeleteNotification();
   const { data: prices } = usePrices();
   const { data: feeData } = useFeeData({
     formatUnits: 'gwei',
-    chainId: contract.chain,
+    chainId: contract.chainId,
   });
   const config = useContractPrepareConfig(contract);
   const { config: submitConfig, isLoading: isPrepareLoading } =
@@ -414,7 +416,7 @@ export const useContractSubmit = (contract: LTSContract) => {
     contractChain.nativeCurrency.decimals,
   );
   const fiatGasPrice = BigDecimal.fromSimple(
-    prices[contract.chain] * nativeTokenGasPrice?.simple,
+    prices[contract.chainId] * nativeTokenGasPrice?.simple,
   );
 
   return {
@@ -457,3 +459,20 @@ export const usePrices = (options?: UseQueryOptions) =>
       ...options,
     },
   );
+
+export const useSetChainId = () => {
+  const update = useUpdate();
+
+  return useCallback(
+    (newChainId: number) => {
+      update(
+        produce((state) => {
+          if (state.chainId !== newChainId) {
+            state.chainId = newChainId;
+          }
+        }),
+      );
+    },
+    [update],
+  );
+};

@@ -5,7 +5,7 @@ import {
   tokens,
   VELODROME_PAIRS_API_ENDPOINT,
 } from '@frontend/shared-constants';
-import { BigDecimal } from '@frontend/shared-utils';
+import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
 import { useQuery } from '@tanstack/react-query';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
@@ -53,9 +53,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
       amount: BigDecimal.ZERO,
       balance: BigDecimal.ZERO,
       price: 0,
-      contract: tokens[chain?.id ?? mainnet.id].find(
-        (token) => token.symbol === 'MTA',
-      ),
+      contract: tokens[mainnet.id].find((token) => token.symbol === 'MTA'),
     },
     mty: {
       amount: BigDecimal.ZERO,
@@ -66,6 +64,16 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
     refetch: () => null,
     reset: () => null,
   });
+
+  useEffect(() => {
+    setState(
+      produce((draft) => {
+        draft.mta.contract = isNilOrEmpty(chain?.id)
+          ? tokens[mainnet.id].find((token) => token.symbol === 'MTA')
+          : tokens[chain.id].find((token) => token.symbol === 'MTA');
+      }),
+    );
+  }, [chain?.id]);
 
   const allArgs = useMemo(
     () => [
@@ -100,6 +108,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
         address: state.mta.contract.address,
         abi: state.mta.contract.abi,
         functionName: 'allowance',
+        chainId: state.mta.contract.chainId,
         args: allArgs,
       },
       {
@@ -159,33 +168,6 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
     state.mty.contract.decimals,
   ]);
 
-  useEffect(() => {
-    setState(
-      produce((draft) => {
-        draft.mty.amount = BigDecimal.fromSimple(
-          (draft.mta.amount.simple * mtaBuybackPrice) /
-            (draft.mty.price === 0 ? 1 : draft.mty.price),
-        );
-      }),
-    );
-  }, [state.mta.amount.exact]);
-
-  useEffect(() => {
-    setState(
-      produce((draft) => {
-        draft.isLoading = isLoading || veloLoading;
-      }),
-    );
-  }, [isLoading, veloLoading]);
-
-  useEffect(() => {
-    setState(
-      produce((draft) => {
-        draft.isError = state.mta.amount.exact.gt(state.mta.balance.exact);
-      }),
-    );
-  }, [state.mta.amount.exact, state.mta.balance.exact]);
-
   const reset = useCallback(() => {
     setState(
       produce((draft) => {
@@ -204,14 +186,37 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
   useEffect(() => {
     setState(
       produce((draft) => {
+        draft.mty.amount = BigDecimal.fromSimple(
+          (draft.mta.amount.simple * mtaBuybackPrice) /
+            (draft.mty.price === 0 ? 1 : draft.mty.price),
+        );
+      }),
+    );
+  }, [state.mta.amount.exact]);
+
+  useEffect(() => {
+    setState(
+      produce((draft) => {
+        draft.isLoading = isLoading || veloLoading;
         draft.refetch = refetch;
         draft.reset = reset;
       }),
     );
+  }, [isLoading, refetch, reset, veloLoading]);
+
+  useEffect(() => {
+    setState(
+      produce((draft) => {
+        draft.isError = state.mta.amount.exact.gt(state.mta.balance.exact);
+      }),
+    );
+  }, [state.mta.amount.exact, state.mta.balance.exact]);
+
+  useEffect(() => {
     if (!isConnected) {
       reset();
     }
-  }, [isConnected, refetch, reset]);
+  }, [isConnected, reset]);
 
   return [state, setState];
 });

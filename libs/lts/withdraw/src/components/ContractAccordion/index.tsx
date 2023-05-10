@@ -47,14 +47,14 @@ const getTitle = (cat: ContractType) =>
 const ContractAccordionWrapped = (props: MotionStackProps) => {
   const intl = useIntl();
   const { isConnected } = useAccount();
-  const { showEmpty, chain } = useSettings();
-  const { contracts } = useTrackedState();
+  const { showEmpty } = useSettings();
+  const { contracts, chainId } = useTrackedState();
 
   const display = pipe(
     filter<LTSContract>(
       (c) =>
         (showEmpty || c.balance.gt(constants.Zero)) &&
-        c.chain === chain &&
+        c.chainId === chainId &&
         isConnected,
     ),
     groupBy<LTSContract, ContractType>(prop('type')),
@@ -73,7 +73,7 @@ const ContractAccordionWrapped = (props: MotionStackProps) => {
           ...props?.sx,
         }}
       >
-        {categories[chain]?.map((cat) => (
+        {categories[chainId]?.map((cat) => (
           <CollapsibleSection
             key={cat}
             title={intl.formatMessage(getTitle(cat))}

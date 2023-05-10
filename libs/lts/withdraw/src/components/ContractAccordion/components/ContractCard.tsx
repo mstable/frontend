@@ -30,7 +30,7 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
   const pushNotification = usePushNotification();
   const navigate = useNavigate<WithdrawRoute>();
   const { chains, chain } = useNetwork();
-  const contractChain = chains.find(propEq(contract.chain, 'id')) ?? mainnet;
+  const contractChain = chains.find(propEq(contract.chainId, 'id')) ?? mainnet;
   const { switchNetwork } = useSwitchNetwork({
     onError: () => {
       pushNotification({
@@ -51,8 +51,8 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
   });
 
   const handleExitClick = async () => {
-    if (chain?.id !== contract.chain) {
-      switchNetwork(contract.chain);
+    if (chain?.id !== contract.chainId) {
+      switchNetwork(contract.chainId);
     } else {
       navigate({ search: { address: `"${contract.address}"` } });
     }
@@ -103,7 +103,7 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
         </Stack>
         {contract.balance.gt(constants.Zero) && (
           <Button onClick={handleExitClick}>
-            {chain?.id === contract.chain
+            {chain?.id === contract.chainId
               ? intl.formatMessage({
                   defaultMessage: 'Exit Position',
                   id: 'hPs6J+',
