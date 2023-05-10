@@ -59,7 +59,7 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
   };
 
   const blockExplorer = contractChain.blockExplorers.default;
-  const bal = new BigDecimal(contract.balance, contract.token?.decimals).simple;
+  const bal = new BigDecimal(contract.balance, contract.decimals).simple;
   const decimals = Math.max(2, countFirstDecimal(bal));
 
   return (
@@ -92,10 +92,8 @@ export const ContractCard = ({ contract, ...rest }: ContractCardProps) => {
           <CountUp
             variant="value4"
             duration={1}
-            end={
-              new BigDecimal(contract.balance, contract.token?.decimals).simple
-            }
-            suffix={contract.token?.symbol}
+            end={new BigDecimal(contract.balance, contract.decimals).simple}
+            suffix={contract.symbol}
             maxWidth={250}
             noWrap
             decimals={decimals}

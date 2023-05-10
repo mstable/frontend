@@ -70,7 +70,7 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
     isSubmitSuccess,
   } = useContractSubmit(contract);
 
-  const bal = new BigDecimal(contract.balance, contract.token?.decimals).simple;
+  const bal = new BigDecimal(contract.balance, contract.decimals).simple;
 
   return (
     <Dialog
@@ -102,7 +102,7 @@ export const ContractDialog = ({ contract, ...rest }: ContractDialogProps) => {
               variant="value4"
               end={bal}
               decimals={Math.max(2, countFirstDecimal(bal))}
-              suffix={contract.token?.symbol}
+              suffix={contract.symbol}
               maxWidth={250}
               noWrap
             />

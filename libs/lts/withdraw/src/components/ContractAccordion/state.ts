@@ -24,7 +24,6 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
       contracts: contracts.map((c) => ({
         ...c,
         balance: constants.Zero,
-        token: null,
       })),
       isLoading: true,
       refetch: null,
