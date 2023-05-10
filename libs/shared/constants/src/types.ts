@@ -5,8 +5,6 @@ import type { ComponentType } from 'react';
 
 export type Contract = {
   address: HexAddress;
-  symbol: string;
-  decimals: number;
   chainId: number;
   abi: any;
   name?: string;

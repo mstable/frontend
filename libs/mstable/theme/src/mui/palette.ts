@@ -80,7 +80,7 @@ const light: ThemeOptions = {
       paper: colors.black50,
       highlight: colors.black100,
     },
-    divider: colors.black100,
+    divider: colors.black200,
     action: {
       active: alpha(colors.blue02, 0.5),
       activatedOpacity: 0.5,
@@ -115,7 +115,7 @@ const dark: ThemeOptions = mergeDeepRight(light, {
     text: {
       primary: colors.black50,
       secondary: colors.black500,
-      disabled: colors.black600,
+      disabled: colors.black400,
     },
     background: {
       default: colors.black900,

@@ -1,20 +1,29 @@
 import { SettingsButton } from '@frontend/lts-settings';
 import { MStable, MStableShort } from '@frontend/shared-icons';
-import { OpenAccountModalButton } from '@frontend/shared-providers';
+import {
+  OpenAccountModalButton,
+  OpenNetworkModalButton,
+} from '@frontend/shared-providers';
+import { RouterLink } from '@frontend/shared-ui';
 import {
   alpha,
   AppBar,
   Button,
+  Link,
   Stack,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import produce from 'immer';
+import { useIntl } from 'react-intl';
+
+import { routes } from '../routes';
 
 import type { LTSRoute } from '../routes';
 
 export const Topnav = () => {
+  const intl = useIntl();
   const theme = useTheme();
   const wide = useMediaQuery(theme.breakpoints.up('sm'));
   const navigate = useNavigate<LTSRoute>();
@@ -40,6 +49,7 @@ export const Topnav = () => {
           color="inherit"
           onClick={() => {
             navigate({
+              to: '/',
               search: produce((draft) => {
                 delete draft.address;
               }),
@@ -57,9 +67,22 @@ export const Topnav = () => {
           alignItems="center"
           spacing={2}
         >
-          <OpenAccountModalButton
-            sx={{ maxWidth: 180, maxHeight: 36, px: 1 }}
-          />
+          {routes.map((route) => (
+            <Link
+              component={RouterLink}
+              key={route.path}
+              to={route.path}
+              getActiveProps={() => ({
+                style: { color: theme.palette.info.dark },
+              })}
+              sx={{ color: 'text.primary' }}
+            >
+              {intl.formatMessage(route.meta.label)}
+            </Link>
+          ))}
+
+          <OpenAccountModalButton sx={{ maxWidth: 180, maxHeight: 36 }} />
+          <OpenNetworkModalButton sx={{ height: 36, width: 36 }} />
           <SettingsButton sx={{ height: 36, width: 36 }} />
         </Stack>
       </Stack>

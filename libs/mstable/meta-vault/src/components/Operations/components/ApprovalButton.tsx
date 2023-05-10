@@ -32,7 +32,7 @@ export const ApprovalButton = (props: ButtonProps) => {
   const pushNotification = usePushNotification();
   const { exactApproval } = useSettings();
   const {
-    metavault: { address, asset, decimals, abi },
+    metavault: { address, asset },
   } = useMetavault();
   const { amount, needsApproval } = useOperations();
   const setIsSubmitLoading = useSetIsSubmitLoading();

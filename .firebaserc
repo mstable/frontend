@@ -1,6 +1,5 @@
 {
   "projects": {
-    "burn": "burn-ec6bb",
     "lts": "apps-lts",
     "mstable": "frontend-7e17f"
   }

@@ -3,7 +3,6 @@ import type { MessageDescriptor } from 'react-intl';
 
 import type { Protocol } from '../protocols';
 import type { Token } from '../tokens';
-import type { Contract } from '../types';
 
 export type SupportedMetavault = 'mvusdc3pcv' | 'test';
 
@@ -12,11 +11,11 @@ export type Strategy = {
   strategy: MessageDescriptor;
 };
 
-export type Metavault = Contract & {
+export type Metavault = Token & {
   id: SupportedMetavault;
   asset: Token;
   underlyings: Token[];
-  proxy: Contract;
+  proxy: Token;
   primaryColor: string;
   featured?: boolean;
   firstBlock: number;

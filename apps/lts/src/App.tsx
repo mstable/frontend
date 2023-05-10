@@ -1,17 +1,10 @@
-import { SunsetBanner } from '@frontend/shared-ui';
 import { Stack } from '@mui/material';
-import { AnimatePresence } from 'framer-motion';
-import { useAccount } from 'wagmi';
+import { Outlet } from '@tanstack/react-location';
 
-import { ContractAccordion } from './components/ContractAccordion';
 import { Footer } from './components/Footer';
-import { Hero } from './components/Hero';
 import { Topnav } from './components/Topnav';
-import { Welcome } from './components/Welcome';
 
 export const App = () => {
-  const { isConnected } = useAccount();
-
   return (
     <Stack
       direction="column"
@@ -31,26 +24,7 @@ export const App = () => {
           minHeight: '84vh',
         })}
       >
-        <Hero my={4} />
-        <SunsetBanner my={4} />
-        <Stack>
-          <AnimatePresence>
-            {isConnected ? (
-              <ContractAccordion
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              />
-            ) : (
-              <Welcome
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                my={4}
-              />
-            )}
-          </AnimatePresence>
-        </Stack>
+        <Outlet />
       </Stack>
       <Footer
         sx={(theme) => ({ py: 4, px: theme.mixins.paddings.page.paddingX })}
