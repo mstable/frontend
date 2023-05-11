@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { NotificationSnack } from '@frontend/shared-ui';
 import { isNilOrEmpty } from '@frontend/shared-utils';
 import { Stack } from '@mui/material';
-import { descend, prop, propEq, take } from 'ramda';
+import { descend, prop, take } from 'ramda';
 
 import { useSetNotificationInvisible, useSetNotificationRead } from '../hooks';
 import { FlagsProvider, Provider, useTrackedState } from '../state';
@@ -30,7 +30,7 @@ const NotificationsWrapped = ({
       take(
         maxVisible,
         notifications
-          .filter(propEq(true, 'visible'))
+          .filter((notif) => notif.visible)
           .sort(descend(prop('createdOn'))),
       ),
     [maxVisible, notifications],
