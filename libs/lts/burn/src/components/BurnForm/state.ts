@@ -142,12 +142,11 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
             data[3] as unknown as BigNumberish,
             draft.mty.contract.decimals,
           ).simple;
-          draft.mta.price =
-            1 /
-            new BigDecimal(
-              data[4] as unknown as BigNumberish,
-              draft.mta.contract.decimals,
-            ).simple;
+          const price = new BigDecimal(
+            data[4] as unknown as BigNumberish,
+            draft.mta.contract.decimals,
+          ).simple;
+          draft.mta.price = price === 0 ? 0 : 1 / price;
         }),
       );
     }
