@@ -1,12 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import {
-  tokens,
-  VELODROME_PAIRS_API_ENDPOINT,
-} from '@frontend/shared-constants';
-import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
-import { useQuery } from '@tanstack/react-query';
+import { toks } from '@frontend/shared-constants';
+import { BigDecimal } from '@frontend/shared-utils';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { useAccount, useContractReads, useNetwork } from 'wagmi';
@@ -17,6 +12,7 @@ import {
   l2Comptroller,
   mtaBuybackPrice,
   mtyPool,
+  velodromeMtaUsdcLP,
 } from '../../constants';
 
 import type { Token } from '@frontend/shared-constants';
@@ -53,13 +49,13 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
       amount: BigDecimal.ZERO,
       balance: BigDecimal.ZERO,
       price: 0,
-      contract: tokens[mainnet.id].find((token) => token.symbol === 'MTA'),
+      contract: toks[mainnet.id]['MTA'],
     },
     mty: {
       amount: BigDecimal.ZERO,
       balance: BigDecimal.ZERO,
       price: 0,
-      contract: tokens[optimism.id].find((token) => token.symbol === 'MTy'),
+      contract: toks[optimism.id]['MTy'],
     },
     refetch: () => null,
     reset: () => null,
@@ -68,9 +64,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
   useEffect(() => {
     setState(
       produce((draft) => {
-        draft.mta.contract = isNilOrEmpty(chain?.id)
-          ? tokens[mainnet.id].find((token) => token.symbol === 'MTA')
-          : tokens[chain.id].find((token) => token.symbol === 'MTA');
+        draft.mta.contract = toks[chain?.id ?? mainnet.id]['MTA'];
       }),
     );
   }, [chain?.id]);
@@ -82,25 +76,6 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
     ],
     [chain?.id, walletAddress],
   );
-
-  const { data: velo, isLoading: veloLoading } = useQuery(
-    ['vAMM-USDC/MTA'],
-    async ({ queryKey }) => {
-      const { data } = await (await fetch(VELODROME_PAIRS_API_ENDPOINT)).json();
-
-      return data.find((d: { symbol: string }) => d.symbol === queryKey[0]);
-    },
-  );
-
-  useEffect(() => {
-    if (velo?.token1?.price) {
-      setState(
-        produce((draft) => {
-          draft.mta.price = velo.token1.price;
-        }),
-      );
-    }
-  }, [velo?.token1?.price]);
 
   const { data, isLoading, refetch } = useContractReads({
     contracts: [
@@ -131,6 +106,16 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
         chainId: mtyPool.chainId,
         functionName: 'tokenPrice',
       },
+      {
+        address: velodromeMtaUsdcLP.address,
+        abi: velodromeMtaUsdcLP.abi,
+        chainId: velodromeMtaUsdcLP.chainId,
+        functionName: 'getAmountOut',
+        args: [
+          BigDecimal.ONE.scale(toks[optimism.id]['USDC'].decimals).exact,
+          toks[optimism.id]['USDC'].address,
+        ],
+      },
     ],
     watch: true,
   });
@@ -157,6 +142,12 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
             data[3] as unknown as BigNumberish,
             draft.mty.contract.decimals,
           ).simple;
+          draft.mta.price =
+            1 /
+            new BigDecimal(
+              data[4] as unknown as BigNumberish,
+              draft.mta.contract.decimals,
+            ).simple;
         }),
       );
     }
@@ -197,12 +188,12 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
   useEffect(() => {
     setState(
       produce((draft) => {
-        draft.isLoading = isLoading || veloLoading;
+        draft.isLoading = isLoading;
         draft.refetch = refetch;
         draft.reset = reset;
       }),
     );
-  }, [isLoading, refetch, reset, veloLoading]);
+  }, [isLoading, refetch, reset]);
 
   useEffect(() => {
     setState(

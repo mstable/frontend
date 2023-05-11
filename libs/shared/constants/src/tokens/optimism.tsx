@@ -1,4 +1,4 @@
-import { MTA, Optimism } from '@frontend/shared-icons';
+import { MTA, Optimism, USDC } from '@frontend/shared-icons';
 import { erc20ABI } from 'wagmi';
 import { optimism } from 'wagmi/chains';
 
@@ -19,6 +19,15 @@ export const toksOptimism: Token[] = [
     name: 'mStable Treasury Yield',
     icon: Optimism,
     decimals: 18,
+    chainId: optimism.id,
+    abi: erc20ABI,
+  },
+  {
+    address: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607',
+    symbol: 'USDC',
+    name: 'USD Coin',
+    icon: USDC,
+    decimals: 6,
     chainId: optimism.id,
     abi: erc20ABI,
   },

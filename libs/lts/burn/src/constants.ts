@@ -8,3 +8,5 @@ export const l1Comptroller =
   cons[mainnet.id]['0x3509816328cf50Fed7631c2F5C9a18c75cd601F0'];
 export const l2Comptroller =
   cons[optimism.id]['0x3509816328cf50Fed7631c2F5C9a18c75cd601F0'];
+export const velodromeMtaUsdcLP =
+  cons[optimism.id]['0x66a8bD7cCfD52bfb5bC838d149FBa78e6920303F'];
