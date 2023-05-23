@@ -26,6 +26,7 @@
       ],
       "@frontend/mstable-explore": ["libs/mstable/explore/src/index.ts"],
       "@frontend/mstable-metavault": ["libs/mstable/meta-vault/src/index.ts"],
+      "@frontend/mstable-vault": ["libs/mstable/vault/src/index.ts"],
       "@frontend/mstable-settings": ["libs/mstable/settings/src/index.ts"],
       "@frontend/mstable-theme": ["libs/mstable/theme/src/index.ts"],
       "@frontend/shared-constants": ["libs/shared/constants/src/index.ts"],

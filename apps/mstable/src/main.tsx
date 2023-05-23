@@ -8,8 +8,10 @@ import {
   rbkDarkTheme,
   rbkLightTheme,
 } from '@frontend/mstable-theme';
+import { CORE_UI_TOOLKIT_POOL_CONFIG_MAP } from '@frontend/shared-constants';
 import {
   AnalyticsProvider,
+  CoreUIToolkitProvider,
   GasFeeProvider,
   I18nProvider,
   ModalsProvider,
@@ -26,6 +28,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import en from './assets/lang/en.json';
 import {
   chains,
+  CORE_UI_TOOLKIT_ACTIONS,
   plausibleClient,
   reactLocationClient,
   reactQueryClient,
@@ -41,6 +44,13 @@ root.render(
   composeContexts(
     [
       [StrictMode],
+      [
+        CoreUIToolkitProvider,
+        {
+          actions: CORE_UI_TOOLKIT_ACTIONS,
+          poolConfigMap: CORE_UI_TOOLKIT_POOL_CONFIG_MAP,
+        },
+      ],
       [AnalyticsProvider, { client: plausibleClient }],
       [QueryClientProvider, { client: reactQueryClient }],
       [I18nProvider, { messages: { en } }],

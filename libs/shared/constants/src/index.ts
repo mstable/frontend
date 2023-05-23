@@ -10,3 +10,5 @@ export * from './tokens';
 export * from './types';
 export * from './utils';
 export * from './velodrome';
+export * from './core-vaults';
+export * from './dhedge';

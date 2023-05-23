@@ -11,14 +11,14 @@ import { mainnet } from 'wagmi/chains';
 import { useTransitionBackgroundColor } from '../components/Backgrounds';
 import { UnsupportedMvPage } from '../components/Errors';
 
-import type { MstableRoute } from '../routes';
+import type { MvRoute } from '@frontend/mstable-metavault';
 
 export const Metavault = () => {
   const updateBkgColor = useTransitionBackgroundColor();
   const { chain } = useNetwork();
   const {
     params: { mvid },
-  } = useMatch<MstableRoute>();
+  } = useMatch<MvRoute>();
   const metavault = useMemo(
     () => metavaults[chain?.id ?? mainnet.id].find(propEq(mvid, 'id')),
     [chain?.id, mvid],

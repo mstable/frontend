@@ -1,0 +1,18 @@
+import { USDY_OPTIMISM } from './optimism/usdy';
+
+import type {
+  PoolConfig,
+  TradingPanelContextConfig,
+} from '@dhedge/core-ui-kit/types';
+
+export const CORE_UI_TOOLKIT_POOL_CONFIG_MAP: TradingPanelContextConfig['poolConfigMap'] =
+  {
+    [USDY_OPTIMISM.address]: USDY_OPTIMISM,
+  };
+
+export const CORE_UI_TOOLKIT_NETWORK_POOL_CONFIG_MAP = Object.values(
+  CORE_UI_TOOLKIT_POOL_CONFIG_MAP,
+).reduce<Record<PoolConfig['chainId'], PoolConfig[]>>((acc, config) => {
+  acc[config.chainId] = [...(acc[config.chainId] ?? []), config];
+  return acc;
+}, {});

@@ -1,6 +1,10 @@
 import { useState } from 'react';
 
-import { metavaults } from '@frontend/shared-constants';
+import { DEFAULT_CHAIN_ID } from '@dhedge/core-ui-kit/const';
+import {
+  CORE_UI_TOOLKIT_NETWORK_POOL_CONFIG_MAP,
+  metavaults,
+} from '@frontend/shared-constants';
 import {
   Box,
   Grid,
@@ -22,6 +26,8 @@ import { useNetwork } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
 import { ComingSoonCard, ComingSoonRow } from './ComingSoon';
+import { CoreVaultCard } from './CoreVaultCard';
+import { CoreVaultTableRow } from './CoreVaultTableRow';
 import { VaultCard } from './VaultCard';
 import { VaultTableRow } from './VaultTableRow';
 
@@ -34,6 +40,8 @@ export const Vaults = () => {
   const { chain } = useNetwork();
 
   const mvs = metavaults[chain?.id || mainnet.id];
+  const coreVaults =
+    CORE_UI_TOOLKIT_NETWORK_POOL_CONFIG_MAP[chain?.id ?? DEFAULT_CHAIN_ID];
 
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 
@@ -63,10 +71,21 @@ export const Vaults = () => {
       </Stack>
       <Box pb={4}>
         {viewMode === 'grid' ? (
-          <Grid container spacing={{ xs: 2, md: 3 }}>
+          <Grid container spacing={{ xs: 2, md: 3 }} alignItems="stretch">
             {mvs.map((mv) => (
               <Grid key={mv.id} item xs={12} sm={6} lg={4}>
                 <VaultCard metavault={mv} to={`./${mv.id}`} />
+              </Grid>
+            ))}
+            {coreVaults.map((config) => (
+              <Grid key={config.address} item xs={12} sm={6} lg={4}>
+                <CoreVaultCard
+                  config={config}
+                  to={`./vault/${config.address}`}
+                  sx={{
+                    height: '100%',
+                  }}
+                />
               </Grid>
             ))}
             {COMING_SOON.map((cs) => (
@@ -136,6 +155,14 @@ export const Vaults = () => {
                     metavault={mv}
                     to={`./${mv.id}`}
                     isLast={i === mvs.length - 1}
+                  />
+                ))}
+                {coreVaults.map((config, i) => (
+                  <CoreVaultTableRow
+                    key={config.address}
+                    config={config}
+                    to={`./vault/${config.address}`}
+                    isLast={i === coreVaults.length - 1}
                   />
                 ))}
                 {COMING_SOON.map((cs) => (
