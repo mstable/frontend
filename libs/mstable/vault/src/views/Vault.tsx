@@ -6,6 +6,7 @@ import { ArrowLeft } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
 import { VaultJumbo } from '../components/VaultJumbo';
+import { useCoreUiKitInitialization } from '../hooks/useCoreUiKitInitialization';
 import { VaultProvider } from '../state';
 
 import type { PoolConfig } from '@dhedge/core-ui-kit/types';
@@ -15,46 +16,50 @@ interface VaultProps extends StackProps {
   config: PoolConfig;
 }
 
-export const Vault = ({ config, ...props }: VaultProps) => {
+const VaultContent = ({ config, ...props }: VaultProps) => {
   const intl = useIntl();
   const track = useTrack();
   const navigate = useNavigate();
+  useCoreUiKitInitialization();
 
   return (
-    <VaultProvider initialState={{ config }}>
-      <Stack direction="column" alignItems="flex-start" {...props}>
-        <Button
-          variant="text"
-          size="small"
-          onClick={() => {
-            navigate({ to: '/' });
-          }}
-          sx={{ mb: 1 }}
-        >
-          <Stack direction="row" alignItems="center" spacing={0.5}>
-            <ArrowLeft width={16} height={16} />
-            {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}
-          </Stack>
-        </Button>
-        <MVIcon
-          address={config.address}
-          sx={{ height: 64, width: 64, mb: 2 }}
-        />
-        <ErrorBoundary
-          ErrorComponent={
-            <ErrorCard
-              pb={8}
-              onMount={() => {
-                track('error', {
-                  name: 'Unhandled Error Vault: Vault Jumbo',
-                });
-              }}
-            />
-          }
-        >
-          <VaultJumbo pb={8} />
-        </ErrorBoundary>
-      </Stack>
+    <Stack direction="column" alignItems="flex-start" {...props}>
+      <Button
+        variant="text"
+        size="small"
+        onClick={() => {
+          navigate({ to: '/' });
+        }}
+        sx={{ mb: 1 }}
+      >
+        <Stack direction="row" alignItems="center" spacing={0.5}>
+          <ArrowLeft width={16} height={16} />
+          {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}
+        </Stack>
+      </Button>
+      <MVIcon address={config.address} sx={{ height: 64, width: 64, mb: 2 }} />
+      <ErrorBoundary
+        ErrorComponent={
+          <ErrorCard
+            pb={8}
+            onMount={() => {
+              track('error', {
+                name: 'Unhandled Error Vault: Vault Jumbo',
+              });
+            }}
+          />
+        }
+      >
+        <VaultJumbo pb={8} />
+      </ErrorBoundary>
+    </Stack>
+  );
+};
+
+export const Vault = (props: VaultProps) => {
+  return (
+    <VaultProvider initialState={{ config: props.config }}>
+      <VaultContent {...props} />
     </VaultProvider>
   );
 };

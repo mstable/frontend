@@ -9,7 +9,7 @@ import { useNetwork } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
 import { useTransitionBackgroundColor } from '../components/Backgrounds';
-import { UnsupportedMvPage } from '../components/Errors';
+import { UnsupportedVaultPage } from '../components/Errors';
 
 import type { MvRoute } from '@frontend/mstable-metavault';
 
@@ -30,7 +30,7 @@ export const Metavault = () => {
     }
   });
 
-  if (!metavault) return <UnsupportedMvPage />;
+  if (!metavault) return <UnsupportedVaultPage />;
 
   return <Mv />;
 };

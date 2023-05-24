@@ -4,7 +4,7 @@ import { Vault as V } from '@frontend/mstable-vault';
 import { CORE_UI_TOOLKIT_POOL_CONFIG_MAP } from '@frontend/shared-constants';
 import { useMatch } from '@tanstack/react-location';
 
-import { UnsupportedMvPage } from '../components/Errors';
+import { UnsupportedVaultPage } from '../components/Errors';
 
 import type { VaultRoute } from '@frontend/mstable-vault';
 
@@ -17,7 +17,7 @@ export const Vault = () => {
     [address],
   );
 
-  if (!config) return <UnsupportedMvPage />;
+  if (!config) return <UnsupportedVaultPage />;
 
   return <V config={config} />;
 };

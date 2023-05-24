@@ -4,7 +4,7 @@ import { Button, Stack } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useNetwork, useSwitchNetwork } from 'wagmi';
 
-export const UnsupportedMvPage = () => {
+export const UnsupportedVaultPage = () => {
   const intl = useIntl();
   const track = useTrack();
 
@@ -20,7 +20,7 @@ export const UnsupportedMvPage = () => {
         </Stack>
       }
       onMount={() => {
-        track('error', { name: 'Unsupported Meta Vault' });
+        track('error', { name: 'Unsupported Vault' });
       }}
     />
   );
