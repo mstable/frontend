@@ -15,18 +15,17 @@ import {
   walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 import { configureChains, createClient } from 'wagmi';
-import { goerli, mainnet } from 'wagmi/chains';
-import { infuraProvider } from 'wagmi/providers/infura';
-import { publicProvider } from 'wagmi/providers/public';
+import { mainnet, optimism } from 'wagmi/chains';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
 
 import type { Wallet } from '@rainbow-me/rainbowkit';
 import type { Chain, Connector } from 'wagmi';
 
 export const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet, goerli],
+  [optimism, mainnet],
   [
-    infuraProvider({ apiKey: process.env['NX_INFURA_API_KEY'] }),
-    publicProvider(),
+    alchemyProvider({ apiKey: process.env['NX_ALCHEMY_MAIN_API_KEY'] }),
+    alchemyProvider({ apiKey: process.env['NX_ALCHEMY_FALLBACK_API_KEY'] }),
   ],
 );
 

@@ -41,8 +41,9 @@ jobs:
 
       - name: Build
         env:
-          infura: ${{ secrets.INFURA_API_KEY }}
-        run: NX_INFURA_API_KEY=$infura yarn nx build mstable
+          alchemyMain: ${{ secrets.ALCHEMY_MAIN_API_KEY }}
+          alchemyFallback: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
+        run: NX_ALCHEMY_MAIN_API_KEY=$alchemyMain NX_ALCHEMY_FALLBACK_API_KEY=$alchemyFallback yarn nx build mstable
 
       - name: Firebase deploy
         env:
@@ -56,4 +57,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "✨ New DEV version of Meta Vaults 🚀 Deploy url: https://frontend-7e17f--dev-zjlmsvmy.web.app/"
+          args: "✨ New DEV version of mStable Vaults 🚀 Deploy url: https://frontend-7e17f--dev-zjlmsvmy.web.app/"

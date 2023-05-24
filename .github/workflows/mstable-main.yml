@@ -1,7 +1,7 @@
 name: mstable Main
 
 on:
-  workflow_dispatch:  
+  workflow_dispatch:
 
 env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 16
           cache: "yarn"
-      
+
       - name: Install jq
         run: |
           sudo apt-get update
@@ -33,8 +33,9 @@ jobs:
         env:
           mainnet: ${{ secrets.NX_THE_GRAPH_MV_MAINNET_URL }}
           goerli: ${{ secrets.NX_THE_GRAPH_MV_GOERLI_URL }}
-          infura: ${{ secrets.INFURA_API_KEY }}
-        run: NX_THE_GRAPH_MV_MAINNET_URL=$mainnet NX_THE_GRAPH_MV_GOERLI_URL=$goerli NX_INFURA_API_KEY=$infura yarn nx build mstable
+          alchemyMain: ${{ secrets.ALCHEMY_MAIN_API_KEY }}
+          alchemyFallback: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
+        run: NX_THE_GRAPH_MV_MAINNET_URL=$mainnet NX_THE_GRAPH_MV_GOERLI_URL=$goerli NX_ALCHEMY_MAIN_API_KEY=$alchemyMain NX_ALCHEMY_FALLBACK_API_KEY=$alchemyFallback yarn nx build mstable
 
       - name: Firebase deploy
         env:
@@ -48,4 +49,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "✅ New PROD version of Meta Vaults 🚀 Deploy url: https://yield.mstable.org"
+          args: "✅ New PROD version of mStable Vaults 🚀 Deploy url: https://yield.mstable.org"
