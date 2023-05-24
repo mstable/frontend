@@ -41,11 +41,17 @@
   "7ynb1z": {
     "defaultMessage": "{value} GWEI"
   },
+  "IB0eky": {
+    "defaultMessage": "Annual percentage yield."
+  },
   "Imiiiv": {
     "defaultMessage": "No Data Available"
   },
   "LiHQih": {
     "defaultMessage": "Coming Soon"
+  },
+  "MLTKb6": {
+    "defaultMessage": "APY"
   },
   "P1xtEU": {
     "defaultMessage": "Earn diversified yield across DeFi."
@@ -71,6 +77,9 @@
   "YC/ZXg": {
     "defaultMessage": "Share price"
   },
+  "ehxGBh": {
+    "defaultMessage": "Token Price"
+  },
   "g6UhRO": {
     "defaultMessage": "Vault name"
   },
@@ -79,6 +88,9 @@
   },
   "s2zphO": {
     "defaultMessage": "Vaults"
+  },
+  "w4UBPL": {
+    "defaultMessage": "The current price of 1 token. Return is represented as a increase in token price value."
   },
   "zFNxtv": {
     "defaultMessage": "Protocols"
@@ -206,9 +218,6 @@
   "LDz7xI": {
     "defaultMessage": "Assets that are used by this vault."
   },
-  "MLTKb6": {
-    "defaultMessage": "APY"
-  },
   "MMRXim": {
     "defaultMessage": "Make a Deposit"
   },
@@ -236,9 +245,6 @@
   "QS3Tk3": {
     "defaultMessage": "The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded."
   },
-  "RpPskj": {
-    "defaultMessage": "Distribution of deposited funds in underlying vaults"
-  },
   "TL3yAY": {
     "defaultMessage": "Position Value"
   },
@@ -247,6 +253,9 @@
   },
   "UMrrVX": {
     "defaultMessage": "TVL ({symbol})"
+  },
+  "VMhVlJ": {
+    "defaultMessage": "Operations are momentarily disabled"
   },
   "WCaf5C": {
     "defaultMessage": "Approve"
@@ -259,9 +268,6 @@
   },
   "XSdWHA": {
     "defaultMessage": "Redeem"
-  },
-  "YYu/aL": {
-    "defaultMessage": "Allocations"
   },
   "ZefNbE": {
     "defaultMessage": "Average - {value} GWEI"
@@ -485,6 +491,9 @@
   "47FYwb": {
     "defaultMessage": "Cancel"
   },
+  "5Jlmp5": {
+    "defaultMessage": "The contracts will always remain live and allow for withdrawals. However, it is recommended to withdraw remaining assets from the contracts since value accrual has been disabled."
+  },
   "6OuLVd": {
     "defaultMessage": "Tips"
   },
@@ -527,11 +536,17 @@
   "UlMgTq": {
     "defaultMessage": "If the problem persists, contact us on our {support}."
   },
+  "VXQPtq": {
+    "defaultMessage": "mStable has been aquired by dHedge. Following the outlined aquisition update, certain mStable products will be sunset."
+  },
   "W87PYU": {
     "defaultMessage": "View on {name}"
   },
   "XYEIBG": {
     "defaultMessage": "App supports Goerli Testnet."
+  },
+  "YP4aoM": {
+    "defaultMessage": "Read the Announcement"
   },
   "p556q3": {
     "defaultMessage": "Copied"

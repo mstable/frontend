@@ -49,7 +49,7 @@ export const DefaultVaultCard = (props: CoreVaultCardProps) => {
           </Typography>
         </ValueLabel>
       </Stack>
-      <Skeleton width="100%" height={164} variant="rounded" />
+      <Skeleton width="100%" height="100%" variant="rounded" />
       <Typography variant="h4" mt={5}>
         {name}
       </Typography>

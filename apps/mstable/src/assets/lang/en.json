@@ -203,6 +203,12 @@
       "value": "Start Again"
     }
   ],
+  "5Jlmp5": [
+    {
+      "type": 0,
+      "value": "The contracts will always remain live and allow for withdrawals. However, it is recommended to withdraw remaining assets from the contracts since value accrual has been disabled."
+    }
+  ],
   "5ObBlW": [
     {
       "type": 0,
@@ -485,6 +491,12 @@
       "value": "Set As Infinite"
     }
   ],
+  "IB0eky": [
+    {
+      "type": 0,
+      "value": "Annual percentage yield."
+    }
+  ],
   "IdL95F": [
     {
       "type": 0,
@@ -645,12 +657,6 @@
       "value": "Make sure your internet connection is working."
     }
   ],
-  "RpPskj": [
-    {
-      "type": 0,
-      "value": "Distribution of deposited funds in underlying vaults"
-    }
-  ],
   "SKB/G9": [
     {
       "type": 0,
@@ -729,6 +735,18 @@
       "value": "."
     }
   ],
+  "VMhVlJ": [
+    {
+      "type": 0,
+      "value": "Operations are momentarily disabled"
+    }
+  ],
+  "VXQPtq": [
+    {
+      "type": 0,
+      "value": "mStable has been aquired by dHedge. Following the outlined aquisition update, certain mStable products will be sunset."
+    }
+  ],
   "VlABxn": [
     {
       "type": 0,
@@ -799,10 +817,10 @@
       "value": "Share price"
     }
   ],
-  "YYu/aL": [
+  "YP4aoM": [
     {
       "type": 0,
-      "value": "Allocations"
+      "value": "Read the Announcement"
     }
   ],
   "ZefNbE": [
@@ -919,6 +937,12 @@
     {
       "type": 0,
       "value": "Aave is a decentralised non-custodial liquidity market protocol where users can participate as depositors or borrowers."
+    }
+  ],
+  "ehxGBh": [
+    {
+      "type": 0,
+      "value": "Token Price"
     }
   ],
   "erCS/d": [
@@ -1181,6 +1205,12 @@
     {
       "type": 0,
       "value": "Sign Transaction"
+    }
+  ],
+  "w4UBPL": [
+    {
+      "type": 0,
+      "value": "The current price of 1 token. Return is represented as a increase in token price value."
     }
   ],
   "wqlXwW": [
