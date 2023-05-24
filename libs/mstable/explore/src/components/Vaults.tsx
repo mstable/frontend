@@ -22,7 +22,6 @@ import {
 } from '@mui/material';
 import { ListDashes, SquaresFour } from 'phosphor-react';
 import { useIntl } from 'react-intl';
-import { useNetwork } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
 import { ComingSoonCard, ComingSoonRow } from './ComingSoon';
@@ -37,11 +36,9 @@ export const Vaults = () => {
   const intl = useIntl();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { chain } = useNetwork();
-
-  const mvs = metavaults[chain?.id || mainnet.id];
-  const coreVaults =
-    CORE_UI_TOOLKIT_NETWORK_POOL_CONFIG_MAP[chain?.id ?? DEFAULT_CHAIN_ID];
+  // TODO: handle network select
+  const mvs = metavaults[mainnet.id];
+  const coreVaults = CORE_UI_TOOLKIT_NETWORK_POOL_CONFIG_MAP[DEFAULT_CHAIN_ID];
 
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 

@@ -15,7 +15,7 @@ import {
 import { useNavigate } from '@tanstack/react-location';
 import { GasPump, Vault } from 'phosphor-react';
 import { useIntl } from 'react-intl';
-import { useFeeData, useNetwork } from 'wagmi';
+import { useFeeData } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
 import { useTotalTvl } from '../hooks';
@@ -23,7 +23,7 @@ import { VaultCard } from './VaultCard';
 
 import type { PaletteMode } from '@mui/material';
 
-const gradient = keyframes`  
+const gradient = keyframes`
 	to {
 		background-position: 300%;
 	}
@@ -37,12 +37,12 @@ const colorGradient = (mode: PaletteMode) =>
 export const FeatureCard = () => {
   const intl = useIntl();
   const theme = useTheme();
-  const { chain } = useNetwork();
   const navigate = useNavigate();
   const { data: feeData, isLoading: feeLoading } = useFeeData({
     formatUnits: 'gwei',
+    chainId: mainnet.id,
   });
-  const mvs = metavaults[chain?.id || mainnet.id];
+  const mvs = metavaults[mainnet.id];
   const featuredMv = mvs.find((mv) => mv.featured);
   const { data: totalTvl, isLoading: totalTvlLoading } = useTotalTvl();
   const { currency } = usePrices();

@@ -6,7 +6,7 @@ import { ArrowLeft } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
 import { VaultJumbo } from '../components/VaultJumbo';
-import { useCoreUiKitInitialization } from '../hooks/useCoreUiKitInitialization';
+import { useCoreUiKitInitialization } from '../hooks';
 import { VaultProvider } from '../state';
 
 import type { PoolConfig } from '@dhedge/core-ui-kit/types';
