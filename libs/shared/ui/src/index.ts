@@ -16,6 +16,7 @@ export * from './Modals';
 export * from './motion';
 export * from './Notifications';
 export * from './RouterLink';
+export * from './TradingInput';
 export * from './Typography';
 export * from './ValueLabel';
 export * from './ViewEtherscanLink';

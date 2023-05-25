@@ -1,25 +1,28 @@
 import { useTrack } from '@frontend/shared-providers';
 import { ErrorBoundary, ErrorCard, MVIcon } from '@frontend/shared-ui';
-import { Button, Stack } from '@mui/material';
+import { Button, Grid, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
+import { TradingPanel } from '../components/TradingPanel';
 import { VaultJumbo } from '../components/VaultJumbo';
 import { useCoreUiKitInitialization } from '../hooks';
 import { VaultProvider } from '../state';
 
 import type { PoolConfig } from '@dhedge/core-ui-kit/types';
 import type { StackProps } from '@mui/material';
-
 interface VaultProps extends StackProps {
   config: PoolConfig;
 }
 
 const VaultContent = ({ config, ...props }: VaultProps) => {
   const intl = useIntl();
+  const theme = useTheme();
   const track = useTrack();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   useCoreUiKitInitialization();
 
   return (
@@ -52,6 +55,33 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
       >
         <VaultJumbo pb={8} />
       </ErrorBoundary>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
+          <Stack direction="column" spacing={2}>
+            Performance and Strategy
+          </Stack>
+        </Grid>
+        {!isMobile && (
+          <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
+            <Stack direction="column" spacing={2}>
+              Position Card Here
+              <ErrorBoundary
+                ErrorComponent={
+                  <ErrorCard
+                    onMount={() => {
+                      track('error', {
+                        name: 'Unhandled Error: Trading Panel',
+                      });
+                    }}
+                  />
+                }
+              >
+                <TradingPanel />
+              </ErrorBoundary>
+            </Stack>
+          </Grid>
+        )}
+      </Grid>
     </Stack>
   );
 };
