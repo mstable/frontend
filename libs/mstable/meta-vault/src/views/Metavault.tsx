@@ -8,7 +8,6 @@ import { useMatch, useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
 import { propEq } from 'ramda';
 import { useIntl } from 'react-intl';
-import { useNetwork } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
 import { MobileBottomCard } from '../components/MobileBottomCard';
@@ -28,14 +27,13 @@ export const Metavault = (props: StackProps) => {
   const theme = useTheme();
   const track = useTrack();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { chain } = useNetwork();
   const navigate = useNavigate();
   const {
     params: { mvid },
   } = useMatch<MvRoute>();
   const metavault = useMemo(
-    () => metavaults[chain?.id ?? mainnet.id].find(propEq(mvid, 'id')),
-    [chain?.id, mvid],
+    () => metavaults[mainnet.id].find(propEq(mvid, 'id')),
+    [mvid],
   );
 
   if (!metavault) return null;

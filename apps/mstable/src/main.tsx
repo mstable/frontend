@@ -53,7 +53,7 @@ root.render(
       ],
       [AnalyticsProvider, { client: plausibleClient }],
       [QueryClientProvider, { client: reactQueryClient }],
-      [I18nProvider, { messages: { en } }],
+      [I18nProvider, { messages: { en }, defaultLanguage: 'en' }],
       [ThemeProvider, { themes: { light, dark } }],
       [Router, { location: reactLocationClient, routes }],
       [NotificationsProvider],

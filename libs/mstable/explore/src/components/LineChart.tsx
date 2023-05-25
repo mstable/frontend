@@ -4,7 +4,6 @@ import { Stack, Typography } from '@mui/material';
 import { propEq } from 'ramda';
 import { Line } from 'react-chartjs-2';
 import { useIntl } from 'react-intl';
-import { useNetwork } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
 import type { SupportedMetavault } from '@frontend/shared-constants';
@@ -28,10 +27,7 @@ export const LineChart = ({
   ...rest
 }: LineChartProps) => {
   const intl = useIntl();
-  const { chain } = useNetwork();
-  const color = metavaults[chain?.id ?? mainnet.id].find(
-    propEq(id, 'id'),
-  )?.primaryColor;
+  const color = metavaults[mainnet.id].find(propEq(id, 'id'))?.primaryColor;
 
   return (
     <Stack {...rest} position="relative">
