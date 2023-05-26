@@ -4,3 +4,4 @@ export * from './Metavault';
 export * from './Protocol';
 export * from './SeverityIcon';
 export * from './Token';
+export * from './TokenIconRevamp';
