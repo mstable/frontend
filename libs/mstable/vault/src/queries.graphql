@@ -1,4 +1,4 @@
-query poolData($address: String!) {
+query fundQuery($address: String!) {
   fund(address: $address) {
     name
     address
@@ -32,6 +32,17 @@ query poolData($address: String!) {
     apy {
       monthly
       weekly
+    }
+  }
+}
+
+query tokenPriceHistoryQuery($address: String!, $period: String!) {
+  tokenPriceHistory(address: $address, period: $period) {
+    history {
+      adjustedTokenPrice
+      timestamp
+      tokenPrice
+      performance
     }
   }
 }

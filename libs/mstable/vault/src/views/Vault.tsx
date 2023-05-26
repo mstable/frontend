@@ -1,11 +1,12 @@
 import { useTrack } from '@frontend/shared-providers';
 import { ErrorBoundary, ErrorCard, MVIcon } from '@frontend/shared-ui';
-import { Button, Stack } from '@mui/material';
+import { Button, Grid, Stack } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
 import { VaultJumbo } from '../components/VaultJumbo';
+import { VaultPerformance } from '../components/VaultPerformance';
 import { useCoreUiKitInitialization } from '../hooks';
 import { VaultProvider } from '../state';
 
@@ -52,6 +53,26 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
       >
         <VaultJumbo pb={8} />
       </ErrorBoundary>
+
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
+          <Stack direction="column" spacing={2}>
+            <ErrorBoundary
+              ErrorComponent={
+                <ErrorCard
+                  onMount={() => {
+                    track('error', {
+                      name: 'Unhandled Error Metavault: Performance Card',
+                    });
+                  }}
+                />
+              }
+            >
+              <VaultPerformance />
+            </ErrorBoundary>
+          </Stack>
+        </Grid>
+      </Grid>
     </Stack>
   );
 };
