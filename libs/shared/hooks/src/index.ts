@@ -1,0 +1,1 @@
+export { useCryptoIcon } from './useCryptoIcon';

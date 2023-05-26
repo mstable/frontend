@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@dhedge/core-ui-kit": "^0.1.8",
+    "@dhedge/crypto-assets": "latest",
     "@emotion/react": "11.10.6",
     "@emotion/styled": "11.10.6",
     "@fontsource/plus-jakarta-sans": "^4.5.11",
