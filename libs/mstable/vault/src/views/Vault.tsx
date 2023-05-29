@@ -5,6 +5,7 @@ import { useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
+import { Strategy } from '../components/Strategy';
 import { VaultJumbo } from '../components/VaultJumbo';
 import { VaultPerformance } from '../components/VaultPerformance';
 import { useCoreUiKitInitialization } from '../hooks';
@@ -62,13 +63,27 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
                 <ErrorCard
                   onMount={() => {
                     track('error', {
-                      name: 'Unhandled Error Metavault: Performance Card',
+                      name: 'Unhandled Error Vault: Performance Card',
                     });
                   }}
                 />
               }
             >
               <VaultPerformance />
+            </ErrorBoundary>
+
+            <ErrorBoundary
+              ErrorComponent={
+                <ErrorCard
+                  onMount={() => {
+                    track('error', {
+                      name: 'Unhandled Error Vault: Strategy Card',
+                    });
+                  }}
+                />
+              }
+            >
+              <Strategy />
             </ErrorBoundary>
           </Stack>
         </Grid>
