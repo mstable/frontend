@@ -10,7 +10,7 @@ import { useUserTokenBalance } from '@dhedge/core-ui-kit/hooks/user';
 import { useAccount } from '@dhedge/core-ui-kit/hooks/web3';
 import { TradingInput } from '@frontend/shared-ui';
 
-import { ExchangeRate } from '../TradingRecap';
+import { ExchangeRate } from './ExchangeRate';
 
 import type { FC } from 'react';
 
@@ -79,6 +79,7 @@ export const WithdrawInputsGroup: FC = () => {
         label="Receive (estimated)"
         hideBottomRow
         disabled
+        placeholder=""
       />
     </>
   );

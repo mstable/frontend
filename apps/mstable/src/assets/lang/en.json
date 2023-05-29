@@ -101,6 +101,12 @@
       "value": "1M"
     }
   ],
+  "1vtEYS": [
+    {
+      "type": 0,
+      "value": "Flexible min slippage value that is likely enough to process the transaction."
+    }
+  ],
   "20X0BC": [
     {
       "type": 0,
@@ -223,6 +229,12 @@
     {
       "type": 0,
       "value": "%"
+    }
+  ],
+  "5gorcB": [
+    {
+      "type": 0,
+      "value": "Minimum received"
     }
   ],
   "65ThHj": [
@@ -503,10 +515,26 @@
       "value": "Set As Infinite"
     }
   ],
+  "HOsSgX": [
+    {
+      "type": 0,
+      "value": "More info"
+    }
+  ],
   "IB0eky": [
     {
       "type": 0,
       "value": "Annual percentage yield."
+    }
+  ],
+  "IBFkFM": [
+    {
+      "type": 0,
+      "value": "You "
+    },
+    {
+      "type": 1,
+      "value": "operation"
     }
   ],
   "IdL95F": [
@@ -669,6 +697,12 @@
       "value": "Make sure your internet connection is working."
     }
   ],
+  "S0seuN": [
+    {
+      "type": 0,
+      "value": "Recommended min slippage"
+    }
+  ],
   "SKB/G9": [
     {
       "type": 0,
@@ -745,6 +779,12 @@
     {
       "type": 0,
       "value": "."
+    }
+  ],
+  "VGRRFC": [
+    {
+      "type": 0,
+      "value": "You will receive no less that this amount."
     }
   ],
   "VMhVlJ": [
@@ -871,6 +911,12 @@
     {
       "type": 0,
       "value": "Deposit Gas"
+    }
+  ],
+  "b1gVRq": [
+    {
+      "type": 0,
+      "value": "Minimum deposit in USD."
     }
   ],
   "bnF8kf": [
@@ -1003,6 +1049,12 @@
       "value": "Withdrawal Gas"
     }
   ],
+  "i0ofjL": [
+    {
+      "type": 0,
+      "value": "Entry fee"
+    }
+  ],
   "iYgKR9": [
     {
       "type": 0,
@@ -1025,6 +1077,12 @@
     {
       "type": 0,
       "value": "Txn hash"
+    }
+  ],
+  "k3YWIR": [
+    {
+      "type": 0,
+      "value": "Max slippage"
     }
   ],
   "k6yAtR": [
@@ -1175,6 +1233,12 @@
       "value": "Email"
     }
   ],
+  "t3IytM": [
+    {
+      "type": 0,
+      "value": "Minimum deposit"
+    }
+  ],
   "tH0obk": [
     {
       "type": 0,
@@ -1271,6 +1335,12 @@
     {
       "type": 0,
       "value": "WITHDRAW"
+    }
+  ],
+  "zisVa1": [
+    {
+      "type": 0,
+      "value": "We recommend 2-3%, but usually it will be < 1%. Slippage may be amplified by the leverage. See the docs for more info."
     }
   ]
 }

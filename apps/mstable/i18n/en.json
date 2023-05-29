@@ -416,11 +416,44 @@
   "yuiyES": {
     "defaultMessage": "General Settings"
   },
+  "1vtEYS": {
+    "defaultMessage": "Flexible min slippage value that is likely enough to process the transaction."
+  },
+  "5gorcB": {
+    "defaultMessage": "Minimum received"
+  },
   "9AgXoz": {
     "defaultMessage": "Sell"
   },
   "EnCOBJ": {
     "defaultMessage": "Buy"
+  },
+  "HOsSgX": {
+    "defaultMessage": "More info"
+  },
+  "IBFkFM": {
+    "defaultMessage": "You {operation}"
+  },
+  "S0seuN": {
+    "defaultMessage": "Recommended min slippage"
+  },
+  "VGRRFC": {
+    "defaultMessage": "You will receive no less that this amount."
+  },
+  "b1gVRq": {
+    "defaultMessage": "Minimum deposit in USD."
+  },
+  "i0ofjL": {
+    "defaultMessage": "Entry fee"
+  },
+  "k3YWIR": {
+    "defaultMessage": "Max slippage"
+  },
+  "t3IytM": {
+    "defaultMessage": "Minimum deposit"
+  },
+  "zisVa1": {
+    "defaultMessage": "We recommend 2-3%, but usually it will be < 1%. Slippage may be amplified by the leverage. See the docs for more info."
   },
   "2JVe1j": {
     "defaultMessage": "Market Neutral"

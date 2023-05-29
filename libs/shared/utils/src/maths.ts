@@ -1,5 +1,3 @@
-import { BigNumber } from 'bignumber.js';
-
 export const countDecimals = (value: number) => {
   if (Math.floor(value) === value) return 0;
 
@@ -23,6 +21,3 @@ export const countFirstDecimal = (value: number) => {
 
 export const isNumeric = (value: string): boolean =>
   !isNaN(parseFloat(value)) && !isNaN(value as never);
-
-export const removeInsignificantTrailingZeros = (value: string): string =>
-  isNumeric(value) ? new BigNumber(value).toFixed() : '';
