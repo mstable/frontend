@@ -1,5 +1,6 @@
 export * from './AddressLabel';
 export * from './Banners';
+export * from './Buttons';
 export * from './Cards';
 export * from './CollapsibleSection';
 export * from './CountUp';

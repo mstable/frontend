@@ -2,6 +2,7 @@ import { useIsDepositTradingPanelType } from '@dhedge/core-ui-kit/hooks/state';
 import { Stack } from '@mui/material';
 
 import { DepositInputsGroup } from './DepositInputsGroup';
+import { WithdrawInputsGroup } from './WithdrawInputsGroup';
 
 import type { FC } from 'react';
 
@@ -18,7 +19,7 @@ export const TradingInputs: FC = () => {
         backgroundColor: 'transparent',
       }}
     >
-      {isDeposit ? <DepositInputsGroup /> : 'Sell Inputs'}
+      {isDeposit ? <DepositInputsGroup /> : <WithdrawInputsGroup />}
     </Stack>
   );
 };
