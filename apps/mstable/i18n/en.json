@@ -416,11 +416,14 @@
   "yuiyES": {
     "defaultMessage": "General Settings"
   },
-  "aTX7LJ": {
-    "defaultMessage": "1D"
-  },
   "1vtEYS": {
     "defaultMessage": "Flexible min slippage value that is likely enough to process the transaction."
+  },
+  "2Dq322": {
+    "defaultMessage": "You can sell your {symbol} tokens in {cooldownEndsInTime}"
+  },
+  "47GkyG": {
+    "defaultMessage": "Minimum deposit is ${minDepositUSD}"
   },
   "5gorcB": {
     "defaultMessage": "Minimum received"
@@ -437,11 +440,20 @@
   "IBFkFM": {
     "defaultMessage": "You {operation}"
   },
+  "MMvFMz": {
+    "defaultMessage": "{symbol} token is no longer active. Please withdraw from them."
+  },
   "S0seuN": {
     "defaultMessage": "Recommended min slippage"
   },
   "VGRRFC": {
     "defaultMessage": "You will receive no less that this amount."
+  },
+  "XnpuKy": {
+    "defaultMessage": "Approve {symbol}"
+  },
+  "aTX7LJ": {
+    "defaultMessage": "1D"
   },
   "b1gVRq": {
     "defaultMessage": "Minimum deposit in USD."
@@ -452,8 +464,17 @@
   "k3YWIR": {
     "defaultMessage": "Max slippage"
   },
+  "s4Vb9J": {
+    "defaultMessage": "Blocked by high {slippage}% max slippage"
+  },
+  "sHyaBT": {
+    "defaultMessage": "This pool is currently private."
+  },
   "t3IytM": {
     "defaultMessage": "Minimum deposit"
+  },
+  "wqlXwW": {
+    "defaultMessage": "Wrong Network"
   },
   "zisVa1": {
     "defaultMessage": "We recommend 2-3%, but usually it will be < 1%. Slippage may be amplified by the leverage. See the docs for more info."
@@ -517,9 +538,6 @@
   },
   "qj1uhz": {
     "defaultMessage": "Disconnect"
-  },
-  "wqlXwW": {
-    "defaultMessage": "Wrong Network"
   },
   "+6JrYn": {
     "defaultMessage": "Make sure your wallet is on Ethereum Mainnet network."

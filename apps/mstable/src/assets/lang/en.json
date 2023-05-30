@@ -113,6 +113,24 @@
       "value": "Transaction Cancelled"
     }
   ],
+  "2Dq322": [
+    {
+      "type": 0,
+      "value": "You can sell your "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": " tokens in "
+    },
+    {
+      "type": 1,
+      "value": "cooldownEndsInTime"
+    }
+  ],
   "2JVe1j": [
     {
       "type": 0,
@@ -201,6 +219,16 @@
     {
       "type": 0,
       "value": "Cancel"
+    }
+  ],
+  "47GkyG": [
+    {
+      "type": 0,
+      "value": "Minimum deposit is $"
+    },
+    {
+      "type": 1,
+      "value": "minDepositUSD"
     }
   ],
   "4tvRCp": [
@@ -597,6 +625,16 @@
       "value": "Make a Deposit"
     }
   ],
+  "MMvFMz": [
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": " token is no longer active. Please withdraw from them."
+    }
+  ],
   "MPUuRK": [
     {
       "type": 0,
@@ -861,6 +899,16 @@
     {
       "type": 0,
       "value": "App supports Goerli Testnet."
+    }
+  ],
+  "XnpuKy": [
+    {
+      "type": 0,
+      "value": "Approve "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
     }
   ],
   "YC/ZXg": [
@@ -1231,6 +1279,26 @@
     {
       "type": 0,
       "value": "Diversified"
+    }
+  ],
+  "s4Vb9J": [
+    {
+      "type": 0,
+      "value": "Blocked by high "
+    },
+    {
+      "type": 1,
+      "value": "slippage"
+    },
+    {
+      "type": 0,
+      "value": "% max slippage"
+    }
+  ],
+  "sHyaBT": [
+    {
+      "type": 0,
+      "value": "This pool is currently private."
     }
   ],
   "sy+pv5": [

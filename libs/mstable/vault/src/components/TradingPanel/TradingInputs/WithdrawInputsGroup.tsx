@@ -1,10 +1,8 @@
-import { usePoolTokenPrice } from '@dhedge/core-ui-kit/hooks/pool';
 import {
   useReceiveTokenInput,
   useSendTokenInput,
   useTradingPanelPoolConfig,
 } from '@dhedge/core-ui-kit/hooks/state';
-import { useAssetPrice } from '@dhedge/core-ui-kit/hooks/trading';
 import { useWithdrawQuote } from '@dhedge/core-ui-kit/hooks/trading/withdraw';
 import { useUserTokenBalance } from '@dhedge/core-ui-kit/hooks/user';
 import { useAccount } from '@dhedge/core-ui-kit/hooks/web3';
@@ -14,46 +12,23 @@ import { ExchangeRate } from './ExchangeRate';
 
 import type { FC } from 'react';
 
-const useSendToken = () => {
-  const { address, chainId } = useTradingPanelPoolConfig();
-  const [data, updater] = useSendTokenInput();
-  const balance = useUserTokenBalance({
-    symbol: data.symbol,
-    address: data.address,
-  });
-  const price = usePoolTokenPrice({ address, chainId });
-
-  return {
-    ...data,
-    updater,
-    balance,
-    price,
-  };
-};
-
-const useReceiveToken = () => {
-  const { chainId } = useTradingPanelPoolConfig();
-  const [data] = useReceiveTokenInput();
-  const price = useAssetPrice({ address: data.address, chainId });
-
-  return {
-    ...data,
-    price,
-  };
-};
-
 const useWithdrawInputsGroup = () => {
+  const [sendToken, updater] = useSendTokenInput();
+  const sendTokenBalance = useUserTokenBalance({
+    symbol: sendToken.symbol,
+    address: sendToken.address,
+  });
+  const [receiveToken] = useReceiveTokenInput();
   const poolConfig = useTradingPanelPoolConfig();
   useWithdrawQuote(poolConfig);
-  const sendToken = useSendToken();
-  const receiveToken = useReceiveToken();
 
   const handleInputChange = (value: string) => {
-    sendToken.updater({ value });
+    updater({ value });
   };
 
   return {
     sendToken,
+    sendTokenBalance,
     receiveToken,
     onInputChange: handleInputChange,
   };
@@ -61,7 +36,8 @@ const useWithdrawInputsGroup = () => {
 
 export const WithdrawInputsGroup: FC = () => {
   const { account } = useAccount();
-  const { sendToken, receiveToken, onInputChange } = useWithdrawInputsGroup();
+  const { sendToken, sendTokenBalance, receiveToken, onInputChange } =
+    useWithdrawInputsGroup();
 
   return (
     <>
@@ -69,7 +45,7 @@ export const WithdrawInputsGroup: FC = () => {
         token={sendToken}
         label="Sell"
         onChange={onInputChange}
-        maxBalance={sendToken.balance}
+        maxBalance={sendTokenBalance}
         isConnected={!!account}
         autoFocus={!!account}
       />

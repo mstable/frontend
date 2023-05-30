@@ -50,11 +50,6 @@ const useTradingInput = ({
 }: TradingInputProps) => {
   const [percentage, setPercentage] = useState(0);
 
-  useEffect(() => {
-    if (!token.value) {
-      setPercentage(0);
-    }
-  }, [token.value]);
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     if (evt.target.validity.valid) {
       const numericValue = evt.target.value.replace(/[^0-9.]/g, '');
@@ -85,6 +80,12 @@ const useTradingInput = ({
       onChange(amt);
     }
   };
+
+  useEffect(() => {
+    if (!token.value) {
+      setPercentage(0);
+    }
+  }, [token.value]);
 
   return {
     handleChange,

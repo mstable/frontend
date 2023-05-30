@@ -11,6 +11,7 @@ import {
 import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
 import { useIntl } from 'react-intl';
 
+import { TradingButton } from './TradingButton';
 import { TradingInputs } from './TradingInputs';
 import { TradingRecap } from './TradingRecap';
 
@@ -44,14 +45,13 @@ export const useTradingPanel = () => {
 
   return {
     tabIndex: TABS.indexOf(type),
-    isDeposit: type === 'deposit',
     onTabChange,
   };
 };
 
 export const TradingPanel: FC<CardProps> = (props) => {
   const intl = useIntl();
-  const { tabIndex, onTabChange, isDeposit } = useTradingPanel();
+  const { tabIndex, onTabChange } = useTradingPanel();
 
   const tabNameMap: Record<TradingPanelType, string> = useMemo(
     () => ({
@@ -78,7 +78,18 @@ export const TradingPanel: FC<CardProps> = (props) => {
         </Tabs>
         <Stack pt={2} spacing={2}>
           <TradingInputs />
-          <TradingRecap />
+          <Stack
+            direction="column"
+            spacing={1.5}
+            sx={{
+              p: 2,
+              borderRadius: 1,
+              border: (theme) => `1px solid ${theme.palette.divider}`,
+            }}
+          >
+            <TradingRecap />
+            <TradingButton />
+          </Stack>
         </Stack>
       </CardContent>
     </Card>
