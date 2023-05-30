@@ -7,11 +7,13 @@ import { useIntl } from 'react-intl';
 
 import { TradingPanel } from '../components/TradingPanel';
 import { VaultJumbo } from '../components/VaultJumbo';
+import { VaultPerformance } from '../components/VaultPerformance';
 import { useCoreUiKitInitialization } from '../hooks';
 import { VaultProvider } from '../state';
 
 import type { PoolConfig } from '@dhedge/core-ui-kit/types';
 import type { StackProps } from '@mui/material';
+
 interface VaultProps extends StackProps {
   config: PoolConfig;
 }
@@ -58,7 +60,19 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
           <Stack direction="column" spacing={2}>
-            Performance and Strategy
+            <ErrorBoundary
+              ErrorComponent={
+                <ErrorCard
+                  onMount={() => {
+                    track('error', {
+                      name: 'Unhandled Error Metavault: Performance Card',
+                    });
+                  }}
+                />
+              }
+            >
+              <VaultPerformance />
+            </ErrorBoundary>
           </Stack>
         </Grid>
         {!isMobile && (
