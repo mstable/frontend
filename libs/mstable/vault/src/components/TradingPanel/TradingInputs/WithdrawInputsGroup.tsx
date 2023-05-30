@@ -13,7 +13,8 @@ import { ExchangeRate } from './ExchangeRate';
 import type { FC } from 'react';
 
 const useWithdrawInputsGroup = () => {
-  const [sendToken, updater] = useSendTokenInput();
+  const [sendToken, updateSendToken] = useSendTokenInput();
+  const [, updateReceiveToken] = useReceiveTokenInput();
   const sendTokenBalance = useUserTokenBalance({
     symbol: sendToken.symbol,
     address: sendToken.address,
@@ -23,7 +24,7 @@ const useWithdrawInputsGroup = () => {
   useWithdrawQuote(poolConfig);
 
   const handleInputChange = (value: string) => {
-    updater({ value });
+    updateSendToken({ value });
   };
 
   return {
@@ -31,20 +32,28 @@ const useWithdrawInputsGroup = () => {
     sendTokenBalance,
     receiveToken,
     onInputChange: handleInputChange,
+    withdrawTokens: poolConfig.withdrawParams.customTokens,
+    updateReceiveToken,
   };
 };
 
 export const WithdrawInputsGroup: FC = () => {
   const { account } = useAccount();
-  const { sendToken, sendTokenBalance, receiveToken, onInputChange } =
-    useWithdrawInputsGroup();
+  const {
+    sendToken,
+    sendTokenBalance,
+    receiveToken,
+    onInputChange,
+    withdrawTokens,
+    updateReceiveToken,
+  } = useWithdrawInputsGroup();
 
   return (
     <>
       <TradingInput
         token={sendToken}
         label="Sell"
-        onChange={onInputChange}
+        onInputChange={onInputChange}
         maxBalance={sendTokenBalance}
         isConnected={!!account}
         autoFocus={!!account}
@@ -52,6 +61,8 @@ export const WithdrawInputsGroup: FC = () => {
       <ExchangeRate />
       <TradingInput
         token={receiveToken}
+        tokenOptions={withdrawTokens}
+        onTokenChange={updateReceiveToken}
         label="Receive (estimated)"
         hideBottomRow
         disabled

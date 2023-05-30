@@ -5,9 +5,10 @@ import {
   Box,
   Collapse,
   Fade,
-  FormControl,
   InputBase,
   InputLabel,
+  MenuItem,
+  Select,
   Skeleton,
   Stack,
   Typography,
@@ -19,6 +20,7 @@ import { PercentageButton } from '../Buttons';
 import { TokenIconRevamp } from '../Icons';
 import { TradingTokenBalance } from './TradingTokenBalance';
 
+import type { TradingToken } from '@dhedge/core-ui-kit/types';
 import type { DynamicTradingToken } from '@dhedge/core-ui-kit/types';
 import type { BoxProps, StackProps } from '@mui/material';
 import type { ChangeEvent } from 'react';
@@ -27,10 +29,11 @@ export type TradingInputProps = {
   label?: string;
   placeholder?: string;
   disabled?: boolean;
-  error?: boolean;
   token: DynamicTradingToken;
+  tokenOptions?: TradingToken[];
   maxBalance?: string;
-  onChange?: (newValue: string) => void;
+  onInputChange?: (newValue: string) => void;
+  onTokenChange?: (token: TradingToken) => void;
   components?: {
     container?: StackProps;
     input?: BoxProps;
@@ -44,7 +47,7 @@ const PERCENTAGE_STEPS = 4; // 25%
 
 const useTradingInput = ({
   token,
-  onChange,
+  onInputChange,
   maxBalance,
   disabled,
 }: TradingInputProps) => {
@@ -60,13 +63,13 @@ const useTradingInput = ({
         return;
       }
       setPercentage(0);
-      onChange(numericValue);
+      onInputChange(numericValue);
     }
   };
 
   const handlePercentageChange = (newValue: number) => () => {
     setPercentage(newValue);
-    if (onChange) {
+    if (onInputChange) {
       const amt =
         newValue === PERCENTAGE_STEPS
           ? maxBalance
@@ -77,7 +80,7 @@ const useTradingInput = ({
                 .toFixed(token.decimals),
             );
 
-      onChange(amt);
+      onInputChange(amt);
     }
   };
 
@@ -102,15 +105,16 @@ export const TradingInput = forwardRef<HTMLInputElement, TradingInputProps>(
   (props, ref) => {
     const {
       label,
-      placeholder = '0.00',
+      placeholder = '0',
       disabled,
-      error,
       token,
       maxBalance,
       components,
       hideBottomRow,
       isConnected,
       autoFocus,
+      tokenOptions,
+      onTokenChange,
     } = props;
 
     const {
@@ -122,8 +126,8 @@ export const TradingInput = forwardRef<HTMLInputElement, TradingInputProps>(
 
     return (
       <Stack {...components?.container}>
-        <FormControl error={error}>
-          <InputLabel error={error}>{label}</InputLabel>
+        <>
+          <InputLabel>{label}</InputLabel>
           <Stack direction="row" alignItems="center" spacing={1} mt={1}>
             <Box
               {...components?.input}
@@ -150,32 +154,79 @@ export const TradingInput = forwardRef<HTMLInputElement, TradingInputProps>(
               )}
             </Box>
             <Fade appear in>
-              <Stack
-                direction="row"
-                spacing={1}
-                alignItems="center"
-                sx={{
-                  p: 1,
-                  borderRadius: '4px',
-                  backgroundColor: 'background.highlight',
-                  color: 'text.primary',
-                  maxWidth: 100,
-                }}
-              >
-                <TokenIconRevamp
-                  symbols={[token.symbol]}
-                  sx={{
-                    width: 14,
-                    height: 14,
+              {tokenOptions?.length ? (
+                <Select
+                  size="small"
+                  value={token.address}
+                  onChange={(e) => {
+                    const token = tokenOptions.find(
+                      ({ address }) => address === e.target.value,
+                    );
+                    onTokenChange?.(token);
                   }}
-                />
-                <Typography variant="buttonMedium" color="inherit" noWrap>
-                  {token.symbol}
-                </Typography>
-              </Stack>
+                >
+                  {tokenOptions.map((token) => (
+                    <MenuItem
+                      key={token.address}
+                      value={token.address}
+                      sx={{ paddingLeft: 1 }}
+                    >
+                      <Stack
+                        direction="row"
+                        spacing={1}
+                        alignItems="center"
+                        sx={{
+                          color: 'text.primary',
+                          maxWidth: 100,
+                        }}
+                      >
+                        <TokenIconRevamp
+                          symbols={[token.symbol]}
+                          sx={{
+                            maxWidth: 18,
+                            maxHeight: 18,
+                          }}
+                        />
+                        <Typography
+                          variant="buttonMedium"
+                          color="inherit"
+                          noWrap
+                        >
+                          {token.symbol}
+                        </Typography>
+                      </Stack>
+                    </MenuItem>
+                  ))}
+                </Select>
+              ) : (
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  alignItems="center"
+                  sx={{
+                    paddingY: 1,
+                    paddingX: 2,
+                    borderRadius: '8px',
+                    backgroundColor: 'background.highlight',
+                    color: 'text.primary',
+                    maxWidth: 100,
+                  }}
+                >
+                  <TokenIconRevamp
+                    symbols={[token.symbol]}
+                    sx={{
+                      maxWidth: 18,
+                      maxHeight: 18,
+                    }}
+                  />
+                  <Typography variant="buttonMedium" color="inherit" noWrap>
+                    {token.symbol}
+                  </Typography>
+                </Stack>
+              )}
             </Fade>
           </Stack>
-        </FormControl>
+        </>
         <Collapse in={!hideBottomRow}>
           <Stack
             direction="row"
