@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, MenuItem, Select } from '@mui/material';
+import { Box, Button, ButtonGroup } from '@mui/material';
 import { useNavigate, useSearch } from '@tanstack/react-location';
 import produce from 'immer';
 
@@ -9,33 +9,14 @@ import type { BoxProps } from '@mui/material';
 import type { VaultRoute } from '../../../types';
 
 export const Controls = (props: BoxProps) => {
-  const { chartTypes, chartPeriods, defaultChartPeriod, defaultChartType } =
+  const { chartPeriods, defaultChartPeriod, defaultChartType } =
     useChartConfig();
   const { chartPeriod = defaultChartPeriod, chartType = defaultChartType } =
     useSearch<VaultRoute>();
   const navigate = useNavigate<VaultRoute>();
 
   return (
-    <Box {...props} display="flex" justifyContent="space-between" mb={3}>
-      <Select value={chartType}>
-        {Object.entries(chartTypes).map(([_, c]) => (
-          <MenuItem
-            key={c.id}
-            value={c.id}
-            sx={{ px: 2 }}
-            onClick={() => {
-              navigate({
-                replace: true,
-                search: produce((draft) => {
-                  draft.chartType = c.id;
-                }),
-              });
-            }}
-          >
-            {c.label}
-          </MenuItem>
-        ))}
-      </Select>
+    <Box {...props} display="flex" justifyContent="flex-end" mb={3}>
       <ButtonGroup color="secondary" size="small">
         {Object.values(chartPeriods).map((c) => (
           <Button
