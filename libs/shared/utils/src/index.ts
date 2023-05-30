@@ -9,3 +9,4 @@ export * from './isNilOrEmpty';
 export * from './maths';
 export * from './random';
 export * from './types';
+export * from './web3';

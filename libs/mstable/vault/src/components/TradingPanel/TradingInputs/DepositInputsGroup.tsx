@@ -50,6 +50,7 @@ export const DepositInputsGroup: FC = () => {
     depositTokens,
     updateSendToken,
   } = useDepositInputsGroup();
+
   return (
     <>
       <TradingInput

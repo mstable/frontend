@@ -1,11 +1,19 @@
+import { usePoolTokenPrice } from '@dhedge/core-ui-kit/hooks/pool';
 import {
   useIsDepositTradingPanelType,
   useReceiveTokenInput,
   useSendTokenInput,
+  useTradingPanelPoolConfig,
 } from '@dhedge/core-ui-kit/hooks/state';
+import { useAssetPrice } from '@dhedge/core-ui-kit/hooks/trading';
+import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import { TokenIconRevamp } from '@frontend/shared-ui';
-import { formatNumberToLimitedDecimals } from '@frontend/shared-utils';
+import {
+  formatNumberToLimitedDecimals,
+  isEqualAddresses,
+} from '@frontend/shared-utils';
 import { Box, Skeleton, Stack, Typography } from '@mui/material';
+import BigNumber from 'bignumber.js';
 import { ArrowsClockwise } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
@@ -46,11 +54,53 @@ const logoBoxProps: BoxProps = {
   zIndex: 2,
 };
 
-export const TradingTokensOverview: FC<StackProps> = (props) => {
-  const intl = useIntl();
+const useTradingTokensOverview = () => {
+  const poolConfig = useTradingPanelPoolConfig();
   const [sendToken] = useSendTokenInput();
   const [receiveToken] = useReceiveTokenInput();
   const isDeposit = useIsDepositTradingPanelType();
+  const poolTokenPrice = usePoolTokenPrice({
+    address: poolConfig.address,
+    chainId: poolConfig.chainId,
+  });
+  const nonPoolAssetPrice = useAssetPrice({
+    address: isEqualAddresses(receiveToken.address, poolConfig.address)
+      ? sendToken.address
+      : receiveToken.address,
+    chainId: poolConfig.chainId,
+  });
+  const sendTokenPrice = isEqualAddresses(sendToken.address, poolConfig.address)
+    ? poolTokenPrice
+    : nonPoolAssetPrice;
+  const receiveTokenPrice = isEqualAddresses(
+    receiveToken.address,
+    poolConfig.address,
+  )
+    ? poolTokenPrice
+    : nonPoolAssetPrice;
+
+  return {
+    sendToken,
+    receiveToken,
+    isDeposit,
+    sendTokenUsdValue: new BigNumber(sendToken.value || 0)
+      .multipliedBy(sendTokenPrice)
+      .toFixed(),
+    receiveTokenUsdValue: new BigNumber(receiveToken.value || 0)
+      .multipliedBy(receiveTokenPrice)
+      .toFixed(),
+  };
+};
+
+export const TradingTokensOverview: FC<StackProps> = (props) => {
+  const intl = useIntl();
+  const {
+    sendToken,
+    receiveToken,
+    isDeposit,
+    sendTokenUsdValue,
+    receiveTokenUsdValue,
+  } = useTradingTokensOverview();
 
   return (
     <Stack {...props} direction="column" spacing={1}>
@@ -93,6 +143,30 @@ export const TradingTokensOverview: FC<StackProps> = (props) => {
             `≈${formatNumberToLimitedDecimals(receiveToken.value || 0)} ${
               receiveToken.symbol
             }`
+          )}
+        </Typography>
+      </Stack>
+      <Stack {...rowProps}>
+        <Typography variant="value5" color="text.secondary">
+          {sendToken.isLoading ? (
+            <Skeleton width={100} />
+          ) : (
+            formatToUsd({
+              value: +sendTokenUsdValue,
+              maximumFractionDigits: 2,
+              minimumFractionDigits: 1,
+            })
+          )}
+        </Typography>
+        <Typography variant="value5" color="text.secondary">
+          {receiveToken.isLoading ? (
+            <Skeleton width={100} />
+          ) : (
+            `≈${formatToUsd({
+              value: +receiveTokenUsdValue,
+              maximumFractionDigits: 2,
+              minimumFractionDigits: 1,
+            })}`
           )}
         </Typography>
       </Stack>
