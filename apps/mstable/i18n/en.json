@@ -401,17 +401,8 @@
   "zRbVmO": {
     "defaultMessage": "WITHDRAW"
   },
-  "2fed1y": {
-    "defaultMessage": "A deposit into a vault requires an approval transaction.<br></br><br></br>Set as infinite to avoid approving multiple times and save gas on subsequent deposits.<br></br><br></br>Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost."
-  },
   "5ObBlW": {
     "defaultMessage": "Dark Mode"
-  },
-  "Gtmi1D": {
-    "defaultMessage": "Set As Infinite"
-  },
-  "n9CFUs": {
-    "defaultMessage": "Token Approval"
   },
   "yuiyES": {
     "defaultMessage": "General Settings"
@@ -421,6 +412,9 @@
   },
   "2Dq322": {
     "defaultMessage": "You can sell your {symbol} tokens in {cooldownEndsInTime}"
+  },
+  "2fed1y": {
+    "defaultMessage": "A deposit into a vault requires an approval transaction.<br></br><br></br>Set as infinite to avoid approving multiple times and save gas on subsequent deposits.<br></br><br></br>Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost."
   },
   "47GkyG": {
     "defaultMessage": "Minimum deposit is ${minDepositUSD}"
@@ -433,6 +427,9 @@
   },
   "EnCOBJ": {
     "defaultMessage": "Buy"
+  },
+  "Gtmi1D": {
+    "defaultMessage": "Set As Infinite"
   },
   "HOsSgX": {
     "defaultMessage": "More info"
@@ -449,6 +446,9 @@
   "VGRRFC": {
     "defaultMessage": "You will receive no less that this amount."
   },
+  "X/RW9w": {
+    "defaultMessage": "Slippage Tolerance"
+  },
   "XnpuKy": {
     "defaultMessage": "Approve {symbol}"
   },
@@ -458,11 +458,17 @@
   "b1gVRq": {
     "defaultMessage": "Minimum deposit in USD."
   },
+  "h4nW++": {
+    "defaultMessage": "When the \"Auto\" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. <br></br> Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 2-3%."
+  },
   "i0ofjL": {
     "defaultMessage": "Entry fee"
   },
   "k3YWIR": {
     "defaultMessage": "Max slippage"
+  },
+  "n9CFUs": {
+    "defaultMessage": "Token Approval"
   },
   "s4Vb9J": {
     "defaultMessage": "Blocked by high {slippage}% max slippage"

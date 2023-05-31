@@ -14,6 +14,7 @@ import { useIntl } from 'react-intl';
 import { TradingButton } from './TradingButton';
 import { TradingInputs } from './TradingInputs';
 import { TradingRecap } from './TradingRecap';
+import { TradingSettings } from './TradingSettings';
 
 import type { TradingPanelType } from '@dhedge/core-ui-kit/types';
 import type { CardProps } from '@mui/material';
@@ -64,6 +65,9 @@ export const TradingPanel: FC<CardProps> = (props) => {
   return (
     <Card {...props} sx={{ position: 'relative', ...props?.sx }}>
       <CardContent>
+        <TradingSettings
+          sx={{ position: 'absolute', right: 5, top: 5, zIndex: 10 }}
+        />
         <Tabs
           value={tabIndex}
           onChange={(_, tab: number) => {
@@ -71,6 +75,7 @@ export const TradingPanel: FC<CardProps> = (props) => {
           }}
           textColor="inherit"
           variant="fullWidth"
+          sx={{ marginTop: 1 }}
         >
           {TABS.map((tab) => (
             <Tab key={tab} label={tabNameMap[tab]} />

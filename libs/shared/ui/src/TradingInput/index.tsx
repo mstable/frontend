@@ -147,6 +147,9 @@ export const TradingInput = forwardRef<HTMLInputElement, TradingInputProps>(
                   sx={{
                     typography: 'value3',
                     pointerEvents: `${disabled ? 'none' : ''}`,
+                    '& input::placeholder': {
+                      fontSize: '1.2rem!important',
+                    },
                   }}
                   placeholder={placeholder}
                   autoFocus={autoFocus}

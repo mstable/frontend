@@ -877,6 +877,12 @@
       "value": "Swap to Stablecoin"
     }
   ],
+  "X/RW9w": [
+    {
+      "type": 0,
+      "value": "Slippage Tolerance"
+    }
+  ],
   "X0zKZO": [
     {
       "type": 0,
@@ -1095,6 +1101,21 @@
     {
       "type": 0,
       "value": "Vault name"
+    }
+  ],
+  "h4nW++": [
+    {
+      "type": 0,
+      "value": "When the \"Auto\" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. "
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": " Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 2-3%."
     }
   ],
   "hRuz7F": [
