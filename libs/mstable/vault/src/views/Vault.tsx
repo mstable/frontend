@@ -6,6 +6,7 @@ import { useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
+import { Position } from '../components/Position';
 import { Strategy } from '../components/Strategy';
 import { TradingPanel } from '../components/TradingPanel';
 import { VaultJumbo } from '../components/VaultJumbo';
@@ -97,7 +98,19 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
         {!isMobile && (
           <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
             <Stack direction="column" spacing={2}>
-              Position Card Here
+              <ErrorBoundary
+                ErrorComponent={
+                  <ErrorCard
+                    onMount={() => {
+                      track('error', {
+                        name: 'Unhandled Error Vault: Position Card',
+                      });
+                    }}
+                  />
+                }
+              >
+                <Position sx={{ marginTop: -28 }} />
+              </ErrorBoundary>
               <ErrorBoundary
                 ErrorComponent={
                   <ErrorCard

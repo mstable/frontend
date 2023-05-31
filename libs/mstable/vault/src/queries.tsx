@@ -4,6 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import type { UseQueryOptions } from '@tanstack/react-query';
 
 import type {
+  AllFundsByInvestorQuery,
+  AllFundsByInvestorQueryVariables,
+} from './types';
+import type {
   FundQuery,
   FundQueryVariables,
   TokenPriceHistoryQuery,
@@ -113,6 +117,32 @@ export const useTokenPriceHistoryQuery = (
       dHedgeApiEndpoint,
       {},
       tokenPriceHistoryQueryDocument,
+      variables,
+    ),
+    options,
+  );
+
+export const allFundsByInvestorQueryDocument = `
+  query allFundsByInvestorQuery($address: String!) {
+    allFundsByInvestor(investorAddress: $address) {
+      returnOnInvestment
+      averageEntryPrice
+      roiUsd
+      fundAddress
+    }
+  }
+`;
+
+export const useAllFundsByInvestorQuery = (
+  variables: AllFundsByInvestorQueryVariables,
+  options?: UseQueryOptions<AllFundsByInvestorQuery, Error>,
+) =>
+  useQuery<AllFundsByInvestorQuery, Error>(
+    ['allFundsByInvestor', variables.address],
+    fetcher<AllFundsByInvestorQuery, AllFundsByInvestorQueryVariables>(
+      dHedgeApiEndpoint,
+      {},
+      allFundsByInvestorQueryDocument,
       variables,
     ),
     options,
