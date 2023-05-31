@@ -1,5 +1,6 @@
 import { useTrack } from '@frontend/shared-providers';
-import { ErrorBoundary, ErrorCard, MVIcon } from '@frontend/shared-ui';
+import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
+import { TokenIconRevamp } from '@frontend/shared-ui';
 import { Button, Grid, Stack } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
@@ -39,7 +40,10 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
           {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}
         </Stack>
       </Button>
-      <MVIcon address={config.address} sx={{ height: 64, width: 64, mb: 2 }} />
+      <TokenIconRevamp
+        symbols={[config.symbol]}
+        sx={{ height: 64, width: 64, mb: 2 }}
+      />
       <ErrorBoundary
         ErrorComponent={
           <ErrorCard
