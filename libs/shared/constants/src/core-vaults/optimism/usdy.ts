@@ -7,6 +7,8 @@ import {
 
 import type { PoolConfig } from '@dhedge/core-ui-kit/types';
 
+import type { VaultConfig } from '../../types';
+
 export const USDY_OPTIMISM: PoolConfig = {
   chainId: optimism.id,
   symbol: 'USDy',
@@ -25,4 +27,24 @@ export const USDY_OPTIMISM: PoolConfig = {
       DAI_OPTIMISM,
     ],
   },
+};
+
+export const USDY_OPTIMISM_VAULT: VaultConfig = {
+  ...USDY_OPTIMISM,
+  description:
+    "This USD yield aggregator vault aims to farm Optimism's most lucrative and safe supported stablecoin pool. It will switch farming pools when higher stablecoin yield opportunities arise for long-term performance.",
+  strategies: [
+    {
+      description: 'Vault receives stablecoin deposits.',
+    },
+    {
+      description: 'Deposits are utilized in the active strategy.',
+    },
+    {
+      description: 'Reward yields are auto-compounded.',
+    },
+    {
+      description: 'The strategy is switched when better opportunities arise.',
+    },
+  ],
 };
