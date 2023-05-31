@@ -231,6 +231,12 @@
       "value": "minDepositUSD"
     }
   ],
+  "4cX/rf": [
+    {
+      "type": 0,
+      "value": "Management Fee"
+    }
+  ],
   "4tvRCp": [
     {
       "type": 0,
@@ -517,6 +523,16 @@
     {
       "type": 0,
       "value": "Need more light on the strategy?"
+    }
+  ],
+  "FGu/VK": [
+    {
+      "type": 0,
+      "value": "The following strategy pipeline is used in "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
     }
   ],
   "FaoPNm": [
@@ -849,6 +865,28 @@
       "value": "Github"
     }
   ],
+  "VyTtUL": [
+    {
+      "type": 0,
+      "value": "The "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": " Vault charges a "
+    },
+    {
+      "type": 1,
+      "value": "fee"
+    },
+    {
+      "type": 0,
+      "value": " entry fee."
+    }
+  ],
   "W87PYU": [
     {
       "type": 0,
@@ -1063,6 +1101,20 @@
       "value": "Token Price"
     }
   ],
+  "epCeiH": [
+    {
+      "type": 0,
+      "value": "The "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": " Vault doesn't charge exit fee."
+    }
+  ],
   "erCS/d": [
     {
       "type": 0,
@@ -1095,6 +1147,12 @@
     {
       "type": 0,
       "value": " Cost"
+    }
+  ],
+  "fhnmhR": [
+    {
+      "type": 0,
+      "value": "Vault strategy pipeline."
     }
   ],
   "g6UhRO": [
@@ -1196,6 +1254,12 @@
       "value": "DAO"
     }
   ],
+  "le9cwx": [
+    {
+      "type": 0,
+      "value": "Exit Fee"
+    }
+  ],
   "m+DGTj": [
     {
       "type": 1,
@@ -1242,6 +1306,12 @@
       "value": "Transaction Error"
     }
   ],
+  "pWv8jk": [
+    {
+      "type": 0,
+      "value": "Entry Fee"
+    }
+  ],
   "qEnyZU": [
     {
       "type": 0,
@@ -1270,6 +1340,28 @@
     {
       "type": 0,
       "value": "Start the tour and get more insight."
+    }
+  ],
+  "qzgBwU": [
+    {
+      "type": 0,
+      "value": "The "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": " Vault charges a "
+    },
+    {
+      "type": 1,
+      "value": "fee"
+    },
+    {
+      "type": 0,
+      "value": " performance upon underlying asset appreciation."
     }
   ],
   "rbrahO": [
@@ -1344,6 +1436,28 @@
     {
       "type": 0,
       "value": "Liquidation Fee"
+    }
+  ],
+  "tivZoE": [
+    {
+      "type": 0,
+      "value": "The "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": " Vault charges a "
+    },
+    {
+      "type": 1,
+      "value": "fee"
+    },
+    {
+      "type": 0,
+      "value": " management fee."
     }
   ],
   "tvpAhG": [

@@ -407,6 +407,15 @@
   "yuiyES": {
     "defaultMessage": "General Settings"
   },
+  "4cX/rf": {
+    "defaultMessage": "Management Fee"
+  },
+  "FGu/VK": {
+    "defaultMessage": "The following strategy pipeline is used in {symbol}"
+  },
+  "VyTtUL": {
+    "defaultMessage": "The {symbol} Vault charges a {fee} entry fee."
+  },
   "1vtEYS": {
     "defaultMessage": "Flexible min slippage value that is likely enough to process the transaction."
   },
@@ -454,6 +463,24 @@
   },
   "aTX7LJ": {
     "defaultMessage": "1D"
+  },
+  "epCeiH": {
+    "defaultMessage": "The {symbol} Vault doesn't charge exit fee."
+  },
+  "fhnmhR": {
+    "defaultMessage": "Vault strategy pipeline."
+  },
+  "le9cwx": {
+    "defaultMessage": "Exit Fee"
+  },
+  "pWv8jk": {
+    "defaultMessage": "Entry Fee"
+  },
+  "qzgBwU": {
+    "defaultMessage": "The {symbol} Vault charges a {fee} performance upon underlying asset appreciation."
+  },
+  "tivZoE": {
+    "defaultMessage": "The {symbol} Vault charges a {fee} management fee."
   },
   "b1gVRq": {
     "defaultMessage": "Minimum deposit in USD."

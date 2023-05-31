@@ -7,16 +7,15 @@ const buildIconLink = (tokenName: string): string =>
     : '';
 
 const getIcon = async (name: string): Promise<string> => {
-  return buildIconLink(name);
-  // TODO: solve the issue with dynamic import
-  // try {
-  //   const img = await import(
-  //     `@dhedge/crypto-assets/icons/${name.toLowerCase()}.png`
-  //   );
-  //   return img?.default ?? buildIconLink(name);
-  // } catch {
-  //   return buildIconLink(name);
-  // }
+  try {
+    // requires relative path
+    const img = await import(
+      `../../../../node_modules/@dhedge/crypto-assets/icons/${name.toLowerCase()}.png`
+    );
+    return img?.default ?? buildIconLink(name);
+  } catch {
+    return buildIconLink(name);
+  }
 };
 
 export const useCryptoIcon = (iconSymbols: string[] = []): string[] => {
