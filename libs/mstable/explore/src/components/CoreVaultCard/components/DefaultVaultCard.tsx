@@ -1,4 +1,8 @@
-import { HoverablePrimaryCard, ValueLabel } from '@frontend/shared-ui';
+import {
+  HoverablePrimaryCard,
+  TokenIconRevamp,
+  ValueLabel,
+} from '@frontend/shared-ui';
 import { Skeleton, Stack, Typography } from '@mui/material';
 
 import { CoreVaultLineChart } from '../../CoreVaultLineChart';
@@ -34,6 +38,10 @@ export const DefaultVaultCard = (props: CoreVaultCardProps) => {
       p={3}
     >
       <Stack direction="row" justifyContent="space-between" mb={3}>
+        <TokenIconRevamp
+          symbols={[config.symbol]}
+          sx={{ height: 53, width: 53, mb: 2, ml: '-6px' }}
+        />
         <ValueLabel
           label={tokenPriceLabel}
           hint={tokenPriceHint}

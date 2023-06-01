@@ -1,6 +1,7 @@
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import { useFundQuery } from '@frontend/mstable-vault';
 import { useChartConfig, useChartData } from '@frontend/shared-hooks';
+import { TokenIconRevamp } from '@frontend/shared-ui';
 import {
   Stack,
   TableCell,
@@ -46,7 +47,12 @@ export const CoreVaultTableRow = ({
         navigate({ to });
       }}
     >
-      <TableCell></TableCell>
+      <TableCell>
+        <TokenIconRevamp
+          symbols={[config.symbol]}
+          sx={{ height: 32, width: 32 }}
+        />
+      </TableCell>
       <TableCell>
         <Typography variant="value4">{data?.fund.name}</Typography>
       </TableCell>
