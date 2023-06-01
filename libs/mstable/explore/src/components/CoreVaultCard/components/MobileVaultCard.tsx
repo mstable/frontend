@@ -1,6 +1,7 @@
-import { HoverablePrimaryCard, MVIcon, ValueLabel } from '@frontend/shared-ui';
+import { HoverablePrimaryCard, ValueLabel } from '@frontend/shared-ui';
 import { Skeleton, Stack, Typography } from '@mui/material';
 
+import { CoreVaultLineChart } from '../../CoreVaultLineChart';
 import { useCoreVaultCardProps } from '../hooks';
 
 import type { CoreVaultCardProps } from '../types';
@@ -20,6 +21,7 @@ export const MobileVaultCard = (props: CoreVaultCardProps) => {
     tvl,
     name,
     tagProps,
+    chartData,
   } = useCoreVaultCardProps(props);
   const { config, to, ...rest } = props;
 
@@ -34,10 +36,6 @@ export const MobileVaultCard = (props: CoreVaultCardProps) => {
       role="button"
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <MVIcon
-          address={config.address}
-          sx={{ height: 40, width: 40, mb: 2, ml: '-6px' }}
-        />
         <ValueLabel
           disableResponsive
           label={tokenPriceLabel}
@@ -48,7 +46,11 @@ export const MobileVaultCard = (props: CoreVaultCardProps) => {
           </Typography>
         </ValueLabel>
       </Stack>
-      <Skeleton height="100%" width="100%" variant="rounded" sx={{ mb: 2 }} />
+      {isLoading ? (
+        <Skeleton height={180} width={280} variant="rounded" />
+      ) : (
+        <CoreVaultLineChart {...chartData} height={180} width={280} />
+      )}
       <Typography variant="h4" mb={2}>
         {name}
       </Typography>

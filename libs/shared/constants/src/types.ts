@@ -16,10 +16,10 @@ export type VaultConfig = PoolConfig & PoolConfigMeta;
 
 export interface PoolConfigMeta {
   description: string;
-  strategies?: Strategy[];
+  strategies?: VaultStrategy[];
 }
 
-export interface Strategy {
+export interface VaultStrategy {
   description: string;
   img?: string;
 }

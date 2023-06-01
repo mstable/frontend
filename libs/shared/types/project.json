@@ -1,7 +1,7 @@
 {
-  "name": "shared-hooks",
+  "name": "shared-types",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/shared/hooks/src",
+  "sourceRoot": "libs/shared/types/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -12,7 +12,7 @@
       ],
       "options": {
         "lintFilePatterns": [
-          "libs/shared/hooks/**/*.{ts,tsx,js,jsx}"
+          "libs/shared/types/**/*.{ts,tsx,js,jsx}"
         ]
       }
     },
@@ -23,7 +23,7 @@
       ],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/libs/shared/hooks"
+        "outputPath": "dist/libs/shared/types"
       },
       "configurations": {
         "development": {
@@ -38,7 +38,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "yarn run formatjs extract 'libs/shared/hooks/src/**/*.{ts,tsx}' --out-file i18n-extractions/libs-shared-hooks.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+          "yarn run formatjs extract 'libs/shared/types/src/**/*.{ts,tsx}' --out-file i18n-extractions/libs-shared-types.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
         ]
       }
     }

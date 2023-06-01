@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import { useFundQuery } from '@frontend/mstable-vault';
+import { useChartConfig, useChartData } from '@frontend/shared-hooks';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import { useIntl } from 'react-intl';
@@ -16,6 +17,13 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
   const { data, isLoading } = useFundQuery({ address: config.address });
+
+  const { defaultChartPeriod, defaultChartType } = useChartConfig();
+  const chartData = useChartData({
+    address: config.address,
+    chartPeriod: defaultChartPeriod,
+    chartType: defaultChartType,
+  });
 
   const handleClick = useCallback(() => {
     if (to) {
@@ -116,5 +124,6 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
     tvl,
     name: data?.fund.name,
     tagProps,
+    chartData,
   };
 };

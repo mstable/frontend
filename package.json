@@ -13,7 +13,7 @@
   },
   "private": true,
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,mdx}": "eslint --cache --fix"
+    "*.{js,jsx,ts,tsx,mdx}": "eslint --fix"
   },
   "dependencies": {
     "@dhedge/core-ui-kit": "^0.1.8",

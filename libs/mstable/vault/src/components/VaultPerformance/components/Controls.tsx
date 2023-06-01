@@ -1,18 +1,15 @@
+import { useChartConfig } from '@frontend/shared-hooks';
 import { Box, Button, ButtonGroup } from '@mui/material';
 import { useNavigate, useSearch } from '@tanstack/react-location';
 import produce from 'immer';
-
-import { useChartConfig } from '../hooks';
 
 import type { BoxProps } from '@mui/material';
 
 import type { VaultRoute } from '../../../types';
 
 export const Controls = (props: BoxProps) => {
-  const { chartPeriods, defaultChartPeriod, defaultChartType } =
-    useChartConfig();
-  const { chartPeriod = defaultChartPeriod, chartType = defaultChartType } =
-    useSearch<VaultRoute>();
+  const { chartPeriods, defaultChartPeriod } = useChartConfig();
+  const { chartPeriod = defaultChartPeriod } = useSearch<VaultRoute>();
   const navigate = useNavigate<VaultRoute>();
 
   return (
