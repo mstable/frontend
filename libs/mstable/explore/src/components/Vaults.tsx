@@ -1,10 +1,7 @@
 import { useState } from 'react';
 
 import { DEFAULT_CHAIN_ID } from '@dhedge/core-ui-kit/const';
-import {
-  CORE_UI_TOOLKIT_NETWORK_POOL_CONFIG_MAP,
-  metavaults,
-} from '@frontend/shared-constants';
+import { CORE_VAULT_NETWORK_CONFIG_MAP } from '@frontend/shared-constants';
 import {
   Box,
   Grid,
@@ -22,23 +19,16 @@ import {
 } from '@mui/material';
 import { ListDashes, SquaresFour } from 'phosphor-react';
 import { useIntl } from 'react-intl';
-import { mainnet } from 'wagmi/chains';
 
-import { ComingSoonCard, ComingSoonRow } from './ComingSoon';
 import { CoreVaultCard } from './CoreVaultCard';
 import { CoreVaultTableRow } from './CoreVaultTableRow';
-import { VaultCard } from './VaultCard';
-import { VaultTableRow } from './VaultTableRow';
-
-const COMING_SOON = ['mveth', 'mvfrax'];
 
 export const Vaults = () => {
   const intl = useIntl();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   // TODO: handle network select
-  const mvs = metavaults[mainnet.id];
-  const coreVaults = CORE_UI_TOOLKIT_NETWORK_POOL_CONFIG_MAP[DEFAULT_CHAIN_ID];
+  const coreVaults = CORE_VAULT_NETWORK_CONFIG_MAP[DEFAULT_CHAIN_ID];
 
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 
@@ -69,11 +59,6 @@ export const Vaults = () => {
       <Box pb={4}>
         {viewMode === 'grid' ? (
           <Grid container spacing={{ xs: 2, md: 3 }} alignItems="stretch">
-            {mvs.map((mv) => (
-              <Grid key={mv.id} item xs={12} sm={6} lg={4}>
-                <VaultCard metavault={mv} to={`./${mv.id}`} />
-              </Grid>
-            ))}
             {coreVaults.map((config) => (
               <Grid key={config.address} item xs={12} sm={6} lg={4}>
                 <CoreVaultCard
@@ -83,11 +68,6 @@ export const Vaults = () => {
                     height: '100%',
                   }}
                 />
-              </Grid>
-            ))}
-            {COMING_SOON.map((cs) => (
-              <Grid key={cs} item xs={12} sm={6} lg={4}>
-                <ComingSoonCard token={cs} />
               </Grid>
             ))}
           </Grid>
@@ -115,22 +95,6 @@ export const Vaults = () => {
                   {!isMobile && (
                     <TableCell>
                       {intl.formatMessage({
-                        defaultMessage: 'Strategy',
-                        id: 'zGHadw',
-                      })}
-                    </TableCell>
-                  )}
-                  {!isMobile && (
-                    <TableCell>
-                      {intl.formatMessage({
-                        defaultMessage: 'Protocols',
-                        id: 'zFNxtv',
-                      })}
-                    </TableCell>
-                  )}
-                  {!isMobile && (
-                    <TableCell>
-                      {intl.formatMessage({
                         defaultMessage: 'TVL',
                         id: 'SKB/G9',
                       })}
@@ -138,22 +102,14 @@ export const Vaults = () => {
                   )}
                   <TableCell>
                     {intl.formatMessage({
-                      defaultMessage: 'ROI',
-                      id: 'P8Xs51',
+                      defaultMessage: 'APY',
+                      id: 'MLTKb6',
                     })}
                   </TableCell>
                   {!isMobile && <TableCell />}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {mvs.map((mv, i) => (
-                  <VaultTableRow
-                    key={mv.id}
-                    metavault={mv}
-                    to={`./${mv.id}`}
-                    isLast={i === mvs.length - 1}
-                  />
-                ))}
                 {coreVaults.map((config, i) => (
                   <CoreVaultTableRow
                     key={config.address}
@@ -161,9 +117,6 @@ export const Vaults = () => {
                     to={`./vault/${config.address}`}
                     isLast={i === coreVaults.length - 1}
                   />
-                ))}
-                {COMING_SOON.map((cs) => (
-                  <ComingSoonRow key={cs} token={cs} />
                 ))}
               </TableBody>
             </Table>

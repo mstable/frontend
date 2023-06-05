@@ -29,12 +29,6 @@ export const Fees = (props: StackProps) => {
   const intl = useIntl();
   const { fees, config } = useVault();
 
-  console.log({
-    fees,
-    address: config.address,
-    chainId: config.chainId,
-  });
-
   return (
     <Stack {...props} direction="column" spacing={2}>
       <Stack {...feeCardProps}>

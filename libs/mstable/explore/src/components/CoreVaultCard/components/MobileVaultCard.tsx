@@ -33,7 +33,7 @@ export const MobileVaultCard = (props: CoreVaultCardProps) => {
     <HoverablePrimaryCard
       direction="column"
       p={3}
-      primaryColor="#2775CA"
+      primaryColor={config.primaryColor}
       {...rest}
       onClick={handleClick}
       sx={{ cursor: 'pointer', ...rest?.sx }}
