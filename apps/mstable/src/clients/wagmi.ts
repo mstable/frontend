@@ -16,14 +16,14 @@ import {
   walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 import { configureChains, createClient } from 'wagmi';
-import { optimism } from 'wagmi/chains';
+import { mainnet, optimism } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 
 import type { Wallet } from '@rainbow-me/rainbowkit';
 import type { Chain, Connector } from 'wagmi';
 
 export const { chains, provider, webSocketProvider } = configureChains(
-  [optimism],
+  [optimism, mainnet],
   [
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_MAIN_API_KEY'] }),
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_FALLBACK_API_KEY'] }),
