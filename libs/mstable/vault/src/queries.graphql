@@ -46,3 +46,12 @@ query tokenPriceHistoryQuery($address: String!, $period: String!) {
     }
   }
 }
+
+query allFundsByInvestorQuery($address: String!) {
+  allFundsByInvestor(investorAddress: $address) {
+    returnOnInvestment
+    averageEntryPrice
+    roiUsd
+    fundAddress
+  }
+}

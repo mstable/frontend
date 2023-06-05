@@ -78,6 +78,21 @@ export interface TokenPriceHistoryQueryVariables {
   period: CHART_PERIOD;
 }
 
+export interface FundByInvestor {
+  returnOnInvestment: string;
+  averageEntryPrice: string;
+  roiUsd: string;
+  fundAddress: Address;
+}
+
+export interface AllFundsByInvestorQuery {
+  allFundsByInvestor: FundByInvestor[];
+}
+
+export interface AllFundsByInvestorQueryVariables {
+  address: Address;
+}
+
 export enum CHART_PERIOD {
   DAY = '1d',
   WEEK = '1w',

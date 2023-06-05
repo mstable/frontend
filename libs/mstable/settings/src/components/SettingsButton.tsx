@@ -1,9 +1,8 @@
 import { useRef, useState } from 'react';
 
-import { ClickAwayMenu, InfoTooltip } from '@frontend/shared-ui';
+import { ClickAwayMenu } from '@frontend/shared-ui';
 import {
   Button,
-  Divider,
   FormControlLabel,
   Stack,
   Switch,
@@ -12,7 +11,7 @@ import {
 import { Gear } from 'phosphor-react';
 import { not } from 'ramda';
 import { useIntl } from 'react-intl';
-import { useAccount, useNetwork } from 'wagmi';
+import { useNetwork } from 'wagmi';
 
 import { useToggleSettings } from '../hooks';
 import { useSettings } from '../state';
@@ -23,9 +22,8 @@ export const SettingsButton = (props: ButtonProps) => {
   const [open, setOpen] = useState(false);
   const anchorEl = useRef(null);
   const { chain } = useNetwork();
-  const { isConnected } = useAccount();
   const intl = useIntl();
-  const { exactApproval, dark } = useSettings();
+  const { dark } = useSettings();
   const toggleSettings = useToggleSettings();
 
   return (
@@ -78,46 +76,6 @@ export const SettingsButton = (props: ButtonProps) => {
             disableTypography
             onChange={() => {
               toggleSettings('dark');
-            }}
-            sx={{ width: 1 }}
-          />
-          <Divider flexItem />
-          <Typography>
-            {intl.formatMessage({
-              defaultMessage: 'Token Approval',
-              id: 'n9CFUs',
-            })}
-          </Typography>
-          <FormControlLabel
-            value={!exactApproval}
-            control={<Switch checked={!exactApproval} />}
-            label={
-              <Stack
-                direction="row"
-                alignItems="center"
-                spacing={1}
-                flexGrow={1}
-              >
-                <Typography variant="label2">
-                  {intl.formatMessage({
-                    defaultMessage: 'Set As Infinite',
-                    id: 'Gtmi1D',
-                  })}
-                </Typography>
-                <InfoTooltip
-                  label={intl.formatMessage({
-                    defaultMessage:
-                      'A deposit into a vault requires an approval transaction.<br></br><br></br>Set as infinite to avoid approving multiple times and save gas on subsequent deposits.<br></br><br></br>Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost.',
-                    id: '2fed1y',
-                  })}
-                />
-              </Stack>
-            }
-            labelPlacement="start"
-            disableTypography
-            disabled={!isConnected}
-            onChange={() => {
-              toggleSettings('exactApproval');
             }}
             sx={{ width: 1 }}
           />

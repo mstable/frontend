@@ -1,12 +1,14 @@
 import { useTrack } from '@frontend/shared-providers';
 import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
 import { TokenIconRevamp } from '@frontend/shared-ui';
-import { Button, Grid, Stack } from '@mui/material';
+import { Button, Grid, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
+import { Position } from '../components/Position';
 import { Strategy } from '../components/Strategy';
+import { TradingPanel } from '../components/TradingPanel';
 import { VaultJumbo } from '../components/VaultJumbo';
 import { VaultPerformance } from '../components/VaultPerformance';
 import { useCoreUiKitInitialization } from '../hooks';
@@ -21,8 +23,11 @@ interface VaultProps extends StackProps {
 
 const VaultContent = ({ config, ...props }: VaultProps) => {
   const intl = useIntl();
+  const theme = useTheme();
   const track = useTrack();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   useCoreUiKitInitialization();
 
   return (
@@ -75,7 +80,6 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
             >
               <VaultPerformance />
             </ErrorBoundary>
-
             <ErrorBoundary
               ErrorComponent={
                 <ErrorCard
@@ -91,6 +95,38 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
             </ErrorBoundary>
           </Stack>
         </Grid>
+        {!isMobile && (
+          <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
+            <Stack direction="column" spacing={2}>
+              <ErrorBoundary
+                ErrorComponent={
+                  <ErrorCard
+                    onMount={() => {
+                      track('error', {
+                        name: 'Unhandled Error Vault: Position Card',
+                      });
+                    }}
+                  />
+                }
+              >
+                <Position sx={{ marginTop: -28 }} />
+              </ErrorBoundary>
+              <ErrorBoundary
+                ErrorComponent={
+                  <ErrorCard
+                    onMount={() => {
+                      track('error', {
+                        name: 'Unhandled Error: Trading Panel',
+                      });
+                    }}
+                  />
+                }
+              >
+                <TradingPanel />
+              </ErrorBoundary>
+            </Stack>
+          </Grid>
+        )}
       </Grid>
     </Stack>
   );
