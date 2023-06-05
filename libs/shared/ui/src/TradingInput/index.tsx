@@ -45,6 +45,10 @@ export type TradingInputProps = {
 
 const PERCENTAGE_STEPS = 4; // 25%
 
+const buildTokenSelectValue = (token: { address: string; symbol: string }) =>
+  `${token.address}_${token.symbol}`;
+const parseTokenSelectValue = (value: string) => value.split('_');
+
 const useTradingInput = ({
   token,
   onInputChange,
@@ -160,46 +164,53 @@ export const TradingInput = forwardRef<HTMLInputElement, TradingInputProps>(
               {tokenOptions?.length ? (
                 <Select
                   size="small"
-                  value={token.address}
+                  value={buildTokenSelectValue(token)}
                   onChange={(e) => {
+                    const [selectedTokenAddress, selectedTokenSymbol] =
+                      parseTokenSelectValue(e.target.value);
                     const token = tokenOptions.find(
-                      ({ address }) => address === e.target.value,
+                      ({ address, symbol }) =>
+                        address === selectedTokenAddress &&
+                        symbol == selectedTokenSymbol,
                     );
                     onTokenChange?.(token);
                   }}
                 >
-                  {tokenOptions.map((token) => (
-                    <MenuItem
-                      key={token.address}
-                      value={token.address}
-                      sx={{ paddingLeft: 1 }}
-                    >
-                      <Stack
-                        direction="row"
-                        spacing={1}
-                        alignItems="center"
-                        sx={{
-                          color: 'text.primary',
-                          maxWidth: 100,
-                        }}
+                  {tokenOptions.map((token) => {
+                    const tokenValue = buildTokenSelectValue(token);
+                    return (
+                      <MenuItem
+                        key={tokenValue}
+                        value={tokenValue}
+                        sx={{ paddingLeft: 1 }}
                       >
-                        <TokenIconRevamp
-                          symbols={[token.symbol]}
+                        <Stack
+                          direction="row"
+                          spacing={1}
+                          alignItems="center"
                           sx={{
-                            maxWidth: 18,
-                            maxHeight: 18,
+                            color: 'text.primary',
+                            maxWidth: 100,
                           }}
-                        />
-                        <Typography
-                          variant="buttonMedium"
-                          color="inherit"
-                          noWrap
                         >
-                          {token.symbol}
-                        </Typography>
-                      </Stack>
-                    </MenuItem>
-                  ))}
+                          <TokenIconRevamp
+                            symbols={[token.symbol]}
+                            sx={{
+                              maxWidth: 18,
+                              maxHeight: 18,
+                            }}
+                          />
+                          <Typography
+                            variant="buttonMedium"
+                            color="inherit"
+                            noWrap
+                          >
+                            {token.symbol}
+                          </Typography>
+                        </Stack>
+                      </MenuItem>
+                    );
+                  })}
                 </Select>
               ) : (
                 <Stack

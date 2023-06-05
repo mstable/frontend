@@ -29,6 +29,8 @@ export const USDMNY_OPTIMISM: PoolConfig = {
 
 export const USDMNY_OPTIMISM_VAULT: VaultConfig = {
   ...USDMNY_OPTIMISM,
+  featured: true,
+  primaryColor: '#2775CA',
   description:
     'This vault earns yield on crypto assets while hedging against to be market neutral, making interest on USD while uninfluenced by crypto price volatility.',
   strategies: [

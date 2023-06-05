@@ -31,9 +31,9 @@ export const DefaultVaultCard = (props: CoreVaultCardProps) => {
 
   return (
     <HoverablePrimaryCard
-      primaryColor="#2775CA"
+      primaryColor={config.primaryColor}
       onClick={handleClick}
-      sx={{ cursor: 'pointer', ...rest?.sx }}
+      sx={{ cursor: 'pointer', ...rest?.sx, width: '100%' }}
       role="button"
       p={3}
     >
@@ -56,7 +56,7 @@ export const DefaultVaultCard = (props: CoreVaultCardProps) => {
         </ValueLabel>
       </Stack>
       {isLoading ? (
-        <Skeleton width={350} height={175} variant="rounded" />
+        <Skeleton width="100%" height={175} variant="rounded" />
       ) : (
         <CoreVaultLineChart {...chartData} />
       )}

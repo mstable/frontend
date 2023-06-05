@@ -1,7 +1,7 @@
-import type { PoolConfig } from '@dhedge/core-ui-kit/types';
+import type { VaultConfig } from '@frontend/shared-constants';
 import type { CardProps } from '@mui/material';
 
 export type CoreVaultCardProps = {
-  config: PoolConfig;
+  config: VaultConfig;
   to?: string;
 } & Omit<CardProps, 'children' | 'onClick'>;

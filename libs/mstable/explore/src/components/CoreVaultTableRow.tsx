@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import { useFundQuery } from '@frontend/mstable-vault';
 import { useChartConfig, useChartData } from '@frontend/shared-hooks';
@@ -39,6 +41,13 @@ export const CoreVaultTableRow = ({
     scales: false,
   });
 
+  const apy = useMemo(() => {
+    const monthlyApy = data?.fund.apy?.monthly;
+    return monthlyApy
+      ? `${Math.max(0, monthlyApy).toFixed(monthlyApy > 0 ? 2 : 0)}%`
+      : '-';
+  }, [data?.fund.apy?.monthly]);
+
   return (
     <TableRow
       sx={{ cursor: 'pointer', borderBottom: isLast ? 'none' : undefined }}
@@ -56,8 +65,6 @@ export const CoreVaultTableRow = ({
       <TableCell>
         <Typography variant="value4">{data?.fund.name}</Typography>
       </TableCell>
-      {!isMobile && <TableCell>-</TableCell>}
-      {!isMobile && <TableCell>-</TableCell>}
       {!isMobile && (
         <TableCell>
           <Typography variant="value4">
@@ -72,7 +79,7 @@ export const CoreVaultTableRow = ({
       )}
       <TableCell>
         <Stack direction="row">
-          <Typography variant="value4">-</Typography>
+          <Typography variant="value4">{apy}</Typography>
         </Stack>
       </TableCell>
       {!isMobile && (

@@ -31,6 +31,7 @@ export const USDY_OPTIMISM: PoolConfig = {
 
 export const USDY_OPTIMISM_VAULT: VaultConfig = {
   ...USDY_OPTIMISM,
+  primaryColor: '#2775CA',
   description:
     "This USD yield aggregator vault aims to farm Optimism's most lucrative and safe supported stablecoin pool. It will switch farming pools when higher stablecoin yield opportunities arise for long-term performance.",
   strategies: [

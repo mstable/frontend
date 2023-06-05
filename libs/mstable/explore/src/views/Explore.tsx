@@ -2,7 +2,7 @@ import { useTrack } from '@frontend/shared-providers';
 import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
 import { Stack } from '@mui/material';
 
-import { FeatureCard } from '../components/FeatureCard';
+import { CoreFeatureCard } from '../components/CoreFeatureCard';
 import { Vaults } from '../components/Vaults';
 
 import type { StackProps } from '@mui/material';
@@ -21,7 +21,7 @@ export const Explore = (props: StackProps) => {
           />
         }
       >
-        <FeatureCard />
+        <CoreFeatureCard />
       </ErrorBoundary>
       <ErrorBoundary
         ErrorComponent={
