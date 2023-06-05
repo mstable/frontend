@@ -1300,6 +1300,28 @@
       "value": "Token Approval"
     }
   ],
+  "obSWjR": [
+    {
+      "type": 0,
+      "value": "Please switch your wallet network to "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " to interact with "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": " vault."
+    }
+  ],
   "ovJ26C": [
     {
       "type": 0,

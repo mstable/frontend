@@ -4,7 +4,10 @@ import { useIntl } from 'react-intl';
 
 import type { PoolConfig } from '@dhedge/core-ui-kit/types';
 
-export const NetworkAlert = ({ chainId }: Pick<PoolConfig, 'chainId'>) => {
+export const NetworkAlert = ({
+  chainId,
+  symbol,
+}: Pick<PoolConfig, 'chainId' | 'symbol'>) => {
   const intl = useIntl();
 
   const { chainId: walletChainId, chains, switchNetwork } = useNetwork();
@@ -40,10 +43,17 @@ export const NetworkAlert = ({ chainId }: Pick<PoolConfig, 'chainId'>) => {
         </Button>
       }
     >
-      {intl.formatMessage({
-        defaultMessage: 'Unsupported Network',
-        id: 'PmkP1H',
-      })}
+      {intl.formatMessage(
+        {
+          defaultMessage:
+            'Please switch your wallet network to {name} to interact with {symbol} vault.',
+          id: 'obSWjR',
+        },
+        {
+          name,
+          symbol,
+        },
+      )}
     </Alert>
   );
 };

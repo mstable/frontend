@@ -33,7 +33,7 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
 
   return (
     <Stack direction="column" alignItems="flex-start" {...props}>
-      <NetworkAlert chainId={config.chainId} />
+      <NetworkAlert chainId={config.chainId} symbol={config.symbol} />
       <Button
         variant="text"
         size="small"
