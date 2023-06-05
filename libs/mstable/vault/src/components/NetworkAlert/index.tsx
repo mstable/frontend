@@ -7,10 +7,10 @@ import type { PoolConfig } from '@dhedge/core-ui-kit/types';
 export const NetworkAlert = ({ chainId }: Pick<PoolConfig, 'chainId'>) => {
   const intl = useIntl();
 
-  const { chain, chains, switchNetwork } = useNetwork();
+  const { chainId: walletChainId, chains, switchNetwork } = useNetwork();
   const { name } = chains.find(({ id }) => id === chainId) ?? { name: chainId };
 
-  if (!chain.unsupported) {
+  if (walletChainId === chainId) {
     return null;
   }
 
