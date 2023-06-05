@@ -2,7 +2,11 @@ import { useCallback, useMemo } from 'react';
 
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import { useFundQuery } from '@frontend/mstable-vault';
-import { useChartConfig, useChartData } from '@frontend/shared-hooks';
+import {
+  useChartConfig,
+  useChartData,
+  useUserVaultBalance,
+} from '@frontend/shared-hooks';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import { useIntl } from 'react-intl';
@@ -23,6 +27,11 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
     address: config.address,
     chartPeriod: defaultChartPeriod,
     chartType: defaultChartType,
+    scales: { x: false, y: true },
+  });
+
+  const { balanceInUsd: balance } = useUserVaultBalance({
+    address: config.address,
   });
 
   const handleClick = useCallback(() => {
@@ -95,6 +104,20 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
     [data?.fund?.totalValue],
   );
 
+  const balanceLabel = useMemo(
+    () => intl.formatMessage({ defaultMessage: 'Balance', id: 'H5+NAX' }),
+    [],
+  );
+
+  const balanceHint = useMemo(
+    () =>
+      intl.formatMessage({
+        defaultMessage: 'Account token balance',
+        id: 'LAazWH',
+      }),
+    [],
+  );
+
   const tagProps: TypographyProps = {
     display: 'flex',
     justifyContent: 'center',
@@ -125,5 +148,8 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
     name: data?.fund.name,
     tagProps,
     chartData,
+    balance,
+    balanceLabel,
+    balanceHint,
   };
 };

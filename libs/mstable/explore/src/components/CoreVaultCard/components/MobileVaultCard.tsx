@@ -26,6 +26,9 @@ export const MobileVaultCard = (props: CoreVaultCardProps) => {
     name,
     tagProps,
     chartData,
+    balance,
+    balanceLabel,
+    balanceHint,
   } = useCoreVaultCardProps(props);
   const { config, to, ...rest } = props;
 
@@ -78,6 +81,11 @@ export const MobileVaultCard = (props: CoreVaultCardProps) => {
         <ValueLabel disableResponsive label={apyLabel} hint={apyHint}>
           <Typography variant="value3">
             {isLoading ? <Skeleton width={50} /> : apy}
+          </Typography>
+        </ValueLabel>
+        <ValueLabel disableResponsive label={balanceLabel} hint={balanceHint}>
+          <Typography variant="value3">
+            {isLoading ? <Skeleton width={50} /> : balance}
           </Typography>
         </ValueLabel>
         <ValueLabel disableResponsive label={tvlLabel} hint={tvlHint}>

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import { useFundQuery } from '@frontend/mstable-vault';
-import { useChartConfig, useChartData } from '@frontend/shared-hooks';
+import { useUserVaultBalance } from '@frontend/shared-hooks';
 import { TokenIconRevamp } from '@frontend/shared-ui';
 import {
   Stack,
@@ -13,8 +13,6 @@ import {
   useTheme,
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
-
-import { CoreVaultLineChart } from './CoreVaultLineChart';
 
 import type { PoolConfig } from '@dhedge/core-ui-kit/types';
 
@@ -33,13 +31,7 @@ export const CoreVaultTableRow = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
   const { data } = useFundQuery({ address: config.address });
-  const { defaultChartType, defaultChartPeriod } = useChartConfig();
-  const chartData = useChartData({
-    address: config.address,
-    chartType: defaultChartType,
-    chartPeriod: defaultChartPeriod,
-    scales: false,
-  });
+  const { balanceInUsd } = useUserVaultBalance({ address: config.address });
 
   const apy = useMemo(() => {
     const monthlyApy = data?.fund.apy?.monthly;
@@ -84,14 +76,7 @@ export const CoreVaultTableRow = ({
       </TableCell>
       {!isMobile && (
         <TableCell>
-          <Stack sx={{ width: 60, height: 40 }}>
-            <CoreVaultLineChart
-              options={{ ...chartData.options, maintainAspectRatio: false }}
-              data={chartData.data}
-              height={40}
-              width={60}
-            />
-          </Stack>
+          <Typography variant="value4">{balanceInUsd}</Typography>
         </TableCell>
       )}
     </TableRow>

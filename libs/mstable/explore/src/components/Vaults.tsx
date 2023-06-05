@@ -106,7 +106,14 @@ export const Vaults = () => {
                       id: 'MLTKb6',
                     })}
                   </TableCell>
-                  {!isMobile && <TableCell />}
+                  {!isMobile && (
+                    <TableCell>
+                      {intl.formatMessage({
+                        defaultMessage: 'Balance',
+                        id: 'H5+NAX',
+                      })}
+                    </TableCell>
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
