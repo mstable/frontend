@@ -25,3 +25,5 @@ export const CORE_UI_TOOLKIT_NETWORK_POOL_CONFIG_MAP = Object.values(
   acc[config.chainId] = [...(acc[config.chainId] ?? []), config];
   return acc;
 }, {});
+
+export const DEPOSIT_QUOTE_DIFF_ERROR_THRESHOLD = 3;
