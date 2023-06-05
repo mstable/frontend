@@ -45,7 +45,7 @@ const I18nProviderWrapped = ({
 };
 
 export const I18nProvider = ({
-  defaultLanguage,
+  defaultLanguage = 'en',
   supportedLocales,
   ...rest
 }: I18nProviderProps) => (
