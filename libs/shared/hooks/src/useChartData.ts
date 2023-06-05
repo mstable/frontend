@@ -6,10 +6,10 @@ import { alpha, useTheme } from '@mui/material';
 import BigNumber from 'bignumber.js';
 import { pluck } from 'ramda';
 import { useIntl } from 'react-intl';
+import { Address } from '@dhedge/core-ui-kit/types';
+import { CHART_PERIOD, CHART_TYPE } from '@frontend/shared-types';
 
-import { useTokenPriceHistoryQuery } from '../../queries';
-import { useVault } from '../../state';
-import { CHART_PERIOD, CHART_TYPE } from '../../types';
+import { useTokenPriceHistoryQuery } from './useTokenPriceHistoryQuery';
 
 import type { ChartData, ChartOptions, ScriptableContext } from 'chart.js';
 
@@ -99,13 +99,17 @@ const getBackgroundColor =
     return gradient;
   };
 
-export const useChartData = (
-  chartPeriod: CHART_PERIOD,
-  chartType: CHART_TYPE,
-) => {
-  const {
-    config: { address },
-  } = useVault();
+export const useChartData = ({
+  address,
+  chartPeriod,
+  chartType,
+  scales = true,
+}: {
+  address: Address;
+  chartPeriod: CHART_PERIOD;
+  chartType: CHART_TYPE;
+  scales?: boolean;
+}) => {
   const theme = useTheme();
   const { chartTypes } = useChartConfig();
 
@@ -168,6 +172,7 @@ export const useChartData = (
           },
           scales: {
             y: {
+              display: scales,
               grid: {
                 color: theme.palette.divider,
                 drawBorder: false,
@@ -186,6 +191,7 @@ export const useChartData = (
               },
             },
             x: {
+              display: scales,
               grid: {
                 display: false,
               },
@@ -244,6 +250,7 @@ export const useChartData = (
         theme.typography.value5.fontWeight,
         minMax?.min,
         minMax?.max,
+        scales,
       ],
     );
 

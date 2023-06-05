@@ -1,5 +1,4 @@
-import { AddressLabel } from '@frontend/shared-ui';
-import { TokenIconRevamp } from '@frontend/shared-ui';
+import { AddressLabel, TokenIconRevamp } from '@frontend/shared-ui';
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useNetwork } from 'wagmi';

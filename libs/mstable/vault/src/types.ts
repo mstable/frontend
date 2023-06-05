@@ -1,4 +1,5 @@
 import type { Address } from '@dhedge/core-ui-kit/types';
+import type { CHART_PERIOD, CHART_TYPE } from '@frontend/shared-types';
 import type { MakeGenerics } from '@tanstack/react-location';
 
 export type VaultRoute = MakeGenerics<{
@@ -60,24 +61,6 @@ export interface FundQueryVariables {
   address: Address;
 }
 
-export interface TokenPriceHistory {
-  adjustedTokenPrice: string;
-  timestamp: string;
-  tokenPrice: string;
-  performance: string;
-}
-
-export interface TokenPriceHistoryQuery {
-  tokenPriceHistory: {
-    history: TokenPriceHistory[];
-  };
-}
-
-export interface TokenPriceHistoryQueryVariables {
-  address: Address;
-  period: CHART_PERIOD;
-}
-
 export interface FundByInvestor {
   returnOnInvestment: string;
   averageEntryPrice: string;
@@ -91,15 +74,4 @@ export interface AllFundsByInvestorQuery {
 
 export interface AllFundsByInvestorQueryVariables {
   address: Address;
-}
-
-export enum CHART_PERIOD {
-  DAY = '1d',
-  WEEK = '1w',
-  MONTH = '1m',
-  YEAR = '1y',
-}
-
-export enum CHART_TYPE {
-  PRICE = 'price',
 }

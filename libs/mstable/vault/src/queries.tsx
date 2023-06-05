@@ -6,12 +6,8 @@ import type { UseQueryOptions } from '@tanstack/react-query';
 import type {
   AllFundsByInvestorQuery,
   AllFundsByInvestorQueryVariables,
-} from './types';
-import type {
   FundQuery,
   FundQueryVariables,
-  TokenPriceHistoryQuery,
-  TokenPriceHistoryQueryVariables,
 } from './types';
 
 function fetcher<TData, TVariables>(
@@ -89,34 +85,6 @@ export const useFundQuery = (
       dHedgeApiEndpoint,
       {},
       fundQueryDocument,
-      variables,
-    ),
-    options,
-  );
-
-export const tokenPriceHistoryQueryDocument = `
-  query tokenPriceHistoryQuery($address: String!, $period: String!) {
-    tokenPriceHistory(address: $address, period: $period) {
-      history {
-        adjustedTokenPrice
-        timestamp
-        tokenPrice
-        performance
-      }
-    }
-  }
-`;
-
-export const useTokenPriceHistoryQuery = (
-  variables: TokenPriceHistoryQueryVariables,
-  options?: UseQueryOptions<TokenPriceHistoryQuery, Error>,
-) =>
-  useQuery<TokenPriceHistoryQuery, Error>(
-    ['tokenPriceHistory', variables.address, variables.period],
-    fetcher<TokenPriceHistoryQuery, TokenPriceHistoryQueryVariables>(
-      dHedgeApiEndpoint,
-      {},
-      tokenPriceHistoryQueryDocument,
       variables,
     ),
     options,

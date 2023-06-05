@@ -78,8 +78,9 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
                 />
               }
             >
-              <VaultPerformance />
+              <VaultPerformance address={config.address} />
             </ErrorBoundary>
+
             <ErrorBoundary
               ErrorComponent={
                 <ErrorCard

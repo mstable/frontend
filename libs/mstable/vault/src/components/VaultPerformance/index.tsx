@@ -1,3 +1,4 @@
+import { useChartConfig, useChartData } from '@frontend/shared-hooks';
 import {
   Card,
   CardContent,
@@ -10,11 +11,16 @@ import { Line } from 'react-chartjs-2';
 import { useIntl } from 'react-intl';
 
 import { Controls } from './components/Controls';
-import { useChartConfig, useChartData } from './hooks';
+
+import type { Address } from '@dhedge/core-ui-kit/types';
 
 import type { VaultRoute } from '../../types';
 
-export const VaultPerformance = () => {
+interface VaultPerformanceProps {
+  address: Address;
+}
+
+export const VaultPerformance = ({ address }: VaultPerformanceProps) => {
   const intl = useIntl();
   const theme = useTheme();
 
@@ -22,7 +28,7 @@ export const VaultPerformance = () => {
   const { defaultChartPeriod, defaultChartType } = useChartConfig();
   const { chartType = defaultChartType, chartPeriod = defaultChartPeriod } =
     useSearch<VaultRoute>();
-  const chartData = useChartData(chartPeriod, chartType);
+  const chartData = useChartData({ address, chartPeriod, chartType });
 
   return (
     <Card sx={{ backgroundColor: 'transparent', border: 'none', boxShadow: 0 }}>

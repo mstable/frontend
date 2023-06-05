@@ -1,6 +1,7 @@
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import { useFundQuery } from '@frontend/mstable-vault';
-import { MVIcon } from '@frontend/shared-ui';
+import { useChartConfig, useChartData } from '@frontend/shared-hooks';
+import { TokenIconRevamp } from '@frontend/shared-ui';
 import {
   Stack,
   TableCell,
@@ -10,6 +11,8 @@ import {
   useTheme,
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
+
+import { CoreVaultLineChart } from './CoreVaultLineChart';
 
 import type { PoolConfig } from '@dhedge/core-ui-kit/types';
 
@@ -28,6 +31,13 @@ export const CoreVaultTableRow = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
   const { data } = useFundQuery({ address: config.address });
+  const { defaultChartType, defaultChartPeriod } = useChartConfig();
+  const chartData = useChartData({
+    address: config.address,
+    chartType: defaultChartType,
+    chartPeriod: defaultChartPeriod,
+    scales: false,
+  });
 
   return (
     <TableRow
@@ -38,7 +48,10 @@ export const CoreVaultTableRow = ({
       }}
     >
       <TableCell>
-        <MVIcon address={config.address} sx={{ height: 32, width: 32 }} />
+        <TokenIconRevamp
+          symbols={[config.symbol]}
+          sx={{ height: 32, width: 32 }}
+        />
       </TableCell>
       <TableCell>
         <Typography variant="value4">{data?.fund.name}</Typography>
@@ -64,7 +77,14 @@ export const CoreVaultTableRow = ({
       </TableCell>
       {!isMobile && (
         <TableCell>
-          <Stack sx={{ width: 60, height: 40 }}>-</Stack>
+          <Stack sx={{ width: 60, height: 40 }}>
+            <CoreVaultLineChart
+              options={{ ...chartData.options, maintainAspectRatio: false }}
+              data={chartData.data}
+              height={40}
+              width={60}
+            />
+          </Stack>
         </TableCell>
       )}
     </TableRow>
