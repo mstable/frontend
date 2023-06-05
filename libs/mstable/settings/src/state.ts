@@ -8,7 +8,7 @@ import { useAccount } from 'wagmi';
 
 import type { SetStateAction } from 'react';
 
-export type Flag = 'exactApproval' | 'dark';
+export type Flag = 'dark';
 
 export type SettingsState = Record<Flag, boolean>;
 
@@ -20,7 +20,6 @@ export const {
   const { address = 'disconnected' } = useAccount();
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [ls, setLs] = useLocalStorage<SettingsState>('settings', {
-    exactApproval: false,
     dark: prefersDarkMode,
   });
   const {

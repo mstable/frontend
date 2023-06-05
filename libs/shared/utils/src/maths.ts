@@ -18,3 +18,6 @@ export const countFirstDecimal = (value: number) => {
 
   return digits;
 };
+
+export const isNumeric = (value: string): boolean =>
+  !isNaN(parseFloat(value)) && !isNaN(value as never);

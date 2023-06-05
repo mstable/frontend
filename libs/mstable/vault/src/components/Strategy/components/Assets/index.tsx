@@ -3,14 +3,18 @@ import { Box, Grid, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useNetwork } from 'wagmi';
 
+import { useVault } from '../../../../state';
 import { useAssetsComposition } from './hooks';
 
 import type { StackProps } from '@mui/material';
 
 export const Assets = (props: StackProps) => {
   const intl = useIntl();
-  const { chain } = useNetwork();
+  const { chains } = useNetwork();
+  const { config } = useVault();
   const composition = useAssetsComposition();
+  const blockExplorerUrl = chains.find(({ id }) => id === config.chainId)
+    ?.blockExplorers?.['etherscan']?.url;
 
   return (
     <Stack {...props} direction="column">
@@ -47,7 +51,7 @@ export const Assets = (props: StackProps) => {
                     small
                     address={tokenAddress}
                     link
-                    blockExplorerUrl={chain?.blockExplorers?.['etherscan']?.url}
+                    blockExplorerUrl={blockExplorerUrl}
                     sx={{ maxWidth: 120 }}
                   />
                   <Typography variant="h6" gutterBottom noWrap>

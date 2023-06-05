@@ -101,10 +101,34 @@
       "value": "1M"
     }
   ],
+  "1vtEYS": [
+    {
+      "type": 0,
+      "value": "Flexible min slippage value that is likely enough to process the transaction."
+    }
+  ],
   "20X0BC": [
     {
       "type": 0,
       "value": "Transaction Cancelled"
+    }
+  ],
+  "2Dq322": [
+    {
+      "type": 0,
+      "value": "You can sell your "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": " tokens in "
+    },
+    {
+      "type": 1,
+      "value": "cooldownEndsInTime"
     }
   ],
   "2JVe1j": [
@@ -197,6 +221,16 @@
       "value": "Cancel"
     }
   ],
+  "47GkyG": [
+    {
+      "type": 0,
+      "value": "Minimum deposit is $"
+    },
+    {
+      "type": 1,
+      "value": "minDepositUSD"
+    }
+  ],
   "4cX/rf": [
     {
       "type": 0,
@@ -229,6 +263,12 @@
     {
       "type": 0,
       "value": "%"
+    }
+  ],
+  "5gorcB": [
+    {
+      "type": 0,
+      "value": "Minimum received"
     }
   ],
   "65ThHj": [
@@ -333,6 +373,12 @@
     {
       "type": 0,
       "value": "Approval Cost"
+    }
+  ],
+  "9AgXoz": [
+    {
+      "type": 0,
+      "value": "Sell"
     }
   ],
   "9RAHhM": [
@@ -461,6 +507,12 @@
       "value": "This Strategy uses USDC to deposit into the 3CRV-Pool on Curve. The 3CRV token is then deposited in various Curve meta pools and staked in Convex. The earned CVX and CRV tokens are periodically claimed, swapped, and compounded."
     }
   ],
+  "EnCOBJ": [
+    {
+      "type": 0,
+      "value": "Buy"
+    }
+  ],
   "EobEOB": [
     {
       "type": 0,
@@ -507,10 +559,26 @@
       "value": "Set As Infinite"
     }
   ],
+  "HOsSgX": [
+    {
+      "type": 0,
+      "value": "More info"
+    }
+  ],
   "IB0eky": [
     {
       "type": 0,
       "value": "Annual percentage yield."
+    }
+  ],
+  "IBFkFM": [
+    {
+      "type": 0,
+      "value": "You "
+    },
+    {
+      "type": 1,
+      "value": "operation"
     }
   ],
   "IdL95F": [
@@ -571,6 +639,16 @@
     {
       "type": 0,
       "value": "Make a Deposit"
+    }
+  ],
+  "MMvFMz": [
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": " token is no longer active. Please withdraw from them."
     }
   ],
   "MPUuRK": [
@@ -673,6 +751,12 @@
       "value": "Make sure your internet connection is working."
     }
   ],
+  "S0seuN": [
+    {
+      "type": 0,
+      "value": "Recommended min slippage"
+    }
+  ],
   "SKB/G9": [
     {
       "type": 0,
@@ -751,6 +835,12 @@
       "value": "."
     }
   ],
+  "VGRRFC": [
+    {
+      "type": 0,
+      "value": "You will receive no less that this amount."
+    }
+  ],
   "VMhVlJ": [
     {
       "type": 0,
@@ -825,6 +915,12 @@
       "value": "Swap to Stablecoin"
     }
   ],
+  "X/RW9w": [
+    {
+      "type": 0,
+      "value": "Slippage Tolerance"
+    }
+  ],
   "X0zKZO": [
     {
       "type": 0,
@@ -847,6 +943,16 @@
     {
       "type": 0,
       "value": "App supports Goerli Testnet."
+    }
+  ],
+  "XnpuKy": [
+    {
+      "type": 0,
+      "value": "Approve "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
     }
   ],
   "YC/ZXg": [
@@ -903,6 +1009,12 @@
     {
       "type": 0,
       "value": "Deposit Gas"
+    }
+  ],
+  "b1gVRq": [
+    {
+      "type": 0,
+      "value": "Minimum deposit in USD."
     }
   ],
   "bnF8kf": [
@@ -1049,10 +1161,31 @@
       "value": "Vault name"
     }
   ],
+  "h4nW++": [
+    {
+      "type": 0,
+      "value": "When the \"Auto\" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. "
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": " Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 2-3%."
+    }
+  ],
   "hRuz7F": [
     {
       "type": 0,
       "value": "Withdrawal Gas"
+    }
+  ],
+  "i0ofjL": [
+    {
+      "type": 0,
+      "value": "Entry fee"
     }
   ],
   "iYgKR9": [
@@ -1077,6 +1210,12 @@
     {
       "type": 0,
       "value": "Txn hash"
+    }
+  ],
+  "k3YWIR": [
+    {
+      "type": 0,
+      "value": "Max slippage"
     }
   ],
   "k6yAtR": [
@@ -1255,10 +1394,36 @@
       "value": "Diversified"
     }
   ],
+  "s4Vb9J": [
+    {
+      "type": 0,
+      "value": "Blocked by high "
+    },
+    {
+      "type": 1,
+      "value": "slippage"
+    },
+    {
+      "type": 0,
+      "value": "% max slippage"
+    }
+  ],
+  "sHyaBT": [
+    {
+      "type": 0,
+      "value": "This pool is currently private."
+    }
+  ],
   "sy+pv5": [
     {
       "type": 0,
       "value": "Email"
+    }
+  ],
+  "t3IytM": [
+    {
+      "type": 0,
+      "value": "Minimum deposit"
     }
   ],
   "tH0obk": [
@@ -1379,6 +1544,12 @@
     {
       "type": 0,
       "value": "WITHDRAW"
+    }
+  ],
+  "zisVa1": [
+    {
+      "type": 0,
+      "value": "We recommend 2-3%, but usually it will be < 1%. Slippage may be amplified by the leverage. See the docs for more info."
     }
   ]
 }
