@@ -10,6 +10,7 @@ import {
 import { STAKING_CHAIN_ID as chainId } from '@frontend/shared-constants';
 import { Address } from '@dhedge/core-ui-kit/types';
 import { useMemo } from 'react';
+import { isNotNil } from 'ramda';
 
 const address = getContractAddressById('stakingV2', chainId);
 
@@ -55,6 +56,7 @@ export const useUserStakedVaults = () => {
   return useMemo(
     () =>
       data
+        ?.filter(isNotNil)
         ?.filter(({ dhedgePoolAddress }) => dhedgePoolAddress !== AddressZero)
         .map(({ dhedgePoolAddress, dhedgePoolAmount }) => ({
           address: dhedgePoolAddress.toLowerCase() as Address,
