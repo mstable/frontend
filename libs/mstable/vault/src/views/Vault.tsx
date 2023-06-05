@@ -6,6 +6,7 @@ import { useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
+import { NetworkAlert } from '../components/NetworkAlert';
 import { Position } from '../components/Position';
 import { Strategy } from '../components/Strategy';
 import { TradingPanel } from '../components/TradingPanel';
@@ -32,6 +33,7 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
 
   return (
     <Stack direction="column" alignItems="flex-start" {...props}>
+      <NetworkAlert chainId={config.chainId} />
       <Button
         variant="text"
         size="small"
