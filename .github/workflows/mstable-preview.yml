@@ -1,4 +1,4 @@
-name: Deploy to preview mStable
+name: preview mStable
 
 on:
   pull_request:
@@ -19,9 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        name: Checkout [main]
-        with:
-          fetch-depth: 0
+        name: Checkout
 
       - uses: actions/setup-node@v3
         name: Setup node
@@ -46,7 +44,7 @@ jobs:
       - name: Firebase deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: "${{ secrets.FIREBASE_TOKEN_FRONTEND_7E17F }}"
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_FRONTEND_7E17F }}"
           expires: 8d
           projectId: frontend-7e17f
