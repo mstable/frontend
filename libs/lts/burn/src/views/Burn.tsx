@@ -5,7 +5,7 @@ export const Burn = () => {
   return (
     <>
       <Hero my={4} />
-      <BurnForm my={4} />
+      <BurnForm />
     </>
   );
 };

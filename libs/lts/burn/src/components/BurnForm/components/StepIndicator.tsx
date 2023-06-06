@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import { useTrackedState } from '../state';
@@ -12,7 +12,7 @@ type IndicatorProps = {
 } & StackProps;
 
 const Indicator = ({ step, label, visited, ...rest }: IndicatorProps) => (
-  <Stack alignItems="center" spacing={2} height={150} zIndex={2} {...rest}>
+  <Stack alignItems="center" spacing={1} height={100} zIndex={2} {...rest}>
     <Box
       display="flex"
       justifyContent="center"
@@ -23,36 +23,36 @@ const Indicator = ({ step, label, visited, ...rest }: IndicatorProps) => (
       border={(theme) => `1px solid ${theme.palette.divider}`}
       bgcolor={visited ? 'info.main' : 'divider'}
     >
-      <Typography variant="h4">{step}</Typography>
+      <Typography variant="h5">{step}</Typography>
     </Box>
-    <Typography maxWidth={100} textAlign="center">
-      {label}
-    </Typography>
+    <Typography textAlign="center">{label}</Typography>
   </Stack>
 );
 
 export const StepIndicator = (props: StackProps) => {
   const intl = useIntl();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { step } = useTrackedState();
 
   return (
     <Stack
       direction="row"
-      spacing={30}
+      spacing={15}
       sx={(theme) => ({
         position: 'relative',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
 
         '::after': {
           position: 'absolute',
           content: '""',
           top: 20,
-          left: 0,
+          left: isMobile ? 0 : 70,
           height: 2,
-          width: '90%',
+          width: '70%',
           background:
             step > 0 ? theme.palette.info.main : theme.palette.divider,
         },
@@ -63,6 +63,7 @@ export const StepIndicator = (props: StackProps) => {
         step={1}
         label={intl.formatMessage({ defaultMessage: 'Burn', id: 'sUIPLS' })}
         visited={step + 1 >= 1}
+        width={isMobile ? undefined : 170}
       />
       <Indicator
         step={2}
@@ -71,6 +72,7 @@ export const StepIndicator = (props: StackProps) => {
           id: 'xfMpIF',
         })}
         visited={step + 1 >= 2}
+        width={isMobile ? undefined : 170}
       />
     </Stack>
   );

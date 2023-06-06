@@ -1,8 +1,20 @@
 {
+  "+1GGs7": [
+    {
+      "type": 0,
+      "value": "Claim CVX & CRV"
+    }
+  ],
   "+6JrYn": [
     {
       "type": 0,
       "value": "Make sure your wallet is on Ethereum Mainnet network."
+    }
+  ],
+  "+k7bPd": [
+    {
+      "type": 0,
+      "value": "The selected network is not supported by this application."
     }
   ],
   "+vVZ/G": [
@@ -23,10 +35,60 @@
       "value": "mStable Withdraw"
     }
   ],
+  "/e4KBT": [
+    {
+      "type": 0,
+      "value": "1 Share = "
+    },
+    {
+      "type": 1,
+      "value": "ratio"
+    },
+    {
+      "type": 0,
+      "value": " "
+    },
+    {
+      "type": 1,
+      "value": "asset"
+    }
+  ],
   "/p1GSi": [
     {
       "type": 0,
       "value": "Check connectivity"
+    }
+  ],
+  "0NMLMN": [
+    {
+      "type": 0,
+      "value": "My Position"
+    }
+  ],
+  "0WJNP/": [
+    {
+      "type": 0,
+      "value": "Return"
+    }
+  ],
+  "0mHzVQ": [
+    {
+      "type": 0,
+      "value": "Fast - "
+    },
+    {
+      "type": 1,
+      "value": "value"
+    },
+    {
+      "type": 0,
+      "value": " GWEI"
+    }
+  ],
+  "0oLj/t": [
+    {
+      "type": 0,
+      "value": "Expand"
     }
   ],
   "1XVJUl": [
@@ -39,10 +101,40 @@
       "value": "defaultChain"
     }
   ],
+  "1uz/I3": [
+    {
+      "type": 0,
+      "value": "1M"
+    }
+  ],
+  "1vtEYS": [
+    {
+      "type": 0,
+      "value": "Flexible min slippage value that is likely enough to process the transaction."
+    }
+  ],
   "20X0BC": [
     {
       "type": 0,
       "value": "Transaction Cancelled"
+    }
+  ],
+  "2Dq322": [
+    {
+      "type": 0,
+      "value": "You can sell your "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": " tokens in "
+    },
+    {
+      "type": 1,
+      "value": "cooldownEndsInTime"
     }
   ],
   "2JVe1j": [
@@ -51,10 +143,82 @@
       "value": "Market Neutral"
     }
   ],
+  "2M9vCZ": [
+    {
+      "type": 0,
+      "value": "Projected APY (%)"
+    }
+  ],
+  "2fed1y": [
+    {
+      "type": 0,
+      "value": "A deposit into a vault requires an approval transaction."
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": "Set as infinite to avoid approving multiple times and save gas on subsequent deposits."
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": "Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost."
+    }
+  ],
   "2zD+V+": [
     {
       "type": 0,
       "value": "Wrong network selected"
+    }
+  ],
+  "3Dvp3q": [
+    {
+      "type": 0,
+      "value": "Vault contract and underlying vaults that are utilized."
+    }
+  ],
+  "3QSP9N": [
+    {
+      "type": 0,
+      "value": "Visualize Strategy"
+    }
+  ],
+  "3wMm/H": [
+    {
+      "type": 0,
+      "value": "You Deposit"
+    }
+  ],
+  "4/JAsV": [
+    {
+      "type": 0,
+      "value": "The underlying vaults charge a "
+    },
+    {
+      "type": 1,
+      "value": "fee"
+    },
+    {
+      "type": 0,
+      "value": "% fee upon liquidation of the earned rewards."
     }
   ],
   "47FYwb": [
@@ -63,10 +227,26 @@
       "value": "Cancel"
     }
   ],
+  "47GkyG": [
+    {
+      "type": 0,
+      "value": "Minimum deposit is $"
+    },
+    {
+      "type": 1,
+      "value": "minDepositUSD"
+    }
+  ],
   "4K2D1N": [
     {
       "type": 0,
       "value": "Withdraw to stablecoins"
+    }
+  ],
+  "4tvRCp": [
+    {
+      "type": 0,
+      "value": "Start Again"
     }
   ],
   "5Jlmp5": [
@@ -132,6 +312,28 @@
       "value": " to help you make a better informed decision."
     }
   ],
+  "5fjd4K": [
+    {
+      "type": 1,
+      "value": "fee"
+    },
+    {
+      "type": 0,
+      "value": "%"
+    }
+  ],
+  "5gorcB": [
+    {
+      "type": 0,
+      "value": "Minimum received"
+    }
+  ],
+  "65ThHj": [
+    {
+      "type": 0,
+      "value": "Protocols Involved"
+    }
+  ],
   "6GZbSi": [
     {
       "type": 0,
@@ -150,6 +352,12 @@
       "value": "BuyBack MTA"
     }
   ],
+  "6bJGds": [
+    {
+      "type": 0,
+      "value": "1W"
+    }
+  ],
   "6z2ptx": [
     {
       "type": 0,
@@ -160,6 +368,38 @@
     {
       "type": 0,
       "value": "mStable is a protocol for yield aggregation and diversification."
+    }
+  ],
+  "7JlauX": [
+    {
+      "type": 0,
+      "value": "Explore"
+    }
+  ],
+  "7d2ri8": [
+    {
+      "type": 1,
+      "value": "value"
+    },
+    {
+      "type": 0,
+      "value": " Shares"
+    }
+  ],
+  "7jeKkk": [
+    {
+      "type": 0,
+      "value": "Protocols that are used by this vault."
+    }
+  ],
+  "7ynb1z": [
+    {
+      "type": 1,
+      "value": "value"
+    },
+    {
+      "type": 0,
+      "value": " GWEI"
     }
   ],
   "8XZjyW": [
@@ -174,6 +414,12 @@
       "value": "Next Step"
     }
   ],
+  "8lLHeh": [
+    {
+      "type": 0,
+      "value": "1Y"
+    }
+  ],
   "8q2nwN": [
     {
       "type": 0,
@@ -184,6 +430,36 @@
     {
       "type": 0,
       "value": "Twitter"
+    }
+  ],
+  "9+Ddtu": [
+    {
+      "type": 0,
+      "value": "Next"
+    }
+  ],
+  "93OUn6": [
+    {
+      "type": 0,
+      "value": "Profitable position after"
+    }
+  ],
+  "9ALsvc": [
+    {
+      "type": 0,
+      "value": "Approval Cost"
+    }
+  ],
+  "9AgXoz": [
+    {
+      "type": 0,
+      "value": "Sell"
+    }
+  ],
+  "9RAHhM": [
+    {
+      "type": 0,
+      "value": "Strategy & Risks"
     }
   ],
   "9ghOJK": [
@@ -210,16 +486,60 @@
       "value": "MTA Buyback"
     }
   ],
+  "AxDOiG": [
+    {
+      "type": 0,
+      "value": "Months"
+    }
+  ],
   "B4cMY/": [
     {
       "type": 0,
       "value": "Super good looking"
     }
   ],
+  "Bak2Yy": [
+    {
+      "type": 0,
+      "value": "Select from supported list"
+    }
+  ],
   "Bj2fLF": [
     {
       "type": 0,
       "value": "Hot"
+    }
+  ],
+  "BnptNt": [
+    {
+      "type": 0,
+      "value": "Slow - "
+    },
+    {
+      "type": 1,
+      "value": "value"
+    },
+    {
+      "type": 0,
+      "value": " GWEI"
+    }
+  ],
+  "BwwISd": [
+    {
+      "type": 0,
+      "value": "Vault"
+    }
+  ],
+  "CGcoFj": [
+    {
+      "type": 0,
+      "value": "Yield Calculator"
+    }
+  ],
+  "CiONZE": [
+    {
+      "type": 0,
+      "value": "Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position."
     }
   ],
   "CuTvKy": [
@@ -234,10 +554,56 @@
       "value": "The Strategy uses Curves 3CRV Pools and Factory pools. The strategy is exposed to the risk of the Curve smart contracts."
     }
   ],
+  "DRXWXB": [
+    {
+      "type": 0,
+      "value": "404"
+    }
+  ],
+  "DUR59o": [
+    {
+      "type": 0,
+      "value": "Total Value Locked"
+    }
+  ],
+  "ENufDd": [
+    {
+      "type": 0,
+      "value": "MTA"
+    }
+  ],
+  "EWa1Fv": [
+    {
+      "type": 0,
+      "value": "LP Position"
+    }
+  ],
+  "EhET/Q": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Yield app"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " by mStable"
+    }
+  ],
   "EibIVS": [
     {
       "type": 0,
       "value": "This Strategy uses USDC to deposit into the 3CRV-Pool on Curve. The 3CRV token is then deposited in various Curve meta pools and staked in Convex. The earned CVX and CRV tokens are periodically claimed, swapped, and compounded."
+    }
+  ],
+  "EnCOBJ": [
+    {
+      "type": 0,
+      "value": "Buy"
     }
   ],
   "EobEOB": [
@@ -246,10 +612,56 @@
       "value": "Please confirm to proceed"
     }
   ],
+  "FApc0Y": [
+    {
+      "type": 0,
+      "value": "Need more light on the strategy?"
+    }
+  ],
+  "FaoPNm": [
+    {
+      "type": 0,
+      "value": "You Burn"
+    }
+  ],
   "FvmV6q": [
     {
       "type": 0,
       "value": "Discord"
+    }
+  ],
+  "Gh1Vm9": [
+    {
+      "type": 0,
+      "value": "You Receive"
+    }
+  ],
+  "Gtmi1D": [
+    {
+      "type": 0,
+      "value": "Set As Infinite"
+    }
+  ],
+  "HOsSgX": [
+    {
+      "type": 0,
+      "value": "More info"
+    }
+  ],
+  "IB0eky": [
+    {
+      "type": 0,
+      "value": "Annual percentage yield."
+    }
+  ],
+  "IBFkFM": [
+    {
+      "type": 0,
+      "value": "You "
+    },
+    {
+      "type": 1,
+      "value": "operation"
     }
   ],
   "IdL95F": [
@@ -258,16 +670,74 @@
       "value": "Make sure you are on the right URL."
     }
   ],
+  "Imiiiv": [
+    {
+      "type": 0,
+      "value": "No Data Available"
+    }
+  ],
+  "IuFETn": [
+    {
+      "type": 0,
+      "value": "Duration"
+    }
+  ],
+  "Jr5tMR": [
+    {
+      "type": 0,
+      "value": "Years"
+    }
+  ],
   "K1NWSN": [
     {
       "type": 0,
       "value": "Price is more favorable on Velodrome"
     }
   ],
+  "KYgRAc": [
+    {
+      "type": 0,
+      "value": "DEPOSIT"
+    }
+  ],
+  "LDz7xI": [
+    {
+      "type": 0,
+      "value": "Assets that are used by this vault."
+    }
+  ],
   "LMK5Bl": [
     {
       "type": 0,
       "value": "The Uniswap Protocol is an open-source protocol for providing liquidity and trading ERC20 tokens on Ethereum."
+    }
+  ],
+  "LiHQih": [
+    {
+      "type": 0,
+      "value": "Coming Soon"
+    }
+  ],
+  "MLTKb6": [
+    {
+      "type": 0,
+      "value": "APY"
+    }
+  ],
+  "MMRXim": [
+    {
+      "type": 0,
+      "value": "Make a Deposit"
+    }
+  ],
+  "MMvFMz": [
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": " token is no longer active. Please withdraw from them."
     }
   ],
   "MPUuRK": [
@@ -282,6 +752,34 @@
       "value": "Reload Page"
     }
   ],
+  "MgN8gK": [
+    {
+      "type": 1,
+      "value": "days"
+    },
+    {
+      "type": 0,
+      "value": " Days"
+    }
+  ],
+  "MoJx/h": [
+    {
+      "type": 0,
+      "value": "Total Value"
+    }
+  ],
+  "MqZGhr": [
+    {
+      "type": 0,
+      "value": "Vault Performance"
+    }
+  ],
+  "N+SKIs": [
+    {
+      "type": 0,
+      "value": "Net Value"
+    }
+  ],
   "N2IrpM": [
     {
       "type": 0,
@@ -294,16 +792,52 @@
       "value": "Withdraw your mStable Treasury Yield tokens to stables"
     }
   ],
+  "OwO+Nr": [
+    {
+      "type": 0,
+      "value": "Mint"
+    }
+  ],
+  "P1xtEU": [
+    {
+      "type": 0,
+      "value": "Earn diversified yield across DeFi."
+    }
+  ],
+  "P8Xs51": [
+    {
+      "type": 0,
+      "value": "ROI"
+    }
+  ],
   "PXAur5": [
     {
       "type": 0,
       "value": "Withdraw"
     }
   ],
+  "Pk6qK4": [
+    {
+      "type": 0,
+      "value": "Fees that are charged by this vault."
+    }
+  ],
   "PmkP1H": [
     {
       "type": 0,
       "value": "Unsupported Network"
+    }
+  ],
+  "PxG1Yq": [
+    {
+      "type": 0,
+      "value": "Total Value Locked in vault"
+    }
+  ],
+  "QS3Tk3": [
+    {
+      "type": 0,
+      "value": "The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded."
     }
   ],
   "R0V7vk": [
@@ -327,6 +861,18 @@
       "value": "Make sure your internet connection is working."
     }
   ],
+  "S0seuN": [
+    {
+      "type": 0,
+      "value": "Recommended min slippage"
+    }
+  ],
+  "SKB/G9": [
+    {
+      "type": 0,
+      "value": "TVL"
+    }
+  ],
   "SRo6uF": [
     {
       "type": 0,
@@ -339,10 +885,42 @@
       "value": "Oops, something went wrong."
     }
   ],
+  "TL3yAY": [
+    {
+      "type": 0,
+      "value": "Position Value"
+    }
+  ],
+  "TvzL+L": [
+    {
+      "type": 0,
+      "value": "Share Price"
+    }
+  ],
   "U6qGuO": [
     {
       "type": 0,
       "value": "Position"
+    }
+  ],
+  "ULHfQE": [
+    {
+      "type": 0,
+      "value": "The current price of 1 share. Return is represented as a increase in share price value."
+    }
+  ],
+  "UMrrVX": [
+    {
+      "type": 0,
+      "value": "TVL ("
+    },
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": ")"
     }
   ],
   "URTaZg": [
@@ -379,6 +957,18 @@
       "value": "."
     }
   ],
+  "VGRRFC": [
+    {
+      "type": 0,
+      "value": "You will receive no less that this amount."
+    }
+  ],
+  "VMhVlJ": [
+    {
+      "type": 0,
+      "value": "Operations are momentarily disabled"
+    }
+  ],
   "VXQPtq": [
     {
       "type": 0,
@@ -413,16 +1003,40 @@
       "value": "Approve"
     }
   ],
+  "WKCp0D": [
+    {
+      "type": 0,
+      "value": "Asset"
+    }
+  ],
+  "WKF4Gx": [
+    {
+      "type": 0,
+      "value": "Swap to Stablecoin"
+    }
+  ],
   "WZwD4F": [
     {
       "type": 0,
       "value": "Burn MTA and receive MTy on Optimism"
     }
   ],
+  "X/RW9w": [
+    {
+      "type": 0,
+      "value": "Slippage Tolerance"
+    }
+  ],
   "X0zKZO": [
     {
       "type": 0,
       "value": "Connected User"
+    }
+  ],
+  "X1WPwl": [
+    {
+      "type": 0,
+      "value": "Nothing here yet, make your first deposit"
     }
   ],
   "XSdWHA": [
@@ -437,6 +1051,22 @@
       "value": "App supports Goerli Testnet."
     }
   ],
+  "XnpuKy": [
+    {
+      "type": 0,
+      "value": "Approve "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
+    }
+  ],
+  "YC/ZXg": [
+    {
+      "type": 0,
+      "value": "Share price"
+    }
+  ],
   "YP4aoM": [
     {
       "type": 0,
@@ -447,6 +1077,26 @@
     {
       "type": 0,
       "value": "Withdraw Cost"
+    }
+  ],
+  "ZefNbE": [
+    {
+      "type": 0,
+      "value": "Average - "
+    },
+    {
+      "type": 1,
+      "value": "value"
+    },
+    {
+      "type": 0,
+      "value": " GWEI"
+    }
+  ],
+  "ZwpbZp": [
+    {
+      "type": 0,
+      "value": "Contracts"
     }
   ],
   "a42kxt": [
@@ -470,6 +1120,36 @@
       "value": "Connect your wallet to easily access your remaining balances and initiate the withdrawal process."
     }
   ],
+  "aPi9xt": [
+    {
+      "type": 0,
+      "value": "Swap fees"
+    }
+  ],
+  "aTX7LJ": [
+    {
+      "type": 0,
+      "value": "1D"
+    }
+  ],
+  "aad9T5": [
+    {
+      "type": 0,
+      "value": "Start Tour"
+    }
+  ],
+  "b+LlHJ": [
+    {
+      "type": 0,
+      "value": "Deposit Gas"
+    }
+  ],
+  "b1gVRq": [
+    {
+      "type": 0,
+      "value": "Minimum deposit in USD."
+    }
+  ],
   "bAqUW1": [
     {
       "type": 0,
@@ -482,10 +1162,34 @@
       "value": "Current Base Fee"
     }
   ],
+  "bvmoAt": [
+    {
+      "type": 0,
+      "value": "The following protocols are used in the strategies and are therefore exposed to their risk:"
+    }
+  ],
+  "bxTM3Z": [
+    {
+      "type": 0,
+      "value": "This Meta Vault accepts USDC. Anyone can deposit and receive vault shares."
+    }
+  ],
+  "byXXyV": [
+    {
+      "type": 0,
+      "value": "Enter Amount"
+    }
+  ],
   "cA+gxG": [
     {
       "type": 0,
       "value": "Legacy Pools"
+    }
+  ],
+  "cg1VJ2": [
+    {
+      "type": 0,
+      "value": "Connect Wallet"
     }
   ],
   "cyR7Kh": [
@@ -494,10 +1198,40 @@
       "value": "Back"
     }
   ],
+  "d1uESJ": [
+    {
+      "type": 0,
+      "value": "Assets"
+    }
+  ],
   "d7AHfy": [
     {
       "type": 0,
       "value": "Burn your MTA and receive stablecoins"
+    }
+  ],
+  "d8EqQY": [
+    {
+      "type": 0,
+      "value": "Days"
+    }
+  ],
+  "dD8CJD": [
+    {
+      "type": 0,
+      "value": "Gas Fee Estimation"
+    }
+  ],
+  "dIgBOz": [
+    {
+      "type": 0,
+      "value": "Deposit"
+    }
+  ],
+  "djJp6c": [
+    {
+      "type": 0,
+      "value": "History"
     }
   ],
   "djdjSw": [
@@ -510,10 +1244,28 @@
       "value": "name"
     }
   ],
+  "eO0C1d": [
+    {
+      "type": 0,
+      "value": "Gas Impact"
+    }
+  ],
   "ePxmfo": [
     {
       "type": 0,
       "value": "Aave is a decentralised non-custodial liquidity market protocol where users can participate as depositors or borrowers."
+    }
+  ],
+  "ehxGBh": [
+    {
+      "type": 0,
+      "value": "Token Price"
+    }
+  ],
+  "erCS/d": [
+    {
+      "type": 0,
+      "value": "Gas fee estimation is based on the current gas price and average gas used"
     }
   ],
   "f4vYF8": [
@@ -528,10 +1280,53 @@
       "value": "This Strategy is super cool, I would even dare to say, HOT. Stay tune for more awesomeness!"
     }
   ],
+  "fJjSsb": [
+    {
+      "type": 0,
+      "value": "Performance Fee"
+    }
+  ],
+  "fcBYFp": [
+    {
+      "type": 1,
+      "value": "operationLabel"
+    },
+    {
+      "type": 0,
+      "value": " Cost"
+    }
+  ],
+  "g6UhRO": [
+    {
+      "type": 0,
+      "value": "Vault name"
+    }
+  ],
+  "h4nW++": [
+    {
+      "type": 0,
+      "value": "When the \"Auto\" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. "
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": " Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 2-3%."
+    }
+  ],
   "hPs6J+": [
     {
       "type": 0,
       "value": "Exit Position"
+    }
+  ],
+  "hRuz7F": [
+    {
+      "type": 0,
+      "value": "Withdrawal Gas"
     }
   ],
   "hesDHZ": [
@@ -584,10 +1379,22 @@
       "value": "gtBal"
     }
   ],
+  "i0ofjL": [
+    {
+      "type": 0,
+      "value": "Entry fee"
+    }
+  ],
   "iD4mN7": [
     {
       "type": 0,
       "value": "mStable roadmap"
+    }
+  ],
+  "iYgKR9": [
+    {
+      "type": 0,
+      "value": "User deposits USDC"
     }
   ],
   "il6pe+": [
@@ -596,16 +1403,74 @@
       "value": "Yeah only mStable baby!"
     }
   ],
+  "in6iXe": [
+    {
+      "type": 0,
+      "value": "Deposit/Withdraw"
+    }
+  ],
+  "jHskc6": [
+    {
+      "type": 0,
+      "value": "Txn hash"
+    }
+  ],
   "jvo0vs": [
     {
       "type": 0,
       "value": "Save"
     }
   ],
+  "k3YWIR": [
+    {
+      "type": 0,
+      "value": "Max slippage"
+    }
+  ],
+  "k6yAtR": [
+    {
+      "type": 0,
+      "value": "How does the 3Pool Convex Meta Vault works?"
+    }
+  ],
+  "kZcqo0": [
+    {
+      "type": 0,
+      "value": "%"
+    }
+  ],
   "kaPKOB": [
     {
       "type": 0,
       "value": "Insufficient balance"
+    }
+  ],
+  "kdIIDL": [
+    {
+      "type": 0,
+      "value": "User withdraws USDC"
+    }
+  ],
+  "korbaG": [
+    {
+      "type": 0,
+      "value": "The following assets are used in this strategy and therefore are exposed (partially) to their risk:"
+    }
+  ],
+  "lLuyem": [
+    {
+      "type": 0,
+      "value": "DAO"
+    }
+  ],
+  "m+DGTj": [
+    {
+      "type": 1,
+      "value": "operation"
+    },
+    {
+      "type": 0,
+      "value": "ing"
     }
   ],
   "mQHAsW": [
@@ -626,6 +1491,18 @@
       "value": "Show Empty"
     }
   ],
+  "mrwfXX": [
+    {
+      "type": 0,
+      "value": "Shares"
+    }
+  ],
+  "n9CFUs": [
+    {
+      "type": 0,
+      "value": "Token Approval"
+    }
+  ],
   "ovJ26C": [
     {
       "type": 0,
@@ -644,10 +1521,34 @@
       "value": "Transaction Error"
     }
   ],
+  "qEnyZU": [
+    {
+      "type": 0,
+      "value": "Meta Vault"
+    }
+  ],
+  "qNhf66": [
+    {
+      "type": 0,
+      "value": "Perf"
+    }
+  ],
+  "qZbedW": [
+    {
+      "type": 0,
+      "value": "Fees"
+    }
+  ],
   "qj1uhz": [
     {
       "type": 0,
       "value": "Disconnect"
+    }
+  ],
+  "qm/wiV": [
+    {
+      "type": 0,
+      "value": "Start the tour and get more insight."
     }
   ],
   "rSsD3z": [
@@ -660,6 +1561,12 @@
     {
       "type": 0,
       "value": "Close"
+    }
+  ],
+  "rfzzi6": [
+    {
+      "type": 0,
+      "value": "Profit/Loss"
     }
   ],
   "rgdwQX": [
@@ -678,6 +1585,26 @@
     {
       "type": 0,
       "value": "Diversified"
+    }
+  ],
+  "s4Vb9J": [
+    {
+      "type": 0,
+      "value": "Blocked by high "
+    },
+    {
+      "type": 1,
+      "value": "slippage"
+    },
+    {
+      "type": 0,
+      "value": "% max slippage"
+    }
+  ],
+  "sHyaBT": [
+    {
+      "type": 0,
+      "value": "This pool is currently private."
     }
   ],
   "sLLUMv": [
@@ -710,6 +1637,44 @@
     {
       "type": 0,
       "value": "Email"
+    }
+  ],
+  "t3IytM": [
+    {
+      "type": 0,
+      "value": "Minimum deposit"
+    }
+  ],
+  "tH0obk": [
+    {
+      "type": 0,
+      "value": "Return Projection"
+    }
+  ],
+  "tTCSmN": [
+    {
+      "type": 0,
+      "value": "Liquidation Fee"
+    }
+  ],
+  "tvpAhG": [
+    {
+      "type": 0,
+      "value": "The Meta Vault charges a "
+    },
+    {
+      "type": 1,
+      "value": "fee"
+    },
+    {
+      "type": 0,
+      "value": "% performance upon underlying asset appreciation."
+    }
+  ],
+  "u7a5FI": [
+    {
+      "type": 0,
+      "value": "Visualize strategy"
     }
   ],
   "v1vY2k": [
@@ -773,6 +1738,18 @@
       "value": "Sign Transaction"
     }
   ],
+  "w4UBPL": [
+    {
+      "type": 0,
+      "value": "The current price of 1 token. Return is represented as a increase in token price value."
+    }
+  ],
+  "wAUtNd": [
+    {
+      "type": 0,
+      "value": "Total Burned"
+    }
+  ],
   "wqlXwW": [
     {
       "type": 0,
@@ -815,6 +1792,30 @@
       "value": "MTA Governance"
     }
   ],
+  "zFNxtv": [
+    {
+      "type": 0,
+      "value": "Protocols"
+    }
+  ],
+  "zGHadw": [
+    {
+      "type": 0,
+      "value": "Strategy"
+    }
+  ],
+  "zKtTJT": [
+    {
+      "type": 0,
+      "value": "Return on investment since Vault inception."
+    }
+  ],
+  "zRbVmO": [
+    {
+      "type": 0,
+      "value": "WITHDRAW"
+    }
+  ],
   "zS899f": [
     {
       "type": 0,
@@ -827,6 +1828,12 @@
     {
       "type": 0,
       "value": " of slippage"
+    }
+  ],
+  "zisVa1": [
+    {
+      "type": 0,
+      "value": "We recommend 2-3%, but usually it will be < 1%. Slippage may be amplified by the leverage. See the docs for more info."
     }
   ]
 }

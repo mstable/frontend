@@ -44,7 +44,8 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
             chainId: l1Comptroller.chainId,
             functionName: 'buyBackOnL2',
             args: [walletAddress, mta.amount.exact],
-            enabled: !isError && mta.amount.exact.gt(constants.Zero),
+            enabled:
+              !isError && mta.amount.exact.gt(constants.Zero) && !needsApproval,
           }
         : {
             address: l2Comptroller.address,
@@ -52,7 +53,8 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
             chainId: l2Comptroller.chainId,
             functionName: 'buyBack',
             args: [walletAddress, mta.amount.exact],
-            enabled: !isError && mta.amount.exact.gt(constants.Zero),
+            enabled:
+              !isError && mta.amount.exact.gt(constants.Zero) && !needsApproval,
           },
     [chain?.id, isError, mta.amount.exact, walletAddress],
   );
