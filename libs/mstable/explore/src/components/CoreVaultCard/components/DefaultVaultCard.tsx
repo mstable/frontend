@@ -26,6 +26,9 @@ export const DefaultVaultCard = (props: CoreVaultCardProps) => {
     name,
     tagProps,
     chartData,
+    balance,
+    balanceLabel,
+    balanceHint,
   } = useCoreVaultCardProps(props);
   const { config, to, ...rest } = props;
 
@@ -93,6 +96,18 @@ export const DefaultVaultCard = (props: CoreVaultCardProps) => {
         >
           <Typography variant="value3">
             {isLoading ? <Skeleton width={50} /> : apy}
+          </Typography>
+        </ValueLabel>
+        <ValueLabel
+          label={balanceLabel}
+          hint={balanceHint}
+          components={{
+            valueContainer: { pb: 0.3 },
+            label: { sx: { mb: 0.5 } },
+          }}
+        >
+          <Typography variant="value3">
+            {isLoading ? <Skeleton width={50} /> : balance}
           </Typography>
         </ValueLabel>
         <ValueLabel

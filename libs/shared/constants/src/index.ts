@@ -12,3 +12,4 @@ export * from './utils';
 export * from './velodrome';
 export * from './core-vaults';
 export * from './dhedge';
+export * from './network';

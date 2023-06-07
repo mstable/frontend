@@ -103,13 +103,14 @@ export const useChartData = ({
   address,
   chartPeriod,
   chartType,
-  scales = true,
+  scales = { x: true, y: true },
 }: {
   address: Address;
   chartPeriod: CHART_PERIOD;
   chartType: CHART_TYPE;
-  scales?: boolean;
+  scales?: { x?: boolean; y?: boolean };
 }) => {
+  const { x = true, y = true } = scales;
   const theme = useTheme();
   const { chartTypes } = useChartConfig();
 
@@ -172,7 +173,7 @@ export const useChartData = ({
           },
           scales: {
             y: {
-              display: scales,
+              display: y,
               grid: {
                 color: theme.palette.divider,
                 drawBorder: false,
@@ -191,7 +192,7 @@ export const useChartData = ({
               },
             },
             x: {
-              display: scales,
+              display: x,
               grid: {
                 display: false,
               },
@@ -250,7 +251,8 @@ export const useChartData = ({
         theme.typography.value5.fontWeight,
         minMax?.min,
         minMax?.max,
-        scales,
+        x,
+        y,
       ],
     );
 

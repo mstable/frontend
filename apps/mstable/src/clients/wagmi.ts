@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import '@rainbow-me/rainbowkit/styles.css';
 
+import { DEFAULT_POLLING_INTERVAL } from '@dhedge/core-ui-kit/const';
 import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import {
@@ -27,6 +28,7 @@ export const { chains, provider, webSocketProvider } = configureChains(
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_MAIN_API_KEY'] }),
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_FALLBACK_API_KEY'] }),
   ],
+  { pollingInterval: DEFAULT_POLLING_INTERVAL },
 );
 
 const gnosisSafeWallet = ({ chains }: { chains: Chain[] }): Wallet => ({

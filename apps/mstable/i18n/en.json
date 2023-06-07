@@ -41,11 +41,17 @@
   "7ynb1z": {
     "defaultMessage": "{value} GWEI"
   },
+  "H5+NAX": {
+    "defaultMessage": "Balance"
+  },
   "IB0eky": {
     "defaultMessage": "Annual percentage yield."
   },
   "Imiiiv": {
     "defaultMessage": "No Data Available"
+  },
+  "LAazWH": {
+    "defaultMessage": "Account token balance"
   },
   "LiHQih": {
     "defaultMessage": "Coming Soon"
@@ -94,9 +100,6 @@
   },
   "zFNxtv": {
     "defaultMessage": "Protocols"
-  },
-  "zGHadw": {
-    "defaultMessage": "Strategy"
   },
   "zKtTJT": {
     "defaultMessage": "Return on investment since Vault inception."
@@ -407,15 +410,6 @@
   "yuiyES": {
     "defaultMessage": "General Settings"
   },
-  "4cX/rf": {
-    "defaultMessage": "Management Fee"
-  },
-  "FGu/VK": {
-    "defaultMessage": "The following strategy pipeline is used in {symbol}"
-  },
-  "VyTtUL": {
-    "defaultMessage": "The {symbol} Vault charges a {fee} entry fee."
-  },
   "1vtEYS": {
     "defaultMessage": "Flexible min slippage value that is likely enough to process the transaction."
   },
@@ -428,6 +422,9 @@
   "47GkyG": {
     "defaultMessage": "Minimum deposit is ${minDepositUSD}"
   },
+  "4cX/rf": {
+    "defaultMessage": "Management Fee"
+  },
   "5gorcB": {
     "defaultMessage": "Minimum received"
   },
@@ -436,6 +433,9 @@
   },
   "EnCOBJ": {
     "defaultMessage": "Buy"
+  },
+  "FGu/VK": {
+    "defaultMessage": "The following strategy pipeline is used in {symbol}"
   },
   "Gtmi1D": {
     "defaultMessage": "Set As Infinite"
@@ -455,14 +455,17 @@
   "VGRRFC": {
     "defaultMessage": "You will receive no less that this amount."
   },
+  "VyTtUL": {
+    "defaultMessage": "The {symbol} Vault charges a {fee} entry fee."
+  },
   "X/RW9w": {
     "defaultMessage": "Slippage Tolerance"
   },
   "XnpuKy": {
     "defaultMessage": "Approve {symbol}"
   },
-  "aTX7LJ": {
-    "defaultMessage": "1D"
+  "b1gVRq": {
+    "defaultMessage": "Minimum deposit in USD."
   },
   "epCeiH": {
     "defaultMessage": "The {symbol} Vault doesn't charge exit fee."
@@ -470,23 +473,11 @@
   "fhnmhR": {
     "defaultMessage": "Vault strategy pipeline."
   },
-  "le9cwx": {
-    "defaultMessage": "Exit Fee"
-  },
-  "pWv8jk": {
-    "defaultMessage": "Entry Fee"
-  },
-  "qzgBwU": {
-    "defaultMessage": "The {symbol} Vault charges a {fee} performance upon underlying asset appreciation."
-  },
-  "tivZoE": {
-    "defaultMessage": "The {symbol} Vault charges a {fee} management fee."
-  },
-  "b1gVRq": {
-    "defaultMessage": "Minimum deposit in USD."
-  },
   "h4nW++": {
     "defaultMessage": "When the \"Auto\" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. <br></br> Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 2-3%."
+  },
+  "hAz8Yo": {
+    "defaultMessage": "$"
   },
   "i0ofjL": {
     "defaultMessage": "Entry fee"
@@ -494,8 +485,17 @@
   "k3YWIR": {
     "defaultMessage": "Max slippage"
   },
+  "le9cwx": {
+    "defaultMessage": "Exit Fee"
+  },
   "n9CFUs": {
     "defaultMessage": "Token Approval"
+  },
+  "pWv8jk": {
+    "defaultMessage": "Entry Fee"
+  },
+  "qzgBwU": {
+    "defaultMessage": "The {symbol} Vault charges a {fee} performance upon underlying asset appreciation."
   },
   "s4Vb9J": {
     "defaultMessage": "Blocked by high {slippage}% max slippage"
@@ -506,8 +506,14 @@
   "t3IytM": {
     "defaultMessage": "Minimum deposit"
   },
+  "tivZoE": {
+    "defaultMessage": "The {symbol} Vault charges a {fee} management fee."
+  },
   "wqlXwW": {
     "defaultMessage": "Wrong Network"
+  },
+  "zGHadw": {
+    "defaultMessage": "Strategy"
   },
   "zisVa1": {
     "defaultMessage": "We recommend 2-3%, but usually it will be < 1%. Slippage may be amplified by the leverage. See the docs for more info."
