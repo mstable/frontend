@@ -24,7 +24,7 @@ jobs:
       - uses: actions/setup-node@v3
         name: Setup node
         with:
-          node-version: 16
+          node-version: 18
           cache: "yarn"
 
       - name: Install jq
@@ -48,4 +48,5 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_FRONTEND_7E17F }}"
           expires: 8d
           projectId: frontend-7e17f
+          args: '--firebase-json "./firebase.mstable.json"'
 
