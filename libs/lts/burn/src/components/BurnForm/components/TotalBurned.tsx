@@ -1,5 +1,4 @@
-import { CountUp } from '@frontend/shared-ui';
-import { Stack, Typography } from '@mui/material';
+import { Skeleton, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import { mtaTokenMainnet } from '../../../constants';
@@ -18,12 +17,13 @@ export const TotalBurned = () => {
         })}
       </Typography>
       <Stack direction="row" alignItems="center" spacing={1.5}>
-        <CountUp
-          variant="value2"
-          color="text.secondary"
-          end={totalBurned}
-          decimals={0}
-        />
+        {!totalBurned ? (
+          <Skeleton width={75} height={35} />
+        ) : (
+          <Typography variant="value2" color="text.secondary">
+            {totalBurned}
+          </Typography>
+        )}
         <Stack direction="row" alignItems="center" spacing={0.5}>
           <mtaTokenMainnet.icon />
           <Typography variant="value2" color="text.secondary">
