@@ -32,6 +32,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install jq
 
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
       - run: yarn install --frozen-lockfile
         name: Install dependencies
 
