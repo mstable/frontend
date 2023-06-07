@@ -3,17 +3,14 @@ import { ErrorBoundary, ErrorPage, SunsetBanner } from '@frontend/shared-ui';
 import { Box, Stack } from '@mui/material';
 import { Outlet } from '@tanstack/react-location';
 import { useEffectOnce } from 'react-use';
-import { useNetwork } from 'wagmi';
 
 import { registerCharts } from '../../clients';
 import { GradientBackground } from '../Backgrounds';
-import { WrongNetworkPage } from '../Errors';
 import { Footer } from '../Footer';
 import { Topnav } from '../Topnav';
 
 export const App = () => {
   const track = useTrack();
-  const { chain } = useNetwork();
 
   useEffectOnce(() => {
     registerCharts();
@@ -52,7 +49,7 @@ export const App = () => {
         >
           <Box minHeight="80vh" pt={{ xs: 2, md: 5 }}>
             <SunsetBanner borderRadius={3} my={4} />
-            {chain?.unsupported ? <WrongNetworkPage /> : <Outlet />}
+            <Outlet />
           </Box>
           <Footer py={4} />
         </GradientBackground>

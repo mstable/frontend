@@ -491,6 +491,9 @@
   "n9CFUs": {
     "defaultMessage": "Token Approval"
   },
+  "obSWjR": {
+    "defaultMessage": "Please switch your wallet network to {name} to interact with {symbol} vault."
+  },
   "pWv8jk": {
     "defaultMessage": "Entry Fee"
   },
