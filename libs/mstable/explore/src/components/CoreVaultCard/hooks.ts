@@ -6,6 +6,7 @@ import {
   useChartConfig,
   useChartData,
   useUserVaultBalance,
+  useUserVaultInvestmentInfo,
 } from '@frontend/shared-hooks';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
@@ -31,6 +32,9 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
   });
 
   const { balanceInUsd: balance } = useUserVaultBalance({
+    address: config.address,
+  });
+  const { formattedRoiUsd } = useUserVaultInvestmentInfo({
     address: config.address,
   });
 
@@ -106,7 +110,16 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
 
   const balanceLabel = useMemo(
     () => intl.formatMessage({ defaultMessage: 'Balance', id: 'H5+NAX' }),
-    [],
+    [intl],
+  );
+
+  const roiLabel = useMemo(
+    () =>
+      intl.formatMessage({
+        defaultMessage: 'Profit/Loss',
+        id: 'rfzzi6',
+      }),
+    [intl],
   );
 
   const balanceHint = useMemo(
@@ -115,7 +128,7 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
         defaultMessage: 'Account token balance',
         id: 'LAazWH',
       }),
-    [],
+    [intl],
   );
 
   const tagProps: TypographyProps = {
@@ -151,5 +164,7 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
     balance,
     balanceLabel,
     balanceHint,
+    roiLabel,
+    formattedRoiUsd,
   };
 };

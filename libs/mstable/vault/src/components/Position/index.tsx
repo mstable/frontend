@@ -1,10 +1,13 @@
 import { useAccount } from '@dhedge/core-ui-kit/hooks/web3';
+import {
+  useUserVaultBalance,
+  useUserVaultInvestmentInfo,
+} from '@frontend/shared-hooks';
 import { CountUp } from '@frontend/shared-ui';
 import { formatNumberToLimitedDecimals } from '@frontend/shared-utils';
 import { Card, CardContent, Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
-import { useUserVaultBalance, useUserVaultInvestmentInfo } from '../../hooks';
 import { useVault } from '../../state';
 
 import type { CardProps } from '@mui/material';
@@ -14,8 +17,12 @@ export const Position: FC<CardProps> = (props) => {
   const { account } = useAccount();
   const { config } = useVault();
   const intl = useIntl();
-  const { formattedRoi, formattedRoiUsd } = useUserVaultInvestmentInfo();
-  const { userVaultBalance, userVaultBalanceInUsd } = useUserVaultBalance();
+  const { formattedRoi, formattedRoiUsd } = useUserVaultInvestmentInfo({
+    address: config.address,
+  });
+  const { balanceInUsd, balance } = useUserVaultBalance({
+    address: config.address,
+  });
 
   return (
     <Card {...props}>
@@ -28,11 +35,10 @@ export const Position: FC<CardProps> = (props) => {
             })}
           </Typography>
           <Typography variant="value1" color="text.secondary" mb={1}>
-            {userVaultBalanceInUsd}
+            {balanceInUsd}
           </Typography>
           <Typography variant="value5" color="text.secondary">
-            {formatNumberToLimitedDecimals(+userVaultBalance, 2)}{' '}
-            {config.symbol}
+            {formatNumberToLimitedDecimals(+balance, 2)} {config.symbol}
           </Typography>
           <Divider flexItem sx={{ my: 3 }} />
           <Typography variant="body2" color="text.secondary" mb={2}>

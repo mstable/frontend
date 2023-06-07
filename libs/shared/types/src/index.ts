@@ -28,3 +28,10 @@ export enum CHART_PERIOD {
 export enum CHART_TYPE {
   PRICE = 'price',
 }
+
+export interface FundByInvestor {
+  returnOnInvestment: string;
+  averageEntryPrice: string;
+  roiUsd: string;
+  fundAddress: Address;
+}

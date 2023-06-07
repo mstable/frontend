@@ -1,4 +1,11 @@
 export { useCryptoIcon } from './useCryptoIcon';
 export { useChartConfig, useChartData } from './useChartData';
-export { useTokenPriceHistoryQuery } from './useTokenPriceHistoryQuery';
-export { useUserVaultBalance, useUserStakedVaults } from './user';
+export {
+  useTokenPriceHistoryQuery,
+  useAllFundsByInvestorQuery,
+} from './queries';
+export {
+  useUserVaultBalance,
+  useUserVaultInvestmentInfo,
+  useUserStakedVaults,
+} from './user';

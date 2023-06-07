@@ -7,7 +7,13 @@ import {
   useTheme,
 } from '@mui/material';
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
-import { useAccount, useEnsAvatar, useEnsName } from 'wagmi';
+import {
+  mainnet,
+  useAccount,
+  useEnsAvatar,
+  useEnsName,
+  useNetwork,
+} from 'wagmi';
 
 import type { AvatarProps, StackProps, TypographyProps } from '@mui/material';
 
@@ -29,8 +35,15 @@ export const AccountLabel = ({
   const theme = useTheme();
   const wide = useMediaQuery(theme.breakpoints.up('sm'));
   const { address } = useAccount();
-  const { data: ensAvatar } = useEnsAvatar({ address });
-  const { data: ensName } = useEnsName({ address });
+  const { chain } = useNetwork();
+  const { data: ensAvatar } = useEnsAvatar({
+    address,
+    enabled: chain.id === mainnet.id,
+  });
+  const { data: ensName } = useEnsName({
+    address,
+    enabled: chain.id === mainnet.id,
+  });
 
   if (!address) {
     return null;

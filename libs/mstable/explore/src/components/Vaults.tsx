@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import { DEFAULT_CHAIN_ID } from '@dhedge/core-ui-kit/const';
-import { CORE_VAULT_NETWORK_CONFIG_MAP } from '@frontend/shared-constants';
+import { VAULT_CONFIGS } from '@frontend/shared-constants';
 import {
   Box,
   Grid,
@@ -27,8 +26,6 @@ export const Vaults = () => {
   const intl = useIntl();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  // TODO: handle network select
-  const coreVaults = CORE_VAULT_NETWORK_CONFIG_MAP[DEFAULT_CHAIN_ID];
 
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 
@@ -59,7 +56,7 @@ export const Vaults = () => {
       <Box pb={4}>
         {viewMode === 'grid' ? (
           <Grid container spacing={{ xs: 2, md: 3 }} alignItems="stretch">
-            {coreVaults.map((config) => (
+            {VAULT_CONFIGS.map((config) => (
               <Grid key={config.address} item xs={12} sm={6} lg={4}>
                 <CoreVaultCard
                   config={config}
@@ -117,12 +114,12 @@ export const Vaults = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {coreVaults.map((config, i) => (
+                {VAULT_CONFIGS.map((config, i) => (
                   <CoreVaultTableRow
                     key={config.address}
                     config={config}
                     to={`./vault/${config.address}`}
-                    isLast={i === coreVaults.length - 1}
+                    isLast={i === VAULT_CONFIGS.length - 1}
                   />
                 ))}
               </TableBody>

@@ -1,19 +1,23 @@
+import { Address } from '@dhedge/core-ui-kit/types';
 import { useAccount } from '@dhedge/core-ui-kit/hooks/web3';
-import { formatUnits } from '@dhedge/core-ui-kit/utils';
-import { isEqualAddresses } from '@frontend/shared-utils';
-
 import { useAllFundsByInvestorQuery } from '../queries';
-import { useVault } from '../state';
+import { isEqualAddresses } from '@frontend/shared-utils';
+import { formatUnits } from '@dhedge/core-ui-kit/utils';
 
-export const useUserVaultInvestmentInfo = () => {
+interface UseUserVaultInvestmentInfoConfig {
+  address: Address;
+}
+
+export const useUserVaultInvestmentInfo = ({
+  address,
+}: UseUserVaultInvestmentInfoConfig) => {
   const { account } = useAccount();
-  const { config } = useVault();
   const { data, isLoading } = useAllFundsByInvestorQuery(
     { address: account },
     { enabled: !!account },
   );
   const returnOnInvestment = data?.allFundsByInvestor.find(({ fundAddress }) =>
-    isEqualAddresses(fundAddress, config.address),
+    isEqualAddresses(fundAddress, address),
   );
 
   return {

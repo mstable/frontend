@@ -60,18 +60,3 @@ export interface FundQuery {
 export interface FundQueryVariables {
   address: Address;
 }
-
-export interface FundByInvestor {
-  returnOnInvestment: string;
-  averageEntryPrice: string;
-  roiUsd: string;
-  fundAddress: Address;
-}
-
-export interface AllFundsByInvestorQuery {
-  allFundsByInvestor: FundByInvestor[];
-}
-
-export interface AllFundsByInvestorQueryVariables {
-  address: Address;
-}
