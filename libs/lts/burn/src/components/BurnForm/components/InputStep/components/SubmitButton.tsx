@@ -68,6 +68,10 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
     isSuccess: isWriteSuccess,
   } = useContractWrite({
     ...submitConfig,
+    request: {
+      ...submitConfig?.request,
+      gasLimit: submitConfig?.request?.gasLimit?.mul(130).div(100),
+    },
     onSuccess: (data) => {
       pushNotification({
         title: intl.formatMessage({

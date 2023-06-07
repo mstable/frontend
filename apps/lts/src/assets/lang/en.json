@@ -810,6 +810,12 @@
       "value": "ROI"
     }
   ],
+  "PWrOlv": [
+    {
+      "type": 0,
+      "value": "mStable has been acquired by dHEDGE. Following the outlined acquisition update, certain mStable products will be sunset."
+    }
+  ],
   "PXAur5": [
     {
       "type": 0,
@@ -967,12 +973,6 @@
     {
       "type": 0,
       "value": "Operations are momentarily disabled"
-    }
-  ],
-  "VXQPtq": [
-    {
-      "type": 0,
-      "value": "mStable has been aquired by dHedge. Following the outlined aquisition update, certain mStable products will be sunset."
     }
   ],
   "VlABxn": [

@@ -716,6 +716,9 @@
   "N2IrpM": {
     "defaultMessage": "Confirm"
   },
+  "PWrOlv": {
+    "defaultMessage": "mStable has been acquired by dHEDGE. Following the outlined acquisition update, certain mStable products will be sunset."
+  },
   "RnacAD": {
     "defaultMessage": "Make sure your internet connection is working."
   },
@@ -727,9 +730,6 @@
   },
   "UlMgTq": {
     "defaultMessage": "If the problem persists, contact us on our {support}."
-  },
-  "VXQPtq": {
-    "defaultMessage": "mStable has been aquired by dHedge. Following the outlined aquisition update, certain mStable products will be sunset."
   },
   "W87PYU": {
     "defaultMessage": "View on {name}"
