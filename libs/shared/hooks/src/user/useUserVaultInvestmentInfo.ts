@@ -1,7 +1,10 @@
 import { Address } from '@dhedge/core-ui-kit/types';
 import { useAccount } from '@dhedge/core-ui-kit/hooks/web3';
 import { useAllFundsByInvestorQuery } from '../queries';
-import { isEqualAddresses } from '@frontend/shared-utils';
+import {
+  formatNumberToLimitedDecimals,
+  isEqualAddresses,
+} from '@frontend/shared-utils';
 import { formatUnits } from '@dhedge/core-ui-kit/utils';
 
 interface UseUserVaultInvestmentInfoConfig {
@@ -23,11 +26,14 @@ export const useUserVaultInvestmentInfo = ({
   return {
     isLoading,
     formattedRoi: returnOnInvestment?.returnOnInvestment
-      ? (+formatUnits(returnOnInvestment?.returnOnInvestment) - 1) * 100
-      : 0,
+      ? formatNumberToLimitedDecimals(
+          (+formatUnits(returnOnInvestment?.returnOnInvestment) - 1) * 100,
+          2,
+        )
+      : '0',
     formattedRoiUsd: returnOnInvestment?.roiUsd
-      ? +formatUnits(returnOnInvestment.roiUsd)
-      : 0,
+      ? formatNumberToLimitedDecimals(formatUnits(returnOnInvestment.roiUsd), 2)
+      : '0',
     roi: returnOnInvestment?.returnOnInvestment,
     roiUsd: returnOnInvestment?.roiUsd,
   };

@@ -38,11 +38,11 @@ export const AccountLabel = ({
   const { chain } = useNetwork();
   const { data: ensAvatar } = useEnsAvatar({
     address,
-    enabled: chain.id === mainnet.id,
+    enabled: chain?.id === mainnet.id,
   });
   const { data: ensName } = useEnsName({
     address,
-    enabled: chain.id === mainnet.id,
+    enabled: chain?.id === mainnet.id,
   });
 
   if (!address) {

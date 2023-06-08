@@ -51,13 +51,13 @@ export const Position: FC<CardProps> = (props) => {
             variant="value1"
             mb={1}
             color={
-              !!account && formattedRoi
-                ? formattedRoi >= 0
+              !!account && formattedRoiUsd !== '0'
+                ? +formattedRoiUsd > 0
                   ? 'success.main'
                   : 'error.main'
                 : 'text.secondary'
             }
-            end={formattedRoiUsd}
+            end={+formattedRoiUsd}
             prefix={intl.formatMessage({
               defaultMessage: '$',
               id: 'hAz8Yo',
@@ -66,7 +66,7 @@ export const Position: FC<CardProps> = (props) => {
           <CountUp
             variant="value5"
             color="text.secondary"
-            end={formattedRoi}
+            end={+formattedRoi}
             suffix={intl.formatMessage({
               defaultMessage: '%',
               id: 'kZcqo0',

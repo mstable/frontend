@@ -3,7 +3,6 @@ import {
   TokenIconRevamp,
   ValueLabel,
 } from '@frontend/shared-ui';
-import { formatNumberToLimitedDecimals } from '@frontend/shared-utils';
 import { Skeleton, Stack, Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
@@ -122,14 +121,14 @@ export const MobileVaultCard = (props: CoreVaultCardProps) => {
               <Typography
                 variant="value3"
                 color={
-                  formattedRoiUsd === 0
+                  formattedRoiUsd === '0'
                     ? undefined
-                    : formattedRoiUsd > 0
+                    : +formattedRoiUsd > 0
                     ? 'success.main'
                     : 'error.main'
                 }
               >
-                ${formatNumberToLimitedDecimals(formattedRoiUsd, 1)}
+                ${formattedRoiUsd}
               </Typography>
             )}
           </ValueLabel>

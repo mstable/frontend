@@ -1,4 +1,4 @@
-import { useNetwork } from '@dhedge/core-ui-kit/hooks/web3';
+import { useAccount, useNetwork } from '@dhedge/core-ui-kit/hooks/web3';
 import { Alert, Button } from '@mui/material';
 import { useIntl } from 'react-intl';
 
@@ -9,11 +9,11 @@ export const NetworkAlert = ({
   symbol,
 }: Pick<PoolConfig, 'chainId' | 'symbol'>) => {
   const intl = useIntl();
-
+  const { account } = useAccount();
   const { chainId: walletChainId, chains, switchNetwork } = useNetwork();
   const { name } = chains.find(({ id }) => id === chainId) ?? { name: chainId };
 
-  if (walletChainId === chainId) {
+  if (!account || walletChainId === chainId) {
     return null;
   }
 

@@ -54,7 +54,7 @@ export const WithdrawButton: FC = () => {
   }
 
   return cooldownActive ? (
-    <Button>
+    <Button disabled sx={{ lineHeight: 1.2 }}>
       {intl.formatMessage(
         {
           defaultMessage:

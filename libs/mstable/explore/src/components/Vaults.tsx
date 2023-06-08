@@ -103,11 +103,17 @@ export const Vaults = () => {
                       id: 'MLTKb6',
                     })}
                   </TableCell>
+                  <TableCell>
+                    {intl.formatMessage({
+                      defaultMessage: 'Balance',
+                      id: 'H5+NAX',
+                    })}
+                  </TableCell>
                   {!isMobile && (
                     <TableCell>
                       {intl.formatMessage({
-                        defaultMessage: 'Balance',
-                        id: 'H5+NAX',
+                        defaultMessage: 'P&L',
+                        id: 'Do29Mx',
                       })}
                     </TableCell>
                   )}

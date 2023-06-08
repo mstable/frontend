@@ -54,6 +54,9 @@ const logoBoxProps: BoxProps = {
   zIndex: 2,
 };
 
+const getShowedDecimals = (tokenPrecision: number) =>
+  Math.round(tokenPrecision / 3);
+
 const useTradingTokensOverview = () => {
   const poolConfig = useTradingPanelPoolConfig();
   const [sendToken] = useSendTokenInput();
@@ -131,18 +134,20 @@ export const TradingTokensOverview: FC<StackProps> = (props) => {
           {sendToken.isLoading ? (
             <Skeleton width={100} />
           ) : (
-            `${formatNumberToLimitedDecimals(sendToken.value || 0)} ${
-              sendToken.symbol
-            }`
+            `${formatNumberToLimitedDecimals(
+              sendToken.value || 0,
+              getShowedDecimals(sendToken.decimals),
+            )} ${sendToken.symbol}`
           )}
         </Typography>
         <Typography variant="value5" color="text.secondary">
           {receiveToken.isLoading ? (
             <Skeleton width={100} />
           ) : (
-            `≈${formatNumberToLimitedDecimals(receiveToken.value || 0)} ${
-              receiveToken.symbol
-            }`
+            `≈${formatNumberToLimitedDecimals(
+              receiveToken.value || 0,
+              getShowedDecimals(receiveToken.decimals),
+            )} ${receiveToken.symbol}`
           )}
         </Typography>
       </Stack>
