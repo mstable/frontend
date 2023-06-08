@@ -22,7 +22,7 @@ import { alchemyProvider } from 'wagmi/providers/alchemy';
 import type { Wallet } from '@rainbow-me/rainbowkit';
 import type { Chain, Connector } from 'wagmi';
 
-export const { chains, provider, webSocketProvider } = configureChains(
+export const { chains, provider } = configureChains(
   [optimism],
   [
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_MAIN_API_KEY'] }),
@@ -69,5 +69,4 @@ export const wagmiClient = createClient({
   autoConnect: true,
   connectors,
   provider,
-  webSocketProvider,
 });
