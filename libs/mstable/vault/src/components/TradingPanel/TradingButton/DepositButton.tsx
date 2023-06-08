@@ -13,6 +13,7 @@ import {
   useDepositAllowance,
   useShouldBeWhitelisted,
 } from '@dhedge/core-ui-kit/hooks/trading/deposit';
+import { useUserVaultBalance } from '@frontend/shared-hooks';
 import { Button } from '@mui/material';
 import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
@@ -26,6 +27,9 @@ const useDepositButton = () => {
   const poolConfig = useTradingPanelPoolConfig();
   const [receiveToken] = useReceiveTokenInput();
   const [sendToken] = useSendTokenInput();
+  const { balanceInUsdNumber } = useUserVaultBalance({
+    address: poolConfig.address,
+  });
 
   const { shouldBeWhitelisted, isAccountWhitelisted } =
     useShouldBeWhitelisted();
@@ -42,7 +46,9 @@ const useDepositButton = () => {
     receiveToken.value || '0',
   ).multipliedBy(productTokenPrice || '0');
   const isLowerThanMinDepositAmount =
-    receiveToken.value === '0' ? false : depositValueInUsd.lt(minDepositUSD);
+    receiveToken.value === '0' || balanceInUsdNumber > minDepositUSD
+      ? false
+      : depositValueInUsd.lt(minDepositUSD);
 
   const { approve, canSpend } = useDepositAllowance();
   const tradingParams = useTradingParams();
