@@ -36,26 +36,25 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
   const { mta, isError, needsApproval, reset } = useTrackedState();
 
   const config = useMemo(
-    () =>
-      chain?.id === mainnet.id
+    () => ({
+      ...{
+        functionName: 'buyBack',
+        args: [walletAddress, mta.amount.exact],
+        enabled:
+          !isError && mta.amount.exact.gt(constants.Zero) && !needsApproval,
+      },
+      ...(chain?.id === mainnet.id
         ? {
             address: l1Comptroller.address,
             abi: l1Comptroller.abi,
             chainId: l1Comptroller.chainId,
-            functionName: 'buyBackOnL2',
-            args: [walletAddress, mta.amount.exact],
-            enabled:
-              !isError && mta.amount.exact.gt(constants.Zero) && !needsApproval,
           }
         : {
             address: l2Comptroller.address,
             abi: l2Comptroller.abi,
             chainId: l2Comptroller.chainId,
-            functionName: 'buyBack',
-            args: [walletAddress, mta.amount.exact],
-            enabled:
-              !isError && mta.amount.exact.gt(constants.Zero) && !needsApproval,
-          },
+          }),
+    }),
     [chain?.id, isError, mta.amount.exact, walletAddress],
   );
 
