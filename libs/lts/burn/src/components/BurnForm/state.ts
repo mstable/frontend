@@ -128,6 +128,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
         args: [],
       },
     ],
+    watch: true,
   });
 
   useEffect(() => {

@@ -17,19 +17,19 @@ import {
 import { configureChains, createClient } from 'wagmi';
 import { mainnet, optimism, polygon } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { publicProvider } from 'wagmi/providers/public';
 
 import type { Wallet } from '@rainbow-me/rainbowkit';
 import type { Chain, Connector } from 'wagmi';
 
-export const { chains, provider, webSocketProvider } = configureChains(
+const POLLING_INTERVAL = 15_000;
+
+export const { chains, provider } = configureChains(
   [mainnet, polygon, optimism],
   [
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_MAIN_API_KEY'] }),
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_FALLBACK_API_KEY'] }),
-    publicProvider(),
   ],
-  { pollingInterval: 20_000 },
+  { pollingInterval: POLLING_INTERVAL },
 );
 
 const gnosisSafeWallet = ({ chains }: { chains: Chain[] }): Wallet => ({
@@ -70,5 +70,4 @@ export const wagmiClient = createClient({
   autoConnect: true,
   connectors,
   provider,
-  webSocketProvider,
 });
