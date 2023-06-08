@@ -20,8 +20,8 @@ export const SunsetBanner = (props: StackProps) => {
       <Warning sx={{ width: 28, height: 28 }} />
       <Typography textAlign="center">
         {intl.formatMessage({
-          defaultMessage: `mStable has been aquired by dHedge. Following the outlined aquisition update, certain mStable products will be sunset.`,
-          id: 'VXQPtq',
+          defaultMessage: `mStable has been acquired by dHEDGE. Following the outlined acquisition update, certain mStable products will be sunset.`,
+          id: 'PWrOlv',
         })}
       </Typography>
       <Typography textAlign="center">

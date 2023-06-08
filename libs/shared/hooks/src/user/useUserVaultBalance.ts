@@ -22,6 +22,7 @@ interface UseUserVaultBalanceConfig {
 
 interface UserVaultBalance {
   rawBalance: string;
+  balance: string;
   balanceInUsd: string;
   balanceInUsdNumber: number;
   includesStakedTokens: boolean;
@@ -29,6 +30,7 @@ interface UserVaultBalance {
 
 const DEFAULT_BALANCE = {
   rawBalance: Zero.toString(),
+  balance: Zero.toString(),
   balanceInUsd: formatToUsd({ value: 0 }),
   balanceInUsdNumber: 0,
   includesStakedTokens: false,
@@ -36,7 +38,8 @@ const DEFAULT_BALANCE = {
 
 export const useUserVaultBalance = (config: UseUserVaultBalanceConfig) => {
   const { account } = useAccount();
-  const stakedVaults = useUserStakedVaults();
+  // TODO: enable staked balance
+  // const stakedVaults = useUserStakedVaults();
 
   const { data } = useContractReads({
     contracts: VAULT_CONFIGS.flatMap(({ address, chainId }) => [
@@ -69,12 +72,13 @@ export const useUserVaultBalance = (config: UseUserVaultBalanceConfig) => {
     const chunkedData = splitEvery(2, data);
     const balanceMap = VAULT_CONFIGS.reduce<Record<Address, UserVaultBalance>>(
       (acc, product, i) => {
-        const stakedBalance = stakedVaults?.find(
-          ({ address }) => address === product.address,
-        );
+        // const stakedBalance = stakedVaults?.find(
+        //   ({ address }) => address === product.address,
+        // );
         const [balance, price] = chunkedData?.[i] ?? [BN.from(0), BN.from(0)];
 
-        const stakedAmountString = stakedBalance?.amount ?? '0';
+        // const stakedAmountString = stakedBalance?.amount ?? '0';
+        const stakedAmountString = '0';
         const balanceString = balance?.toString() ?? '0';
         const priceString = price?.toString() ?? '0';
 
@@ -90,9 +94,11 @@ export const useUserVaultBalance = (config: UseUserVaultBalanceConfig) => {
 
         const balanceOptions = {
           rawBalance: totalBalance,
+          balance: formatUnits(totalBalance),
           balanceInUsd: formatToUsd({ value: balanceInUsdNumber }),
           balanceInUsdNumber,
-          includesStakedTokens: !!stakedBalance,
+          // includesStakedTokens: !!stakedBalance,
+          includesStakedTokens: false,
         };
 
         if (balanceInUsdNumber > 0) {

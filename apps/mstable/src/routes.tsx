@@ -14,11 +14,6 @@ export const routes: Route[] = [
     ],
   },
   {
-    id: 'metavault',
-    path: '/:mvid',
-    element: () => import('./views/Metavault').then((mod) => <mod.Metavault />),
-  },
-  {
     id: 'explore',
     path: '/',
     element: <Home />,

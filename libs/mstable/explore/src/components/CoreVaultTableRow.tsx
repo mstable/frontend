@@ -2,7 +2,10 @@ import { useMemo } from 'react';
 
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import { useFundQuery } from '@frontend/mstable-vault';
-import { useUserVaultBalance } from '@frontend/shared-hooks';
+import {
+  useUserVaultBalance,
+  useUserVaultInvestmentInfo,
+} from '@frontend/shared-hooks';
 import { TokenIconRevamp } from '@frontend/shared-ui';
 import {
   Stack,
@@ -32,6 +35,9 @@ export const CoreVaultTableRow = ({
   const navigate = useNavigate();
   const { data } = useFundQuery({ address: config.address });
   const { balanceInUsd } = useUserVaultBalance({ address: config.address });
+  const { formattedRoiUsd } = useUserVaultInvestmentInfo({
+    address: config.address,
+  });
 
   const apy = useMemo(() => {
     const monthlyApy = data?.fund.apy?.monthly;
@@ -74,9 +80,23 @@ export const CoreVaultTableRow = ({
           <Typography variant="value4">{apy}</Typography>
         </Stack>
       </TableCell>
+      <TableCell>
+        <Typography variant="value4">{balanceInUsd}</Typography>
+      </TableCell>
       {!isMobile && (
         <TableCell>
-          <Typography variant="value4">{balanceInUsd}</Typography>
+          <Typography
+            variant="value4"
+            color={
+              formattedRoiUsd === '0'
+                ? undefined
+                : +formattedRoiUsd > 0
+                ? 'success.main'
+                : 'error.main'
+            }
+          >
+            ${formattedRoiUsd}
+          </Typography>
         </TableCell>
       )}
     </TableRow>

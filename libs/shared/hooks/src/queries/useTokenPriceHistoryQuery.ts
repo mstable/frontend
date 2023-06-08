@@ -4,7 +4,7 @@ import type {
   TokenPriceHistoryQueryVariables,
 } from '@frontend/shared-types';
 import { dHedgeApiEndpoint } from '@frontend/shared-constants';
-import { fetcher } from './fetcher';
+import { fetcher } from '../fetcher';
 
 export const tokenPriceHistoryQueryDocument = `
   query tokenPriceHistoryQuery($address: String!, $period: String!) {

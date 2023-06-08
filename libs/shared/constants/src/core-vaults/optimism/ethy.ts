@@ -14,7 +14,6 @@ export const ETHY_OPTIMISM: PoolConfig = {
   symbol: 'ETHy',
   address: '0xb2cfb909e8657c0ec44d3dd898c1053b87804755',
   depositParams: {
-    method: 'depositWithCustomCooldown',
     customTokens: [SUSD_OPTIMISM],
   },
   withdrawParams: {

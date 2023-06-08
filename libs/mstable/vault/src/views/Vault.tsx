@@ -6,6 +6,7 @@ import { useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
+import { MobileBottomCard } from '../components/MobileBottomCard';
 import { NetworkAlert } from '../components/NetworkAlert';
 import { Position } from '../components/Position';
 import { Strategy } from '../components/Strategy';
@@ -32,106 +33,109 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
   useCoreUiKitInitialization();
 
   return (
-    <Stack direction="column" alignItems="flex-start" {...props}>
-      <NetworkAlert chainId={config.chainId} symbol={config.symbol} />
-      <Button
-        variant="text"
-        size="small"
-        onClick={() => {
-          navigate({ to: '/' });
-        }}
-        sx={{ mb: 1 }}
-      >
-        <Stack direction="row" alignItems="center" spacing={0.5}>
-          <ArrowLeft width={16} height={16} />
-          {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}
-        </Stack>
-      </Button>
-      <TokenIconRevamp
-        symbols={[config.symbol]}
-        sx={{ height: 64, width: 64, mb: 2 }}
-      />
-      <ErrorBoundary
-        ErrorComponent={
-          <ErrorCard
-            pb={8}
-            onMount={() => {
-              track('error', {
-                name: 'Unhandled Error Vault: Vault Jumbo',
-              });
-            }}
-          />
-        }
-      >
-        <VaultJumbo pb={8} />
-      </ErrorBoundary>
-
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
-          <Stack direction="column" spacing={2}>
-            <ErrorBoundary
-              ErrorComponent={
-                <ErrorCard
-                  onMount={() => {
-                    track('error', {
-                      name: 'Unhandled Error Vault: Performance Card',
-                    });
-                  }}
-                />
-              }
-            >
-              <VaultPerformance address={config.address} />
-            </ErrorBoundary>
-
-            <ErrorBoundary
-              ErrorComponent={
-                <ErrorCard
-                  onMount={() => {
-                    track('error', {
-                      name: 'Unhandled Error Vault: Strategy Card',
-                    });
-                  }}
-                />
-              }
-            >
-              <Strategy />
-            </ErrorBoundary>
+    <>
+      <Stack direction="column" alignItems="flex-start" {...props}>
+        <NetworkAlert chainId={config.chainId} symbol={config.symbol} />
+        <Button
+          variant="text"
+          size="small"
+          onClick={() => {
+            navigate({ to: '/' });
+          }}
+          sx={{ mb: 1 }}
+        >
+          <Stack direction="row" alignItems="center" spacing={0.5}>
+            <ArrowLeft width={16} height={16} />
+            {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}
           </Stack>
-        </Grid>
-        {!isMobile && (
-          <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
+        </Button>
+        <TokenIconRevamp
+          symbols={[config.symbol]}
+          sx={{ height: 64, width: 64, mb: 2 }}
+        />
+        <ErrorBoundary
+          ErrorComponent={
+            <ErrorCard
+              pb={8}
+              onMount={() => {
+                track('error', {
+                  name: 'Unhandled Error Vault: Vault Jumbo',
+                });
+              }}
+            />
+          }
+        >
+          <VaultJumbo pb={8} />
+        </ErrorBoundary>
+
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
             <Stack direction="column" spacing={2}>
               <ErrorBoundary
                 ErrorComponent={
                   <ErrorCard
                     onMount={() => {
                       track('error', {
-                        name: 'Unhandled Error Vault: Position Card',
+                        name: 'Unhandled Error Vault: Performance Card',
                       });
                     }}
                   />
                 }
               >
-                <Position sx={{ marginTop: -28 }} />
+                <VaultPerformance address={config.address} />
               </ErrorBoundary>
+
               <ErrorBoundary
                 ErrorComponent={
                   <ErrorCard
                     onMount={() => {
                       track('error', {
-                        name: 'Unhandled Error: Trading Panel',
+                        name: 'Unhandled Error Vault: Strategy Card',
                       });
                     }}
                   />
                 }
               >
-                <TradingPanel />
+                <Strategy />
               </ErrorBoundary>
             </Stack>
           </Grid>
-        )}
-      </Grid>
-    </Stack>
+          {!isMobile && (
+            <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
+              <Stack direction="column" spacing={2}>
+                <ErrorBoundary
+                  ErrorComponent={
+                    <ErrorCard
+                      onMount={() => {
+                        track('error', {
+                          name: 'Unhandled Error Vault: Position Card',
+                        });
+                      }}
+                    />
+                  }
+                >
+                  <Position sx={{ marginTop: -28 }} />
+                </ErrorBoundary>
+                <ErrorBoundary
+                  ErrorComponent={
+                    <ErrorCard
+                      onMount={() => {
+                        track('error', {
+                          name: 'Unhandled Error: Trading Panel',
+                        });
+                      }}
+                    />
+                  }
+                >
+                  <TradingPanel />
+                </ErrorBoundary>
+              </Stack>
+            </Grid>
+          )}
+        </Grid>
+      </Stack>
+      {isMobile && <MobileBottomCard />}
+    </>
   );
 };
 

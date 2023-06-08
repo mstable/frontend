@@ -190,7 +190,6 @@ export const TradingInput = forwardRef<HTMLInputElement, TradingInputProps>(
                           alignItems="center"
                           sx={{
                             color: 'text.primary',
-                            maxWidth: 100,
                           }}
                         >
                           <TokenIconRevamp
@@ -215,15 +214,15 @@ export const TradingInput = forwardRef<HTMLInputElement, TradingInputProps>(
               ) : (
                 <Stack
                   direction="row"
-                  spacing={1}
+                  spacing={0.5}
                   alignItems="center"
                   sx={{
                     paddingY: 1,
-                    paddingX: 2,
+                    paddingX: 1.5,
                     borderRadius: '8px',
                     backgroundColor: 'background.highlight',
                     color: 'text.primary',
-                    maxWidth: 100,
+                    width: 120,
                   }}
                 >
                   <TokenIconRevamp

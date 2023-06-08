@@ -35,23 +35,3 @@ query fundQuery($address: String!) {
     }
   }
 }
-
-query tokenPriceHistoryQuery($address: String!, $period: String!) {
-  tokenPriceHistory(address: $address, period: $period) {
-    history {
-      adjustedTokenPrice
-      timestamp
-      tokenPrice
-      performance
-    }
-  }
-}
-
-query allFundsByInvestorQuery($address: String!) {
-  allFundsByInvestor(investorAddress: $address) {
-    returnOnInvestment
-    averageEntryPrice
-    roiUsd
-    fundAddress
-  }
-}

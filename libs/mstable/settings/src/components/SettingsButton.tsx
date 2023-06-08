@@ -51,7 +51,7 @@ export const SettingsButton = (props: ButtonProps) => {
         <Stack
           alignItems="flex-start"
           spacing={1}
-          sx={{ minWidth: { xs: '94vw', sm: 300 } }}
+          sx={{ minWidth: { xs: '85vw', sm: 300 } }}
         >
           <Typography>
             {intl.formatMessage({
