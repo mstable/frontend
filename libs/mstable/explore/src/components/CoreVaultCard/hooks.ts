@@ -165,6 +165,6 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
     balanceLabel,
     balanceHint,
     roiLabel,
-    formattedRoiUsd,
+    formattedRoiUsd: +formattedRoiUsd,
   };
 };

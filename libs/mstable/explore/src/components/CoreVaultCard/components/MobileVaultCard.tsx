@@ -121,14 +121,18 @@ export const MobileVaultCard = (props: CoreVaultCardProps) => {
               <Typography
                 variant="value3"
                 color={
-                  formattedRoiUsd === '0'
+                  formattedRoiUsd === 0
                     ? undefined
-                    : +formattedRoiUsd > 0
+                    : formattedRoiUsd > 0
                     ? 'success.main'
                     : 'error.main'
                 }
               >
-                ${formattedRoiUsd}
+                {Intl.NumberFormat('en-US', {
+                  currency: 'USD',
+                  style: 'currency',
+                  maximumSignificantDigits: 2,
+                }).format(formattedRoiUsd)}
               </Typography>
             )}
           </ValueLabel>
