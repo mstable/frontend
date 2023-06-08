@@ -38,7 +38,7 @@ export const Position: FC<CardProps> = (props) => {
             {balanceInUsd}
           </Typography>
           <Typography variant="value5" color="text.secondary">
-            {formatNumberToLimitedDecimals(+balance, 2)} {config.symbol}
+            {formatNumberToLimitedDecimals(+balance, 4)} {config.symbol}
           </Typography>
           <Divider flexItem sx={{ my: 3 }} />
           <Typography variant="body2" color="text.secondary" mb={2}>
