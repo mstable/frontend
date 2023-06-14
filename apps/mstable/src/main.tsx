@@ -10,7 +10,6 @@ import {
 } from '@frontend/mstable-theme';
 import {
   AnalyticsProvider,
-  GasFeeProvider,
   I18nProvider,
   ModalsProvider,
   NotificationsProvider,
@@ -58,7 +57,6 @@ root.render(
       ],
       [WalletAnalyticsProvider],
       [PricesProvider],
-      [GasFeeProvider],
       [ModalsProvider],
       [SettingsProvider],
       [CoreUIToolkitProvider],
