@@ -65,9 +65,6 @@
   "CuTvKy": {
     "defaultMessage": "Swap on Velodrome"
   },
-  "ENufDd": {
-    "defaultMessage": "MTA"
-  },
   "K1NWSN": {
     "defaultMessage": "Price is more favorable on Velodrome"
   },
@@ -112,9 +109,6 @@
   },
   "w1LBDB": {
     "defaultMessage": "Sign Transaction"
-  },
-  "wAUtNd": {
-    "defaultMessage": "Total Burned"
   },
   "xfMpIF": {
     "defaultMessage": "Withdraw to stables"
@@ -542,6 +536,9 @@
   "zRbVmO": {
     "defaultMessage": "WITHDRAW"
   },
+  "/r/mPc": {
+    "defaultMessage": "Sending order to your wallet"
+  },
   "1vtEYS": {
     "defaultMessage": "Flexible min slippage value that is likely enough to process the transaction."
   },
@@ -580,6 +577,9 @@
   },
   "MMvFMz": {
     "defaultMessage": "{symbol} token is no longer active. Please withdraw from them."
+  },
+  "ObjU4O": {
+    "defaultMessage": "Mining"
   },
   "S0seuN": {
     "defaultMessage": "Recommended min slippage"
@@ -620,6 +620,9 @@
   "le9cwx": {
     "defaultMessage": "Exit Fee"
   },
+  "lubHZr": {
+    "defaultMessage": "Setting up transaction"
+  },
   "n9CFUs": {
     "defaultMessage": "Token Approval"
   },
@@ -646,6 +649,9 @@
   },
   "wqlXwW": {
     "defaultMessage": "Wrong Network"
+  },
+  "xrKHS6": {
+    "defaultMessage": "Success"
   },
   "zGHadw": {
     "defaultMessage": "Strategy"

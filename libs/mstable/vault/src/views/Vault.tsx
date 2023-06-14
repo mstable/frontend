@@ -10,6 +10,7 @@ import { MobileBottomCard } from '../components/MobileBottomCard';
 import { NetworkAlert } from '../components/NetworkAlert';
 import { Position } from '../components/Position';
 import { Strategy } from '../components/Strategy';
+import { TradingModal } from '../components/TradingModal';
 import { TradingPanel } from '../components/TradingPanel';
 import { VaultJumbo } from '../components/VaultJumbo';
 import { VaultPerformance } from '../components/VaultPerformance';
@@ -135,6 +136,7 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
         </Grid>
       </Stack>
       {isMobile && <MobileBottomCard />}
+      <TradingModal />
     </>
   );
 };

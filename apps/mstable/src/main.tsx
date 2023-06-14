@@ -8,11 +8,8 @@ import {
   rbkDarkTheme,
   rbkLightTheme,
 } from '@frontend/mstable-theme';
-import { CORE_UI_TOOLKIT_POOL_CONFIG_MAP } from '@frontend/shared-constants';
 import {
   AnalyticsProvider,
-  CoreUIToolkitProvider,
-  GasFeeProvider,
   I18nProvider,
   ModalsProvider,
   NotificationsProvider,
@@ -28,13 +25,13 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import en from './assets/lang/en.json';
 import {
   chains,
-  CORE_UI_TOOLKIT_ACTIONS,
   plausibleClient,
   reactLocationClient,
   reactQueryClient,
   wagmiClient,
 } from './clients';
 import { App } from './components/App';
+import { CoreUIToolkitProvider } from './providers';
 import { routes } from './routes';
 
 const root = ReactDOM.createRoot(
@@ -44,13 +41,6 @@ root.render(
   composeContexts(
     [
       [StrictMode],
-      [
-        CoreUIToolkitProvider,
-        {
-          actions: CORE_UI_TOOLKIT_ACTIONS,
-          poolConfigMap: CORE_UI_TOOLKIT_POOL_CONFIG_MAP,
-        },
-      ],
       [AnalyticsProvider, { client: plausibleClient }],
       [QueryClientProvider, { client: reactQueryClient }],
       [I18nProvider, { messages: { en }, defaultLanguage: 'en' }],
@@ -67,9 +57,9 @@ root.render(
       ],
       [WalletAnalyticsProvider],
       [PricesProvider],
-      [GasFeeProvider],
       [ModalsProvider],
       [SettingsProvider],
+      [CoreUIToolkitProvider],
     ],
     <App />,
   ),

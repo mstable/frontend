@@ -33,6 +33,7 @@
       "@frontend/shared-hooks": ["libs/shared/hooks/src/index.ts"],
       "@frontend/shared-icons": ["libs/shared/icons/src/index.ts"],
       "@frontend/shared-providers": ["libs/shared/providers/src/index.ts"],
+      "@frontend/shared-services": ["libs/shared/services/src/index.ts"],
       "@frontend/shared-types": ["libs/shared/types/src/index.ts"],
       "@frontend/shared-ui": ["libs/shared/ui/src/index.ts"],
       "@frontend/shared-utils": ["libs/shared/utils/src/index.ts"],

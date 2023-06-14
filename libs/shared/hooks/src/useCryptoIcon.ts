@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import { equals } from 'ramda';
-
-const buildIconLink = (tokenName: string): string =>
-  !!tokenName
-    ? `https://raw.githubusercontent.com/dhedge/crypto-icons/main/icons/${tokenName.toLowerCase()}.png`
-    : '';
+import { buildIconLink } from '@frontend/shared-utils';
 
 const getIcon = async (name: string): Promise<string> => {
   try {

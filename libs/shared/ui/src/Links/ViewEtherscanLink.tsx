@@ -5,6 +5,7 @@ import { mainnet } from 'wagmi/chains';
 import type { LinkProps } from '@mui/material';
 
 export type ViewEtherscanLinkProps = {
+  href?: string;
   hash?: string;
   blockExplorer?: {
     name: string;
@@ -15,6 +16,7 @@ export type ViewEtherscanLinkProps = {
 export const ViewEtherscanLink = ({
   hash,
   blockExplorer,
+  href,
   ...rest
 }: ViewEtherscanLinkProps) => {
   const intl = useIntl();
@@ -22,9 +24,12 @@ export const ViewEtherscanLink = ({
   return (
     <Link
       {...rest}
-      href={`${blockExplorer?.url ?? mainnet.blockExplorers.default.url}/tx/${
-        hash ?? ''
-      }`}
+      href={
+        href ??
+        `${blockExplorer?.url ?? mainnet.blockExplorers.default.url}/tx/${
+          hash ?? ''
+        }`
+      }
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -33,7 +38,7 @@ export const ViewEtherscanLink = ({
           defaultMessage: 'View on {name}',
           id: 'W87PYU',
         },
-        { name: blockExplorer?.name ?? 'Etherscan' },
+        { name: blockExplorer?.name ?? 'Explorer' },
       )}
     </Link>
   );

@@ -4,10 +4,9 @@ import react from '@vitejs/plugin-react';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 import dts from 'vite-plugin-dts';
 import { join } from 'path';
-import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  cacheDir: '../../../node_modules/.vite/shared-hooks',
+  cacheDir: '../../../node_modules/.vite/shared-services',
 
   plugins: [
     dts({
@@ -16,7 +15,6 @@ export default defineConfig({
       skipDiagnostics: true,
     }),
     react(),
-    svgr(),
     viteTsConfigPaths({
       root: '../../../',
     }),
@@ -37,7 +35,7 @@ export default defineConfig({
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: 'src/index.ts',
-      name: 'shared-hooks',
+      name: 'shared-services',
       fileName: 'index',
       // Change this to the formats you want to support.
       // Don't forgot to update your package.json as well.
