@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 import dts from 'vite-plugin-dts';
 import { join } from 'path';
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   cacheDir: '../../../node_modules/.vite/shared-services',
@@ -15,6 +16,7 @@ export default defineConfig({
       skipDiagnostics: true,
     }),
     react(),
+    svgr(),
     viteTsConfigPaths({
       root: '../../../',
     }),
