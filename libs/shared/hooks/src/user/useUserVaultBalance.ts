@@ -18,6 +18,7 @@ import { useMemo } from 'react';
 
 interface UseUserVaultBalanceConfig {
   address: Address;
+  watch?: boolean;
 }
 
 interface UserVaultBalance {
@@ -60,8 +61,7 @@ export const useUserVaultBalance = (config: UseUserVaultBalanceConfig) => {
     ]),
     enabled: !!account,
     staleTime: DEFAULT_POLLING_INTERVAL,
-    // TODO Resolve watch re-renders
-    // watch: true,
+    watch: config.watch ?? false,
   });
 
   return useMemo(() => {

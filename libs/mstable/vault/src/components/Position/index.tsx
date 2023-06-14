@@ -22,6 +22,7 @@ export const Position: FC<CardProps> = (props) => {
   });
   const { balanceInUsd, balance } = useUserVaultBalance({
     address: config.address,
+    watch: true,
   });
 
   return (
