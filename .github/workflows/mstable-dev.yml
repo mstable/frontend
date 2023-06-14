@@ -1,6 +1,7 @@
 name: mstable Dev
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -52,9 +53,9 @@ jobs:
           yarn firebase use mstable
           yarn firebase hosting:channel:deploy dev -c ./firebase.mstable.json --expires 30d
 
-      - name: Discord notification
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: Ilshidur/action-discord@0.3.2
-        with:
-          args: "✨ New DEV version of mStable Vaults 🚀 Deploy url: https://frontend-7e17f--dev-zjlmsvmy.web.app/"
+#      - name: Discord notification
+#        env:
+#          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+#        uses: Ilshidur/action-discord@0.3.2
+#        with:
+#          args: "✨ New DEV version of mStable Vaults 🚀 Deploy url: https://frontend-7e17f--dev-zjlmsvmy.web.app/"

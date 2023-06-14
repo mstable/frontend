@@ -1,0 +1,59 @@
+name: preview mStable
+
+on:
+  pull_request:
+    paths:
+      - 'apps/mstable/**'
+      - 'libs/mstable/**'
+      - 'libs/shared/**'
+      - 'package.json'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout
+
+      - uses: actions/setup-node@v3
+        name: Setup node
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: webfactory/ssh-agent
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          'ssh-private-key': '${{ secrets.SSH_PRIVATE_KEY }}'
+
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq
+
+      - run: yarn install --frozen-lockfile
+        name: Install dependencies
+
+      - name: Build
+        env:
+          alchemyMain: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
+          alchemyFallback: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
+        run: NX_ALCHEMY_MAIN_API_KEY=$alchemyMain NX_ALCHEMY_FALLBACK_API_KEY=$alchemyFallback yarn nx build mstable
+
+      - name: Copy Firebase LTS to Firebase
+        run: cp firebase.lts.json firebase.json
+
+      - name: Firebase deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FRONTEND_7E17F }}'
+          expires: 8d
+          projectId: frontend-7e17f
