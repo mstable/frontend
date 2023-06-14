@@ -542,6 +542,12 @@
       "value": "Vault"
     }
   ],
+  "C9fFq/": [
+    {
+      "type": 0,
+      "value": "We recommend 1%, but usually it will be < 1%."
+    }
+  ],
   "CGcoFj": [
     {
       "type": 0,
@@ -2000,12 +2006,6 @@
     {
       "type": 0,
       "value": " of slippage"
-    }
-  ],
-  "zisVa1": [
-    {
-      "type": 0,
-      "value": "We recommend 2-3%, but usually it will be < 1%. Slippage may be amplified by the leverage. See the docs for more info."
     }
   ]
 }

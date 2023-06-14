@@ -13,7 +13,7 @@ export const Home = () => {
 
   return (
     <>
-      <SunsetBanner borderRadius={3} my={4} />
+      <SunsetBanner borderRadius={3} mb={4} />
       <Explore />
     </>
   );

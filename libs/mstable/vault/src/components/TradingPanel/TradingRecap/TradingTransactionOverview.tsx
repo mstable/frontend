@@ -103,9 +103,8 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
           id: 'k3YWIR',
         })}
         tooltipText={intl.formatMessage({
-          defaultMessage:
-            'We recommend 2-3%, but usually it will be < 1%. Slippage may be amplified by the leverage. See the docs for more info.',
-          id: 'zisVa1',
+          defaultMessage: 'We recommend 1%, but usually it will be < 1%.',
+          id: 'C9fFq/',
         })}
         value={
           <Stack direction="row" alignItems="center">

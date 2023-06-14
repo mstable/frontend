@@ -5,7 +5,6 @@ import {
   CoreUIToolkitProvider as ToolkitProvider,
   usePushNotification,
 } from '@frontend/shared-providers';
-import { simulateTransaction } from '@frontend/shared-services';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { Button } from '@mui/material';
 
@@ -62,21 +61,23 @@ const getActions = (
     });
   },
   onSimulateTransaction: async ({ chainId, from, to, gas, value, input }) => {
-    try {
-      const { data } = await simulateTransaction({
-        chainId,
-        from,
-        to,
-        input,
-        gas,
-        value,
-      });
-      console.debug('[mStable] simulation data:', data);
-      return data?.data;
-    } catch (error) {
-      console.debug('[mStable] failed to simulate tx:', error);
-      return null;
-    }
+    // TODO: add transaction simulation logic
+    return null;
+    // try {
+    //   const { data } = await simulateTransaction({
+    //     chainId,
+    //     from,
+    //     to,
+    //     input,
+    //     gas,
+    //     value,
+    //   });
+    //   console.debug('[mStable] simulation data:', data);
+    //   return data?.data;
+    // } catch (error) {
+    //   console.debug('[mStable] failed to simulate tx:', error);
+    //   return null;
+    // }
   },
   onLog: (eventName, payload) => {
     console.log(`[core-ui-toolkit]: log ${eventName}`, payload);

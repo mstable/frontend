@@ -28,7 +28,6 @@ Here are the environment variables you can set:
 - `NX_CLOUD_ACCESS_TOKEN`: Allows you to push local build files to nx cloud.
 - `NX_THE_GRAPH_MV_MAINNET_URL`: TheGraph endpoint for mainnet Meta Vault subgraph.
 - `NX_THE_GRAPH_MV_GOERLI_URL`: TheGraph endpoint for Goerli Meta Vault subgraph.
-- `NX_INFURA_API_KEY`: Your own Infura API key for lts dapp.
 - `NX_ALCHEMY_MAIN_API_KEY`: Your own Alchemy API key for mstable dapp.
 - `NX_ALCHEMY_FALLBACK_API_KEY`: Your own Alchemy API key for mstable dapp.
 

@@ -560,6 +560,9 @@
   "9AgXoz": {
     "defaultMessage": "Sell"
   },
+  "C9fFq/": {
+    "defaultMessage": "We recommend 1%, but usually it will be < 1%."
+  },
   "EnCOBJ": {
     "defaultMessage": "Buy"
   },
@@ -655,9 +658,6 @@
   },
   "zGHadw": {
     "defaultMessage": "Strategy"
-  },
-  "zisVa1": {
-    "defaultMessage": "We recommend 2-3%, but usually it will be < 1%. Slippage may be amplified by the leverage. See the docs for more info."
   },
   "2JVe1j": {
     "defaultMessage": "Market Neutral"
