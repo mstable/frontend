@@ -59,6 +59,12 @@
       "value": "Check connectivity"
     }
   ],
+  "/r/mPc": [
+    {
+      "type": 0,
+      "value": "Sending order to your wallet"
+    }
+  ],
   "0NMLMN": [
     {
       "type": 0,
@@ -578,12 +584,6 @@
       "value": "P&L"
     }
   ],
-  "ENufDd": [
-    {
-      "type": 0,
-      "value": "MTA"
-    }
-  ],
   "EWa1Fv": [
     {
       "type": 0,
@@ -824,6 +824,12 @@
     {
       "type": 0,
       "value": "Withdraw your mStable Treasury Yield tokens to stables"
+    }
+  ],
+  "ObjU4O": [
+    {
+      "type": 0,
+      "value": "Mining"
     }
   ],
   "OwO+Nr": [
@@ -1545,6 +1551,12 @@
       "value": "Exit Fee"
     }
   ],
+  "lubHZr": [
+    {
+      "type": 0,
+      "value": "Setting up transaction"
+    }
+  ],
   "m+DGTj": [
     {
       "type": 1,
@@ -1898,12 +1910,6 @@
       "value": "The current price of 1 token. Return is represented as a increase in token price value."
     }
   ],
-  "wAUtNd": [
-    {
-      "type": 0,
-      "value": "Total Burned"
-    }
-  ],
   "wqlXwW": [
     {
       "type": 0,
@@ -1920,6 +1926,12 @@
     {
       "type": 0,
       "value": "Withdraw to stables"
+    }
+  ],
+  "xrKHS6": [
+    {
+      "type": 0,
+      "value": "Success"
     }
   ],
   "y1NA43": [
