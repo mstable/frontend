@@ -1,29 +1,25 @@
 import { useMemo } from 'react';
 
-import {
-  useReceiveTokenInput,
-  useTradingPanelModal,
-} from '@dhedge/core-ui-kit/hooks/state';
+import { useTradingPanelModal } from '@dhedge/core-ui-kit/hooks/state';
 import { useIntl } from 'react-intl';
 
 export const useTradingModal = () => {
   const intl = useIntl();
-  const [receiveToken] = useReceiveTokenInput();
   const [
-    { isOpen, status: txStatus, summary, link: explorerLink, action },
+    { isOpen, status: txStatus, link: explorerLink, action, receiveToken },
     updateTradingModal,
   ] = useTradingPanelModal();
   const isSuccessTx = txStatus === 'Success';
   const showShareButton = action === 'deposit' && isSuccessTx;
   const showAddToken =
-    showShareButton && receiveToken.symbol !== 'all' && isSuccessTx;
+    showShareButton &&
+    receiveToken &&
+    receiveToken.symbol !== 'all' &&
+    isSuccessTx;
 
   const onModalClose = () => {
     updateTradingModal({
       isOpen: false,
-      status: 'None',
-      summary: '',
-      link: '',
     });
   };
 
@@ -44,11 +40,9 @@ export const useTradingModal = () => {
   );
 
   return {
-    titleMap,
     onModalClose,
     isOpen,
     isSuccessTx,
-    summary,
     explorerLink,
     showAddToken,
     showShareButton,

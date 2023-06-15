@@ -24,7 +24,7 @@ export const TradingModalActions: FC<TradingModalActionsProps> = ({
   return (
     <Stack
       direction="row"
-      mt={-2}
+      mt={-1}
       spacing={2}
       justifyContent="center"
       sx={{ width: '100%', flexWrap: 'wrap', gap: 1 }}

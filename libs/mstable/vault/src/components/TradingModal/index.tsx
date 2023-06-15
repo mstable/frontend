@@ -1,19 +1,18 @@
 import { Dialog, Spinner } from '@frontend/shared-ui';
 import CheckIcon from '@mui/icons-material/Check';
-import { Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import { useTradingModal } from './hooks';
 import { TradingModalActions } from './TradingModalActions';
+import { TradingModalSummary } from './TradingModalSummary';
 
 export const TradingModal = () => {
   const {
     onModalClose,
-    titleMap,
     isOpen,
     showShareButton,
     showAddToken,
     isSuccessTx,
-    summary,
     explorerLink,
     receiveToken,
     modalTitle,
@@ -30,18 +29,18 @@ export const TradingModal = () => {
             <CheckIcon color="success" sx={{ fontSize: 75 }} />
           ) : (
             <Spinner circularProgressProps={{ size: 75 }} />
-          )}{' '}
-          {summary && <Typography variant="body1">{summary}</Typography>}
+          )}
+          <TradingModalSummary />
         </Stack>
       }
       actions={
-        explorerLink ? (
+        explorerLink && receiveToken ? (
           <TradingModalActions
             token={receiveToken}
             showShareButton={showShareButton}
             showAddToken={showAddToken}
             explorerLink={explorerLink}
-          ></TradingModalActions>
+          />
         ) : undefined
       }
       maxWidth="xs"
