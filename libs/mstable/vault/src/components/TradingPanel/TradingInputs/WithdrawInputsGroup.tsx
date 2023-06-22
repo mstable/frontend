@@ -18,6 +18,7 @@ const useWithdrawInputsGroup = () => {
   const sendTokenBalance = useUserTokenBalance({
     symbol: sendToken.symbol,
     address: sendToken.address,
+    watch: true,
   });
   const [receiveToken] = useReceiveTokenInput();
   const poolConfig = useTradingPanelPoolConfig();

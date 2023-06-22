@@ -8,11 +8,7 @@ import { VAULT_CONFIGS } from '@frontend/shared-constants';
 import { formatUnits } from '@dhedge/core-ui-kit/utils';
 
 import { useUserStakedVaults } from './useUserStakedVaults';
-import {
-  DEFAULT_POLLING_INTERVAL,
-  DEFAULT_PRECISION,
-  Zero,
-} from '@dhedge/core-ui-kit/const';
+import { DEFAULT_PRECISION, Zero } from '@dhedge/core-ui-kit/const';
 import { Address } from '@dhedge/core-ui-kit/types';
 import { useMemo } from 'react';
 
@@ -60,7 +56,6 @@ export const useUserVaultBalance = (config: UseUserVaultBalanceConfig) => {
       },
     ]),
     enabled: !!account,
-    staleTime: DEFAULT_POLLING_INTERVAL,
     watch: config.watch ?? false,
   });
 
