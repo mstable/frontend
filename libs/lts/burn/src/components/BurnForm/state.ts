@@ -11,6 +11,8 @@ import {
   l1Comptroller,
   l2Comptroller,
   mtaBuybackPrice,
+  mtaTokenMainnet,
+  mtaTotalSupply,
   mtyPool,
   velodromeMtaUsdcLP,
 } from '../../constants';
@@ -34,6 +36,7 @@ type StateProps = {
   mty: InputProps;
   refetch: () => void;
   reset: () => void;
+  totalBurned: number;
 };
 
 export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
@@ -57,6 +60,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
       price: 0,
       contract: toks[optimism.id]['MTy'],
     },
+    totalBurned: 0,
     refetch: () => null,
     reset: () => null,
   });
@@ -116,6 +120,13 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
           toks[optimism.id]['USDC'].address,
         ],
       },
+      {
+        address: mtaTokenMainnet.address,
+        abi: mtaTokenMainnet.abi,
+        chainId: mtaTokenMainnet.chainId,
+        functionName: 'totalSupply',
+        args: [],
+      },
     ],
     watch: true,
   });
@@ -147,6 +158,10 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
             draft.mta.contract.decimals,
           ).simple;
           draft.mta.price = price === 0 ? 0 : 1 / price;
+          draft.totalBurned = data[5]
+            ? mtaTotalSupply -
+              new BigDecimal(data[5] as unknown as BigNumberish).simpleRounded
+            : 0;
         }),
       );
     }

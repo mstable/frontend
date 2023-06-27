@@ -73,7 +73,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
       setState(
         produce((draft) => {
           draft.contracts.forEach((c, i) => {
-            c.balance = bal[i] as unknown as BigNumber;
+            c.balance = (bal[i] ?? constants.Zero) as BigNumber;
           });
         }),
       );

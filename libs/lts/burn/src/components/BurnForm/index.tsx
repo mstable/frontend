@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 
 import { InputStep } from './components/InputStep';
 import { StepIndicator } from './components/StepIndicator';
+import { TotalBurned } from './components/TotalBurned';
 import { WithdrawStep } from './components/WithdrawStep';
 import { Provider, useTrackedState } from './state';
 
@@ -18,7 +19,8 @@ const BurnFormWrapped = (props: StackProps) => {
   const { step } = useTrackedState();
 
   return (
-    <Stack alignItems="center" spacing={2} {...props}>
+    <Stack alignItems="center" spacing={1} {...props}>
+      <TotalBurned />
       <StepIndicator />
       <AnimatePresence>
         {step === 0 ? (
