@@ -132,7 +132,7 @@
     "rimraf": "^5.0.0",
     "swc-loader": "0.1.15",
     "typescript": "5.0.4",
-    "vite": "^4.2.1",
+    "vite": "^4.2.3",
     "vite-plugin-dts": "~2.2.0",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^2.2.2",
