@@ -6,3 +6,4 @@ export * from './notifications';
 export * from './prices';
 export * from './themes';
 export * from './wagmi';
+export * from './core-ui-toolkit';

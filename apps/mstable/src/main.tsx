@@ -10,7 +10,6 @@ import {
 } from '@frontend/mstable-theme';
 import {
   AnalyticsProvider,
-  GasFeeProvider,
   I18nProvider,
   ModalsProvider,
   NotificationsProvider,
@@ -32,6 +31,7 @@ import {
   wagmiClient,
 } from './clients';
 import { App } from './components/App';
+import { CoreUIToolkitProvider } from './providers';
 import { routes } from './routes';
 
 const root = ReactDOM.createRoot(
@@ -57,9 +57,9 @@ root.render(
       ],
       [WalletAnalyticsProvider],
       [PricesProvider],
-      [GasFeeProvider],
       [ModalsProvider],
       [SettingsProvider],
+      [CoreUIToolkitProvider],
     ],
     <App />,
   ),

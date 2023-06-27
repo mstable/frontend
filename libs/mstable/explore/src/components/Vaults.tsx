@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { metavaults } from '@frontend/shared-constants';
+import { VAULT_CONFIGS } from '@frontend/shared-constants';
+import { useIsMobile } from '@frontend/shared-hooks';
 import {
   Box,
   Grid,
@@ -13,27 +14,20 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
-  useMediaQuery,
   useTheme,
 } from '@mui/material';
 import { ListDashes, SquaresFour } from 'phosphor-react';
 import { useIntl } from 'react-intl';
-import { useNetwork } from 'wagmi';
-import { mainnet } from 'wagmi/chains';
 
-import { ComingSoonCard, ComingSoonRow } from './ComingSoon';
-import { VaultCard } from './VaultCard';
-import { VaultTableRow } from './VaultTableRow';
+import { CoreVaultCard } from './CoreVaultCard';
+import { CoreVaultTableRow } from './CoreVaultTableRow';
 
-const COMING_SOON = ['mveth', 'mvfrax'];
+const buildVaultPath = (address: string) => `./vault/${address}`;
 
 export const Vaults = () => {
   const intl = useIntl();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { chain } = useNetwork();
-
-  const mvs = metavaults[chain?.id || mainnet.id];
+  const isMobile = useIsMobile();
 
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 
@@ -63,15 +57,16 @@ export const Vaults = () => {
       </Stack>
       <Box pb={4}>
         {viewMode === 'grid' ? (
-          <Grid container spacing={{ xs: 2, md: 3 }}>
-            {mvs.map((mv) => (
-              <Grid key={mv.id} item xs={12} sm={6} lg={4}>
-                <VaultCard metavault={mv} to={`./${mv.id}`} />
-              </Grid>
-            ))}
-            {COMING_SOON.map((cs) => (
-              <Grid key={cs} item xs={12} sm={6} lg={4}>
-                <ComingSoonCard token={cs} />
+          <Grid container spacing={{ xs: 2, md: 3 }} alignItems="stretch">
+            {VAULT_CONFIGS.map((config) => (
+              <Grid key={config.address} item xs={12} sm={6} lg={4}>
+                <CoreVaultCard
+                  config={config}
+                  to={buildVaultPath(config.address)}
+                  sx={{
+                    height: '100%',
+                  }}
+                />
               </Grid>
             ))}
           </Grid>
@@ -99,22 +94,6 @@ export const Vaults = () => {
                   {!isMobile && (
                     <TableCell>
                       {intl.formatMessage({
-                        defaultMessage: 'Strategy',
-                        id: 'zGHadw',
-                      })}
-                    </TableCell>
-                  )}
-                  {!isMobile && (
-                    <TableCell>
-                      {intl.formatMessage({
-                        defaultMessage: 'Protocols',
-                        id: 'zFNxtv',
-                      })}
-                    </TableCell>
-                  )}
-                  {!isMobile && (
-                    <TableCell>
-                      {intl.formatMessage({
                         defaultMessage: 'TVL',
                         id: 'SKB/G9',
                       })}
@@ -122,24 +101,34 @@ export const Vaults = () => {
                   )}
                   <TableCell>
                     {intl.formatMessage({
-                      defaultMessage: 'ROI',
-                      id: 'P8Xs51',
+                      defaultMessage: 'APY',
+                      id: 'MLTKb6',
                     })}
                   </TableCell>
-                  {!isMobile && <TableCell />}
+                  <TableCell>
+                    {intl.formatMessage({
+                      defaultMessage: 'Balance',
+                      id: 'H5+NAX',
+                    })}
+                  </TableCell>
+                  {!isMobile && (
+                    <TableCell>
+                      {intl.formatMessage({
+                        defaultMessage: 'P&L',
+                        id: 'Do29Mx',
+                      })}
+                    </TableCell>
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {mvs.map((mv, i) => (
-                  <VaultTableRow
-                    key={mv.id}
-                    metavault={mv}
-                    to={`./${mv.id}`}
-                    isLast={i === mvs.length - 1}
+                {VAULT_CONFIGS.map((config, i) => (
+                  <CoreVaultTableRow
+                    key={config.address}
+                    config={config}
+                    to={buildVaultPath(config.address)}
+                    isLast={i === VAULT_CONFIGS.length - 1}
                   />
-                ))}
-                {COMING_SOON.map((cs) => (
-                  <ComingSoonRow key={cs} token={cs} />
                 ))}
               </TableBody>
             </Table>

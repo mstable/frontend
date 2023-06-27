@@ -8,7 +8,7 @@ import { alpha } from '@mui/material';
 import { constants } from 'ethers';
 import { ascend, pathOr, pluck, prop, sort } from 'ramda';
 import { useIntl } from 'react-intl';
-import { mainnet, useContractReads, useNetwork } from 'wagmi';
+import { mainnet, useContractReads } from 'wagmi';
 
 import { useMetavaultQuery } from './queries.generated';
 
@@ -31,7 +31,10 @@ const getGradient =
     return gradient;
   };
 
-export const useChartData = (metavault: Metavault, isSmallChart?: boolean) => {
+export const useMetavaultChartData = (
+  metavault: Metavault,
+  isSmallChart?: boolean,
+) => {
   const intl = useIntl();
   const dataSource = useDataSource();
   const { data } = useMetavaultQuery(dataSource, {
@@ -138,9 +141,8 @@ export const useChartData = (metavault: Metavault, isSmallChart?: boolean) => {
 };
 
 export const useTotalTvl = () => {
-  const { chain } = useNetwork();
   const { currency } = usePrices();
-  const mvs = metavaults[chain?.id || mainnet.id];
+  const mvs = metavaults[mainnet.id];
   const assets = mvs.map((mv) => mv.asset.address);
   const decimals = mvs.map((mv) => mv.asset.decimals);
   const { data: tvls, isLoading: tvlsLoading } = useContractReads({

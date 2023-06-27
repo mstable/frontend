@@ -1,0 +1,37 @@
+query fundQuery($address: String!) {
+  fund(address: $address) {
+    name
+    address
+    managerLogicAddress
+    tokenPrice
+    totalValue
+    totalSupply
+    managerFeeNumerator
+    blockTime
+    riskFactor
+    performanceMetrics {
+      day
+      week
+      month
+      quarter
+      halfyear
+      year
+    }
+    isPrivate
+    fundComposition {
+      tokenName
+      tokenAddress
+      amount
+      rate
+      isDeposit
+      precision
+      asset {
+        iconSymbols
+      }
+    }
+    apy {
+      monthly
+      weekly
+    }
+  }
+}

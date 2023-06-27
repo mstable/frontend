@@ -1,6 +1,9 @@
 import { SettingsButton } from '@frontend/mstable-settings';
 import { MStable, MStableShort } from '@frontend/shared-icons';
-import { OpenAccountModalButton } from '@frontend/shared-providers';
+import {
+  OpenAccountModalButton,
+  OpenNetworkModalButton,
+} from '@frontend/shared-providers';
 import {
   alpha,
   AppBar,
@@ -51,6 +54,9 @@ export const Topnav = () => {
         >
           <OpenAccountModalButton
             sx={{ maxWidth: 180, maxHeight: 36, px: 1 }}
+          />
+          <OpenNetworkModalButton
+            sx={{ height: 36, width: 36, pointerEvents: 'none' }}
           />
           <SettingsButton sx={{ height: 36, width: 36 }} />
         </Stack>

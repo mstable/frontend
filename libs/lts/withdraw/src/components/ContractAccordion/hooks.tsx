@@ -8,8 +8,7 @@ import {
   usePushNotification,
 } from '@frontend/shared-providers';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
-import { BigDecimal, isNilOrEmpty } from '@frontend/shared-utils';
-import { isDev } from '@frontend/shared-utils';
+import { BigDecimal, isDev, isNilOrEmpty } from '@frontend/shared-utils';
 import { useNavigate } from '@tanstack/react-location';
 import { useQuery } from '@tanstack/react-query';
 import {

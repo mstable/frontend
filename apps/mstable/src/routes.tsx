@@ -1,15 +1,17 @@
 import { Home } from './views/Home';
 
-import type { MvRoute } from '@frontend/mstable-metavault';
 import type { Route } from '@tanstack/react-location';
 
-export type MstableRoute = MvRoute;
-
-export const routes: Route<MstableRoute>[] = [
+export const routes: Route[] = [
   {
-    id: 'metavault',
-    path: '/:mvid',
-    element: () => import('./views/Metavault').then((mod) => <mod.Metavault />),
+    id: 'vault',
+    path: '/vault',
+    children: [
+      {
+        path: ':address',
+        element: () => import('./views/Vault').then((mod) => <mod.Vault />),
+      },
+    ],
   },
   {
     id: 'explore',
