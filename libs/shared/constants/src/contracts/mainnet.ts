@@ -6,7 +6,7 @@ import type { Contract } from '../types';
 
 export const contractsMainnet: Contract[] = [
   {
-    address: '0x3509816328cf50Fed7631c2F5C9a18c75cd601F0',
+    address: '0x06e54ADa21565c4F2Ebe2bc1E3C4BD04262A4616',
     chainId: mainnet.id,
     abi: L1ComptrollerABI,
     name: 'L1Comptroller',

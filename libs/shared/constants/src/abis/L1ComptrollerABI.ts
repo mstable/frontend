@@ -154,7 +154,7 @@ export const L1ComptrollerABI = [
       { internalType: 'address', name: 'receiver', type: 'address' },
       { internalType: 'uint256', name: 'amount', type: 'uint256' },
     ],
-    name: 'buyBackOnL2',
+    name: 'buyBack',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

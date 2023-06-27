@@ -92,7 +92,7 @@ export const InputStep = (props: MotionStackProps) => {
                       })}
                     </Typography>
                     <Button
-                      href="https://app.velodrome.finance/liquidity/manage?address=0x66a8bd7ccfd52bfb5bc838d149fba78e6920303f"
+                      href="https://app.velodrome.finance/swap"
                       target="_blank"
                       rel="noopener noreferrer"
                       size="large"
