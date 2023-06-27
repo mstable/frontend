@@ -1,4 +1,5 @@
 import { useDataSource } from '@frontend/mstable-data-access';
+import { useIsMobile } from '@frontend/shared-hooks';
 import { MVIcon, ProtocolIcon } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
 import {
@@ -8,14 +9,12 @@ import {
   TableCell,
   TableRow,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
 
-import { useChartData } from '../hooks';
+import { useMetavaultChartData } from '../hooks';
 import { useMetavaultQuery } from '../queries.generated';
 import { LineChart } from './LineChart';
 
@@ -43,15 +42,14 @@ const tagProps: TypographyProps = {
 
 export const VaultTableRow = ({ metavault, to, isLast }: Props) => {
   const intl = useIntl();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
   const navigate = useNavigate();
   const dataSource = useDataSource();
   const { data } = useMetavaultQuery(dataSource, {
     id: metavault.address,
     firstBlock: metavault.firstBlock,
   });
-  const chartData = useChartData(metavault, true);
+  const chartData = useMetavaultChartData(metavault, true);
 
   return (
     <TableRow

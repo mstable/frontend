@@ -1,4 +1,5 @@
 import { metavaults } from '@frontend/shared-constants';
+import { useIsMobile } from '@frontend/shared-hooks';
 import { usePrices } from '@frontend/shared-providers';
 import { hoverPrimarySx } from '@frontend/shared-ui';
 import { BigDecimal } from '@frontend/shared-utils';
@@ -9,7 +10,6 @@ import {
   Skeleton,
   Stack,
   Typography,
-  useMediaQuery,
   useTheme,
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
@@ -46,7 +46,7 @@ export const FeatureCard = () => {
   const featuredMv = mvs.find((mv) => mv.featured);
   const { data: totalTvl, isLoading: totalTvlLoading } = useTotalTvl();
   const { currency } = usePrices();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
 
   const handleClick = () => {
     navigate({ to: `./${featuredMv.id}` });

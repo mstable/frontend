@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 
 import { metavaults } from '@frontend/shared-constants';
+import { useIsMobile } from '@frontend/shared-hooks';
 import { useTrack } from '@frontend/shared-providers';
 import { ErrorBoundary, ErrorCard, MVIcon } from '@frontend/shared-ui';
-import { Button, Grid, Stack, useMediaQuery, useTheme } from '@mui/material';
+import { Button, Grid, Stack } from '@mui/material';
 import { useMatch, useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
 import { propEq } from 'ramda';
@@ -24,9 +25,8 @@ import type { MvRoute } from '../types';
 
 export const Metavault = (props: StackProps) => {
   const intl = useIntl();
-  const theme = useTheme();
   const track = useTrack();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
   const navigate = useNavigate();
   const {
     params: { mvid },

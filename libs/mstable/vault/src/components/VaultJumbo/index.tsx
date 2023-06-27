@@ -37,8 +37,8 @@ export const VaultJumbo = (props: StackProps) => {
           })}
           hint={intl.formatMessage({
             defaultMessage:
-              'The current price of 1 token. Return is represented as a increase in token price value.',
-            id: 'w4UBPL',
+              'The current price of 1 token. Return is represented as an increase in token price value.',
+            id: 'Am173P',
           })}
         >
           {!fund?.tokenPrice ? (

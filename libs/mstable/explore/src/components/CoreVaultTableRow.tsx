@@ -3,18 +3,12 @@ import { useMemo } from 'react';
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import { useFundQuery } from '@frontend/mstable-vault';
 import {
+  useIsMobile,
   useUserVaultBalance,
   useUserVaultInvestmentInfo,
 } from '@frontend/shared-hooks';
 import { TokenIconRevamp } from '@frontend/shared-ui';
-import {
-  Stack,
-  TableCell,
-  TableRow,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Stack, TableCell, TableRow, Typography } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 
 import type { PoolConfig } from '@dhedge/core-ui-kit/types';
@@ -30,8 +24,7 @@ export const CoreVaultTableRow = ({
   to,
   isLast,
 }: VaultTableRowProps) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
   const navigate = useNavigate();
   const { data } = useFundQuery({ address: config.address });
   const { balanceInUsd } = useUserVaultBalance({ address: config.address });

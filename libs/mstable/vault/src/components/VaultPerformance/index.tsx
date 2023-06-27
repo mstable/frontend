@@ -1,11 +1,9 @@
-import { useChartConfig, useChartData } from '@frontend/shared-hooks';
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+  useChartConfig,
+  useChartData,
+  useIsMobile,
+} from '@frontend/shared-hooks';
+import { Card, CardContent, CardHeader } from '@mui/material';
 import { useSearch } from '@tanstack/react-location';
 import { Line } from 'react-chartjs-2';
 import { useIntl } from 'react-intl';
@@ -22,9 +20,7 @@ interface VaultPerformanceProps {
 
 export const VaultPerformance = ({ address }: VaultPerformanceProps) => {
   const intl = useIntl();
-  const theme = useTheme();
-
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
   const { defaultChartPeriod, defaultChartType } = useChartConfig();
   const { chartType = defaultChartType, chartPeriod = defaultChartPeriod } =
     useSearch<VaultRoute>();

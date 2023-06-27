@@ -1,4 +1,5 @@
-import { Box, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { useIsMobile } from '@frontend/shared-hooks';
+import { Box, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import { useTrackedState } from '../state';
@@ -31,8 +32,7 @@ const Indicator = ({ step, label, visited, ...rest }: IndicatorProps) => (
 
 export const StepIndicator = (props: StackProps) => {
   const intl = useIntl();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
   const { step } = useTrackedState();
 
   return (

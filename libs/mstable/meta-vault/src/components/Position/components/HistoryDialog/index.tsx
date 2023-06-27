@@ -1,18 +1,11 @@
 import { useEffect } from 'react';
 
 import { useDataSource } from '@frontend/mstable-data-access';
+import { useIsMobile } from '@frontend/shared-hooks';
 import { useTrack } from '@frontend/shared-providers';
 import { Dialog, Spinner } from '@frontend/shared-ui';
 import { isNilOrEmpty } from '@frontend/shared-utils';
-import {
-  Box,
-  Button,
-  Table,
-  TableBody,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Box, Button, Table, TableBody, Typography } from '@mui/material';
 import { Tray } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 import { useAccount, useNetwork } from 'wagmi';
@@ -24,9 +17,8 @@ import { ItemTableRow } from './ItemTableRow';
 
 export const HistoryDialog = ({ onClose }: { onClose: () => void }) => {
   const intl = useIntl();
-  const theme = useTheme();
   const track = useTrack();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
   const { chain } = useNetwork();
   const { metavault } = useMetavault();
   const { address } = useAccount();

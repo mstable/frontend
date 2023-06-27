@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { VAULT_CONFIGS } from '@frontend/shared-constants';
+import { useIsMobile } from '@frontend/shared-hooks';
 import {
   Box,
   Grid,
@@ -13,7 +14,6 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
-  useMediaQuery,
   useTheme,
 } from '@mui/material';
 import { ListDashes, SquaresFour } from 'phosphor-react';
@@ -22,10 +22,12 @@ import { useIntl } from 'react-intl';
 import { CoreVaultCard } from './CoreVaultCard';
 import { CoreVaultTableRow } from './CoreVaultTableRow';
 
+const buildVaultPath = (address: string) => `./vault/${address}`;
+
 export const Vaults = () => {
   const intl = useIntl();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
 
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 
@@ -60,7 +62,7 @@ export const Vaults = () => {
               <Grid key={config.address} item xs={12} sm={6} lg={4}>
                 <CoreVaultCard
                   config={config}
-                  to={`./vault/${config.address}`}
+                  to={buildVaultPath(config.address)}
                   sx={{
                     height: '100%',
                   }}
@@ -124,7 +126,7 @@ export const Vaults = () => {
                   <CoreVaultTableRow
                     key={config.address}
                     config={config}
-                    to={`./vault/${config.address}`}
+                    to={buildVaultPath(config.address)}
                     isLast={i === VAULT_CONFIGS.length - 1}
                   />
                 ))}

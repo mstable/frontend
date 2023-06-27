@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useDataSource } from '@frontend/mstable-data-access';
+import { useIsMobile } from '@frontend/shared-hooks';
 import {
   OpenAccountModalButton,
   useGasFee,
@@ -27,8 +28,6 @@ import {
   Select,
   Stack,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import produce from 'immer';
@@ -52,8 +51,7 @@ export const YieldCalculatorDialog = ({
   onClose: () => void;
 }) => {
   const intl = useIntl();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
   const navigate = useNavigate<MvRoute>();
   const {
     assetBalance,

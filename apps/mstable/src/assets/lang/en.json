@@ -486,6 +486,12 @@
       "value": "Discord support channel"
     }
   ],
+  "Am173P": [
+    {
+      "type": 0,
+      "value": "The current price of 1 token. Return is represented as an increase in token price value."
+    }
+  ],
   "Ar5obI": [
     {
       "type": 0,
@@ -1009,12 +1015,6 @@
       "value": "."
     }
   ],
-  "VGRRFC": [
-    {
-      "type": 0,
-      "value": "You will receive no less that this amount."
-    }
-  ],
   "VMhVlJ": [
     {
       "type": 0,
@@ -1087,6 +1087,12 @@
     {
       "type": 0,
       "value": "Burn MTA and receive MTy on Optimism"
+    }
+  ],
+  "X/I7ge": [
+    {
+      "type": 0,
+      "value": "You will receive no less than this amount."
     }
   ],
   "X/RW9w": [
@@ -1382,21 +1388,6 @@
     {
       "type": 0,
       "value": "Vault name"
-    }
-  ],
-  "h4nW++": [
-    {
-      "type": 0,
-      "value": "When the \"Auto\" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. "
-    },
-    {
-      "children": [],
-      "type": 8,
-      "value": "br"
-    },
-    {
-      "type": 0,
-      "value": " Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 2-3%."
     }
   ],
   "hAz8Yo": [
@@ -1916,12 +1907,6 @@
       "value": "Sign Transaction"
     }
   ],
-  "w4UBPL": [
-    {
-      "type": 0,
-      "value": "The current price of 1 token. Return is represented as a increase in token price value."
-    }
-  ],
   "wqlXwW": [
     {
       "type": 0,
@@ -1956,6 +1941,21 @@
     {
       "type": 0,
       "value": "mStable Treasury Yield"
+    }
+  ],
+  "yap3X0": [
+    {
+      "type": 0,
+      "value": "When the \"Auto\" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. "
+    },
+    {
+      "children": [],
+      "type": 8,
+      "value": "br"
+    },
+    {
+      "type": 0,
+      "value": " Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 1-2%."
     }
   ],
   "yuiyES": [

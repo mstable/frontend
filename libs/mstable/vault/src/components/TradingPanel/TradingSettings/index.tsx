@@ -73,8 +73,8 @@ export const TradingSettings: FC<ButtonProps> = (props) => {
             })}
             tooltipText={intl.formatMessage({
               defaultMessage:
-                'When the "Auto" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. <br></br> Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 2-3%.',
-              id: 'h4nW++',
+                'When the "Auto" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. <br></br> Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 1-2%.',
+              id: 'yap3X0',
             })}
           >
             <SlippageSelector />

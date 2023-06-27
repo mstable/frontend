@@ -9,7 +9,7 @@ import { useIntl } from 'react-intl';
 import { Address } from '@dhedge/core-ui-kit/types';
 import { CHART_PERIOD, CHART_TYPE } from '@frontend/shared-types';
 
-import { useTokenPriceHistoryQuery } from './queries/useTokenPriceHistoryQuery';
+import { useTokenPriceHistoryQuery } from './queries';
 
 import type { ChartData, ChartOptions, ScriptableContext } from 'chart.js';
 

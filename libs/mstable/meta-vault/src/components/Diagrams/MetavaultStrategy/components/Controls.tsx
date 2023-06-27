@@ -1,4 +1,5 @@
-import { Button, Stack, useMediaQuery, useTheme } from '@mui/material';
+import { useIsMobile } from '@frontend/shared-hooks';
+import { Button, Stack } from '@mui/material';
 import { ArrowCounterClockwise, ArrowLeft, ArrowRight } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
@@ -10,8 +11,7 @@ type ControlsProps = { onClose?: () => void } & StackProps;
 
 export const Controls = ({ onClose = () => null, ...rest }: ControlsProps) => {
   const intl = useIntl();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
   const { step, handleNext, handlePrev, handleReset } = useSteps();
 
   const actionButtonProps: ButtonProps = {

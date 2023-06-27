@@ -8,7 +8,6 @@ import {
   useUserVaultBalance,
   useUserVaultInvestmentInfo,
 } from '@frontend/shared-hooks';
-import { useMediaQuery, useTheme } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import { useIntl } from 'react-intl';
 
@@ -18,8 +17,6 @@ import type { CoreVaultCardProps } from './types';
 
 export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
   const intl = useIntl();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
   const { data, isLoading } = useFundQuery({ address: config.address });
 
@@ -52,8 +49,8 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
     () =>
       intl.formatMessage({
         defaultMessage:
-          'The current price of 1 token. Return is represented as a increase in token price value.',
-        id: 'w4UBPL',
+          'The current price of 1 token. Return is represented as an increase in token price value.',
+        id: 'Am173P',
       }),
     [intl],
   );
@@ -146,7 +143,6 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
 
   return {
     intl,
-    isMobile,
     isLoading,
     handleClick,
     tokenPriceLabel,

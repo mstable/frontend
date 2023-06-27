@@ -1,19 +1,19 @@
 import { DEFAULT_CHAIN_ID } from '@dhedge/core-ui-kit/const';
+import { useNetwork } from '@dhedge/core-ui-kit/hooks/web3';
 import { CORE_VAULT_NETWORK_CONFIG_MAP } from '@frontend/shared-constants';
-import { useMediaQuery, useTheme } from '@mui/material';
+import { useIsMobile } from '@frontend/shared-hooks';
 import { useNavigate } from '@tanstack/react-location';
 
 import { DefaultCoreFeatureCard } from './DefaultCoreFeatureCard';
 import { MobileCoreFeatureCard } from './MobileCoreFeatureCard';
 
 export const CoreFeatureCard = () => {
-  const theme = useTheme();
+  const { chainId } = useNetwork();
   const navigate = useNavigate();
 
-  // TODO: handle chainId;
-  const coreVaults = CORE_VAULT_NETWORK_CONFIG_MAP[DEFAULT_CHAIN_ID];
+  const coreVaults = CORE_VAULT_NETWORK_CONFIG_MAP[chainId ?? DEFAULT_CHAIN_ID];
   const featuredVault = coreVaults.find((vault) => vault.featured);
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
 
   const handleClick = () => {
     navigate({ to: `./vault/${featuredVault.address}` });

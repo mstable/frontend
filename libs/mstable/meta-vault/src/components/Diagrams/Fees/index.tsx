@@ -1,5 +1,6 @@
+import { useIsMobile } from '@frontend/shared-hooks';
 import { Arrow, Logo } from '@frontend/shared-ui';
-import { Stack, useMediaQuery, useTheme } from '@mui/material';
+import { Stack, useTheme } from '@mui/material';
 import {
   ArrowsClockwise,
   Bank,
@@ -18,7 +19,7 @@ export type FeesProps = { fees: number } & StackProps;
 export const PerformanceFees = ({ fees, ...rest }: FeesProps) => {
   const theme = useTheme();
   const intl = useIntl();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
 
   const arrowProps: ArrowProps = {
     direction: isMobile ? 'down' : 'right',
@@ -76,7 +77,7 @@ export const PerformanceFees = ({ fees, ...rest }: FeesProps) => {
 export const LiquidationFees = ({ fees, ...rest }: FeesProps) => {
   const theme = useTheme();
   const intl = useIntl();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
 
   const arrowProps: ArrowProps = {
     direction: isMobile ? 'down' : 'right',

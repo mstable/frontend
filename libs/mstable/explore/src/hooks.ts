@@ -31,7 +31,10 @@ const getGradient =
     return gradient;
   };
 
-export const useChartData = (metavault: Metavault, isSmallChart?: boolean) => {
+export const useMetavaultChartData = (
+  metavault: Metavault,
+  isSmallChart?: boolean,
+) => {
   const intl = useIntl();
   const dataSource = useDataSource();
   const { data } = useMetavaultQuery(dataSource, {

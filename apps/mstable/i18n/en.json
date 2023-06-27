@@ -206,6 +206,9 @@
   "7ynb1z": {
     "defaultMessage": "{value} GWEI"
   },
+  "Am173P": {
+    "defaultMessage": "The current price of 1 token. Return is represented as an increase in token price value."
+  },
   "Do29Mx": {
     "defaultMessage": "P&L"
   },
@@ -259,9 +262,6 @@
   },
   "rfzzi6": {
     "defaultMessage": "Profit/Loss"
-  },
-  "w4UBPL": {
-    "defaultMessage": "The current price of 1 token. Return is represented as a increase in token price value."
   },
   "zFNxtv": {
     "defaultMessage": "Protocols"
@@ -587,11 +587,11 @@
   "S0seuN": {
     "defaultMessage": "Recommended min slippage"
   },
-  "VGRRFC": {
-    "defaultMessage": "You will receive no less that this amount."
-  },
   "VyTtUL": {
     "defaultMessage": "The {symbol} Vault charges a {fee} entry fee."
+  },
+  "X/I7ge": {
+    "defaultMessage": "You will receive no less than this amount."
   },
   "X/RW9w": {
     "defaultMessage": "Slippage Tolerance"
@@ -607,9 +607,6 @@
   },
   "fhnmhR": {
     "defaultMessage": "Vault strategy pipeline."
-  },
-  "h4nW++": {
-    "defaultMessage": "When the \"Auto\" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. <br></br> Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 2-3%."
   },
   "hAz8Yo": {
     "defaultMessage": "$"
@@ -655,6 +652,9 @@
   },
   "xrKHS6": {
     "defaultMessage": "Success"
+  },
+  "yap3X0": {
+    "defaultMessage": "When the \"Auto\" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. <br></br> Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 1-2%."
   },
   "zGHadw": {
     "defaultMessage": "Strategy"

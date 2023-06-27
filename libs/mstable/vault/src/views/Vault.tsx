@@ -1,7 +1,8 @@
+import { useIsMobile } from '@frontend/shared-hooks';
 import { useTrack } from '@frontend/shared-providers';
 import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
 import { TokenIconRevamp } from '@frontend/shared-ui';
-import { Button, Grid, Stack, useMediaQuery, useTheme } from '@mui/material';
+import { Button, Grid, Stack } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from 'phosphor-react';
 import { useIntl } from 'react-intl';
@@ -26,10 +27,9 @@ interface VaultProps extends StackProps {
 
 const VaultContent = ({ config, ...props }: VaultProps) => {
   const intl = useIntl();
-  const theme = useTheme();
   const track = useTrack();
   const navigate = useNavigate();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
 
   useCoreUiKitInitialization();
 

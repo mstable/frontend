@@ -1,3 +1,4 @@
+import { useIsMobile } from '@frontend/shared-hooks';
 import { isNilOrEmpty } from '@frontend/shared-utils';
 import Close from '@mui/icons-material/Close';
 import {
@@ -7,8 +8,6 @@ import {
   DialogContentText,
   DialogTitle,
   IconButton,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material';
 
 import type { DialogProps as MuiDialogProps } from '@mui/material';
@@ -44,8 +43,7 @@ export const Dialog = ({
   disableClickAway = false,
   ...rest
 }: DialogProps) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
 
   if (isNilOrEmpty(content)) return null;
 

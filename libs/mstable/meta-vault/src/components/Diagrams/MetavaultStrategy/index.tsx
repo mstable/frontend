@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
-import { Stack, useMediaQuery, useTheme } from '@mui/material';
+import { useIsMobile } from '@frontend/shared-hooks';
+import { Stack } from '@mui/material';
 
 import { AnimatedDiagram } from './components/AnimatedDiagram';
 import { Controls } from './components/Controls';
@@ -15,8 +16,7 @@ export type DiagramStrategyProps = {
 };
 
 const DiagramStrategyWrapped = ({ onClose }: DiagramStrategyProps) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
   const { handleReset } = useSteps();
 
   useEffect(() => {

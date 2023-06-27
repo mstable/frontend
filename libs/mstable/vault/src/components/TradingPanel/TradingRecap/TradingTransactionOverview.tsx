@@ -121,8 +121,8 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
           id: '5gorcB',
         })}
         tooltipText={intl.formatMessage({
-          defaultMessage: 'You will receive no less that this amount.',
-          id: 'VGRRFC',
+          defaultMessage: 'You will receive no less than this amount.',
+          id: 'X/I7ge',
         })}
         value={minReceivedText}
       />

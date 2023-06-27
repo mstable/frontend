@@ -1,15 +1,9 @@
 import { useEffect } from 'react';
 
+import { useIsMobile } from '@frontend/shared-hooks';
 import { useTrack } from '@frontend/shared-providers';
 import { Dialog } from '@frontend/shared-ui';
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Button, Card, CardContent, CardHeader } from '@mui/material';
 import { useNavigate, useSearch } from '@tanstack/react-location';
 import produce from 'immer';
 import { FrameCorners } from 'phosphor-react';
@@ -25,14 +19,13 @@ import type { MvRoute } from '../../types';
 
 export const VaultPerformance = () => {
   const intl = useIntl();
-  const theme = useTheme();
   const track = useTrack();
   const {
     metavault: { id },
   } = useMetavault();
   const { address } = useAccount();
   const { chain } = useNetwork();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
   const { defaultChartTimeframe, defaultChartType } = useChartConfig();
   const {
     chartType = defaultChartType,

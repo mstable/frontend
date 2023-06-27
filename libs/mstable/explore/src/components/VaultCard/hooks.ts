@@ -1,14 +1,14 @@
 import { useCallback, useMemo } from 'react';
 
 import { useDataSource } from '@frontend/mstable-data-access';
+import { useIsMobile } from '@frontend/shared-hooks';
 import { usePrices } from '@frontend/shared-providers';
 import { BigDecimal } from '@frontend/shared-utils';
-import { useMediaQuery, useTheme } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
 
-import { useChartData } from '../../hooks';
+import { useMetavaultChartData } from '../../hooks';
 import { useMetavaultQuery } from '../../queries.generated';
 
 import type { TypographyProps } from '@mui/material';
@@ -21,8 +21,7 @@ export const useVaultCardProps = ({
   onClick,
 }: VaultCardProps) => {
   const intl = useIntl();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useIsMobile();
   const navigate = useNavigate();
   const { currency } = usePrices();
   const dataSource = useDataSource();
@@ -31,7 +30,7 @@ export const useVaultCardProps = ({
     firstBlock: metavault.firstBlock,
     days: 7,
   });
-  const chartData = useChartData(metavault);
+  const chartData = useMetavaultChartData(metavault);
 
   const tagProps: TypographyProps = {
     display: 'flex',
