@@ -50,7 +50,8 @@ export const useChartConfig = (): ChartConfig => {
         id: 'ehxGBh',
       }),
       chartMargin: 0.05,
-      getValue: (item) => new BigNumber(item.tokenPrice).plus(1).toNumber(),
+      getValue: (item) =>
+        new BigNumber(item.adjustedTokenPrice).plus(1).toNumber(),
       getLabel: (item) =>
         new Intl.NumberFormat('en-US', {
           style: 'currency',
