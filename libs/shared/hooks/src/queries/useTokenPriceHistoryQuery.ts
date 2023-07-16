@@ -12,8 +12,6 @@ export const tokenPriceHistoryQueryDocument = `
       history {
         adjustedTokenPrice
         timestamp
-        tokenPrice
-        performance
       }
     }
   }
