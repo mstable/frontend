@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Link,
   Stack,
   Typography,
 } from '@mui/material';
@@ -86,7 +87,16 @@ export const Strategy = () => {
         />
         <CardContent sx={{ paddingLeft: 0 }}>
           <Typography mb={2} color="text.secondary">
-            {meta.description}
+            {meta.description}{' '}
+            {meta?.descriptionLink && (
+              <Link
+                href={meta.descriptionLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Read more.
+              </Link>
+            )}
           </Typography>
           <Stack
             direction="column"

@@ -1,6 +1,4 @@
-import { ETHY_OPTIMISM, ETHY_OPTIMISM_VAULT } from './optimism/ethy';
-import { USDMNY_OPTIMISM, USDMNY_OPTIMISM_VAULT } from './optimism/usdmny';
-import { USDY_OPTIMISM, USDY_OPTIMISM_VAULT } from './optimism/usdy';
+import { MHRVST_OPTIMISM, MHRVST_OPTIMISM_VAULT } from './optimism/mhrvst';
 
 import type { TradingPanelContextConfig } from '@dhedge/core-ui-kit/types';
 
@@ -8,15 +6,11 @@ import type { VaultConfig } from '../types';
 
 export const CORE_UI_TOOLKIT_POOL_CONFIG_MAP: TradingPanelContextConfig['poolConfigMap'] =
   {
-    [USDY_OPTIMISM.address]: USDY_OPTIMISM,
-    [USDMNY_OPTIMISM.address]: USDMNY_OPTIMISM,
-    [ETHY_OPTIMISM.address]: ETHY_OPTIMISM,
+    [MHRVST_OPTIMISM.address]: MHRVST_OPTIMISM,
   };
 
 export const VAULT_CONFIG_MAP: Record<VaultConfig['address'], VaultConfig> = {
-  [USDY_OPTIMISM_VAULT.address]: USDY_OPTIMISM_VAULT,
-  [USDMNY_OPTIMISM_VAULT.address]: USDMNY_OPTIMISM_VAULT,
-  [ETHY_OPTIMISM_VAULT.address]: ETHY_OPTIMISM_VAULT,
+  [MHRVST_OPTIMISM.address]: MHRVST_OPTIMISM_VAULT,
 };
 
 export const VAULT_CONFIGS = Object.values(VAULT_CONFIG_MAP);

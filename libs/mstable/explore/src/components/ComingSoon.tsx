@@ -1,24 +1,15 @@
-import { TokenIcon } from '@frontend/shared-ui';
-import { alpha, Stack, TableCell, TableRow, Typography } from '@mui/material';
+import { TokenIconRevamp } from '@frontend/shared-ui';
+import { alpha, Stack, Typography } from '@mui/material';
 import { mergeDeepRight } from 'ramda';
 import { useIntl } from 'react-intl';
 
-import type { StackProps, TableRowProps } from '@mui/material';
+import type { StackProps } from '@mui/material';
 
 export type ComingSoonCardProps = {
-  token: string;
+  index: number;
 } & StackProps;
 
-const comingSoon = {
-  mveth: {
-    color: 'rgb(98, 132, 234)',
-  },
-  mvfrax: {
-    color: 'rgb(0, 0, 0)',
-  },
-};
-
-export const ComingSoonCard = ({ token, ...rest }: ComingSoonCardProps) => {
+export const ComingSoonCard = ({ index, ...rest }: ComingSoonCardProps) => {
   const intl = useIntl();
 
   return (
@@ -34,7 +25,7 @@ export const ComingSoonCard = ({ token, ...rest }: ComingSoonCardProps) => {
 
           borderRadius: 2,
           background: `linear-gradient(180deg, ${alpha(
-            comingSoon[token].color,
+            index % 2 === 0 ? 'rgb(98, 132, 234)' : 'rgb(0, 153, 204)',
             0.2,
           )} 0%, ${alpha(theme.palette.background.default, 0.4)} 100%)`,
           border: `1px solid ${theme.palette.background.highlight}`,
@@ -42,32 +33,13 @@ export const ComingSoonCard = ({ token, ...rest }: ComingSoonCardProps) => {
         })
       }
     >
-      <TokenIcon symbol={token} sx={{ height: 53, width: 53 }} />
+      <TokenIconRevamp
+        symbols={['placeholder']}
+        sx={{ height: 35, width: 35 }}
+      />
       <Typography>
         {intl.formatMessage({ defaultMessage: 'Coming Soon', id: 'LiHQih' })}
       </Typography>
     </Stack>
-  );
-};
-
-export type ComingSoonRowProps = { token: string } & TableRowProps;
-
-export const ComingSoonRow = ({ token, ...rest }: ComingSoonRowProps) => {
-  const intl = useIntl();
-
-  return (
-    <TableRow
-      {...rest}
-      sx={{ backgroundColor: 'background.hihglight', ...rest?.sx }}
-    >
-      <TableCell>
-        <TokenIcon symbol={token} sx={{ height: 32, width: 32 }} />
-      </TableCell>
-      <TableCell colSpan={6}>
-        <Typography variant="value4">
-          {intl.formatMessage({ defaultMessage: 'Coming Soon', id: 'LiHQih' })}
-        </Typography>
-      </TableCell>
-    </TableRow>
   );
 };

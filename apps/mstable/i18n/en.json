@@ -251,6 +251,9 @@
   "YC/ZXg": {
     "defaultMessage": "Share price"
   },
+  "YZUa24": {
+    "defaultMessage": "Earn optimized, automated, and diversified yield across DeFi."
+  },
   "ehxGBh": {
     "defaultMessage": "Token Price"
   },
@@ -262,6 +265,9 @@
   },
   "rfzzi6": {
     "defaultMessage": "Profit/Loss"
+  },
+  "yFvqzw": {
+    "defaultMessage": "Meta Harvester"
   },
   "zFNxtv": {
     "defaultMessage": "Protocols"
@@ -706,6 +712,9 @@
   },
   "vS/YSY": {
     "defaultMessage": "Curve is an exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers, without an opportunity cost."
+  },
+  "aTX7LJ": {
+    "defaultMessage": "1D"
   },
   "+vVZ/G": {
     "defaultMessage": "Connect"

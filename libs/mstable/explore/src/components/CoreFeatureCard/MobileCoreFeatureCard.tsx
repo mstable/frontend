@@ -70,6 +70,7 @@ export const MobileCoreFeatureCard: FC<CoreFeatureCardProps> = ({
           fontSize: 18,
           fontWeight: 800,
           mb: 4,
+          textAlign: 'center',
         },
         '.panel': {
           border: `1px solid ${theme.palette.divider}`,
@@ -111,14 +112,15 @@ export const MobileCoreFeatureCard: FC<CoreFeatureCardProps> = ({
       </Typography>
       <Typography className="title" mb={3}>
         {intl.formatMessage({
-          defaultMessage: 'Vaults',
-          id: 's2zphO',
+          defaultMessage: 'Meta Harvester',
+          id: 'yFvqzw',
         })}
       </Typography>
       <Typography className="subtitle" mb={3}>
         {intl.formatMessage({
-          defaultMessage: 'Earn diversified yield across DeFi.',
-          id: 'P1xtEU',
+          defaultMessage:
+            'Earn optimized, automated, and diversified yield across DeFi.',
+          id: 'YZUa24',
         })}
       </Typography>
       <CoreVaultCard

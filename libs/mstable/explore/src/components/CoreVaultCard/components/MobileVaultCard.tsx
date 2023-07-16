@@ -63,9 +63,14 @@ export const MobileVaultCard = (props: CoreVaultCardProps) => {
       {isLoading ? (
         <Skeleton height={180} width={280} variant="rounded" />
       ) : (
-        <CoreVaultLineChart {...chartData} height={180} width={280} />
+        <CoreVaultLineChart
+          {...chartData}
+          height={180}
+          width={280}
+          sx={{ flexShrink: 0 }}
+        />
       )}
-      <Typography variant="h4" mb={2}>
+      <Typography variant="h4" my={2}>
         {name}
       </Typography>
       <Stack direction="row" mb={4} flexWrap="wrap" columnGap={1} rowGap={2}>
