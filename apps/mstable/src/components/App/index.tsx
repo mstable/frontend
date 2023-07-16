@@ -1,3 +1,4 @@
+import { useScrollToTop } from '@frontend/shared-hooks';
 import { useTrack } from '@frontend/shared-providers';
 import { ErrorBoundary, ErrorPage } from '@frontend/shared-ui';
 import { Box, Stack } from '@mui/material';
@@ -11,6 +12,7 @@ import { Topnav } from '../Topnav';
 
 export const App = () => {
   const track = useTrack();
+  useScrollToTop();
 
   useEffectOnce(() => {
     registerCharts();
