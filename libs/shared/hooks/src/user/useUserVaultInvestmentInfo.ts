@@ -32,7 +32,7 @@ export const useUserVaultInvestmentInfo = ({
         vaultAddress: address,
         investorAddress: account,
       },
-      { enabled: !!account },
+      { enabled: false }, // TODO: enable custom currency roi when it will be ready
     );
 
   return {
