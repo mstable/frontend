@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { VAULT_CONFIGS } from '@frontend/shared-constants';
-import { useIsMobile } from '@frontend/shared-hooks';
 import {
   Box,
   Grid,
@@ -27,7 +26,6 @@ const buildVaultPath = (address: string) => `./vault/${address}`;
 export const Vaults = () => {
   const intl = useIntl();
   const theme = useTheme();
-  const isMobile = useIsMobile();
 
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
 
@@ -91,14 +89,12 @@ export const Vaults = () => {
                       id: 'g6UhRO',
                     })}
                   </TableCell>
-                  {!isMobile && (
-                    <TableCell>
-                      {intl.formatMessage({
-                        defaultMessage: 'TVL',
-                        id: 'SKB/G9',
-                      })}
-                    </TableCell>
-                  )}
+                  <TableCell>
+                    {intl.formatMessage({
+                      defaultMessage: 'TVL',
+                      id: 'SKB/G9',
+                    })}
+                  </TableCell>
                   <TableCell>
                     {intl.formatMessage({
                       defaultMessage: 'APY',
@@ -111,14 +107,12 @@ export const Vaults = () => {
                       id: 'H5+NAX',
                     })}
                   </TableCell>
-                  {!isMobile && (
-                    <TableCell>
-                      {intl.formatMessage({
-                        defaultMessage: 'P&L',
-                        id: 'Do29Mx',
-                      })}
-                    </TableCell>
-                  )}
+                  <TableCell>
+                    {intl.formatMessage({
+                      defaultMessage: 'P&L',
+                      id: 'Do29Mx',
+                    })}
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

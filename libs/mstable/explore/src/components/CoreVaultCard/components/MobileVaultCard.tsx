@@ -31,7 +31,7 @@ export const MobileVaultCard = (props: CoreVaultCardProps) => {
     balanceLabel,
     balanceHint,
     roiLabel,
-    formattedRoiUsd,
+    roiInfo,
   } = useCoreVaultCardProps(props);
   const { config, to, ...rest } = props;
 
@@ -115,27 +115,94 @@ export const MobileVaultCard = (props: CoreVaultCardProps) => {
               label: { sx: { mb: 0.5 } },
             }}
           >
-            {isLoading ? (
+            {roiInfo.isRoiLoading ? (
               <Skeleton width={50} />
             ) : (
-              <Typography
-                variant="value3"
-                color={
-                  formattedRoiUsd === 0
-                    ? undefined
-                    : formattedRoiUsd > 0
-                    ? 'success.main'
-                    : 'error.main'
-                }
-              >
-                {Intl.NumberFormat('en-US', {
-                  currency: 'USD',
-                  style: 'currency',
-                  maximumSignificantDigits: 2,
-                }).format(formattedRoiUsd)}
-              </Typography>
+              <>
+                <Typography
+                  variant="value3"
+                  color={
+                    !roiInfo.roiInUsd
+                      ? undefined
+                      : roiInfo.roiInUsd > 0
+                      ? 'success.main'
+                      : 'error.main'
+                  }
+                >
+                  {Intl.NumberFormat('en-US', {
+                    currency: 'USD',
+                    style: 'currency',
+                    maximumSignificantDigits: 2,
+                  }).format(roiInfo.roiInUsd)}
+                </Typography>
+                {roiInfo.roiInUsd !== 0 && (
+                  <Typography
+                    variant="value5"
+                    color={
+                      roiInfo.roiInPercentage === 0
+                        ? undefined
+                        : roiInfo.roiInPercentage > 0
+                        ? 'success.main'
+                        : 'error.main'
+                    }
+                    ml={0.5}
+                  >
+                    (
+                    {Intl.NumberFormat('en-US', {
+                      style: 'percent',
+                      maximumSignificantDigits: 2,
+                    }).format(roiInfo.roiInPercentage / 100)}
+                    )
+                  </Typography>
+                )}
+              </>
             )}
           </ValueLabel>
+          {!!roiInfo.customRoiInCurrency &&
+            !!roiInfo.customRoiCurrencySymbol && (
+              <Stack
+                direction="row"
+                alignItems="center"
+                mt={-0.5}
+                sx={{ flexWrap: 'nowrap' }}
+              >
+                <Typography
+                  variant="value3"
+                  color={
+                    roiInfo.customRoiInCurrency === 0
+                      ? undefined
+                      : roiInfo.customRoiInCurrency > 0
+                      ? 'success.main'
+                      : 'error.main'
+                  }
+                >
+                  {Intl.NumberFormat('en-US', {
+                    currency: 'USD',
+                    style: 'currency',
+                    maximumFractionDigits: 3,
+                  })
+                    .format(roiInfo.customRoiInCurrency)
+                    .replace('$', roiInfo.customRoiCurrencySymbol)}
+                </Typography>
+                <Typography
+                  variant="value5"
+                  color={
+                    roiInfo.customRoiInPercentage === 0
+                      ? undefined
+                      : roiInfo.customRoiInPercentage > 0
+                      ? 'success.main'
+                      : 'error.main'
+                  }
+                >
+                  (
+                  {Intl.NumberFormat('en-US', {
+                    style: 'percent',
+                    maximumSignificantDigits: 2,
+                  }).format(roiInfo.customRoiInPercentage / 100)}
+                  )
+                </Typography>
+              </Stack>
+            )}
         </Grid>
       </Grid>
     </HoverablePrimaryCard>

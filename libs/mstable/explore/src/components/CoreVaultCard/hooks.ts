@@ -31,7 +31,7 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
   const { balanceInUsd: balance } = useUserVaultBalance({
     address: config.address,
   });
-  const { formattedRoiUsd } = useUserVaultInvestmentInfo({
+  const roiInfo = useUserVaultInvestmentInfo({
     address: config.address,
   });
 
@@ -161,6 +161,6 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
     balanceLabel,
     balanceHint,
     roiLabel,
-    formattedRoiUsd: +formattedRoiUsd,
+    roiInfo,
   };
 };

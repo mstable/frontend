@@ -3,11 +3,11 @@ import { useMemo } from 'react';
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import { useFundQuery } from '@frontend/mstable-vault';
 import {
-  useIsMobile,
   useUserVaultBalance,
   useUserVaultInvestmentInfo,
 } from '@frontend/shared-hooks';
 import { TokenIconRevamp } from '@frontend/shared-ui';
+import { formatNumberToLimitedDecimals } from '@frontend/shared-utils';
 import { Stack, TableCell, TableRow, Typography } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
 
@@ -24,13 +24,13 @@ export const CoreVaultTableRow = ({
   to,
   isLast,
 }: VaultTableRowProps) => {
-  const isMobile = useIsMobile();
   const navigate = useNavigate();
   const { data } = useFundQuery({ address: config.address });
   const { balanceInUsd } = useUserVaultBalance({ address: config.address });
-  const { formattedRoiUsd } = useUserVaultInvestmentInfo({
-    address: config.address,
-  });
+  const { roiInUsd, customRoiInCurrency, customRoiCurrencySymbol } =
+    useUserVaultInvestmentInfo({
+      address: config.address,
+    });
 
   const apy = useMemo(() => {
     const monthlyApy = data?.fund.apy?.monthly;
@@ -56,18 +56,16 @@ export const CoreVaultTableRow = ({
       <TableCell>
         <Typography variant="value4">{data?.fund.name}</Typography>
       </TableCell>
-      {!isMobile && (
-        <TableCell>
-          <Typography variant="value4">
-            {formatToUsd({
-              value: data?.fund.totalValue ? +data?.fund.totalValue : 0,
-              maximumFractionDigits: 0,
-              minimumFractionDigits: 0,
-              normalize: true,
-            })}
-          </Typography>
-        </TableCell>
-      )}
+      <TableCell>
+        <Typography variant="value4">
+          {formatToUsd({
+            value: data?.fund.totalValue ? +data?.fund.totalValue : 0,
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0,
+            normalize: true,
+          })}
+        </Typography>
+      </TableCell>
       <TableCell>
         <Stack direction="row">
           <Typography variant="value4">{apy}</Typography>
@@ -76,22 +74,31 @@ export const CoreVaultTableRow = ({
       <TableCell>
         <Typography variant="value4">{balanceInUsd}</Typography>
       </TableCell>
-      {!isMobile && (
-        <TableCell>
+      <TableCell>
+        <Stack direction="column">
           <Typography
             variant="value4"
             color={
-              formattedRoiUsd === '0'
+              roiInUsd === 0
                 ? undefined
-                : +formattedRoiUsd > 0
+                : roiInUsd > 0
                 ? 'success.main'
                 : 'error.main'
             }
           >
-            ${formattedRoiUsd}
+            ${roiInUsd}
           </Typography>
-        </TableCell>
-      )}
+          {customRoiInCurrency && (
+            <Typography
+              variant="value4"
+              color={customRoiInCurrency > 0 ? 'success.main' : 'error.main'}
+            >
+              {customRoiCurrencySymbol}
+              {formatNumberToLimitedDecimals(customRoiInCurrency, 4)}
+            </Typography>
+          )}
+        </Stack>
+      </TableCell>
     </TableRow>
   );
 };

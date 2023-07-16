@@ -1,5 +1,6 @@
 export * from './abis';
 export * from './contracts';
+export * from './currency';
 export * from './metavaults';
 export * from './etherscan';
 export * from './mstable';
