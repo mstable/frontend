@@ -3,8 +3,6 @@ import type { Address } from '@dhedge/core-ui-kit/types';
 export interface TokenPriceHistory {
   adjustedTokenPrice: string;
   timestamp: string;
-  tokenPrice: string;
-  performance: string;
 }
 
 export interface TokenPriceHistoryQuery {
