@@ -25,6 +25,7 @@
         "libs/mstable/data-access/src/index.ts"
       ],
       "@frontend/mstable-explore": ["libs/mstable/explore/src/index.ts"],
+      "@frontend/mstable-flatcoin": ["libs/mstable/flatcoin/src/index.ts"],
       "@frontend/mstable-metavault": ["libs/mstable/meta-vault/src/index.ts"],
       "@frontend/mstable-settings": ["libs/mstable/settings/src/index.ts"],
       "@frontend/mstable-theme": ["libs/mstable/theme/src/index.ts"],

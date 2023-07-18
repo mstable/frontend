@@ -4,17 +4,23 @@ import {
   OpenAccountModalButton,
   OpenNetworkModalButton,
 } from '@frontend/shared-providers';
+import { RouterLink } from '@frontend/shared-ui';
 import {
   alpha,
   AppBar,
   Button,
+  Link,
   Stack,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
+import { useIntl } from 'react-intl';
+
+import { routes } from '../../routes';
 
 export const Topnav = () => {
+  const intl = useIntl();
   const navigate = useNavigate();
   const theme = useTheme();
   const wide = useMediaQuery(theme.breakpoints.up('sm'));
@@ -52,6 +58,21 @@ export const Topnav = () => {
           alignItems="center"
           spacing={2}
         >
+          {routes.map((route) =>
+            route.meta?.label ? (
+              <Link
+                component={RouterLink}
+                key={route.path}
+                to={route.path}
+                getActiveProps={() => ({
+                  style: { color: theme.palette.info.dark },
+                })}
+                sx={{ color: 'text.primary' }}
+              >
+                {intl.formatMessage(route.meta.label)}
+              </Link>
+            ) : null,
+          )}
           <OpenAccountModalButton
             sx={{ maxWidth: 180, maxHeight: 36, px: 1 }}
           />

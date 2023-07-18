@@ -1,3 +1,5 @@
+import { defineMessage } from 'react-intl';
+
 import { Home } from './views/Home';
 
 import type { Route } from '@tanstack/react-location';
@@ -17,5 +19,16 @@ export const routes: Route[] = [
     id: 'explore',
     path: '/',
     element: <Home />,
+    meta: {
+      label: defineMessage({ defaultMessage: 'Explore', id: '7JlauX' }),
+    },
+  },
+  {
+    id: 'flatcoin',
+    path: '/flatcoin',
+    element: () => import('./views/Flatcoin').then((mod) => <mod.Flatcoin />),
+    meta: {
+      label: defineMessage({ defaultMessage: 'Flatcoin', id: 'Ew5cbe' }),
+    },
   },
 ];
