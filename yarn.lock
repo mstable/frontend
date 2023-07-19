@@ -1995,10 +1995,10 @@
     lodash.noop "^3.0.1"
     lodash.uniqby "^4.7.0"
 
-"@dhedge/crypto-assets@latest":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@dhedge/crypto-assets/-/crypto-assets-0.0.1.tgz#dfed7810f9216b2b7a1a7597a65ae8c3d342574f"
-  integrity sha512-FtUoJE/23VVkXBKmjyVY2MxT9qH35tpHxnBJ0iWardMcOnos3IlvlmAnrxSfQquh5g1FAchc0EJdagogFynxuQ==
+"@dhedge/crypto-assets@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@dhedge/crypto-assets/-/crypto-assets-0.2.3.tgz#ee874281466074a5350159ca11e8d7fb8e95a45f"
+  integrity sha512-V/FYfYiQn698n0JvW6q/uTkRu5bg/j9wkkBiFTuJybXribtbD3RFv0v+kwfgu/k3szgZgQ9svFMACN8hj75c7A==
 
 "@discoveryjs/json-ext@^0.5.3", "@discoveryjs/json-ext@^0.5.7":
   version "0.5.7"
