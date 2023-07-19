@@ -20,13 +20,13 @@ export const MHRVST_OPTIMISM_VAULT: VaultConfig = {
   ...MHRVST_OPTIMISM,
   primaryColor: '#2775CA',
   description:
-    'This vault goes beyond the ordinary, intelligently reallocating liquidity among strategies to secure maximum returns. With its three sub-vaults, including Stablecoin Yield Vault, USD Delta Neutral Vault, and Perpetual Delta Neutral Yield Vault, it employs sophisticated risk strategies to generate yield based on USD value. Powered by cutting-edge automation, Meta Harvester eliminates the need for manual intervention, ensuring effortless transitions between strategies and pioneering the next phase of efficient yield farming.',
+    'This vault goes beyond the ordinary, intelligently reallocating liquidity among strategies to secure maximum returns. With its three sub-vaults, including Stablecoin Yield Vault, USD Delta Neutral Vault, and Perpetual Delta Neutral Vault. It employs sophisticated risk strategies to generate yield based on USD value. Powered by cutting-edge automation, Meta Harvester eliminates the need for manual intervention, ensuring effortless transitions between strategies and pioneering the next phase of efficient yield farming.',
   // descriptionLink: '', // TODO: add link to docs or post
   featured: true,
   strategies: [
     {
       description:
-        'Allocates funds among its sub-vaults, including Stablecoin Yield Vault, USD Delta Neutral Vault, and Perpetual Delta Neutral Yield Vault, based on the best Annual Percentage Yield (APY) offered by each sub-vault.',
+        'Allocates funds among its sub-vaults, including Stablecoin Yield Vault, USD Delta Neutral Vault, and Perpetual Delta Neutral Vault, based on the best Annual Percentage Yield (APY) offered by each sub-vault.',
     },
     {
       description:
