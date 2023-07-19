@@ -23,3 +23,5 @@ export const CORE_VAULT_NETWORK_CONFIG_MAP = Object.values(
 }, {});
 
 export const DEPOSIT_QUOTE_DIFF_ERROR_THRESHOLD = 3;
+
+export { MHRVST_OPTIMISM, MHRVST_OPTIMISM_VAULT };
