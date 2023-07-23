@@ -23,10 +23,10 @@ import { TradingTokenBalance } from './TradingTokenBalance';
 import type { TradingToken } from '@dhedge/core-ui-kit/types';
 import type { DynamicTradingToken } from '@dhedge/core-ui-kit/types';
 import type { BoxProps, StackProps } from '@mui/material';
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, ReactNode } from 'react';
 
 export type TradingInputProps = {
-  label?: string;
+  label?: ReactNode;
   placeholder?: string;
   disabled?: boolean;
   token: DynamicTradingToken;
