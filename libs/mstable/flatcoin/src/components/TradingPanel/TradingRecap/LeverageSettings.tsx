@@ -32,7 +32,7 @@ const useLeverageInput = () => {
   return { leverage, handleInputChange, updateLeverage };
 };
 
-export const LeverageInput: FC<
+export const LeverageSettings: FC<
   StackProps & { label?: string; disabled?: boolean }
 > = ({ label, disabled, ...props }) => {
   const { leverage, updateLeverage, handleInputChange } = useLeverageInput();

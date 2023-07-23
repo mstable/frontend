@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 import { useFlatcoinPageState, useUpdateTradingType } from '../../state';
 import { FlatcoinTradingStateProvider } from './state';
 import { TradingInputs } from './TradingInputs';
+import { TradingRecap } from './TradingRecap';
 
 import type { CardProps } from '@mui/material';
 import type { FC } from 'react';
@@ -80,7 +81,7 @@ export const TradingPanel: FC<CardProps> = (props) => {
                 border: (theme) => `1px solid ${theme.palette.divider}`,
               }}
             >
-              {/*<TradingRecap />*/}
+              <TradingRecap />
               {/*<TradingButton />*/}
             </Stack>
           </Stack>

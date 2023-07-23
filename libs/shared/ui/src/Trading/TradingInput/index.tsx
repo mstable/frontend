@@ -16,8 +16,8 @@ import {
 import BigNumber from 'bignumber.js';
 import { range } from 'ramda';
 
-import { PercentageButton } from '../Buttons';
-import { TokenIconRevamp } from '../Icons';
+import { PercentageButton } from '../../Buttons';
+import { TokenIconRevamp } from '../../Icons';
 import { TradingTokenBalance } from './TradingTokenBalance';
 
 import type { TradingToken } from '@dhedge/core-ui-kit/types';
