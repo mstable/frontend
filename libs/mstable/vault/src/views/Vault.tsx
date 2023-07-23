@@ -105,19 +105,6 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
                     <ErrorCard
                       onMount={() => {
                         track('error', {
-                          name: 'Unhandled Error Vault: Position Card',
-                        });
-                      }}
-                    />
-                  }
-                >
-                  <Position sx={{ marginTop: -28 }} />
-                </ErrorBoundary>
-                <ErrorBoundary
-                  ErrorComponent={
-                    <ErrorCard
-                      onMount={() => {
-                        track('error', {
                           name: 'Unhandled Error: Trading Panel',
                         });
                       }}
@@ -125,6 +112,19 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
                   }
                 >
                   <TradingPanel />
+                </ErrorBoundary>
+                <ErrorBoundary
+                  ErrorComponent={
+                    <ErrorCard
+                      onMount={() => {
+                        track('error', {
+                          name: 'Unhandled Error Vault: Position Card',
+                        });
+                      }}
+                    />
+                  }
+                >
+                  <Position sx={{ marginTop: -28 }} />
                 </ErrorBoundary>
               </Stack>
             </Grid>
