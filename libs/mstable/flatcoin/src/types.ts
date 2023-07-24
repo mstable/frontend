@@ -1,5 +1,6 @@
-import { MakeGenerics } from '@tanstack/react-location';
-import { CHART_PERIOD, CHART_TYPE } from '@frontend/shared-types';
+import type { DynamicTradingToken } from '@dhedge/core-ui-kit/types';
+import type { CHART_PERIOD, CHART_TYPE } from '@frontend/shared-types';
+import type { MakeGenerics } from '@tanstack/react-location';
 
 export type FlatcoinRoute = MakeGenerics<{
   Search: {
@@ -22,4 +23,10 @@ export interface Position {
   liquidation?: string;
   profitLossTotal: string;
   profitLossFunding: string;
+}
+
+export interface FlatcoinTradingState {
+  sendToken: DynamicTradingToken;
+  receiveToken: DynamicTradingToken;
+  leverage: string;
 }

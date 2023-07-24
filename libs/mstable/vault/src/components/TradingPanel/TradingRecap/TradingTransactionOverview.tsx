@@ -16,40 +16,12 @@ import {
   useMinReceiveText,
 } from '@dhedge/core-ui-kit/hooks/trading';
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
-import { CollapsibleSection, InfoTooltip } from '@frontend/shared-ui';
-import {
-  Box,
-  CircularProgress,
-  Divider,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { CollapsibleSection, TradingOverviewItem } from '@frontend/shared-ui';
+import { CircularProgress, Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import type { StackProps } from '@mui/material';
-import type { FC, ReactNode } from 'react';
-
-interface OverviewItemProps {
-  tooltipText: string;
-  label: string;
-  value?: ReactNode;
-}
-
-const OverviewItem: FC<OverviewItemProps> = ({ label, value, tooltipText }) => (
-  <Stack direction="row" justifyContent="space-between" alignItems="center">
-    <Box display="flex" alignItems="center">
-      <Typography variant="label2">{label}</Typography>
-      <InfoTooltip
-        sx={{ ml: 0.5 }}
-        display="flex"
-        weight="bold"
-        label={tooltipText}
-        size={16}
-      />
-    </Box>
-    <Typography variant="value5">{value}</Typography>
-  </Stack>
-);
+import type { FC } from 'react';
 
 const useTradingTransactionOverview = () => {
   const { address, chainId } = useTradingPanelPoolConfig();
@@ -97,7 +69,7 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
 
   return (
     <Stack {...props} direction="column" spacing={1}>
-      <OverviewItem
+      <TradingOverviewItem
         label={intl.formatMessage({
           defaultMessage: 'Max slippage',
           id: 'k3YWIR',
@@ -115,7 +87,7 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
           </Stack>
         }
       />
-      <OverviewItem
+      <TradingOverviewItem
         label={intl.formatMessage({
           defaultMessage: 'Minimum received',
           id: '5gorcB',
@@ -127,7 +99,7 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
         value={minReceivedText}
       />
       {showMinRecommendedSlippage && (
-        <OverviewItem
+        <TradingOverviewItem
           label={intl.formatMessage({
             defaultMessage: 'Recommended min slippage',
             id: 'S0seuN',
@@ -138,7 +110,7 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
             id: '1vtEYS',
           })}
           value={typeof minSlippage === 'number' ? `${minSlippage}%` : '-'}
-        ></OverviewItem>
+        ></TradingOverviewItem>
       )}
       {isDeposit && (
         <CollapsibleSection
@@ -157,7 +129,7 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
         >
           <Stack direction="column" spacing={1}>
             <Divider sx={{ marginTop: 1 }} />
-            <OverviewItem
+            <TradingOverviewItem
               tooltipText={
                 hasPoolEntryFee
                   ? 'Entry fee is charged on deposit.'
@@ -170,7 +142,7 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
               value={entryFee}
             />
             {hasMinDeposit && (
-              <OverviewItem
+              <TradingOverviewItem
                 label={intl.formatMessage({
                   defaultMessage: 'Minimum deposit',
                   id: 't3IytM',

@@ -6,7 +6,7 @@ import { useIntl } from 'react-intl';
 import type { SxProps } from '@mui/material';
 import type { FC } from 'react';
 
-import type { TradingInputProps } from './';
+import type { TradingInputProps } from './index';
 
 const maxStyles: SxProps = {
   paddingX: 0.5,

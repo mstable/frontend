@@ -1,15 +1,19 @@
-import { Button, Grid, Stack } from '@mui/material';
-import { FC } from 'react';
-import { useNavigate } from '@tanstack/react-location';
-import { ArrowLeft } from '@mui/icons-material';
-import { useIntl } from 'react-intl';
-import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
-import { useTrack } from '@frontend/shared-providers';
 import { useIsMobile } from '@frontend/shared-hooks';
-import { FlatcoinProvider } from '../state';
+import { useTrack } from '@frontend/shared-providers';
+import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
+import { ArrowLeft } from '@mui/icons-material';
+import { Button, Grid, Stack } from '@mui/material';
+import { useNavigate } from '@tanstack/react-location';
+import { useIntl } from 'react-intl';
+
 import { Jumbo } from '../components/Jumbo';
 import { Performance } from '../components/Performance';
 import { Positions } from '../components/Positions';
+import { TradingPanel } from '../components/TradingPanel';
+import { FlatcoinProvider } from '../state';
+
+import type { FC } from 'react';
+import { PositionType } from '../types';
 
 const FlatcoinContent: FC = () => {
   const intl = useIntl();
@@ -90,7 +94,7 @@ const FlatcoinContent: FC = () => {
                 />
               }
             >
-              {/* Trading Panel */}
+              <TradingPanel />
             </ErrorBoundary>
           </Grid>
         )}
@@ -100,8 +104,22 @@ const FlatcoinContent: FC = () => {
 };
 
 export const Flatcoin = () => {
+  // TODO: read from config constants
+  const configs: Record<Lowercase<PositionType>, any> = {
+    flatcoin: {
+      name: 'Flatcoin',
+    },
+    leveragedeth: {
+      name: 'Leveraged ETH',
+    },
+  };
+
   return (
-    <FlatcoinProvider initialState={{ config: { name: 'Flatcoin' } }}>
+    <FlatcoinProvider
+      initialState={{
+        configs,
+      }}
+    >
       <FlatcoinContent />
     </FlatcoinProvider>
   );

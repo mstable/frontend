@@ -18,6 +18,6 @@ export * from './Modals';
 export * from './motion';
 export * from './Notifications';
 export * from './RouterLink';
-export * from './TradingInput';
+export * from './Trading';
 export * from './Typography';
 export * from './ValueLabel';
