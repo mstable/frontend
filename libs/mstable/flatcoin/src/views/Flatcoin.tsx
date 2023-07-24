@@ -1,4 +1,4 @@
-import { Button, Grid, Stack, StackProps } from '@mui/material';
+import { Button, Grid, Stack } from '@mui/material';
 import { FC } from 'react';
 import { useNavigate } from '@tanstack/react-location';
 import { ArrowLeft } from '@mui/icons-material';
@@ -6,15 +6,19 @@ import { useIntl } from 'react-intl';
 import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
 import { useTrack } from '@frontend/shared-providers';
 import { useIsMobile } from '@frontend/shared-hooks';
+import { FlatcoinProvider } from '../state';
+import { Jumbo } from '../components/Jumbo';
+import { Performance } from '../components/Performance';
+import { Positions } from '../components/Positions';
 
-export const Flatcoin: FC<StackProps> = (props) => {
+const FlatcoinContent: FC = () => {
   const intl = useIntl();
   const navigate = useNavigate();
   const track = useTrack();
   const isMobile = useIsMobile();
 
   return (
-    <Stack direction="column" alignItems="flex-start" {...props}>
+    <Stack direction="column" alignItems="flex-start">
       <Button
         variant="text"
         size="small"
@@ -40,7 +44,7 @@ export const Flatcoin: FC<StackProps> = (props) => {
           />
         }
       >
-        {/* Flatcoin/Leveraged Info: APY, TVL, Funding Rate, Open Interest, Skew */}
+        <Jumbo pb={8} />
       </ErrorBoundary>
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
@@ -56,7 +60,7 @@ export const Flatcoin: FC<StackProps> = (props) => {
                 />
               }
             >
-              {/*  Performance Chart */}
+              <Performance />
             </ErrorBoundary>
             <ErrorBoundary
               ErrorComponent={
@@ -69,7 +73,7 @@ export const Flatcoin: FC<StackProps> = (props) => {
                 />
               }
             >
-              {/* User Positions Table */}
+              <Positions />
             </ErrorBoundary>
           </Stack>
         </Grid>
@@ -92,5 +96,13 @@ export const Flatcoin: FC<StackProps> = (props) => {
         )}
       </Grid>
     </Stack>
+  );
+};
+
+export const Flatcoin = () => {
+  return (
+    <FlatcoinProvider initialState={{ config: { name: 'Flatcoin' } }}>
+      <FlatcoinContent />
+    </FlatcoinProvider>
   );
 };
