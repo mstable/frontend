@@ -64,6 +64,7 @@ export const Topnav = () => {
                 component={RouterLink}
                 key={route.path}
                 to={route.path}
+                search={route.search}
                 getActiveProps={() => ({
                   style: { color: theme.palette.info.dark },
                 })}

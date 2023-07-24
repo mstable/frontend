@@ -8,7 +8,7 @@ import type { StackProps } from '@mui/material';
 
 export const Jumbo = (props: StackProps) => {
   const intl = useIntl();
-  const { data, config } = useFlatcoin();
+  const { data, configs, type } = useFlatcoin();
 
   return (
     <Stack
@@ -19,7 +19,7 @@ export const Jumbo = (props: StackProps) => {
       {...props}
     >
       <Typography variant="h1" pb={2}>
-        {config?.name}
+        {configs?.[type].name}
       </Typography>
       <Stack
         direction={{ xs: 'column', md: 'row' }}
