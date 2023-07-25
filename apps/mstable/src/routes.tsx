@@ -26,6 +26,7 @@ export const routes: Route[] = [
   {
     id: 'flatcoin',
     path: '/flatcoin',
+    search: ({ type }) => ({ type: type ?? 'flatcoin' }),
     element: () => import('./views/Flatcoin').then((mod) => <mod.Flatcoin />),
     meta: {
       label: defineMessage({ defaultMessage: 'Flatcoin', id: 'Ew5cbe' }),

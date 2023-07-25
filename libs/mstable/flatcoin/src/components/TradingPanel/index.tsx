@@ -2,8 +2,9 @@ import { useMemo } from 'react';
 
 import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
 import { useIntl } from 'react-intl';
+import { useNavigate } from '@tanstack/react-location';
 
-import { useFlatcoinPageState, useUpdateTradingType } from '../../state';
+import { useFlatcoin } from '../../state';
 import { FlatcoinTradingStateProvider } from './state';
 import { TradingInputs } from './TradingInputs';
 import { TradingRecap } from './TradingRecap';
@@ -11,11 +12,12 @@ import { TradingRecap } from './TradingRecap';
 import type { CardProps } from '@mui/material';
 import type { FC } from 'react';
 
-import type { FlatcoinTradingPanelType } from '../../types';
+import type { FlatcoinRoute, PositionType } from '../../types';
+import produce from 'immer';
 
-const TABS: FlatcoinTradingPanelType[] = ['stable', 'leveraged'];
+const TABS: Lowercase<PositionType>[] = ['flatcoin', 'leveragedeth'];
 const TRADING_TAB_INDEX_MAP = TABS.reduce<
-  Record<number, FlatcoinTradingPanelType>
+  Record<number, Lowercase<PositionType>>
 >((acc, type, index) => {
   acc[index] = type;
   return acc;
@@ -23,17 +25,25 @@ const TRADING_TAB_INDEX_MAP = TABS.reduce<
 
 const useTradingPanel = () => {
   const intl = useIntl();
-  const { type } = useFlatcoinPageState();
-  const updateTradingType = useUpdateTradingType();
+  const navigate = useNavigate<FlatcoinRoute>();
+  const { type } = useFlatcoin();
 
   const onTabChange = (index: number) => {
-    updateTradingType(TRADING_TAB_INDEX_MAP[index]);
+    navigate({
+      replace: true,
+      search: produce((draft) => {
+        draft.type = TRADING_TAB_INDEX_MAP[index];
+      }),
+    });
   };
 
-  const tabNameMap: Record<FlatcoinTradingPanelType, string> = useMemo(
+  const tabNameMap: Record<Lowercase<PositionType>, string> = useMemo(
     () => ({
-      stable: intl.formatMessage({ defaultMessage: 'Flatcoin', id: 'Ew5cbe' }),
-      leveraged: intl.formatMessage({
+      flatcoin: intl.formatMessage({
+        defaultMessage: 'Flatcoin',
+        id: 'Ew5cbe',
+      }),
+      leveragedeth: intl.formatMessage({
         defaultMessage: 'Leveraged ETH',
         id: 'xSqIpD',
       }),

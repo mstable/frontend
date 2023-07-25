@@ -6,12 +6,12 @@ import {
   USDC_OPTIMISM,
 } from '@dhedge/core-ui-kit/const';
 import { createContainer } from 'react-tracked';
-
-import { useFlatcoinPageState } from '../../state';
+import { useSearch } from '@tanstack/react-location';
 
 import type { Dispatch, SetStateAction } from 'react';
 
-import type { FlatcoinTradingState } from '../../types';
+import type { FlatcoinRoute, FlatcoinTradingState } from '../../types';
+import { PositionType } from '../../types';
 
 const initialState: FlatcoinTradingState = {
   sendToken: {
@@ -39,12 +39,11 @@ export const {
   unknown
 >(() => {
   const [state, setState] = useState<FlatcoinTradingState>(initialState);
-
-  const { type } = useFlatcoinPageState();
+  const { type } = useSearch<FlatcoinRoute>();
 
   // TODO: move tokens to constants
   useEffect(() => {
-    if (type === 'stable') {
+    if (type === PositionType.Flatcoin.toLowerCase()) {
       setState((prevState) => ({
         ...prevState,
         sendToken: USDC_OPTIMISM,
