@@ -227,6 +227,12 @@
       "value": "% fee upon liquidation of the earned rewards."
     }
   ],
+  "42xcXv": [
+    {
+      "type": 0,
+      "value": "Ensure that you understand the risks associated with high slippage and are comfortable proceeding with the trade."
+    }
+  ],
   "47FYwb": [
     {
       "type": 0,
@@ -1336,6 +1342,20 @@
       "value": "Aave is a decentralised non-custodial liquidity market protocol where users can participate as depositors or borrowers."
     }
   ],
+  "eTGEXC": [
+    {
+      "type": 0,
+      "value": "Approve "
+    },
+    {
+      "type": 1,
+      "value": "slippage"
+    },
+    {
+      "type": 0,
+      "value": "% max slippage"
+    }
+  ],
   "ehxGBh": [
     {
       "type": 0,
@@ -1704,6 +1724,12 @@
       "value": " performance upon underlying asset appreciation."
     }
   ],
+  "r2pety": [
+    {
+      "type": 0,
+      "value": "Please consider the following before confirming:"
+    }
+  ],
   "rSsD3z": [
     {
       "type": 0,
@@ -1738,20 +1764,6 @@
     {
       "type": 0,
       "value": "Diversified"
-    }
-  ],
-  "s4Vb9J": [
-    {
-      "type": 0,
-      "value": "Blocked by high "
-    },
-    {
-      "type": 1,
-      "value": "slippage"
-    },
-    {
-      "type": 0,
-      "value": "% max slippage"
     }
   ],
   "sHyaBT": [
@@ -1953,6 +1965,12 @@
     {
       "type": 0,
       "value": "Meta Harvester"
+    }
+  ],
+  "yL//gV": [
+    {
+      "type": 0,
+      "value": "Be aware that the final amount of assets you receive may be different from the initially quoted value."
     }
   ],
   "yNEh8X": [

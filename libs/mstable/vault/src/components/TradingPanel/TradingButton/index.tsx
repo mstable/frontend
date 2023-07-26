@@ -1,3 +1,5 @@
+import { useCallback, useState } from 'react';
+
 import {
   useIsDepositTradingPanelType,
   useTradingPanelPoolConfig,
@@ -11,6 +13,7 @@ import { Button } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import { DepositButton } from './DepositButton';
+import { HighSlippageButton } from './HighSlippageButton';
 import { WithdrawButton } from './WithdrawButton';
 
 import type { ButtonProps } from '@mui/material';
@@ -21,6 +24,7 @@ const buttonProps: ButtonProps = {
 };
 
 const useTradingButton = () => {
+  const [approvedSlippage, setApprovedSlippage] = useState(0);
   const { account } = useAccount();
   const { chainId } = useNetwork();
   const isDeposit = useIsDepositTradingPanelType();
@@ -29,14 +33,21 @@ const useTradingButton = () => {
   const insufficientBalance = useIsInsufficientBalance();
   const slippageToBeUsed = slippage === 'auto' ? minSlippage ?? 0 : slippage;
 
+  const approveHighSlippage = useCallback(
+    (slippage: number) => setApprovedSlippage(slippage),
+    [],
+  );
+
   return {
     isDisconnected: !account,
     isWrongNetwork: chainId !== poolConfig.chainId,
     isDeposit,
     slippageToBeUsed,
-    isHighSlippage:
+    showHighSlippageButton:
       !insufficientBalance &&
-      slippageToBeUsed > DEPOSIT_QUOTE_DIFF_ERROR_THRESHOLD,
+      slippageToBeUsed > DEPOSIT_QUOTE_DIFF_ERROR_THRESHOLD &&
+      approvedSlippage < slippageToBeUsed,
+    approveHighSlippage,
   };
 };
 
@@ -46,7 +57,8 @@ export const TradingButton: FC = () => {
     isDisconnected,
     isWrongNetwork,
     isDeposit,
-    isHighSlippage,
+    showHighSlippageButton,
+    approveHighSlippage,
     slippageToBeUsed,
   } = useTradingButton();
 
@@ -74,17 +86,13 @@ export const TradingButton: FC = () => {
     );
   }
 
-  if (isHighSlippage) {
+  if (showHighSlippageButton) {
     return (
-      <Button {...buttonProps} disabled>
-        {intl.formatMessage(
-          {
-            defaultMessage: 'Blocked by high {slippage}% max slippage',
-            id: 's4Vb9J',
-          },
-          { slippage: Math.abs(slippageToBeUsed) },
-        )}
-      </Button>
+      <HighSlippageButton
+        slippageToBeUsed={slippageToBeUsed}
+        approveHighSlippage={approveHighSlippage}
+        {...buttonProps}
+      />
     );
   }
 

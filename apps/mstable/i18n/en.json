@@ -554,6 +554,9 @@
   "2fed1y": {
     "defaultMessage": "A deposit into a vault requires an approval transaction.<br></br><br></br>Set as infinite to avoid approving multiple times and save gas on subsequent deposits.<br></br><br></br>Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost."
   },
+  "42xcXv": {
+    "defaultMessage": "Ensure that you understand the risks associated with high slippage and are comfortable proceeding with the trade."
+  },
   "47GkyG": {
     "defaultMessage": "Minimum deposit is ${minDepositUSD}"
   },
@@ -608,6 +611,9 @@
   "b1gVRq": {
     "defaultMessage": "Minimum deposit in USD."
   },
+  "eTGEXC": {
+    "defaultMessage": "Approve {slippage}% max slippage"
+  },
   "epCeiH": {
     "defaultMessage": "The {symbol} Vault doesn't charge exit fee."
   },
@@ -641,8 +647,8 @@
   "qzgBwU": {
     "defaultMessage": "The {symbol} Vault charges a {fee} performance upon underlying asset appreciation."
   },
-  "s4Vb9J": {
-    "defaultMessage": "Blocked by high {slippage}% max slippage"
+  "r2pety": {
+    "defaultMessage": "Please consider the following before confirming:"
   },
   "sHyaBT": {
     "defaultMessage": "This pool is currently private."
@@ -658,6 +664,9 @@
   },
   "xrKHS6": {
     "defaultMessage": "Success"
+  },
+  "yL//gV": {
+    "defaultMessage": "Be aware that the final amount of assets you receive may be different from the initially quoted value."
   },
   "yap3X0": {
     "defaultMessage": "When the \"Auto\" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. <br></br> Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 1-2%."
