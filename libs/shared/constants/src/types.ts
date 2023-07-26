@@ -20,6 +20,7 @@ export interface PoolConfigMeta {
   strategies?: VaultStrategy[];
   featured?: boolean;
   primaryColor: string;
+  minWithdrawalUsd?: number;
 }
 
 export interface VaultStrategy {

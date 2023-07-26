@@ -37,4 +37,5 @@ export const MHRVST_OPTIMISM_VAULT: VaultConfig = {
         'Continuously evaluates market conditions, rebalances the allocation of funds between sub-vaults, and adjusts strategies to optimize returns.',
     },
   ],
+  minWithdrawalUsd: 100,
 };
