@@ -16,7 +16,7 @@
     "*.{js,jsx,ts,tsx,mdx}": "eslint --fix"
   },
   "dependencies": {
-    "@dhedge/core-ui-kit": "^0.2.10",
+    "@dhedge/core-ui-kit": "^0.2.12",
     "@dhedge/crypto-assets": "^0.2.3",
     "@emotion/react": "11.10.6",
     "@emotion/styled": "11.10.6",

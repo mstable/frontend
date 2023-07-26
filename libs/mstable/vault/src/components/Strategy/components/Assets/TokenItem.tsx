@@ -1,4 +1,4 @@
-// import { useIsDhedgePool } from '@dhedge/core-ui-kit/hooks/pool';
+import { useIsDhedgePool } from '@dhedge/core-ui-kit/hooks/pool';
 import { dHEDGEDappLink } from '@frontend/shared-constants';
 import { DHEDGEProtocol } from '@frontend/shared-icons';
 import { AddressLabel, TokenIconRevamp } from '@frontend/shared-ui';
@@ -21,9 +21,7 @@ export const TokenItem: FC<AssetItemProps> = ({
   blockExplorerUrl,
 }) => {
   const { tokenAddress, tokenName, asset, percentage } = token;
-  // const isDhedgePool = useIsDhedgePool({ address: tokenAddress, chainId });
-  const isDhedgePool = true; // TODO: add useIsDhedgePool after core-ui-kit-update
-
+  const isDhedgePool = useIsDhedgePool({ address: tokenAddress, chainId });
   return (
     <Grid item key={`${tokenAddress}-${tokenName}`} xs={6} zeroMinWidth>
       <Stack
