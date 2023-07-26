@@ -17,7 +17,11 @@ import { usePrices, useUpdate } from './state';
 import type { HexAddress } from '@frontend/shared-utils';
 import type { UseQueryOptions } from '@tanstack/react-query';
 
-import type { SupportedCurrency } from './types';
+import type {
+  SupportedCurrency,
+  UseTokenPriceHistoryRequest,
+  UseTokenPriceHistoryResponse,
+} from './types';
 
 export const useSetCurrency = () => {
   const update = useUpdate();
@@ -101,3 +105,31 @@ export const useGetPrices = (
         }),
   });
 };
+
+export const useGetTokenPriceHistory = (
+  { tokenId, from, to }: UseTokenPriceHistoryRequest,
+  options?: Omit<
+    UseQueryOptions<
+      UseTokenPriceHistoryResponse,
+      Error,
+      UseTokenPriceHistoryResponse,
+      [
+        string,
+        UseTokenPriceHistoryRequest['tokenId'],
+        UseTokenPriceHistoryRequest['from'],
+        UseTokenPriceHistoryRequest['to'],
+      ]
+    >,
+    'queryKey' | 'queryFn'
+  >,
+) =>
+  useQuery({
+    ...options,
+    queryKey: ['coins/:tokenId/market_chart/range', tokenId, from, to],
+    queryFn: ({ queryKey }) =>
+      axios
+        .get(`${coingeckoEndpoint}/coins/${tokenId}/market_chart/range`, {
+          params: { vs_currency: 'usd', from, to },
+        })
+        .then(pathOr([], ['data', 'prices'])),
+  });

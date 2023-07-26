@@ -1,12 +1,21 @@
-import { CHART_PERIOD, CHART_TYPE } from '@frontend/shared-types';
-import { alpha, useTheme } from '@mui/material';
-import { useChartConfig } from '@frontend/shared-hooks';
 import { useMemo } from 'react';
-import { ChartData, ChartOptions, ScriptableContext } from 'chart.js';
-import { pluck } from 'ramda';
-import { isNilOrEmpty } from '@frontend/shared-utils';
 
-type Serie = { label: string; value: any };
+import { useGetTokenPriceHistory } from '@frontend/shared-providers';
+import { CHART_PERIOD, CHART_TYPE } from '@frontend/shared-types';
+import { isNilOrEmpty } from '@frontend/shared-utils';
+import { alpha, useTheme } from '@mui/material';
+import BigNumber from 'bignumber.js';
+import { getUnixTime, set, sub } from 'date-fns';
+import { pluck } from 'ramda';
+import { useIntl } from 'react-intl';
+
+import { useFlatcoin } from '../state';
+
+import type { ChartConfig } from '@frontend/shared-hooks';
+import type { UseTokenPriceHistoryRequest } from '@frontend/shared-providers';
+import type { ChartData, ChartOptions, ScriptableContext } from 'chart.js';
+
+type Serie = { label: string; value: number };
 
 const getRange = (margin: number, series: Serie[]) =>
   !isNilOrEmpty(series)
@@ -36,6 +45,75 @@ const getBackgroundColor =
     return gradient;
   };
 
+const getDurationFromChartPeriod = (
+  period: CHART_PERIOD,
+): Pick<UseTokenPriceHistoryRequest, 'from' | 'to'> => {
+  // prevent timestamp update during minute
+  const now = set(new Date(), { seconds: 0, milliseconds: 0 });
+  const nowUnix = getUnixTime(now);
+
+  switch (period) {
+    case CHART_PERIOD.DAY:
+      return { from: getUnixTime(sub(now, { days: 1 })), to: nowUnix };
+    case CHART_PERIOD.WEEK:
+      return { from: getUnixTime(sub(now, { weeks: 1 })), to: nowUnix };
+    case CHART_PERIOD.MONTH:
+      return { from: getUnixTime(sub(now, { months: 1 })), to: nowUnix };
+    case CHART_PERIOD.YEAR:
+      return { from: getUnixTime(sub(now, { years: 1 })), to: nowUnix };
+  }
+};
+
+export const useChartConfig = (): ChartConfig => {
+  const intl = useIntl();
+
+  const chartTypes: Record<CHART_TYPE, any> = {
+    [CHART_TYPE.PRICE]: {
+      id: CHART_TYPE.PRICE,
+      label: intl.formatMessage({
+        defaultMessage: 'Token Price',
+        id: 'ehxGBh',
+      }),
+      chartMargin: 0.05,
+      getValue: (item) =>
+        new BigNumber(item.adjustedTokenPrice).plus(1).toNumber(),
+      getLabel: (item) =>
+        new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 4,
+        }).format(item),
+    },
+  };
+
+  const chartPeriods: ChartConfig['chartPeriods'] = {
+    [CHART_PERIOD.DAY]: {
+      id: CHART_PERIOD.DAY,
+      label: intl.formatMessage({ defaultMessage: '1D', id: 'aTX7LJ' }),
+    },
+    [CHART_PERIOD.WEEK]: {
+      id: CHART_PERIOD.WEEK,
+      label: intl.formatMessage({ defaultMessage: '1W', id: '6bJGds' }),
+    },
+    [CHART_PERIOD.MONTH]: {
+      id: CHART_PERIOD.MONTH,
+      label: intl.formatMessage({ defaultMessage: '1M', id: '1uz/I3' }),
+    },
+    [CHART_PERIOD.YEAR]: {
+      id: CHART_PERIOD.YEAR,
+      label: intl.formatMessage({ defaultMessage: '1Y', id: '8lLHeh' }),
+    },
+  };
+
+  return {
+    chartTypes,
+    chartPeriods,
+    defaultChartType: CHART_TYPE.PRICE,
+    defaultChartPeriod: CHART_PERIOD.MONTH,
+  };
+};
+
 export const useChartData = ({
   chartPeriod,
   chartType,
@@ -45,36 +123,47 @@ export const useChartData = ({
   chartType: CHART_TYPE;
   scales?: { x?: boolean; y?: boolean };
 }) => {
+  const intl = useIntl();
   const { x = true, y = true } = scales;
+  const { type } = useFlatcoin();
   const theme = useTheme();
   const { chartTypes } = useChartConfig();
 
-  const { data } = {
-    data: {
-      tokenPriceHistory: {
-        history: [],
-      },
+  const { from, to } = getDurationFromChartPeriod(chartPeriod);
+
+  const { data: prices } = useGetTokenPriceHistory(
+    {
+      tokenId: 'ethereum',
+      from,
+      to,
     },
-  };
+    {
+      enabled: type === 'leveragedeth',
+      staleTime: 20_000,
+    },
+  );
+
+  const data = type === 'leveragedeth' ? prices : [];
 
   const series = useMemo<Serie[]>(
     () =>
-      (data?.tokenPriceHistory?.history || []).map((d) => ({
+      (data || []).map(([timestamp, price]) => ({
         label: Intl.DateTimeFormat('en-US', {
           timeZone: 'UTC',
           day: 'numeric',
           month: 'short',
-        }).format(Number(d.timestamp)),
-        value: chartTypes[chartType].getValue(d),
+          year: '2-digit',
+        }).format(Number(timestamp)),
+        value: price,
       })),
-    [chartType, chartTypes, data?.tokenPriceHistory?.history],
+    [chartType, data],
   );
   const minMax = useMemo(
     () =>
       ({
-        [CHART_TYPE.PRICE]: getRange(chartTypes[chartType].chartMargin, series),
+        [CHART_TYPE.PRICE]: getRange(0.05, series),
       }[chartType]),
-    [chartType, chartTypes, series],
+    [chartType, series],
   );
 
   const chartData: { data: ChartData<'line'>; options: ChartOptions<'line'> } =
@@ -84,7 +173,10 @@ export const useChartData = ({
           labels: series.map((d) => d.label),
           datasets: [
             {
-              label: chartTypes[chartType].label,
+              label: intl.formatMessage({
+                defaultMessage: 'Token Price',
+                id: 'ehxGBh',
+              }),
               data: pluck('value', series),
               borderColor: '#2775CA',
               backgroundColor: getBackgroundColor('#2775CA'),

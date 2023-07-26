@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 
 import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
-import { useIntl } from 'react-intl';
 import { useNavigate } from '@tanstack/react-location';
+import produce from 'immer';
+import { useIntl } from 'react-intl';
 
 import { useFlatcoin } from '../../state';
 import { FlatcoinTradingStateProvider } from './state';
@@ -13,15 +14,15 @@ import type { CardProps } from '@mui/material';
 import type { FC } from 'react';
 
 import type { FlatcoinRoute, PositionType } from '../../types';
-import produce from 'immer';
 
-const TABS: Lowercase<PositionType>[] = ['flatcoin', 'leveragedeth'];
-const TRADING_TAB_INDEX_MAP = TABS.reduce<
-  Record<number, Lowercase<PositionType>>
->((acc, type, index) => {
-  acc[index] = type;
-  return acc;
-}, {});
+const TABS: PositionType[] = ['flatcoin', 'leveragedeth'];
+const TRADING_TAB_INDEX_MAP = TABS.reduce<Record<number, PositionType>>(
+  (acc, type, index) => {
+    acc[index] = type;
+    return acc;
+  },
+  {},
+);
 
 const useTradingPanel = () => {
   const intl = useIntl();
@@ -37,7 +38,7 @@ const useTradingPanel = () => {
     });
   };
 
-  const tabNameMap: Record<Lowercase<PositionType>, string> = useMemo(
+  const tabNameMap: Record<PositionType, string> = useMemo(
     () => ({
       flatcoin: intl.formatMessage({
         defaultMessage: 'Flatcoin',

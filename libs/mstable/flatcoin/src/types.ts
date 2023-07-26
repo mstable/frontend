@@ -6,14 +6,11 @@ export type FlatcoinRoute = MakeGenerics<{
   Search: {
     chartPeriod?: CHART_PERIOD;
     chartType?: CHART_TYPE;
-    type?: Lowercase<PositionType>;
+    type?: PositionType;
   };
 }>;
 
-export enum PositionType {
-  Flatcoin = 'Flatcoin',
-  LeveragedETH = 'LeveragedETH',
-}
+export type PositionType = 'flatcoin' | 'leveragedeth';
 
 export interface Position {
   type: PositionType;

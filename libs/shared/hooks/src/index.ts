@@ -10,3 +10,4 @@ export {
   useUserVaultInvestmentInfo,
   useUserStakedVaults,
 } from './user';
+export type { ChartConfig } from './useChartData';
