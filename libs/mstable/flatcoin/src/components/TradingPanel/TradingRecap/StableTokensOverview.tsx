@@ -1,7 +1,11 @@
+import { USDC_OPTIMISM } from '@dhedge/core-ui-kit/const';
 import { useAssetPrice } from '@dhedge/core-ui-kit/hooks/trading';
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import { TokenIconRevamp } from '@frontend/shared-ui';
-import { formatNumberToLimitedDecimals } from '@frontend/shared-utils';
+import {
+  formatNumberToLimitedDecimals,
+  isEqualAddresses,
+} from '@frontend/shared-utils';
 import { Box, Skeleton, Stack, Typography } from '@mui/material';
 import BigNumber from 'bignumber.js';
 import { ArrowsClockwise } from 'phosphor-react';
@@ -51,12 +55,24 @@ const TOKEN_DECIMALS = 2;
 
 const useStableTokensOverview = () => {
   const { sendToken, receiveToken } = useFlatcoinTradingState();
-  const sendTokenPrice = useAssetPrice({
-    address: sendToken.address,
+  const usdcTokenPrice = useAssetPrice({
+    address: USDC_OPTIMISM.address,
     chainId: optimism.id, // TODO: use flatcoinChain constant?
   });
   // TODO: add logic
-  const receiveTokenPrice = '1.2';
+  const flatcoinTokenPrice = '1.2';
+  const sendTokenPrice = isEqualAddresses(
+    sendToken.address,
+    USDC_OPTIMISM.address,
+  )
+    ? usdcTokenPrice
+    : flatcoinTokenPrice;
+  const receiveTokenPrice = isEqualAddresses(
+    receiveToken.address,
+    USDC_OPTIMISM.address,
+  )
+    ? usdcTokenPrice
+    : flatcoinTokenPrice;
 
   return {
     sendToken,

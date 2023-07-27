@@ -11,6 +11,7 @@ export type FlatcoinRoute = MakeGenerics<{
 }>;
 
 export type PositionType = 'flatcoin' | 'leveragedeth';
+export type TradingType = 'deposit' | 'withdraw';
 
 export interface Position {
   type: PositionType;
@@ -26,4 +27,5 @@ export interface FlatcoinTradingState {
   sendToken: DynamicTradingToken;
   receiveToken: DynamicTradingToken;
   leverage: string;
+  tradingType: TradingType;
 }
