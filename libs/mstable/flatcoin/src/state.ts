@@ -4,10 +4,9 @@ import { useSearch } from '@tanstack/react-location';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
 
-import { PositionType } from './types';
-
 import type { Dispatch, SetStateAction } from 'react';
 
+import type { PositionType } from './types';
 import type { FlatcoinRoute, Position } from './types';
 
 type FlatcoinState = {
@@ -15,9 +14,9 @@ type FlatcoinState = {
     apy?: string;
     tvl?: string;
   };
-  configs: Record<Lowercase<PositionType>, any>;
+  configs: Record<PositionType, any>;
   positions?: Position[];
-  type: Lowercase<PositionType>;
+  type: PositionType;
 };
 
 export const {
@@ -44,7 +43,7 @@ export const {
     },
     positions: [
       {
-        type: PositionType.LeveragedETH,
+        type: 'leveragedeth',
         value: new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
@@ -75,7 +74,7 @@ export const {
         }).format(-20),
       },
       {
-        type: PositionType.Flatcoin,
+        type: 'flatcoin',
         value: new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
@@ -102,11 +101,9 @@ export const {
   useEffect(() => {
     setState(
       produce((draft) => {
-        draft.type = [PositionType.Flatcoin, PositionType.LeveragedETH]
-          .map((type) => type.toLowerCase())
-          .includes(type)
+        draft.type = ['flatcoin', 'leveragedeth'].includes(type)
           ? type
-          : (PositionType.Flatcoin.toLowerCase() as Lowercase<PositionType>);
+          : 'flatcoin';
       }),
     );
   }, [type]);

@@ -15,7 +15,7 @@ import type { ChartData, ChartOptions, ScriptableContext } from 'chart.js';
 
 type Serie = { label: string; value: any };
 
-interface ChartConfig {
+export interface ChartConfig {
   chartTypes: Record<CHART_TYPE, any>;
   chartPeriods: Record<CHART_PERIOD, any>;
   defaultChartType: CHART_TYPE;

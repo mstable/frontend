@@ -1,4 +1,3 @@
-import type { StackProps } from '@mui/material';
 import {
   Button,
   Paper,
@@ -12,8 +11,10 @@ import {
   Typography,
 } from '@mui/material';
 import { useIntl } from 'react-intl';
+
 import { useFlatcoin } from '../../state';
-import { PositionType } from 'libs/mstable/flatcoin/src/types';
+
+import type { StackProps } from '@mui/material';
 
 export const Positions = (props: StackProps) => {
   const intl = useIntl();
@@ -129,7 +130,7 @@ export const Positions = (props: StackProps) => {
                     <Button sx={{ minWidth: 92 }}>
                       {intl
                         .formatMessage(
-                          type === PositionType.Flatcoin
+                          type === 'flatcoin'
                             ? { defaultMessage: 'redeem', id: 'XSdWHA' }
                             : { defaultMessage: 'close', id: 'rbrahO' },
                         )
