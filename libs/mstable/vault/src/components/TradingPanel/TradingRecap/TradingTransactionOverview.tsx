@@ -195,13 +195,13 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
           </Stack>
         </CollapsibleSection>
       )}
-      {minWithdrawalUsd && (
+      {!isDeposit && minWithdrawalUsd && (
         <Typography variant="hint" color="warning.dark">
           {intl.formatMessage(
             {
               defaultMessage:
-                'Due to high slippage on lower withdrawal amounts, please consider withdrawing a minimum of {minWithdrawalUsd} or manually increasing the maximum slippage.',
-              id: 'cFUs3P',
+                'Due to high slippage on lower withdrawal amounts, please consider withdrawing a minimum of ${minWithdrawalUsd} or manually increasing the maximum slippage.',
+              id: 'QrqA2G',
             },
             { minWithdrawalUsd },
           )}

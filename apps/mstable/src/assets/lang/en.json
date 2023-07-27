@@ -904,6 +904,20 @@
       "value": "The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded."
     }
   ],
+  "QrqA2G": [
+    {
+      "type": 0,
+      "value": "Due to high slippage on lower withdrawal amounts, please consider withdrawing a minimum of $"
+    },
+    {
+      "type": 1,
+      "value": "minWithdrawalUsd"
+    },
+    {
+      "type": 0,
+      "value": " or manually increasing the maximum slippage."
+    }
+  ],
   "R0V7vk": [
     {
       "type": 0,

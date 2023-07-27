@@ -593,6 +593,9 @@
   "ObjU4O": {
     "defaultMessage": "Mining"
   },
+  "QrqA2G": {
+    "defaultMessage": "Due to high slippage on lower withdrawal amounts, please consider withdrawing a minimum of ${minWithdrawalUsd} or manually increasing the maximum slippage."
+  },
   "S0seuN": {
     "defaultMessage": "Recommended min slippage"
   },
