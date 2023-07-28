@@ -167,7 +167,11 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
             <OverviewItem
               tooltipText={
                 hasPoolEntryFee
-                  ? 'Entry fees are collected during deposit. The entry fee is distributed to all token holders to pay for rebalancing costs after new deposits.'
+                  ? intl.formatMessage({
+                      defaultMessage:
+                        'Entry fees are collected during deposit. The entry fee is distributed to all token holders to pay for rebalancing costs after new deposits.',
+                      id: 'uBC8fe',
+                    })
                   : null
               }
               label={intl.formatMessage({

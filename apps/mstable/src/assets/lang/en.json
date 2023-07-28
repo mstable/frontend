@@ -1884,6 +1884,12 @@
       "value": "Visualize strategy"
     }
   ],
+  "uBC8fe": [
+    {
+      "type": 0,
+      "value": "Entry fees are collected during deposit. The entry fee is distributed to all token holders to pay for rebalancing costs after new deposits."
+    }
+  ],
   "v1vY2k": [
     {
       "type": 0,

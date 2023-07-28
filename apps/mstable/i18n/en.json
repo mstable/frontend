@@ -662,6 +662,9 @@
   "tivZoE": {
     "defaultMessage": "The {symbol} Vault charges a {fee} management fee."
   },
+  "uBC8fe": {
+    "defaultMessage": "Entry fees are collected during deposit. The entry fee is distributed to all token holders to pay for rebalancing costs after new deposits."
+  },
   "wqlXwW": {
     "defaultMessage": "Wrong Network"
   },
