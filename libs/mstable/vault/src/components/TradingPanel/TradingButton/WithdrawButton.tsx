@@ -8,10 +8,10 @@ import {
   useWithdraw,
   useWithdrawAllowance,
 } from '@dhedge/core-ui-kit/hooks/trading/withdraw';
+import { ApproveButton } from '@frontend/shared-ui';
 import { Button } from '@mui/material';
 import { useIntl } from 'react-intl';
 
-import { ApproveButton } from './ApproveButton';
 import { TradeButton } from './TradeButton';
 
 import type { FC } from 'react';

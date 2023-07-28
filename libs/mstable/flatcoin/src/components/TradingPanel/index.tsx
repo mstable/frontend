@@ -7,6 +7,7 @@ import { useIntl } from 'react-intl';
 
 import { useFlatcoin } from '../../state';
 import { FlatcoinTradingStateProvider } from './state';
+import { TradingButton } from './TradingButton';
 import { TradingInputs } from './TradingInputs';
 import { TradingRecap } from './TradingRecap';
 
@@ -93,7 +94,7 @@ export const TradingPanel: FC<CardProps> = (props) => {
               }}
             >
               <TradingRecap />
-              {/*<TradingButton />*/}
+              <TradingButton />
             </Stack>
           </Stack>
         </CardContent>

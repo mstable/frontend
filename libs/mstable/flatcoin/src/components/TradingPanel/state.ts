@@ -1,31 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import {
-  AddressZero,
-  DEFAULT_PRECISION,
-  USDC_OPTIMISM,
-} from '@dhedge/core-ui-kit/const';
+import { USDC_OPTIMISM } from '@dhedge/core-ui-kit/const';
+import { ETH_OPTIMISM, FLATCOIN_OPTIMISM } from '@frontend/shared-constants';
 import { useSearch } from '@tanstack/react-location';
 import { createContainer } from 'react-tracked';
 
 import type { Dispatch, SetStateAction } from 'react';
 
-import type { FlatcoinRoute, FlatcoinTradingState } from '../../types';
+import type {
+  FlatcoinRoute,
+  FlatcoinTradingState,
+  TradingType,
+} from '../../types';
 
 const initialState: FlatcoinTradingState = {
-  sendToken: {
-    address: AddressZero,
-    symbol: '',
-    decimals: DEFAULT_PRECISION,
-    value: '',
-  },
-  receiveToken: {
-    address: AddressZero,
-    symbol: '',
-    decimals: DEFAULT_PRECISION,
-    value: '',
-  },
+  sendToken: USDC_OPTIMISM,
+  receiveToken: FLATCOIN_OPTIMISM,
   leverage: '2',
+  tradingType: 'deposit',
 };
 
 export const {
@@ -40,34 +32,21 @@ export const {
   const [state, setState] = useState<FlatcoinTradingState>(initialState);
   const { type } = useSearch<FlatcoinRoute>();
 
-  // TODO: move tokens to constants
+  // Set correct tokens on page type switch
   useEffect(() => {
     if (type === 'flatcoin') {
       setState((prevState) => ({
         ...prevState,
         sendToken: USDC_OPTIMISM,
-        receiveToken: {
-          symbol: 'mStable',
-          address: AddressZero,
-          decimals: 18,
-          value: '',
-        },
+        receiveToken: FLATCOIN_OPTIMISM,
+        tradingType: 'deposit',
       }));
     } else {
       setState((prevState) => ({
         ...prevState,
-        sendToken: {
-          symbol: 'ETH',
-          address: '0x4200000000000000000000000000000000000006',
-          decimals: 18,
-          value: '',
-        },
-        receiveToken: {
-          symbol: 'ETH',
-          address: '0x4200000000000000000000000000000000000006',
-          decimals: 18,
-          value: '',
-        },
+        sendToken: ETH_OPTIMISM,
+        receiveToken: ETH_OPTIMISM,
+        tradingType: 'deposit',
       }));
     }
   }, [type]);
@@ -83,7 +62,7 @@ export const useUpdateSendToken = () => {
         ...prevState,
         sendToken: { ...prevState.sendToken, ...token },
       })),
-    [],
+    [updateState],
   );
 };
 
@@ -95,7 +74,7 @@ export const useUpdateReceiveToken = () => {
         ...prevState,
         receiveToken: { ...prevState.receiveToken, ...token },
       })),
-    [],
+    [updateState],
   );
 };
 
@@ -107,6 +86,33 @@ export const useUpdateLeverage = () => {
         ...prevState,
         leverage,
       })),
-    [],
+    [updateState],
+  );
+};
+
+export const useUpdateStableTradingType = () => {
+  const updateState = useUpdateFlatcoinTradingState();
+  return useCallback(
+    (tradingType: TradingType) => {
+      switch (tradingType) {
+        case 'deposit':
+          updateState((prevState) => ({
+            ...prevState,
+            tradingType,
+            sendToken: USDC_OPTIMISM,
+            receiveToken: FLATCOIN_OPTIMISM,
+          }));
+          return;
+        case 'withdraw':
+          updateState((prevState) => ({
+            ...prevState,
+            tradingType,
+            sendToken: FLATCOIN_OPTIMISM,
+            receiveToken: USDC_OPTIMISM,
+          }));
+          return;
+      }
+    },
+    [updateState],
   );
 };

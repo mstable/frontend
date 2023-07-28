@@ -14,11 +14,11 @@ import {
   useShouldBeWhitelisted,
 } from '@dhedge/core-ui-kit/hooks/trading/deposit';
 import { useUserVaultBalance } from '@frontend/shared-hooks';
+import { ApproveButton } from '@frontend/shared-ui';
 import { Button } from '@mui/material';
 import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
 
-import { ApproveButton } from './ApproveButton';
 import { TradeButton } from './TradeButton';
 
 import type { FC } from 'react';
