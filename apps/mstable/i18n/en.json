@@ -116,11 +116,29 @@
   "+U6ozc": {
     "defaultMessage": "Type"
   },
+  "1uz/I3": {
+    "defaultMessage": "1M"
+  },
+  "3xhnWF": {
+    "defaultMessage": "You Spend"
+  },
+  "6bJGds": {
+    "defaultMessage": "1W"
+  },
+  "8lLHeh": {
+    "defaultMessage": "1Y"
+  },
   "AA5h7P": {
     "defaultMessage": "Performance"
   },
+  "CB1174": {
+    "defaultMessage": "Funding Rate"
+  },
   "DUR59o": {
     "defaultMessage": "Total Value Locked"
+  },
+  "Gh1Vm9": {
+    "defaultMessage": "You Receive"
   },
   "GufXy5": {
     "defaultMessage": "Value"
@@ -128,8 +146,20 @@
   "KoFhQ1": {
     "defaultMessage": "liquidation"
   },
+  "MQ02gW": {
+    "defaultMessage": "Skew"
+  },
+  "PQiNnk": {
+    "defaultMessage": "Open Interest"
+  },
+  "Px2xWV": {
+    "defaultMessage": "Open Position"
+  },
   "U6qGuO": {
     "defaultMessage": "Position"
+  },
+  "aTX7LJ": {
+    "defaultMessage": "1D"
   },
   "aTf36y": {
     "defaultMessage": "total"
@@ -137,11 +167,20 @@
   "bMsoah": {
     "defaultMessage": "funding"
   },
+  "cg1VJ2": {
+    "defaultMessage": "Connect Wallet"
+  },
   "hVxfnN": {
     "defaultMessage": "Positions"
   },
   "pVeGn/": {
     "defaultMessage": "leverage"
+  },
+  "wqlXwW": {
+    "defaultMessage": "Wrong Network"
+  },
+  "xSqIpD": {
+    "defaultMessage": "Leveraged ETH"
   },
   "zQ9i1N": {
     "defaultMessage": "Date Opened"
@@ -166,9 +205,6 @@
   },
   "0oLj/t": {
     "defaultMessage": "Expand"
-  },
-  "1uz/I3": {
-    "defaultMessage": "1M"
   },
   "20X0BC": {
     "defaultMessage": "Transaction Cancelled"
@@ -197,17 +233,11 @@
   "65ThHj": {
     "defaultMessage": "Protocols Involved"
   },
-  "6bJGds": {
-    "defaultMessage": "1W"
-  },
   "7d2ri8": {
     "defaultMessage": "{value} Shares"
   },
   "7jeKkk": {
     "defaultMessage": "Protocols that are used by this vault."
-  },
-  "8lLHeh": {
-    "defaultMessage": "1Y"
   },
   "9+Ddtu": {
     "defaultMessage": "Next"
@@ -244,9 +274,6 @@
   },
   "FaoPNm": {
     "defaultMessage": "You Burn"
-  },
-  "Gh1Vm9": {
-    "defaultMessage": "You Receive"
   },
   "IuFETn": {
     "defaultMessage": "Duration"
@@ -337,9 +364,6 @@
   },
   "byXXyV": {
     "defaultMessage": "Enter Amount"
-  },
-  "cg1VJ2": {
-    "defaultMessage": "Connect Wallet"
   },
   "d1uESJ": {
     "defaultMessage": "Assets"
@@ -506,9 +530,6 @@
   "X/RW9w": {
     "defaultMessage": "Slippage Tolerance"
   },
-  "XnpuKy": {
-    "defaultMessage": "Approve {symbol}"
-  },
   "b1gVRq": {
     "defaultMessage": "Minimum deposit in USD."
   },
@@ -556,9 +577,6 @@
   },
   "tivZoE": {
     "defaultMessage": "The {symbol} Vault charges a {fee} management fee."
-  },
-  "wqlXwW": {
-    "defaultMessage": "Wrong Network"
   },
   "xrKHS6": {
     "defaultMessage": "Success"
@@ -694,6 +712,9 @@
   },
   "XYEIBG": {
     "defaultMessage": "App supports Goerli Testnet."
+  },
+  "XnpuKy": {
+    "defaultMessage": "Approve {symbol}"
   },
   "YP4aoM": {
     "defaultMessage": "Read the Announcement"

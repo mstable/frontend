@@ -6,9 +6,96 @@ import { useFlatcoin } from '../../state';
 
 import type { StackProps } from '@mui/material';
 
-export const Jumbo = (props: StackProps) => {
+const FlatcoinValues = () => {
   const intl = useIntl();
-  const { data, configs, type } = useFlatcoin();
+  const { data } = useFlatcoin();
+
+  return (
+    <>
+      <ValueLabel
+        label={intl.formatMessage({ defaultMessage: 'APY', id: 'MLTKb6' })}
+        hint={intl.formatMessage({
+          defaultMessage: 'Annual percentage yield.',
+          id: 'IB0eky',
+        })}
+      >
+        {!data.apy ? (
+          <Skeleton height={24} width={60} />
+        ) : (
+          <Typography variant="value2">{data.apy}</Typography>
+        )}
+      </ValueLabel>
+      <ValueLabel
+        label={intl.formatMessage({ defaultMessage: 'TVL', id: 'SKB/G9' })}
+        hint={intl.formatMessage({
+          defaultMessage: 'Total Value Locked',
+          id: 'DUR59o',
+        })}
+      >
+        {!data.tvl ? (
+          <Skeleton height={24} width={60} />
+        ) : (
+          <Typography variant="value2">{data.tvl}</Typography>
+        )}
+      </ValueLabel>
+    </>
+  );
+};
+
+const LeveragedEthValues = () => {
+  const intl = useIntl();
+  const { data } = useFlatcoin();
+
+  return (
+    <>
+      <ValueLabel
+        label={intl.formatMessage({
+          defaultMessage: 'Funding Rate',
+          id: 'CB1174',
+        })}
+        hint={intl.formatMessage({
+          defaultMessage: 'Funding Rate',
+          id: 'CB1174',
+        })}
+      >
+        {!data.fundingRate ? (
+          <Skeleton height={24} width={60} />
+        ) : (
+          <Typography variant="value2">{data.fundingRate}</Typography>
+        )}
+      </ValueLabel>
+      <ValueLabel
+        label={intl.formatMessage({
+          defaultMessage: 'Open Interest',
+          id: 'PQiNnk',
+        })}
+        hint={intl.formatMessage({
+          defaultMessage: 'Open Interest',
+          id: 'PQiNnk',
+        })}
+      >
+        {!data.openInterest ? (
+          <Skeleton height={24} width={60} />
+        ) : (
+          <Typography variant="value2">{data.openInterest}</Typography>
+        )}
+      </ValueLabel>
+      <ValueLabel
+        label={intl.formatMessage({ defaultMessage: 'Skew', id: 'MQ02gW' })}
+        hint={intl.formatMessage({ defaultMessage: 'Skew', id: 'MQ02gW' })}
+      >
+        {!data.skew ? (
+          <Skeleton height={24} width={60} />
+        ) : (
+          <Typography variant="value2">{data.skew}</Typography>
+        )}
+      </ValueLabel>
+    </>
+  );
+};
+
+export const Jumbo = (props: StackProps) => {
+  const { configs, type } = useFlatcoin();
 
   return (
     <Stack
@@ -28,34 +115,7 @@ export const Jumbo = (props: StackProps) => {
         width={1}
         divider={<Divider orientation="vertical" flexItem variant="middle" />}
       >
-        <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'APY', id: 'MLTKb6' })}
-          hint={intl.formatMessage({
-            defaultMessage: 'Annual percentage yield.',
-            id: 'IB0eky',
-          })}
-        >
-          {!data.apy ? (
-            <Skeleton height={24} width={60} />
-          ) : (
-            <Typography variant="value2">{data.apy}</Typography>
-          )}
-        </ValueLabel>
-        <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'TVL', id: 'SKB/G9' })}
-          hint={intl.formatMessage({
-            defaultMessage: 'Total Value Locked',
-            id: 'DUR59o',
-          })}
-        >
-          {!data.tvl ? (
-            <Skeleton height={24} width={60} />
-          ) : (
-            <Stack direction="row" spacing={1} alignItems="baseline">
-              <Typography variant="value2">{data.tvl}</Typography>
-            </Stack>
-          )}
-        </ValueLabel>
+        {type === 'flatcoin' ? <FlatcoinValues /> : <LeveragedEthValues />}
       </Stack>
     </Stack>
   );
