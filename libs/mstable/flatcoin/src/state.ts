@@ -6,18 +6,7 @@ import { createContainer } from 'react-tracked';
 
 import type { Dispatch, SetStateAction } from 'react';
 
-import type { PositionType } from './types';
-import type { FlatcoinRoute, Position } from './types';
-
-type FlatcoinState = {
-  data: {
-    apy?: string;
-    tvl?: string;
-  };
-  configs: Record<PositionType, any>;
-  positions?: Position[];
-  type: PositionType;
-};
+import type { FlatcoinRoute, FlatcoinState } from './types';
 
 export const {
   Provider: FlatcoinProvider,
@@ -40,6 +29,16 @@ export const {
         currency: 'USD',
         compactDisplay: 'short',
       }).format(1234567),
+      fundingRate: new Intl.NumberFormat('en-US', {
+        style: 'percent',
+        minimumFractionDigits: 3,
+      }).format(-0.00001),
+      openInterest: new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        compactDisplay: 'short',
+      }).format(1234567),
+      skew: new Intl.NumberFormat('en-US', { style: 'percent' }).format(0.48),
     },
     positions: [
       {

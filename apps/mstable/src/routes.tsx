@@ -1,3 +1,4 @@
+import produce from 'immer';
 import { defineMessage } from 'react-intl';
 
 import { Home } from './views/Home';
@@ -26,6 +27,15 @@ export const routes: Route[] = [
   {
     id: 'flatcoin',
     path: '/flatcoin',
+    searchFilters: [
+      produce((prev) => {
+        prev.type =
+          typeof prev.type === 'string' &&
+          ['flatcoin', 'leveragedeth'].includes(prev.type)
+            ? prev.type
+            : 'flatcoin';
+      }),
+    ],
     search: ({ type }) => ({ type: type ?? 'flatcoin' }),
     element: () => import('./views/Flatcoin').then((mod) => <mod.Flatcoin />),
     meta: {

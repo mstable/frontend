@@ -29,3 +29,16 @@ export interface FlatcoinTradingState {
   leverage: string;
   tradingType: TradingType;
 }
+
+export type FlatcoinState = {
+  data: {
+    apy?: string;
+    tvl?: string;
+    fundingRate?: string;
+    openInterest?: string;
+    skew?: string;
+  };
+  configs: Record<PositionType, any>;
+  positions?: Position[];
+  type: PositionType;
+};

@@ -213,6 +213,12 @@
       "value": "You Deposit"
     }
   ],
+  "3xhnWF": [
+    {
+      "type": 0,
+      "value": "You Spend"
+    }
+  ],
   "4/JAsV": [
     {
       "type": 0,
@@ -479,6 +485,12 @@
       "value": "We recommend 1%, but usually it will be < 1%."
     }
   ],
+  "CB1174": [
+    {
+      "type": 0,
+      "value": "Funding Rate"
+    }
+  ],
   "CGcoFj": [
     {
       "type": 0,
@@ -723,6 +735,12 @@
       "value": "The Strategy uses Meta Vault and Vault contracts and combines and wraps the underlying strategies into one contract."
     }
   ],
+  "MQ02gW": [
+    {
+      "type": 0,
+      "value": "Skew"
+    }
+  ],
   "MSTVqC": [
     {
       "type": 0,
@@ -787,6 +805,12 @@
       "value": "ROI"
     }
   ],
+  "PQiNnk": [
+    {
+      "type": 0,
+      "value": "Open Interest"
+    }
+  ],
   "PWrOlv": [
     {
       "type": 0,
@@ -809,6 +833,12 @@
     {
       "type": 0,
       "value": "Unsupported Network"
+    }
+  ],
+  "Px2xWV": [
+    {
+      "type": 0,
+      "value": "Open Position"
     }
   ],
   "PxG1Yq": [
@@ -1069,6 +1099,12 @@
     {
       "type": 0,
       "value": "Swap fees"
+    }
+  ],
+  "aTX7LJ": [
+    {
+      "type": 0,
+      "value": "1D"
     }
   ],
   "aTf36y": [
@@ -1623,6 +1659,12 @@
     {
       "type": 0,
       "value": "Not Connected"
+    }
+  ],
+  "xSqIpD": [
+    {
+      "type": 0,
+      "value": "Leveraged ETH"
     }
   ],
   "xrKHS6": [
