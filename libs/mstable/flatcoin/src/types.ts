@@ -28,6 +28,8 @@ export interface FlatcoinTradingState {
   receiveToken: DynamicTradingToken;
   leverage: string;
   tradingType: TradingType;
+  slippage: string;
+  isInfiniteAllowance: boolean;
 }
 
 export type FlatcoinState = {

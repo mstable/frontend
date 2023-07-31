@@ -1,2 +1,3 @@
 export * from './TradingInput';
-export * from './TradingOverview';
+export { TradingOverviewItem } from './TradingOverviewItem';
+export { TradingSettingsOption } from './TradingSettingsOption';

@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { USDC_OPTIMISM } from '@dhedge/core-ui-kit/const';
-import { ETH_OPTIMISM, FLATCOIN_OPTIMISM } from '@frontend/shared-constants';
+import {
+  DEFAULT_MAX_SLIPPAGE,
+  ETH_OPTIMISM,
+  FLATCOIN_OPTIMISM,
+} from '@frontend/shared-constants';
 import { useSearch } from '@tanstack/react-location';
 import { createContainer } from 'react-tracked';
 
@@ -18,6 +22,8 @@ const initialState: FlatcoinTradingState = {
   receiveToken: FLATCOIN_OPTIMISM,
   leverage: '2',
   tradingType: 'deposit',
+  slippage: DEFAULT_MAX_SLIPPAGE,
+  isInfiniteAllowance: false,
 };
 
 export const {
@@ -113,6 +119,30 @@ export const useUpdateStableTradingType = () => {
           return;
       }
     },
+    [updateState],
+  );
+};
+
+export const useUpdateTradingSlippage = () => {
+  const updateState = useUpdateFlatcoinTradingState();
+  return useCallback(
+    (slippage: string) =>
+      updateState((prevState) => ({
+        ...prevState,
+        slippage,
+      })),
+    [updateState],
+  );
+};
+
+export const useUpdateTradingAllowance = () => {
+  const updateState = useUpdateFlatcoinTradingState();
+  return useCallback(
+    (isInfiniteAllowance: boolean) =>
+      updateState((prevState) => ({
+        ...prevState,
+        isInfiniteAllowance,
+      })),
     [updateState],
   );
 };

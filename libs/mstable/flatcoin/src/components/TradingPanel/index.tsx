@@ -10,6 +10,7 @@ import { FlatcoinTradingStateProvider } from './state';
 import { TradingButton } from './TradingButton';
 import { TradingInputs } from './TradingInputs';
 import { TradingRecap } from './TradingRecap';
+import { TradingSettings } from './TradingSettings';
 
 import type { CardProps } from '@mui/material';
 import type { FC } from 'react';
@@ -66,9 +67,9 @@ export const TradingPanel: FC<CardProps> = (props) => {
     <FlatcoinTradingStateProvider>
       <Card {...props} sx={{ position: 'relative', ...props?.sx }}>
         <CardContent>
-          {/*<TradingSettings*/}
-          {/*  sx={{ position: 'absolute', right: 5, top: 5, zIndex: 10 }}*/}
-          {/*/>*/}
+          <TradingSettings
+            sx={{ position: 'absolute', right: 5, top: 5, zIndex: 10 }}
+          />
           <Tabs
             value={currentTab}
             onChange={(_, tab: number) => {
@@ -76,7 +77,7 @@ export const TradingPanel: FC<CardProps> = (props) => {
             }}
             textColor="inherit"
             variant="fullWidth"
-            sx={{ marginTop: 1 }}
+            sx={{ marginTop: 2 }}
           >
             {TABS.map((tab) => (
               <Tab key={tab} label={tabNameMap[tab]} />

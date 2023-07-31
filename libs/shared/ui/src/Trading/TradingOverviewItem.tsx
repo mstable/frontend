@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
 
-import { InfoTooltip } from '../../InfoTooltip';
+import { InfoTooltip } from '../InfoTooltip';
 
 import type { FC, ReactNode } from 'react';
 
