@@ -1,34 +1,10 @@
 import { dHedgeApiEndpoint } from '@frontend/shared-constants';
+import { fetcher } from '@frontend/shared-utils';
 import { useQuery } from '@tanstack/react-query';
 
 import type { UseQueryOptions } from '@tanstack/react-query';
 
 import type { FundQuery, FundQueryVariables } from './types';
-
-function fetcher<TData, TVariables>(
-  endpoint: string,
-  requestInit: RequestInit,
-  query: string,
-  variables?: TVariables,
-) {
-  return async (): Promise<TData> => {
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      ...requestInit,
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  };
-}
 
 export const fundQueryDocument = `
   query fundQuery($address: String!) {

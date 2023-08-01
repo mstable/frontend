@@ -5,9 +5,14 @@ export function fetcher<TData, TVariables>(
   variables?: TVariables,
 ) {
   return async (): Promise<TData> => {
+    const headers = {
+      'Content-Type': 'application/json', // Set the correct content type for JSON requests
+      ...(requestInit.headers || {}),
+    };
     const res = await fetch(endpoint, {
       method: 'POST',
       ...requestInit,
+      headers,
       body: JSON.stringify({ query, variables }),
     });
 
