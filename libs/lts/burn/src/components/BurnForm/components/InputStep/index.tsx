@@ -56,7 +56,7 @@ export const InputStep = (props: MotionStackProps) => {
             }).format(mtaBuybackPrice),
             roadmap: (
               <Link
-                href="https://medium.com/mstable/some-article"
+                href="https://medium.com/mstable/mstable-acquisition-completed-by-dhedge-the-next-chapter-of-defi-yield-vaults-begins-79a326157132"
                 target="_blank"
                 rel="noopener noreferrer"
               >
