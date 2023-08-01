@@ -5,6 +5,7 @@ export * from './createFlagsContainer';
 export * from './createLoadersContainer';
 export * from './envHelpers';
 export * from './formatters';
+export * from './httpRequests';
 export * from './isNilOrEmpty';
 export * from './maths';
 export * from './random';
