@@ -124,7 +124,7 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
                     />
                   }
                 >
-                  <Position sx={{ marginTop: -28 }} />
+                  <Position />
                 </ErrorBoundary>
               </Stack>
             </Grid>
