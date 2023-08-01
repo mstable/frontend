@@ -3,6 +3,7 @@ import { SvgIcon } from '@mui/material';
 import { ReactComponent as AaveSvg } from './aave.svg';
 import { ReactComponent as ConvexSvg } from './convex.svg';
 import CRVWebp from './crv.webp';
+import DHEDGE from './dhedge.png';
 import { ReactComponent as MStableSvg } from './mstable.svg';
 import { ReactComponent as UniswapSvg } from './uniswap.svg';
 
@@ -24,4 +25,10 @@ export const MStableProtocol = (props: SvgIconProps) => (
 );
 export const UniswapProtocol = (props: SvgIconProps) => (
   <SvgIcon {...props} component={UniswapSvg} viewBox="40.04 0 470.19 541.43" />
+);
+
+export const DHEDGEProtocol = (props: SvgIconProps) => (
+  <SvgIcon {...props} viewBox="0 0 200 40">
+    <image href={DHEDGE} height={40} width={200} />
+  </SvgIcon>
 );

@@ -10,7 +10,7 @@ interface ApyProps extends TypographyProps {
 }
 
 const getApyValue = ({ fundApy, period = 'monthly' }: ApyProps) => {
-  const apy = fundApy?.[period];
+  const apy = fundApy?.[period] || fundApy?.weekly;
   return apy ? `${Math.max(0, apy).toFixed(apy > 0 ? 2 : 0)}%` : '-';
 };
 

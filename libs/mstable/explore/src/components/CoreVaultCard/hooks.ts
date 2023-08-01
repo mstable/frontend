@@ -76,11 +76,9 @@ export const useCoreVaultCardProps = ({ config, to }: CoreVaultCardProps) => {
     [intl],
   );
   const apy = useMemo(() => {
-    const monthlyApy = data?.fund.apy?.monthly;
-    return monthlyApy
-      ? `${Math.max(0, monthlyApy).toFixed(monthlyApy > 0 ? 2 : 0)}%`
-      : '-';
-  }, [data?.fund.apy?.monthly]);
+    const apy = data?.fund.apy?.monthly || data?.fund.apy?.weekly;
+    return apy ? `${Math.max(0, apy).toFixed(apy > 0 ? 2 : 0)}%` : '-';
+  }, [data.fund.apy?.monthly, data.fund.apy.weekly]);
 
   const tvlLabel = useMemo(
     () => intl.formatMessage({ defaultMessage: 'TVL', id: 'SKB/G9' }),

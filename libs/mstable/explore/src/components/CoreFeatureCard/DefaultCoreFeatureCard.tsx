@@ -123,8 +123,8 @@ export const DefaultCoreFeatureCard: FC<CoreFeatureCardProps> = ({
           </Typography>
           <Typography className="title" mb={3}>
             {intl.formatMessage({
-              defaultMessage: 'Vaults',
-              id: 's2zphO',
+              defaultMessage: 'Meta Harvester',
+              id: 'yFvqzw',
             })}
           </Typography>
           <Typography
@@ -138,8 +138,9 @@ export const DefaultCoreFeatureCard: FC<CoreFeatureCardProps> = ({
             mb={4}
           >
             {intl.formatMessage({
-              defaultMessage: 'Earn diversified yield across DeFi.',
-              id: 'P1xtEU',
+              defaultMessage:
+                'Earn optimized, automated, and diversified yield across DeFi.',
+              id: 'YZUa24',
             })}
           </Typography>
         </Stack>

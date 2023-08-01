@@ -18,8 +18,11 @@ import {
 import { ListDashes, SquaresFour } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
+import { ComingSoonCard } from './ComingSoon';
 import { CoreVaultCard } from './CoreVaultCard';
 import { CoreVaultTableRow } from './CoreVaultTableRow';
+
+const COMING_SOON = Array.from({ length: 2 }, (_, index) => index);
 
 const buildVaultPath = (address: string) => `./vault/${address}`;
 
@@ -65,6 +68,11 @@ export const Vaults = () => {
                     height: '100%',
                   }}
                 />
+              </Grid>
+            ))}
+            {COMING_SOON.map((i) => (
+              <Grid key={i} item xs={12} sm={6} lg={4}>
+                <ComingSoonCard index={i} />
               </Grid>
             ))}
           </Grid>

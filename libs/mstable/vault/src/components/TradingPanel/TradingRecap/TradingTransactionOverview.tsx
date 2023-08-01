@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import { CUSTOM_LOCK_TIME } from '@dhedge/core-ui-kit/const';
 import {
   usePoolFees,
   usePoolManagerLogicData,
@@ -8,7 +7,6 @@ import {
 import {
   useIsDepositTradingPanelType,
   useTradingPanelLockTime,
-  useTradingPanelPoolConfig,
   useTradingPanelSettings,
 } from '@dhedge/core-ui-kit/hooks/state';
 import {
@@ -26,11 +24,13 @@ import {
 } from '@mui/material';
 import { useIntl } from 'react-intl';
 
+import { useVault } from '../../../state';
+
 import type { StackProps } from '@mui/material';
 import type { FC, ReactNode } from 'react';
 
 interface OverviewItemProps {
-  tooltipText: string;
+  tooltipText?: string;
   label: string;
   value?: ReactNode;
 }
@@ -39,20 +39,25 @@ const OverviewItem: FC<OverviewItemProps> = ({ label, value, tooltipText }) => (
   <Stack direction="row" justifyContent="space-between" alignItems="center">
     <Box display="flex" alignItems="center">
       <Typography variant="label2">{label}</Typography>
-      <InfoTooltip
-        sx={{ ml: 0.5 }}
-        display="flex"
-        weight="bold"
-        label={tooltipText}
-        size={16}
-      />
+      {tooltipText && (
+        <InfoTooltip
+          sx={{ ml: 0.5 }}
+          display="flex"
+          weight="bold"
+          label={tooltipText}
+          size={16}
+        />
+      )}
     </Box>
     <Typography variant="value5">{value}</Typography>
   </Stack>
 );
 
 const useTradingTransactionOverview = () => {
-  const { address, chainId } = useTradingPanelPoolConfig();
+  const {
+    meta: { minWithdrawalUsd },
+    config: { address, chainId },
+  } = useVault();
   const [{ slippage, minSlippage, isMaxSlippageLoading }] =
     useTradingPanelSettings();
   const { entryFee, hasPoolEntryFee } = usePoolFees({ address, chainId });
@@ -75,6 +80,7 @@ const useTradingTransactionOverview = () => {
     hasMinDeposit: !!minDepositUSD && isDeposit,
     minDeposit: formatToUsd({ value: minDepositUSD, minimumFractionDigits: 0 }),
     lockTime,
+    minWithdrawalUsd,
   };
 };
 
@@ -93,6 +99,7 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
     hasMinDeposit,
     minDeposit,
     lockTime,
+    minWithdrawalUsd,
   } = useTradingTransactionOverview();
 
   return (
@@ -160,8 +167,12 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
             <OverviewItem
               tooltipText={
                 hasPoolEntryFee
-                  ? 'Entry fee is charged on deposit.'
-                  : `Entry fee is charged when a cooldown of ${CUSTOM_LOCK_TIME} is selected. Bypass Entry Fee at trading settings.`
+                  ? intl.formatMessage({
+                      defaultMessage:
+                        'Entry fees are collected during deposit. The entry fee is distributed to all token holders to pay for rebalancing costs after new deposits.',
+                      id: 'uBC8fe',
+                    })
+                  : null
               }
               label={intl.formatMessage({
                 defaultMessage: 'Entry fee',
@@ -187,6 +198,18 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
             </Typography>
           </Stack>
         </CollapsibleSection>
+      )}
+      {!isDeposit && minWithdrawalUsd && (
+        <Typography variant="hint" color="warning.dark">
+          {intl.formatMessage(
+            {
+              defaultMessage:
+                'Due to high slippage on lower withdrawal amounts, please consider withdrawing a minimum of ${minWithdrawalUsd} or manually increasing the maximum slippage.',
+              id: 'QrqA2G',
+            },
+            { minWithdrawalUsd },
+          )}
+        </Typography>
       )}
     </Stack>
   );

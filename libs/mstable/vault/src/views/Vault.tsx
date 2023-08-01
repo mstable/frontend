@@ -2,10 +2,7 @@ import { useIsMobile } from '@frontend/shared-hooks';
 import { useTrack } from '@frontend/shared-providers';
 import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
 import { TokenIconRevamp } from '@frontend/shared-ui';
-import { Button, Grid, Stack } from '@mui/material';
-import { useNavigate } from '@tanstack/react-location';
-import { ArrowLeft } from 'phosphor-react';
-import { useIntl } from 'react-intl';
+import { Grid, Stack } from '@mui/material';
 
 import { MobileBottomCard } from '../components/MobileBottomCard';
 import { NetworkAlert } from '../components/NetworkAlert';
@@ -26,9 +23,7 @@ interface VaultProps extends StackProps {
 }
 
 const VaultContent = ({ config, ...props }: VaultProps) => {
-  const intl = useIntl();
   const track = useTrack();
-  const navigate = useNavigate();
   const isMobile = useIsMobile();
 
   useCoreUiKitInitialization();
@@ -37,19 +32,20 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
     <>
       <Stack direction="column" alignItems="flex-start" {...props}>
         <NetworkAlert chainId={config.chainId} symbol={config.symbol} />
-        <Button
-          variant="text"
-          size="small"
-          onClick={() => {
-            navigate({ to: '/' });
-          }}
-          sx={{ mb: 1 }}
-        >
-          <Stack direction="row" alignItems="center" spacing={0.5}>
-            <ArrowLeft width={16} height={16} />
-            {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}
-          </Stack>
-        </Button>
+        {/* TODO: re add back button when more vaults will be added */}
+        {/*<Button*/}
+        {/*  variant="text"*/}
+        {/*  size="small"*/}
+        {/*  onClick={() => {*/}
+        {/*    navigate({ to: '/' });*/}
+        {/*  }}*/}
+        {/*  sx={{ mb: 1 }}*/}
+        {/*>*/}
+        {/*  <Stack direction="row" alignItems="center" spacing={0.5}>*/}
+        {/*    <ArrowLeft width={16} height={16} />*/}
+        {/*    {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}*/}
+        {/*  </Stack>*/}
+        {/*</Button>*/}
         <TokenIconRevamp
           symbols={[config.symbol]}
           sx={{ height: 64, width: 64, mb: 2 }}
@@ -109,19 +105,6 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
                     <ErrorCard
                       onMount={() => {
                         track('error', {
-                          name: 'Unhandled Error Vault: Position Card',
-                        });
-                      }}
-                    />
-                  }
-                >
-                  <Position sx={{ marginTop: -28 }} />
-                </ErrorBoundary>
-                <ErrorBoundary
-                  ErrorComponent={
-                    <ErrorCard
-                      onMount={() => {
-                        track('error', {
                           name: 'Unhandled Error: Trading Panel',
                         });
                       }}
@@ -129,6 +112,19 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
                   }
                 >
                   <TradingPanel />
+                </ErrorBoundary>
+                <ErrorBoundary
+                  ErrorComponent={
+                    <ErrorCard
+                      onMount={() => {
+                        track('error', {
+                          name: 'Unhandled Error Vault: Position Card',
+                        });
+                      }}
+                    />
+                  }
+                >
+                  <Position />
                 </ErrorBoundary>
               </Stack>
             </Grid>

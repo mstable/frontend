@@ -17,12 +17,7 @@ type VaultState = {
   fund?: Fund;
   config: PoolConfig;
   meta: PoolConfigMeta;
-  fees?: Partial<
-    Pick<
-      ReturnType<typeof usePoolFees>,
-      'entryFee' | 'performanceFee' | 'streamingFee'
-    >
-  >;
+  fees?: Partial<ReturnType<typeof usePoolFees>>;
 };
 
 export const {
@@ -62,7 +57,7 @@ export const {
     },
   );
 
-  const { performanceFee, entryFee, streamingFee } = usePoolFees({
+  const fees = usePoolFees({
     address: initialState.config.address,
     chainId: initialState.config.chainId,
   });
@@ -70,26 +65,10 @@ export const {
   useEffect(() => {
     setState(
       produce((draft) => {
-        draft.fees.performanceFee = performanceFee;
+        draft.fees = fees;
       }),
     );
-  }, [performanceFee]);
-
-  useEffect(() => {
-    setState(
-      produce((draft) => {
-        draft.fees.entryFee = entryFee;
-      }),
-    );
-  }, [entryFee]);
-
-  useEffect(() => {
-    setState(
-      produce((draft) => {
-        draft.fees.streamingFee = streamingFee;
-      }),
-    );
-  }, [streamingFee]);
+  }, [fees]);
 
   return [state, setState];
 });
