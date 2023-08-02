@@ -1,6 +1,6 @@
+import { getChainData } from '@dhedge/core-ui-kit/utils';
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
-import { useNetwork } from 'wagmi';
 
 import { useVault } from '../../../../state';
 import { useAssetsComposition } from './hooks';
@@ -10,11 +10,11 @@ import type { StackProps } from '@mui/material';
 
 export const Assets = (props: StackProps) => {
   const intl = useIntl();
-  const { chains } = useNetwork();
   const { config } = useVault();
   const composition = useAssetsComposition();
-  const blockExplorerUrl = chains.find(({ id }) => id === config.chainId)
-    ?.blockExplorers?.['etherscan']?.url;
+  const blockExplorerUrl = getChainData(config.chainId)?.blockExplorers?.[
+    'etherscan'
+  ]?.url;
 
   return (
     <Stack {...props} direction="column">
