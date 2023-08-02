@@ -1983,12 +1983,12 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@dhedge/core-ui-kit@^0.2.12":
-  version "0.2.12"
-  resolved "https://registry.yarnpkg.com/@dhedge/core-ui-kit/-/core-ui-kit-0.2.12.tgz#b63203917273cb8ae4588c4076bac5049aa6ff88"
-  integrity sha512-u+FvuDUZmzzadFbXZdl2XRbnWhlTNrCTfUl12IduWZtvDjHXx9pa6PD4LtIzjiVNjOdTW3o7Ja9Ux+koagJ1UQ==
+"@dhedge/core-ui-kit@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@dhedge/core-ui-kit/-/core-ui-kit-0.3.0.tgz#fa0a222c6295eeb49b3a120d0b00a9e8ccf59be0"
+  integrity sha512-6Wb1MvKOlxEDYFB+gaJNbSC+TvreLuFgnr8BWn12tRxekGxmtGUwyP6PYRDO47EoOOwkZZOCTGT3QMvBKyKtpw==
   dependencies:
-    "@wagmi/chains" "^0.2.23"
+    "@wagmi/chains" "^0.2.25"
     lodash.chunk "^4.2.0"
     lodash.debounce "^4.0.8"
     lodash.isnumber "^3.0.3"
@@ -7128,7 +7128,7 @@
   resolved "https://registry.yarnpkg.com/@wagmi/chains/-/chains-0.2.22.tgz#25e511e134a00742e4fbf5108613dadf876c5bd9"
   integrity sha512-TdiOzJT6TO1JrztRNjTA5Quz+UmQlbvWFG8N41u9tta0boHA1JCAzGGvU6KuIcOmJfRJkKOUIt67wlbopCpVHg==
 
-"@wagmi/chains@^0.2.23":
+"@wagmi/chains@^0.2.25":
   version "0.2.25"
   resolved "https://registry.yarnpkg.com/@wagmi/chains/-/chains-0.2.25.tgz#44614a07399bcebb6651899d8116475e4a87e875"
   integrity sha512-Gah0bgR+14navwxi7xTL2oFB8YgK4qoBPye1b8ucccIwF3Z8Zg1u2gVTDFAyPT4lyB+ZVqwYKs3Y/IkFNG5O4Q==

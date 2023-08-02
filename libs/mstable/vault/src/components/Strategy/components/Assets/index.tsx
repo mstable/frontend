@@ -1,4 +1,4 @@
-import { YIELD_APP_SUPPORTED_CHAINS } from '@frontend/shared-constants';
+import { getChainData } from '@dhedge/core-ui-kit/utils';
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
@@ -12,9 +12,9 @@ export const Assets = (props: StackProps) => {
   const intl = useIntl();
   const { config } = useVault();
   const composition = useAssetsComposition();
-  const blockExplorerUrl = YIELD_APP_SUPPORTED_CHAINS.find(
-    ({ id }) => id === config.chainId,
-  )?.blockExplorers?.['etherscan']?.url;
+  const blockExplorerUrl = getChainData(config.chainId)?.blockExplorers?.[
+    'etherscan'
+  ]?.url;
 
   return (
     <Stack {...props} direction="column">
