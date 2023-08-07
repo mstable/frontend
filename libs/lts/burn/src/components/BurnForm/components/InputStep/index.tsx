@@ -74,37 +74,36 @@ export const InputStep = (props: MotionStackProps) => {
           <TokenInputs mb={4} />
           {isConnected ? (
             <>
-              {mta.balance.exact.gt(constants.Zero) &&
-                mta.price > mtaBuybackPrice && (
-                  <Stack spacing={2} alignItems="center" mb={2}>
-                    <Typography
-                      sx={{
-                        color: 'warning.main',
-                        display: 'flex',
-                        svg: { mr: 1 },
-                      }}
-                      mb={2}
-                    >
-                      <Warning />
-                      {intl.formatMessage({
-                        defaultMessage: 'Price is more favorable on Velodrome',
-                        id: 'K1NWSN',
-                      })}
-                    </Typography>
-                    <Button
-                      href="https://app.velodrome.finance/swap?from=0x929b939f8524c3be977af57a4a0ad3fb1e374b50&to=0x7f5c764cbc14f9669b88837ca1490cca17c31607"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      size="large"
-                      fullWidth
-                    >
-                      {intl.formatMessage({
-                        defaultMessage: 'Swap on Velodrome',
-                        id: 'CuTvKy',
-                      })}
-                    </Button>
-                  </Stack>
-                )}
+              {mta.price > mtaBuybackPrice && (
+                <Stack spacing={2} alignItems="center" mb={2}>
+                  <Typography
+                    sx={{
+                      color: 'warning.main',
+                      display: 'flex',
+                      svg: { mr: 1 },
+                    }}
+                    mb={2}
+                  >
+                    <Warning />
+                    {intl.formatMessage({
+                      defaultMessage: 'Price is more favorable on Velodrome',
+                      id: 'K1NWSN',
+                    })}
+                  </Typography>
+                  <Button
+                    href="https://app.velodrome.finance/swap?from=0x929b939f8524c3be977af57a4a0ad3fb1e374b50&to=0x7f5c764cbc14f9669b88837ca1490cca17c31607"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    size="large"
+                    fullWidth
+                  >
+                    {intl.formatMessage({
+                      defaultMessage: 'Swap on Velodrome',
+                      id: 'CuTvKy',
+                    })}
+                  </Button>
+                </Stack>
+              )}
               {needsApproval ? <ApprovalButton /> : <SubmitButton />}
             </>
           ) : (
