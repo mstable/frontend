@@ -16,6 +16,7 @@ import {
   useMinReceiveText,
 } from '@dhedge/core-ui-kit/hooks/trading';
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
+import { RECOMMENDED_MIN_SLIPPAGE } from '@frontend/shared-constants';
 import { CollapsibleSection, TradingOverviewItem } from '@frontend/shared-ui';
 import { CircularProgress, Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
@@ -74,10 +75,14 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
           defaultMessage: 'Max slippage',
           id: 'k3YWIR',
         })}
-        tooltipText={intl.formatMessage({
-          defaultMessage: 'We recommend 1%, but usually it will be < 1%.',
-          id: 'C9fFq/',
-        })}
+        tooltipText={intl.formatMessage(
+          {
+            defaultMessage:
+              'We recommend {slippage}%, but usually it will be < {slippage}%.',
+            id: 'OkOAzx',
+          },
+          { slippage: RECOMMENDED_MIN_SLIPPAGE },
+        )}
         value={
           <Stack direction="row" alignItems="center">
             {isMaxSlippageLoading && (

@@ -1,5 +1,8 @@
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
-import { DEFAULT_MAX_SLIPPAGE } from '@frontend/shared-constants';
+import {
+  DEFAULT_MAX_SLIPPAGE,
+  RECOMMENDED_MIN_SLIPPAGE,
+} from '@frontend/shared-constants';
 import { TradingOverviewItem } from '@frontend/shared-ui';
 import { Stack } from '@mui/material';
 import { useIntl } from 'react-intl';
@@ -38,10 +41,14 @@ export const TransactionOverview: FC<StackProps> = (props) => {
             defaultMessage: 'Max slippage',
             id: 'k3YWIR',
           })}
-          tooltipText={intl.formatMessage({
-            defaultMessage: 'We recommend 1%, but usually it will be < 1%.',
-            id: 'C9fFq/',
-          })}
+          tooltipText={intl.formatMessage(
+            {
+              defaultMessage:
+                'We recommend {slippage}%, but usually it will be < {slippage}%.',
+              id: 'OkOAzx',
+            },
+            { slippage: RECOMMENDED_MIN_SLIPPAGE },
+          )}
           value={<>{slippage}%</>}
         />
       )}

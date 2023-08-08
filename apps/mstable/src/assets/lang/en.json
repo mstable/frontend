@@ -479,12 +479,6 @@
       "value": "Vault"
     }
   ],
-  "C9fFq/": [
-    {
-      "type": 0,
-      "value": "We recommend 1%, but usually it will be < 1%."
-    }
-  ],
   "CB1174": [
     {
       "type": 0,
@@ -785,6 +779,28 @@
     {
       "type": 0,
       "value": "Mining"
+    }
+  ],
+  "OkOAzx": [
+    {
+      "type": 0,
+      "value": "We recommend "
+    },
+    {
+      "type": 1,
+      "value": "slippage"
+    },
+    {
+      "type": 0,
+      "value": "%, but usually it will be < "
+    },
+    {
+      "type": 1,
+      "value": "slippage"
+    },
+    {
+      "type": 0,
+      "value": "%."
     }
   ],
   "OwO+Nr": [
