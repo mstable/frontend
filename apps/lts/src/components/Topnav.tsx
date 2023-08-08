@@ -1,4 +1,5 @@
 import { SettingsButton } from '@frontend/lts-settings';
+import { MSTABLE_LANDING_PAGE_URL } from '@frontend/shared-constants';
 import { MStable, MStableShort } from '@frontend/shared-icons';
 import {
   OpenAccountModalButton,
@@ -15,7 +16,6 @@ import {
   useTheme,
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-location';
-import produce from 'immer';
 import { useIntl } from 'react-intl';
 
 import { routes } from '../routes';
@@ -47,15 +47,8 @@ export const Topnav = () => {
         <Button
           variant="text"
           color="inherit"
-          onClick={() => {
-            navigate({
-              to: '/',
-              search: produce((draft) => {
-                delete draft.address;
-              }),
-            });
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
+          href={MSTABLE_LANDING_PAGE_URL}
+          rel="noopener noreferrer"
           sx={{ ml: -2 }}
         >
           {wide ? <MStable sx={{ minWidth: 120 }} /> : <MStableShort />}
