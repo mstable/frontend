@@ -43,4 +43,5 @@ export type FlatcoinState = {
   configs: Record<PositionType, any>;
   positions?: Position[];
   type: PositionType;
+  flatcoinChainId: number;
 };

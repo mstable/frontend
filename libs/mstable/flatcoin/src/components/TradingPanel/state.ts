@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { USDC_OPTIMISM } from '@dhedge/core-ui-kit/const';
-import {
-  DEFAULT_MAX_SLIPPAGE,
-  ETH_OPTIMISM,
-  FLATCOIN_OPTIMISM,
-} from '@frontend/shared-constants';
+import { DEFAULT_MAX_SLIPPAGE, ZERO_ADDRESS } from '@frontend/shared-constants';
 import { useSearch } from '@tanstack/react-location';
 import { createContainer } from 'react-tracked';
+
+import { useFlatcoin } from '../../state';
+import { getFlatcoinTokensByChain } from '../../utils';
 
 import type { Dispatch, SetStateAction } from 'react';
 
@@ -17,9 +15,16 @@ import type {
   TradingType,
 } from '../../types';
 
+const TOKEN_STUB = {
+  address: ZERO_ADDRESS,
+  symbol: '',
+  decimals: 18,
+  value: '',
+};
+
 const initialState: FlatcoinTradingState = {
-  sendToken: USDC_OPTIMISM,
-  receiveToken: FLATCOIN_OPTIMISM,
+  sendToken: TOKEN_STUB,
+  receiveToken: TOKEN_STUB,
   leverage: '2',
   tradingType: 'deposit',
   slippage: DEFAULT_MAX_SLIPPAGE,
@@ -35,27 +40,29 @@ export const {
   Dispatch<SetStateAction<FlatcoinTradingState>>,
   unknown
 >(() => {
+  const { flatcoinChainId } = useFlatcoin();
   const [state, setState] = useState<FlatcoinTradingState>(initialState);
   const { type } = useSearch<FlatcoinRoute>();
 
   // Set correct tokens on page type switch
   useEffect(() => {
+    const { USDC, FLATCOIN, ETH } = getFlatcoinTokensByChain(flatcoinChainId);
     if (type === 'flatcoin') {
       setState((prevState) => ({
         ...prevState,
-        sendToken: USDC_OPTIMISM,
-        receiveToken: FLATCOIN_OPTIMISM,
+        sendToken: USDC,
+        receiveToken: FLATCOIN,
         tradingType: 'deposit',
       }));
     } else {
       setState((prevState) => ({
         ...prevState,
-        sendToken: ETH_OPTIMISM,
-        receiveToken: ETH_OPTIMISM,
+        sendToken: ETH,
+        receiveToken: ETH,
         tradingType: 'deposit',
       }));
     }
-  }, [type]);
+  }, [type, flatcoinChainId]);
 
   return [state, setState];
 });
@@ -97,6 +104,8 @@ export const useUpdateLeverage = () => {
 };
 
 export const useUpdateStableTradingType = () => {
+  const { flatcoinChainId } = useFlatcoin();
+  const { USDC, FLATCOIN } = getFlatcoinTokensByChain(flatcoinChainId);
   const updateState = useUpdateFlatcoinTradingState();
   return useCallback(
     (tradingType: TradingType) => {
@@ -105,16 +114,16 @@ export const useUpdateStableTradingType = () => {
           updateState((prevState) => ({
             ...prevState,
             tradingType,
-            sendToken: USDC_OPTIMISM,
-            receiveToken: FLATCOIN_OPTIMISM,
+            sendToken: USDC,
+            receiveToken: FLATCOIN,
           }));
           return;
         case 'withdraw':
           updateState((prevState) => ({
             ...prevState,
             tradingType,
-            sendToken: FLATCOIN_OPTIMISM,
-            receiveToken: USDC_OPTIMISM,
+            sendToken: FLATCOIN,
+            receiveToken: USDC,
           }));
           return;
       }

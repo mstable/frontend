@@ -1,11 +1,11 @@
-import { useNetwork } from '@dhedge/core-ui-kit/hooks/web3';
 import { useAccount } from '@dhedge/core-ui-kit/hooks/web3';
 import { OpenAccountModalButton } from '@frontend/shared-providers';
 import { Button } from '@mui/material';
 import { useIntl } from 'react-intl';
-import { optimism } from 'wagmi/chains';
+import { useNetwork } from 'wagmi';
 
 import { useIsLeveragedType } from '../../../hooks/useIsLeveragedType';
+import { isFlatcoinSupportedChain } from '../../../utils';
 import { LeveragedTradingButton } from './LeveragedTradingButton';
 import { StableTradingButton } from './StableTradingButton';
 
@@ -17,12 +17,12 @@ const buttonProps: ButtonProps = {
 
 export const useTradingButton = () => {
   const { account } = useAccount();
-  const { chainId } = useNetwork();
   const isLeveraged = useIsLeveragedType();
+  const { chain } = useNetwork();
 
   return {
     isDisconnected: !account,
-    isWrongNetwork: chainId !== optimism.id, // TODO: move to const
+    isWrongNetwork: !isFlatcoinSupportedChain(chain.id),
     isLeveraged,
   };
 };
