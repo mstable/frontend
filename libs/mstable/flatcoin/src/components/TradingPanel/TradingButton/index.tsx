@@ -6,6 +6,7 @@ import { useNetwork } from 'wagmi';
 
 import { useIsLeveragedType } from '../../../hooks/useIsLeveragedType';
 import { isFlatcoinSupportedChain } from '../../../utils';
+import { useFlatcoinTradingState } from '../state';
 import { LeveragedTradingButton } from './LeveragedTradingButton';
 import { StableTradingButton } from './StableTradingButton';
 
@@ -19,17 +20,20 @@ export const useTradingButton = () => {
   const { account } = useAccount();
   const isLeveraged = useIsLeveragedType();
   const { chain } = useNetwork();
+  const { isInsufficientBalance } = useFlatcoinTradingState();
 
   return {
     isDisconnected: !account,
-    isWrongNetwork: !isFlatcoinSupportedChain(chain.id),
+    isWrongNetwork: !!account && !isFlatcoinSupportedChain(chain.id),
     isLeveraged,
+    isInsufficientBalance,
   };
 };
 
 export const TradingButton = () => {
   const intl = useIntl();
-  const { isDisconnected, isWrongNetwork, isLeveraged } = useTradingButton();
+  const { isDisconnected, isWrongNetwork, isLeveraged, isInsufficientBalance } =
+    useTradingButton();
 
   if (isDisconnected) {
     return (
@@ -50,6 +54,17 @@ export const TradingButton = () => {
         {intl.formatMessage({
           defaultMessage: 'Wrong Network',
           id: 'wqlXwW',
+        })}
+      </Button>
+    );
+  }
+
+  if (isInsufficientBalance) {
+    return (
+      <Button {...buttonProps} disabled>
+        {intl.formatMessage({
+          defaultMessage: 'Insufficient balance',
+          id: 'kaPKOB',
         })}
       </Button>
     );

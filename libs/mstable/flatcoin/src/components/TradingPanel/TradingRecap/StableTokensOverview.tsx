@@ -9,8 +9,6 @@ import BigNumber from 'bignumber.js';
 import { ArrowsClockwise } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
-import { useFlatcoin } from '../../../state';
-import { getFlatcoinTokensByChain } from '../../../utils';
 import { useFlatcoinTradingState } from '../state';
 
 import type { BoxProps, StackProps } from '@mui/material';
@@ -53,23 +51,13 @@ const logoBoxProps: BoxProps = {
 const TOKEN_DECIMALS = 2;
 
 const useStableTokensOverview = () => {
-  const { flatcoinChainId } = useFlatcoin();
-  const { sendToken, receiveToken } = useFlatcoinTradingState();
-  const { USDC } = getFlatcoinTokensByChain(flatcoinChainId);
-  // TODO: add usdc token price
-  // const usdcTokenPrice = useAssetPrice({
-  //   address: USDC.address,
-  //   chainId: flatcoinChainId,
-  // });
-  const usdcTokenPrice = '1.01';
-  // TODO: add logic
-  const flatcoinTokenPrice = '1.2';
-  const sendTokenPrice = isEqualAddresses(sendToken.address, USDC.address)
-    ? usdcTokenPrice
-    : flatcoinTokenPrice;
-  const receiveTokenPrice = isEqualAddresses(receiveToken.address, USDC.address)
-    ? usdcTokenPrice
-    : flatcoinTokenPrice;
+  const { sendToken, receiveToken, usdc, flatcoin } = useFlatcoinTradingState();
+  const sendTokenPrice = isEqualAddresses(sendToken.address, usdc.address)
+    ? usdc.price
+    : flatcoin.price;
+  const receiveTokenPrice = isEqualAddresses(receiveToken.address, usdc.address)
+    ? usdc.price
+    : flatcoin.price;
 
   return {
     sendToken,

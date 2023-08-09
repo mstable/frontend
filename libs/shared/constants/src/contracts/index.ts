@@ -22,3 +22,7 @@ export const cons: Record<number, Record<string, Contract>> = Object.entries(
     }, {}),
   };
 }, {});
+
+export * from './mainnet';
+export * from './optimism';
+export * from './optimismGoerli';

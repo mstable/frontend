@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from 'react';
 
-import { useUserTokenBalance } from '@dhedge/core-ui-kit/hooks/user';
 import { useAccount } from '@dhedge/core-ui-kit/hooks/web3';
 import { TradingInput } from '@frontend/shared-ui';
+import { isEqualAddresses } from '@frontend/shared-utils';
 import { Button, Divider } from '@mui/material';
 import { ArrowsDownUp } from 'phosphor-react';
 
@@ -18,14 +18,15 @@ import {
 const useStableInputsGroup = () => {
   const { account } = useAccount();
   const { flatcoinChainId } = useFlatcoin();
-  const { sendToken, receiveToken, tradingType } = useFlatcoinTradingState();
+  const { sendToken, tradingType, receiveToken, usdc, flatcoin } =
+    useFlatcoinTradingState();
   const updateSendToken = useUpdateSendToken();
-  const sendTokenBalance = useUserTokenBalance({
-    symbol: sendToken.symbol,
-    address: sendToken.address,
-  });
+  const updateTradingType = useUpdateStableTradingType(flatcoinChainId);
+  const sendTokenBalance = isEqualAddresses(sendToken.address, usdc.address)
+    ? usdc.balance
+    : flatcoin.balance;
+
   useStableTradeQuote();
-  const updateTradingType = useUpdateStableTradingType();
 
   const onSendInputChange = (value) => updateSendToken({ value });
 
@@ -37,7 +38,10 @@ const useStableInputsGroup = () => {
 
   const tokenOptions = useMemo(() => {
     const { USDC, FLATCOIN } = getFlatcoinTokensByChain(flatcoinChainId);
-    return [USDC, FLATCOIN];
+    return [
+      { ...USDC, value: '' },
+      { ...FLATCOIN, value: '' },
+    ];
   }, [flatcoinChainId]);
 
   return {

@@ -1,21 +1,19 @@
-import { ApproveButton } from '@frontend/shared-ui';
 import { Button } from '@mui/material';
 
 import { useFlatcoinTradingState } from '../state';
+import { ApprovalButton } from './ApprovalButton';
 
 const useStableTradingButton = () => {
-  const { sendToken } = useFlatcoinTradingState();
-  // TODO: allowance and stable trading logic
-  const onApprove = () => alert('approve');
+  const { needsApproval } = useFlatcoinTradingState();
 
-  return { isApproved: false, sendToken, onApprove };
+  return { needsApproval };
 };
 
 export const StableTradingButton = () => {
-  const { isApproved, sendToken, onApprove } = useStableTradingButton();
+  const { needsApproval } = useStableTradingButton();
 
-  if (!isApproved) {
-    return <ApproveButton symbol={sendToken.symbol} onApprove={onApprove} />;
+  if (needsApproval) {
+    return <ApprovalButton />;
   }
   return <Button onClick={() => console.log('Trade')}>Trade</Button>;
 };
