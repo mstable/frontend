@@ -4,6 +4,7 @@
   "license": "GNU",
   "scripts": {
     "start": "nx serve mstable",
+    "start:lts": "nx serve lts",
     "build": "nx build mstable",
     "i18n:clear": "rimraf i18n-extractions",
     "codegen": "nx run mstable-data-access:codegen",
