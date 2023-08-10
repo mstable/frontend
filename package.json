@@ -4,6 +4,7 @@
   "license": "GNU",
   "scripts": {
     "start": "nx serve mstable",
+    "start:lts": "nx serve lts",
     "build": "nx build mstable",
     "i18n:clear": "rimraf i18n-extractions",
     "codegen": "nx run mstable-data-access:codegen",
@@ -16,8 +17,8 @@
     "*.{js,jsx,ts,tsx,mdx}": "eslint --fix"
   },
   "dependencies": {
-    "@dhedge/core-ui-kit": "^0.2.10",
-    "@dhedge/crypto-assets": "latest",
+    "@dhedge/core-ui-kit": "^0.3.0",
+    "@dhedge/crypto-assets": "^0.2.3",
     "@emotion/react": "11.10.6",
     "@emotion/styled": "11.10.6",
     "@fontsource/plus-jakarta-sans": "^4.5.11",
@@ -57,7 +58,7 @@
     "ts-custom-error": "^3.3.1",
     "tslib": "^2.5.0",
     "util": "^0.12.5",
-    "wagmi": "^0.12.10"
+    "wagmi": "^0.12.19"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.14.5",

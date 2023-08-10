@@ -33,13 +33,13 @@ export const Fees = (props: StackProps) => {
     <Stack {...props} direction="column" spacing={2}>
       <Stack {...feeCardProps}>
         <Typography {...rateChipProps}>{fees?.entryFee}</Typography>
-        <Typography variant="h5" gutterBottom pt={2}>
+        <Typography variant="h5" gutterBottom>
           {intl.formatMessage({
             defaultMessage: 'Entry Fee',
             id: 'pWv8jk',
           })}
         </Typography>
-        <Typography sx={{ typography: 'subtitle2', paddingBottom: 2 }}>
+        <Typography sx={{ typography: 'subtitle2', paddingBottom: 1 }}>
           {intl.formatMessage(
             {
               defaultMessage: 'The {symbol} Vault charges a {fee} entry fee.',
@@ -51,16 +51,25 @@ export const Fees = (props: StackProps) => {
             },
           )}
         </Typography>
+        {fees?.hasPoolEntryFee && (
+          <Typography sx={{ typography: 'subtitle2', paddingBottom: 1 }}>
+            {intl.formatMessage({
+              defaultMessage:
+                'Entry fees are collected during deposit. The entry fee is distributed to all token holders to pay for rebalancing costs after new deposits.',
+              id: 'uBC8fe',
+            })}
+          </Typography>
+        )}
       </Stack>
       <Stack {...feeCardProps}>
         <Typography {...rateChipProps}>{fees?.entryFee}</Typography>
-        <Typography variant="h5" gutterBottom pt={2}>
+        <Typography variant="h5" gutterBottom>
           {intl.formatMessage({
             defaultMessage: 'Exit Fee',
             id: 'le9cwx',
           })}
         </Typography>
-        <Typography sx={{ typography: 'subtitle2', paddingBottom: 2 }}>
+        <Typography sx={{ typography: 'subtitle2', paddingBottom: 1 }}>
           {intl.formatMessage(
             {
               defaultMessage: `The {symbol} Vault doesn't charge exit fee.`,
@@ -74,13 +83,13 @@ export const Fees = (props: StackProps) => {
       </Stack>
       <Stack {...feeCardProps}>
         <Typography {...rateChipProps}>{fees?.performanceFee}</Typography>
-        <Typography variant="h5" gutterBottom pt={2}>
+        <Typography variant="h5" gutterBottom>
           {intl.formatMessage({
             defaultMessage: 'Performance Fee',
             id: 'fJjSsb',
           })}
         </Typography>
-        <Typography sx={{ typography: 'subtitle2', paddingBottom: 2 }}>
+        <Typography sx={{ typography: 'subtitle2', paddingBottom: 1 }}>
           {intl.formatMessage(
             {
               defaultMessage:
@@ -96,13 +105,13 @@ export const Fees = (props: StackProps) => {
       </Stack>
       <Stack {...feeCardProps}>
         <Typography {...rateChipProps}>{fees?.streamingFee}</Typography>
-        <Typography variant="h5" gutterBottom pt={2}>
+        <Typography variant="h5" gutterBottom>
           {intl.formatMessage({
             defaultMessage: 'Management Fee',
             id: '4cX/rf',
           })}
         </Typography>
-        <Typography sx={{ typography: 'subtitle2', paddingBottom: 2 }}>
+        <Typography sx={{ typography: 'subtitle2', paddingBottom: 1 }}>
           {intl.formatMessage(
             {
               defaultMessage:

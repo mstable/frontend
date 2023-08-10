@@ -5,9 +5,6 @@
   "1XVJUl": {
     "defaultMessage": "Switch to {defaultChain}"
   },
-  "7JlauX": {
-    "defaultMessage": "Explore"
-  },
   "8ywLSf": {
     "defaultMessage": "Twitter"
   },
@@ -40,6 +37,9 @@
   },
   "sy+pv5": {
     "defaultMessage": "Email"
+  },
+  "7JlauX": {
+    "defaultMessage": "Explore"
   },
   "7ynb1z": {
     "defaultMessage": "{value} GWEI"
@@ -92,6 +92,9 @@
   "YC/ZXg": {
     "defaultMessage": "Share price"
   },
+  "YZUa24": {
+    "defaultMessage": "Earn optimized, automated, and diversified yield across DeFi."
+  },
   "ehxGBh": {
     "defaultMessage": "Token Price"
   },
@@ -107,6 +110,9 @@
   "s2zphO": {
     "defaultMessage": "Vaults"
   },
+  "yFvqzw": {
+    "defaultMessage": "Meta Harvester"
+  },
   "zFNxtv": {
     "defaultMessage": "Protocols"
   },
@@ -116,8 +122,14 @@
   "+U6ozc": {
     "defaultMessage": "Type"
   },
+  "/54G9d": {
+    "defaultMessage": "Approving Token"
+  },
   "1uz/I3": {
     "defaultMessage": "1M"
+  },
+  "20X0BC": {
+    "defaultMessage": "Transaction Cancelled"
   },
   "3xhnWF": {
     "defaultMessage": "You Spend"
@@ -185,11 +197,23 @@
   "k3YWIR": {
     "defaultMessage": "Max slippage"
   },
+  "kaPKOB": {
+    "defaultMessage": "Insufficient balance"
+  },
   "n9CFUs": {
     "defaultMessage": "Token Approval"
   },
+  "p8bsw4": {
+    "defaultMessage": "Transaction Error"
+  },
   "pVeGn/": {
     "defaultMessage": "leverage"
+  },
+  "rgdwQX": {
+    "defaultMessage": "Transaction Confirmed"
+  },
+  "w1LBDB": {
+    "defaultMessage": "Sign Transaction"
   },
   "wqlXwW": {
     "defaultMessage": "Wrong Network"
@@ -202,9 +226,6 @@
   },
   "+1GGs7": {
     "defaultMessage": "Claim CVX & CRV"
-  },
-  "/54G9d": {
-    "defaultMessage": "Approving Token"
   },
   "/e4KBT": {
     "defaultMessage": "1 Share = {ratio} {asset}"
@@ -220,9 +241,6 @@
   },
   "0oLj/t": {
     "defaultMessage": "Expand"
-  },
-  "20X0BC": {
-    "defaultMessage": "Transaction Cancelled"
   },
   "2M9vCZ": {
     "defaultMessage": "Projected APY (%)"
@@ -425,9 +443,6 @@
   "kZcqo0": {
     "defaultMessage": "%"
   },
-  "kaPKOB": {
-    "defaultMessage": "Insufficient balance"
-  },
   "kdIIDL": {
     "defaultMessage": "User withdraws USDC"
   },
@@ -443,9 +458,6 @@
   "mrwfXX": {
     "defaultMessage": "Shares"
   },
-  "p8bsw4": {
-    "defaultMessage": "Transaction Error"
-  },
   "qEnyZU": {
     "defaultMessage": "Meta Vault"
   },
@@ -458,9 +470,6 @@
   "rbrahO": {
     "defaultMessage": "Close"
   },
-  "rgdwQX": {
-    "defaultMessage": "Transaction Confirmed"
-  },
   "tH0obk": {
     "defaultMessage": "Return Projection"
   },
@@ -472,9 +481,6 @@
   },
   "u7a5FI": {
     "defaultMessage": "Visualize strategy"
-  },
-  "w1LBDB": {
-    "defaultMessage": "Sign Transaction"
   },
   "zRbVmO": {
     "defaultMessage": "WITHDRAW"
@@ -496,6 +502,9 @@
   },
   "2fed1y": {
     "defaultMessage": "A deposit into a vault requires an approval transaction.<br></br><br></br>Set as infinite to avoid approving multiple times and save gas on subsequent deposits.<br></br><br></br>Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost."
+  },
+  "42xcXv": {
+    "defaultMessage": "Ensure that you understand the risks associated with high slippage and are comfortable proceeding with the trade."
   },
   "47GkyG": {
     "defaultMessage": "Minimum deposit is ${minDepositUSD}"
@@ -527,6 +536,9 @@
   "ObjU4O": {
     "defaultMessage": "Mining"
   },
+  "QrqA2G": {
+    "defaultMessage": "Due to high slippage on lower withdrawal amounts, please consider withdrawing a minimum of ${minWithdrawalUsd} or manually increasing the maximum slippage."
+  },
   "S0seuN": {
     "defaultMessage": "Recommended min slippage"
   },
@@ -538,6 +550,9 @@
   },
   "b1gVRq": {
     "defaultMessage": "Minimum deposit in USD."
+  },
+  "eTGEXC": {
+    "defaultMessage": "Approve {slippage}% max slippage"
   },
   "epCeiH": {
     "defaultMessage": "The {symbol} Vault doesn't charge exit fee."
@@ -566,8 +581,8 @@
   "qzgBwU": {
     "defaultMessage": "The {symbol} Vault charges a {fee} performance upon underlying asset appreciation."
   },
-  "s4Vb9J": {
-    "defaultMessage": "Blocked by high {slippage}% max slippage"
+  "r2pety": {
+    "defaultMessage": "Please consider the following before confirming:"
   },
   "sHyaBT": {
     "defaultMessage": "This pool is currently private."
@@ -578,8 +593,14 @@
   "tivZoE": {
     "defaultMessage": "The {symbol} Vault charges a {fee} management fee."
   },
+  "uBC8fe": {
+    "defaultMessage": "Entry fees are collected during deposit. The entry fee is distributed to all token holders to pay for rebalancing costs after new deposits."
+  },
   "xrKHS6": {
     "defaultMessage": "Success"
+  },
+  "yL//gV": {
+    "defaultMessage": "Be aware that the final amount of assets you receive may be different from the initially quoted value."
   },
   "yap3X0": {
     "defaultMessage": "When the \"Auto\" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. <br></br> Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 1-2%."

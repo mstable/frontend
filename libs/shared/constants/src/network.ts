@@ -1,4 +1,4 @@
-import { optimism } from '@dhedge/core-ui-kit/const';
+import { optimism } from 'wagmi/chains';
 
 import type { ChainId } from '@dhedge/core-ui-kit/types';
 

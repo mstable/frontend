@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { fetcher } from '../fetcher';
 import { dHedgeApiEndpoint } from '@frontend/shared-constants';
+import { fetcher } from '@frontend/shared-utils';
 
 interface CustomCurrencyRoiVariables {
   vaultAddress: string;

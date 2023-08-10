@@ -42,7 +42,7 @@ jobs:
 
       - name: Build
         env:
-          alchemyMain: ${{ secrets.ALCHEMY_MAIN_API_KEY }}
+          alchemyMain: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
           alchemyFallback: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
         run: NX_ALCHEMY_MAIN_API_KEY=$alchemyMain NX_ALCHEMY_FALLBACK_API_KEY=$alchemyFallback yarn nx build lts
 

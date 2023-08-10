@@ -1,8 +1,8 @@
 import { dHedgeApiEndpoint } from '@frontend/shared-constants';
-import { fetcher } from '../fetcher';
 import { FundByInvestor } from '@frontend/shared-types';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Address } from '@dhedge/core-ui-kit/types';
+import { fetcher } from '@frontend/shared-utils';
 
 interface AllFundsByInvestorQueryVariables {
   address: Address;

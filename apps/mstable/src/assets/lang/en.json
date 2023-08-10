@@ -233,6 +233,12 @@
       "value": "% fee upon liquidation of the earned rewards."
     }
   ],
+  "42xcXv": [
+    {
+      "type": 0,
+      "value": "Ensure that you understand the risks associated with high slippage and are comfortable proceeding with the trade."
+    }
+  ],
   "47FYwb": [
     {
       "type": 0,
@@ -869,6 +875,20 @@
       "value": "The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded."
     }
   ],
+  "QrqA2G": [
+    {
+      "type": 0,
+      "value": "Due to high slippage on lower withdrawal amounts, please consider withdrawing a minimum of $"
+    },
+    {
+      "type": 1,
+      "value": "minWithdrawalUsd"
+    },
+    {
+      "type": 0,
+      "value": " or manually increasing the maximum slippage."
+    }
+  ],
   "RnacAD": [
     {
       "type": 0,
@@ -1091,6 +1111,12 @@
       "value": "Read the Announcement"
     }
   ],
+  "YZUa24": [
+    {
+      "type": 0,
+      "value": "Earn optimized, automated, and diversified yield across DeFi."
+    }
+  ],
   "ZefNbE": [
     {
       "type": 0,
@@ -1229,6 +1255,20 @@
     {
       "type": 0,
       "value": "Aave is a decentralised non-custodial liquidity market protocol where users can participate as depositors or borrowers."
+    }
+  ],
+  "eTGEXC": [
+    {
+      "type": 0,
+      "value": "Approve "
+    },
+    {
+      "type": 1,
+      "value": "slippage"
+    },
+    {
+      "type": 0,
+      "value": "% max slippage"
     }
   ],
   "ehxGBh": [
@@ -1531,6 +1571,12 @@
       "value": " performance upon underlying asset appreciation."
     }
   ],
+  "r2pety": [
+    {
+      "type": 0,
+      "value": "Please consider the following before confirming:"
+    }
+  ],
   "rbrahO": [
     {
       "type": 0,
@@ -1559,20 +1605,6 @@
     {
       "type": 0,
       "value": "Diversified"
-    }
-  ],
-  "s4Vb9J": [
-    {
-      "type": 0,
-      "value": "Blocked by high "
-    },
-    {
-      "type": 1,
-      "value": "slippage"
-    },
-    {
-      "type": 0,
-      "value": "% max slippage"
     }
   ],
   "sHyaBT": [
@@ -1653,6 +1685,12 @@
       "value": "Visualize strategy"
     }
   ],
+  "uBC8fe": [
+    {
+      "type": 0,
+      "value": "Entry fees are collected during deposit. The entry fee is distributed to all token holders to pay for rebalancing costs after new deposits."
+    }
+  ],
   "vS/YSY": [
     {
       "type": 0,
@@ -1693,6 +1731,18 @@
     {
       "type": 0,
       "value": "Check URL"
+    }
+  ],
+  "yFvqzw": [
+    {
+      "type": 0,
+      "value": "Meta Harvester"
+    }
+  ],
+  "yL//gV": [
+    {
+      "type": 0,
+      "value": "Be aware that the final amount of assets you receive may be different from the initially quoted value."
     }
   ],
   "yap3X0": [

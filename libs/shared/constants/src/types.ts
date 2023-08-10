@@ -16,9 +16,11 @@ export type VaultConfig = PoolConfig & PoolConfigMeta;
 
 export interface PoolConfigMeta {
   description: string;
+  descriptionLink?: string;
   strategies?: VaultStrategy[];
   featured?: boolean;
   primaryColor: string;
+  minWithdrawalUsd?: number;
 }
 
 export interface VaultStrategy {
