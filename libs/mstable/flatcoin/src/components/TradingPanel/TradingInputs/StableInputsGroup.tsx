@@ -17,13 +17,18 @@ import {
 
 const useStableInputsGroup = () => {
   const { account } = useAccount();
-  const { flatcoinChainId } = useFlatcoin();
-  const { sendToken, tradingType, receiveToken, usdc, flatcoin } =
-    useFlatcoinTradingState();
+  const {
+    flatcoinChainId,
+    tokens: { collateral, flatcoin },
+  } = useFlatcoin();
+  const { sendToken, tradingType, receiveToken } = useFlatcoinTradingState();
   const updateSendToken = useUpdateSendToken();
   const updateTradingType = useUpdateStableTradingType(flatcoinChainId);
-  const sendTokenBalance = isEqualAddresses(sendToken.address, usdc.address)
-    ? usdc.balance
+  const sendTokenBalance = isEqualAddresses(
+    sendToken.address,
+    collateral.address,
+  )
+    ? collateral.balance
     : flatcoin.balance;
 
   useStableTradeQuote();
@@ -37,9 +42,9 @@ const useStableInputsGroup = () => {
   );
 
   const tokenOptions = useMemo(() => {
-    const { USDC, FLATCOIN } = getFlatcoinTokensByChain(flatcoinChainId);
+    const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(flatcoinChainId);
     return [
-      { ...USDC, value: '' },
+      { ...COLLATERAL, value: '' },
       { ...FLATCOIN, value: '' },
     ];
   }, [flatcoinChainId]);

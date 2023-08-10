@@ -18,17 +18,22 @@ const useApprovalButton = () => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
   const { chain } = useNetwork();
-  const { flatcoinChainId } = useFlatcoin();
+  const {
+    flatcoinChainId,
+    tokens: { collateral, flatcoin },
+  } = useFlatcoin();
   const {
     sendToken,
     needsApproval,
-    usdc,
-    flatcoin,
+
     refetch,
     isInsufficientBalance,
   } = useFlatcoinTradingState();
-  const tokenToBeApproved = isEqualAddresses(sendToken.address, usdc.address)
-    ? usdc
+  const tokenToBeApproved = isEqualAddresses(
+    sendToken.address,
+    collateral.address,
+  )
+    ? collateral
     : flatcoin;
 
   const { config } = usePrepareContractWrite({

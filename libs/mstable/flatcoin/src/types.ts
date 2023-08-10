@@ -32,8 +32,6 @@ export interface FlatcoinTradingState {
   tradingType: TradingType;
   slippage: string;
   isInfiniteAllowance: boolean;
-  usdc: TokenInfo;
-  flatcoin: TokenInfo;
   needsApproval: boolean;
   isInsufficientBalance: boolean;
   refetch: () => void;
@@ -48,6 +46,16 @@ export type FlatcoinState = {
     fundingRate?: string;
     openInterest?: string;
     skew?: string;
+  };
+  tokens: {
+    collateral: TokenInfo;
+    flatcoin: TokenInfo;
+    native: {
+      symbol: string;
+      decimals: number;
+      balance: string;
+      price: string;
+    };
   };
   configs: Record<PositionType, any>;
   positions?: Position[];

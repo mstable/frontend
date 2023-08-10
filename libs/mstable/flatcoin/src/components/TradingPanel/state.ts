@@ -1,11 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import {
-  DEFAULT_MAX_SLIPPAGE,
-  SUPPORTED_FLATCOIN_CHAIN_IDS,
-  toks,
-  ZERO_ADDRESS,
-} from '@frontend/shared-constants';
+import { DEFAULT_MAX_SLIPPAGE, ZERO_ADDRESS } from '@frontend/shared-constants';
 import { isEqualAddresses } from '@frontend/shared-utils';
 import { useSearch } from '@tanstack/react-location';
 import BigNumber from 'bignumber.js';
@@ -37,16 +32,6 @@ const initialState: FlatcoinTradingState = {
   tradingType: 'deposit',
   slippage: DEFAULT_MAX_SLIPPAGE,
   isInfiniteAllowance: false,
-  usdc: {
-    ...toks[SUPPORTED_FLATCOIN_CHAIN_IDS[0]]['USDC'],
-    balance: '',
-    price: '',
-  },
-  flatcoin: {
-    ...toks[SUPPORTED_FLATCOIN_CHAIN_IDS[0]]['mStable'],
-    balance: '',
-    price: '',
-  },
   needsApproval: true,
   isInsufficientBalance: false,
   keeperFees: '1.27', // TODO: implement keeper fees fetching logic
@@ -63,20 +48,24 @@ export const {
   Dispatch<SetStateAction<FlatcoinTradingState>>,
   unknown
 >(() => {
-  const { flatcoinChainId } = useFlatcoin();
+  const {
+    flatcoinChainId,
+    tokens: { collateral, flatcoin },
+  } = useFlatcoin();
   const [state, setState] = useState<FlatcoinTradingState>(initialState);
   const { type } = useSearch<FlatcoinRoute>();
 
   // Set correct tokens on page type switch
   useEffect(() => {
-    const { USDC, FLATCOIN, ETH } = getFlatcoinTokensByChain(flatcoinChainId);
+    const { COLLATERAL, FLATCOIN, ETH } =
+      getFlatcoinTokensByChain(flatcoinChainId);
     if (type === 'flatcoin') {
       setState(
         produce((draft) => {
           draft.sendToken = {
-            symbol: USDC.symbol,
-            decimals: USDC.decimals,
-            address: USDC.address,
+            symbol: COLLATERAL.symbol,
+            decimals: COLLATERAL.decimals,
+            address: COLLATERAL.address,
             value: '',
           };
           draft.receiveToken = {
@@ -101,23 +90,13 @@ export const {
   }, [type, flatcoinChainId]);
 
   useEffect(() => {
-    const { USDC, FLATCOIN } = getFlatcoinTokensByChain(flatcoinChainId);
-    setState(
-      produce((draft) => {
-        draft.usdc = { ...USDC, price: '1', balance: '123' }; // TODO: remove and update
-        draft.flatcoin = { ...FLATCOIN, price: '1.2', balance: '321' }; // TODO: remove and update
-      }),
-    );
-  }, [flatcoinChainId]);
-
-  useEffect(() => {
     if (type === 'flatcoin') {
       const sendTokenBalance = isEqualAddresses(
         state.sendToken.address,
-        state.usdc.address,
+        collateral.address,
       )
-        ? state.usdc.balance
-        : state.flatcoin.balance;
+        ? collateral.balance
+        : flatcoin.balance;
       setState(
         produce((draft) => {
           draft.isInsufficientBalance = new BigNumber(
@@ -134,11 +113,11 @@ export const {
     }
   }, [
     type,
-    state.flatcoin.balance,
+    flatcoin.balance,
     state.sendToken.value,
     state.sendToken.address,
-    state.usdc.address,
-    state.usdc.balance,
+    collateral.address,
+    collateral.balance,
   ]);
 
   return [state, setState];
@@ -181,20 +160,19 @@ export const useUpdateLeverage = () => {
 };
 
 export const useUpdateStableTradingType = (chainId: number) => {
-  const { USDC, FLATCOIN } = getFlatcoinTokensByChain(chainId);
-
   const updateState = useUpdateFlatcoinTradingState();
   return useCallback(
     (tradingType: TradingType) => {
+      const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(chainId);
       switch (tradingType) {
         case 'deposit':
           updateState((prevState) => ({
             ...prevState,
             tradingType,
             sendToken: {
-              symbol: USDC.symbol,
-              address: USDC.address,
-              decimals: USDC.decimals,
+              symbol: COLLATERAL.symbol,
+              address: COLLATERAL.address,
+              decimals: COLLATERAL.decimals,
               value: '',
             },
             receiveToken: {
@@ -216,16 +194,16 @@ export const useUpdateStableTradingType = (chainId: number) => {
               value: '',
             },
             receiveToken: {
-              symbol: USDC.symbol,
-              address: USDC.address,
-              decimals: USDC.decimals,
+              symbol: COLLATERAL.symbol,
+              address: COLLATERAL.address,
+              decimals: COLLATERAL.decimals,
               value: '',
             },
           }));
           return;
       }
     },
-    [updateState],
+    [updateState, chainId],
   );
 };
 

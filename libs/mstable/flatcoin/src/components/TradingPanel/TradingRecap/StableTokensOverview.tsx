@@ -9,6 +9,7 @@ import BigNumber from 'bignumber.js';
 import { ArrowsClockwise } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
+import { useFlatcoin } from '../../../state';
 import { useFlatcoinTradingState } from '../state';
 
 import type { BoxProps, StackProps } from '@mui/material';
@@ -51,12 +52,18 @@ const logoBoxProps: BoxProps = {
 const TOKEN_DECIMALS = 2;
 
 const useStableTokensOverview = () => {
-  const { sendToken, receiveToken, usdc, flatcoin } = useFlatcoinTradingState();
-  const sendTokenPrice = isEqualAddresses(sendToken.address, usdc.address)
-    ? usdc.price
+  const {
+    tokens: { collateral, flatcoin },
+  } = useFlatcoin();
+  const { sendToken, receiveToken } = useFlatcoinTradingState();
+  const sendTokenPrice = isEqualAddresses(sendToken.address, collateral.address)
+    ? collateral.price
     : flatcoin.price;
-  const receiveTokenPrice = isEqualAddresses(receiveToken.address, usdc.address)
-    ? usdc.price
+  const receiveTokenPrice = isEqualAddresses(
+    receiveToken.address,
+    collateral.address,
+  )
+    ? collateral.price
     : flatcoin.price;
 
   return {

@@ -2,6 +2,9 @@ import { USDC } from '@frontend/shared-icons';
 import { erc20ABI } from 'wagmi';
 import { baseGoerli } from 'wagmi/chains';
 
+import { FlatcoinStableModuleABI } from '../abis/flatcoin/FlatcoinStableModuleABI';
+import { flatcoinStableModuleBaseGoerli } from '../contracts/baseGoerli';
+
 import type { Token } from './types';
 
 export const toksBaseGoerli: Token[] = [
@@ -15,11 +18,11 @@ export const toksBaseGoerli: Token[] = [
     abi: erc20ABI,
   },
   {
-    address: '0x2', // TODO: add
+    address: flatcoinStableModuleBaseGoerli.address,
     symbol: 'mStable',
     name: 'Flatcoin',
     decimals: 18,
     chainId: baseGoerli.id,
-    abi: erc20ABI,
+    abi: FlatcoinStableModuleABI,
   },
 ];

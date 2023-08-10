@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
 
-import { SUPPORTED_FLATCOIN_CHAIN_IDS } from '@frontend/shared-constants';
+import { SUPPORTED_FLATCOIN_CHAIN_IDS, toks } from '@frontend/shared-constants';
 import { useSearch } from '@tanstack/react-location';
+import BigNumber from 'bignumber.js';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
-import { useNetwork } from 'wagmi';
+import { useAccount, useBalance, useContractReads, useNetwork } from 'wagmi';
 
-import { isFlatcoinSupportedChain } from './utils';
+import { getFlatcoinTokensByChain, isFlatcoinSupportedChain } from './utils';
 
 import type { Dispatch, SetStateAction } from 'react';
 
 import type { FlatcoinRoute, FlatcoinState } from './types';
+const defaultFlatcoinChainId = SUPPORTED_FLATCOIN_CHAIN_IDS[0];
 
 export const {
   Provider: FlatcoinProvider,
@@ -27,6 +29,7 @@ export const {
 >(({ initialState }) => {
   const { type } = useSearch<FlatcoinRoute>();
   const { chain } = useNetwork();
+  const { address: walletAddress } = useAccount();
 
   const [state, setState] = useState<FlatcoinState>({
     type,
@@ -104,7 +107,68 @@ export const {
         }).format(20),
       },
     ],
-    flatcoinChainId: SUPPORTED_FLATCOIN_CHAIN_IDS[0],
+    flatcoinChainId: defaultFlatcoinChainId,
+    tokens: {
+      collateral: {
+        ...toks[defaultFlatcoinChainId]['USDC'],
+        balance: '',
+        price: '',
+      },
+      flatcoin: {
+        ...toks[defaultFlatcoinChainId]['mStable'],
+        balance: '',
+        price: '',
+      },
+      native: {
+        balance: '',
+        price: '',
+        symbol: '',
+        decimals: 18,
+      },
+    },
+  });
+
+  useBalance({
+    address: walletAddress,
+    chainId: chain?.id,
+    onSuccess({ decimals, symbol, formatted }) {
+      setState(
+        produce((draft) => {
+          draft.tokens.native.decimals = decimals;
+          draft.tokens.native.symbol = symbol;
+          draft.tokens.native.balance = formatted;
+        }),
+      );
+    },
+    enabled: !!walletAddress,
+    watch: true,
+  });
+  const { data: tokensChainData } = useContractReads({
+    contracts: [
+      {
+        address: state.tokens.collateral.address,
+        abi: state.tokens.collateral.abi,
+        chainId: state.tokens.collateral.chainId,
+        functionName: 'balanceOf',
+        args: [walletAddress],
+      },
+      {
+        address: state.tokens.flatcoin.address,
+        abi: state.tokens.flatcoin.abi,
+        chainId: state.tokens.flatcoin.chainId,
+        functionName: 'balanceOf',
+        args: [walletAddress],
+      },
+      {
+        address: state.tokens.flatcoin.address,
+        abi: state.tokens.flatcoin.abi,
+        chainId: state.tokens.flatcoin.chainId,
+        functionName: 'stableCollateralPerShare',
+        args: [],
+      },
+    ],
+    enabled: !!walletAddress,
+    watch: true,
   });
 
   useEffect(() => {
@@ -118,12 +182,46 @@ export const {
   }, [type]);
 
   useEffect(() => {
-    produce((draft) => {
-      draft.flatcoinChainId = isFlatcoinSupportedChain(chain.id)
-        ? chain.id
-        : SUPPORTED_FLATCOIN_CHAIN_IDS[0];
-    });
+    setState(
+      produce((draft) => {
+        draft.flatcoinChainId = isFlatcoinSupportedChain(chain?.id)
+          ? chain.id
+          : SUPPORTED_FLATCOIN_CHAIN_IDS[0];
+      }),
+    );
   }, [chain]);
+
+  useEffect(() => {
+    const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(
+      state.flatcoinChainId,
+    );
+    setState(
+      produce((draft) => {
+        draft.tokens.collateral = {
+          ...COLLATERAL,
+          price: '1',
+          balance: tokensChainData[0]
+            ? new BigNumber(tokensChainData[0].toString())
+                .shiftedBy(-COLLATERAL.decimals)
+                .toFixed()
+            : '',
+        };
+        draft.tokens.flatcoin = {
+          ...FLATCOIN,
+          price: tokensChainData[2]
+            ? new BigNumber(tokensChainData[2].toString())
+                .shiftedBy(-FLATCOIN.decimals)
+                .toFixed()
+            : '', // TODO: check
+          balance: tokensChainData[1]
+            ? new BigNumber(tokensChainData[1].toString())
+                .shiftedBy(-FLATCOIN.decimals)
+                .toFixed()
+            : '',
+        };
+      }),
+    );
+  }, [state.flatcoinChainId, tokensChainData]);
 
   return [state, setState];
 });
