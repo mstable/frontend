@@ -1,10 +1,7 @@
 import { useIsMobile } from '@frontend/shared-hooks';
 import { useTrack } from '@frontend/shared-providers';
 import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
-import { ArrowLeft } from '@mui/icons-material';
-import { Button, Grid, Stack } from '@mui/material';
-import { useNavigate } from '@tanstack/react-location';
-import { useIntl } from 'react-intl';
+import { Grid, Stack } from '@mui/material';
 
 import { Jumbo } from '../components/Jumbo';
 import { Performance } from '../components/Performance';
@@ -13,46 +10,47 @@ import { TradingPanel } from '../components/TradingPanel';
 import { FlatcoinProvider } from '../state';
 
 import type { FC } from 'react';
-import { PositionType } from '../types';
+
+import type { PositionType } from '../types';
 
 const FlatcoinContent: FC = () => {
-  const intl = useIntl();
-  const navigate = useNavigate();
+  // const intl = useIntl();
+  // const navigate = useNavigate();
   const track = useTrack();
   const isMobile = useIsMobile();
 
   return (
     <Stack direction="column" alignItems="flex-start">
-      <Button
-        variant="text"
-        size="small"
-        onClick={() => {
-          navigate({ to: '/' });
-        }}
-        sx={{ mb: 1 }}
-      >
-        <Stack direction="row" alignItems="center" spacing={0.5}>
-          <ArrowLeft width={16} height={16} />
-          {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}
-        </Stack>
-      </Button>
-      <ErrorBoundary
-        ErrorComponent={
-          <ErrorCard
-            pb={8}
-            onMount={() => {
-              track('error', {
-                name: 'Unhandled Error: Flatcoin/Leveraged Info',
-              });
-            }}
-          />
-        }
-      >
-        <Jumbo pb={8} />
-      </ErrorBoundary>
+      {/*<Button*/}
+      {/*  variant="text"*/}
+      {/*  size="small"*/}
+      {/*  onClick={() => {*/}
+      {/*    navigate({ to: '/' });*/}
+      {/*  }}*/}
+      {/*  sx={{ mb: 1 }}*/}
+      {/*>*/}
+      {/*  <Stack direction="row" alignItems="center" spacing={0.5}>*/}
+      {/*    <ArrowLeft width={16} height={16} />*/}
+      {/*    {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}*/}
+      {/*  </Stack>*/}
+      {/*</Button>*/}
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
           <Stack direction="column" spacing={2}>
+            <ErrorBoundary
+              ErrorComponent={
+                <ErrorCard
+                  pb={8}
+                  onMount={() => {
+                    track('error', {
+                      name: 'Unhandled Error: Flatcoin/Leveraged Info',
+                    });
+                  }}
+                />
+              }
+            >
+              <Jumbo pb={6} />
+            </ErrorBoundary>
             <ErrorBoundary
               ErrorComponent={
                 <ErrorCard

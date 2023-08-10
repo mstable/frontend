@@ -1,10 +1,11 @@
 import {
+  flatcoinDelayedOrderBaseGoerli,
   flatcoinDelayedOrderOptimismGoerli,
   SUPPORTED_FLATCOIN_CHAIN_IDS,
   toks,
   ZERO_ADDRESS,
 } from '@frontend/shared-constants';
-import { optimismGoerli } from 'wagmi/chains';
+import { baseGoerli, optimismGoerli } from 'wagmi/chains';
 
 export const isFlatcoinSupportedChain = (chainId: number) =>
   SUPPORTED_FLATCOIN_CHAIN_IDS.includes(chainId);
@@ -19,7 +20,9 @@ export const getFlatcoinDelayedOrderContract = (chainId: number) => {
   switch (chainId) {
     case optimismGoerli.id:
       return flatcoinDelayedOrderOptimismGoerli;
+    case baseGoerli.id:
+      return flatcoinDelayedOrderBaseGoerli;
     default:
-      return flatcoinDelayedOrderOptimismGoerli;
+      return {};
   }
 };

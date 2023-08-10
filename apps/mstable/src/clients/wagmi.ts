@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import '@rainbow-me/rainbowkit/styles.css';
 
+import { SUPPORTED_FLATCOIN_CHAINS } from '@frontend/shared-constants';
 import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import {
@@ -14,8 +15,8 @@ import {
   rainbowWallet,
   walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets';
+import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc';
 import { configureChains, createClient } from 'wagmi';
-import { optimismGoerli } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 
 import type { Wallet } from '@rainbow-me/rainbowkit';
@@ -24,10 +25,15 @@ import type { Chain, Connector } from 'wagmi';
 const POLLING_INTERVAL = 15_000;
 
 export const { chains, provider } = configureChains(
-  [optimismGoerli],
+  SUPPORTED_FLATCOIN_CHAINS,
   [
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_MAIN_API_KEY'] }),
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_FALLBACK_API_KEY'] }),
+    jsonRpcProvider({
+      rpc: (chain) => ({
+        http: `https://goerli.base.org`,
+      }),
+    }),
   ],
   { pollingInterval: POLLING_INTERVAL },
 );
