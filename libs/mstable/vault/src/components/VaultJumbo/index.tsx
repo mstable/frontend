@@ -31,6 +31,19 @@ export const VaultJumbo = (props: StackProps) => {
         divider={<Divider orientation="vertical" flexItem variant="middle" />}
       >
         <ValueLabel
+          label={intl.formatMessage({ defaultMessage: 'APY', id: 'MLTKb6' })}
+          hint={intl.formatMessage({
+            defaultMessage: 'Annual percentage yield.',
+            id: 'IB0eky',
+          })}
+        >
+          {!fund?.apy ? (
+            <Skeleton height={24} width={60} />
+          ) : (
+            <Apy variant="value1" fundApy={fund?.apy} />
+          )}
+        </ValueLabel>
+        <ValueLabel
           label={intl.formatMessage({
             defaultMessage: 'Token Price',
             id: 'ehxGBh',
@@ -44,26 +57,13 @@ export const VaultJumbo = (props: StackProps) => {
           {!fund?.tokenPrice ? (
             <Skeleton height={24} width={60} />
           ) : (
-            <Typography variant="value2">
+            <Typography variant="value3">
               {formatToUsd({
                 value: +fund.tokenPrice,
                 maximumFractionDigits: 4,
                 normalize: true,
               })}
             </Typography>
-          )}
-        </ValueLabel>
-        <ValueLabel
-          label={intl.formatMessage({ defaultMessage: 'APY', id: 'MLTKb6' })}
-          hint={intl.formatMessage({
-            defaultMessage: 'Annual percentage yield.',
-            id: 'IB0eky',
-          })}
-        >
-          {!fund?.apy ? (
-            <Skeleton height={24} width={60} />
-          ) : (
-            <Apy variant="value2" fundApy={fund?.apy} />
           )}
         </ValueLabel>
         <ValueLabel
@@ -77,7 +77,7 @@ export const VaultJumbo = (props: StackProps) => {
             <Skeleton height={24} width={60} />
           ) : (
             <Stack direction="row" spacing={1} alignItems="baseline">
-              <Typography variant="value2">
+              <Typography variant="value3">
                 {formatToUsd({
                   value: +fund?.totalValue,
                   normalize: true,
