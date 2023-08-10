@@ -46,28 +46,32 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
         {/*    {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}*/}
         {/*  </Stack>*/}
         {/*</Button>*/}
-        <TokenIconRevamp
-          symbols={[config.symbol]}
-          sx={{ height: 64, width: 64, mb: 2 }}
-        />
-        <ErrorBoundary
-          ErrorComponent={
-            <ErrorCard
-              pb={8}
-              onMount={() => {
-                track('error', {
-                  name: 'Unhandled Error Vault: Vault Jumbo',
-                });
-              }}
-            />
-          }
-        >
-          <VaultJumbo pb={8} />
-        </ErrorBoundary>
 
         <Grid container spacing={2}>
           <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
-            <Stack direction="column" spacing={2}>
+            <Stack direction="column" spacing={2} pt={6}>
+              <Grid container spacing={2}>
+                <Stack direction="row" spacing={4}>
+                  <TokenIconRevamp
+                    symbols={[config.symbol]}
+                    sx={{ height: 64, width: 64, mb: 2 }}
+                  />
+                  <ErrorBoundary
+                    ErrorComponent={
+                      <ErrorCard
+                        pb={8}
+                        onMount={() => {
+                          track('error', {
+                            name: 'Unhandled Error Vault: Vault Jumbo',
+                          });
+                        }}
+                      />
+                    }
+                  >
+                    <VaultJumbo pb={6} />
+                  </ErrorBoundary>
+                </Stack>
+              </Grid>
               <ErrorBoundary
                 ErrorComponent={
                   <ErrorCard
