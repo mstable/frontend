@@ -1,10 +1,9 @@
 import { usePushNotification } from '@frontend/shared-providers';
 import { ApproveButton, ViewEtherscanLink } from '@frontend/shared-ui';
-import { isEqualAddresses } from '@frontend/shared-utils';
+import { getBlockExplorerUrl, isEqualAddresses } from '@frontend/shared-utils';
 import { Button, CircularProgress } from '@mui/material';
 import { useIntl } from 'react-intl';
 import {
-  mainnet,
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
@@ -37,7 +36,7 @@ const useApprovalButton = () => {
     abi: tokenToBeApproved.abi,
     functionName: 'approve',
     args: [
-      getFlatcoinDelayedOrderContract(flatcoinChainId).address,
+      getFlatcoinDelayedOrderContract(flatcoinChainId)?.address,
       sendToken.value, // TODO: check logic
     ],
     chainId: chain?.id,
@@ -60,10 +59,7 @@ const useApprovalButton = () => {
         content: (
           <ViewEtherscanLink
             hash={data?.hash}
-            blockExplorer={
-              chain?.blockExplorers?.['etherscan'] ??
-              mainnet.blockExplorers.default
-            }
+            blockExplorer={getBlockExplorerUrl(chain)}
           />
         ),
         severity: 'info',
@@ -92,10 +88,7 @@ const useApprovalButton = () => {
           content: (
             <ViewEtherscanLink
               hash={transactionHash}
-              blockExplorer={
-                chain?.blockExplorers?.['etherscan'] ??
-                mainnet.blockExplorers.default
-              }
+              blockExplorer={getBlockExplorerUrl(chain)}
             />
           ),
           severity: 'success',
@@ -110,10 +103,7 @@ const useApprovalButton = () => {
           content: (
             <ViewEtherscanLink
               hash={approveData?.hash}
-              blockExplorer={
-                chain?.blockExplorers?.['etherscan'] ??
-                mainnet.blockExplorers.default
-              }
+              blockExplorer={getBlockExplorerUrl(chain)}
             />
           ),
           severity: 'error',
@@ -133,7 +123,7 @@ const useApprovalButton = () => {
   };
 };
 
-export const ApprovalButton = () => {
+export const StableApprovalButton = () => {
   const {
     intl,
     sendToken,

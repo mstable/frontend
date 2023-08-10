@@ -49,7 +49,9 @@ const initialState: FlatcoinTradingState = {
   },
   needsApproval: true,
   isInsufficientBalance: false,
-  refetch: () => null,
+  keeperFees: '1.27', // TODO: implement keeper fees fetching logic
+  refetch: () => null, // TODO: implement refetch logic after adding contract calls
+  reset: () => null, // TODO: implement refetch logic after adding contract calls
 };
 
 export const {

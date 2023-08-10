@@ -37,6 +37,8 @@ export interface FlatcoinTradingState {
   needsApproval: boolean;
   isInsufficientBalance: boolean;
   refetch: () => void;
+  reset: () => void;
+  keeperFees: string;
 }
 
 export type FlatcoinState = {

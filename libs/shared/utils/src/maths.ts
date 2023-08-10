@@ -1,3 +1,5 @@
+import { BigNumber } from 'bignumber.js';
+
 export const countDecimals = (value: number) => {
   if (Math.floor(value) === value) return 0;
 
@@ -21,3 +23,11 @@ export const countFirstDecimal = (value: number) => {
 
 export const isNumeric = (value: string): boolean =>
   !isNaN(parseFloat(value)) && !isNaN(value as never);
+
+export const getSlippageAdjustedValue = (
+  value: string | number,
+  slippage: string,
+): BigNumber => {
+  const slippageMultiplier = new BigNumber(100).minus(slippage).dividedBy(100);
+  return new BigNumber(value).times(slippageMultiplier);
+};

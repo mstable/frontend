@@ -23,6 +23,6 @@ export const getFlatcoinDelayedOrderContract = (chainId: number) => {
     case baseGoerli.id:
       return flatcoinDelayedOrderBaseGoerli;
     default:
-      return {};
+      return null;
   }
 };
