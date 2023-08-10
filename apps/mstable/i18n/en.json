@@ -140,6 +140,9 @@
   "Gh1Vm9": {
     "defaultMessage": "You Receive"
   },
+  "Gtmi1D": {
+    "defaultMessage": "Set As Infinite"
+  },
   "GufXy5": {
     "defaultMessage": "Value"
   },
@@ -149,6 +152,9 @@
   "MQ02gW": {
     "defaultMessage": "Skew"
   },
+  "OkOAzx": {
+    "defaultMessage": "We recommend {slippage}%, but usually it will be < {slippage}%."
+  },
   "PQiNnk": {
     "defaultMessage": "Open Interest"
   },
@@ -157,6 +163,9 @@
   },
   "U6qGuO": {
     "defaultMessage": "Position"
+  },
+  "X/RW9w": {
+    "defaultMessage": "Slippage Tolerance"
   },
   "aTX7LJ": {
     "defaultMessage": "1D"
@@ -172,6 +181,12 @@
   },
   "hVxfnN": {
     "defaultMessage": "Positions"
+  },
+  "k3YWIR": {
+    "defaultMessage": "Max slippage"
+  },
+  "n9CFUs": {
+    "defaultMessage": "Token Approval"
   },
   "pVeGn/": {
     "defaultMessage": "leverage"
@@ -494,17 +509,11 @@
   "9AgXoz": {
     "defaultMessage": "Sell"
   },
-  "C9fFq/": {
-    "defaultMessage": "We recommend 1%, but usually it will be < 1%."
-  },
   "EnCOBJ": {
     "defaultMessage": "Buy"
   },
   "FGu/VK": {
     "defaultMessage": "The following strategy pipeline is used in {symbol}"
-  },
-  "Gtmi1D": {
-    "defaultMessage": "Set As Infinite"
   },
   "HOsSgX": {
     "defaultMessage": "More info"
@@ -527,9 +536,6 @@
   "X/I7ge": {
     "defaultMessage": "You will receive no less than this amount."
   },
-  "X/RW9w": {
-    "defaultMessage": "Slippage Tolerance"
-  },
   "b1gVRq": {
     "defaultMessage": "Minimum deposit in USD."
   },
@@ -545,17 +551,11 @@
   "i0ofjL": {
     "defaultMessage": "Entry fee"
   },
-  "k3YWIR": {
-    "defaultMessage": "Max slippage"
-  },
   "le9cwx": {
     "defaultMessage": "Exit Fee"
   },
   "lubHZr": {
     "defaultMessage": "Setting up transaction"
-  },
-  "n9CFUs": {
-    "defaultMessage": "Token Approval"
   },
   "obSWjR": {
     "defaultMessage": "Please switch your wallet network to {name} to interact with {symbol} vault."

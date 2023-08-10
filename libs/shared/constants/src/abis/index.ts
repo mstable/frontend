@@ -1,6 +1,7 @@
 export * from './BalancerPoolTokenABI';
 export * from './FeederPoolABI';
 export * from './FeederPoolVaultABI';
+export * from './FlatcoinDelayedOrder';
 export * from './SaveABI';
 export * from './StableABI';
 export * from './StakingABI';

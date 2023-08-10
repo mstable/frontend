@@ -1,4 +1,5 @@
 import type { DynamicTradingToken } from '@dhedge/core-ui-kit/types';
+import type { Token } from '@frontend/shared-constants';
 import type { CHART_PERIOD, CHART_TYPE } from '@frontend/shared-types';
 import type { MakeGenerics } from '@tanstack/react-location';
 
@@ -12,6 +13,7 @@ export type FlatcoinRoute = MakeGenerics<{
 
 export type PositionType = 'flatcoin' | 'leveragedeth';
 export type TradingType = 'deposit' | 'withdraw';
+type TokenInfo = Token & { balance: string; price: string };
 
 export interface Position {
   type: PositionType;
@@ -28,6 +30,13 @@ export interface FlatcoinTradingState {
   receiveToken: DynamicTradingToken;
   leverage: string;
   tradingType: TradingType;
+  slippage: string;
+  isInfiniteAllowance: boolean;
+  usdc: TokenInfo;
+  flatcoin: TokenInfo;
+  needsApproval: boolean;
+  isInsufficientBalance: boolean;
+  refetch: () => void;
 }
 
 export type FlatcoinState = {
@@ -41,4 +50,5 @@ export type FlatcoinState = {
   configs: Record<PositionType, any>;
   positions?: Position[];
   type: PositionType;
+  flatcoinChainId: number;
 };

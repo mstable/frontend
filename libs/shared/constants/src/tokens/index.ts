@@ -2,6 +2,7 @@ import {
   goerli,
   mainnet,
   optimism,
+  optimismGoerli,
   polygon,
   polygonMumbai,
 } from 'wagmi/chains';
@@ -9,6 +10,7 @@ import {
 import { toksGoerli } from './goerli';
 import { toksMainnet } from './mainnet';
 import { toksOptimism } from './optimism';
+import { toksOptimismGoerli } from './optimismGoerli';
 import { toksPolygon } from './polygon';
 import { toksPolygonMumbai } from './polygonMumbai';
 
@@ -22,6 +24,7 @@ export const tokens = {
   [polygon.id]: toksPolygon,
   [polygonMumbai.id]: toksPolygonMumbai,
   [optimism.id]: toksOptimism,
+  [optimismGoerli.id]: toksOptimismGoerli,
 };
 
 export const toks: Record<number, Record<string, Token>> = Object.entries(

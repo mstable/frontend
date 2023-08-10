@@ -28,4 +28,4 @@ export const CORE_VAULT_NETWORK_CONFIG_MAP = Object.values(
   return acc;
 }, {});
 
-export const DEPOSIT_QUOTE_DIFF_ERROR_THRESHOLD = 3;
+export * from './trading';

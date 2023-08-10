@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
 
+import { SUPPORTED_FLATCOIN_CHAIN_IDS } from '@frontend/shared-constants';
 import { useSearch } from '@tanstack/react-location';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
+import { useNetwork } from 'wagmi';
+
+import { isFlatcoinSupportedChain } from './utils';
 
 import type { Dispatch, SetStateAction } from 'react';
 
@@ -15,9 +19,14 @@ export const {
 } = createContainer<
   FlatcoinState,
   Dispatch<SetStateAction<FlatcoinState>>,
-  { initialState: { configs: FlatcoinState['configs'] } }
+  {
+    initialState: {
+      configs: FlatcoinState['configs'];
+    };
+  }
 >(({ initialState }) => {
   const { type } = useSearch<FlatcoinRoute>();
+  const { chain } = useNetwork();
 
   const [state, setState] = useState<FlatcoinState>({
     type,
@@ -95,6 +104,7 @@ export const {
         }).format(20),
       },
     ],
+    flatcoinChainId: SUPPORTED_FLATCOIN_CHAIN_IDS[0],
   });
 
   useEffect(() => {
@@ -106,6 +116,14 @@ export const {
       }),
     );
   }, [type]);
+
+  useEffect(() => {
+    produce((draft) => {
+      draft.flatcoinChainId = isFlatcoinSupportedChain(chain.id)
+        ? chain.id
+        : SUPPORTED_FLATCOIN_CHAIN_IDS[0];
+    });
+  }, [chain]);
 
   return [state, setState];
 });

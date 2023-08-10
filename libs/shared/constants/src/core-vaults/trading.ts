@@ -1,0 +1,3 @@
+export const DEPOSIT_QUOTE_DIFF_ERROR_THRESHOLD = 3;
+
+export const RECOMMENDED_MIN_SLIPPAGE = 1;

@@ -6,14 +6,16 @@ import { Gear } from 'phosphor-react';
 import { not } from 'ramda';
 import { useIntl } from 'react-intl';
 
-import { SlippageSelector } from './SlippageSelector';
-import { TokenAllowanceSwitch } from './TokenAllowanceSwitch';
+import { useFlatcoin } from '../../../state';
+import { SlippageInput } from './SlippageInput';
+import { TokenApprovalSwitch } from './TokenApprovalSwitch';
 
 import type { ButtonProps } from '@mui/material';
 import type { FC } from 'react';
 
 export const TradingSettings: FC<ButtonProps> = (props) => {
   const intl = useIntl();
+  const { type } = useFlatcoin();
   const [open, setOpen] = useState(false);
   const anchorEl = useRef(null);
 
@@ -27,6 +29,7 @@ export const TradingSettings: FC<ButtonProps> = (props) => {
         }}
         variant="text"
         sx={{ p: 0, ...props?.sx }}
+        disabled={type === 'leveragedeth'}
       >
         <Gear size={20} weight="fill" />
       </Button>
@@ -49,13 +52,8 @@ export const TradingSettings: FC<ButtonProps> = (props) => {
               defaultMessage: 'Slippage Tolerance',
               id: 'X/RW9w',
             })}
-            tooltipText={intl.formatMessage({
-              defaultMessage:
-                'When the "Auto" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. <br></br> Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 1-2%.',
-              id: 'yap3X0',
-            })}
           >
-            <SlippageSelector />
+            <SlippageInput mt={1} />
           </TradingSettingsOption>
           <Divider flexItem />
           <TradingSettingsOption
@@ -63,13 +61,8 @@ export const TradingSettings: FC<ButtonProps> = (props) => {
               defaultMessage: 'Token Approval',
               id: 'n9CFUs',
             })}
-            tooltipText={intl.formatMessage({
-              defaultMessage:
-                'A deposit into a vault requires an approval transaction.<br></br><br></br>Set as infinite to avoid approving multiple times and save gas on subsequent deposits.<br></br><br></br>Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost.',
-              id: '2fed1y',
-            })}
           >
-            <TokenAllowanceSwitch />
+            <TokenApprovalSwitch />
           </TradingSettingsOption>
         </Stack>
       </ClickAwayMenu>
