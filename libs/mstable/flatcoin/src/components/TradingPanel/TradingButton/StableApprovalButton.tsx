@@ -1,7 +1,9 @@
+import { MaxUint256 } from '@dhedge/core-ui-kit/const';
 import { usePushNotification } from '@frontend/shared-providers';
 import { ApproveButton, ViewEtherscanLink } from '@frontend/shared-ui';
 import { getBlockExplorerUrl, isEqualAddresses } from '@frontend/shared-utils';
 import { Button, CircularProgress } from '@mui/material';
+import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
 import {
   useContractWrite,
@@ -25,9 +27,9 @@ const useApprovalButton = () => {
   const {
     sendToken,
     needsApproval,
-
     refetch,
     isInsufficientBalance,
+    isInfiniteAllowance,
   } = useFlatcoinTradingState();
   const tokenToBeApproved = isEqualAddresses(
     sendToken.address,
@@ -42,7 +44,11 @@ const useApprovalButton = () => {
     functionName: 'approve',
     args: [
       getFlatcoinDelayedOrderContract(flatcoinChainId)?.address,
-      sendToken.value, // TODO: check logic
+      isInfiniteAllowance
+        ? MaxUint256
+        : new BigNumber(sendToken.value)
+            .shiftedBy(sendToken.decimals)
+            .toFixed(),
     ],
     chainId: chain?.id,
     enabled: needsApproval && !isInsufficientBalance,

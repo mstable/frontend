@@ -35,13 +35,14 @@ const useStableTradingButton = () => {
     isInsufficientBalance,
     sendToken,
     receiveToken,
-    keeperFees,
+    keeperFee,
     slippage,
     reset,
   } = useFlatcoinTradingState();
-  const delayedOrderContract = getFlatcoinDelayedOrderContract(flatcoinChainId);
 
   const config = useMemo(() => {
+    const delayedOrderContract =
+      getFlatcoinDelayedOrderContract(flatcoinChainId);
     const isDeposit = tradingType === 'deposit';
     return {
       address: delayedOrderContract?.address,
@@ -49,25 +50,22 @@ const useStableTradingButton = () => {
       functionName: isDeposit
         ? 'announceStableDeposit'
         : 'announceStableWithdraw',
-      // TODO: check logic
       args: [
         new BigNumber(sendToken.value || '0')
           .shiftedBy(sendToken.decimals)
           .toFixed(0, BigNumber.ROUND_DOWN),
-        getSlippageAdjustedValue(receiveToken.value, slippage)
+        getSlippageAdjustedValue(receiveToken.value || '0', slippage)
           .shiftedBy(receiveToken.decimals)
           .toFixed(0, BigNumber.ROUND_DOWN),
-        keeperFees,
+        keeperFee.rawFee,
       ],
       chainId: flatcoinChainId,
-      enabled: !needsApproval && !isInsufficientBalance,
+      enabled: !needsApproval && !isInsufficientBalance && !!receiveToken.value,
     };
   }, [
-    delayedOrderContract?.abi,
-    delayedOrderContract?.address,
     flatcoinChainId,
     isInsufficientBalance,
-    keeperFees,
+    keeperFee.rawFee,
     needsApproval,
     receiveToken.decimals,
     receiveToken.value,

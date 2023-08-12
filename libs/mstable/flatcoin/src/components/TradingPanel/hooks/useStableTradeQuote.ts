@@ -1,52 +1,47 @@
 import { useEffect } from 'react';
 
 import { useDebounce } from '@dhedge/core-ui-kit/hooks/utils';
+import BigNumber from 'bignumber.js';
+import { useContractRead } from 'wagmi';
 
+import { useFlatcoin } from '../../../state';
+import { getFlatcoinDelayedOrderContract } from '../../../utils';
 import { useFlatcoinTradingState, useUpdateReceiveToken } from '../state';
 
-interface QuoteProps {
-  skip: boolean;
-  sendTokenValue: string;
-  updateReceiveToken: ReturnType<typeof useUpdateReceiveToken>;
-}
-
-const useDepositQuote = ({
-  skip,
-  sendTokenValue,
-  updateReceiveToken,
-}: QuoteProps) => {
-  // TODO: stable deposit quote logic
-  useEffect(() => {
-    if (skip || !sendTokenValue) return;
-    updateReceiveToken({ value: (+sendTokenValue / 1.2).toString() });
-  }, [sendTokenValue, skip, updateReceiveToken]);
-};
-
-const useWithdrawQuote = ({
-  skip,
-  sendTokenValue,
-  updateReceiveToken,
-}: QuoteProps) => {
-  // TODO: stable deposit quote logic
-  useEffect(() => {
-    if (skip || !sendTokenValue) return;
-    updateReceiveToken({ value: (+sendTokenValue * 1.2).toString() });
-  }, [sendTokenValue, skip, updateReceiveToken]);
-};
-
 export const useStableTradeQuote = () => {
-  const { sendToken, tradingType } = useFlatcoinTradingState();
-  const sendTokenValue = useDebounce(sendToken.value, 500);
+  const { sendToken, tradingType, receiveToken } = useFlatcoinTradingState();
+  const { flatcoinChainId } = useFlatcoin();
   const updateReceiveToken = useUpdateReceiveToken();
+  const rawSendTokenValue = useDebounce(
+    new BigNumber(sendToken.value || '0')
+      .shiftedBy(sendToken.decimals)
+      .toFixed(),
+    500,
+  );
+  const functionName = useDebounce(
+    tradingType === 'deposit' ? 'stableDepositQuote' : 'stableWithdrawQuote',
+    500,
+  );
 
-  useDepositQuote({
-    sendTokenValue,
-    updateReceiveToken,
-    skip: tradingType === 'withdraw',
+  useContractRead({
+    address: getFlatcoinDelayedOrderContract(flatcoinChainId).address,
+    chainId: flatcoinChainId,
+    abi: getFlatcoinDelayedOrderContract(flatcoinChainId).abi,
+    functionName,
+    args: [rawSendTokenValue],
+    onSuccess(data) {
+      updateReceiveToken({
+        value: new BigNumber(data.toString())
+          .shiftedBy(-receiveToken.decimals)
+          .toFixed(),
+      });
+    },
+    enabled: rawSendTokenValue !== '0',
   });
-  useWithdrawQuote({
-    sendTokenValue,
-    updateReceiveToken,
-    skip: tradingType === 'deposit',
-  });
+
+  useEffect(() => {
+    if (rawSendTokenValue === '0') {
+      updateReceiveToken({ value: '' });
+    }
+  }, [rawSendTokenValue, updateReceiveToken]);
 };

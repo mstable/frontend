@@ -7,10 +7,11 @@ import { useSearch } from '@tanstack/react-location';
 import BigNumber from 'bignumber.js';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
-import { useContractReads } from 'wagmi';
+import { erc20ABI, useAccount, useContractReads } from 'wagmi';
 
 import { useFlatcoin } from '../../state';
 import {
+  getFlatcoinDelayedOrderContract,
   getFlatcoinKeeperFeeContract,
   getFlatcoinTokensByChain,
 } from '../../utils';
@@ -56,6 +57,7 @@ export const {
   Dispatch<SetStateAction<FlatcoinTradingState>>,
   unknown
 >(() => {
+  const { address: walletAddress } = useAccount();
   const {
     flatcoinChainId,
     tokens: { collateral, flatcoin },
@@ -63,8 +65,18 @@ export const {
   const [state, setState] = useState<FlatcoinTradingState>(initialState);
   const { type } = useSearch<FlatcoinRoute>();
 
-  const { refetch } = useContractReads({
+  const { data: contractData, refetch } = useContractReads({
     contracts: [
+      {
+        address: state.sendToken.address,
+        chainId: flatcoinChainId,
+        abi: erc20ABI,
+        functionName: 'allowance',
+        args: [
+          walletAddress,
+          getFlatcoinDelayedOrderContract(flatcoinChainId).address,
+        ],
+      },
       {
         address: getFlatcoinKeeperFeeContract(flatcoinChainId).address,
         chainId: flatcoinChainId,
@@ -74,11 +86,13 @@ export const {
       },
     ],
     onSuccess(data) {
-      if (!data) return;
+      const rawFee = new BigNumber(data[1].toString())
+        .multipliedBy(1.05) // TODO: move to constant
+        .toFixed(0);
       setState(
         produce((draft) => {
-          draft.keeperFee.rawFee = data[0].toString();
-          draft.keeperFee.formattedFee = new BigNumber(data[0].toString())
+          draft.keeperFee.rawFee = rawFee;
+          draft.keeperFee.formattedFee = new BigNumber(rawFee)
             .shiftedBy(-DEFAULT_PRECISION)
             .toFixed();
         }),
@@ -86,6 +100,20 @@ export const {
     },
     // watch: true,
   });
+
+  // handle needsApproval
+  useEffect(() => {
+    if (!contractData) return;
+    setState(
+      produce((draft) => {
+        draft.needsApproval = new BigNumber(state.sendToken.value || '0').gt(
+          new BigNumber(contractData[0]?.toString() ?? '0').shiftedBy(
+            -state.sendToken.decimals,
+          ),
+        );
+      }),
+    );
+  }, [contractData, state.sendToken.decimals, state.sendToken.value]);
 
   useEffect(() => {
     setState(
