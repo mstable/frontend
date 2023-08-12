@@ -1,14 +1,19 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { DEFAULT_PRECISION } from '@dhedge/core-ui-kit/const';
 import { DEFAULT_MAX_SLIPPAGE, ZERO_ADDRESS } from '@frontend/shared-constants';
 import { isEqualAddresses } from '@frontend/shared-utils';
 import { useSearch } from '@tanstack/react-location';
 import BigNumber from 'bignumber.js';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
+import { useContractReads } from 'wagmi';
 
 import { useFlatcoin } from '../../state';
-import { getFlatcoinTokensByChain } from '../../utils';
+import {
+  getFlatcoinKeeperFeeContract,
+  getFlatcoinTokensByChain,
+} from '../../utils';
 
 import type { Dispatch, SetStateAction } from 'react';
 
@@ -34,7 +39,10 @@ const initialState: FlatcoinTradingState = {
   isInfiniteAllowance: false,
   needsApproval: true,
   isInsufficientBalance: false,
-  keeperFees: '1.27', // TODO: implement keeper fees fetching logic
+  keeperFee: {
+    rawFee: '',
+    formattedFee: '',
+  },
   refetch: () => null, // TODO: implement refetch logic after adding contract calls
   reset: () => null, // TODO: implement refetch logic after adding contract calls
 };
@@ -54,6 +62,38 @@ export const {
   } = useFlatcoin();
   const [state, setState] = useState<FlatcoinTradingState>(initialState);
   const { type } = useSearch<FlatcoinRoute>();
+
+  const { refetch } = useContractReads({
+    contracts: [
+      {
+        address: getFlatcoinKeeperFeeContract(flatcoinChainId).address,
+        chainId: flatcoinChainId,
+        abi: getFlatcoinKeeperFeeContract(flatcoinChainId).abi,
+        functionName: 'getKeeperFee',
+        args: [],
+      },
+    ],
+    onSuccess(data) {
+      if (!data) return;
+      setState(
+        produce((draft) => {
+          draft.keeperFee.rawFee = data[0].toString();
+          draft.keeperFee.formattedFee = new BigNumber(data[0].toString())
+            .shiftedBy(-DEFAULT_PRECISION)
+            .toFixed();
+        }),
+      );
+    },
+    // watch: true,
+  });
+
+  useEffect(() => {
+    setState(
+      produce((draft) => {
+        draft.refetch = refetch;
+      }),
+    );
+  }, [refetch]);
 
   // Set correct tokens on page type switch
   useEffect(() => {
@@ -89,6 +129,7 @@ export const {
     }
   }, [type, flatcoinChainId]);
 
+  // handle isInsufficientBalance check
   useEffect(() => {
     if (type === 'flatcoin') {
       const sendTokenBalance = isEqualAddresses(

@@ -70,10 +70,10 @@ const useStableTokensOverview = () => {
     sendToken,
     receiveToken,
     sendTokenUsdValue: new BigNumber(sendToken.value || 0)
-      .multipliedBy(sendTokenPrice)
+      .multipliedBy(sendTokenPrice || 0)
       .toFixed(),
     receiveTokenUsdValue: new BigNumber(receiveToken.value || 0)
-      .multipliedBy(receiveTokenPrice)
+      .multipliedBy(receiveTokenPrice || 0)
       .toFixed(),
   };
 };

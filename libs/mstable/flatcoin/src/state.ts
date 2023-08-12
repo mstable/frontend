@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { SUPPORTED_FLATCOIN_CHAIN_IDS, toks } from '@frontend/shared-constants';
+import { SUPPORTED_FLATCOIN_CHAIN_IDS } from '@frontend/shared-constants';
 import { useSearch } from '@tanstack/react-location';
 import BigNumber from 'bignumber.js';
 import produce from 'immer';
@@ -13,6 +13,9 @@ import type { Dispatch, SetStateAction } from 'react';
 
 import type { FlatcoinRoute, FlatcoinState } from './types';
 const defaultFlatcoinChainId = SUPPORTED_FLATCOIN_CHAIN_IDS[0];
+const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(
+  defaultFlatcoinChainId,
+);
 
 export const {
   Provider: FlatcoinProvider,
@@ -110,12 +113,12 @@ export const {
     flatcoinChainId: defaultFlatcoinChainId,
     tokens: {
       collateral: {
-        ...toks[defaultFlatcoinChainId]['USDC'],
+        ...COLLATERAL,
         balance: '',
         price: '',
       },
       flatcoin: {
-        ...toks[defaultFlatcoinChainId]['mStable'],
+        ...FLATCOIN,
         balance: '',
         price: '',
       },
@@ -143,7 +146,8 @@ export const {
     enabled: !!walletAddress,
     watch: true,
   });
-  const { data: tokensChainData } = useContractReads({
+
+  useContractReads({
     contracts: [
       {
         address: state.tokens.collateral.address,
@@ -167,8 +171,38 @@ export const {
         args: [],
       },
     ],
-    enabled: !!walletAddress,
     watch: true,
+    onSuccess(data) {
+      const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(
+        state.flatcoinChainId,
+      );
+      setState(
+        produce((draft) => {
+          draft.tokens.collateral = {
+            ...COLLATERAL,
+            price: '1',
+            balance: data?.[0]
+              ? new BigNumber(data[0].toString())
+                  .shiftedBy(-COLLATERAL.decimals)
+                  .toFixed()
+              : '',
+          };
+          draft.tokens.flatcoin = {
+            ...FLATCOIN,
+            price: data?.[2]
+              ? new BigNumber(data[2].toString())
+                  .shiftedBy(-FLATCOIN.decimals)
+                  .toFixed()
+              : '', // TODO: check
+            balance: data?.[1]
+              ? new BigNumber(data[1].toString())
+                  .shiftedBy(-FLATCOIN.decimals)
+                  .toFixed()
+              : '',
+          };
+        }),
+      );
+    },
   });
 
   useEffect(() => {
@@ -190,38 +224,6 @@ export const {
       }),
     );
   }, [chain]);
-
-  useEffect(() => {
-    const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(
-      state.flatcoinChainId,
-    );
-    setState(
-      produce((draft) => {
-        draft.tokens.collateral = {
-          ...COLLATERAL,
-          price: '1',
-          balance: tokensChainData[0]
-            ? new BigNumber(tokensChainData[0].toString())
-                .shiftedBy(-COLLATERAL.decimals)
-                .toFixed()
-            : '',
-        };
-        draft.tokens.flatcoin = {
-          ...FLATCOIN,
-          price: tokensChainData[2]
-            ? new BigNumber(tokensChainData[2].toString())
-                .shiftedBy(-FLATCOIN.decimals)
-                .toFixed()
-            : '', // TODO: check
-          balance: tokensChainData[1]
-            ? new BigNumber(tokensChainData[1].toString())
-                .shiftedBy(-FLATCOIN.decimals)
-                .toFixed()
-            : '',
-        };
-      }),
-    );
-  }, [state.flatcoinChainId, tokensChainData]);
 
   return [state, setState];
 });

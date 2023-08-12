@@ -36,7 +36,10 @@ export interface FlatcoinTradingState {
   isInsufficientBalance: boolean;
   refetch: () => void;
   reset: () => void;
-  keeperFees: string;
+  keeperFee: {
+    rawFee: string;
+    formattedFee: string;
+  };
 }
 
 export type FlatcoinState = {

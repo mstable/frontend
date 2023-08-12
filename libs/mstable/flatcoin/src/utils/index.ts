@@ -1,25 +1,24 @@
 import {
-  flatcoinDelayedOrderBaseGoerli,
+  flatcoinCollateralBaseGoerli,
+  flatcoinTokenBaseGoerli,
   SUPPORTED_FLATCOIN_CHAIN_IDS,
-  toks,
   ZERO_ADDRESS,
 } from '@frontend/shared-constants';
 import { baseGoerli } from 'wagmi/chains';
 
+export * from './contracts';
+
 export const isFlatcoinSupportedChain = (chainId: number) =>
   SUPPORTED_FLATCOIN_CHAIN_IDS.includes(chainId);
 
-export const getFlatcoinTokensByChain = (chainId: number) => ({
-  COLLATERAL: toks[chainId]['USDC'],
-  FLATCOIN: toks[chainId]['mStable'],
-  ETH: { symbol: 'ETH', decimals: 18, address: ZERO_ADDRESS },
-});
-
-export const getFlatcoinDelayedOrderContract = (chainId: number) => {
+export const getFlatcoinTokensByChain = (chainId: number) => {
   switch (chainId) {
     case baseGoerli.id:
-      return flatcoinDelayedOrderBaseGoerli;
-    default:
-      return null;
+      return {
+        COLLATERAL: flatcoinCollateralBaseGoerli,
+        FLATCOIN: flatcoinTokenBaseGoerli,
+        ETH: { symbol: 'ETH', decimals: 18, address: ZERO_ADDRESS },
+      };
   }
+  return {};
 };

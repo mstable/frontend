@@ -8,7 +8,6 @@ import { Stack } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import { useIsLeveragedType } from '../../../hooks/useIsLeveragedType';
-import { useTradingFees } from '../hooks/useTradingFees';
 import { useFlatcoinTradingState } from '../state';
 
 import type { StackProps } from '@mui/material';
@@ -16,11 +15,13 @@ import type { FC } from 'react';
 
 const useTransactionOverview = () => {
   const isLeveraged = useIsLeveragedType();
-  const tradingFees = useTradingFees();
-  const { slippage } = useFlatcoinTradingState();
+  const {
+    slippage,
+    keeperFee: { formattedFee },
+  } = useFlatcoinTradingState();
 
   return {
-    tradingFees,
+    keeperFee: formattedFee,
     isLeveraged,
     slippage: slippage || DEFAULT_MAX_SLIPPAGE,
   };
@@ -28,12 +29,12 @@ const useTransactionOverview = () => {
 
 export const TransactionOverview: FC<StackProps> = (props) => {
   const intl = useIntl();
-  const { tradingFees, isLeveraged, slippage } = useTransactionOverview();
+  const { keeperFee, isLeveraged, slippage } = useTransactionOverview();
   return (
     <Stack {...props} direction="column" spacing={1}>
       <TradingOverviewItem
         label="Fees"
-        value={formatToUsd({ value: tradingFees })}
+        value={formatToUsd({ value: +keeperFee })}
       />
       {!isLeveraged && (
         <TradingOverviewItem

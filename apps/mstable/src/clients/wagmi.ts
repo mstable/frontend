@@ -5,15 +5,10 @@ import { SUPPORTED_FLATCOIN_CHAINS } from '@frontend/shared-constants';
 import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import {
-  argentWallet,
   braveWallet,
   coinbaseWallet,
-  imTokenWallet,
   injectedWallet,
-  ledgerWallet,
   metaMaskWallet,
-  rainbowWallet,
-  walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc';
 import { configureChains, createClient } from 'wagmi';
@@ -49,13 +44,14 @@ const gnosisSafeWallet = ({ chains }: { chains: Chain[] }): Wallet => ({
   }),
 });
 
+// TODO: some wallets were disabled for Base testnet, enable when migrating to Base Mainnet
 const connectors = connectorsForWallets([
   {
     groupName: 'Recommended',
     wallets: [
       metaMaskWallet({ chains, shimDisconnect: true }),
-      ledgerWallet({ chains }),
-      walletConnectWallet({ chains }),
+      // ledgerWallet({ chains }),
+      // walletConnectWallet({ chains }),
       coinbaseWallet({ appName: 'mStable', chains }),
     ],
   },
@@ -64,10 +60,10 @@ const connectors = connectorsForWallets([
     wallets: [
       injectedWallet({ chains, shimDisconnect: true }),
       gnosisSafeWallet({ chains }),
-      rainbowWallet({ chains }),
+      // rainbowWallet({ chains }),
       braveWallet({ chains, shimDisconnect: true }),
-      argentWallet({ chains }),
-      imTokenWallet({ chains }),
+      // argentWallet({ chains }),
+      // imTokenWallet({ chains }),
     ],
   },
 ]);

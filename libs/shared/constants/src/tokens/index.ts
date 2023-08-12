@@ -17,6 +17,7 @@ import { toksPolygonMumbai } from './polygonMumbai';
 import type { Token } from './types';
 
 export * from './types';
+export * from './baseGoerli';
 
 export const tokens = {
   [mainnet.id]: toksMainnet,
