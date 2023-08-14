@@ -66,9 +66,10 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
   });
 
   useEffect(() => {
+    const chainId = !chain || chain.unsupported ? mainnet.id : chain.id;
     setState(
       produce((draft) => {
-        draft.mta.contract = toks[chain?.id ?? mainnet.id]['MTA'];
+        draft.mta.contract = toks[chainId]['MTA'];
       }),
     );
   }, [chain?.id]);
