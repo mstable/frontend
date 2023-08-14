@@ -25,6 +25,13 @@ export interface Position {
   profitLossFunding: string;
 }
 
+export interface Order {
+  type: number;
+  keeperFee: string;
+  executableAtTime: string;
+  orderData: string;
+}
+
 export interface FlatcoinTradingState {
   sendToken: DynamicTradingToken;
   receiveToken: DynamicTradingToken;
@@ -56,6 +63,7 @@ export type FlatcoinState = {
   };
   configs: Record<PositionType, any>;
   positions?: Position[];
+  announcedOrders: Order[];
   type: PositionType;
   flatcoinChainId: number;
 };

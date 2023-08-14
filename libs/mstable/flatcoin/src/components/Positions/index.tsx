@@ -13,12 +13,13 @@ import {
 import { useIntl } from 'react-intl';
 
 import { useFlatcoin } from '../../state';
+import { AnnouncedOrders } from './AnnouncedOrders';
 
 import type { StackProps } from '@mui/material';
 
 export const Positions = (props: StackProps) => {
   const intl = useIntl();
-  const { positions } = useFlatcoin();
+  const { positions, announcedOrders } = useFlatcoin();
 
   return (
     <Stack
@@ -143,6 +144,17 @@ export const Positions = (props: StackProps) => {
           </TableBody>
         </Table>
       </TableContainer>
+      {!!announcedOrders.length && (
+        <>
+          <Typography variant="h3" py={2}>
+            {intl.formatMessage({
+              defaultMessage: 'Announced Orders',
+              id: 'LGv1C5',
+            })}
+          </Typography>
+          <AnnouncedOrders />
+        </>
+      )}
     </Stack>
   );
 };

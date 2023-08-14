@@ -7,8 +7,13 @@ import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { useAccount, useContractReads, useNetwork } from 'wagmi';
 
-import { getFlatcoinTokensByChain, isFlatcoinSupportedChain } from './utils';
+import {
+  getFlatcoinDelayedOrderContract,
+  getFlatcoinTokensByChain,
+  isFlatcoinSupportedChain,
+} from './utils';
 
+import type { BigNumberish } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
 
 import type { FlatcoinRoute, FlatcoinState } from './types';
@@ -110,6 +115,7 @@ export const {
         }).format(20),
       },
     ],
+    announcedOrders: [],
     flatcoinChainId: defaultFlatcoinChainId,
     tokens: {
       collateral: {
@@ -160,6 +166,13 @@ export const {
         functionName: 'stableCollateralPerShare',
         args: [],
       },
+      {
+        address: getFlatcoinDelayedOrderContract(state.flatcoinChainId).address,
+        chainId: state.flatcoinChainId,
+        abi: getFlatcoinDelayedOrderContract(state.flatcoinChainId).abi,
+        functionName: 'getAnnouncedOrder',
+        args: [walletAddress],
+      },
     ],
     watch: true,
     onSuccess(data) {
@@ -195,6 +208,21 @@ export const {
                   .toFixed()
               : '',
           };
+          //TODO: check why only 1 announce order?
+          draft.announcedOrders = data[3]
+            ? [
+                {
+                  orderData: data[3]?.['orderData'] as string,
+                  type: data[3]?.['orderType'] as number,
+                  keeperFee: (
+                    data[3]?.['keeperFee'] as BigNumberish
+                  ).toString(),
+                  executableAtTime: (
+                    data[3]?.['executableAtTime'] as BigNumberish
+                  ).toString(),
+                },
+              ]
+            : [];
         }),
       );
     },
