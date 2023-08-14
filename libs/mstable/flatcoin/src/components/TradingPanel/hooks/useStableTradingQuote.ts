@@ -8,7 +8,7 @@ import { useFlatcoin } from '../../../state';
 import { getFlatcoinDelayedOrderContract } from '../../../utils';
 import { useFlatcoinTradingState, useUpdateReceiveToken } from '../state';
 
-export const useStableTradeQuote = () => {
+export const useStableTradingQuote = () => {
   const { sendToken, tradingType, receiveToken } = useFlatcoinTradingState();
   const { flatcoinChainId } = useFlatcoin();
   const updateReceiveToken = useUpdateReceiveToken();

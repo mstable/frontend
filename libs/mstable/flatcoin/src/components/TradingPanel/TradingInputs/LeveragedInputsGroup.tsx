@@ -9,7 +9,7 @@ import { useFlatcoinTradingState, useUpdateSendToken } from '../state';
 const useLeveragedInputsGroup = () => {
   const { account } = useAccount();
   const {
-    tokens: { native },
+    tokens: { collateral },
   } = useFlatcoin();
   const { sendToken, receiveToken, leverage } = useFlatcoinTradingState();
   const updateSendToken = useUpdateSendToken();
@@ -20,7 +20,7 @@ const useLeveragedInputsGroup = () => {
   return {
     sendToken,
     receiveToken,
-    sendTokenBalance: native.balance,
+    sendTokenBalance: collateral.balance,
     account,
     onSendInputChange,
     receiveInputLabel: <>Leverage: {leverage ? `${leverage}X` : ''}</>,

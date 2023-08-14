@@ -5,7 +5,7 @@ import { useSearch } from '@tanstack/react-location';
 import BigNumber from 'bignumber.js';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
-import { useAccount, useBalance, useContractReads, useNetwork } from 'wagmi';
+import { useAccount, useContractReads, useNetwork } from 'wagmi';
 
 import { getFlatcoinTokensByChain, isFlatcoinSupportedChain } from './utils';
 
@@ -122,30 +122,20 @@ export const {
         balance: '',
         price: '',
       },
-      native: {
-        balance: '',
-        price: '',
-        symbol: '',
-        decimals: 18,
-      },
     },
   });
 
-  useBalance({
-    address: walletAddress,
-    chainId: chain?.id,
-    onSuccess({ decimals, symbol, formatted }) {
-      setState(
-        produce((draft) => {
-          draft.tokens.native.decimals = decimals;
-          draft.tokens.native.symbol = symbol;
-          draft.tokens.native.balance = formatted;
-        }),
-      );
-    },
-    enabled: !!walletAddress,
-    watch: true,
-  });
+  // TODO: uncomment and check prices
+  // const setEthPrice = useCallback(([{ price }]: PriceFeedData[]) => {
+  //   setState(
+  //     produce((draft) => {
+  //       draft.tokens.collateral.price = new BigNumber(price.price)
+  //         .shiftedBy(price.expo)
+  //         .toFixed();
+  //     }),
+  //   );
+  // }, []);
+  // useEthPriceFeed({ onSuccess: setEthPrice });
 
   useContractReads({
     contracts: [
@@ -179,13 +169,18 @@ export const {
       setState(
         produce((draft) => {
           draft.tokens.collateral = {
+            ...draft.tokens.collateral,
             ...COLLATERAL,
-            price: '1',
             balance: data?.[0]
               ? new BigNumber(data[0].toString())
                   .shiftedBy(-COLLATERAL.decimals)
                   .toFixed()
               : '',
+            price: data?.[2]
+              ? new BigNumber(data[2].toString())
+                  .shiftedBy(-FLATCOIN.decimals)
+                  .toFixed()
+              : '', // TODO: remove when uncommenting useEthPriceFeed
           };
           draft.tokens.flatcoin = {
             ...FLATCOIN,

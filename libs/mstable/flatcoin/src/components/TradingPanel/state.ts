@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { DEFAULT_PRECISION } from '@dhedge/core-ui-kit/const';
 import { DEFAULT_MAX_SLIPPAGE, ZERO_ADDRESS } from '@frontend/shared-constants';
 import { isEqualAddresses } from '@frontend/shared-utils';
 import { useSearch } from '@tanstack/react-location';
@@ -87,13 +86,13 @@ export const {
     ],
     onSuccess(data) {
       const rawFee = new BigNumber(data[1].toString())
-        .multipliedBy(1.05) // TODO: move to constant
+        .multipliedBy(1.01) // TODO: move to constant
         .toFixed(0);
       setState(
         produce((draft) => {
           draft.keeperFee.rawFee = rawFee;
           draft.keeperFee.formattedFee = new BigNumber(rawFee)
-            .shiftedBy(-DEFAULT_PRECISION)
+            .shiftedBy(-collateral.decimals)
             .toFixed();
         }),
       );
@@ -125,31 +124,33 @@ export const {
 
   // Set correct tokens on page type switch
   useEffect(() => {
-    const { COLLATERAL, FLATCOIN, ETH } =
-      getFlatcoinTokensByChain(flatcoinChainId);
+    const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(flatcoinChainId);
+    const collateral = {
+      symbol: COLLATERAL.symbol,
+      decimals: COLLATERAL.decimals,
+      address: COLLATERAL.address,
+      value: '',
+    };
+    const flatcoin = {
+      symbol: FLATCOIN.symbol,
+      decimals: FLATCOIN.decimals,
+      address: FLATCOIN.address,
+      value: '',
+    };
+
     if (type === 'flatcoin') {
       setState(
         produce((draft) => {
-          draft.sendToken = {
-            symbol: COLLATERAL.symbol,
-            decimals: COLLATERAL.decimals,
-            address: COLLATERAL.address,
-            value: '',
-          };
-          draft.receiveToken = {
-            symbol: FLATCOIN.symbol,
-            decimals: FLATCOIN.decimals,
-            address: FLATCOIN.address,
-            value: '',
-          };
+          draft.sendToken = collateral;
+          draft.receiveToken = flatcoin;
           draft.tradingType = 'deposit';
         }),
       );
     } else {
       setState(
         produce((draft) => {
-          draft.sendToken = { ...ETH, value: '' };
-          draft.receiveToken = { ...ETH, value: '' };
+          draft.sendToken = collateral;
+          draft.receiveToken = collateral;
           draft.tradingType = 'deposit';
           draft.needsApproval = false;
         }),
@@ -159,27 +160,19 @@ export const {
 
   // handle isInsufficientBalance check
   useEffect(() => {
-    if (type === 'flatcoin') {
-      const sendTokenBalance = isEqualAddresses(
-        state.sendToken.address,
-        collateral.address,
-      )
-        ? collateral.balance
-        : flatcoin.balance;
-      setState(
-        produce((draft) => {
-          draft.isInsufficientBalance = new BigNumber(
-            draft.sendToken.value || '0',
-          ).gt(sendTokenBalance || '0');
-        }),
-      );
-    } else {
-      setState(
-        produce((draft) => {
-          draft.isInsufficientBalance = false; // TODO: add logic
-        }),
-      );
-    }
+    const sendTokenBalance = isEqualAddresses(
+      state.sendToken.address,
+      collateral.address,
+    )
+      ? collateral.balance
+      : flatcoin.balance;
+    setState(
+      produce((draft) => {
+        draft.isInsufficientBalance = new BigNumber(
+          draft.sendToken.value || '0',
+        ).gt(sendTokenBalance || '0');
+      }),
+    );
   }, [
     type,
     flatcoin.balance,

@@ -53,15 +53,18 @@ export type FlatcoinState = {
   tokens: {
     collateral: TokenInfo;
     flatcoin: TokenInfo;
-    native: {
-      symbol: string;
-      decimals: number;
-      balance: string;
-      price: string;
-    };
   };
   configs: Record<PositionType, any>;
   positions?: Position[];
   type: PositionType;
   flatcoinChainId: number;
 };
+
+export interface PriceFeedData {
+  price: {
+    conf: string;
+    expo: number;
+    price: string;
+    publish_time: number;
+  };
+}

@@ -8,7 +8,7 @@ import { ArrowsDownUp } from 'phosphor-react';
 
 import { useFlatcoin } from '../../../state';
 import { getFlatcoinTokensByChain } from '../../../utils';
-import { useStableTradeQuote } from '../hooks/useStableTradeQuote';
+import { useStableTradingQuote } from '../hooks/useStableTradingQuote';
 import {
   useFlatcoinTradingState,
   useUpdateSendToken,
@@ -31,7 +31,7 @@ const useStableInputsGroup = () => {
     ? collateral.balance
     : flatcoin.balance;
 
-  useStableTradeQuote();
+  useStableTradingQuote();
 
   const onSendInputChange = (value) => updateSendToken({ value });
 

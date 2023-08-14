@@ -8,6 +8,7 @@ import { Stack } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import { useIsLeveragedType } from '../../../hooks/useIsLeveragedType';
+import { useFlatcoin } from '../../../state';
 import { useFlatcoinTradingState } from '../state';
 
 import type { StackProps } from '@mui/material';
@@ -15,6 +16,9 @@ import type { FC } from 'react';
 
 const useTransactionOverview = () => {
   const isLeveraged = useIsLeveragedType();
+  const {
+    tokens: { collateral },
+  } = useFlatcoin();
   const {
     slippage,
     keeperFee: { formattedFee },
@@ -24,17 +28,27 @@ const useTransactionOverview = () => {
     keeperFee: formattedFee,
     isLeveraged,
     slippage: slippage || DEFAULT_MAX_SLIPPAGE,
+    collateral,
   };
 };
 
 export const TransactionOverview: FC<StackProps> = (props) => {
   const intl = useIntl();
-  const { keeperFee, isLeveraged, slippage } = useTransactionOverview();
+  const { keeperFee, isLeveraged, slippage, collateral } =
+    useTransactionOverview();
   return (
     <Stack {...props} direction="column" spacing={1}>
       <TradingOverviewItem
         label="Fees"
-        value={formatToUsd({ value: +keeperFee })}
+        value={
+          <>
+            {Intl.NumberFormat('en-US', {
+              style: 'decimal',
+              maximumFractionDigits: 2,
+            }).format(+keeperFee)}{' '}
+            {collateral.symbol}
+          </>
+        }
       />
       {!isLeveraged && (
         <TradingOverviewItem
