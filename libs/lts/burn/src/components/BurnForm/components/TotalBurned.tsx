@@ -21,7 +21,10 @@ export const TotalBurned = () => {
           <Skeleton width={75} height={35} />
         ) : (
           <Typography variant="value2" color="text.secondary">
-            {totalBurned}
+            {Intl.NumberFormat('en-US', {
+              style: 'decimal',
+              maximumFractionDigits: 0,
+            }).format(totalBurned)}
           </Typography>
         )}
         <Stack direction="row" alignItems="center" spacing={0.5}>
