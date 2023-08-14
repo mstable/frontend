@@ -19,7 +19,7 @@ import {
 import { useFlatcoin } from '../../../state';
 import { getFlatcoinDelayedOrderContract } from '../../../utils';
 import { useFlatcoinTradingState } from '../state';
-import { StableApprovalButton } from './StableApprovalButton';
+import { ApprovalButton } from './ApprovalButton';
 
 import type { ButtonProps } from '@mui/material';
 import type { FC } from 'react';
@@ -75,7 +75,7 @@ const useStableTradingButton = () => {
     tradingType,
   ]);
 
-  const { config: tradeConfig } = usePrepareContractWrite(config);
+  const { config: tradeConfig, isError } = usePrepareContractWrite(config);
 
   const {
     data: writeData,
@@ -152,6 +152,7 @@ const useStableTradingButton = () => {
     isWriteSuccess,
     isSubmitSuccess,
     write,
+    isError,
   };
 };
 
@@ -163,10 +164,11 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
     isWriteSuccess,
     isSubmitSuccess,
     write,
+    isError,
   } = useStableTradingButton();
 
   if (needsApproval) {
-    return <StableApprovalButton />;
+    return <ApprovalButton {...props} />;
   }
   if (isWriteLoading) {
     return (
@@ -188,7 +190,7 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
   }
 
   return (
-    <Button {...props} onClick={write}>
+    <Button {...props} onClick={write} disabled={isError}>
       {intl.formatMessage({
         defaultMessage: 'Trade',
         id: '90axO4',

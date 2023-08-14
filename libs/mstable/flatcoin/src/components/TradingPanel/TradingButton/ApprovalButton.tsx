@@ -16,6 +16,9 @@ import { useFlatcoin } from '../../../state';
 import { getFlatcoinDelayedOrderContract } from '../../../utils';
 import { useFlatcoinTradingState } from '../state';
 
+import type { ButtonProps } from '@mui/material';
+import type { FC } from 'react';
+
 const useApprovalButton = () => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
@@ -134,7 +137,7 @@ const useApprovalButton = () => {
   };
 };
 
-export const StableApprovalButton = () => {
+export const ApprovalButton: FC<ButtonProps> = (props) => {
   const {
     intl,
     sendToken,
@@ -147,7 +150,7 @@ export const StableApprovalButton = () => {
 
   if (isWriteLoading) {
     return (
-      <Button disabled>
+      <Button {...props} disabled>
         {intl.formatMessage({
           defaultMessage: 'Sign Transaction',
           id: 'w1LBDB',
@@ -158,11 +161,13 @@ export const StableApprovalButton = () => {
 
   if (isWriteSuccess && !isWaitSuccess && isWaitLoading) {
     return (
-      <Button disabled>
+      <Button {...props} disabled>
         <CircularProgress size={20} />
       </Button>
     );
   }
 
-  return <ApproveButton symbol={sendToken.symbol} onApprove={write} />;
+  return (
+    <ApproveButton {...props} symbol={sendToken.symbol} onApprove={write} />
+  );
 };
