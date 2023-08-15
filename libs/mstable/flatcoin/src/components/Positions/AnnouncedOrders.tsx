@@ -16,10 +16,12 @@ const AnnouncedOrder: FC<{ order: Order }> = ({ order }) => {
   const { flatcoinChainId } = useFlatcoin();
   const delayedOrderContract = getFlatcoinDelayedOrderContract(flatcoinChainId);
 
-  const { data: priceData } = useEthPriceFeed<string[]>({ type: 'vaas' });
+  const { data: priceData } = useEthPriceFeed<string[]>({
+    type: 'txData',
+  });
 
   // TODO: replace or move into separate function
-  const binaryData = atob(priceData?.[0] ?? '');
+  const binaryData = priceData?.[0] ? atob(priceData[0]) : '';
   const bytes = new Uint8Array(binaryData.length);
   for (let i = 0; i < binaryData.length; i++) {
     bytes[i] = binaryData.charCodeAt(i);

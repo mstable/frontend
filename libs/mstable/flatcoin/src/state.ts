@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { SUPPORTED_FLATCOIN_CHAIN_IDS } from '@frontend/shared-constants';
 import { useSearch } from '@tanstack/react-location';
@@ -7,6 +7,7 @@ import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { useAccount, useContractReads, useNetwork } from 'wagmi';
 
+import { useEthPriceFeed } from './hooks/useEthPriceFeed';
 import {
   getFlatcoinDelayedOrderContract,
   getFlatcoinTokensByChain,
@@ -16,7 +17,7 @@ import {
 import type { BigNumberish } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
 
-import type { FlatcoinRoute, FlatcoinState } from './types';
+import type { FlatcoinRoute, FlatcoinState, PriceFeedData } from './types';
 const defaultFlatcoinChainId = SUPPORTED_FLATCOIN_CHAIN_IDS[0];
 const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(
   defaultFlatcoinChainId,
@@ -131,19 +132,7 @@ export const {
     },
   });
 
-  // TODO: uncomment and check prices
-  // const setEthPrice = useCallback(([{ price }]: PriceFeedData[]) => {
-  //   setState(
-  //     produce((draft) => {
-  //       draft.tokens.collateral.price = new BigNumber(price.price)
-  //         .shiftedBy(price.expo)
-  //         .toFixed();
-  //     }),
-  //   );
-  // }, []);
-  // useEthPriceFeed({ onSuccess: setEthPrice });
-
-  useContractReads({
+  const { data: contractData } = useContractReads({
     contracts: [
       {
         address: state.tokens.collateral.address,
@@ -189,19 +178,10 @@ export const {
                   .shiftedBy(-COLLATERAL.decimals)
                   .toFixed()
               : '',
-            price: data?.[2]
-              ? new BigNumber(data[2].toString())
-                  .shiftedBy(-FLATCOIN.decimals)
-                  .toFixed()
-              : '', // TODO: remove when uncommenting useEthPriceFeed
           };
           draft.tokens.flatcoin = {
+            ...draft.tokens.flatcoin,
             ...FLATCOIN,
-            price: data?.[2]
-              ? new BigNumber(data[2].toString())
-                  .shiftedBy(-FLATCOIN.decimals)
-                  .toFixed()
-              : '', // TODO: check
             balance: data?.[1]
               ? new BigNumber(data[1].toString())
                   .shiftedBy(-FLATCOIN.decimals)
@@ -226,6 +206,31 @@ export const {
         }),
       );
     },
+  });
+
+  const setEthPrice = useCallback(
+    ([{ price }]: PriceFeedData[]) => {
+      setState(
+        produce((draft) => {
+          const collateralPrice = new BigNumber(price.price).shiftedBy(
+            price.expo,
+          );
+          draft.tokens.collateral.price = collateralPrice.toFixed();
+          draft.tokens.flatcoin.price = contractData?.[2]
+            ? new BigNumber(contractData[2].toString())
+                .shiftedBy(-FLATCOIN.decimals)
+                .multipliedBy(collateralPrice)
+                .toFixed()
+            : '';
+        }),
+      );
+    },
+    [contractData],
+  );
+  useEthPriceFeed<PriceFeedData[]>({
+    onSuccess: setEthPrice,
+    type: 'price',
+    enabled: !!contractData?.[2],
   });
 
   useEffect(() => {
