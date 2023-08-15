@@ -39,11 +39,11 @@ const useStableTradingButton = () => {
     slippage,
     reset,
   } = useFlatcoinTradingState();
+  const isDeposit = tradingType === 'deposit';
 
   const config = useMemo(() => {
     const delayedOrderContract =
       getFlatcoinDelayedOrderContract(flatcoinChainId);
-    const isDeposit = tradingType === 'deposit';
     return {
       address: delayedOrderContract?.address,
       abi: delayedOrderContract?.abi,
@@ -73,6 +73,7 @@ const useStableTradingButton = () => {
     sendToken.value,
     slippage,
     tradingType,
+    isDeposit,
   ]);
 
   const { config: tradeConfig, isError } = usePrepareContractWrite(config);
@@ -86,10 +87,15 @@ const useStableTradingButton = () => {
     ...tradeConfig,
     onSuccess: (data) => {
       pushNotification({
-        title: intl.formatMessage({
-          defaultMessage: 'Flatcoin Deposit',
-          id: 'wfUbwI',
-        }),
+        title: isDeposit
+          ? intl.formatMessage({
+              defaultMessage: 'Flatcoin Deposit',
+              id: 'wfUbwI',
+            })
+          : intl.formatMessage({
+              defaultMessage: 'Flatcoin Withdraw',
+              id: 'oNO7VY',
+            }),
         content: (
           <ViewEtherscanLink
             hash={data?.hash}

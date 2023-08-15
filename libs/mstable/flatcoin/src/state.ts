@@ -7,7 +7,7 @@ import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { useAccount, useContractReads, useNetwork } from 'wagmi';
 
-import { useEthPriceFeed } from './hooks/useEthPriceFeed';
+import { usePythEthPrice } from './hooks/usePythEthPrice';
 import {
   getFlatcoinDelayedOrderContract,
   getFlatcoinTokensByChain,
@@ -116,7 +116,7 @@ export const {
         }).format(20),
       },
     ],
-    announcedOrders: [],
+    announcedOrder: null,
     flatcoinChainId: defaultFlatcoinChainId,
     tokens: {
       collateral: {
@@ -189,9 +189,10 @@ export const {
               : '',
           };
           //TODO: check why only 1 announce order?
-          draft.announcedOrders = data[3]
-            ? [
-                {
+          draft.announcedOrder =
+            !data[3] || data[3]['orderData'] === '0x'
+              ? null
+              : {
                   orderData: data[3]?.['orderData'] as string,
                   type: data[3]?.['orderType'] as number,
                   keeperFee: (
@@ -200,9 +201,7 @@ export const {
                   executableAtTime: (
                     data[3]?.['executableAtTime'] as BigNumberish
                   ).toString(),
-                },
-              ]
-            : [];
+                };
         }),
       );
     },
@@ -227,10 +226,11 @@ export const {
     },
     [contractData],
   );
-  useEthPriceFeed<PriceFeedData[]>({
+  usePythEthPrice<PriceFeedData[]>({
     onSuccess: setEthPrice,
     type: 'price',
     enabled: !!contractData?.[2],
+    chainId: state.flatcoinChainId,
   });
 
   useEffect(() => {

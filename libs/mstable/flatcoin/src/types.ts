@@ -63,7 +63,7 @@ export type FlatcoinState = {
   };
   configs: Record<PositionType, any>;
   positions?: Position[];
-  announcedOrders: Order[];
+  announcedOrder: Order | null;
   type: PositionType;
   flatcoinChainId: number;
 };

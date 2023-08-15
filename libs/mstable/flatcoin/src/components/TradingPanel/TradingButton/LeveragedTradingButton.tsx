@@ -58,7 +58,7 @@ const useLeveragedTradingButton = () => {
       args: [
         margin.toFixed(),
         margin.multipliedBy(leverage).toFixed(0),
-        maxFillPrice,
+        maxFillPrice, // TODO: add slippage
         keeperFee.rawFee,
       ],
       chainId: flatcoinChainId,
