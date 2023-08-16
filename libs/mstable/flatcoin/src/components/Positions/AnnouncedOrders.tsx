@@ -19,7 +19,7 @@ import type { FC } from 'react';
 
 import type { Order } from '../../types';
 
-const useAnnouncedOrder = (order: Order | null) => {
+const useAnnouncedOrders = (order: Order | null) => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
   const { chain } = useNetwork();
@@ -142,7 +142,7 @@ const useAnnouncedOrder = (order: Order | null) => {
   };
 };
 
-export const AnnouncedOrder: FC = () => {
+export const AnnouncedOrders: FC = () => {
   const { announcedOrder } = useFlatcoin();
   const {
     intl,
@@ -155,7 +155,7 @@ export const AnnouncedOrder: FC = () => {
     isWaitLoading,
     hasOrderExpired,
     orderExpirationDate,
-  } = useAnnouncedOrder(announcedOrder);
+  } = useAnnouncedOrders(announcedOrder);
 
   if (!announcedOrder || hasOrderExpired) return null;
 

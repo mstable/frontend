@@ -12,12 +12,11 @@ import {
 } from '@mui/material';
 import { useIntl } from 'react-intl';
 
-import { useFlatcoin } from '../../state';
-import { AnnouncedOrder } from './AnnouncedOrder';
+import { useFlatcoin } from '../../../state';
 
 import type { StackProps } from '@mui/material';
 
-export const Positions = (props: StackProps) => {
+export const LeveragePositions = (props: StackProps) => {
   const intl = useIntl();
   const { positions } = useFlatcoin();
 
@@ -144,7 +143,6 @@ export const Positions = (props: StackProps) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <AnnouncedOrder />
     </Stack>
   );
 };

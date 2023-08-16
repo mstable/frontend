@@ -5,7 +5,9 @@ import { Grid, Stack } from '@mui/material';
 
 import { Jumbo } from '../components/Jumbo';
 import { Performance } from '../components/Performance';
-import { Positions } from '../components/Positions';
+import { AnnouncedOrders } from '../components/Positions/AnnouncedOrders';
+import { LeveragePositions } from '../components/Positions/Leverage';
+import { StablePosition } from '../components/Positions/Stable';
 import { TradingPanel } from '../components/TradingPanel';
 import { FlatcoinProvider } from '../state';
 
@@ -75,7 +77,20 @@ const FlatcoinContent: FC = () => {
                 />
               }
             >
-              <Positions />
+              <LeveragePositions />
+            </ErrorBoundary>
+            <ErrorBoundary
+              ErrorComponent={
+                <ErrorCard
+                  onMount={() => {
+                    track('error', {
+                      name: 'Unhandled Error: User Announced Orders',
+                    });
+                  }}
+                />
+              }
+            >
+              <AnnouncedOrders />
             </ErrorBoundary>
           </Stack>
         </Grid>
@@ -93,6 +108,19 @@ const FlatcoinContent: FC = () => {
               }
             >
               <TradingPanel />
+            </ErrorBoundary>
+            <ErrorBoundary
+              ErrorComponent={
+                <ErrorCard
+                  onMount={() => {
+                    track('error', {
+                      name: 'Unhandled Error: Stable Position Card',
+                    });
+                  }}
+                />
+              }
+            >
+              <StablePosition sx={{ mt: 2 }} />
             </ErrorBoundary>
           </Grid>
         )}
