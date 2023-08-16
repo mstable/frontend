@@ -9,7 +9,12 @@ import { getFlatcoinDelayedOrderContract } from '../../../utils';
 import { useFlatcoinTradingState, useUpdateReceiveToken } from '../state';
 
 export const useStableTradingQuote = () => {
-  const { sendToken, tradingType, receiveToken } = useFlatcoinTradingState();
+  const {
+    sendToken,
+    tradingType,
+    receiveToken,
+    keeperFee: { rawFee },
+  } = useFlatcoinTradingState();
   const { flatcoinChainId } = useFlatcoin();
   const updateReceiveToken = useUpdateReceiveToken();
   const rawSendTokenValue = useDebounce(
@@ -18,8 +23,9 @@ export const useStableTradingQuote = () => {
       .toFixed(),
     500,
   );
+  const isDeposit = tradingType === 'deposit';
   const functionName = useDebounce(
-    tradingType === 'deposit' ? 'stableDepositQuote' : 'stableWithdrawQuote',
+    isDeposit ? 'stableDepositQuote' : 'stableWithdrawQuote',
     500,
   );
 
@@ -32,6 +38,7 @@ export const useStableTradingQuote = () => {
     onSuccess(data) {
       updateReceiveToken({
         value: new BigNumber(data.toString())
+          .minus(isDeposit ? '0' : rawFee) // Keeper fee will be held from the received collateral amount
           .shiftedBy(-receiveToken.decimals)
           .toFixed(),
       });

@@ -50,6 +50,10 @@ const useAnnouncedOrder = (executableAtTime?: string) => {
     isSuccess: isWriteSuccess,
   } = useContractWrite({
     ...config,
+    request: {
+      ...config?.request,
+      gasLimit: config?.request?.gasLimit?.mul(130).div(100), // TODO: think how to move this logic into separate function and reuse in other palces
+    },
     onSuccess: (data) => {
       pushNotification({
         title: intl.formatMessage({
