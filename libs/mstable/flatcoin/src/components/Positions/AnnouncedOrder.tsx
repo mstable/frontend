@@ -17,7 +17,9 @@ import { getFlatcoinDelayedOrderContract } from '../../utils';
 
 import type { FC } from 'react';
 
-const useAnnouncedOrder = (executableAtTime?: string) => {
+import type { Order } from '../../types';
+
+const useAnnouncedOrder = (order: Order | null) => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
   const { chain } = useNetwork();
@@ -25,7 +27,15 @@ const useAnnouncedOrder = (executableAtTime?: string) => {
   const { flatcoinChainId } = useFlatcoin();
   const delayedOrderContract = getFlatcoinDelayedOrderContract(flatcoinChainId);
   const priceData = useEthTransactionPriceData();
-
+  const orderExpirationDate = order
+    ? (+order.executableAtTime -
+        +order.minExecutabilityAge +
+        +order.maxExecutabilityAge) *
+      1000
+    : null;
+  const hasOrderExpired = orderExpirationDate
+    ? orderExpirationDate < Date.now()
+    : true;
   const {
     config,
     isError,
@@ -37,7 +47,10 @@ const useAnnouncedOrder = (executableAtTime?: string) => {
     args: [walletAddress, priceData],
     chainId: flatcoinChainId,
     enabled:
-      !!priceData && executableAtTime && Date.now() > +executableAtTime * 1000,
+      !!priceData &&
+      !!order &&
+      !hasOrderExpired &&
+      Date.now() > +order.executableAtTime * 1000,
     overrides: {
       value: '1', // the Pyth oracle will take 1 WEI of ETH to make the price update
     },
@@ -52,7 +65,7 @@ const useAnnouncedOrder = (executableAtTime?: string) => {
     ...config,
     request: {
       ...config?.request,
-      gasLimit: config?.request?.gasLimit?.mul(130).div(100), // TODO: think how to move this logic into separate function and reuse in other palces
+      gasLimit: config?.request?.gasLimit?.mul(150).div(100), // TODO: think how to move this logic into separate function and reuse in other palces
     },
     onSuccess: (data) => {
       pushNotification({
@@ -124,6 +137,8 @@ const useAnnouncedOrder = (executableAtTime?: string) => {
     isWriteSuccess,
     isWaitSuccess,
     isWaitLoading,
+    hasOrderExpired,
+    orderExpirationDate,
   };
 };
 
@@ -138,9 +153,11 @@ export const AnnouncedOrder: FC = () => {
     isWriteSuccess,
     isWaitSuccess,
     isWaitLoading,
-  } = useAnnouncedOrder(announcedOrder?.executableAtTime);
+    hasOrderExpired,
+    orderExpirationDate,
+  } = useAnnouncedOrder(announcedOrder);
 
-  if (!announcedOrder) return null;
+  if (!announcedOrder || hasOrderExpired) return null;
 
   return (
     <>
@@ -150,10 +167,15 @@ export const AnnouncedOrder: FC = () => {
           id: 'LGv1C5',
         })}
       </Typography>
-      <div key={announcedOrder.type}>
-        {announcedOrder.type}
+      <div>
+        Type:
+        <p>{announcedOrder.type}</p>
+        Keeper Fee:
         <p>{announcedOrder.keeperFee}</p>
+        Executable At:
         <p>{new Date(+announcedOrder.executableAtTime * 1000).toString()}</p>
+        Order Expires At:
+        <p>{new Date(orderExpirationDate).toString()}</p>
         {isWriteLoading ? (
           <Button sx={{ minWidth: 92 }} disabled>
             {intl.formatMessage({

@@ -36,11 +36,11 @@ export const useStableTradingQuote = () => {
     functionName,
     args: [rawSendTokenValue],
     onSuccess(data) {
+      const receivedValue = new BigNumber(data.toString())
+        .minus(rawFee)
+        .shiftedBy(-receiveToken.decimals);
       updateReceiveToken({
-        value: new BigNumber(data.toString())
-          .minus(isDeposit ? '0' : rawFee) // Keeper fee will be held from the received collateral amount
-          .shiftedBy(-receiveToken.decimals)
-          .toFixed(),
+        value: receivedValue.lt('0') ? '0' : receivedValue.toFixed(),
       });
     },
     enabled: rawSendTokenValue !== '0',

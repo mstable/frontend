@@ -8,9 +8,7 @@ interface FetchPriceFeedParams {
   type: QueryType;
   chainId: number;
 }
-interface Props<T>
-  extends Pick<UseQueryOptions<T>, 'onSuccess' | 'enabled'>,
-    FetchPriceFeedParams {}
+interface Props<T> extends UseQueryOptions<T>, FetchPriceFeedParams {}
 
 const getApiUrl = (chainId: number) => {
   switch (chainId) {
@@ -40,15 +38,10 @@ const fetchPriceFeed = async ({ type, chainId }: FetchPriceFeedParams) => {
   return await response.json();
 };
 
-export function usePythEthPrice<T>({
-  type,
-  onSuccess,
-  enabled,
-  chainId,
-}: Props<T>) {
+export function usePythEthPrice<T>({ type, chainId, ...options }: Props<T>) {
   return useQuery<T>(
     ['priceFeed', type, getPriceId(chainId)],
     () => fetchPriceFeed({ type, chainId }),
-    { onSuccess, enabled },
+    options,
   );
 }

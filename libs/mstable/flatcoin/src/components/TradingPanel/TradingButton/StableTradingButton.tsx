@@ -40,6 +40,11 @@ const useStableTradingButton = () => {
     reset,
   } = useFlatcoinTradingState();
   const isDeposit = tradingType === 'deposit';
+  const lowerThanKeeperFee =
+    isDeposit &&
+    new BigNumber(sendToken.value)
+      .shiftedBy(sendToken.decimals)
+      .lte(keeperFee.rawFee);
 
   const config = useMemo(() => {
     const delayedOrderContract =
@@ -53,6 +58,7 @@ const useStableTradingButton = () => {
       args: [
         new BigNumber(sendToken.value || '0')
           .shiftedBy(sendToken.decimals)
+          .minus(isDeposit ? keeperFee.rawFee : '0') // On stable deposits keeper fee will be transfered separately
           .toFixed(0, BigNumber.ROUND_DOWN),
         getSlippageAdjustedValue(receiveToken.value || '0', slippage)
           .shiftedBy(receiveToken.decimals)
@@ -60,7 +66,11 @@ const useStableTradingButton = () => {
         keeperFee.rawFee,
       ],
       chainId: flatcoinChainId,
-      enabled: !needsApproval && !isInsufficientBalance && !!receiveToken.value,
+      enabled:
+        !needsApproval &&
+        !isInsufficientBalance &&
+        !!receiveToken.value &&
+        !lowerThanKeeperFee,
     };
   }, [
     flatcoinChainId,
@@ -72,8 +82,8 @@ const useStableTradingButton = () => {
     sendToken.decimals,
     sendToken.value,
     slippage,
-    tradingType,
     isDeposit,
+    lowerThanKeeperFee,
   ]);
 
   const { config: tradeConfig, isError } = usePrepareContractWrite(config);
@@ -159,6 +169,7 @@ const useStableTradingButton = () => {
     isSubmitSuccess,
     write,
     isError,
+    lowerThanKeeperFee,
   };
 };
 
@@ -169,6 +180,7 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
     isWriteLoading,
     isWriteSuccess,
     isSubmitSuccess,
+    lowerThanKeeperFee,
     write,
     isError,
   } = useStableTradingButton();
@@ -176,6 +188,19 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
   if (needsApproval) {
     return <ApprovalButton {...props} />;
   }
+
+  // TODO: handle min deposit flow
+  if (lowerThanKeeperFee) {
+    return (
+      <Button {...props} disabled>
+        {intl.formatMessage({
+          defaultMessage: 'Trade',
+          id: '90axO4',
+        })}
+      </Button>
+    );
+  }
+
   if (isWriteLoading) {
     return (
       <Button {...props} disabled>

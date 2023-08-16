@@ -162,6 +162,20 @@ export const {
         functionName: 'getAnnouncedOrder',
         args: [walletAddress],
       },
+      {
+        address: getFlatcoinDelayedOrderContract(state.flatcoinChainId).address,
+        chainId: state.flatcoinChainId,
+        abi: getFlatcoinDelayedOrderContract(state.flatcoinChainId).abi,
+        functionName: 'maxExecutabilityAge',
+        args: [],
+      },
+      {
+        address: getFlatcoinDelayedOrderContract(state.flatcoinChainId).address,
+        chainId: state.flatcoinChainId,
+        abi: getFlatcoinDelayedOrderContract(state.flatcoinChainId).abi,
+        functionName: 'minExecutabilityAge',
+        args: [],
+      },
     ],
     watch: true,
     onSuccess(data) {
@@ -201,6 +215,8 @@ export const {
                   executableAtTime: (
                     data[3]?.['executableAtTime'] as BigNumberish
                   ).toString(),
+                  maxExecutabilityAge: data?.[4].toString() ?? '',
+                  minExecutabilityAge: data?.[5].toString() ?? '',
                 };
         }),
       );

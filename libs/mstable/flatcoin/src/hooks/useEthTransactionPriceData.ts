@@ -8,6 +8,7 @@ export const useEthTransactionPriceData = (): [string] | null => {
   const { data: priceData } = usePythEthPrice<string[]>({
     type: 'txData',
     chainId: flatcoinChainId,
+    refetchInterval: 20_000,
   });
 
   if (!priceData?.[0]) return null;

@@ -30,6 +30,8 @@ export interface Order {
   keeperFee: string;
   executableAtTime: string;
   orderData: string;
+  maxExecutabilityAge: string;
+  minExecutabilityAge: string;
 }
 
 export interface FlatcoinTradingState {
