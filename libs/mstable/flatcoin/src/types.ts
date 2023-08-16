@@ -15,14 +15,14 @@ export type PositionType = 'flatcoin' | 'leveragedeth';
 export type TradingType = 'deposit' | 'withdraw';
 type TokenInfo = Token & { balance: string; price: string };
 
-export interface Position {
-  type: PositionType;
-  value: string;
-  date: string;
-  leverageMultiplier?: string;
-  liquidation?: string;
-  profitLossTotal: string;
-  profitLossFunding: string;
+export interface LeveragedPosition {
+  additionalSize: string;
+  entryCumulativeFunding: string;
+  entryPrice: string;
+  marginDeposited: string;
+  accruedFunding: string;
+  marginAfterSettlement: string;
+  profitLoss: string;
 }
 
 export interface Order {
@@ -64,7 +64,7 @@ export type FlatcoinState = {
     flatcoin: TokenInfo;
   };
   configs: Record<PositionType, any>;
-  positions?: Position[];
+  leveragedPositions?: LeveragedPosition[];
   announcedOrder: Order | null;
   type: PositionType;
   flatcoinChainId: number;

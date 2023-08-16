@@ -7,9 +7,11 @@ import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { useAccount, useContractReads, useNetwork } from 'wagmi';
 
+import { useUserLeveragePositions } from './hooks/state/useUserLeveragePositions';
 import { usePythEthPrice } from './hooks/usePythEthPrice';
 import {
   getFlatcoinDelayedOrderContract,
+  getFlatcoinLeveragedModuleContract,
   getFlatcoinTokensByChain,
   isFlatcoinSupportedChain,
 } from './utils';
@@ -61,61 +63,7 @@ export const {
       }).format(1234567),
       skew: new Intl.NumberFormat('en-US', { style: 'percent' }).format(0.48),
     },
-    positions: [
-      {
-        type: 'leveragedeth',
-        value: new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-          compactDisplay: 'short',
-          minimumFractionDigits: 2,
-        }).format(1000),
-        date: new Date().toLocaleString(),
-        leverageMultiplier: new Intl.NumberFormat('en-US', {
-          compactDisplay: 'short',
-          minimumFractionDigits: 1,
-        }).format(10),
-        liquidation: new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-          compactDisplay: 'short',
-        }).format(1000),
-        profitLossTotal: new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-          compactDisplay: 'short',
-          signDisplay: 'always',
-        }).format(100),
-        profitLossFunding: new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-          compactDisplay: 'short',
-          signDisplay: 'always',
-        }).format(-20),
-      },
-      {
-        type: 'flatcoin',
-        value: new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-          compactDisplay: 'short',
-          minimumFractionDigits: 2,
-        }).format(1000),
-        date: new Date().toLocaleString(),
-        profitLossTotal: new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-          compactDisplay: 'short',
-          signDisplay: 'always',
-        }).format(100),
-        profitLossFunding: new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
-          compactDisplay: 'short',
-          signDisplay: 'always',
-        }).format(20),
-      },
-    ],
+    leveragedPositions: [],
     announcedOrder: null,
     flatcoinChainId: defaultFlatcoinChainId,
     tokens: {
@@ -170,11 +118,12 @@ export const {
         args: [],
       },
       {
-        address: getFlatcoinDelayedOrderContract(state.flatcoinChainId).address,
+        address: getFlatcoinLeveragedModuleContract(state.flatcoinChainId)
+          .address,
         chainId: state.flatcoinChainId,
-        abi: getFlatcoinDelayedOrderContract(state.flatcoinChainId).abi,
-        functionName: 'minExecutabilityAge',
-        args: [],
+        abi: getFlatcoinLeveragedModuleContract(state.flatcoinChainId).abi,
+        functionName: 'balanceOf',
+        args: [walletAddress],
       },
     ],
     watch: true,
@@ -221,6 +170,12 @@ export const {
         }),
       );
     },
+  });
+
+  useUserLeveragePositions({
+    setState,
+    chainId: state.flatcoinChainId,
+    userLeverageBalance: contractData?.[5]?.toString() ?? '',
   });
 
   const setEthPrice = useCallback(
