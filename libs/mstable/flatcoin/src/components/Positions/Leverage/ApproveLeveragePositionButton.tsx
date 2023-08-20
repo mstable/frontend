@@ -1,13 +1,9 @@
-import { useMemo } from 'react';
-
 import { usePushNotification } from '@frontend/shared-providers';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { getBlockExplorerUrl } from '@frontend/shared-utils';
 import { Button, CircularProgress } from '@mui/material';
-import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
 import {
-  useContractRead,
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
@@ -15,80 +11,43 @@ import {
 } from 'wagmi';
 
 import { useFlatcoin } from '../../../state';
-import { getFlatcoinDelayedOrderContract } from '../../../utils';
-import { useFlatcoinTradingState } from '../state';
-import { ApprovalButton } from './ApprovalButton';
+import {
+  getFlatcoinDelayedOrderContract,
+  getFlatcoinLeveragedModuleContract,
+} from '../../../utils';
 
 import type { ButtonProps } from '@mui/material';
 import type { FC } from 'react';
 
-const useLeveragedTradingButton = () => {
+interface Props extends ButtonProps {
+  tokenId: string;
+}
+
+const useApproveLeveragePositionButton = (tokenId: string) => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
   const { chain } = useNetwork();
-  const { flatcoinChainId, keeperFee } = useFlatcoin();
-  const {
-    needsApproval,
-    isInsufficientBalance,
-    receiveToken,
-    sendToken,
-    leverage,
-    reset,
-  } = useFlatcoinTradingState();
-  const delayedOrderContract = getFlatcoinDelayedOrderContract(flatcoinChainId);
-  const margin = new BigNumber(sendToken.value || '0').shiftedBy(
-    sendToken.decimals,
-  );
-  const additionalSize = margin.multipliedBy(leverage);
-  const { data: maxFillPrice } = useContractRead({
-    address: delayedOrderContract.address,
+  const { flatcoinChainId } = useFlatcoin();
+  const { config, isError } = usePrepareContractWrite({
+    address: getFlatcoinLeveragedModuleContract(flatcoinChainId)?.address,
+    abi: getFlatcoinLeveragedModuleContract(flatcoinChainId)?.abi,
+    functionName: 'approve',
+    args: [getFlatcoinDelayedOrderContract(flatcoinChainId)?.address, tokenId],
     chainId: flatcoinChainId,
-    abi: delayedOrderContract.abi,
-    functionName: 'leverageModifyFillPrice',
-    args: [additionalSize.toFixed(0)],
-    enabled: !additionalSize.isZero(),
   });
 
-  const config = useMemo(() => {
-    return {
-      address: delayedOrderContract?.address,
-      abi: delayedOrderContract?.abi,
-      functionName: 'announceLeverageOpen',
-      args: [
-        margin.toFixed(),
-        margin.multipliedBy(leverage).toFixed(0),
-        maxFillPrice, // TODO: add slippage
-        keeperFee.rawFee,
-      ],
-      chainId: flatcoinChainId,
-      enabled: !needsApproval && !isInsufficientBalance && !!receiveToken.value,
-    };
-  }, [
-    delayedOrderContract?.abi,
-    delayedOrderContract?.address,
-    flatcoinChainId,
-    isInsufficientBalance,
-    keeperFee.rawFee,
-    leverage,
-    margin,
-    maxFillPrice,
-    needsApproval,
-    receiveToken.value,
-  ]);
-
-  const { config: tradeConfig, isError } = usePrepareContractWrite(config);
   const {
     data: writeData,
     write,
     isLoading: isWriteLoading,
     isSuccess: isWriteSuccess,
   } = useContractWrite({
-    ...tradeConfig,
+    ...config,
     onSuccess: (data) => {
       pushNotification({
         title: intl.formatMessage({
-          defaultMessage: 'Announce Leverage Position',
-          id: 'qcHHVw',
+          defaultMessage: 'Approve Position Close',
+          id: '0OPmis',
         }),
         content: (
           <ViewEtherscanLink
@@ -142,38 +101,34 @@ const useLeveragedTradingButton = () => {
         severity: 'error',
       });
     },
-    onSettled: reset,
   });
 
   return {
-    intl,
-    needsApproval,
+    isError,
+    write,
+    isSubmitSuccess,
     isWriteLoading,
     isWriteSuccess,
-    isSubmitSuccess,
-    write,
-    isError,
+    intl,
   };
 };
 
-export const LeveragedTradingButton: FC<ButtonProps> = (props) => {
+export const ApproveLeveragePositionButton: FC<Props> = ({
+  tokenId,
+  ...buttonProps
+}) => {
   const {
-    needsApproval,
+    isError,
     write,
-    intl,
+    isSubmitSuccess,
     isWriteLoading,
     isWriteSuccess,
-    isSubmitSuccess,
-    isError,
-  } = useLeveragedTradingButton();
-
-  if (needsApproval) {
-    return <ApprovalButton {...props} />;
-  }
+    intl,
+  } = useApproveLeveragePositionButton(tokenId);
 
   if (isWriteLoading) {
     return (
-      <Button {...props} disabled>
+      <Button disabled {...buttonProps}>
         {intl.formatMessage({
           defaultMessage: 'Sign Transaction',
           id: 'w1LBDB',
@@ -184,15 +139,18 @@ export const LeveragedTradingButton: FC<ButtonProps> = (props) => {
 
   if (isWriteSuccess && !isSubmitSuccess) {
     return (
-      <Button {...props} disabled>
+      <Button disabled {...buttonProps}>
         <CircularProgress size={20} />
       </Button>
     );
   }
 
   return (
-    <Button onClick={write} {...props} disabled={isError}>
-      {intl.formatMessage({ defaultMessage: 'Open Position', id: 'Px2xWV' })}
+    <Button disabled={isError} onClick={write} {...buttonProps}>
+      {intl.formatMessage({
+        defaultMessage: 'Approve',
+        id: 'WCaf5C',
+      })}
     </Button>
   );
 };

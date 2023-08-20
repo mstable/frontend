@@ -11,7 +11,6 @@ import { erc20ABI, useAccount, useContractReads } from 'wagmi';
 import { useFlatcoin } from '../../state';
 import {
   getFlatcoinDelayedOrderContract,
-  getFlatcoinKeeperFeeContract,
   getFlatcoinTokensByChain,
 } from '../../utils';
 
@@ -39,10 +38,6 @@ const initialState: FlatcoinTradingState = {
   isInfiniteAllowance: false,
   needsApproval: true,
   isInsufficientBalance: false,
-  keeperFee: {
-    rawFee: '',
-    formattedFee: '',
-  },
   refetch: () => null, // TODO: implement refetch logic after adding contract calls
   reset: () => null, // TODO: implement refetch logic after adding contract calls
 };
@@ -76,27 +71,7 @@ export const {
           getFlatcoinDelayedOrderContract(flatcoinChainId).address,
         ],
       },
-      {
-        address: getFlatcoinKeeperFeeContract(flatcoinChainId).address,
-        chainId: flatcoinChainId,
-        abi: getFlatcoinKeeperFeeContract(flatcoinChainId).abi,
-        functionName: 'getKeeperFee',
-        args: [],
-      },
     ],
-    onSuccess(data) {
-      const rawFee = new BigNumber(data[1].toString())
-        .multipliedBy(1.01) // TODO: move to constant
-        .toFixed(0);
-      setState(
-        produce((draft) => {
-          draft.keeperFee.rawFee = rawFee;
-          draft.keeperFee.formattedFee = new BigNumber(rawFee)
-            .shiftedBy(-collateral.decimals)
-            .toFixed();
-        }),
-      );
-    },
     // watch: true,
   });
 

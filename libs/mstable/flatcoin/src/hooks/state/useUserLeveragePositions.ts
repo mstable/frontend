@@ -1,3 +1,5 @@
+import { ZERO_ADDRESS } from '@frontend/shared-constants';
+import { utils } from 'ethers';
 import produce from 'immer';
 import { useAccount, useContractReads } from 'wagmi';
 
@@ -7,6 +9,7 @@ import type { BN } from '@dhedge/core-ui-kit/utils';
 import type { Dispatch, SetStateAction } from 'react';
 
 import type { FlatcoinState } from '../../types';
+const { formatUnits } = utils;
 
 interface UseUserLeveragePositionsVariables {
   userLeverageBalance: string;
@@ -26,6 +29,7 @@ interface GetPositionSummaryContractData {
   profitLoss: BN;
 }
 
+// TODO: refactor using Viewer contract
 export const useUserLeveragePositions = ({
   userLeverageBalance,
   chainId,
@@ -62,33 +66,57 @@ export const useUserLeveragePositions = ({
           functionName: 'getPositionSummary',
           args: [id],
         },
+        {
+          address: getFlatcoinLeveragedModuleContract(chainId).address,
+          chainId,
+          abi: getFlatcoinLeveragedModuleContract(chainId).abi,
+          functionName: 'getApproved',
+          args: [id],
+        },
       ])
       .flat(),
     enabled: !!tokenIds?.length,
+    watch: true,
     onSuccess(data) {
       setState(
         produce((draft) => {
-          draft.leveragedPositions = tokenIds.map((_, index) => {
-            const positionIndex = index * 2;
-            const positionSummaryIndex = positionIndex + 1;
-            const position = data[
-              positionIndex
-            ] as unknown as GetPositionContractData;
-            const positionSummary = data[
-              positionSummaryIndex
-            ] as unknown as GetPositionSummaryContractData;
-            return {
-              additionalSize: position?.additionalSize?.toString() ?? '',
-              entryCumulativeFunding:
-                position?.entryCumulativeFunding?.toString() ?? '',
-              entryPrice: position?.entryPrice?.toString() ?? '',
-              marginDeposited: position?.marginDeposited?.toString() ?? '',
-              accruedFunding: positionSummary?.accruedFunding?.toString() ?? '',
-              marginAfterSettlement:
-                positionSummary?.marginAfterSettlement?.toString() ?? '',
-              profitLoss: positionSummary?.profitLoss?.toString() ?? '',
-            };
-          });
+          draft.leveragedPositions = tokenIds?.length
+            ? tokenIds.map((id, index) => {
+                const positionIndex = index * 3;
+                const positionSummaryIndex = positionIndex + 1;
+                const positionApproveIndex = positionSummaryIndex + 1;
+                const position = data[
+                  positionIndex
+                ] as unknown as GetPositionContractData;
+                const positionSummary = data[
+                  positionSummaryIndex
+                ] as unknown as GetPositionSummaryContractData;
+                return {
+                  positionId: id.toString(),
+                  additionalSize: position?.additionalSize
+                    ? formatUnits(position.additionalSize)
+                    : '',
+                  entryCumulativeFunding:
+                    position?.entryCumulativeFunding?.toString() ?? '',
+                  entryPrice: position?.entryPrice
+                    ? formatUnits(position.entryPrice)
+                    : '',
+                  marginDeposited: position?.marginDeposited
+                    ? formatUnits(position.marginDeposited)
+                    : '',
+                  accruedFunding:
+                    positionSummary?.accruedFunding?.toString() ?? '',
+                  marginAfterSettlement: positionSummary?.marginAfterSettlement
+                    ? formatUnits(positionSummary.marginAfterSettlement)
+                    : '',
+                  profitLoss: positionSummary?.profitLoss
+                    ? formatUnits(positionSummary.profitLoss)
+                    : '',
+                  approvedAddress:
+                    data?.[positionApproveIndex].toString() ?? ZERO_ADDRESS,
+                };
+              })
+            : [];
         }),
       );
     },

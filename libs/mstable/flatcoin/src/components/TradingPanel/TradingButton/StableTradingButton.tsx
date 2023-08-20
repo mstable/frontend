@@ -28,14 +28,13 @@ const useStableTradingButton = () => {
   const intl = useIntl();
   const { chain } = useNetwork();
   const pushNotification = usePushNotification();
-  const { flatcoinChainId } = useFlatcoin();
+  const { flatcoinChainId, keeperFee } = useFlatcoin();
   const {
     needsApproval,
     tradingType,
     isInsufficientBalance,
     sendToken,
     receiveToken,
-    keeperFee,
     slippage,
     reset,
   } = useFlatcoinTradingState();

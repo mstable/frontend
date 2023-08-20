@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import { usePushNotification } from '@frontend/shared-providers';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { getBlockExplorerUrl } from '@frontend/shared-utils';
@@ -15,75 +13,63 @@ import {
 } from 'wagmi';
 
 import { useFlatcoin } from '../../../state';
-import { getFlatcoinDelayedOrderContract } from '../../../utils';
-import { useFlatcoinTradingState } from '../state';
-import { ApprovalButton } from './ApprovalButton';
+import {
+  getFlatcoinDelayedOrderContract,
+  getFlatcoinOracleModuleContract,
+} from '../../../utils';
 
 import type { ButtonProps } from '@mui/material';
 import type { FC } from 'react';
 
-const useLeveragedTradingButton = () => {
+import type { LeveragedPosition } from '../../../types';
+
+interface Props {
+  position: LeveragedPosition;
+}
+
+const useCloseLeveragePositionButton = ({
+  positionId,
+  marginAfterSettlement,
+}: LeveragedPosition) => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
   const { chain } = useNetwork();
-  const { flatcoinChainId, keeperFee } = useFlatcoin();
   const {
-    needsApproval,
-    isInsufficientBalance,
-    receiveToken,
-    sendToken,
-    leverage,
-    reset,
-  } = useFlatcoinTradingState();
-  const delayedOrderContract = getFlatcoinDelayedOrderContract(flatcoinChainId);
-  const margin = new BigNumber(sendToken.value || '0').shiftedBy(
-    sendToken.decimals,
-  );
-  const additionalSize = margin.multipliedBy(leverage);
-  const { data: maxFillPrice } = useContractRead({
-    address: delayedOrderContract.address,
+    flatcoinChainId,
+    keeperFee: { rawFee },
+    tokens: { collateral },
+  } = useFlatcoin();
+  const sellAmount = new BigNumber(marginAfterSettlement)
+    .shiftedBy(collateral.decimals)
+    .toFixed();
+
+  const { data } = useContractRead({
+    address: getFlatcoinOracleModuleContract(flatcoinChainId).address,
     chainId: flatcoinChainId,
-    abi: delayedOrderContract.abi,
-    functionName: 'leverageModifyFillPrice',
-    args: [additionalSize.toFixed(0)],
-    enabled: !additionalSize.isZero(),
+    abi: getFlatcoinOracleModuleContract(flatcoinChainId).abi,
+    functionName: 'getSellPrice',
+    args: [sellAmount, false],
+  });
+  const sellPrice = data?.[0]
+    ? new BigNumber(data[0].toString()).multipliedBy(0.995).toFixed(0) // applied 0.5% of slippage
+    : '';
+
+  const { config, isError } = usePrepareContractWrite({
+    address: getFlatcoinDelayedOrderContract(flatcoinChainId)?.address,
+    abi: getFlatcoinDelayedOrderContract(flatcoinChainId)?.abi,
+    functionName: 'announceLeverageClose',
+    args: [positionId, sellPrice, rawFee],
+    chainId: flatcoinChainId,
+    enabled: !!sellPrice && !!rawFee,
   });
 
-  const config = useMemo(() => {
-    return {
-      address: delayedOrderContract?.address,
-      abi: delayedOrderContract?.abi,
-      functionName: 'announceLeverageOpen',
-      args: [
-        margin.toFixed(),
-        margin.multipliedBy(leverage).toFixed(0),
-        maxFillPrice, // TODO: add slippage
-        keeperFee.rawFee,
-      ],
-      chainId: flatcoinChainId,
-      enabled: !needsApproval && !isInsufficientBalance && !!receiveToken.value,
-    };
-  }, [
-    delayedOrderContract?.abi,
-    delayedOrderContract?.address,
-    flatcoinChainId,
-    isInsufficientBalance,
-    keeperFee.rawFee,
-    leverage,
-    margin,
-    maxFillPrice,
-    needsApproval,
-    receiveToken.value,
-  ]);
-
-  const { config: tradeConfig, isError } = usePrepareContractWrite(config);
   const {
     data: writeData,
     write,
     isLoading: isWriteLoading,
     isSuccess: isWriteSuccess,
   } = useContractWrite({
-    ...tradeConfig,
+    ...config,
     onSuccess: (data) => {
       pushNotification({
         title: intl.formatMessage({
@@ -142,38 +128,28 @@ const useLeveragedTradingButton = () => {
         severity: 'error',
       });
     },
-    onSettled: reset,
   });
 
   return {
-    intl,
-    needsApproval,
+    isError,
+    write,
     isWriteLoading,
     isWriteSuccess,
     isSubmitSuccess,
-    write,
-    isError,
   };
 };
 
-export const LeveragedTradingButton: FC<ButtonProps> = (props) => {
-  const {
-    needsApproval,
-    write,
-    intl,
-    isWriteLoading,
-    isWriteSuccess,
-    isSubmitSuccess,
-    isError,
-  } = useLeveragedTradingButton();
-
-  if (needsApproval) {
-    return <ApprovalButton {...props} />;
-  }
+export const CloseLeveragePositionButton: FC<Props & ButtonProps> = ({
+  position,
+  ...buttonProps
+}) => {
+  const intl = useIntl();
+  const { isError, write, isWriteSuccess, isSubmitSuccess, isWriteLoading } =
+    useCloseLeveragePositionButton(position);
 
   if (isWriteLoading) {
     return (
-      <Button {...props} disabled>
+      <Button {...buttonProps} disabled>
         {intl.formatMessage({
           defaultMessage: 'Sign Transaction',
           id: 'w1LBDB',
@@ -184,15 +160,18 @@ export const LeveragedTradingButton: FC<ButtonProps> = (props) => {
 
   if (isWriteSuccess && !isSubmitSuccess) {
     return (
-      <Button {...props} disabled>
+      <Button {...buttonProps} disabled>
         <CircularProgress size={20} />
       </Button>
     );
   }
 
   return (
-    <Button onClick={write} {...props} disabled={isError}>
-      {intl.formatMessage({ defaultMessage: 'Open Position', id: 'Px2xWV' })}
+    <Button {...buttonProps} disabled={isError} onClick={write}>
+      {intl.formatMessage({
+        defaultMessage: 'Close',
+        id: 'rbrahO',
+      })}
     </Button>
   );
 };

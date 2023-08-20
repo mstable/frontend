@@ -11,6 +11,7 @@ import { useUserLeveragePositions } from './hooks/state/useUserLeveragePositions
 import { usePythEthPrice } from './hooks/usePythEthPrice';
 import {
   getFlatcoinDelayedOrderContract,
+  getFlatcoinKeeperFeeContract,
   getFlatcoinLeveragedModuleContract,
   getFlatcoinTokensByChain,
   isFlatcoinSupportedChain,
@@ -78,6 +79,10 @@ export const {
         price: '',
       },
     },
+    keeperFee: {
+      rawFee: '',
+      formattedFee: '',
+    },
   });
 
   const { data: contractData } = useContractReads({
@@ -125,12 +130,23 @@ export const {
         functionName: 'balanceOf',
         args: [walletAddress],
       },
+      {
+        address: getFlatcoinKeeperFeeContract(state.flatcoinChainId).address,
+        chainId: state.flatcoinChainId,
+        abi: getFlatcoinKeeperFeeContract(state.flatcoinChainId).abi,
+        functionName: 'getKeeperFee',
+        args: [],
+      },
     ],
     watch: true,
     onSuccess(data) {
       const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(
         state.flatcoinChainId,
       );
+      const rawFee = new BigNumber(data[6].toString())
+        .multipliedBy(1.02) // TODO: move to constant
+        .toFixed(0);
+
       setState(
         produce((draft) => {
           draft.tokens.collateral = {
@@ -167,6 +183,11 @@ export const {
                   maxExecutabilityAge: data?.[4].toString() ?? '',
                   minExecutabilityAge: data?.[5].toString() ?? '',
                 };
+
+          draft.keeperFee.rawFee = rawFee;
+          draft.keeperFee.formattedFee = new BigNumber(rawFee)
+            .shiftedBy(-COLLATERAL.decimals)
+            .toFixed();
         }),
       );
     },

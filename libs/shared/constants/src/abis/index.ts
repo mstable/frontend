@@ -5,6 +5,7 @@ export * from './flatcoin/FlatcoinDelayedOrderABI';
 export * from './flatcoin/FlatcoinStableModuleABI';
 export * from './flatcoin/FlatcoinKeeperFeeABI';
 export * from './flatcoin/FlatcoinLeveragedModuleABI';
+export * from './flatcoin/FlatcoinOracleModuleABI';
 export * from './flatcoin/FlatcoinVaultABI';
 export * from './SaveABI';
 export * from './StableABI';

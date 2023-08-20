@@ -1,5 +1,4 @@
 import {
-  Button,
   Paper,
   Stack,
   Table,
@@ -13,6 +12,7 @@ import {
 import { useIntl } from 'react-intl';
 
 import { useFlatcoin } from '../../../state';
+import { CloseLeveragePositionModal } from './CloseLeveragePositionModal';
 
 import type { StackProps } from '@mui/material';
 
@@ -31,7 +31,10 @@ export const LeveragePositions = (props: StackProps) => {
       {...props}
     >
       <Typography variant="h3" pb={2}>
-        {intl.formatMessage({ defaultMessage: 'Positions', id: 'hVxfnN' })}
+        {intl.formatMessage({
+          defaultMessage: 'Leveraged Positions',
+          id: 'AlCWDq',
+        })}
       </Typography>
       <TableContainer component={Paper}>
         <Table>
@@ -74,37 +77,23 @@ export const LeveragePositions = (props: StackProps) => {
             <TableCell>profitLoss</TableCell>
           </TableHead>
           <TableBody>
-            {leveragedPositions.map(
-              ({
-                additionalSize,
-                entryCumulativeFunding,
-                marginDeposited,
-                entryPrice,
-                accruedFunding,
-                marginAfterSettlement,
-                profitLoss,
-              }) => (
-                <TableRow key={marginDeposited}>
-                  <TableCell>{additionalSize}</TableCell>
-                  <TableCell>{entryCumulativeFunding}</TableCell>
-                  <TableCell>{entryPrice}</TableCell>
-                  <TableCell>{marginDeposited}</TableCell>
-                  <TableCell>{accruedFunding}</TableCell>
-                  <TableCell>{marginAfterSettlement}</TableCell>
-                  <TableCell>{profitLoss}</TableCell>
-                  <TableCell>
-                    <Button sx={{ minWidth: 92 }}>
-                      {intl
-                        .formatMessage({
-                          defaultMessage: 'close',
-                          id: 'BSij1a',
-                        })
-                        .toUpperCase()}
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ),
-            )}
+            {leveragedPositions.map((position) => (
+              <TableRow key={position.marginDeposited}>
+                <TableCell>{position.additionalSize}</TableCell>
+                <TableCell>{position.entryCumulativeFunding}</TableCell>
+                <TableCell>{position.entryPrice}</TableCell>
+                <TableCell>{position.marginDeposited}</TableCell>
+                <TableCell>{position.accruedFunding}</TableCell>
+                <TableCell>{position.marginAfterSettlement}</TableCell>
+                <TableCell>{position.profitLoss}</TableCell>
+                <TableCell>
+                  <CloseLeveragePositionModal
+                    position={position}
+                    sx={{ minWidth: 92 }}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
           {/*<TableBody>*/}
           {/*  {leveragedPositions.map(*/}

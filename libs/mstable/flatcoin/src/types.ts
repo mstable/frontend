@@ -16,6 +16,7 @@ export type TradingType = 'deposit' | 'withdraw';
 type TokenInfo = Token & { balance: string; price: string };
 
 export interface LeveragedPosition {
+  positionId: string;
   additionalSize: string;
   entryCumulativeFunding: string;
   entryPrice: string;
@@ -23,6 +24,7 @@ export interface LeveragedPosition {
   accruedFunding: string;
   marginAfterSettlement: string;
   profitLoss: string;
+  approvedAddress: string;
 }
 
 export interface Order {
@@ -45,10 +47,6 @@ export interface FlatcoinTradingState {
   isInsufficientBalance: boolean;
   refetch: () => void;
   reset: () => void;
-  keeperFee: {
-    rawFee: string;
-    formattedFee: string;
-  };
 }
 
 export type FlatcoinState = {
@@ -68,6 +66,10 @@ export type FlatcoinState = {
   announcedOrder: Order | null;
   type: PositionType;
   flatcoinChainId: number;
+  keeperFee: {
+    rawFee: string;
+    formattedFee: string;
+  };
 };
 
 export interface PriceFeedData {

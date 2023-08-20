@@ -2,12 +2,13 @@ import { useEffect } from 'react';
 
 import { useDebounce } from '@dhedge/core-ui-kit/hooks/utils';
 
+import { useFlatcoin } from '../../../state';
 import { useFlatcoinTradingState, useUpdateReceiveToken } from '../state';
 
 export const useLeveragedTradeQuote = () => {
-  const { sendToken, keeperFee } = useFlatcoinTradingState();
+  const { keeperFee } = useFlatcoin();
+  const { leverage, sendToken } = useFlatcoinTradingState();
   const debouncedSendTokenValue = useDebounce(sendToken.value, 500);
-  const { leverage } = useFlatcoinTradingState();
   const updateReceiveToken = useUpdateReceiveToken();
 
   useEffect(() => {

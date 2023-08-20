@@ -9,13 +9,11 @@ import { getFlatcoinDelayedOrderContract } from '../../../utils';
 import { useFlatcoinTradingState, useUpdateReceiveToken } from '../state';
 
 export const useStableTradingQuote = () => {
+  const { sendToken, tradingType, receiveToken } = useFlatcoinTradingState();
   const {
-    sendToken,
-    tradingType,
-    receiveToken,
+    flatcoinChainId,
     keeperFee: { rawFee },
-  } = useFlatcoinTradingState();
-  const { flatcoinChainId } = useFlatcoin();
+  } = useFlatcoin();
   const updateReceiveToken = useUpdateReceiveToken();
   const rawSendTokenValue = useDebounce(
     new BigNumber(sendToken.value || '0')

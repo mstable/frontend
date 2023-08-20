@@ -18,11 +18,9 @@ const useTransactionOverview = () => {
   const isLeveraged = useIsLeveragedType();
   const {
     tokens: { collateral },
-  } = useFlatcoin();
-  const {
-    slippage,
     keeperFee: { formattedFee },
-  } = useFlatcoinTradingState();
+  } = useFlatcoin();
+  const { slippage } = useFlatcoinTradingState();
 
   return {
     keeperFee: formattedFee,
