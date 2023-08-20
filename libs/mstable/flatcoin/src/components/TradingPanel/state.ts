@@ -38,7 +38,7 @@ const initialState: FlatcoinTradingState = {
   isInfiniteAllowance: false,
   needsApproval: true,
   isInsufficientBalance: false,
-  refetch: () => null, // TODO: implement refetch logic after adding contract calls
+  refetchAllowance: () => null, // TODO: implement refetch logic after adding contract calls
   reset: () => null, // TODO: implement refetch logic after adding contract calls
 };
 
@@ -92,7 +92,7 @@ export const {
   useEffect(() => {
     setState(
       produce((draft) => {
-        draft.refetch = refetch;
+        draft.refetchAllowance = refetch;
       }),
     );
   }, [refetch]);

@@ -1,16 +1,8 @@
 import { usePushNotification } from '@frontend/shared-providers';
-import { ViewEtherscanLink } from '@frontend/shared-ui';
-import { getBlockExplorerUrl } from '@frontend/shared-utils';
-import { Button, CircularProgress } from '@mui/material';
+import { TransactionActionButton } from '@frontend/shared-ui';
 import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
-import {
-  useContractRead,
-  useContractWrite,
-  useNetwork,
-  usePrepareContractWrite,
-  useWaitForTransaction,
-} from 'wagmi';
+import { useContractRead, usePrepareContractWrite } from 'wagmi';
 
 import { useFlatcoin } from '../../../state';
 import {
@@ -31,9 +23,6 @@ const useCloseLeveragePositionButton = ({
   positionId,
   marginAfterSettlement,
 }: LeveragedPosition) => {
-  const intl = useIntl();
-  const pushNotification = usePushNotification();
-  const { chain } = useNetwork();
   const {
     flatcoinChainId,
     keeperFee: { rawFee },
@@ -63,79 +52,9 @@ const useCloseLeveragePositionButton = ({
     enabled: !!sellPrice && !!rawFee,
   });
 
-  const {
-    data: writeData,
-    write,
-    isLoading: isWriteLoading,
-    isSuccess: isWriteSuccess,
-  } = useContractWrite({
-    ...config,
-    onSuccess: (data) => {
-      pushNotification({
-        title: intl.formatMessage({
-          defaultMessage: 'Announce Leverage Position',
-          id: 'qcHHVw',
-        }),
-        content: (
-          <ViewEtherscanLink
-            hash={data?.hash}
-            blockExplorer={getBlockExplorerUrl(chain)}
-          />
-        ),
-        severity: 'info',
-      });
-    },
-    onError: () => {
-      pushNotification({
-        title: intl.formatMessage({
-          defaultMessage: 'Transaction Cancelled',
-          id: '20X0BC',
-        }),
-        severity: 'info',
-      });
-    },
-  });
-
-  const { isSuccess: isSubmitSuccess } = useWaitForTransaction({
-    hash: writeData?.hash,
-    onSuccess: ({ transactionHash }) => {
-      pushNotification({
-        title: intl.formatMessage({
-          defaultMessage: 'Transaction Confirmed',
-          id: 'rgdwQX',
-        }),
-        content: (
-          <ViewEtherscanLink
-            hash={transactionHash}
-            blockExplorer={getBlockExplorerUrl(chain)}
-          />
-        ),
-        severity: 'success',
-      });
-    },
-    onError: () => {
-      pushNotification({
-        title: intl.formatMessage({
-          defaultMessage: 'Transaction Error',
-          id: 'p8bsw4',
-        }),
-        content: (
-          <ViewEtherscanLink
-            hash={writeData?.hash}
-            blockExplorer={getBlockExplorerUrl(chain)}
-          />
-        ),
-        severity: 'error',
-      });
-    },
-  });
-
   return {
     isError,
-    write,
-    isWriteLoading,
-    isWriteSuccess,
-    isSubmitSuccess,
+    config,
   };
 };
 
@@ -144,34 +63,23 @@ export const CloseLeveragePositionButton: FC<Props & ButtonProps> = ({
   ...buttonProps
 }) => {
   const intl = useIntl();
-  const { isError, write, isWriteSuccess, isSubmitSuccess, isWriteLoading } =
-    useCloseLeveragePositionButton(position);
-
-  if (isWriteLoading) {
-    return (
-      <Button {...buttonProps} disabled>
-        {intl.formatMessage({
-          defaultMessage: 'Sign Transaction',
-          id: 'w1LBDB',
-        })}
-      </Button>
-    );
-  }
-
-  if (isWriteSuccess && !isSubmitSuccess) {
-    return (
-      <Button {...buttonProps} disabled>
-        <CircularProgress size={20} />
-      </Button>
-    );
-  }
+  const pushNotification = usePushNotification();
+  const { isError, config } = useCloseLeveragePositionButton(position);
 
   return (
-    <Button {...buttonProps} disabled={isError} onClick={write}>
-      {intl.formatMessage({
+    <TransactionActionButton
+      config={config}
+      pushNotification={pushNotification}
+      isError={isError}
+      transactionName={intl.formatMessage({
+        defaultMessage: 'Announce Leverage Position Close',
+        id: '1v6yZm',
+      })}
+      actionName={intl.formatMessage({
         defaultMessage: 'Close',
         id: 'rbrahO',
       })}
-    </Button>
+      {...buttonProps}
+    />
   );
 };

@@ -45,7 +45,7 @@ export interface FlatcoinTradingState {
   isInfiniteAllowance: boolean;
   needsApproval: boolean;
   isInsufficientBalance: boolean;
-  refetch: () => void;
+  refetchAllowance: () => void;
   reset: () => void;
 }
 
