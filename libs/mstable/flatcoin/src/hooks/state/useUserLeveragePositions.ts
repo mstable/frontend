@@ -1,4 +1,5 @@
 import { ZERO_ADDRESS } from '@frontend/shared-constants';
+import BigNumber from 'bignumber.js';
 import { utils } from 'ethers';
 import produce from 'immer';
 import { useAccount, useContractReads } from 'wagmi';
@@ -96,6 +97,13 @@ export const useUserLeveragePositions = ({
                   additionalSize: position?.additionalSize
                     ? formatUnits(position.additionalSize)
                     : '',
+                  leverage: new BigNumber(
+                    position?.additionalSize?.toString() ?? '',
+                  )
+                    .dividedBy(
+                      positionSummary?.marginAfterSettlement?.toString() ?? '0',
+                    )
+                    .toFixed(),
                   entryCumulativeFunding:
                     position?.entryCumulativeFunding?.toString() ?? '',
                   entryPrice: position?.entryPrice

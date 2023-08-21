@@ -17,14 +17,15 @@ type TokenInfo = Token & { balance: string; price: string };
 
 export interface LeveragedPosition {
   positionId: string;
-  additionalSize: string;
-  entryCumulativeFunding: string;
+  leverage: string;
   entryPrice: string;
   marginDeposited: string;
-  accruedFunding: string;
+  additionalSize: string;
   marginAfterSettlement: string;
   profitLoss: string;
   approvedAddress: string;
+  entryCumulativeFunding: string;
+  accruedFunding: string;
 }
 
 export interface Order {
