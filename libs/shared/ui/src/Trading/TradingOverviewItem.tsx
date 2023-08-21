@@ -2,9 +2,10 @@ import { Box, Stack, Typography } from '@mui/material';
 
 import { InfoTooltip } from '../InfoTooltip';
 
+import type { StackProps } from '@mui/material';
 import type { FC, ReactNode } from 'react';
 
-interface OverviewItemProps {
+interface OverviewItemProps extends StackProps {
   tooltipText?: string;
   label: string;
   value?: ReactNode;
@@ -14,8 +15,14 @@ export const TradingOverviewItem: FC<OverviewItemProps> = ({
   label,
   value,
   tooltipText,
+  ...stackProps
 }) => (
-  <Stack direction="row" justifyContent="space-between" alignItems="center">
+  <Stack
+    direction="row"
+    justifyContent="space-between"
+    alignItems="center"
+    {...stackProps}
+  >
     <Box display="flex" alignItems="center">
       <Typography variant="label2">{label}</Typography>
       {tooltipText && (

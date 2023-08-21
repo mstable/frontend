@@ -6,7 +6,6 @@ import { Gear } from 'phosphor-react';
 import { not } from 'ramda';
 import { useIntl } from 'react-intl';
 
-import { useFlatcoin } from '../../../state';
 import { SlippageInput } from './SlippageInput';
 import { TokenApprovalSwitch } from './TokenApprovalSwitch';
 
@@ -15,7 +14,6 @@ import type { FC } from 'react';
 
 export const TradingSettings: FC<ButtonProps> = (props) => {
   const intl = useIntl();
-  const { type } = useFlatcoin();
   const [open, setOpen] = useState(false);
   const anchorEl = useRef(null);
 
@@ -29,7 +27,6 @@ export const TradingSettings: FC<ButtonProps> = (props) => {
         }}
         variant="text"
         sx={{ p: 0, ...props?.sx }}
-        disabled={type === 'leveragedeth'}
       >
         <Gear size={20} weight="fill" />
       </Button>

@@ -1,3 +1,6 @@
+import { formatToUsd } from '@dhedge/core-ui-kit/utils';
+import { TokenIconRevamp } from '@frontend/shared-ui';
+import { formatNumberToLimitedDecimals } from '@frontend/shared-utils';
 import {
   Paper,
   Stack,
@@ -15,6 +18,78 @@ import { useFlatcoin } from '../../../state';
 import { CloseLeveragePositionModal } from './CloseLeveragePositionModal';
 
 import type { StackProps } from '@mui/material';
+import type { FC } from 'react';
+
+import type { LeveragedPosition } from '../../../types';
+
+const PositionsTableRow: FC<{ position: LeveragedPosition }> = ({
+  position,
+}) => {
+  const {
+    tokens: { collateral },
+  } = useFlatcoin();
+  const { marginDeposited, leverage, entryPrice, profitLoss } = position;
+  const marginDepositedInUsd = marginDeposited.simple * entryPrice.simple;
+  const profitLossInUsd = profitLoss.simple * +collateral.price;
+  const isPositiveProfit = profitLoss.exact.gt(0);
+  return (
+    <TableRow>
+      <TableCell>
+        <Stack direction="row" alignItems="center" spacing={0.5}>
+          <Typography variant="value4">
+            {formatNumberToLimitedDecimals(marginDeposited.simple, 4)}
+          </Typography>
+          <TokenIconRevamp
+            sx={{ width: 12, height: 12, ml: 0.5 }}
+            symbols={[collateral.symbol]}
+          />
+          <Typography variant="value4">{collateral.symbol}</Typography>
+        </Stack>
+        <Typography variant="value5" color="text.secondary">
+          ≈{formatToUsd({ value: marginDepositedInUsd })}
+        </Typography>
+      </TableCell>
+      <TableCell>
+        <Typography variant="value4">
+          {formatNumberToLimitedDecimals(leverage, 2)}X
+        </Typography>
+      </TableCell>
+      <TableCell>
+        <Typography variant="value4">
+          {formatToUsd({ value: entryPrice.simple })}
+        </Typography>
+      </TableCell>
+      <TableCell>
+        <Stack direction="row" alignItems="center" spacing={0.5}>
+          <Typography
+            variant="value4"
+            color={
+              !profitLoss.exact.isZero()
+                ? isPositiveProfit
+                  ? 'success.main'
+                  : 'error.main'
+                : 'text.secondary'
+            }
+          >
+            {isPositiveProfit && '+'}
+            {formatNumberToLimitedDecimals(profitLoss.simple, 4)}{' '}
+          </Typography>
+          <TokenIconRevamp
+            sx={{ width: 12, height: 12, ml: 0.5 }}
+            symbols={[collateral.symbol]}
+          />
+          <Typography variant="value4">{collateral.symbol}</Typography>
+        </Stack>
+        <Typography variant="value5" color="text.secondary">
+          ≈{formatToUsd({ value: profitLossInUsd })}
+        </Typography>
+      </TableCell>
+      <TableCell>
+        <CloseLeveragePositionModal position={position} sx={{ minWidth: 92 }} />
+      </TableCell>
+    </TableRow>
+  );
+};
 
 export const LeveragePositions = (props: StackProps) => {
   const intl = useIntl();
@@ -38,132 +113,43 @@ export const LeveragePositions = (props: StackProps) => {
       </Typography>
       <TableContainer component={Paper}>
         <Table>
-          {/*<TableHead>*/}
-          {/*  <TableRow>*/}
-          {/*    <TableCell>*/}
-          {/*      {intl.formatMessage({*/}
-          {/*        defaultMessage: 'Value',*/}
-          {/*        id: 'GufXy5',*/}
-          {/*      })}*/}
-          {/*    </TableCell>*/}
-          {/*    <TableCell>*/}
-          {/*      {intl.formatMessage({*/}
-          {/*        defaultMessage: 'Date Opened',*/}
-          {/*        id: 'zQ9i1N',*/}
-          {/*      })}*/}
-          {/*    </TableCell>*/}
-          {/*    <TableCell>*/}
-          {/*      {intl.formatMessage({*/}
-          {/*        defaultMessage: 'Position',*/}
-          {/*        id: 'U6qGuO',*/}
-          {/*      })}*/}
-          {/*    </TableCell>*/}
-          {/*    <TableCell>*/}
-          {/*      {intl.formatMessage({*/}
-          {/*        defaultMessage: 'Profit/Loss',*/}
-          {/*        id: 'rfzzi6',*/}
-          {/*      })}*/}
-          {/*    </TableCell>*/}
-          {/*    <TableCell />*/}
-          {/*  </TableRow>*/}
-          {/*</TableHead>*/}
           <TableHead>
-            <TableCell>additionalSize</TableCell>
-            <TableCell>entryCumulativeFunding</TableCell>
-            <TableCell>entryPrice</TableCell>
-            <TableCell>marginDeposited</TableCell>
-            <TableCell>accruedFunding</TableCell>
-            <TableCell>marginAfterSettlement</TableCell>
-            <TableCell>profitLoss</TableCell>
+            <TableRow>
+              <TableCell>
+                {intl.formatMessage({
+                  defaultMessage: 'Margin Deposited',
+                  id: 'inIeEz',
+                })}
+              </TableCell>
+              <TableCell>
+                {intl.formatMessage({
+                  defaultMessage: 'Leverage',
+                  id: 'pbpdV6',
+                })}
+              </TableCell>
+              <TableCell>
+                {intl.formatMessage({
+                  defaultMessage: 'Entry Price',
+                  id: 'Ty3dr6',
+                })}
+              </TableCell>
+              <TableCell>
+                {intl.formatMessage({
+                  defaultMessage: 'Profit/Loss',
+                  id: 'rfzzi6',
+                })}
+              </TableCell>
+              <TableCell />
+            </TableRow>
           </TableHead>
           <TableBody>
             {leveragedPositions.map((position) => (
-              <TableRow key={position.marginDeposited}>
-                <TableCell>{position.additionalSize}</TableCell>
-                <TableCell>{position.entryCumulativeFunding}</TableCell>
-                <TableCell>{position.entryPrice}</TableCell>
-                <TableCell>{position.marginDeposited}</TableCell>
-                <TableCell>{position.accruedFunding}</TableCell>
-                <TableCell>{position.marginAfterSettlement}</TableCell>
-                <TableCell>{position.profitLoss}</TableCell>
-                <TableCell>
-                  <CloseLeveragePositionModal
-                    position={position}
-                    sx={{ minWidth: 92 }}
-                  />
-                </TableCell>
-              </TableRow>
+              <PositionsTableRow
+                position={position}
+                key={position.positionId}
+              />
             ))}
           </TableBody>
-          {/*<TableBody>*/}
-          {/*  {leveragedPositions.map(*/}
-          {/*    ({*/}
-          {/*      value,*/}
-          {/*      date,*/}
-          {/*      leverageMultiplier,*/}
-          {/*      liquidation,*/}
-          {/*      profitLossTotal,*/}
-          {/*      profitLossFunding,*/}
-          {/*    }) => (*/}
-          {/*      <TableRow*/}
-          {/*        key={date}*/}
-          {/*        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}*/}
-          {/*      >*/}
-          {/*        <TableCell>{value}</TableCell>*/}
-          {/*        <TableCell>{date}</TableCell>*/}
-          {/*        <TableCell>*/}
-          {/*          <Stack direction="column" alignItems="flex-start">*/}
-          {/*            <span>*/}
-          {/*              {leverageMultiplier*/}
-          {/*                ? `${leverageMultiplier}x ${intl.formatMessage({*/}
-          {/*                    defaultMessage: 'leverage',*/}
-          {/*                    id: 'pVeGn/',*/}
-          {/*                  })}`*/}
-          {/*                : null}*/}
-          {/*            </span>*/}
-          {/*            <span>*/}
-          {/*              {liquidation*/}
-          {/*                ? `${liquidation} ${intl.formatMessage({*/}
-          {/*                    defaultMessage: 'liquidation',*/}
-          {/*                    id: 'KoFhQ1',*/}
-          {/*                  })}`*/}
-          {/*                : null}*/}
-          {/*            </span>*/}
-          {/*          </Stack>*/}
-          {/*        </TableCell>*/}
-          {/*        <TableCell>*/}
-          {/*          <Stack direction="column" alignItems="flex-start">*/}
-          {/*            <span>*/}
-          {/*              {profitLossTotal}{' '}*/}
-          {/*              {intl.formatMessage({*/}
-          {/*                defaultMessage: 'total',*/}
-          {/*                id: 'aTf36y',*/}
-          {/*              })}*/}
-          {/*            </span>*/}
-          {/*            <span>*/}
-          {/*              {profitLossFunding}{' '}*/}
-          {/*              {intl.formatMessage({*/}
-          {/*                defaultMessage: 'funding',*/}
-          {/*                id: 'bMsoah',*/}
-          {/*              })}*/}
-          {/*            </span>*/}
-          {/*          </Stack>*/}
-          {/*        </TableCell>*/}
-          {/*        <TableCell>*/}
-          {/*          <Button sx={{ minWidth: 92 }}>*/}
-          {/*            {intl*/}
-          {/*              .formatMessage(*/}
-          {/*                type === 'flatcoin'*/}
-          {/*                  ? { defaultMessage: 'redeem', id: 'XSdWHA' }*/}
-          {/*                  : { defaultMessage: 'close', id: 'rbrahO' },*/}
-          {/*              )*/}
-          {/*              .toUpperCase()}*/}
-          {/*          </Button>*/}
-          {/*        </TableCell>*/}
-          {/*      </TableRow>*/}
-          {/*    ),*/}
-          {/*  )}*/}
-          {/*</TableBody>*/}
         </Table>
       </TableContainer>
     </Stack>

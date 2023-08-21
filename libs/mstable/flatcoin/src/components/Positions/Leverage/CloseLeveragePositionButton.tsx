@@ -26,7 +26,6 @@ const useCloseLeveragePositionButton = ({
   const {
     flatcoinChainId,
     keeperFee: { rawFee },
-    tokens: { collateral },
   } = useFlatcoin();
 
   const { data } = useContractRead({
@@ -34,10 +33,7 @@ const useCloseLeveragePositionButton = ({
     chainId: flatcoinChainId,
     abi: getFlatcoinOracleModuleContract(flatcoinChainId).abi,
     functionName: 'getSellPrice',
-    args: [
-      new BigNumber(additionalSize).shiftedBy(collateral.decimals).toFixed(),
-      true,
-    ],
+    args: [additionalSize.exact.toString(), true],
   });
   const sellPrice = data?.[0]
     ? new BigNumber(data[0].toString()).multipliedBy(0.99).toFixed(0) // applied 1% of slippage

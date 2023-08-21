@@ -1,5 +1,5 @@
 import { ZERO_ADDRESS } from '@frontend/shared-constants';
-import { utils } from 'ethers';
+import { BigDecimal } from '@frontend/shared-utils';
 import produce from 'immer';
 import { useAccount, useContractReads } from 'wagmi';
 
@@ -9,7 +9,6 @@ import type { BN } from '@dhedge/core-ui-kit/utils';
 import type { Dispatch, SetStateAction } from 'react';
 
 import type { FlatcoinState } from '../../types';
-const { formatUnits } = utils;
 
 interface UseUserLeveragePositionsVariables {
   userLeverageBalance: string;
@@ -93,25 +92,33 @@ export const useUserLeveragePositions = ({
                 ] as unknown as GetPositionSummaryContractData;
                 return {
                   positionId: id.toString(),
-                  additionalSize: position?.additionalSize
-                    ? formatUnits(position.additionalSize)
-                    : '',
-                  entryCumulativeFunding:
-                    position?.entryCumulativeFunding?.toString() ?? '',
-                  entryPrice: position?.entryPrice
-                    ? formatUnits(position.entryPrice)
-                    : '',
-                  marginDeposited: position?.marginDeposited
-                    ? formatUnits(position.marginDeposited)
-                    : '',
-                  accruedFunding:
-                    positionSummary?.accruedFunding?.toString() ?? '',
-                  marginAfterSettlement: positionSummary?.marginAfterSettlement
-                    ? formatUnits(positionSummary.marginAfterSettlement)
-                    : '',
-                  profitLoss: positionSummary?.profitLoss
-                    ? formatUnits(positionSummary.profitLoss)
-                    : '',
+                  additionalSize:
+                    position && positionSummary
+                      ? new BigDecimal(position.additionalSize)
+                      : BigDecimal.ZERO,
+                  leverage: position
+                    ? new BigDecimal(position.additionalSize).simple /
+                      new BigDecimal(positionSummary.marginAfterSettlement)
+                        .simple
+                    : 0,
+                  entryCumulativeFunding: position
+                    ? new BigDecimal(position.entryCumulativeFunding)
+                    : BigDecimal.ZERO,
+                  entryPrice: position
+                    ? new BigDecimal(position.entryPrice)
+                    : BigDecimal.ZERO,
+                  marginDeposited: position
+                    ? new BigDecimal(position.marginDeposited)
+                    : BigDecimal.ZERO,
+                  accruedFunding: positionSummary
+                    ? new BigDecimal(positionSummary.accruedFunding)
+                    : BigDecimal.ZERO,
+                  marginAfterSettlement: positionSummary
+                    ? new BigDecimal(positionSummary.marginAfterSettlement)
+                    : BigDecimal.ZERO,
+                  profitLoss: positionSummary
+                    ? new BigDecimal(positionSummary.profitLoss)
+                    : BigDecimal.ZERO,
                   approvedAddress:
                     data?.[positionApproveIndex].toString() ?? ZERO_ADDRESS,
                 };
