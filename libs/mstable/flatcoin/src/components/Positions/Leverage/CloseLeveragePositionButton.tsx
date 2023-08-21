@@ -21,26 +21,26 @@ interface Props {
 
 const useCloseLeveragePositionButton = ({
   positionId,
-  marginAfterSettlement,
+  additionalSize,
 }: LeveragedPosition) => {
   const {
     flatcoinChainId,
     keeperFee: { rawFee },
     tokens: { collateral },
   } = useFlatcoin();
-  const sellAmount = new BigNumber(marginAfterSettlement)
-    .shiftedBy(collateral.decimals)
-    .toFixed();
 
   const { data } = useContractRead({
     address: getFlatcoinOracleModuleContract(flatcoinChainId).address,
     chainId: flatcoinChainId,
     abi: getFlatcoinOracleModuleContract(flatcoinChainId).abi,
     functionName: 'getSellPrice',
-    args: [sellAmount, false],
+    args: [
+      new BigNumber(additionalSize).shiftedBy(collateral.decimals).toFixed(),
+      true,
+    ],
   });
   const sellPrice = data?.[0]
-    ? new BigNumber(data[0].toString()).multipliedBy(0.995).toFixed(0) // applied 0.5% of slippage
+    ? new BigNumber(data[0].toString()).multipliedBy(0.99).toFixed(0) // applied 1% of slippage
     : '';
 
   const { config, isError } = usePrepareContractWrite({

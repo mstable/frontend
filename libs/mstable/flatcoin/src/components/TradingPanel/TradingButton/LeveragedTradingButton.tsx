@@ -4,7 +4,7 @@ import { usePushNotification } from '@frontend/shared-providers';
 import { TransactionActionButton } from '@frontend/shared-ui';
 import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
-import { useContractRead, usePrepareContractWrite } from 'wagmi';
+import { usePrepareContractWrite } from 'wagmi';
 
 import { useFlatcoin } from '../../../state';
 import { getFlatcoinDelayedOrderContract } from '../../../utils';
@@ -22,21 +22,14 @@ const useLeveragedTradingButton = () => {
     receiveToken,
     sendToken,
     leverage,
+    slippage,
     reset,
+    rawMaxFillPrice,
   } = useFlatcoinTradingState();
   const delayedOrderContract = getFlatcoinDelayedOrderContract(flatcoinChainId);
-  const margin = new BigNumber(sendToken.value || '0').shiftedBy(
-    sendToken.decimals,
-  );
-  const additionalSize = margin.multipliedBy(leverage);
-  const { data: maxFillPrice } = useContractRead({
-    address: delayedOrderContract.address,
-    chainId: flatcoinChainId,
-    abi: delayedOrderContract.abi,
-    functionName: 'leverageModifyFillPrice',
-    args: [additionalSize.toFixed(0)],
-    enabled: !additionalSize.isZero(),
-  });
+  const margin = new BigNumber(sendToken.value || '0')
+    .shiftedBy(sendToken.decimals)
+    .minus(keeperFee.rawFee);
 
   const txConfig = useMemo(() => {
     return {
@@ -44,11 +37,12 @@ const useLeveragedTradingButton = () => {
       abi: delayedOrderContract?.abi,
       functionName: 'announceLeverageOpen',
       args: [
-        margin.toFixed(),
+        margin.toFixed(0, BigNumber.ROUND_DOWN),
         margin.multipliedBy(leverage).toFixed(0),
-        new BigNumber(maxFillPrice?.toString() ?? '0')
-          .multipliedBy(1.005)
-          .toFixed(0), // add 0.5% slippage
+        new BigNumber(rawMaxFillPrice?.toString() ?? '0')
+          .multipliedBy(100 + +slippage)
+          .dividedBy(100)
+          .toFixed(0, BigNumber.ROUND_DOWN),
         keeperFee.rawFee,
       ],
       chainId: flatcoinChainId,
@@ -56,7 +50,7 @@ const useLeveragedTradingButton = () => {
         !needsApproval &&
         !isInsufficientBalance &&
         !!receiveToken.value &&
-        !!maxFillPrice,
+        !!rawMaxFillPrice,
     };
   }, [
     delayedOrderContract?.abi,
@@ -66,9 +60,10 @@ const useLeveragedTradingButton = () => {
     keeperFee.rawFee,
     leverage,
     margin,
-    maxFillPrice,
+    rawMaxFillPrice,
     needsApproval,
     receiveToken.value,
+    slippage,
   ]);
 
   const { config, isError } = usePrepareContractWrite(txConfig);

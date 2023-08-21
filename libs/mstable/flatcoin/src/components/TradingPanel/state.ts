@@ -33,12 +33,13 @@ const initialState: FlatcoinTradingState = {
   sendToken: TOKEN_STUB,
   receiveToken: TOKEN_STUB,
   leverage: '2',
+  rawMaxFillPrice: null,
   tradingType: 'deposit',
   slippage: DEFAULT_MAX_SLIPPAGE,
   isInfiniteAllowance: false,
   needsApproval: true,
   isInsufficientBalance: false,
-  refetchAllowance: () => null, // TODO: implement refetch logic after adding contract calls
+  refetchAllowance: () => null,
   reset: () => null, // TODO: implement refetch logic after adding contract calls
 };
 
@@ -72,7 +73,6 @@ export const {
         ],
       },
     ],
-    // watch: true,
   });
 
   // handle needsApproval
@@ -119,6 +119,8 @@ export const {
           draft.sendToken = collateral;
           draft.receiveToken = flatcoin;
           draft.tradingType = 'deposit';
+          // reset maxFillPrice
+          draft.rawMaxFillPrice = null;
         }),
       );
     } else {
@@ -263,6 +265,18 @@ export const useUpdateTradingAllowance = () => {
       updateState((prevState) => ({
         ...prevState,
         isInfiniteAllowance,
+      })),
+    [updateState],
+  );
+};
+
+export const useUpdateMaxFillPrice = () => {
+  const updateState = useUpdateFlatcoinTradingState();
+  return useCallback(
+    (rawMaxFillPrice: string | null) =>
+      updateState((prevState) => ({
+        ...prevState,
+        rawMaxFillPrice,
       })),
     [updateState],
   );

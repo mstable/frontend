@@ -26,11 +26,7 @@ const useAnnouncedOrders = (order: Order | null) => {
   const hasOrderExpired = orderExpirationDate
     ? orderExpirationDate < Date.now()
     : true;
-  const {
-    config,
-    isError,
-    isLoading: isEstimating,
-  } = usePrepareContractWrite({
+  const { config, isError } = usePrepareContractWrite({
     address: delayedOrderContract.address,
     abi: delayedOrderContract.abi,
     functionName: 'executeOrder',

@@ -40,6 +40,7 @@ export interface FlatcoinTradingState {
   sendToken: DynamicTradingToken;
   receiveToken: DynamicTradingToken;
   leverage: string;
+  rawMaxFillPrice: string | null;
   tradingType: TradingType;
   slippage: string;
   isInfiniteAllowance: boolean;
