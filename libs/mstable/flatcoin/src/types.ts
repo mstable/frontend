@@ -1,6 +1,7 @@
 import type { DynamicTradingToken } from '@dhedge/core-ui-kit/types';
 import type { Token } from '@frontend/shared-constants';
 import type { CHART_PERIOD, CHART_TYPE } from '@frontend/shared-types';
+import type { BigDecimal } from '@frontend/shared-utils';
 import type { MakeGenerics } from '@tanstack/react-location';
 
 export type FlatcoinRoute = MakeGenerics<{
@@ -17,15 +18,15 @@ type TokenInfo = Token & { balance: string; price: string };
 
 export interface LeveragedPosition {
   positionId: string;
-  leverage: string;
-  entryPrice: string;
-  marginDeposited: string;
-  additionalSize: string;
-  marginAfterSettlement: string;
-  profitLoss: string;
+  leverage: number;
+  entryPrice: BigDecimal;
+  marginDeposited: BigDecimal;
+  additionalSize: BigDecimal;
+  marginAfterSettlement: BigDecimal;
+  profitLoss: BigDecimal;
   approvedAddress: string;
-  entryCumulativeFunding: string;
-  accruedFunding: string;
+  entryCumulativeFunding: BigDecimal;
+  accruedFunding: BigDecimal;
 }
 
 export interface Order {

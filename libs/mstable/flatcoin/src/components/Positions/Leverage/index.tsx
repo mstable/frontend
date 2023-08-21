@@ -12,7 +12,6 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
 
 import { useFlatcoin } from '../../../state';
@@ -30,26 +29,22 @@ const PositionsTableRow: FC<{ position: LeveragedPosition }> = ({
     tokens: { collateral },
   } = useFlatcoin();
   const { marginDeposited, leverage, entryPrice, profitLoss } = position;
-  const marginDepositedInUsd = new BigNumber(marginDeposited)
-    .multipliedBy(entryPrice)
-    .toNumber();
-  const profitLossInUsd = new BigNumber(profitLoss)
-    .multipliedBy(collateral.price)
-    .toNumber();
-  const isPositiveProfit = +profitLoss > 0;
+  const marginDepositedInUsd = marginDeposited.simple * entryPrice.simple;
+  const profitLossInUsd = profitLoss.simple * +collateral.price;
+  const isPositiveProfit = profitLoss.exact.gt(0);
   return (
     <TableRow>
       <TableCell>
-        <Typography variant="value4">
-          <Stack direction="row" alignItems="center" spacing={0.5}>
-            {formatNumberToLimitedDecimals(marginDeposited, 4)}{' '}
-            <TokenIconRevamp
-              sx={{ width: 12, height: 12, ml: 0.5 }}
-              symbols={[collateral.symbol]}
-            />{' '}
-            {collateral.symbol}
-          </Stack>
-        </Typography>
+        <Stack direction="row" alignItems="center" spacing={0.5}>
+          <Typography variant="value4">
+            {formatNumberToLimitedDecimals(marginDeposited.simple, 4)}
+          </Typography>
+          <TokenIconRevamp
+            sx={{ width: 12, height: 12, ml: 0.5 }}
+            symbols={[collateral.symbol]}
+          />
+          <Typography variant="value4">{collateral.symbol}</Typography>
+        </Stack>
         <Typography variant="value5" color="text.secondary">
           ≈{formatToUsd({ value: marginDepositedInUsd })}
         </Typography>
@@ -61,7 +56,7 @@ const PositionsTableRow: FC<{ position: LeveragedPosition }> = ({
       </TableCell>
       <TableCell>
         <Typography variant="value4">
-          {formatToUsd({ value: +entryPrice })}
+          {formatToUsd({ value: entryPrice.simple })}
         </Typography>
       </TableCell>
       <TableCell>
@@ -69,7 +64,7 @@ const PositionsTableRow: FC<{ position: LeveragedPosition }> = ({
           <Typography
             variant="value4"
             color={
-              profitLoss !== '0'
+              !profitLoss.exact.isZero()
                 ? isPositiveProfit
                   ? 'success.main'
                   : 'error.main'
@@ -77,13 +72,13 @@ const PositionsTableRow: FC<{ position: LeveragedPosition }> = ({
             }
           >
             {isPositiveProfit && '+'}
-            {formatNumberToLimitedDecimals(profitLoss, 4)}{' '}
+            {formatNumberToLimitedDecimals(profitLoss.simple, 4)}{' '}
           </Typography>
           <TokenIconRevamp
             sx={{ width: 12, height: 12, ml: 0.5 }}
             symbols={[collateral.symbol]}
           />
-          {collateral.symbol}
+          <Typography variant="value4">{collateral.symbol}</Typography>
         </Stack>
         <Typography variant="value5" color="text.secondary">
           ≈{formatToUsd({ value: profitLossInUsd })}
@@ -122,8 +117,8 @@ export const LeveragePositions = (props: StackProps) => {
             <TableRow>
               <TableCell>
                 {intl.formatMessage({
-                  defaultMessage: 'Deposited',
-                  id: 'LjNvmm',
+                  defaultMessage: 'Margin Deposited',
+                  id: 'inIeEz',
                 })}
               </TableCell>
               <TableCell>
@@ -144,6 +139,7 @@ export const LeveragePositions = (props: StackProps) => {
                   id: 'rfzzi6',
                 })}
               </TableCell>
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
