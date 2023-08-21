@@ -1,167 +1,82 @@
+import { MaxUint256 } from '@dhedge/core-ui-kit/const';
 import { usePushNotification } from '@frontend/shared-providers';
-import { ApproveButton, ViewEtherscanLink } from '@frontend/shared-ui';
+import { TransactionActionButton } from '@frontend/shared-ui';
 import { isEqualAddresses } from '@frontend/shared-utils';
-import { Button, CircularProgress } from '@mui/material';
+import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
-import {
-  mainnet,
-  useContractWrite,
-  useNetwork,
-  usePrepareContractWrite,
-  useWaitForTransaction,
-} from 'wagmi';
+import { useNetwork, usePrepareContractWrite } from 'wagmi';
 
 import { useFlatcoin } from '../../../state';
 import { getFlatcoinDelayedOrderContract } from '../../../utils';
 import { useFlatcoinTradingState } from '../state';
 
+import type { ButtonProps } from '@mui/material';
+import type { FC } from 'react';
+
 const useApprovalButton = () => {
-  const intl = useIntl();
-  const pushNotification = usePushNotification();
   const { chain } = useNetwork();
-  const { flatcoinChainId } = useFlatcoin();
+  const {
+    flatcoinChainId,
+    tokens: { collateral, flatcoin },
+  } = useFlatcoin();
   const {
     sendToken,
     needsApproval,
-    usdc,
-    flatcoin,
-    refetch,
     isInsufficientBalance,
+    isInfiniteAllowance,
+    refetchAllowance,
   } = useFlatcoinTradingState();
-  const tokenToBeApproved = isEqualAddresses(sendToken.address, usdc.address)
-    ? usdc
+  const tokenToBeApproved = isEqualAddresses(
+    sendToken.address,
+    collateral.address,
+  )
+    ? collateral
     : flatcoin;
 
-  const { config } = usePrepareContractWrite({
+  const { config, isError } = usePrepareContractWrite({
     address: tokenToBeApproved.address,
     abi: tokenToBeApproved.abi,
     functionName: 'approve',
     args: [
-      getFlatcoinDelayedOrderContract(flatcoinChainId).address,
-      sendToken.value, // TODO: check logic
+      getFlatcoinDelayedOrderContract(flatcoinChainId)?.address,
+      isInfiniteAllowance
+        ? MaxUint256
+        : new BigNumber(sendToken.value)
+            .shiftedBy(sendToken.decimals)
+            .toFixed(),
     ],
     chainId: chain?.id,
     enabled: needsApproval && !isInsufficientBalance,
   });
 
-  const {
-    data: approveData,
-    write,
-    isLoading: isWriteLoading,
-    isSuccess: isWriteSuccess,
-  } = useContractWrite({
-    ...config,
-    onSuccess: (data) => {
-      pushNotification({
-        title: intl.formatMessage({
-          defaultMessage: 'Approving Token',
-          id: '/54G9d',
-        }),
-        content: (
-          <ViewEtherscanLink
-            hash={data?.hash}
-            blockExplorer={
-              chain?.blockExplorers?.['etherscan'] ??
-              mainnet.blockExplorers.default
-            }
-          />
-        ),
-        severity: 'info',
-      });
-    },
-    onError: () => {
-      pushNotification({
-        title: intl.formatMessage({
-          defaultMessage: 'Transaction Cancelled',
-          id: '20X0BC',
-        }),
-        severity: 'info',
-      });
-    },
-  });
-
-  const { isSuccess: isWaitSuccess, isLoading: isWaitLoading } =
-    useWaitForTransaction({
-      hash: approveData?.hash,
-      onSuccess: ({ transactionHash }) => {
-        pushNotification({
-          title: intl.formatMessage({
-            defaultMessage: 'Transaction Confirmed',
-            id: 'rgdwQX',
-          }),
-          content: (
-            <ViewEtherscanLink
-              hash={transactionHash}
-              blockExplorer={
-                chain?.blockExplorers?.['etherscan'] ??
-                mainnet.blockExplorers.default
-              }
-            />
-          ),
-          severity: 'success',
-        });
-      },
-      onError: () => {
-        pushNotification({
-          title: intl.formatMessage({
-            defaultMessage: 'Transaction Error',
-            id: 'p8bsw4',
-          }),
-          content: (
-            <ViewEtherscanLink
-              hash={approveData?.hash}
-              blockExplorer={
-                chain?.blockExplorers?.['etherscan'] ??
-                mainnet.blockExplorers.default
-              }
-            />
-          ),
-          severity: 'error',
-        });
-      },
-      onSettled: refetch,
-    });
-
   return {
-    intl,
-    write,
-    sendToken,
-    isWriteLoading,
-    isWriteSuccess,
-    isWaitSuccess,
-    isWaitLoading,
+    symbol: sendToken.symbol,
+    isError,
+    config,
+    onSettled: refetchAllowance,
   };
 };
 
-export const ApprovalButton = () => {
-  const {
-    intl,
-    sendToken,
-    isWriteLoading,
-    isWriteSuccess,
-    isWaitSuccess,
-    isWaitLoading,
-    write,
-  } = useApprovalButton();
+export const ApprovalButton: FC<ButtonProps> = (props) => {
+  const intl = useIntl();
+  const pushNotification = usePushNotification();
+  const { symbol, config, isError, onSettled } = useApprovalButton();
 
-  if (isWriteLoading) {
-    return (
-      <Button disabled>
-        {intl.formatMessage({
-          defaultMessage: 'Sign Transaction',
-          id: 'w1LBDB',
-        })}
-      </Button>
-    );
-  }
-
-  if (isWriteSuccess && !isWaitSuccess && isWaitLoading) {
-    return (
-      <Button disabled>
-        <CircularProgress size={20} />
-      </Button>
-    );
-  }
-
-  return <ApproveButton symbol={sendToken.symbol} onApprove={write} />;
+  return (
+    <TransactionActionButton
+      config={config}
+      pushNotification={pushNotification}
+      isError={isError}
+      transactionName={intl.formatMessage({
+        defaultMessage: 'Approving Token',
+        id: '/54G9d',
+      })}
+      actionName={intl.formatMessage(
+        { defaultMessage: 'Approve {symbol}', id: 'XnpuKy' },
+        { symbol },
+      )}
+      onSettled={onSettled}
+      {...props}
+    />
+  );
 };

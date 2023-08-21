@@ -1,1 +1,1 @@
-export const DEFAULT_MAX_SLIPPAGE = '1';
+export const DEFAULT_MAX_SLIPPAGE = '0.5';

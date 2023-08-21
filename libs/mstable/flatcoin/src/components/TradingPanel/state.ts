@@ -1,19 +1,18 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import {
-  DEFAULT_MAX_SLIPPAGE,
-  SUPPORTED_FLATCOIN_CHAIN_IDS,
-  toks,
-  ZERO_ADDRESS,
-} from '@frontend/shared-constants';
+import { DEFAULT_MAX_SLIPPAGE, ZERO_ADDRESS } from '@frontend/shared-constants';
 import { isEqualAddresses } from '@frontend/shared-utils';
 import { useSearch } from '@tanstack/react-location';
 import BigNumber from 'bignumber.js';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
+import { erc20ABI, useAccount, useContractReads } from 'wagmi';
 
 import { useFlatcoin } from '../../state';
-import { getFlatcoinTokensByChain } from '../../utils';
+import {
+  getFlatcoinDelayedOrderContract,
+  getFlatcoinTokensByChain,
+} from '../../utils';
 
 import type { Dispatch, SetStateAction } from 'react';
 
@@ -37,19 +36,10 @@ const initialState: FlatcoinTradingState = {
   tradingType: 'deposit',
   slippage: DEFAULT_MAX_SLIPPAGE,
   isInfiniteAllowance: false,
-  usdc: {
-    ...toks[SUPPORTED_FLATCOIN_CHAIN_IDS[0]]['USDC'],
-    balance: '',
-    price: '',
-  },
-  flatcoin: {
-    ...toks[SUPPORTED_FLATCOIN_CHAIN_IDS[0]]['mStable'],
-    balance: '',
-    price: '',
-  },
   needsApproval: true,
   isInsufficientBalance: false,
-  refetch: () => null,
+  refetchAllowance: () => null, // TODO: implement refetch logic after adding contract calls
+  reset: () => null, // TODO: implement refetch logic after adding contract calls
 };
 
 export const {
@@ -61,36 +51,81 @@ export const {
   Dispatch<SetStateAction<FlatcoinTradingState>>,
   unknown
 >(() => {
-  const { flatcoinChainId } = useFlatcoin();
+  const { address: walletAddress } = useAccount();
+  const {
+    flatcoinChainId,
+    tokens: { collateral, flatcoin },
+  } = useFlatcoin();
   const [state, setState] = useState<FlatcoinTradingState>(initialState);
   const { type } = useSearch<FlatcoinRoute>();
 
+  const { data: contractData, refetch } = useContractReads({
+    contracts: [
+      {
+        address: state.sendToken.address,
+        chainId: flatcoinChainId,
+        abi: erc20ABI,
+        functionName: 'allowance',
+        args: [
+          walletAddress,
+          getFlatcoinDelayedOrderContract(flatcoinChainId).address,
+        ],
+      },
+    ],
+    // watch: true,
+  });
+
+  // handle needsApproval
+  useEffect(() => {
+    if (!contractData) return;
+    setState(
+      produce((draft) => {
+        draft.needsApproval = new BigNumber(state.sendToken.value || '0').gt(
+          new BigNumber(contractData[0]?.toString() ?? '0').shiftedBy(
+            -state.sendToken.decimals,
+          ),
+        );
+      }),
+    );
+  }, [contractData, state.sendToken.decimals, state.sendToken.value]);
+
+  useEffect(() => {
+    setState(
+      produce((draft) => {
+        draft.refetchAllowance = refetch;
+      }),
+    );
+  }, [refetch]);
+
   // Set correct tokens on page type switch
   useEffect(() => {
-    const { USDC, FLATCOIN, ETH } = getFlatcoinTokensByChain(flatcoinChainId);
+    const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(flatcoinChainId);
+    const collateral = {
+      symbol: COLLATERAL.symbol,
+      decimals: COLLATERAL.decimals,
+      address: COLLATERAL.address,
+      value: '',
+    };
+    const flatcoin = {
+      symbol: FLATCOIN.symbol,
+      decimals: FLATCOIN.decimals,
+      address: FLATCOIN.address,
+      value: '',
+    };
+
     if (type === 'flatcoin') {
       setState(
         produce((draft) => {
-          draft.sendToken = {
-            symbol: USDC.symbol,
-            decimals: USDC.decimals,
-            address: USDC.address,
-            value: '',
-          };
-          draft.receiveToken = {
-            symbol: FLATCOIN.symbol,
-            decimals: FLATCOIN.decimals,
-            address: FLATCOIN.address,
-            value: '',
-          };
+          draft.sendToken = collateral;
+          draft.receiveToken = flatcoin;
           draft.tradingType = 'deposit';
         }),
       );
     } else {
       setState(
         produce((draft) => {
-          draft.sendToken = { ...ETH, value: '' };
-          draft.receiveToken = { ...ETH, value: '' };
+          draft.sendToken = collateral;
+          draft.receiveToken = collateral;
           draft.tradingType = 'deposit';
           draft.needsApproval = false;
         }),
@@ -98,45 +133,28 @@ export const {
     }
   }, [type, flatcoinChainId]);
 
+  // handle isInsufficientBalance check
   useEffect(() => {
-    const { USDC, FLATCOIN } = getFlatcoinTokensByChain(flatcoinChainId);
+    const sendTokenBalance = isEqualAddresses(
+      state.sendToken.address,
+      collateral.address,
+    )
+      ? collateral.balance
+      : flatcoin.balance;
     setState(
       produce((draft) => {
-        draft.usdc = { ...USDC, price: '1', balance: '123' }; // TODO: remove and update
-        draft.flatcoin = { ...FLATCOIN, price: '1.2', balance: '321' }; // TODO: remove and update
+        draft.isInsufficientBalance = new BigNumber(
+          draft.sendToken.value || '0',
+        ).gt(sendTokenBalance || '0');
       }),
     );
-  }, [flatcoinChainId]);
-
-  useEffect(() => {
-    if (type === 'flatcoin') {
-      const sendTokenBalance = isEqualAddresses(
-        state.sendToken.address,
-        state.usdc.address,
-      )
-        ? state.usdc.balance
-        : state.flatcoin.balance;
-      setState(
-        produce((draft) => {
-          draft.isInsufficientBalance = new BigNumber(
-            draft.sendToken.value || '0',
-          ).gt(sendTokenBalance || '0');
-        }),
-      );
-    } else {
-      setState(
-        produce((draft) => {
-          draft.isInsufficientBalance = false; // TODO: add logic
-        }),
-      );
-    }
   }, [
     type,
-    state.flatcoin.balance,
+    flatcoin.balance,
     state.sendToken.value,
     state.sendToken.address,
-    state.usdc.address,
-    state.usdc.balance,
+    collateral.address,
+    collateral.balance,
   ]);
 
   return [state, setState];
@@ -179,20 +197,19 @@ export const useUpdateLeverage = () => {
 };
 
 export const useUpdateStableTradingType = (chainId: number) => {
-  const { USDC, FLATCOIN } = getFlatcoinTokensByChain(chainId);
-
   const updateState = useUpdateFlatcoinTradingState();
   return useCallback(
     (tradingType: TradingType) => {
+      const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(chainId);
       switch (tradingType) {
         case 'deposit':
           updateState((prevState) => ({
             ...prevState,
             tradingType,
             sendToken: {
-              symbol: USDC.symbol,
-              address: USDC.address,
-              decimals: USDC.decimals,
+              symbol: COLLATERAL.symbol,
+              address: COLLATERAL.address,
+              decimals: COLLATERAL.decimals,
               value: '',
             },
             receiveToken: {
@@ -214,16 +231,16 @@ export const useUpdateStableTradingType = (chainId: number) => {
               value: '',
             },
             receiveToken: {
-              symbol: USDC.symbol,
-              address: USDC.address,
-              decimals: USDC.decimals,
+              symbol: COLLATERAL.symbol,
+              address: COLLATERAL.address,
+              decimals: COLLATERAL.decimals,
               value: '',
             },
           }));
           return;
       }
     },
-    [updateState],
+    [updateState, chainId],
   );
 };
 

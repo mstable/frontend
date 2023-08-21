@@ -15,14 +15,25 @@ export type PositionType = 'flatcoin' | 'leveragedeth';
 export type TradingType = 'deposit' | 'withdraw';
 type TokenInfo = Token & { balance: string; price: string };
 
-export interface Position {
-  type: PositionType;
-  value: string;
-  date: string;
-  leverageMultiplier?: string;
-  liquidation?: string;
-  profitLossTotal: string;
-  profitLossFunding: string;
+export interface LeveragedPosition {
+  positionId: string;
+  additionalSize: string;
+  entryCumulativeFunding: string;
+  entryPrice: string;
+  marginDeposited: string;
+  accruedFunding: string;
+  marginAfterSettlement: string;
+  profitLoss: string;
+  approvedAddress: string;
+}
+
+export interface Order {
+  type: number;
+  keeperFee: string;
+  executableAtTime: string;
+  orderData: string;
+  maxExecutabilityAge: string;
+  minExecutabilityAge: string;
 }
 
 export interface FlatcoinTradingState {
@@ -32,11 +43,10 @@ export interface FlatcoinTradingState {
   tradingType: TradingType;
   slippage: string;
   isInfiniteAllowance: boolean;
-  usdc: TokenInfo;
-  flatcoin: TokenInfo;
   needsApproval: boolean;
   isInsufficientBalance: boolean;
-  refetch: () => void;
+  refetchAllowance: () => void;
+  reset: () => void;
 }
 
 export type FlatcoinState = {
@@ -47,8 +57,26 @@ export type FlatcoinState = {
     openInterest?: string;
     skew?: string;
   };
+  tokens: {
+    collateral: TokenInfo;
+    flatcoin: TokenInfo;
+  };
   configs: Record<PositionType, any>;
-  positions?: Position[];
+  leveragedPositions?: LeveragedPosition[];
+  announcedOrder: Order | null;
   type: PositionType;
   flatcoinChainId: number;
+  keeperFee: {
+    rawFee: string;
+    formattedFee: string;
+  };
 };
+
+export interface PriceFeedData {
+  price: {
+    conf: string;
+    expo: number;
+    price: string;
+    publish_time: number;
+  };
+}

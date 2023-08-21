@@ -1,6 +1,7 @@
 import { SvgIcon } from '@mui/material';
 
 import { ReactComponent as ArbitrumSvg } from './Arbitrum.svg';
+import { ReactComponent as BaseSvg } from './Base.svg';
 import { ReactComponent as EthIconSvg } from './Ethereum.svg';
 import { ReactComponent as NightfallSvg } from './Nightfall.svg';
 import { ReactComponent as OptimismSvg } from './Optimism.svg';
@@ -12,6 +13,9 @@ import type { SvgIconProps } from '@mui/material';
 
 export const Arbitrum = (props: SvgIconProps) => (
   <SvgIcon {...props} component={ArbitrumSvg} viewBox="0 0 84 84" />
+);
+export const Base = (props: SvgIconProps) => (
+  <SvgIcon {...props} component={BaseSvg} viewBox="0 0 111 111" />
 );
 export const Ethereum = (props: SvgIconProps) => (
   <SvgIcon {...props} component={EthIconSvg} viewBox="0 0 32 32" />

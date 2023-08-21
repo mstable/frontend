@@ -1,19 +1,141 @@
-import { Button } from '@mui/material';
+import { useMemo } from 'react';
 
+import { usePushNotification } from '@frontend/shared-providers';
+import { TransactionActionButton } from '@frontend/shared-ui';
+import { getSlippageAdjustedValue } from '@frontend/shared-utils';
+import { Button } from '@mui/material';
+import BigNumber from 'bignumber.js';
+import { useIntl } from 'react-intl';
+import { usePrepareContractWrite } from 'wagmi';
+
+import { useFlatcoin } from '../../../state';
+import { getFlatcoinDelayedOrderContract } from '../../../utils';
 import { useFlatcoinTradingState } from '../state';
 import { ApprovalButton } from './ApprovalButton';
 
-const useStableTradingButton = () => {
-  const { needsApproval } = useFlatcoinTradingState();
+import type { ButtonProps } from '@mui/material';
+import type { FC } from 'react';
 
-  return { needsApproval };
+const useStableTradingButton = () => {
+  const { flatcoinChainId, keeperFee } = useFlatcoin();
+  const {
+    needsApproval,
+    tradingType,
+    isInsufficientBalance,
+    sendToken,
+    receiveToken,
+    slippage,
+    reset,
+  } = useFlatcoinTradingState();
+  const isDeposit = tradingType === 'deposit';
+  const lowerThanKeeperFee =
+    isDeposit &&
+    new BigNumber(sendToken.value)
+      .shiftedBy(sendToken.decimals)
+      .lte(keeperFee.rawFee);
+
+  const txConfig = useMemo(() => {
+    const delayedOrderContract =
+      getFlatcoinDelayedOrderContract(flatcoinChainId);
+    return {
+      address: delayedOrderContract?.address,
+      abi: delayedOrderContract?.abi,
+      functionName: isDeposit
+        ? 'announceStableDeposit'
+        : 'announceStableWithdraw',
+      args: [
+        new BigNumber(sendToken.value || '0')
+          .shiftedBy(sendToken.decimals)
+          .minus(isDeposit ? keeperFee.rawFee : '0') // On stable deposits keeper fee will be transfered separately
+          .toFixed(0, BigNumber.ROUND_DOWN),
+        getSlippageAdjustedValue(receiveToken.value || '0', slippage)
+          .shiftedBy(receiveToken.decimals)
+          .toFixed(0, BigNumber.ROUND_DOWN),
+        keeperFee.rawFee,
+      ],
+      chainId: flatcoinChainId,
+      enabled:
+        !needsApproval &&
+        !isInsufficientBalance &&
+        !!receiveToken.value &&
+        !lowerThanKeeperFee,
+    };
+  }, [
+    flatcoinChainId,
+    isInsufficientBalance,
+    keeperFee.rawFee,
+    needsApproval,
+    receiveToken.decimals,
+    receiveToken.value,
+    sendToken.decimals,
+    sendToken.value,
+    slippage,
+    isDeposit,
+    lowerThanKeeperFee,
+  ]);
+
+  const { config, isError } = usePrepareContractWrite(txConfig);
+
+  return {
+    needsApproval,
+    isError,
+    lowerThanKeeperFee,
+    onSettled: reset,
+    config,
+    isDeposit,
+  };
 };
 
-export const StableTradingButton = () => {
-  const { needsApproval } = useStableTradingButton();
+export const StableTradingButton: FC<ButtonProps> = (props) => {
+  const intl = useIntl();
+  const pushNotification = usePushNotification();
+  const {
+    needsApproval,
+    lowerThanKeeperFee,
+    isError,
+    config,
+    isDeposit,
+    onSettled,
+  } = useStableTradingButton();
 
   if (needsApproval) {
-    return <ApprovalButton />;
+    return <ApprovalButton {...props} />;
   }
-  return <Button onClick={() => console.log('Trade')}>Trade</Button>;
+
+  // TODO: handle min deposit flow
+  if (lowerThanKeeperFee) {
+    return (
+      <Button {...props} disabled>
+        {intl.formatMessage({
+          defaultMessage: 'Trade',
+          id: '90axO4',
+        })}
+      </Button>
+    );
+  }
+
+  return (
+    <TransactionActionButton
+      config={config}
+      pushNotification={pushNotification}
+      isError={isError}
+      transactionName={
+        isDeposit
+          ? intl.formatMessage({
+              defaultMessage: 'Flatcoin Deposit',
+              id: 'wfUbwI',
+            })
+          : intl.formatMessage({
+              defaultMessage: 'Flatcoin Withdraw',
+              id: 'oNO7VY',
+            })
+      }
+      actionName={intl.formatMessage({
+        defaultMessage: 'Trade',
+        id: '90axO4',
+      })}
+      onSettled={onSettled}
+      {...props}
+    />
+  );
 };
