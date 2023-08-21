@@ -79,19 +79,6 @@ const FlatcoinContent: FC = () => {
             >
               <LeveragePositions />
             </ErrorBoundary>
-            <ErrorBoundary
-              ErrorComponent={
-                <ErrorCard
-                  onMount={() => {
-                    track('error', {
-                      name: 'Unhandled Error: User Announced Orders',
-                    });
-                  }}
-                />
-              }
-            >
-              <AnnouncedOrders />
-            </ErrorBoundary>
           </Stack>
         </Grid>
         {!isMobile && (
@@ -121,6 +108,19 @@ const FlatcoinContent: FC = () => {
               }
             >
               <StablePosition sx={{ mt: 2 }} />
+            </ErrorBoundary>
+            <ErrorBoundary
+              ErrorComponent={
+                <ErrorCard
+                  onMount={() => {
+                    track('error', {
+                      name: 'Unhandled Error: User Announced Orders',
+                    });
+                  }}
+                />
+              }
+            >
+              <AnnouncedOrders sx={{ mt: 2 }} />
             </ErrorBoundary>
           </Grid>
         )}

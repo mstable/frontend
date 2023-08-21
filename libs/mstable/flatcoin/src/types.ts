@@ -32,6 +32,7 @@ export interface LeveragedPosition {
 export interface Order {
   type: number;
   keeperFee: string;
+  keeperFeeUsd: string;
   executableAtTime: string;
   orderData: string;
   maxExecutabilityAge: string;

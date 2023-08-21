@@ -20,3 +20,20 @@ export const getFlatcoinTokensByChain = (chainId: number) => {
   }
   return {};
 };
+
+export const getOrderTypeName = (type: number): string => {
+  switch (type) {
+    case 1:
+      return 'Stable deposit';
+    case 2:
+      return 'Stable withdraw';
+    case 3:
+      return 'Leverage open';
+    case 4:
+      return 'Leverage close';
+    case 5:
+      return 'Leverage adjust';
+    default:
+      return '';
+  }
+};

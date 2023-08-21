@@ -119,14 +119,23 @@
   "zKtTJT": {
     "defaultMessage": "Return on investment since Vault inception."
   },
+  "+U6ozc": {
+    "defaultMessage": "Type"
+  },
   "/54G9d": {
     "defaultMessage": "Approving Token"
+  },
+  "0OPmis": {
+    "defaultMessage": "Approve Position Close"
+  },
+  "0fFawv": {
+    "defaultMessage": "Stable Position Value"
   },
   "1uz/I3": {
     "defaultMessage": "1M"
   },
-  "20X0BC": {
-    "defaultMessage": "Transaction Cancelled"
+  "1v6yZm": {
+    "defaultMessage": "Announce Leverage Position Close"
   },
   "3xhnWF": {
     "defaultMessage": "You Spend"
@@ -137,8 +146,14 @@
   "8lLHeh": {
     "defaultMessage": "1Y"
   },
+  "90axO4": {
+    "defaultMessage": "Trade"
+  },
   "AA5h7P": {
     "defaultMessage": "Performance"
+  },
+  "AlCWDq": {
+    "defaultMessage": "Leveraged Positions"
   },
   "CB1174": {
     "defaultMessage": "Funding Rate"
@@ -152,11 +167,11 @@
   "Gtmi1D": {
     "defaultMessage": "Set As Infinite"
   },
-  "GufXy5": {
-    "defaultMessage": "Value"
+  "ImPhdW": {
+    "defaultMessage": "Order expires at"
   },
-  "KoFhQ1": {
-    "defaultMessage": "liquidation"
+  "LGv1C5": {
+    "defaultMessage": "Announced Orders"
   },
   "MQ02gW": {
     "defaultMessage": "Skew"
@@ -170,26 +185,32 @@
   "Px2xWV": {
     "defaultMessage": "Open Position"
   },
-  "U6qGuO": {
-    "defaultMessage": "Position"
+  "Ty3dr6": {
+    "defaultMessage": "Entry Price"
+  },
+  "WCaf5C": {
+    "defaultMessage": "Approve"
   },
   "X/RW9w": {
     "defaultMessage": "Slippage Tolerance"
   },
+  "XnpuKy": {
+    "defaultMessage": "Approve {symbol}"
+  },
   "aTX7LJ": {
     "defaultMessage": "1D"
-  },
-  "aTf36y": {
-    "defaultMessage": "total"
-  },
-  "bMsoah": {
-    "defaultMessage": "funding"
   },
   "cg1VJ2": {
     "defaultMessage": "Connect Wallet"
   },
-  "hVxfnN": {
-    "defaultMessage": "Positions"
+  "d21Els": {
+    "defaultMessage": "Execute"
+  },
+  "dlRkGS": {
+    "defaultMessage": "Keeper fee"
+  },
+  "inIeEz": {
+    "defaultMessage": "Margin Deposited"
   },
   "k3YWIR": {
     "defaultMessage": "Max slippage"
@@ -200,26 +221,32 @@
   "n9CFUs": {
     "defaultMessage": "Token Approval"
   },
-  "p8bsw4": {
-    "defaultMessage": "Transaction Error"
+  "oNO7VY": {
+    "defaultMessage": "Flatcoin Withdraw"
   },
-  "pVeGn/": {
-    "defaultMessage": "leverage"
+  "pbpdV6": {
+    "defaultMessage": "Leverage"
   },
-  "rgdwQX": {
-    "defaultMessage": "Transaction Confirmed"
+  "qcHHVw": {
+    "defaultMessage": "Announce Leverage Position"
   },
-  "w1LBDB": {
-    "defaultMessage": "Sign Transaction"
+  "rbrahO": {
+    "defaultMessage": "Close"
+  },
+  "sjr65W": {
+    "defaultMessage": "Execute Order"
+  },
+  "tw0ig8": {
+    "defaultMessage": "Executable at"
+  },
+  "wfUbwI": {
+    "defaultMessage": "Flatcoin Deposit"
   },
   "wqlXwW": {
     "defaultMessage": "Wrong Network"
   },
   "xSqIpD": {
     "defaultMessage": "Leveraged ETH"
-  },
-  "zQ9i1N": {
-    "defaultMessage": "Date Opened"
   },
   "+1GGs7": {
     "defaultMessage": "Claim CVX & CRV"
@@ -238,6 +265,9 @@
   },
   "0oLj/t": {
     "defaultMessage": "Expand"
+  },
+  "20X0BC": {
+    "defaultMessage": "Transaction Cancelled"
   },
   "2M9vCZ": {
     "defaultMessage": "Projected APY (%)"
@@ -356,9 +386,6 @@
   "VMhVlJ": {
     "defaultMessage": "Operations are momentarily disabled"
   },
-  "WCaf5C": {
-    "defaultMessage": "Approve"
-  },
   "WKF4Gx": {
     "defaultMessage": "Swap to Stablecoin"
   },
@@ -455,6 +482,9 @@
   "mrwfXX": {
     "defaultMessage": "Shares"
   },
+  "p8bsw4": {
+    "defaultMessage": "Transaction Error"
+  },
   "qEnyZU": {
     "defaultMessage": "Meta Vault"
   },
@@ -464,8 +494,8 @@
   "qm/wiV": {
     "defaultMessage": "Start the tour and get more insight."
   },
-  "rbrahO": {
-    "defaultMessage": "Close"
+  "rgdwQX": {
+    "defaultMessage": "Transaction Confirmed"
   },
   "tH0obk": {
     "defaultMessage": "Return Projection"
@@ -478,6 +508,9 @@
   },
   "u7a5FI": {
     "defaultMessage": "Visualize strategy"
+  },
+  "w1LBDB": {
+    "defaultMessage": "Sign Transaction"
   },
   "zRbVmO": {
     "defaultMessage": "WITHDRAW"
@@ -730,9 +763,6 @@
   },
   "XYEIBG": {
     "defaultMessage": "App supports Goerli Testnet."
-  },
-  "XnpuKy": {
-    "defaultMessage": "Approve {symbol}"
   },
   "YP4aoM": {
     "defaultMessage": "Read the Announcement"
