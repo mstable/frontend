@@ -1,20 +1,27 @@
 import { usePushNotification } from '@frontend/shared-providers';
 import { TransactionActionButton } from '@frontend/shared-ui';
-import { Typography } from '@mui/material';
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useAccount, usePrepareContractWrite } from 'wagmi';
 
 import { useEthTransactionPriceData } from '../../hooks';
 import { useFlatcoin } from '../../state';
-import { getFlatcoinDelayedOrderContract } from '../../utils';
+import { getFlatcoinDelayedOrderContract, getOrderTypeName } from '../../utils';
 
+import type { CardProps } from '@mui/material';
 import type { FC } from 'react';
 
 import type { Order } from '../../types';
 
 const useAnnouncedOrders = (order: Order | null) => {
   const { address: walletAddress } = useAccount();
-  const { flatcoinChainId } = useFlatcoin();
+  const { flatcoinChainId, tokens } = useFlatcoin();
   const delayedOrderContract = getFlatcoinDelayedOrderContract(flatcoinChainId);
   const priceData = useEthTransactionPriceData();
   const orderExpirationDate = order
@@ -46,36 +53,82 @@ const useAnnouncedOrders = (order: Order | null) => {
     isError,
     config,
     hasOrderExpired,
-    orderExpirationDate,
+    orderExpirationDate: new Intl.DateTimeFormat('en-US', {
+      timeStyle: 'medium',
+    }).format(new Date(orderExpirationDate)),
+    feeSymbol: tokens.collateral.symbol,
   };
 };
 
-export const AnnouncedOrders: FC = () => {
+export const AnnouncedOrders: FC<CardProps> = (props) => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
   const { announcedOrder } = useFlatcoin();
-  const { isError, config, hasOrderExpired, orderExpirationDate } =
+  const { isError, config, hasOrderExpired, orderExpirationDate, feeSymbol } =
     useAnnouncedOrders(announcedOrder);
 
   if (!announcedOrder || hasOrderExpired) return null;
 
   return (
-    <>
-      <Typography variant="h3" py={2}>
-        {intl.formatMessage({
-          defaultMessage: 'Announced Orders',
-          id: 'LGv1C5',
-        })}
-      </Typography>
-      <div>
-        Type:
-        <p>{announcedOrder.type}</p>
-        Keeper Fee:
-        <p>{announcedOrder.keeperFee}</p>
-        Executable At:
-        <p>{new Date(+announcedOrder.executableAtTime * 1000).toString()}</p>
-        Order Expires At:
-        <p>{new Date(orderExpirationDate).toString()}</p>
+    <Card {...props}>
+      <CardContent>
+        <Stack direction="column">
+          <Typography variant="body2" color="text.secondary" mb={2}>
+            {intl.formatMessage({
+              defaultMessage: 'Announced Orders',
+              id: 'LGv1C5',
+            })}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" mb={2}>
+            {intl.formatMessage({
+              defaultMessage: 'Type',
+              id: '+U6ozc',
+            })}
+            :
+          </Typography>
+          <Typography variant="value3" color="text.secondary" mb={2}>
+            {getOrderTypeName(announcedOrder.type)}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" mb={2}>
+            {intl.formatMessage({
+              defaultMessage: 'Keeper fee',
+              id: 'dlRkGS',
+            })}
+            , {feeSymbol}:
+          </Typography>
+          <Typography variant="value3" color="text.secondary" mb={2}>
+            {new Intl.NumberFormat('en-US').format(+announcedOrder.keeperFee)} (
+            {new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            }).format(+announcedOrder.keeperFeeUsd)}
+            )
+          </Typography>
+          <Typography variant="body2" color="text.secondary" mb={2}>
+            {intl.formatMessage({
+              defaultMessage: 'Executable at',
+              id: 'tw0ig8',
+            })}
+            :
+          </Typography>
+          <Typography variant="value3" color="text.secondary" mb={2}>
+            {new Intl.DateTimeFormat('en-US', { timeStyle: 'medium' }).format(
+              new Date(+announcedOrder.executableAtTime * 1000),
+            )}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" mb={2}>
+            {intl.formatMessage({
+              defaultMessage: 'Order expires at',
+              id: 'ImPhdW',
+            })}
+            :
+          </Typography>
+          <Typography variant="value3" color="text.secondary" mb={2}>
+            {orderExpirationDate}
+          </Typography>
+        </Stack>
+      </CardContent>
+      <CardActions>
         <TransactionActionButton
           config={config}
           pushNotification={pushNotification}
@@ -88,9 +141,9 @@ export const AnnouncedOrders: FC = () => {
             defaultMessage: 'Execute',
             id: 'd21Els',
           })}
-          sx={{ minWidth: 92 }}
+          sx={{ minWidth: 92, width: '100%' }}
         />
-      </div>
-    </>
+      </CardActions>
+    </Card>
   );
 };

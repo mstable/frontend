@@ -11,6 +11,12 @@
       "value": "Make sure your wallet is on Ethereum Mainnet network."
     }
   ],
+  "+U6ozc": [
+    {
+      "type": 0,
+      "value": "Type"
+    }
+  ],
   "+k7bPd": [
     {
       "type": 0,
@@ -65,10 +71,22 @@
       "value": "My Position"
     }
   ],
+  "0OPmis": [
+    {
+      "type": 0,
+      "value": "Approve Position Close"
+    }
+  ],
   "0WJNP/": [
     {
       "type": 0,
       "value": "Return"
+    }
+  ],
+  "0fFawv": [
+    {
+      "type": 0,
+      "value": "Stable Position Value"
     }
   ],
   "0mHzVQ": [
@@ -105,6 +123,12 @@
     {
       "type": 0,
       "value": "1M"
+    }
+  ],
+  "1v6yZm": [
+    {
+      "type": 0,
+      "value": "Announce Leverage Position Close"
     }
   ],
   "1vtEYS": [
@@ -381,6 +405,12 @@
       "value": "Next"
     }
   ],
+  "90axO4": [
+    {
+      "type": 0,
+      "value": "Trade"
+    }
+  ],
   "93OUn6": [
     {
       "type": 0,
@@ -421,6 +451,12 @@
     {
       "type": 0,
       "value": "Performance"
+    }
+  ],
+  "AlCWDq": [
+    {
+      "type": 0,
+      "value": "Leveraged Positions"
     }
   ],
   "Am173P": [
@@ -607,12 +643,6 @@
       "value": "Set As Infinite"
     }
   ],
-  "GufXy5": [
-    {
-      "type": 0,
-      "value": "Value"
-    }
-  ],
   "H5+NAX": [
     {
       "type": 0,
@@ -647,6 +677,12 @@
       "value": "Make sure you are on the right URL."
     }
   ],
+  "ImPhdW": [
+    {
+      "type": 0,
+      "value": "Order expires at"
+    }
+  ],
   "Imiiiv": [
     {
       "type": 0,
@@ -671,12 +707,6 @@
       "value": "DEPOSIT"
     }
   ],
-  "KoFhQ1": [
-    {
-      "type": 0,
-      "value": "liquidation"
-    }
-  ],
   "LAazWH": [
     {
       "type": 0,
@@ -687,6 +717,12 @@
     {
       "type": 0,
       "value": "Assets that are used by this vault."
+    }
+  ],
+  "LGv1C5": [
+    {
+      "type": 0,
+      "value": "Announced Orders"
     }
   ],
   "LMK5Bl": [
@@ -925,10 +961,10 @@
       "value": "Share Price"
     }
   ],
-  "U6qGuO": [
+  "Ty3dr6": [
     {
       "type": 0,
-      "value": "Position"
+      "value": "Entry Price"
     }
   ],
   "ULHfQE": [
@@ -1143,12 +1179,6 @@
       "value": "1D"
     }
   ],
-  "aTf36y": [
-    {
-      "type": 0,
-      "value": "total"
-    }
-  ],
   "aad9T5": [
     {
       "type": 0,
@@ -1165,12 +1195,6 @@
     {
       "type": 0,
       "value": "Minimum deposit in USD."
-    }
-  ],
-  "bMsoah": [
-    {
-      "type": 0,
-      "value": "funding"
     }
   ],
   "bnF8kf": [
@@ -1215,6 +1239,12 @@
       "value": "Assets"
     }
   ],
+  "d21Els": [
+    {
+      "type": 0,
+      "value": "Execute"
+    }
+  ],
   "d8EqQY": [
     {
       "type": 0,
@@ -1237,6 +1267,12 @@
     {
       "type": 0,
       "value": "History"
+    }
+  ],
+  "dlRkGS": [
+    {
+      "type": 0,
+      "value": "Keeper fee"
     }
   ],
   "eO0C1d": [
@@ -1343,12 +1379,6 @@
       "value": "Withdrawal Gas"
     }
   ],
-  "hVxfnN": [
-    {
-      "type": 0,
-      "value": "Positions"
-    }
-  ],
   "i0ofjL": [
     {
       "type": 0,
@@ -1371,6 +1401,12 @@
     {
       "type": 0,
       "value": "Deposit/Withdraw"
+    }
+  ],
+  "inIeEz": [
+    {
+      "type": 0,
+      "value": "Margin Deposited"
     }
   ],
   "jHskc6": [
@@ -1461,6 +1497,12 @@
       "value": "Token Approval"
     }
   ],
+  "oNO7VY": [
+    {
+      "type": 0,
+      "value": "Flatcoin Withdraw"
+    }
+  ],
   "obSWjR": [
     {
       "type": 0,
@@ -1501,16 +1543,16 @@
       "value": "Transaction Error"
     }
   ],
-  "pVeGn/": [
-    {
-      "type": 0,
-      "value": "leverage"
-    }
-  ],
   "pWv8jk": [
     {
       "type": 0,
       "value": "Entry Fee"
+    }
+  ],
+  "pbpdV6": [
+    {
+      "type": 0,
+      "value": "Leverage"
     }
   ],
   "qEnyZU": [
@@ -1529,6 +1571,12 @@
     {
       "type": 0,
       "value": "Fees"
+    }
+  ],
+  "qcHHVw": [
+    {
+      "type": 0,
+      "value": "Announce Leverage Position"
     }
   ],
   "qj1uhz": [
@@ -1607,6 +1655,12 @@
       "value": "This pool is currently private."
     }
   ],
+  "sjr65W": [
+    {
+      "type": 0,
+      "value": "Execute Order"
+    }
+  ],
   "smAgyB": [
     {
       "type": 0,
@@ -1673,6 +1727,12 @@
       "value": "% performance upon underlying asset appreciation."
     }
   ],
+  "tw0ig8": [
+    {
+      "type": 0,
+      "value": "Executable at"
+    }
+  ],
   "u7a5FI": [
     {
       "type": 0,
@@ -1695,6 +1755,12 @@
     {
       "type": 0,
       "value": "Sign Transaction"
+    }
+  ],
+  "wfUbwI": [
+    {
+      "type": 0,
+      "value": "Flatcoin Deposit"
     }
   ],
   "wqlXwW": [
@@ -1776,12 +1842,6 @@
     {
       "type": 0,
       "value": "Return on investment since Vault inception."
-    }
-  ],
-  "zQ9i1N": [
-    {
-      "type": 0,
-      "value": "Date Opened"
     }
   ],
   "zRbVmO": [

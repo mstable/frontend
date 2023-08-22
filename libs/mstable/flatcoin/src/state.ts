@@ -174,9 +174,17 @@ export const {
               : {
                   orderData: data[3]?.['orderData'] as string,
                   type: data[3]?.['orderType'] as number,
-                  keeperFee: (
-                    data[3]?.['keeperFee'] as BigNumberish
-                  ).toString(),
+                  keeperFee: new BigNumber(
+                    (data[3]?.['keeperFee'] as BigNumberish).toString(),
+                  )
+                    .shiftedBy(-COLLATERAL.decimals)
+                    .toFixed(6),
+                  keeperFeeUsd: new BigNumber(
+                    (data[3]?.['keeperFee'] as BigNumberish).toString(),
+                  )
+                    .shiftedBy(-COLLATERAL.decimals)
+                    .multipliedBy(draft.tokens.collateral.price)
+                    .toFixed(6),
                   executableAtTime: (
                     data[3]?.['executableAtTime'] as BigNumberish
                   ).toString(),
