@@ -10,14 +10,12 @@ import { useFlatcoinTradingState, useUpdateReceiveToken } from '../state';
 
 export const useStableTradingQuote = () => {
   const { sendToken, tradingType, receiveToken } = useFlatcoinTradingState();
-  const {
-    flatcoinChainId,
-    keeperFee: { rawFee },
-  } = useFlatcoin();
+  const { flatcoinChainId, keeperFee } = useFlatcoin();
   const updateReceiveToken = useUpdateReceiveToken();
   const rawSendTokenValue = useDebounce(
     new BigNumber(sendToken.value || '0')
       .shiftedBy(sendToken.decimals)
+      .minus(keeperFee.exact.toString())
       .toFixed(),
     500,
   );
@@ -34,9 +32,9 @@ export const useStableTradingQuote = () => {
     functionName,
     args: [rawSendTokenValue],
     onSuccess(data) {
-      const receivedValue = new BigNumber(data.toString())
-        .minus(rawFee)
-        .shiftedBy(-receiveToken.decimals);
+      const receivedValue = new BigNumber(data.toString()).shiftedBy(
+        -receiveToken.decimals,
+      );
       updateReceiveToken({
         value: receivedValue.lt('0') ? '0' : receivedValue.toFixed(),
       });
