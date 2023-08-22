@@ -29,7 +29,7 @@ const useLeveragedTradingButton = () => {
   const delayedOrderContract = getFlatcoinDelayedOrderContract(flatcoinChainId);
   const margin = new BigNumber(sendToken.value || '0')
     .shiftedBy(sendToken.decimals)
-    .minus(keeperFee.rawFee);
+    .minus(keeperFee.exact.toString());
 
   const txConfig = useMemo(() => {
     return {
@@ -43,7 +43,7 @@ const useLeveragedTradingButton = () => {
           .multipliedBy(100 + +slippage)
           .dividedBy(100)
           .toFixed(0, BigNumber.ROUND_DOWN),
-        keeperFee.rawFee,
+        keeperFee.exact,
       ],
       chainId: flatcoinChainId,
       enabled:
@@ -57,7 +57,7 @@ const useLeveragedTradingButton = () => {
     delayedOrderContract?.address,
     flatcoinChainId,
     isInsufficientBalance,
-    keeperFee.rawFee,
+    keeperFee,
     leverage,
     margin,
     rawMaxFillPrice,

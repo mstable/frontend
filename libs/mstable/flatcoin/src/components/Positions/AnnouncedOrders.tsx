@@ -21,7 +21,7 @@ import type { Order } from '../../types';
 
 const useAnnouncedOrders = (order: Order | null) => {
   const { address: walletAddress } = useAccount();
-  const { flatcoinChainId, tokens } = useFlatcoin();
+  const { flatcoinChainId, tokens, keeperFee } = useFlatcoin();
   const delayedOrderContract = getFlatcoinDelayedOrderContract(flatcoinChainId);
   const priceData = useEthTransactionPriceData();
   const orderExpirationDate = order
@@ -48,6 +48,7 @@ const useAnnouncedOrders = (order: Order | null) => {
       value: '1', // the Pyth oracle will take 1 WEI of ETH to make the price update
     },
   });
+  const keeperFeeUsd = keeperFee.simple * tokens.collateral.price.simple;
 
   return {
     isError,
@@ -57,6 +58,7 @@ const useAnnouncedOrders = (order: Order | null) => {
       timeStyle: 'medium',
     }).format(new Date(orderExpirationDate)),
     feeSymbol: tokens.collateral.symbol,
+    keeperFeeUsd,
   };
 };
 
@@ -64,8 +66,14 @@ export const AnnouncedOrders: FC<CardProps> = (props) => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
   const { announcedOrder } = useFlatcoin();
-  const { isError, config, hasOrderExpired, orderExpirationDate, feeSymbol } =
-    useAnnouncedOrders(announcedOrder);
+  const {
+    isError,
+    config,
+    hasOrderExpired,
+    orderExpirationDate,
+    feeSymbol,
+    keeperFeeUsd,
+  } = useAnnouncedOrders(announcedOrder);
 
   if (!announcedOrder || hasOrderExpired) return null;
 
@@ -97,11 +105,14 @@ export const AnnouncedOrders: FC<CardProps> = (props) => {
             , {feeSymbol}:
           </Typography>
           <Typography variant="value3" color="text.secondary" mb={2}>
-            {new Intl.NumberFormat('en-US').format(+announcedOrder.keeperFee)} (
+            {new Intl.NumberFormat('en-US').format(
+              announcedOrder.keeperFee.simple,
+            )}{' '}
+            (
             {new Intl.NumberFormat('en-US', {
               style: 'currency',
               currency: 'USD',
-            }).format(+announcedOrder.keeperFeeUsd)}
+            }).format(keeperFeeUsd)}
             )
           </Typography>
           <Typography variant="body2" color="text.secondary" mb={2}>

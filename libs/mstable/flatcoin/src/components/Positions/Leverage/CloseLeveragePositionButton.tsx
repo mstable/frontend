@@ -23,10 +23,7 @@ const useCloseLeveragePositionButton = ({
   positionId,
   additionalSize,
 }: LeveragedPosition) => {
-  const {
-    flatcoinChainId,
-    keeperFee: { rawFee },
-  } = useFlatcoin();
+  const { flatcoinChainId, keeperFee } = useFlatcoin();
 
   const { data } = useContractRead({
     address: getFlatcoinOracleModuleContract(flatcoinChainId).address,
@@ -43,9 +40,9 @@ const useCloseLeveragePositionButton = ({
     address: getFlatcoinDelayedOrderContract(flatcoinChainId)?.address,
     abi: getFlatcoinDelayedOrderContract(flatcoinChainId)?.abi,
     functionName: 'announceLeverageClose',
-    args: [positionId, sellPrice, rawFee],
+    args: [positionId, sellPrice, keeperFee.exact],
     chainId: flatcoinChainId,
-    enabled: !!sellPrice && !!rawFee,
+    enabled: !!sellPrice && !keeperFee.exact.isZero(),
   });
 
   return {

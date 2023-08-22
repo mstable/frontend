@@ -32,7 +32,7 @@ const useStableTradingButton = () => {
     isDeposit &&
     new BigNumber(sendToken.value)
       .shiftedBy(sendToken.decimals)
-      .lte(keeperFee.rawFee);
+      .lte(keeperFee.exact.toString());
 
   const txConfig = useMemo(() => {
     const delayedOrderContract =
@@ -46,12 +46,12 @@ const useStableTradingButton = () => {
       args: [
         new BigNumber(sendToken.value || '0')
           .shiftedBy(sendToken.decimals)
-          .minus(isDeposit ? keeperFee.rawFee : '0') // On stable deposits keeper fee will be transfered separately
+          .minus(isDeposit ? keeperFee.exact.toString() : '0') // On stable deposits keeper fee will be transfered separately
           .toFixed(0, BigNumber.ROUND_DOWN),
         getSlippageAdjustedValue(receiveToken.value || '0', slippage)
           .shiftedBy(receiveToken.decimals)
           .toFixed(0, BigNumber.ROUND_DOWN),
-        keeperFee.rawFee,
+        keeperFee.exact,
       ],
       chainId: flatcoinChainId,
       enabled:
@@ -63,7 +63,7 @@ const useStableTradingButton = () => {
   }, [
     flatcoinChainId,
     isInsufficientBalance,
-    keeperFee.rawFee,
+    keeperFee,
     needsApproval,
     receiveToken.decimals,
     receiveToken.value,

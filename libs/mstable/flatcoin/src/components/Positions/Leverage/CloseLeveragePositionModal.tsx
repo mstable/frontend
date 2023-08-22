@@ -43,10 +43,10 @@ const useCloseLeveragePositionModal = ({
   const notApproved = isEqualAddresses(approvedAddress, ZERO_ADDRESS);
   const marginDepositedInUsd = marginDeposited.simple * entryPrice.simple;
   const receiveAmount = new BigDecimal(
-    marginAfterSettlement.exact.sub(keeperFee.rawFee || '0'),
+    marginAfterSettlement.exact.sub(keeperFee.exact),
   ).simple;
-  const receiveAmountInUsd = receiveAmount * +collateral.price;
-  const profitLossInUsd = profitLoss.simple * +collateral.price;
+  const receiveAmountInUsd = receiveAmount * collateral.price.simple;
+  const profitLossInUsd = profitLoss.simple * collateral.price.simple;
 
   return {
     opened,
@@ -138,7 +138,7 @@ export const CloseLeveragePositionModal: FC<
                   {Intl.NumberFormat('en-US', {
                     style: 'decimal',
                     maximumFractionDigits: 2,
-                  }).format(+keeperFee.formattedFee)}{' '}
+                  }).format(keeperFee.simple)}{' '}
                   {collateral.symbol}
                 </>
               }

@@ -27,10 +27,10 @@ export const StablePosition: FC<CardProps> = (props) => {
             })}
           </Typography>
           <Typography variant="value1" color="text.secondary" mb={1}>
-            {formatToUsd({ value: +balance * +price })}
+            {formatToUsd({ value: balance.simple * price.simple })}
           </Typography>
           <Typography variant="value5" color="text.secondary">
-            {formatNumberToLimitedDecimals(+balance, 4)} {symbol}
+            {formatNumberToLimitedDecimals(balance.simple, 4)} {symbol}
           </Typography>
         </Stack>
       </CardContent>

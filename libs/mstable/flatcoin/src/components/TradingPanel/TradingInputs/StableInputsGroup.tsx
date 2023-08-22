@@ -78,7 +78,7 @@ export const StableInputsGroup = () => {
         token={sendToken}
         label="Pay with"
         onInputChange={onSendInputChange}
-        maxBalance={sendTokenBalance}
+        maxBalance={sendTokenBalance.simple.toString()}
         isConnected={!!account}
         autoFocus={!!account}
         tokenOptions={tokenOptions}

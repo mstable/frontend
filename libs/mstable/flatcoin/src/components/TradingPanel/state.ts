@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { DEFAULT_MAX_SLIPPAGE, ZERO_ADDRESS } from '@frontend/shared-constants';
-import { isEqualAddresses } from '@frontend/shared-utils';
+import { BigDecimal, isEqualAddresses } from '@frontend/shared-utils';
 import { useSearch } from '@tanstack/react-location';
 import BigNumber from 'bignumber.js';
 import produce from 'immer';
@@ -33,7 +33,7 @@ const initialState: FlatcoinTradingState = {
   sendToken: TOKEN_STUB,
   receiveToken: TOKEN_STUB,
   leverage: '2',
-  rawMaxFillPrice: null,
+  rawMaxFillPrice: BigDecimal.ZERO,
   tradingType: 'deposit',
   slippage: DEFAULT_MAX_SLIPPAGE,
   isInfiniteAllowance: false,
@@ -119,8 +119,6 @@ export const {
           draft.sendToken = collateral;
           draft.receiveToken = flatcoin;
           draft.tradingType = 'deposit';
-          // reset maxFillPrice
-          draft.rawMaxFillPrice = null;
         }),
       );
     } else {
@@ -147,7 +145,7 @@ export const {
       produce((draft) => {
         draft.isInsufficientBalance = new BigNumber(
           draft.sendToken.value || '0',
-        ).gt(sendTokenBalance || '0');
+        ).gt(sendTokenBalance.simple);
       }),
     );
   }, [
@@ -273,7 +271,7 @@ export const useUpdateTradingAllowance = () => {
 export const useUpdateMaxFillPrice = () => {
   const updateState = useUpdateFlatcoinTradingState();
   return useCallback(
-    (rawMaxFillPrice: string | null) =>
+    (rawMaxFillPrice: BigDecimal) =>
       updateState((prevState) => ({
         ...prevState,
         rawMaxFillPrice,

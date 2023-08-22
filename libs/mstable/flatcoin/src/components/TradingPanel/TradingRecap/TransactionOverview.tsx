@@ -5,10 +5,9 @@ import {
 } from '@frontend/shared-constants';
 import { TradingOverviewItem } from '@frontend/shared-ui';
 import { Stack } from '@mui/material';
-import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
 
-import { useIsLeveragedType } from '../../../hooks/useIsLeveragedType';
+import { useIsLeveragedType } from '../../../hooks';
 import { useFlatcoin } from '../../../state';
 import { useFlatcoinTradingState } from '../state';
 
@@ -19,20 +18,16 @@ const useTransactionOverview = () => {
   const isLeveraged = useIsLeveragedType();
   const {
     tokens: { collateral },
-    keeperFee: { formattedFee },
+    keeperFee,
   } = useFlatcoin();
-  const { slippage, rawMaxFillPrice } = useFlatcoinTradingState();
+  const { slippage, rawMaxFillPrice: entryPrice } = useFlatcoinTradingState();
 
   return {
-    keeperFee: formattedFee,
+    keeperFee,
     isLeveraged,
     slippage: slippage || DEFAULT_MAX_SLIPPAGE,
     collateral,
-    entryPrice: rawMaxFillPrice
-      ? new BigNumber(rawMaxFillPrice)
-          .shiftedBy(-collateral.decimals)
-          .toNumber()
-      : null,
+    entryPrice,
   };
 };
 
@@ -49,7 +44,7 @@ export const TransactionOverview: FC<StackProps> = (props) => {
             {Intl.NumberFormat('en-US', {
               style: 'decimal',
               maximumFractionDigits: 2,
-            }).format(+keeperFee)}{' '}
+            }).format(keeperFee.simple)}{' '}
             {collateral.symbol}
           </>
         }
@@ -76,13 +71,13 @@ export const TransactionOverview: FC<StackProps> = (props) => {
           <TradingOverviewItem
             label="Est. Entry Price"
             value={
-              entryPrice
-                ? formatToUsd({
-                    value: entryPrice,
+              entryPrice.exact.isZero()
+                ? '-'
+                : formatToUsd({
+                    value: entryPrice.simple,
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
                   })
-                : '-'
             }
           />
           <TradingOverviewItem label="Est. Liquidation Price" value="-" />

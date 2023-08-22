@@ -14,7 +14,7 @@ export type FlatcoinRoute = MakeGenerics<{
 
 export type PositionType = 'flatcoin' | 'leveragedeth';
 export type TradingType = 'deposit' | 'withdraw';
-type TokenInfo = Token & { balance: string; price: string };
+type TokenInfo = Token & { balance: BigDecimal; price: BigDecimal };
 
 export interface LeveragedPosition {
   positionId: string;
@@ -31,8 +31,7 @@ export interface LeveragedPosition {
 
 export interface Order {
   type: number;
-  keeperFee: string;
-  keeperFeeUsd: string;
+  keeperFee: BigDecimal;
   executableAtTime: string;
   orderData: string;
   maxExecutabilityAge: string;
@@ -43,7 +42,7 @@ export interface FlatcoinTradingState {
   sendToken: DynamicTradingToken;
   receiveToken: DynamicTradingToken;
   leverage: string;
-  rawMaxFillPrice: string | null;
+  rawMaxFillPrice: BigDecimal;
   tradingType: TradingType;
   slippage: string;
   isInfiniteAllowance: boolean;
@@ -70,10 +69,7 @@ export type FlatcoinState = {
   announcedOrder: Order | null;
   type: PositionType;
   flatcoinChainId: number;
-  keeperFee: {
-    rawFee: string;
-    formattedFee: string;
-  };
+  keeperFee: BigDecimal;
 };
 
 export interface PriceFeedData {

@@ -30,7 +30,7 @@ const PositionsTableRow: FC<{ position: LeveragedPosition }> = ({
   } = useFlatcoin();
   const { marginDeposited, leverage, entryPrice, profitLoss } = position;
   const marginDepositedInUsd = marginDeposited.simple * entryPrice.simple;
-  const profitLossInUsd = profitLoss.simple * +collateral.price;
+  const profitLossInUsd = profitLoss.simple * collateral.price.simple;
   const isPositiveProfit = profitLoss.exact.gt(0);
   return (
     <TableRow>
