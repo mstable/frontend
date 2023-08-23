@@ -1,9 +1,10 @@
-import { ZERO_ADDRESS } from '@frontend/shared-constants';
+import { useEffect } from 'react';
+
 import { BigDecimal } from '@frontend/shared-utils';
 import produce from 'immer';
-import { useAccount, useContractReads } from 'wagmi';
+import { useAccount, useContractRead } from 'wagmi';
 
-import { getFlatcoinLeveragedModuleContract } from '../../utils';
+import { getFlatcoinViewerContract } from '../../utils';
 
 import type { BN } from '@dhedge/core-ui-kit/utils';
 import type { Dispatch, SetStateAction } from 'react';
@@ -11,121 +12,71 @@ import type { Dispatch, SetStateAction } from 'react';
 import type { FlatcoinState } from '../../types';
 
 interface UseUserLeveragePositionsVariables {
-  userLeverageBalance: string;
   chainId: number;
   setState: Dispatch<SetStateAction<FlatcoinState>>;
 }
 
-interface GetPositionContractData {
+interface LeveragedPositionContractData {
   additionalSize: BN;
   entryCumulativeFunding: BN;
   entryPrice: BN;
   marginDeposited: BN;
-}
-interface GetPositionSummaryContractData {
   accruedFunding: BN;
   marginAfterSettlement: BN;
   profitLoss: BN;
+  tokenId: BN;
 }
 
-// TODO: refactor using Viewer contract
 export const useUserLeveragePositions = ({
-  userLeverageBalance,
   chainId,
   setState,
 }: UseUserLeveragePositionsVariables) => {
   const { address: walletAddress } = useAccount();
-  const { data: tokenIds } = useContractReads({
-    contracts: Array.from(Array(+userLeverageBalance || 0).keys()).map(
-      (index) => ({
-        address: getFlatcoinLeveragedModuleContract(chainId).address,
-        chainId,
-        abi: getFlatcoinLeveragedModuleContract(chainId).abi,
-        functionName: 'tokenOfOwnerByIndex',
-        args: [walletAddress, index],
-      }),
-    ),
-    enabled: !!userLeverageBalance,
+
+  const { data } = useContractRead({
+    address: getFlatcoinViewerContract(chainId).address,
+    chainId,
+    abi: getFlatcoinViewerContract(chainId).abi,
+    functionName: 'getAccountLeveragePositionData',
+    args: [walletAddress],
+    enabled: !!walletAddress,
+    watch: true,
   });
 
-  useContractReads({
-    contracts: tokenIds
-      ?.map((id) => [
-        {
-          address: getFlatcoinLeveragedModuleContract(chainId).address,
-          chainId,
-          abi: getFlatcoinLeveragedModuleContract(chainId).abi,
-          functionName: 'getPosition',
-          args: [id],
-        },
-        {
-          address: getFlatcoinLeveragedModuleContract(chainId).address,
-          chainId,
-          abi: getFlatcoinLeveragedModuleContract(chainId).abi,
-          functionName: 'getPositionSummary',
-          args: [id],
-        },
-        {
-          address: getFlatcoinLeveragedModuleContract(chainId).address,
-          chainId,
-          abi: getFlatcoinLeveragedModuleContract(chainId).abi,
-          functionName: 'getApproved',
-          args: [id],
-        },
-      ])
-      .flat(),
-    enabled: !!tokenIds?.length,
-    watch: true,
-    onSuccess(data) {
-      setState(
-        produce((draft) => {
-          draft.leveragedPositions = tokenIds?.length
-            ? tokenIds.map((id, index) => {
-                const positionIndex = index * 3;
-                const positionSummaryIndex = positionIndex + 1;
-                const positionApproveIndex = positionSummaryIndex + 1;
-                const position = data[
-                  positionIndex
-                ] as unknown as GetPositionContractData;
-                const positionSummary = data[
-                  positionSummaryIndex
-                ] as unknown as GetPositionSummaryContractData;
+  useEffect(() => {
+    setState(
+      produce((draft) => {
+        draft.leveragedPositions = data?.length
+          ? data.map(
+              ({
+                tokenId,
+                additionalSize,
+                entryCumulativeFunding,
+                entryPrice,
+                marginDeposited,
+                accruedFunding,
+                marginAfterSettlement,
+                profitLoss,
+              }: LeveragedPositionContractData) => {
                 return {
-                  positionId: id.toString(),
-                  additionalSize:
-                    position && positionSummary
-                      ? new BigDecimal(position.additionalSize)
-                      : BigDecimal.ZERO,
-                  leverage: position
-                    ? new BigDecimal(position.additionalSize).simple /
-                      new BigDecimal(positionSummary.marginAfterSettlement)
-                        .simple
-                    : 0,
-                  entryCumulativeFunding: position
-                    ? new BigDecimal(position.entryCumulativeFunding)
-                    : BigDecimal.ZERO,
-                  entryPrice: position
-                    ? new BigDecimal(position.entryPrice)
-                    : BigDecimal.ZERO,
-                  marginDeposited: position
-                    ? new BigDecimal(position.marginDeposited)
-                    : BigDecimal.ZERO,
-                  accruedFunding: positionSummary
-                    ? new BigDecimal(positionSummary.accruedFunding)
-                    : BigDecimal.ZERO,
-                  marginAfterSettlement: positionSummary
-                    ? new BigDecimal(positionSummary.marginAfterSettlement)
-                    : BigDecimal.ZERO,
-                  profitLoss: positionSummary
-                    ? new BigDecimal(positionSummary.profitLoss)
-                    : BigDecimal.ZERO,
-                  approvedAddress:
-                    data?.[positionApproveIndex]?.toString() ?? ZERO_ADDRESS,
+                  positionId: tokenId.toString(),
+                  additionalSize: new BigDecimal(additionalSize),
+                  leverage:
+                    new BigDecimal(additionalSize).simple /
+                    new BigDecimal(marginAfterSettlement).simple,
+                  entryCumulativeFunding: new BigDecimal(
+                    entryCumulativeFunding,
+                  ),
+                  entryPrice: new BigDecimal(entryPrice),
+                  marginDeposited: new BigDecimal(marginDeposited),
+                  accruedFunding: new BigDecimal(accruedFunding),
+                  marginAfterSettlement: new BigDecimal(marginAfterSettlement),
+                  profitLoss: new BigDecimal(profitLoss),
                 };
-              })
-            : [];
-        }),
-      );
-    },
-  });
+              },
+            )
+          : [];
+      }),
+    );
+  }, [data, setState]);
 };

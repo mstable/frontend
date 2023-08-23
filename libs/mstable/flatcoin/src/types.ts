@@ -25,7 +25,6 @@ export interface LeveragedPosition {
   additionalSize: BigDecimal;
   marginAfterSettlement: BigDecimal;
   profitLoss: BigDecimal;
-  approvedAddress: string;
   entryCumulativeFunding: BigDecimal;
   accruedFunding: BigDecimal;
 }
