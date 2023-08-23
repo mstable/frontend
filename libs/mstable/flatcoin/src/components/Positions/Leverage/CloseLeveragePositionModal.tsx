@@ -137,7 +137,7 @@ export const CloseLeveragePositionModal: FC<
                 <>
                   {Intl.NumberFormat('en-US', {
                     style: 'decimal',
-                    maximumFractionDigits: 2,
+                    maximumFractionDigits: 4,
                   }).format(keeperFee.simple)}{' '}
                   {collateral.symbol}
                 </>

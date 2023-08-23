@@ -30,7 +30,7 @@ const useCloseLeveragePositionButton = ({
     chainId: flatcoinChainId,
     abi: getFlatcoinOracleModuleContract(flatcoinChainId).abi,
     functionName: 'getSellPrice',
-    args: [additionalSize.exact.toString(), true],
+    args: [additionalSize.exact.toString(), false],
   });
   const sellPrice = data?.[0]
     ? new BigNumber(data[0].toString()).multipliedBy(0.99).toFixed(0) // applied 1% of slippage

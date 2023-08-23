@@ -39,7 +39,7 @@ const useLeveragedTradingButton = () => {
       args: [
         margin.toFixed(0, BigNumber.ROUND_DOWN),
         margin.multipliedBy(leverage).toFixed(0),
-        new BigNumber(rawMaxFillPrice?.toString() ?? '0')
+        new BigNumber(rawMaxFillPrice.exact.toString())
           .multipliedBy(100 + +slippage)
           .dividedBy(100)
           .toFixed(0, BigNumber.ROUND_DOWN),

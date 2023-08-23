@@ -105,9 +105,9 @@ export const AnnouncedOrders: FC<CardProps> = (props) => {
             , {feeSymbol}:
           </Typography>
           <Typography variant="value3" color="text.secondary" mb={2}>
-            {new Intl.NumberFormat('en-US').format(
-              announcedOrder.keeperFee.simple,
-            )}{' '}
+            {new Intl.NumberFormat('en-US', {
+              maximumFractionDigits: 4,
+            }).format(announcedOrder.keeperFee.simple)}{' '}
             (
             {new Intl.NumberFormat('en-US', {
               style: 'currency',
