@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { DEFAULT_MAX_FILL_PRICE_SLIPPAGE } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-providers';
 import { TransactionActionButton } from '@frontend/shared-ui';
 import BigNumber from 'bignumber.js';
@@ -19,10 +20,8 @@ const useLeveragedTradingButton = () => {
   const {
     needsApproval,
     isInsufficientBalance,
-    receiveToken,
     sendToken,
     leverage,
-    slippage,
     reset,
     rawMaxFillPrice,
   } = useFlatcoinTradingState();
@@ -40,7 +39,7 @@ const useLeveragedTradingButton = () => {
         margin.toFixed(0, BigNumber.ROUND_DOWN),
         margin.multipliedBy(leverage).toFixed(0),
         new BigNumber(rawMaxFillPrice.exact.toString())
-          .multipliedBy(100 + +slippage)
+          .multipliedBy(100 + DEFAULT_MAX_FILL_PRICE_SLIPPAGE)
           .dividedBy(100)
           .toFixed(0, BigNumber.ROUND_DOWN),
         keeperFee.exact,
@@ -49,21 +48,20 @@ const useLeveragedTradingButton = () => {
       enabled:
         !needsApproval &&
         !isInsufficientBalance &&
-        !!receiveToken.value &&
-        !!rawMaxFillPrice,
+        !!sendToken.value &&
+        !rawMaxFillPrice.exact.isZero(),
     };
   }, [
-    delayedOrderContract?.abi,
     delayedOrderContract?.address,
-    flatcoinChainId,
-    isInsufficientBalance,
-    keeperFee,
-    leverage,
+    delayedOrderContract?.abi,
     margin,
-    rawMaxFillPrice,
+    leverage,
+    rawMaxFillPrice.exact,
+    keeperFee.exact,
+    flatcoinChainId,
     needsApproval,
-    receiveToken.value,
-    slippage,
+    isInsufficientBalance,
+    sendToken.value,
   ]);
 
   const { config, isError } = usePrepareContractWrite(txConfig);

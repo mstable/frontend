@@ -1,7 +1,10 @@
 import { useState } from 'react';
 
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
-import { ZERO_ADDRESS } from '@frontend/shared-constants';
+import {
+  DEFAULT_TOKEN_DECIMALS,
+  ZERO_ADDRESS,
+} from '@frontend/shared-constants';
 import {
   Dialog,
   TokenIconRevamp,
@@ -47,6 +50,7 @@ const useCloseLeveragePositionModal = ({
   ).simple;
   const receiveAmountInUsd = receiveAmount * collateral.price.simple;
   const profitLossInUsd = profitLoss.simple * collateral.price.simple;
+  const keeperFeeInUsd = keeperFee.simple * collateral.price.simple;
 
   return {
     opened,
@@ -58,6 +62,7 @@ const useCloseLeveragePositionModal = ({
     receiveAmount,
     receiveAmountInUsd,
     profitLossInUsd,
+    keeperFeeInUsd,
   };
 };
 
@@ -76,6 +81,7 @@ export const CloseLeveragePositionModal: FC<
     receiveAmount,
     receiveAmountInUsd,
     profitLossInUsd,
+    keeperFeeInUsd,
   } = useCloseLeveragePositionModal(position);
 
   return (
@@ -103,7 +109,10 @@ export const CloseLeveragePositionModal: FC<
                 </Typography>
                 <Stack direction="row" alignItems="center" mt={1}>
                   <Typography variant="value4">
-                    {formatNumberToLimitedDecimals(marginDeposited.simple, 4)}
+                    {formatNumberToLimitedDecimals(
+                      marginDeposited.simple,
+                      DEFAULT_TOKEN_DECIMALS,
+                    )}
                   </Typography>
                   <TokenIconRevamp
                     sx={{ width: 12, height: 12, ml: 0.5 }}
@@ -137,30 +146,29 @@ export const CloseLeveragePositionModal: FC<
                 <>
                   {Intl.NumberFormat('en-US', {
                     style: 'decimal',
-                    maximumFractionDigits: 4,
+                    maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
                   }).format(keeperFee.simple)}{' '}
                   {collateral.symbol}
                 </>
               }
+              subvalue={<>≈{formatToUsd({ value: keeperFeeInUsd })}</>}
             />
             <TradingOverviewItem
+              mt={1}
               label="Est. Receive Amount"
-              size="md"
               value={
                 <>
                   {Intl.NumberFormat('en-US', {
                     style: 'decimal',
-                    maximumFractionDigits: 2,
+                    maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
                   }).format(receiveAmount)}{' '}
                   {collateral.symbol}
                 </>
               }
+              subvalue={<>≈{formatToUsd({ value: receiveAmountInUsd })}</>}
             />
             <TradingOverviewItem
-              label="Est. Receive USD"
-              value={<>≈{formatToUsd({ value: receiveAmountInUsd })}</>}
-            />
-            <TradingOverviewItem
+              mt={1}
               label="Est. Profit/Loss"
               value={
                 <Typography
@@ -173,9 +181,14 @@ export const CloseLeveragePositionModal: FC<
                       : 'text.secondary'
                   }
                 >
-                  ≈{formatToUsd({ value: profitLossInUsd })}
+                  {Intl.NumberFormat('en-US', {
+                    style: 'decimal',
+                    maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
+                  }).format(profitLoss.simple)}{' '}
+                  {collateral.symbol}
                 </Typography>
               }
+              subvalue={<>≈{formatToUsd({ value: profitLossInUsd })}</>}
             />
           </>
         }

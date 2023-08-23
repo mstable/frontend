@@ -1,3 +1,4 @@
+import { DEFAULT_MAX_FILL_PRICE_SLIPPAGE } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-providers';
 import { TransactionActionButton } from '@frontend/shared-ui';
 import BigNumber from 'bignumber.js';
@@ -33,7 +34,10 @@ const useCloseLeveragePositionButton = ({
     args: [additionalSize.exact.toString(), false],
   });
   const sellPrice = data?.[0]
-    ? new BigNumber(data[0].toString()).multipliedBy(0.99).toFixed(0) // applied 1% of slippage
+    ? new BigNumber(data[0].toString())
+        .multipliedBy(100 - DEFAULT_MAX_FILL_PRICE_SLIPPAGE) // applied 0.25% of slippage
+        .dividedBy(100)
+        .toFixed(0)
     : '';
 
   const { config, isError } = usePrepareContractWrite({

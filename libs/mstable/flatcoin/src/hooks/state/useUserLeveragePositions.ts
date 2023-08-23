@@ -120,7 +120,7 @@ export const useUserLeveragePositions = ({
                     ? new BigDecimal(positionSummary.profitLoss)
                     : BigDecimal.ZERO,
                   approvedAddress:
-                    data?.[positionApproveIndex].toString() ?? ZERO_ADDRESS,
+                    data?.[positionApproveIndex]?.toString() ?? ZERO_ADDRESS,
                 };
               })
             : [];

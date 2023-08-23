@@ -1,3 +1,4 @@
+import { DEFAULT_TOKEN_DECIMALS } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-providers';
 import { TransactionActionButton } from '@frontend/shared-ui';
 import {
@@ -106,7 +107,7 @@ export const AnnouncedOrders: FC<CardProps> = (props) => {
           </Typography>
           <Typography variant="value3" color="text.secondary" mb={2}>
             {new Intl.NumberFormat('en-US', {
-              maximumFractionDigits: 4,
+              maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
             }).format(announcedOrder.keeperFee.simple)}{' '}
             (
             {new Intl.NumberFormat('en-US', {

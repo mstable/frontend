@@ -5,13 +5,14 @@ import { Divider } from '@mui/material';
 import { useFlatcoin } from '../../../state';
 import { useLeveragedTradeQuote } from '../hooks/useLeveragedTradeQuote';
 import { useFlatcoinTradingState, useUpdateSendToken } from '../state';
+import { LeverageSettings } from './LeverageSettings';
 
 const useLeveragedInputsGroup = () => {
   const { account } = useAccount();
   const {
     tokens: { collateral },
   } = useFlatcoin();
-  const { sendToken, receiveToken, leverage } = useFlatcoinTradingState();
+  const { sendToken } = useFlatcoinTradingState();
   const updateSendToken = useUpdateSendToken();
   useLeveragedTradeQuote();
 
@@ -19,23 +20,15 @@ const useLeveragedInputsGroup = () => {
 
   return {
     sendToken,
-    receiveToken,
     sendTokenBalance: collateral.balance.string,
     account,
     onSendInputChange,
-    receiveInputLabel: <>Leverage: {leverage ? `${leverage}X` : ''}</>,
   };
 };
 
 export const LeveragedInputsGroup = () => {
-  const {
-    sendToken,
-    receiveToken,
-    sendTokenBalance,
-    account,
-    onSendInputChange,
-    receiveInputLabel,
-  } = useLeveragedInputsGroup();
+  const { sendToken, sendTokenBalance, account, onSendInputChange } =
+    useLeveragedInputsGroup();
   return (
     <>
       <TradingInput
@@ -47,13 +40,7 @@ export const LeveragedInputsGroup = () => {
         autoFocus={!!account}
       />
       <Divider />
-      <TradingInput
-        token={receiveToken}
-        label={receiveInputLabel}
-        hideBottomRow
-        disabled
-        placeholder=""
-      />
+      <LeverageSettings label="Leverage" />
     </>
   );
 };

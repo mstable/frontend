@@ -10,6 +10,7 @@ import { usePrepareContractWrite } from 'wagmi';
 
 import { useFlatcoin } from '../../../state';
 import { getFlatcoinDelayedOrderContract } from '../../../utils';
+import { useTradingType } from '../hooks/useTradingType';
 import { useFlatcoinTradingState } from '../state';
 import { ApprovalButton } from './ApprovalButton';
 
@@ -17,17 +18,16 @@ import type { ButtonProps } from '@mui/material';
 import type { FC } from 'react';
 
 const useStableTradingButton = () => {
-  const { flatcoinChainId, keeperFee, tokens } = useFlatcoin();
+  const isDeposit = useTradingType()[0] === 'deposit';
+  const { flatcoinChainId, keeperFee } = useFlatcoin();
   const {
     needsApproval,
-    tradingType,
     isInsufficientBalance,
     sendToken,
     receiveToken,
     slippage,
     reset,
   } = useFlatcoinTradingState();
-  const isDeposit = tradingType === 'deposit';
   const lowerThanKeeperFee =
     isDeposit &&
     new BigNumber(sendToken.value || '0')

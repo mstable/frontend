@@ -1,27 +1,17 @@
-import { useEffect } from 'react';
-
-import { useDebounce } from '@dhedge/core-ui-kit/hooks/utils';
 import { BigDecimal } from '@frontend/shared-utils';
 import BigNumber from 'bignumber.js';
 import { useContractRead } from 'wagmi';
 
 import { useFlatcoin } from '../../../state';
 import { getFlatcoinDelayedOrderContract } from '../../../utils';
-import {
-  useFlatcoinTradingState,
-  useUpdateMaxFillPrice,
-  useUpdateReceiveToken,
-} from '../state';
+import { useFlatcoinTradingState, useUpdateMaxFillPrice } from '../state';
 
 export const useLeveragedTradeQuote = () => {
   const {
-    keeperFee,
     flatcoinChainId,
     tokens: { collateral },
   } = useFlatcoin();
   const { leverage, sendToken } = useFlatcoinTradingState();
-  const debouncedSendTokenValue = useDebounce(sendToken.value, 500);
-  const updateReceiveToken = useUpdateReceiveToken();
   const updateMaxFillPrice = useUpdateMaxFillPrice();
   const delayedOrderContract = getFlatcoinDelayedOrderContract(flatcoinChainId);
 
@@ -41,14 +31,4 @@ export const useLeveragedTradeQuote = () => {
       );
     },
   });
-
-  useEffect(() => {
-    if (!leverage || !debouncedSendTokenValue) return;
-    updateReceiveToken({
-      value: (
-        (+debouncedSendTokenValue - keeperFee.simple) *
-        +leverage
-      ).toString(),
-    });
-  }, [leverage, debouncedSendTokenValue, updateReceiveToken, keeperFee]);
 };

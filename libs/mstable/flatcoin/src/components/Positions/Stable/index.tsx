@@ -1,4 +1,5 @@
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
+import { DEFAULT_TOKEN_DECIMALS } from '@frontend/shared-constants';
 import { formatNumberToLimitedDecimals } from '@frontend/shared-utils';
 import { Card, CardContent, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
@@ -30,7 +31,11 @@ export const StablePosition: FC<CardProps> = (props) => {
             {formatToUsd({ value: balance.simple * price.simple })}
           </Typography>
           <Typography variant="value5" color="text.secondary">
-            {formatNumberToLimitedDecimals(balance.simple, 4)} {symbol}
+            {formatNumberToLimitedDecimals(
+              balance.simple,
+              DEFAULT_TOKEN_DECIMALS,
+            )}{' '}
+            {symbol}
           </Typography>
         </Stack>
       </CardContent>

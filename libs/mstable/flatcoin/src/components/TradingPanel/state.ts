@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { DEFAULT_MAX_SLIPPAGE, ZERO_ADDRESS } from '@frontend/shared-constants';
+import {
+  DEFAULT_LEVERAGE_COEFF,
+  DEFAULT_MAX_SLIPPAGE,
+  ZERO_ADDRESS,
+} from '@frontend/shared-constants';
 import { BigDecimal, isEqualAddresses } from '@frontend/shared-utils';
 import BigNumber from 'bignumber.js';
 import produce from 'immer';
@@ -29,14 +33,14 @@ const TOKEN_STUB = {
 const initialState: FlatcoinTradingState = {
   sendToken: TOKEN_STUB,
   receiveToken: TOKEN_STUB,
-  leverage: '2',
+  leverage: DEFAULT_LEVERAGE_COEFF,
   rawMaxFillPrice: BigDecimal.ZERO,
   slippage: DEFAULT_MAX_SLIPPAGE,
   isInfiniteAllowance: false,
   needsApproval: true,
   isInsufficientBalance: false,
   refetchAllowance: () => null,
-  reset: () => null, // TODO: implement refetch logic after adding contract calls
+  reset: () => null,
 };
 
 export const {
@@ -86,13 +90,25 @@ export const {
     );
   }, [contractData, state.sendToken.decimals, state.sendToken.value]);
 
+  const reset = useCallback(() => {
+    setState(
+      produce((draft) => {
+        draft.sendToken.value = '';
+        draft.receiveToken.value = '';
+        draft.leverage = DEFAULT_LEVERAGE_COEFF;
+      }),
+    );
+    refetch();
+  }, [refetch]);
+
   useEffect(() => {
     setState(
       produce((draft) => {
         draft.refetchAllowance = refetch;
+        draft.reset = reset;
       }),
     );
-  }, [refetch]);
+  }, [refetch, reset]);
 
   // Set correct tokens on page type switch
   useEffect(() => {
@@ -141,7 +157,7 @@ export const {
       produce((draft) => {
         draft.isInsufficientBalance = new BigNumber(
           draft.sendToken.value || '0',
-        ).gt(sendTokenBalance.simple);
+        ).gt(sendTokenBalance.string);
       }),
     );
   }, [

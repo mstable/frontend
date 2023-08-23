@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { DEFAULT_TOKEN_DECIMALS } from '@frontend/shared-constants';
 import { useGetTokenPriceHistory } from '@frontend/shared-providers';
 import { CHART_PERIOD, CHART_TYPE } from '@frontend/shared-types';
 import { isNilOrEmpty } from '@frontend/shared-utils';
@@ -82,7 +83,7 @@ export const useChartConfig = (): ChartConfig => {
           style: 'currency',
           currency: 'USD',
           minimumFractionDigits: 0,
-          maximumFractionDigits: 4,
+          maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
         }).format(item),
     },
   };
