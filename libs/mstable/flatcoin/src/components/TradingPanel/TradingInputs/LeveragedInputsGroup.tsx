@@ -20,7 +20,7 @@ const useLeveragedInputsGroup = () => {
   return {
     sendToken,
     receiveToken,
-    sendTokenBalance: collateral.balance.simple.toString(),
+    sendTokenBalance: collateral.balance.string,
     account,
     onSendInputChange,
     receiveInputLabel: <>Leverage: {leverage ? `${leverage}X` : ''}</>,

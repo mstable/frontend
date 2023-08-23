@@ -12,14 +12,13 @@ export const useStableTradingQuote = () => {
   const { sendToken, tradingType, receiveToken } = useFlatcoinTradingState();
   const { flatcoinChainId, keeperFee } = useFlatcoin();
   const updateReceiveToken = useUpdateReceiveToken();
+  const isDeposit = tradingType === 'deposit';
   const rawSendTokenValue = useDebounce(
     new BigNumber(sendToken.value || '0')
       .shiftedBy(sendToken.decimals)
-      .minus(keeperFee.exact.toString())
-      .toFixed(),
+      .minus(isDeposit ? keeperFee.exact.toString() : '0'), // On stable deposits keeper fee will be transferred separately
     500,
   );
-  const isDeposit = tradingType === 'deposit';
   const functionName = useDebounce(
     isDeposit ? 'stableDepositQuote' : 'stableWithdrawQuote',
     500,
@@ -30,20 +29,20 @@ export const useStableTradingQuote = () => {
     chainId: flatcoinChainId,
     abi: getFlatcoinDelayedOrderContract(flatcoinChainId).abi,
     functionName,
-    args: [rawSendTokenValue],
+    args: [rawSendTokenValue.toFixed()],
     onSuccess(data) {
-      const receivedValue = new BigNumber(data.toString()).shiftedBy(
-        -receiveToken.decimals,
-      );
+      const receivedValue = new BigNumber(data.toString())
+        .minus(isDeposit ? '0' : keeperFee.exact.toString()) // On stable withdrawals keeper fee will be paid from received amount
+        .shiftedBy(-receiveToken.decimals);
       updateReceiveToken({
         value: receivedValue.lt('0') ? '0' : receivedValue.toFixed(),
       });
     },
-    enabled: rawSendTokenValue !== '0',
+    enabled: rawSendTokenValue.gt(0),
   });
 
   useEffect(() => {
-    if (rawSendTokenValue === '0') {
+    if (rawSendTokenValue.lte(0)) {
       updateReceiveToken({ value: '' });
     }
   }, [rawSendTokenValue, updateReceiveToken]);

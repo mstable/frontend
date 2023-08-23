@@ -17,7 +17,7 @@ import type { ButtonProps } from '@mui/material';
 import type { FC } from 'react';
 
 const useStableTradingButton = () => {
-  const { flatcoinChainId, keeperFee } = useFlatcoin();
+  const { flatcoinChainId, keeperFee, tokens } = useFlatcoin();
   const {
     needsApproval,
     tradingType,
@@ -30,7 +30,7 @@ const useStableTradingButton = () => {
   const isDeposit = tradingType === 'deposit';
   const lowerThanKeeperFee =
     isDeposit &&
-    new BigNumber(sendToken.value)
+    new BigNumber(sendToken.value || '0')
       .shiftedBy(sendToken.decimals)
       .lte(keeperFee.exact.toString());
 
@@ -46,7 +46,7 @@ const useStableTradingButton = () => {
       args: [
         new BigNumber(sendToken.value || '0')
           .shiftedBy(sendToken.decimals)
-          .minus(isDeposit ? keeperFee.exact.toString() : '0') // On stable deposits keeper fee will be transfered separately
+          .minus(isDeposit ? keeperFee.exact.toString() : '0') // On stable deposits keeper fee will be transferred separately
           .toFixed(0, BigNumber.ROUND_DOWN),
         getSlippageAdjustedValue(receiveToken.value || '0', slippage)
           .shiftedBy(receiveToken.decimals)
