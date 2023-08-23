@@ -3,8 +3,8 @@ import { Card, CardContent, CardHeader } from '@mui/material';
 import { useSearch } from '@tanstack/react-location';
 import { Line } from 'react-chartjs-2';
 import { useIntl } from 'react-intl';
-import { useChartData } from '../../hooks';
 
+import { useChartData } from '../../hooks';
 import { Controls } from './components/Controls';
 
 import type { FlatcoinRoute } from '../../types';

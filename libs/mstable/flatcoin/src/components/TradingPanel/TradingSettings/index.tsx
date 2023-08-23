@@ -6,6 +6,7 @@ import { Gear } from 'phosphor-react';
 import { not } from 'ramda';
 import { useIntl } from 'react-intl';
 
+import { useIsLeveragedType } from '../../../hooks';
 import { SlippageInput } from './SlippageInput';
 import { TokenApprovalSwitch } from './TokenApprovalSwitch';
 
@@ -14,6 +15,7 @@ import type { FC } from 'react';
 
 export const TradingSettings: FC<ButtonProps> = (props) => {
   const intl = useIntl();
+  const isLeveraged = useIsLeveragedType();
   const [open, setOpen] = useState(false);
   const anchorEl = useRef(null);
 
@@ -27,6 +29,7 @@ export const TradingSettings: FC<ButtonProps> = (props) => {
         }}
         variant="text"
         sx={{ p: 0, ...props?.sx }}
+        disabled={isLeveraged}
       >
         <Gear size={20} weight="fill" />
       </Button>

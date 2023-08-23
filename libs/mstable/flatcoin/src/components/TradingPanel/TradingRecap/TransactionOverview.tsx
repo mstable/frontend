@@ -1,14 +1,19 @@
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import {
+  DEFAULT_MAX_FILL_PRICE_SLIPPAGE,
   DEFAULT_MAX_SLIPPAGE,
-  RECOMMENDED_MIN_SLIPPAGE,
+  DEFAULT_TOKEN_DECIMALS,
 } from '@frontend/shared-constants';
 import { TradingOverviewItem } from '@frontend/shared-ui';
+import {
+  formatNumberToLimitedDecimals,
+  getSlippageAdjustedValue,
+  isEqualAddresses,
+} from '@frontend/shared-utils';
 import { Stack } from '@mui/material';
-import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
 
-import { useIsLeveragedType } from '../../../hooks/useIsLeveragedType';
+import { useIsLeveragedType } from '../../../hooks';
 import { useFlatcoin } from '../../../state';
 import { useFlatcoinTradingState } from '../state';
 
@@ -18,28 +23,57 @@ import type { FC } from 'react';
 const useTransactionOverview = () => {
   const isLeveraged = useIsLeveragedType();
   const {
-    tokens: { collateral },
-    keeperFee: { formattedFee },
+    tokens: { collateral, flatcoin },
+    keeperFee,
   } = useFlatcoin();
-  const { slippage, rawMaxFillPrice } = useFlatcoinTradingState();
+  const {
+    slippage,
+    rawMaxFillPrice: entryPrice,
+    receiveToken,
+  } = useFlatcoinTradingState();
+  const keeperFeeInUsd = keeperFee.simple * collateral.price.simple;
+  const minReceivedAmount = receiveToken.value
+    ? formatNumberToLimitedDecimals(
+        getSlippageAdjustedValue(receiveToken.value || '0', slippage).toFixed(),
+        DEFAULT_TOKEN_DECIMALS,
+      )
+    : null;
+  const receivedTokenPrice = isEqualAddresses(
+    receiveToken.address,
+    collateral.address,
+  )
+    ? collateral.price
+    : flatcoin.price;
+  const minReceivedInUsd = minReceivedAmount
+    ? +minReceivedAmount * receivedTokenPrice.simple
+    : null;
 
   return {
-    keeperFee: formattedFee,
+    keeperFee,
     isLeveraged,
     slippage: slippage || DEFAULT_MAX_SLIPPAGE,
     collateral,
-    entryPrice: rawMaxFillPrice
-      ? new BigNumber(rawMaxFillPrice)
-          .shiftedBy(-collateral.decimals)
-          .toNumber()
-      : null,
+    entryPrice,
+    keeperFeeInUsd,
+    minReceivedAmount,
+    receiveTokenSymbol: receiveToken.symbol,
+    minReceivedInUsd,
   };
 };
 
 export const TransactionOverview: FC<StackProps> = (props) => {
   const intl = useIntl();
-  const { keeperFee, isLeveraged, slippage, collateral, entryPrice } =
-    useTransactionOverview();
+  const {
+    keeperFee,
+    isLeveraged,
+    slippage,
+    collateral,
+    entryPrice,
+    keeperFeeInUsd,
+    minReceivedAmount,
+    receiveTokenSymbol,
+    minReceivedInUsd,
+  } = useTransactionOverview();
   return (
     <Stack {...props} direction="column" spacing={1}>
       <TradingOverviewItem
@@ -48,42 +82,58 @@ export const TransactionOverview: FC<StackProps> = (props) => {
           <>
             {Intl.NumberFormat('en-US', {
               style: 'decimal',
-              maximumFractionDigits: 2,
-            }).format(+keeperFee)}{' '}
+              maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
+            }).format(keeperFee.simple)}{' '}
             {collateral.symbol}
           </>
         }
+        subvalue={<>≈{formatToUsd({ value: keeperFeeInUsd })}</>}
       />
       {!isLeveraged && (
-        <TradingOverviewItem
-          label={intl.formatMessage({
-            defaultMessage: 'Max slippage',
-            id: 'k3YWIR',
-          })}
-          tooltipText={intl.formatMessage(
-            {
-              defaultMessage:
-                'We recommend {slippage}%, but usually it will be < {slippage}%.',
-              id: 'OkOAzx',
-            },
-            { slippage: RECOMMENDED_MIN_SLIPPAGE },
-          )}
-          value={<>{slippage}%</>}
-        />
+        <>
+          <TradingOverviewItem
+            label={intl.formatMessage({
+              defaultMessage: 'Max slippage',
+              id: 'k3YWIR',
+            })}
+            value={<>{slippage}%</>}
+          />
+          <TradingOverviewItem
+            label={intl.formatMessage({
+              defaultMessage: 'Minimum Received',
+              id: 'AeA4mw',
+            })}
+            value={
+              minReceivedAmount ? (
+                <>
+                  {minReceivedAmount} {receiveTokenSymbol}
+                </>
+              ) : (
+                '-'
+              )
+            }
+            subvalue={
+              minReceivedInUsd ? (
+                <>≈{formatToUsd({ value: minReceivedInUsd })}</>
+              ) : null
+            }
+          />
+        </>
       )}
       {isLeveraged && (
         <>
           <TradingOverviewItem
             label="Est. Entry Price"
             value={
-              entryPrice
-                ? formatToUsd({
-                    value: entryPrice,
+              entryPrice.exact.isZero()
+                ? '-'
+                : formatToUsd({
+                    value: entryPrice.simple,
                     minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
+                    maximumFractionDigits: 1,
                   })
-                : '-'
             }
+            subvalue={<>±{DEFAULT_MAX_FILL_PRICE_SLIPPAGE}%</>}
           />
           <TradingOverviewItem label="Est. Liquidation Price" value="-" />
         </>

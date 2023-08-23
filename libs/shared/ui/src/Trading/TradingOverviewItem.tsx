@@ -9,18 +9,20 @@ interface OverviewItemProps extends StackProps {
   tooltipText?: string;
   label: string;
   value?: ReactNode;
+  subvalue?: ReactNode;
 }
 
 export const TradingOverviewItem: FC<OverviewItemProps> = ({
   label,
   value,
   tooltipText,
+  subvalue,
   ...stackProps
 }) => (
   <Stack
     direction="row"
     justifyContent="space-between"
-    alignItems="center"
+    alignItems="start"
     {...stackProps}
   >
     <Box display="flex" alignItems="center">
@@ -35,6 +37,13 @@ export const TradingOverviewItem: FC<OverviewItemProps> = ({
         />
       )}
     </Box>
-    <Typography variant="value5">{value}</Typography>
+    <Stack direction="column" alignItems="end">
+      <Typography variant="value5">{value}</Typography>
+      {subvalue && (
+        <Typography variant="value5" color="text.secondary">
+          {subvalue}
+        </Typography>
+      )}
+    </Stack>
   </Stack>
 );

@@ -1,3 +1,4 @@
+import { DEFAULT_MAX_FILL_PRICE_SLIPPAGE } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-providers';
 import { TransactionActionButton } from '@frontend/shared-ui';
 import BigNumber from 'bignumber.js';
@@ -23,29 +24,29 @@ const useCloseLeveragePositionButton = ({
   positionId,
   additionalSize,
 }: LeveragedPosition) => {
-  const {
-    flatcoinChainId,
-    keeperFee: { rawFee },
-  } = useFlatcoin();
+  const { flatcoinChainId, keeperFee } = useFlatcoin();
 
   const { data } = useContractRead({
     address: getFlatcoinOracleModuleContract(flatcoinChainId).address,
     chainId: flatcoinChainId,
     abi: getFlatcoinOracleModuleContract(flatcoinChainId).abi,
     functionName: 'getSellPrice',
-    args: [additionalSize.exact.toString(), true],
+    args: [additionalSize.exact.toString(), false],
   });
   const sellPrice = data?.[0]
-    ? new BigNumber(data[0].toString()).multipliedBy(0.99).toFixed(0) // applied 1% of slippage
+    ? new BigNumber(data[0].toString())
+        .multipliedBy(100 - DEFAULT_MAX_FILL_PRICE_SLIPPAGE) // applied 0.25% of slippage
+        .dividedBy(100)
+        .toFixed(0)
     : '';
 
   const { config, isError } = usePrepareContractWrite({
     address: getFlatcoinDelayedOrderContract(flatcoinChainId)?.address,
     abi: getFlatcoinDelayedOrderContract(flatcoinChainId)?.abi,
     functionName: 'announceLeverageClose',
-    args: [positionId, sellPrice, rawFee],
+    args: [positionId, sellPrice, keeperFee.exact],
     chainId: flatcoinChainId,
-    enabled: !!sellPrice && !!rawFee,
+    enabled: !!sellPrice && !keeperFee.exact.isZero(),
   });
 
   return {

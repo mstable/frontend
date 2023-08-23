@@ -9,11 +9,8 @@ import { ArrowsDownUp } from 'phosphor-react';
 import { useFlatcoin } from '../../../state';
 import { getFlatcoinTokensByChain } from '../../../utils';
 import { useStableTradingQuote } from '../hooks/useStableTradingQuote';
-import {
-  useFlatcoinTradingState,
-  useUpdateSendToken,
-  useUpdateStableTradingType,
-} from '../state';
+import { useTradingType } from '../hooks/useTradingType';
+import { useFlatcoinTradingState, useUpdateSendToken } from '../state';
 
 const useStableInputsGroup = () => {
   const { account } = useAccount();
@@ -21,9 +18,9 @@ const useStableInputsGroup = () => {
     flatcoinChainId,
     tokens: { collateral, flatcoin },
   } = useFlatcoin();
-  const { sendToken, tradingType, receiveToken } = useFlatcoinTradingState();
+  const { sendToken, receiveToken } = useFlatcoinTradingState();
   const updateSendToken = useUpdateSendToken();
-  const updateTradingType = useUpdateStableTradingType(flatcoinChainId);
+  const [tradingType, updateTradingType] = useTradingType();
   const sendTokenBalance = isEqualAddresses(
     sendToken.address,
     collateral.address,
@@ -78,7 +75,7 @@ export const StableInputsGroup = () => {
         token={sendToken}
         label="Pay with"
         onInputChange={onSendInputChange}
-        maxBalance={sendTokenBalance}
+        maxBalance={sendTokenBalance.string}
         isConnected={!!account}
         autoFocus={!!account}
         tokenOptions={tokenOptions}

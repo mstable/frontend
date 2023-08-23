@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { DEFAULT_TOKEN_DECIMALS } from '@frontend/shared-constants';
 import { useGetTokenPriceHistory } from '@frontend/shared-providers';
 import { CHART_PERIOD, CHART_TYPE } from '@frontend/shared-types';
 import { isNilOrEmpty } from '@frontend/shared-utils';
@@ -9,7 +10,7 @@ import { getUnixTime, set, sub } from 'date-fns';
 import { pluck } from 'ramda';
 import { useIntl } from 'react-intl';
 
-import { useFlatcoin } from '../state';
+import { useFlatcoinType } from './useFlatcoinType';
 
 import type { ChartConfig } from '@frontend/shared-hooks';
 import type { UseTokenPriceHistoryRequest } from '@frontend/shared-providers';
@@ -82,7 +83,7 @@ export const useChartConfig = (): ChartConfig => {
           style: 'currency',
           currency: 'USD',
           minimumFractionDigits: 0,
-          maximumFractionDigits: 4,
+          maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
         }).format(item),
     },
   };
@@ -125,7 +126,7 @@ export const useChartData = ({
 }) => {
   const intl = useIntl();
   const { x = true, y = true } = scales;
-  const { type } = useFlatcoin();
+  const [type] = useFlatcoinType();
   const theme = useTheme();
   const { chartTypes } = useChartConfig();
 
@@ -156,7 +157,7 @@ export const useChartData = ({
         }).format(Number(timestamp)),
         value: price,
       })),
-    [chartType, data],
+    [data],
   );
   const minMax = useMemo(
     () =>
@@ -265,8 +266,8 @@ export const useChartData = ({
       }),
       [
         series,
-        chartTypes,
-        chartType,
+        intl,
+        y,
         theme.palette.divider,
         theme.palette.text.secondary,
         theme.palette.mode,
@@ -276,8 +277,9 @@ export const useChartData = ({
         theme.typography.value5.fontWeight,
         minMax?.min,
         minMax?.max,
+        chartTypes,
+        chartType,
         x,
-        y,
       ],
     );
 

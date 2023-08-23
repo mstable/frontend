@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { DEFAULT_MAX_FILL_PRICE_SLIPPAGE } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-providers';
 import { TransactionActionButton } from '@frontend/shared-ui';
 import BigNumber from 'bignumber.js';
@@ -19,17 +20,15 @@ const useLeveragedTradingButton = () => {
   const {
     needsApproval,
     isInsufficientBalance,
-    receiveToken,
     sendToken,
     leverage,
-    slippage,
     reset,
     rawMaxFillPrice,
   } = useFlatcoinTradingState();
   const delayedOrderContract = getFlatcoinDelayedOrderContract(flatcoinChainId);
   const margin = new BigNumber(sendToken.value || '0')
     .shiftedBy(sendToken.decimals)
-    .minus(keeperFee.rawFee);
+    .minus(keeperFee.exact.toString());
 
   const txConfig = useMemo(() => {
     return {
@@ -39,31 +38,30 @@ const useLeveragedTradingButton = () => {
       args: [
         margin.toFixed(0, BigNumber.ROUND_DOWN),
         margin.multipliedBy(leverage).toFixed(0),
-        new BigNumber(rawMaxFillPrice?.toString() ?? '0')
-          .multipliedBy(100 + +slippage)
+        new BigNumber(rawMaxFillPrice.exact.toString())
+          .multipliedBy(100 + DEFAULT_MAX_FILL_PRICE_SLIPPAGE)
           .dividedBy(100)
           .toFixed(0, BigNumber.ROUND_DOWN),
-        keeperFee.rawFee,
+        keeperFee.exact,
       ],
       chainId: flatcoinChainId,
       enabled:
         !needsApproval &&
         !isInsufficientBalance &&
-        !!receiveToken.value &&
-        !!rawMaxFillPrice,
+        !!sendToken.value &&
+        !rawMaxFillPrice.exact.isZero(),
     };
   }, [
-    delayedOrderContract?.abi,
     delayedOrderContract?.address,
-    flatcoinChainId,
-    isInsufficientBalance,
-    keeperFee.rawFee,
-    leverage,
+    delayedOrderContract?.abi,
     margin,
-    rawMaxFillPrice,
+    leverage,
+    rawMaxFillPrice.exact,
+    keeperFee.exact,
+    flatcoinChainId,
     needsApproval,
-    receiveToken.value,
-    slippage,
+    isInsufficientBalance,
+    sendToken.value,
   ]);
 
   const { config, isError } = usePrepareContractWrite(txConfig);

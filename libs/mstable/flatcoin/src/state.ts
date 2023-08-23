@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { SUPPORTED_FLATCOIN_CHAIN_IDS } from '@frontend/shared-constants';
-import { useSearch } from '@tanstack/react-location';
+import {
+  KEEPER_FEE_SLIPPAGE_COEFF,
+  SUPPORTED_FLATCOIN_CHAIN_IDS,
+} from '@frontend/shared-constants';
+import { BigDecimal } from '@frontend/shared-utils';
 import BigNumber from 'bignumber.js';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { useAccount, useContractReads, useNetwork } from 'wagmi';
 
+import { usePythEthPrice } from './hooks';
 import { useUserLeveragePositions } from './hooks/state/useUserLeveragePositions';
-import { usePythEthPrice } from './hooks/usePythEthPrice';
 import {
   getFlatcoinDelayedOrderContract,
   getFlatcoinKeeperFeeContract,
@@ -20,7 +23,7 @@ import {
 import type { BigNumberish } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
 
-import type { FlatcoinRoute, FlatcoinState, PriceFeedData } from './types';
+import type { FlatcoinState, PriceFeedData } from './types';
 const defaultFlatcoinChainId = SUPPORTED_FLATCOIN_CHAIN_IDS[0];
 const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(
   defaultFlatcoinChainId,
@@ -39,12 +42,10 @@ export const {
     };
   }
 >(({ initialState }) => {
-  const { type } = useSearch<FlatcoinRoute>();
   const { chain } = useNetwork();
   const { address: walletAddress } = useAccount();
 
   const [state, setState] = useState<FlatcoinState>({
-    type,
     configs: initialState.configs,
     data: {
       apy: new Intl.NumberFormat('en-US', { style: 'percent' }).format(0.152),
@@ -70,19 +71,16 @@ export const {
     tokens: {
       collateral: {
         ...COLLATERAL,
-        balance: '',
-        price: '',
+        balance: BigDecimal.ZERO,
+        price: BigDecimal.ZERO,
       },
       flatcoin: {
         ...FLATCOIN,
-        balance: '',
-        price: '',
+        balance: BigDecimal.ZERO,
+        price: BigDecimal.ZERO,
       },
     },
-    keeperFee: {
-      rawFee: '',
-      formattedFee: '',
-    },
+    keeperFee: BigDecimal.ZERO,
   });
 
   const { data: contractData } = useContractReads({
@@ -139,67 +137,57 @@ export const {
       },
     ],
     watch: true,
-    onSuccess(data) {
-      const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(
-        state.flatcoinChainId,
-      );
-      const rawFee = new BigNumber(data[6].toString())
-        .multipliedBy(1.02) // TODO: move to constant
-        .toFixed(0);
-
-      setState(
-        produce((draft) => {
-          draft.tokens.collateral = {
-            ...draft.tokens.collateral,
-            ...COLLATERAL,
-            balance: data?.[0]
-              ? new BigNumber(data[0].toString())
-                  .shiftedBy(-COLLATERAL.decimals)
-                  .toFixed()
-              : '',
-          };
-          draft.tokens.flatcoin = {
-            ...draft.tokens.flatcoin,
-            ...FLATCOIN,
-            balance: data?.[1]
-              ? new BigNumber(data[1].toString())
-                  .shiftedBy(-FLATCOIN.decimals)
-                  .toFixed()
-              : '',
-          };
-          //TODO: check why only 1 announce order?
-          draft.announcedOrder =
-            !data[3] || data[3]['orderData'] === '0x'
-              ? null
-              : {
-                  orderData: data[3]?.['orderData'] as string,
-                  type: data[3]?.['orderType'] as number,
-                  keeperFee: new BigNumber(
-                    (data[3]?.['keeperFee'] as BigNumberish).toString(),
-                  )
-                    .shiftedBy(-COLLATERAL.decimals)
-                    .toFixed(6),
-                  keeperFeeUsd: new BigNumber(
-                    (data[3]?.['keeperFee'] as BigNumberish).toString(),
-                  )
-                    .shiftedBy(-COLLATERAL.decimals)
-                    .multipliedBy(draft.tokens.collateral.price)
-                    .toFixed(6),
-                  executableAtTime: (
-                    data[3]?.['executableAtTime'] as BigNumberish
-                  ).toString(),
-                  maxExecutabilityAge: data?.[4].toString() ?? '',
-                  minExecutabilityAge: data?.[5].toString() ?? '',
-                };
-
-          draft.keeperFee.rawFee = rawFee;
-          draft.keeperFee.formattedFee = new BigNumber(rawFee)
-            .shiftedBy(-COLLATERAL.decimals)
-            .toFixed();
-        }),
-      );
-    },
   });
+
+  useEffect(() => {
+    if (!contractData) return;
+
+    const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(
+      state.flatcoinChainId,
+    );
+
+    setState(
+      produce((draft) => {
+        draft.tokens.collateral = {
+          ...draft.tokens.collateral,
+          ...COLLATERAL,
+          balance: contractData?.[0]
+            ? new BigDecimal(contractData[0].toString())
+            : BigDecimal.ZERO,
+        };
+        draft.tokens.flatcoin = {
+          ...draft.tokens.flatcoin,
+          ...FLATCOIN,
+          balance: contractData?.[1]
+            ? new BigDecimal(contractData[1].toString())
+            : BigDecimal.ZERO,
+        };
+        draft.announcedOrder =
+          !contractData[3] || contractData[3]['orderData'] === '0x'
+            ? null
+            : {
+                orderData: contractData[3]?.['orderData'] as string,
+                type: contractData[3]?.['orderType'] as number,
+                keeperFee: new BigDecimal(
+                  contractData[3]?.['keeperFee'] as BigNumberish,
+                  COLLATERAL.decimals,
+                ),
+                executableAtTime: (
+                  contractData[3]?.['executableAtTime'] as BigNumberish
+                ).toString(),
+                maxExecutabilityAge: contractData?.[4].toString() ?? '',
+                minExecutabilityAge: contractData?.[5].toString() ?? '',
+              };
+
+        draft.keeperFee = new BigDecimal(
+          new BigNumber(contractData[6].toString())
+            .multipliedBy(KEEPER_FEE_SLIPPAGE_COEFF)
+            .toFixed(0),
+          COLLATERAL.decimals,
+        );
+      }),
+    );
+  }, [contractData, state.flatcoinChainId]);
 
   useUserLeveragePositions({
     setState,
@@ -211,20 +199,24 @@ export const {
     ([{ price }]: PriceFeedData[]) => {
       setState(
         produce((draft) => {
-          const collateralPrice = new BigNumber(price.price).shiftedBy(
-            price.expo,
+          const collateralPrice = new BigDecimal(
+            new BigNumber(price.price)
+              .shiftedBy(price.expo)
+              .shiftedBy(state.tokens.collateral.decimals)
+              .toFixed(),
           );
-          draft.tokens.collateral.price = collateralPrice.toFixed();
+          draft.tokens.collateral.price = collateralPrice;
           draft.tokens.flatcoin.price = contractData?.[2]
-            ? new BigNumber(contractData[2].toString())
-                .shiftedBy(-FLATCOIN.decimals)
-                .multipliedBy(collateralPrice)
-                .toFixed()
-            : '';
+            ? new BigDecimal(
+                new BigNumber(contractData[2].toString())
+                  .multipliedBy(collateralPrice.simple)
+                  .toFixed(0),
+              )
+            : BigDecimal.ZERO;
         }),
       );
     },
-    [contractData],
+    [contractData, state.tokens.collateral.decimals],
   );
   usePythEthPrice<PriceFeedData[]>({
     onSuccess: setEthPrice,
@@ -232,16 +224,6 @@ export const {
     enabled: !!contractData?.[2],
     chainId: state.flatcoinChainId,
   });
-
-  useEffect(() => {
-    setState(
-      produce((draft) => {
-        draft.type = ['flatcoin', 'leveragedeth'].includes(type)
-          ? type
-          : 'flatcoin';
-      }),
-    );
-  }, [type]);
 
   useEffect(() => {
     setState(

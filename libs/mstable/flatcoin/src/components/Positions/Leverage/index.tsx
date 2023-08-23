@@ -1,4 +1,5 @@
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
+import { DEFAULT_TOKEN_DECIMALS } from '@frontend/shared-constants';
 import { TokenIconRevamp } from '@frontend/shared-ui';
 import { formatNumberToLimitedDecimals } from '@frontend/shared-utils';
 import {
@@ -30,39 +31,42 @@ const PositionsTableRow: FC<{ position: LeveragedPosition }> = ({
   } = useFlatcoin();
   const { marginDeposited, leverage, entryPrice, profitLoss } = position;
   const marginDepositedInUsd = marginDeposited.simple * entryPrice.simple;
-  const profitLossInUsd = profitLoss.simple * +collateral.price;
+  const profitLossInUsd = profitLoss.simple * collateral.price.simple;
   const isPositiveProfit = profitLoss.exact.gt(0);
   return (
     <TableRow>
       <TableCell>
         <Stack direction="row" alignItems="center" spacing={0.5}>
-          <Typography variant="value4">
-            {formatNumberToLimitedDecimals(marginDeposited.simple, 4)}
+          <Typography variant="value5">
+            {formatNumberToLimitedDecimals(
+              marginDeposited.simple,
+              DEFAULT_TOKEN_DECIMALS,
+            )}
           </Typography>
           <TokenIconRevamp
             sx={{ width: 12, height: 12, ml: 0.5 }}
             symbols={[collateral.symbol]}
           />
-          <Typography variant="value4">{collateral.symbol}</Typography>
+          <Typography variant="value5">{collateral.symbol}</Typography>
         </Stack>
-        <Typography variant="value5" color="text.secondary">
+        <Typography variant="value6" color="text.secondary">
           ≈{formatToUsd({ value: marginDepositedInUsd })}
         </Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="value4">
+        <Typography variant="value5">
           {formatNumberToLimitedDecimals(leverage, 2)}X
         </Typography>
       </TableCell>
       <TableCell>
-        <Typography variant="value4">
+        <Typography variant="value5">
           {formatToUsd({ value: entryPrice.simple })}
         </Typography>
       </TableCell>
       <TableCell>
         <Stack direction="row" alignItems="center" spacing={0.5}>
           <Typography
-            variant="value4"
+            variant="value5"
             color={
               !profitLoss.exact.isZero()
                 ? isPositiveProfit
@@ -72,15 +76,18 @@ const PositionsTableRow: FC<{ position: LeveragedPosition }> = ({
             }
           >
             {isPositiveProfit && '+'}
-            {formatNumberToLimitedDecimals(profitLoss.simple, 4)}{' '}
+            {formatNumberToLimitedDecimals(
+              profitLoss.simple,
+              DEFAULT_TOKEN_DECIMALS,
+            )}{' '}
           </Typography>
           <TokenIconRevamp
             sx={{ width: 12, height: 12, ml: 0.5 }}
             symbols={[collateral.symbol]}
           />
-          <Typography variant="value4">{collateral.symbol}</Typography>
+          <Typography variant="value5">{collateral.symbol}</Typography>
         </Stack>
-        <Typography variant="value5" color="text.secondary">
+        <Typography variant="value6" color="text.secondary">
           ≈{formatToUsd({ value: profitLossInUsd })}
         </Typography>
       </TableCell>

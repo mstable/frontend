@@ -10,6 +10,7 @@ import { usePrepareContractWrite } from 'wagmi';
 
 import { useFlatcoin } from '../../../state';
 import { getFlatcoinDelayedOrderContract } from '../../../utils';
+import { useTradingType } from '../hooks/useTradingType';
 import { useFlatcoinTradingState } from '../state';
 import { ApprovalButton } from './ApprovalButton';
 
@@ -17,22 +18,21 @@ import type { ButtonProps } from '@mui/material';
 import type { FC } from 'react';
 
 const useStableTradingButton = () => {
+  const isDeposit = useTradingType()[0] === 'deposit';
   const { flatcoinChainId, keeperFee } = useFlatcoin();
   const {
     needsApproval,
-    tradingType,
     isInsufficientBalance,
     sendToken,
     receiveToken,
     slippage,
     reset,
   } = useFlatcoinTradingState();
-  const isDeposit = tradingType === 'deposit';
   const lowerThanKeeperFee =
     isDeposit &&
-    new BigNumber(sendToken.value)
+    new BigNumber(sendToken.value || '0')
       .shiftedBy(sendToken.decimals)
-      .lte(keeperFee.rawFee);
+      .lte(keeperFee.exact.toString());
 
   const txConfig = useMemo(() => {
     const delayedOrderContract =
@@ -46,12 +46,12 @@ const useStableTradingButton = () => {
       args: [
         new BigNumber(sendToken.value || '0')
           .shiftedBy(sendToken.decimals)
-          .minus(isDeposit ? keeperFee.rawFee : '0') // On stable deposits keeper fee will be transfered separately
+          .minus(isDeposit ? keeperFee.exact.toString() : '0') // On stable deposits keeper fee will be transferred separately
           .toFixed(0, BigNumber.ROUND_DOWN),
         getSlippageAdjustedValue(receiveToken.value || '0', slippage)
           .shiftedBy(receiveToken.decimals)
           .toFixed(0, BigNumber.ROUND_DOWN),
-        keeperFee.rawFee,
+        keeperFee.exact,
       ],
       chainId: flatcoinChainId,
       enabled:
@@ -63,7 +63,7 @@ const useStableTradingButton = () => {
   }, [
     flatcoinChainId,
     isInsufficientBalance,
-    keeperFee.rawFee,
+    keeperFee,
     needsApproval,
     receiveToken.decimals,
     receiveToken.value,

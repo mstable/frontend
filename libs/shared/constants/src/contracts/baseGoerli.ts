@@ -7,6 +7,7 @@ import {
   FlatcoinOracleModuleABI,
   FlatcoinStableModuleABI,
   FlatcoinVaultABI,
+  FlatcoinViewerABI,
 } from '../abis';
 
 import type { Contract } from '../types';
@@ -33,7 +34,7 @@ export const flatcoinLeveragedModuleBaseGoerli: Contract = {
 };
 
 export const flatcoinKeeperFeeBaseGoerli: Contract = {
-  address: '0x16ecf65e4ca525baf4e5c94006c672024922c557',
+  address: '0xD0375Ddb8D9EFc67Ef08DC119EbA3b35a4764C34',
   chainId: baseGoerli.id,
   abi: FlatcoinKeeperFeeABI,
   name: 'FlatcoinStableModule',
@@ -53,6 +54,13 @@ export const flatcoinOracleModuleBaseGoerli: Contract = {
   name: 'FlatcoinOracleModule',
 };
 
+export const flatcoinViewerContractBaseGoerli: Contract = {
+  address: '0xED1736BaF6fD90506ABb29b20AF59c6A62474eC7',
+  chainId: baseGoerli.id,
+  abi: FlatcoinViewerABI,
+  name: 'FlatcoinViewer',
+};
+
 export const contractsBaseGoerli: Contract[] = [
   flatcoinDelayedOrderBaseGoerli,
   flatcoinStableModuleBaseGoerli,
@@ -60,4 +68,5 @@ export const contractsBaseGoerli: Contract[] = [
   flatcoinVaultBaseGoerli,
   flatcoinLeveragedModuleBaseGoerli,
   flatcoinOracleModuleBaseGoerli,
+  flatcoinViewerContractBaseGoerli,
 ];
