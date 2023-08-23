@@ -1,3 +1,3 @@
-import { useFlatcoin } from '../state';
+import { useFlatcoinType } from './useFlatcoinType';
 
-export const useIsLeveragedType = () => useFlatcoin().type === 'leveragedeth';
+export const useIsLeveragedType = () => useFlatcoinType()[0] === 'leveragedeth';

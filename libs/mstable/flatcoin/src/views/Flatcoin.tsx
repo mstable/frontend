@@ -15,9 +15,17 @@ import type { FC } from 'react';
 
 import type { PositionType } from '../types';
 
+// TODO: read from config constants
+const configs: Record<Lowercase<PositionType>, any> = {
+  flatcoin: {
+    name: 'Flatcoin',
+  },
+  leveragedeth: {
+    name: 'Leveraged ETH',
+  },
+};
+
 const FlatcoinContent: FC = () => {
-  // const intl = useIntl();
-  // const navigate = useNavigate();
   const track = useTrack();
   const isMobile = useIsMobile();
 
@@ -130,16 +138,6 @@ const FlatcoinContent: FC = () => {
 };
 
 export const Flatcoin = () => {
-  // TODO: read from config constants
-  const configs: Record<Lowercase<PositionType>, any> = {
-    flatcoin: {
-      name: 'Flatcoin',
-    },
-    leveragedeth: {
-      name: 'Leveraged ETH',
-    },
-  };
-
   return (
     <FlatcoinProvider
       initialState={{

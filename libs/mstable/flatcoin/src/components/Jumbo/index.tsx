@@ -2,6 +2,7 @@ import { ValueLabel } from '@frontend/shared-ui';
 import { Divider, Skeleton, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
+import { useFlatcoinType } from '../../hooks';
 import { useFlatcoin } from '../../state';
 
 import type { StackProps } from '@mui/material';
@@ -95,7 +96,8 @@ const LeveragedEthValues = () => {
 };
 
 export const Jumbo = (props: StackProps) => {
-  const { configs, type } = useFlatcoin();
+  const [type] = useFlatcoinType();
+  const { configs } = useFlatcoin();
 
   return (
     <Stack

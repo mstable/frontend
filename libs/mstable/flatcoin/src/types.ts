@@ -9,6 +9,7 @@ export type FlatcoinRoute = MakeGenerics<{
     chartPeriod?: CHART_PERIOD;
     chartType?: CHART_TYPE;
     type?: PositionType;
+    action?: TradingType;
   };
 }>;
 
@@ -43,7 +44,6 @@ export interface FlatcoinTradingState {
   receiveToken: DynamicTradingToken;
   leverage: string;
   rawMaxFillPrice: BigDecimal;
-  tradingType: TradingType;
   slippage: string;
   isInfiniteAllowance: boolean;
   needsApproval: boolean;
@@ -67,7 +67,6 @@ export type FlatcoinState = {
   configs: Record<PositionType, any>;
   leveragedPositions?: LeveragedPosition[];
   announcedOrder: Order | null;
-  type: PositionType;
   flatcoinChainId: number;
   keeperFee: BigDecimal;
 };

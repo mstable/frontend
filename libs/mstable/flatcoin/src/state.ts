@@ -5,14 +5,13 @@ import {
   SUPPORTED_FLATCOIN_CHAIN_IDS,
 } from '@frontend/shared-constants';
 import { BigDecimal } from '@frontend/shared-utils';
-import { useSearch } from '@tanstack/react-location';
 import BigNumber from 'bignumber.js';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { useAccount, useContractReads, useNetwork } from 'wagmi';
 
+import { usePythEthPrice } from './hooks';
 import { useUserLeveragePositions } from './hooks/state/useUserLeveragePositions';
-import { usePythEthPrice } from './hooks/usePythEthPrice';
 import {
   getFlatcoinDelayedOrderContract,
   getFlatcoinKeeperFeeContract,
@@ -24,7 +23,7 @@ import {
 import type { BigNumberish } from 'ethers';
 import type { Dispatch, SetStateAction } from 'react';
 
-import type { FlatcoinRoute, FlatcoinState, PriceFeedData } from './types';
+import type { FlatcoinState, PriceFeedData } from './types';
 const defaultFlatcoinChainId = SUPPORTED_FLATCOIN_CHAIN_IDS[0];
 const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(
   defaultFlatcoinChainId,
@@ -43,12 +42,10 @@ export const {
     };
   }
 >(({ initialState }) => {
-  const { type } = useSearch<FlatcoinRoute>();
   const { chain } = useNetwork();
   const { address: walletAddress } = useAccount();
 
   const [state, setState] = useState<FlatcoinState>({
-    type,
     configs: initialState.configs,
     data: {
       apy: new Intl.NumberFormat('en-US', { style: 'percent' }).format(0.152),
@@ -227,16 +224,6 @@ export const {
     enabled: !!contractData?.[2],
     chainId: state.flatcoinChainId,
   });
-
-  useEffect(() => {
-    setState(
-      produce((draft) => {
-        draft.type = ['flatcoin', 'leveragedeth'].includes(type)
-          ? type
-          : 'flatcoin';
-      }),
-    );
-  }, [type]);
 
   useEffect(() => {
     setState(

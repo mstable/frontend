@@ -1,11 +1,10 @@
 import { useMemo } from 'react';
 
 import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
-import { useNavigate } from '@tanstack/react-location';
-import produce from 'immer';
 import { useIntl } from 'react-intl';
 
-import { useFlatcoin } from '../../state';
+import { useFlatcoinType } from '../../hooks';
+import { useTradingType } from './hooks/useTradingType';
 import { FlatcoinTradingStateProvider } from './state';
 import { TradingButton } from './TradingButton';
 import { TradingInputs } from './TradingInputs';
@@ -15,7 +14,7 @@ import { TradingSettings } from './TradingSettings';
 import type { CardProps } from '@mui/material';
 import type { FC } from 'react';
 
-import type { FlatcoinRoute, PositionType } from '../../types';
+import type { PositionType } from '../../types';
 
 const TABS: PositionType[] = ['flatcoin', 'leveragedeth'];
 const TRADING_TAB_INDEX_MAP = TABS.reduce<Record<number, PositionType>>(
@@ -28,18 +27,14 @@ const TRADING_TAB_INDEX_MAP = TABS.reduce<Record<number, PositionType>>(
 
 const useTradingPanel = () => {
   const intl = useIntl();
-  const navigate = useNavigate<FlatcoinRoute>();
-  const { type } = useFlatcoin();
+  const [type, updateFlatcoinType] = useFlatcoinType();
+  const [, updateTradingType] = useTradingType();
 
   const onTabChange = (index: number) => {
-    navigate({
-      replace: true,
-      search: produce((draft) => {
-        draft.type = TRADING_TAB_INDEX_MAP[index];
-      }),
-    });
+    const type = TRADING_TAB_INDEX_MAP[index];
+    updateFlatcoinType(type);
+    type === 'leveragedeth' && updateTradingType('deposit');
   };
-
   const tabNameMap: Record<PositionType, string> = useMemo(
     () => ({
       flatcoin: intl.formatMessage({
