@@ -17,6 +17,7 @@ import {
   getFlatcoinKeeperFeeContract,
   getFlatcoinLeveragedModuleContract,
   getFlatcoinTokensByChain,
+  getFlatcoinViewerContract,
   isFlatcoinSupportedChain,
 } from './utils';
 
@@ -49,11 +50,7 @@ export const {
     configs: initialState.configs,
     data: {
       apy: new Intl.NumberFormat('en-US', { style: 'percent' }).format(0.152),
-      tvl: new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        compactDisplay: 'short',
-      }).format(1234567),
+      tvl: '',
       fundingRate: new Intl.NumberFormat('en-US', {
         style: 'percent',
         minimumFractionDigits: 3,
@@ -135,6 +132,13 @@ export const {
         functionName: 'getKeeperFee',
         args: [],
       },
+      {
+        address: getFlatcoinViewerContract(state.flatcoinChainId).address,
+        chainId: state.flatcoinChainId,
+        abi: getFlatcoinViewerContract(state.flatcoinChainId).abi,
+        functionName: 'getFlatcoinTVL',
+        args: [],
+      },
     ],
     watch: true,
   });
@@ -185,6 +189,10 @@ export const {
             .toFixed(0),
           COLLATERAL.decimals,
         );
+
+        draft.data.tvl = BigNumber.isBigNumber(contractData[7])
+          ? new BigDecimal(contractData[7].toString()).usd
+          : BigDecimal.ZERO.usd;
       }),
     );
   }, [contractData, state.flatcoinChainId]);
