@@ -17,6 +17,7 @@ import {
   getFlatcoinKeeperFeeContract,
   getFlatcoinLeveragedModuleContract,
   getFlatcoinTokensByChain,
+  getFlatcoinVaultContract,
   getFlatcoinViewerContract,
   isFlatcoinSupportedChain,
 } from './utils';
@@ -51,16 +52,9 @@ export const {
     data: {
       apy: new Intl.NumberFormat('en-US', { style: 'percent' }).format(0.152),
       tvl: '',
-      fundingRate: new Intl.NumberFormat('en-US', {
-        style: 'percent',
-        minimumFractionDigits: 3,
-      }).format(-0.00001),
-      openInterest: new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        compactDisplay: 'short',
-      }).format(1234567),
-      skew: new Intl.NumberFormat('en-US', { style: 'percent' }).format(0.48),
+      fundingRate: NaN,
+      openInterest: '',
+      skew: NaN,
     },
     leveragedPositions: [],
     announcedOrder: null,
@@ -139,6 +133,20 @@ export const {
         functionName: 'getFlatcoinTVL',
         args: [],
       },
+      {
+        address: getFlatcoinVaultContract(state.flatcoinChainId).address,
+        chainId: state.flatcoinChainId,
+        abi: getFlatcoinVaultContract(state.flatcoinChainId).abi,
+        functionName: 'getVaultSummary',
+        args: [],
+      },
+      {
+        address: getFlatcoinVaultContract(state.flatcoinChainId).address,
+        chainId: state.flatcoinChainId,
+        abi: getFlatcoinVaultContract(state.flatcoinChainId).abi,
+        functionName: 'getCurrentFundingRate',
+        args: [],
+      },
     ],
     watch: true,
   });
@@ -193,6 +201,27 @@ export const {
         draft.data.tvl = BigNumber.isBigNumber(contractData[7])
           ? new BigDecimal(contractData[7].toString()).usd
           : BigDecimal.ZERO.usd;
+
+        draft.data.skew = BigNumber.isBigNumber(
+          contractData?.[8]?.['marketSkew'],
+        )
+          ? new BigDecimal(contractData[8]['marketSkew'].toString())
+              .simpleRounded
+          : 0;
+
+        draft.data.fundingRate = BigNumber.isBigNumber(contractData?.[9])
+          ? new BigDecimal(contractData[9].toString()).simpleRounded
+          : 0;
+
+        draft.data.openInterest = BigNumber.isBigNumber(
+          contractData?.[8]?.['globalPositions']?.['sizeOpenedTotal'],
+        )
+          ? new BigDecimal(
+              contractData?.[8]?.['globalPositions']?.[
+                'sizeOpenedTotal'
+              ].toString(),
+            ).usd
+          : '';
       }),
     );
   }, [contractData, state.flatcoinChainId]);

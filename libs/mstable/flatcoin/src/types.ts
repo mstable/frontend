@@ -56,9 +56,9 @@ export type FlatcoinState = {
   data: {
     apy?: string;
     tvl?: string;
-    fundingRate?: string;
+    fundingRate?: number;
     openInterest?: string;
-    skew?: string;
+    skew?: number;
   };
   tokens: {
     collateral: TokenInfo;

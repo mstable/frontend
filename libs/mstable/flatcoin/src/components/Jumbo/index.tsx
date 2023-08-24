@@ -7,6 +7,28 @@ import { useFlatcoin } from '../../state';
 
 import type { StackProps } from '@mui/material';
 
+const resolveSkewPosition = (value: number) => {
+  if (value > 0) {
+    return 'long';
+  }
+  if (value < 0) {
+    return 'short';
+  }
+
+  return '';
+};
+
+const resolveColor = (value: number) => {
+  if (value > 0) {
+    return 'success.main';
+  }
+  if (value < 0) {
+    return 'error.main';
+  }
+
+  return undefined;
+};
+
 const FlatcoinValues = () => {
   const intl = useIntl();
   const { data } = useFlatcoin();
@@ -42,7 +64,6 @@ const FlatcoinValues = () => {
     </>
   );
 };
-
 const LeveragedEthValues = () => {
   const intl = useIntl();
   const { data } = useFlatcoin();
@@ -59,10 +80,12 @@ const LeveragedEthValues = () => {
           id: 'CB1174',
         })}
       >
-        {!data.fundingRate ? (
+        {isNaN(data.fundingRate) ? (
           <Skeleton height={24} width={60} />
         ) : (
-          <Typography variant="value2">{data.fundingRate}</Typography>
+          <Typography variant="value2" color={resolveColor(data.fundingRate)}>
+            {data.fundingRate}
+          </Typography>
         )}
       </ValueLabel>
       <ValueLabel
@@ -85,10 +108,12 @@ const LeveragedEthValues = () => {
         label={intl.formatMessage({ defaultMessage: 'Skew', id: 'MQ02gW' })}
         hint={intl.formatMessage({ defaultMessage: 'Skew', id: 'MQ02gW' })}
       >
-        {!data.skew ? (
+        {isNaN(data.skew) ? (
           <Skeleton height={24} width={60} />
         ) : (
-          <Typography variant="value2">{data.skew}</Typography>
+          <Typography variant="value2" color={resolveColor(data.skew)}>
+            {data.skew}% {resolveSkewPosition(data.skew)}
+          </Typography>
         )}
       </ValueLabel>
     </>
