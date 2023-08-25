@@ -15,7 +15,6 @@ import { useUserLeveragePositions } from './hooks/state/useUserLeveragePositions
 import {
   getFlatcoinDelayedOrderContract,
   getFlatcoinKeeperFeeContract,
-  getFlatcoinLeveragedModuleContract,
   getFlatcoinTokensByChain,
   isFlatcoinSupportedChain,
 } from './utils';
@@ -121,12 +120,11 @@ export const {
         args: [],
       },
       {
-        address: getFlatcoinLeveragedModuleContract(state.flatcoinChainId)
-          .address,
+        address: getFlatcoinDelayedOrderContract(state.flatcoinChainId).address,
         chainId: state.flatcoinChainId,
-        abi: getFlatcoinLeveragedModuleContract(state.flatcoinChainId).abi,
-        functionName: 'balanceOf',
-        args: [walletAddress],
+        abi: getFlatcoinDelayedOrderContract(state.flatcoinChainId).abi,
+        functionName: 'minExecutabilityAge',
+        args: [],
       },
       {
         address: getFlatcoinKeeperFeeContract(state.flatcoinChainId).address,
@@ -192,7 +190,6 @@ export const {
   useUserLeveragePositions({
     setState,
     chainId: state.flatcoinChainId,
-    userLeverageBalance: contractData?.[5]?.toString() ?? '',
   });
 
   const setEthPrice = useCallback(

@@ -17,8 +17,10 @@ import {
 } from '@frontend/shared-utils';
 import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
+import { useContractRead } from 'wagmi';
 
 import { useFlatcoin } from '../../../state';
+import { getFlatcoinLeveragedModuleContract } from '../../../utils';
 import { ApproveLeveragePositionButton } from './ApproveLeveragePositionButton';
 import { CloseLeveragePositionButton } from './CloseLeveragePositionButton';
 
@@ -32,18 +34,18 @@ interface CloseLeveragePositionModalProps extends ButtonProps {
 }
 
 const useCloseLeveragePositionModal = ({
-  approvedAddress,
   entryPrice,
   marginDeposited,
   marginAfterSettlement,
   profitLoss,
+  positionId,
 }: LeveragedPosition) => {
   const {
     tokens: { collateral },
     keeperFee,
+    flatcoinChainId,
   } = useFlatcoin();
   const [opened, setOpened] = useState(false);
-  const notApproved = isEqualAddresses(approvedAddress, ZERO_ADDRESS);
   const marginDepositedInUsd = marginDeposited.simple * entryPrice.simple;
   const receiveAmount = new BigDecimal(
     marginAfterSettlement.exact.sub(keeperFee.exact),
@@ -51,6 +53,20 @@ const useCloseLeveragePositionModal = ({
   const receiveAmountInUsd = receiveAmount * collateral.price.simple;
   const profitLossInUsd = profitLoss.simple * collateral.price.simple;
   const keeperFeeInUsd = keeperFee.simple * collateral.price.simple;
+
+  const { data: approvedAddress, refetch } = useContractRead({
+    address: getFlatcoinLeveragedModuleContract(flatcoinChainId).address,
+    chainId: flatcoinChainId,
+    abi: getFlatcoinLeveragedModuleContract(flatcoinChainId).abi,
+    functionName: 'getApproved',
+    args: [positionId],
+    enabled: opened,
+  });
+
+  const notApproved = isEqualAddresses(
+    (approvedAddress as unknown as string) ?? ZERO_ADDRESS,
+    ZERO_ADDRESS,
+  );
 
   return {
     opened,
@@ -63,6 +79,7 @@ const useCloseLeveragePositionModal = ({
     receiveAmountInUsd,
     profitLossInUsd,
     keeperFeeInUsd,
+    refetch,
   };
 };
 
@@ -82,6 +99,7 @@ export const CloseLeveragePositionModal: FC<
     receiveAmountInUsd,
     profitLossInUsd,
     keeperFeeInUsd,
+    refetch,
   } = useCloseLeveragePositionModal(position);
 
   return (
@@ -197,6 +215,7 @@ export const CloseLeveragePositionModal: FC<
             <ApproveLeveragePositionButton
               tokenId={position.positionId}
               sx={{ width: '100%' }}
+              onSettled={refetch}
             />
           ) : (
             <CloseLeveragePositionButton

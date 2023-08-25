@@ -14,10 +14,12 @@ import type { FC } from 'react';
 
 interface Props extends ButtonProps {
   tokenId: string;
+  onSettled: () => void;
 }
 
 export const ApproveLeveragePositionButton: FC<Props> = ({
   tokenId,
+  onSettled,
   ...buttonProps
 }) => {
   const intl = useIntl();
@@ -46,6 +48,7 @@ export const ApproveLeveragePositionButton: FC<Props> = ({
         defaultMessage: 'Approve',
         id: 'WCaf5C',
       })}
+      onSettled={onSettled}
       {...buttonProps}
     />
   );
