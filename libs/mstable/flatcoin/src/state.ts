@@ -52,9 +52,6 @@ export const {
     data: {
       apy: new Intl.NumberFormat('en-US', { style: 'percent' }).format(0.152),
       tvl: '',
-      fundingRate: NaN,
-      openInterest: '',
-      skew: NaN,
     },
     leveragedPositions: [],
     announcedOrder: null,
@@ -202,26 +199,21 @@ export const {
           ? new BigDecimal(contractData[7].toString()).usd
           : BigDecimal.ZERO.usd;
 
-        draft.data.skew = BigNumber.isBigNumber(
-          contractData?.[8]?.['marketSkew'],
-        )
+        draft.data.skew = contractData[8]
           ? new BigDecimal(contractData[8]['marketSkew'].toString())
-              .simpleRounded
-          : 0;
+          : BigDecimal.ZERO;
 
-        draft.data.fundingRate = BigNumber.isBigNumber(contractData?.[9])
-          ? new BigDecimal(contractData[9].toString()).simpleRounded
-          : 0;
+        draft.data.fundingRate = contractData[9]
+          ? new BigDecimal(contractData[9].toString())
+          : BigDecimal.ZERO;
 
-        draft.data.openInterest = BigNumber.isBigNumber(
-          contractData?.[8]?.['globalPositions']?.['sizeOpenedTotal'],
-        )
+        draft.data.openInterest = contractData[8]
           ? new BigDecimal(
               contractData?.[8]?.['globalPositions']?.[
                 'sizeOpenedTotal'
               ].toString(),
-            ).usd
-          : '';
+            )
+          : BigDecimal.ZERO;
       }),
     );
   }, [contractData, state.flatcoinChainId]);

@@ -1,4 +1,6 @@
+import { DEFAULT_TOKEN_DECIMALS } from '@frontend/shared-constants';
 import { ValueLabel } from '@frontend/shared-ui';
+import { formatNumberToLimitedDecimals } from '@frontend/shared-utils';
 import { Divider, Skeleton, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
@@ -66,8 +68,10 @@ const FlatcoinValues = () => {
 };
 const LeveragedEthValues = () => {
   const intl = useIntl();
-  const { data } = useFlatcoin();
-
+  const {
+    data,
+    tokens: { collateral },
+  } = useFlatcoin();
   return (
     <>
       <ValueLabel
@@ -80,11 +84,14 @@ const LeveragedEthValues = () => {
           id: 'CB1174',
         })}
       >
-        {isNaN(data.fundingRate) ? (
+        {!data.fundingRate ? (
           <Skeleton height={24} width={60} />
         ) : (
-          <Typography variant="value2" color={resolveColor(data.fundingRate)}>
-            {data.fundingRate}
+          <Typography
+            variant="value2"
+            color={resolveColor(data.fundingRate.simple)}
+          >
+            {formatNumberToLimitedDecimals(data.fundingRate.simple, 6)}%
           </Typography>
         )}
       </ValueLabel>
@@ -101,19 +108,37 @@ const LeveragedEthValues = () => {
         {!data.openInterest ? (
           <Skeleton height={24} width={60} />
         ) : (
-          <Typography variant="value2">{data.openInterest}</Typography>
+          <Typography variant="value3">
+            {formatNumberToLimitedDecimals(
+              data.openInterest.simple,
+              DEFAULT_TOKEN_DECIMALS,
+            )}{' '}
+            {collateral.symbol}
+          </Typography>
         )}
       </ValueLabel>
       <ValueLabel
         label={intl.formatMessage({ defaultMessage: 'Skew', id: 'MQ02gW' })}
         hint={intl.formatMessage({ defaultMessage: 'Skew', id: 'MQ02gW' })}
+        components={{
+          valueContainer: {
+            spacing: 1,
+          },
+        }}
       >
-        {isNaN(data.skew) ? (
+        {!data.skew ? (
           <Skeleton height={24} width={60} />
         ) : (
-          <Typography variant="value2" color={resolveColor(data.skew)}>
-            {data.skew}% {resolveSkewPosition(data.skew)}
-          </Typography>
+          <>
+            <Typography variant="value3" color={resolveColor(data.skew.simple)}>
+              {resolveSkewPosition(data.skew.simple)}{' '}
+              {formatNumberToLimitedDecimals(
+                data.skew.simple,
+                DEFAULT_TOKEN_DECIMALS,
+              )}
+            </Typography>
+            <Typography variant="value3">{collateral.symbol}</Typography>
+          </>
         )}
       </ValueLabel>
     </>
