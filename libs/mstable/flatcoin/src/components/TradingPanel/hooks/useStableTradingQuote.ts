@@ -7,9 +7,11 @@ import { useContractRead } from 'wagmi';
 import { useFlatcoin } from '../../../state';
 import { getFlatcoinDelayedOrderContract } from '../../../utils';
 import { useFlatcoinTradingState, useUpdateReceiveToken } from '../state';
+import { useTradingType } from './useTradingType';
 
 export const useStableTradingQuote = () => {
-  const { sendToken, tradingType, receiveToken } = useFlatcoinTradingState();
+  const [tradingType] = useTradingType();
+  const { sendToken, receiveToken } = useFlatcoinTradingState();
   const { flatcoinChainId, keeperFee } = useFlatcoin();
   const updateReceiveToken = useUpdateReceiveToken();
   const isDeposit = tradingType === 'deposit';
