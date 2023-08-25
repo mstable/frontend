@@ -3,6 +3,7 @@ import {
   flatcoinKeeperFeeBaseGoerli,
   flatcoinLeveragedModuleBaseGoerli,
   flatcoinOracleModuleBaseGoerli,
+  flatcoinVaultBaseGoerli,
   flatcoinViewerContractBaseGoerli,
 } from '@frontend/shared-constants';
 import { baseGoerli } from 'wagmi/chains';
@@ -47,6 +48,15 @@ export const getFlatcoinViewerContract = (chainId: number) => {
   switch (chainId) {
     case baseGoerli.id:
       return flatcoinViewerContractBaseGoerli;
+    default:
+      return null;
+  }
+};
+
+export const getFlatcoinVaultContract = (chainId: number) => {
+  switch (chainId) {
+    case baseGoerli.id:
+      return flatcoinVaultBaseGoerli;
     default:
       return null;
   }

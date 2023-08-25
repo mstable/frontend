@@ -16,6 +16,8 @@ import {
   getFlatcoinDelayedOrderContract,
   getFlatcoinKeeperFeeContract,
   getFlatcoinTokensByChain,
+  getFlatcoinVaultContract,
+  getFlatcoinViewerContract,
   isFlatcoinSupportedChain,
 } from './utils';
 
@@ -48,21 +50,7 @@ export const {
     configs: initialState.configs,
     data: {
       apy: new Intl.NumberFormat('en-US', { style: 'percent' }).format(0.152),
-      tvl: new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        compactDisplay: 'short',
-      }).format(1234567),
-      fundingRate: new Intl.NumberFormat('en-US', {
-        style: 'percent',
-        minimumFractionDigits: 3,
-      }).format(-0.00001),
-      openInterest: new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        compactDisplay: 'short',
-      }).format(1234567),
-      skew: new Intl.NumberFormat('en-US', { style: 'percent' }).format(0.48),
+      tvl: '',
     },
     leveragedPositions: [],
     announcedOrder: null,
@@ -133,6 +121,27 @@ export const {
         functionName: 'getKeeperFee',
         args: [],
       },
+      {
+        address: getFlatcoinViewerContract(state.flatcoinChainId).address,
+        chainId: state.flatcoinChainId,
+        abi: getFlatcoinViewerContract(state.flatcoinChainId).abi,
+        functionName: 'getFlatcoinTVL',
+        args: [],
+      },
+      {
+        address: getFlatcoinVaultContract(state.flatcoinChainId).address,
+        chainId: state.flatcoinChainId,
+        abi: getFlatcoinVaultContract(state.flatcoinChainId).abi,
+        functionName: 'getVaultSummary',
+        args: [],
+      },
+      {
+        address: getFlatcoinVaultContract(state.flatcoinChainId).address,
+        chainId: state.flatcoinChainId,
+        abi: getFlatcoinVaultContract(state.flatcoinChainId).abi,
+        functionName: 'getCurrentFundingRate',
+        args: [],
+      },
     ],
     watch: true,
   });
@@ -183,6 +192,26 @@ export const {
             .toFixed(0),
           COLLATERAL.decimals,
         );
+
+        draft.data.tvl = BigNumber.isBigNumber(contractData[7])
+          ? new BigDecimal(contractData[7].toString()).usd
+          : BigDecimal.ZERO.usd;
+
+        draft.data.skew = contractData[8]
+          ? new BigDecimal(contractData[8]['marketSkew'].toString())
+          : BigDecimal.ZERO;
+
+        draft.data.fundingRate = contractData[9]
+          ? new BigDecimal(contractData[9].toString())
+          : BigDecimal.ZERO;
+
+        draft.data.openInterest = contractData[8]
+          ? new BigDecimal(
+              contractData?.[8]?.['globalPositions']?.[
+                'sizeOpenedTotal'
+              ].toString(),
+            )
+          : BigDecimal.ZERO;
       }),
     );
   }, [contractData, state.flatcoinChainId]);
