@@ -64,12 +64,12 @@ const useLeveragedTradingButton = () => {
     sendToken.value,
   ]);
 
-  const { config, isError } = usePrepareContractWrite(txConfig);
+  const { config, error } = usePrepareContractWrite(txConfig);
 
   return {
     needsApproval,
     config,
-    isError,
+    error,
     onSettled: reset,
   };
 };
@@ -77,7 +77,7 @@ const useLeveragedTradingButton = () => {
 export const LeveragedTradingButton: FC<ButtonProps> = (props) => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
-  const { needsApproval, config, onSettled, isError } =
+  const { needsApproval, config, onSettled, error } =
     useLeveragedTradingButton();
 
   if (needsApproval) {
@@ -88,7 +88,7 @@ export const LeveragedTradingButton: FC<ButtonProps> = (props) => {
     <TransactionActionButton
       config={config}
       pushNotification={pushNotification}
-      isError={isError}
+      error={error}
       transactionName={intl.formatMessage({
         defaultMessage: 'Announce Leverage Position',
         id: 'qcHHVw',
@@ -98,7 +98,7 @@ export const LeveragedTradingButton: FC<ButtonProps> = (props) => {
         id: 'Px2xWV',
       })}
       onSettled={onSettled}
-      {...props}
+      components={{ button: props }}
     />
   );
 };

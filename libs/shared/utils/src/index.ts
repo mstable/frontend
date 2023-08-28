@@ -10,5 +10,6 @@ export * from './isNilOrEmpty';
 export * from './maths';
 export * from './random';
 export * from './tokens';
+export * from './transactionErrors';
 export * from './types';
 export * from './web3';

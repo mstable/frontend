@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { DEFAULT_MAX_SLIPPAGE } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-providers';
 import { TransactionActionButton } from '@frontend/shared-ui';
 import { getSlippageAdjustedValue } from '@frontend/shared-utils';
@@ -48,7 +49,10 @@ const useStableTradingButton = () => {
           .shiftedBy(sendToken.decimals)
           .minus(isDeposit ? keeperFee.exact.toString() : '0') // On stable deposits keeper fee will be transferred separately
           .toFixed(0, BigNumber.ROUND_DOWN),
-        getSlippageAdjustedValue(receiveToken.value || '0', slippage)
+        getSlippageAdjustedValue(
+          receiveToken.value || '0',
+          slippage || DEFAULT_MAX_SLIPPAGE,
+        )
           .shiftedBy(receiveToken.decimals)
           .toFixed(0, BigNumber.ROUND_DOWN),
         keeperFee.exact,
@@ -74,11 +78,11 @@ const useStableTradingButton = () => {
     lowerThanKeeperFee,
   ]);
 
-  const { config, isError } = usePrepareContractWrite(txConfig);
+  const { config, error } = usePrepareContractWrite(txConfig);
 
   return {
     needsApproval,
-    isError,
+    error,
     lowerThanKeeperFee,
     onSettled: reset,
     config,
@@ -92,7 +96,7 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
   const {
     needsApproval,
     lowerThanKeeperFee,
-    isError,
+    error,
     config,
     isDeposit,
     onSettled,
@@ -118,7 +122,7 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
     <TransactionActionButton
       config={config}
       pushNotification={pushNotification}
-      isError={isError}
+      error={error}
       transactionName={
         isDeposit
           ? intl.formatMessage({
@@ -135,7 +139,7 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
         id: '90axO4',
       })}
       onSettled={onSettled}
-      {...props}
+      components={{ button: props }}
     />
   );
 };

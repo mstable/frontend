@@ -11,7 +11,7 @@ import {
   getFlatcoinOracleModuleContract,
 } from '../../../utils';
 
-import type { ButtonProps } from '@mui/material';
+import type { StackProps } from '@mui/material';
 import type { FC } from 'react';
 
 import type { LeveragedPosition } from '../../../types';
@@ -40,7 +40,7 @@ const useCloseLeveragePositionButton = ({
         .toFixed(0)
     : '';
 
-  const { config, isError } = usePrepareContractWrite({
+  const { config, error } = usePrepareContractWrite({
     address: getFlatcoinDelayedOrderContract(flatcoinChainId)?.address,
     abi: getFlatcoinDelayedOrderContract(flatcoinChainId)?.abi,
     functionName: 'announceLeverageClose',
@@ -50,24 +50,24 @@ const useCloseLeveragePositionButton = ({
   });
 
   return {
-    isError,
+    error,
     config,
   };
 };
 
-export const CloseLeveragePositionButton: FC<Props & ButtonProps> = ({
+export const CloseLeveragePositionButton: FC<Props & StackProps> = ({
   position,
-  ...buttonProps
+  ...stackProps
 }) => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
-  const { isError, config } = useCloseLeveragePositionButton(position);
+  const { error, config } = useCloseLeveragePositionButton(position);
 
   return (
     <TransactionActionButton
       config={config}
       pushNotification={pushNotification}
-      isError={isError}
+      error={error}
       transactionName={intl.formatMessage({
         defaultMessage: 'Announce Leverage Position Close',
         id: '1v6yZm',
@@ -76,7 +76,7 @@ export const CloseLeveragePositionButton: FC<Props & ButtonProps> = ({
         defaultMessage: 'Close',
         id: 'rbrahO',
       })}
-      {...buttonProps}
+      components={{ buttonContainer: stackProps }}
     />
   );
 };

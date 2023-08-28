@@ -1,34 +1,45 @@
-import { getBlockExplorerUrl } from '@frontend/shared-utils';
-import { Button, CircularProgress } from '@mui/material';
+import {
+  getBlockExplorerUrl,
+  getTransactionErrorHint,
+} from '@frontend/shared-utils';
+import { Button, CircularProgress, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useContractWrite, useNetwork, useWaitForTransaction } from 'wagmi';
 
 import { ViewEtherscanLink } from '../Links';
 
-import type { ButtonProps } from '@mui/material';
+import type { ButtonProps, StackProps } from '@mui/material';
 import type { PrepareWriteContractResult } from '@wagmi/core';
 import type { FC } from 'react';
+import type { usePrepareContractWrite } from 'wagmi';
 
-interface TransactionActionButtonProps extends ButtonProps {
+interface TransactionActionButtonProps {
   config: PrepareWriteContractResult<unknown[], any, number>;
-  isError?: boolean;
   transactionName: string;
   actionName: string;
   pushNotification: (config: any) => void;
   onSettled?: () => void;
+  error: ReturnType<typeof usePrepareContractWrite>['error'];
+  components?: {
+    button?: ButtonProps;
+    buttonContainer?: StackProps;
+  };
 }
 
 export const TransactionActionButton: FC<TransactionActionButtonProps> = ({
   config,
   transactionName,
   actionName,
-  isError,
+  error,
   pushNotification,
   onSettled,
-  ...buttonProps
+  components,
 }) => {
   const intl = useIntl();
   const { chain } = useNetwork();
+  const errorHint = error?.message
+    ? getTransactionErrorHint(error.message)
+    : null;
 
   const {
     data: writeData,
@@ -101,26 +112,44 @@ export const TransactionActionButton: FC<TransactionActionButtonProps> = ({
 
   if (isWriteLoading) {
     return (
-      <Button {...buttonProps} disabled>
-        {intl.formatMessage({
-          defaultMessage: 'Sign Transaction',
-          id: 'w1LBDB',
-        })}
-      </Button>
+      <Stack {...components?.buttonContainer}>
+        <Button {...components.button} disabled>
+          {intl.formatMessage({
+            defaultMessage: 'Sign Transaction',
+            id: 'w1LBDB',
+          })}
+        </Button>
+      </Stack>
     );
   }
 
   if (isWriteSuccess && !isSubmitSuccess) {
     return (
-      <Button {...buttonProps} disabled>
-        <CircularProgress size={20} />
-      </Button>
+      <Stack {...components?.buttonContainer}>
+        <Button {...components.button} disabled>
+          <CircularProgress size={20} />
+        </Button>
+      </Stack>
     );
   }
 
   return (
-    <Button {...buttonProps} disabled={isError} onClick={write}>
-      {actionName}
-    </Button>
+    <Stack spacing={1} {...components?.buttonContainer}>
+      {!!errorHint && (
+        <Stack>
+          <Typography variant="hint" color="error.main">
+            {errorHint.name}
+          </Typography>
+          {!!errorHint.action && (
+            <Typography variant="hint" color="error.main">
+              {errorHint.action}
+            </Typography>
+          )}
+        </Stack>
+      )}
+      <Button {...components.button} disabled={!!error} onClick={write}>
+        {actionName}
+      </Button>
+    </Stack>
   );
 };

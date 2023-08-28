@@ -9,10 +9,10 @@ import {
   getFlatcoinLeveragedModuleContract,
 } from '../../../utils';
 
-import type { ButtonProps } from '@mui/material';
+import type { StackProps } from '@mui/material';
 import type { FC } from 'react';
 
-interface Props extends ButtonProps {
+interface Props extends StackProps {
   tokenId: string;
   onSettled: () => void;
 }
@@ -20,14 +20,14 @@ interface Props extends ButtonProps {
 export const ApproveLeveragePositionButton: FC<Props> = ({
   tokenId,
   onSettled,
-  ...buttonProps
+  ...stackProps
 }) => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
   const { flatcoinChainId } = useFlatcoin();
   const leveragedModuleContract =
     getFlatcoinLeveragedModuleContract(flatcoinChainId);
-  const { config, isError } = usePrepareContractWrite({
+  const { config, error } = usePrepareContractWrite({
     address: leveragedModuleContract?.address,
     abi: leveragedModuleContract?.abi,
     functionName: 'approve',
@@ -39,7 +39,7 @@ export const ApproveLeveragePositionButton: FC<Props> = ({
     <TransactionActionButton
       config={config}
       pushNotification={pushNotification}
-      isError={isError}
+      error={error}
       transactionName={intl.formatMessage({
         defaultMessage: 'Approve Position Close',
         id: '0OPmis',
@@ -49,7 +49,7 @@ export const ApproveLeveragePositionButton: FC<Props> = ({
         id: 'WCaf5C',
       })}
       onSettled={onSettled}
-      {...buttonProps}
+      components={{ buttonContainer: stackProps }}
     />
   );
 };
