@@ -4,7 +4,7 @@ import { DEFAULT_MAX_SLIPPAGE } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-providers';
 import { TransactionActionButton } from '@frontend/shared-ui';
 import { getSlippageAdjustedValue } from '@frontend/shared-utils';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
 import { usePrepareContractWrite } from 'wagmi';
@@ -29,11 +29,7 @@ const useStableTradingButton = () => {
     slippage,
     reset,
   } = useFlatcoinTradingState();
-  const lowerThanKeeperFee =
-    isDeposit &&
-    new BigNumber(sendToken.value || '0')
-      .shiftedBy(sendToken.decimals)
-      .lte(keeperFee.exact.toString());
+  const tradingAmountLowerThanKeeperFee = receiveToken.value === '0';
 
   const txConfig = useMemo(() => {
     const delayedOrderContract =
@@ -62,7 +58,7 @@ const useStableTradingButton = () => {
         !needsApproval &&
         !isInsufficientBalance &&
         !!receiveToken.value &&
-        !lowerThanKeeperFee,
+        !tradingAmountLowerThanKeeperFee,
     };
   }, [
     flatcoinChainId,
@@ -75,7 +71,7 @@ const useStableTradingButton = () => {
     sendToken.value,
     slippage,
     isDeposit,
-    lowerThanKeeperFee,
+    tradingAmountLowerThanKeeperFee,
   ]);
 
   const { config, error } = usePrepareContractWrite(txConfig);
@@ -83,7 +79,7 @@ const useStableTradingButton = () => {
   return {
     needsApproval,
     error,
-    lowerThanKeeperFee,
+    tradingAmountLowerThanKeeperFee,
     onSettled: reset,
     config,
     isDeposit,
@@ -95,7 +91,7 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
   const pushNotification = usePushNotification();
   const {
     needsApproval,
-    lowerThanKeeperFee,
+    tradingAmountLowerThanKeeperFee,
     error,
     config,
     isDeposit,
@@ -106,15 +102,19 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
     return <ApprovalButton {...props} />;
   }
 
-  // TODO: handle min deposit flow
-  if (lowerThanKeeperFee) {
+  if (tradingAmountLowerThanKeeperFee) {
     return (
-      <Button {...props} disabled>
-        {intl.formatMessage({
-          defaultMessage: 'Trade',
-          id: '90axO4',
-        })}
-      </Button>
+      <>
+        <Typography variant="hint" color="error.main">
+          Trading amount is lower than keeper fee
+        </Typography>
+        <Button {...props} disabled>
+          {intl.formatMessage({
+            defaultMessage: 'Trade',
+            id: '90axO4',
+          })}
+        </Button>
+      </>
     );
   }
 

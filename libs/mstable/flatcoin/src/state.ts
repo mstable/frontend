@@ -186,12 +186,14 @@ export const {
                 minExecutabilityAge: contractData?.[5].toString() ?? '',
               };
 
-        draft.keeperFee = new BigDecimal(
-          new BigNumber(contractData[6].toString())
-            .multipliedBy(KEEPER_FEE_SLIPPAGE_COEFF)
-            .toFixed(0),
-          COLLATERAL.decimals,
-        );
+        draft.keeperFee = contractData[6]
+          ? new BigDecimal(
+              new BigNumber(contractData[6].toString())
+                .multipliedBy(KEEPER_FEE_SLIPPAGE_COEFF)
+                .toFixed(0),
+              COLLATERAL.decimals,
+            )
+          : BigDecimal.ZERO;
 
         draft.data.tvl = BigNumber.isBigNumber(contractData[7])
           ? new BigDecimal(contractData[7].toString()).usd
