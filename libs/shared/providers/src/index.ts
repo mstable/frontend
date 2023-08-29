@@ -1,5 +1,6 @@
 export * from './analytics';
 export * from './gas-fee';
+export * from './google-analytics';
 export * from './i18n';
 export * from './modals';
 export * from './notifications';

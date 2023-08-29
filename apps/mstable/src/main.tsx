@@ -10,6 +10,7 @@ import {
 } from '@frontend/mstable-theme';
 import {
   AnalyticsProvider,
+  GoogleAnalyticsProvider,
   I18nProvider,
   ModalsProvider,
   NotificationsProvider,
@@ -25,6 +26,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import en from './assets/lang/en.json';
 import {
   chains,
+  firebaseApp,
   plausibleClient,
   reactLocationClient,
   reactQueryClient,
@@ -41,6 +43,7 @@ root.render(
   composeContexts(
     [
       [StrictMode],
+      [GoogleAnalyticsProvider, { client: firebaseApp }],
       [AnalyticsProvider, { client: plausibleClient }],
       [QueryClientProvider, { client: reactQueryClient }],
       [I18nProvider, { messages: { en } }],

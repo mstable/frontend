@@ -1,3 +1,4 @@
+export * from './google-analytics';
 export * from './plausible';
 export * from './chartjs';
 export * from './react-location';
