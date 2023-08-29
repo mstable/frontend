@@ -34,7 +34,7 @@ const useAnnouncedOrders = (order: Order | null) => {
   const hasOrderExpired = orderExpirationDate
     ? orderExpirationDate < Date.now()
     : true;
-  const { config, isError } = usePrepareContractWrite({
+  const { config, error } = usePrepareContractWrite({
     address: delayedOrderContract.address,
     abi: delayedOrderContract.abi,
     functionName: 'executeOrder',
@@ -52,7 +52,7 @@ const useAnnouncedOrders = (order: Order | null) => {
   const keeperFeeUsd = keeperFee.simple * tokens.collateral.price.simple;
 
   return {
-    isError,
+    error,
     config,
     hasOrderExpired,
     orderExpirationDate: new Intl.DateTimeFormat('en-US', {
@@ -68,7 +68,7 @@ export const AnnouncedOrders: FC<CardProps> = (props) => {
   const pushNotification = usePushNotification();
   const { announcedOrder } = useFlatcoin();
   const {
-    isError,
+    error,
     config,
     hasOrderExpired,
     orderExpirationDate,
@@ -144,7 +144,7 @@ export const AnnouncedOrders: FC<CardProps> = (props) => {
         <TransactionActionButton
           config={config}
           pushNotification={pushNotification}
-          isError={isError}
+          error={error}
           transactionName={intl.formatMessage({
             defaultMessage: 'Execute Order',
             id: 'sjr65W',
@@ -153,7 +153,14 @@ export const AnnouncedOrders: FC<CardProps> = (props) => {
             defaultMessage: 'Execute',
             id: 'd21Els',
           })}
-          sx={{ minWidth: 92, width: '100%' }}
+          components={{
+            buttonContainer: {
+              sx: {
+                minWidth: 92,
+                width: '100%',
+              },
+            },
+          }}
         />
       </CardActions>
     </Card>

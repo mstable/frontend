@@ -33,7 +33,7 @@ const useApprovalButton = () => {
     ? collateral
     : flatcoin;
 
-  const { config, isError } = usePrepareContractWrite({
+  const { config, error } = usePrepareContractWrite({
     address: tokenToBeApproved.address,
     abi: tokenToBeApproved.abi,
     functionName: 'approve',
@@ -51,7 +51,7 @@ const useApprovalButton = () => {
 
   return {
     symbol: sendToken.symbol,
-    isError,
+    error,
     config,
     onSettled: refetchAllowance,
   };
@@ -60,13 +60,13 @@ const useApprovalButton = () => {
 export const ApprovalButton: FC<ButtonProps> = (props) => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
-  const { symbol, config, isError, onSettled } = useApprovalButton();
+  const { symbol, config, error, onSettled } = useApprovalButton();
 
   return (
     <TransactionActionButton
       config={config}
       pushNotification={pushNotification}
-      isError={isError}
+      error={error}
       transactionName={intl.formatMessage({
         defaultMessage: 'Approving Token',
         id: '/54G9d',
@@ -76,7 +76,7 @@ export const ApprovalButton: FC<ButtonProps> = (props) => {
         { symbol },
       )}
       onSettled={onSettled}
-      {...props}
+      components={{ button: props }}
     />
   );
 };

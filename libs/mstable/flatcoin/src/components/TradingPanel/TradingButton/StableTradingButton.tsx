@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 
+import { DEFAULT_MAX_SLIPPAGE } from '@frontend/shared-constants';
 import { usePushNotification } from '@frontend/shared-providers';
 import { TransactionActionButton } from '@frontend/shared-ui';
 import { getSlippageAdjustedValue } from '@frontend/shared-utils';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
 import { usePrepareContractWrite } from 'wagmi';
@@ -28,11 +29,8 @@ const useStableTradingButton = () => {
     slippage,
     reset,
   } = useFlatcoinTradingState();
-  const lowerThanKeeperFee =
-    isDeposit &&
-    new BigNumber(sendToken.value || '0')
-      .shiftedBy(sendToken.decimals)
-      .lte(keeperFee.exact.toString());
+  // receive value can be "0" only when trading amount is lower than keeper fee
+  const lowTradingAmount = receiveToken.value === '0';
 
   const txConfig = useMemo(() => {
     const delayedOrderContract =
@@ -48,7 +46,10 @@ const useStableTradingButton = () => {
           .shiftedBy(sendToken.decimals)
           .minus(isDeposit ? keeperFee.exact.toString() : '0') // On stable deposits keeper fee will be transferred separately
           .toFixed(0, BigNumber.ROUND_DOWN),
-        getSlippageAdjustedValue(receiveToken.value || '0', slippage)
+        getSlippageAdjustedValue(
+          receiveToken.value || '0',
+          slippage || DEFAULT_MAX_SLIPPAGE,
+        )
           .shiftedBy(receiveToken.decimals)
           .toFixed(0, BigNumber.ROUND_DOWN),
         keeperFee.exact,
@@ -58,7 +59,7 @@ const useStableTradingButton = () => {
         !needsApproval &&
         !isInsufficientBalance &&
         !!receiveToken.value &&
-        !lowerThanKeeperFee,
+        !lowTradingAmount,
     };
   }, [
     flatcoinChainId,
@@ -71,15 +72,15 @@ const useStableTradingButton = () => {
     sendToken.value,
     slippage,
     isDeposit,
-    lowerThanKeeperFee,
+    lowTradingAmount,
   ]);
 
-  const { config, isError } = usePrepareContractWrite(txConfig);
+  const { config, error } = usePrepareContractWrite(txConfig);
 
   return {
     needsApproval,
-    isError,
-    lowerThanKeeperFee,
+    error,
+    lowTradingAmount,
     onSettled: reset,
     config,
     isDeposit,
@@ -91,8 +92,8 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
   const pushNotification = usePushNotification();
   const {
     needsApproval,
-    lowerThanKeeperFee,
-    isError,
+    lowTradingAmount,
+    error,
     config,
     isDeposit,
     onSettled,
@@ -102,15 +103,19 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
     return <ApprovalButton {...props} />;
   }
 
-  // TODO: handle min deposit flow
-  if (lowerThanKeeperFee) {
+  if (lowTradingAmount) {
     return (
-      <Button {...props} disabled>
-        {intl.formatMessage({
-          defaultMessage: 'Trade',
-          id: '90axO4',
-        })}
-      </Button>
+      <>
+        <Typography variant="hint" color="error.main">
+          Trading amount is lower than keeper fee
+        </Typography>
+        <Button {...props} disabled>
+          {intl.formatMessage({
+            defaultMessage: 'Trade',
+            id: '90axO4',
+          })}
+        </Button>
+      </>
     );
   }
 
@@ -118,7 +123,7 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
     <TransactionActionButton
       config={config}
       pushNotification={pushNotification}
-      isError={isError}
+      error={error}
       transactionName={
         isDeposit
           ? intl.formatMessage({
@@ -135,7 +140,7 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
         id: '90axO4',
       })}
       onSettled={onSettled}
-      {...props}
+      components={{ button: props }}
     />
   );
 };

@@ -15,7 +15,7 @@ import {
   formatNumberToLimitedDecimals,
   isEqualAddresses,
 } from '@frontend/shared-utils';
-import { Box, Button, Divider, Stack, Typography } from '@mui/material';
+import { Button, Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 import { useContractRead } from 'wagmi';
 
@@ -39,6 +39,7 @@ const useCloseLeveragePositionModal = ({
   marginAfterSettlement,
   profitLoss,
   positionId,
+  leverage,
 }: LeveragedPosition) => {
   const {
     tokens: { collateral },
@@ -46,13 +47,21 @@ const useCloseLeveragePositionModal = ({
     flatcoinChainId,
   } = useFlatcoin();
   const [opened, setOpened] = useState(false);
-  const marginDepositedInUsd = marginDeposited.simple * entryPrice.simple;
+  const marginDepositedInUsd = formatToUsd({
+    value: marginDeposited.simple * entryPrice.simple,
+  });
   const receiveAmount = new BigDecimal(
     marginAfterSettlement.exact.sub(keeperFee.exact),
   ).simple;
-  const receiveAmountInUsd = receiveAmount * collateral.price.simple;
-  const profitLossInUsd = profitLoss.simple * collateral.price.simple;
-  const keeperFeeInUsd = keeperFee.simple * collateral.price.simple;
+  const receiveAmountInUsd = formatToUsd({
+    value: receiveAmount * collateral.price.simple,
+  });
+  const profitLossInUsd = formatToUsd({
+    value: profitLoss.simple * collateral.price.simple,
+  });
+  const keeperFeeInUsd = formatToUsd({
+    value: keeperFee.simple * collateral.price.simple,
+  });
 
   const { data: approvedAddress, refetch } = useContractRead({
     address: getFlatcoinLeveragedModuleContract(flatcoinChainId).address,
@@ -73,12 +82,33 @@ const useCloseLeveragePositionModal = ({
     setOpened,
     notApproved,
     collateral,
+    marginDeposited: formatNumberToLimitedDecimals(
+      marginDeposited.simple,
+      DEFAULT_TOKEN_DECIMALS,
+    ),
     marginDepositedInUsd,
-    keeperFee,
-    receiveAmount,
+    keeperFee: Intl.NumberFormat('en-US', {
+      style: 'decimal',
+      maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
+    }).format(keeperFee.simple),
+    receiveAmount: Intl.NumberFormat('en-US', {
+      style: 'decimal',
+      maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
+    }).format(receiveAmount),
     receiveAmountInUsd,
     profitLossInUsd,
     keeperFeeInUsd,
+    leverage: formatNumberToLimitedDecimals(leverage, 2),
+    entryPrice: formatToUsd({ value: entryPrice.simple }),
+    profitLoss: Intl.NumberFormat('en-US', {
+      style: 'decimal',
+      maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
+    }).format(profitLoss.simple),
+    profitLossTextColor: !profitLoss.exact.isZero()
+      ? profitLoss.exact.gt(0)
+        ? 'success.main'
+        : 'error.main'
+      : 'text.secondary',
     refetch,
   };
 };
@@ -87,19 +117,23 @@ export const CloseLeveragePositionModal: FC<
   CloseLeveragePositionModalProps
 > = ({ position, ...buttonProps }) => {
   const intl = useIntl();
-  const { marginDeposited, leverage, profitLoss } = position;
   const {
     opened,
     setOpened,
     notApproved,
     collateral,
+    marginDeposited,
     marginDepositedInUsd,
     keeperFee,
     receiveAmount,
     receiveAmountInUsd,
     profitLossInUsd,
     keeperFeeInUsd,
+    leverage,
     refetch,
+    entryPrice,
+    profitLoss,
+    profitLossTextColor,
   } = useCloseLeveragePositionModal(position);
 
   return (
@@ -117,44 +151,51 @@ export const CloseLeveragePositionModal: FC<
         title="Close Leveraged Position"
         content={
           <>
-            <Stack direction="row" spacing={6} mb={4}>
-              <Box>
-                <Typography variant="label2" color="text.secondary">
-                  {intl.formatMessage({
-                    defaultMessage: 'Margin Deposited',
-                    id: 'inIeEz',
-                  })}
-                </Typography>
-                <Stack direction="row" alignItems="center" mt={1}>
-                  <Typography variant="value4">
-                    {formatNumberToLimitedDecimals(
-                      marginDeposited.simple,
-                      DEFAULT_TOKEN_DECIMALS,
-                    )}
+            <Stack spacing={1} mb={4}>
+              <TradingOverviewItem
+                label={intl.formatMessage({
+                  defaultMessage: 'Margin Deposited',
+                  id: 'inIeEz',
+                })}
+                value={
+                  <Stack direction="row" alignItems="center">
+                    {marginDeposited}
+                    <TokenIconRevamp
+                      sx={{ width: 12, height: 12, ml: 0.5 }}
+                      symbols={[collateral.symbol]}
+                    />
+                    {collateral.symbol}
+                  </Stack>
+                }
+                subvalue={<>≈{marginDepositedInUsd}</>}
+              />
+              <TradingOverviewItem
+                label={intl.formatMessage({
+                  defaultMessage: 'Leverage',
+                  id: 'pbpdV6',
+                })}
+                value={<>{leverage}X</>}
+              />
+              <TradingOverviewItem
+                label={intl.formatMessage({
+                  defaultMessage: 'Entry Price',
+                  id: 'Ty3dr6',
+                })}
+                value={entryPrice}
+              />
+              <TradingOverviewItem
+                label="Est. Profit/Loss"
+                value={
+                  <Typography variant="value5" color={profitLossTextColor}>
+                    {profitLoss} {collateral.symbol}
                   </Typography>
-                  <TokenIconRevamp
-                    sx={{ width: 12, height: 12, ml: 0.5 }}
-                    symbols={[collateral.symbol]}
-                  />
-                  <Typography variant="value4">{collateral.symbol}</Typography>
-                </Stack>
-                <Typography variant="value5" color="text.secondary">
-                  ≈{formatToUsd({ value: marginDepositedInUsd })}
-                </Typography>
-              </Box>
-              <Box>
-                <Typography variant="label2" color="text.secondary">
-                  {intl.formatMessage({
-                    defaultMessage: 'Leverage',
-                    id: 'pbpdV6',
-                  })}
-                </Typography>
-                <Box mt={0.5}>
-                  <Typography variant="value4">
-                    {formatNumberToLimitedDecimals(leverage, 2)}X
+                }
+                subvalue={
+                  <Typography variant="value5" color={profitLossTextColor}>
+                    ≈{profitLossInUsd}
                   </Typography>
-                </Box>
-              </Box>
+                }
+              />
             </Stack>
             <Divider role="presentation" />
             <TradingOverviewItem
@@ -162,51 +203,20 @@ export const CloseLeveragePositionModal: FC<
               label="Fees"
               value={
                 <>
-                  {Intl.NumberFormat('en-US', {
-                    style: 'decimal',
-                    maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
-                  }).format(keeperFee.simple)}{' '}
-                  {collateral.symbol}
+                  {keeperFee} {collateral.symbol}
                 </>
               }
-              subvalue={<>≈{formatToUsd({ value: keeperFeeInUsd })}</>}
+              subvalue={<>≈{keeperFeeInUsd}</>}
             />
             <TradingOverviewItem
               mt={1}
               label="Est. Receive Amount"
               value={
                 <>
-                  {Intl.NumberFormat('en-US', {
-                    style: 'decimal',
-                    maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
-                  }).format(receiveAmount)}{' '}
-                  {collateral.symbol}
+                  {receiveAmount} {collateral.symbol}
                 </>
               }
-              subvalue={<>≈{formatToUsd({ value: receiveAmountInUsd })}</>}
-            />
-            <TradingOverviewItem
-              mt={1}
-              label="Est. Profit/Loss"
-              value={
-                <Typography
-                  variant="value5"
-                  color={
-                    !profitLoss.exact.isZero()
-                      ? profitLoss.exact.gt(0)
-                        ? 'success.main'
-                        : 'error.main'
-                      : 'text.secondary'
-                  }
-                >
-                  {Intl.NumberFormat('en-US', {
-                    style: 'decimal',
-                    maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
-                  }).format(profitLoss.simple)}{' '}
-                  {collateral.symbol}
-                </Typography>
-              }
-              subvalue={<>≈{formatToUsd({ value: profitLossInUsd })}</>}
+              subvalue={<>≈{receiveAmountInUsd}</>}
             />
           </>
         }

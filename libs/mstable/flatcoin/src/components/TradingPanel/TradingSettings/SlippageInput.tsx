@@ -1,3 +1,4 @@
+import { DEFAULT_MAX_SLIPPAGE } from '@frontend/shared-constants';
 import { Input, Stack } from '@mui/material';
 
 import { useFlatcoinTradingState, useUpdateTradingSlippage } from '../state';
@@ -20,7 +21,7 @@ export const SlippageInput: FC<StackProps> = (props) => {
   return (
     <Stack direction="row" {...props}>
       <Input
-        placeholder="0"
+        placeholder={DEFAULT_MAX_SLIPPAGE}
         value={slippage}
         onChange={handleSlippageChange}
         type="number"
