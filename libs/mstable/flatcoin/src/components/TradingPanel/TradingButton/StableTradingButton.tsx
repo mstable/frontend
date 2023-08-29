@@ -29,7 +29,8 @@ const useStableTradingButton = () => {
     slippage,
     reset,
   } = useFlatcoinTradingState();
-  const tradingAmountLowerThanKeeperFee = receiveToken.value === '0';
+  // receive value can be "0" only when trading amount is lower than keeper fee
+  const lowTradingAmount = receiveToken.value === '0';
 
   const txConfig = useMemo(() => {
     const delayedOrderContract =
@@ -58,7 +59,7 @@ const useStableTradingButton = () => {
         !needsApproval &&
         !isInsufficientBalance &&
         !!receiveToken.value &&
-        !tradingAmountLowerThanKeeperFee,
+        !lowTradingAmount,
     };
   }, [
     flatcoinChainId,
@@ -71,7 +72,7 @@ const useStableTradingButton = () => {
     sendToken.value,
     slippage,
     isDeposit,
-    tradingAmountLowerThanKeeperFee,
+    lowTradingAmount,
   ]);
 
   const { config, error } = usePrepareContractWrite(txConfig);
@@ -79,7 +80,7 @@ const useStableTradingButton = () => {
   return {
     needsApproval,
     error,
-    tradingAmountLowerThanKeeperFee,
+    lowTradingAmount,
     onSettled: reset,
     config,
     isDeposit,
@@ -91,7 +92,7 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
   const pushNotification = usePushNotification();
   const {
     needsApproval,
-    tradingAmountLowerThanKeeperFee,
+    lowTradingAmount,
     error,
     config,
     isDeposit,
@@ -102,7 +103,7 @@ export const StableTradingButton: FC<ButtonProps> = (props) => {
     return <ApprovalButton {...props} />;
   }
 
-  if (tradingAmountLowerThanKeeperFee) {
+  if (lowTradingAmount) {
     return (
       <>
         <Typography variant="hint" color="error.main">

@@ -15,9 +15,19 @@ const useTradingRecap = () => {
     keeperFee,
     tokens: { collateral },
   } = useFlatcoin();
-  const keeperFeeInUsd = keeperFee.simple * collateral.price.simple;
+  const keeperFeeInUsd = formatToUsd({
+    value: keeperFee.simple * collateral.price.simple,
+  });
 
-  return { isLeveraged, keeperFee, keeperFeeInUsd, collateral };
+  return {
+    isLeveraged,
+    keeperFee: Intl.NumberFormat('en-US', {
+      style: 'decimal',
+      maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
+    }).format(keeperFee.simple),
+    keeperFeeInUsd,
+    collateral,
+  };
 };
 
 export const TradingRecap = () => {
@@ -35,14 +45,10 @@ export const TradingRecap = () => {
           label="Fees"
           value={
             <>
-              {Intl.NumberFormat('en-US', {
-                style: 'decimal',
-                maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
-              }).format(keeperFee.simple)}{' '}
-              {collateral.symbol}
+              {keeperFee} {collateral.symbol}
             </>
           }
-          subvalue={<>≈{formatToUsd({ value: keeperFeeInUsd })}</>}
+          subvalue={<>≈{keeperFeeInUsd}</>}
         />
         {isLeveraged ? (
           <LeverageTransactionOverview />
