@@ -47,7 +47,7 @@ const FlatcoinValues = () => {
         {!data.apy ? (
           <Skeleton height={24} width={60} />
         ) : (
-          <Typography variant="value2">{data.apy}</Typography>
+          <Typography variant="value3">{data.apy}</Typography>
         )}
       </ValueLabel>
       <ValueLabel
@@ -60,7 +60,7 @@ const FlatcoinValues = () => {
         {!data.tvl ? (
           <Skeleton height={24} width={60} />
         ) : (
-          <Typography variant="value2">{data.tvl}</Typography>
+          <Typography variant="value3">{data.tvl}</Typography>
         )}
       </ValueLabel>
     </>
@@ -88,7 +88,7 @@ const LeveragedEthValues = () => {
           <Skeleton height={24} width={60} />
         ) : (
           <Typography
-            variant="value2"
+            variant="value3"
             color={resolveColor(data.fundingRate.simple)}
           >
             {formatNumberToLimitedDecimals(data.fundingRate.simple, 6)}%
