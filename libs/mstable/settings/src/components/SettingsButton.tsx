@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react';
 
-import { useLogAnalyticsEvent } from '@frontend/shared-providers';
 import { ClickAwayMenu } from '@frontend/shared-ui';
 import {
   Button,
@@ -19,8 +18,14 @@ import { useSettings } from '../state';
 
 import type { ButtonProps } from '@mui/material';
 
-export const SettingsButton = (props: ButtonProps) => {
-  const logEvent = useLogAnalyticsEvent();
+interface SettingsButtonProps extends ButtonProps {
+  logSettingsMenuOpen?: () => void;
+}
+
+export const SettingsButton = ({
+  logSettingsMenuOpen,
+  ...props
+}: SettingsButtonProps) => {
   const [open, setOpen] = useState(false);
   const anchorEl = useRef(null);
   const { chain } = useNetwork();
@@ -35,7 +40,7 @@ export const SettingsButton = (props: ButtonProps) => {
         ref={anchorEl}
         onClick={() => {
           if (!open) {
-            logEvent('open_app_settings');
+            logSettingsMenuOpen?.();
           }
           setOpen(not);
         }}
