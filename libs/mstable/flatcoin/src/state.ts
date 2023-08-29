@@ -202,7 +202,11 @@ export const {
           : BigDecimal.ZERO;
 
         draft.data.fundingRate = contractData[9]
-          ? new BigDecimal(contractData[9].toString())
+          ? new BigDecimal(
+              new BigNumber(contractData[9].toString())
+                .multipliedBy(100)
+                .toString(),
+            )
           : BigDecimal.ZERO;
 
         draft.data.openInterest = contractData[8]
