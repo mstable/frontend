@@ -5,6 +5,8 @@ import {
 } from '@frontend/shared-constants';
 import { baseGoerli } from 'wagmi/chains';
 
+import type { FlatcoinState, PositionType } from '../types';
+
 export * from './contracts';
 
 export const isFlatcoinSupportedChain = (chainId: number) =>
@@ -36,4 +38,12 @@ export const getOrderTypeName = (type: number): string => {
     default:
       return '';
   }
+};
+
+export const POSITION_TYPE_TOKEN_KEY_MAP: Record<
+  PositionType,
+  keyof FlatcoinState['tokens']
+> = {
+  flatcoin: 'flatcoin',
+  leveraged: 'collateral',
 };

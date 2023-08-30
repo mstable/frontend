@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 
 import { useFlatcoinType } from '../../hooks';
 import { useFlatcoin } from '../../state';
+import { POSITION_TYPE_TOKEN_KEY_MAP } from '../../utils';
 
 import type { StackProps } from '@mui/material';
 
@@ -147,7 +148,7 @@ const LeveragedEthValues = () => {
 
 export const Jumbo = (props: StackProps) => {
   const [type] = useFlatcoinType();
-  const { configs } = useFlatcoin();
+  const { tokens } = useFlatcoin();
 
   return (
     <Stack
@@ -158,7 +159,7 @@ export const Jumbo = (props: StackProps) => {
       {...props}
     >
       <Typography variant="h1" pb={2}>
-        {configs?.[type].name}
+        {tokens[POSITION_TYPE_TOKEN_KEY_MAP[type]].name}
       </Typography>
       <Stack
         direction={{ xs: 'column', md: 'row' }}

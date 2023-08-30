@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 
 import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
-import { useIntl } from 'react-intl';
 
 import { useFlatcoinType } from '../../hooks';
+import { useFlatcoin } from '../../state';
+import { POSITION_TYPE_TOKEN_KEY_MAP } from '../../utils';
 import { useTradingType } from './hooks/useTradingType';
 import { FlatcoinTradingStateProvider } from './state';
 import { TradingButton } from './TradingButton';
@@ -16,7 +17,7 @@ import type { FC } from 'react';
 
 import type { PositionType } from '../../types';
 
-const TABS: PositionType[] = ['flatcoin', 'leveragedeth'];
+const TABS: PositionType[] = ['flatcoin', 'leveraged'];
 const TRADING_TAB_INDEX_MAP = TABS.reduce<Record<number, PositionType>>(
   (acc, type, index) => {
     acc[index] = type;
@@ -26,27 +27,26 @@ const TRADING_TAB_INDEX_MAP = TABS.reduce<Record<number, PositionType>>(
 );
 
 const useTradingPanel = () => {
-  const intl = useIntl();
   const [type, updateFlatcoinType] = useFlatcoinType();
   const [, updateTradingType] = useTradingType();
+  const { tokens } = useFlatcoin();
 
   const onTabChange = (index: number) => {
     const type = TRADING_TAB_INDEX_MAP[index];
     updateFlatcoinType(type);
-    type === 'leveragedeth' && updateTradingType('deposit');
+    type === 'leveraged' && updateTradingType('deposit');
   };
-  const tabNameMap: Record<PositionType, string> = useMemo(
-    () => ({
-      flatcoin: intl.formatMessage({
-        defaultMessage: 'Flatcoin',
-        id: 'Ew5cbe',
-      }),
-      leveragedeth: intl.formatMessage({
-        defaultMessage: 'Leveraged ETH',
-        id: 'xSqIpD',
-      }),
-    }),
-    [intl],
+
+  const tabNameMap = useMemo(
+    () =>
+      TABS.reduce(
+        (acc, type) => ({
+          ...acc,
+          [type]: tokens[POSITION_TYPE_TOKEN_KEY_MAP[type]].name,
+        }),
+        {},
+      ),
+    [tokens],
   );
 
   return {

@@ -26,7 +26,7 @@ export const useFlatcoinType = (): [
   );
 
   return [
-    ['flatcoin', 'leveragedeth'].includes(type) ? type : 'flatcoin',
+    ['flatcoin', 'leveraged'].includes(type) ? type : 'flatcoin',
     updateFlatcoinType,
   ];
 };

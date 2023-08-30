@@ -13,7 +13,7 @@ export type FlatcoinRoute = MakeGenerics<{
   };
 }>;
 
-export type PositionType = 'flatcoin' | 'leveragedeth';
+export type PositionType = 'flatcoin' | 'leveraged';
 export type TradingType = 'deposit' | 'withdraw';
 type TokenInfo = Token & { balance: BigDecimal; price: BigDecimal };
 
@@ -63,7 +63,6 @@ export type FlatcoinState = {
     collateral: TokenInfo;
     flatcoin: TokenInfo;
   };
-  configs: Record<PositionType, any>;
   leveragedPositions?: LeveragedPosition[];
   announcedOrder: Order | null;
   flatcoinChainId: number;
