@@ -6,9 +6,9 @@ import {
 import { useWithdrawQuote } from '@dhedge/core-ui-kit/hooks/trading/withdraw';
 import { useUserTokenBalance } from '@dhedge/core-ui-kit/hooks/user';
 import { useAccount } from '@dhedge/core-ui-kit/hooks/web3';
-import { TradingInput } from '@frontend/shared-ui';
 
 import { ExchangeRate } from './ExchangeRate';
+import { TradingInput } from './TradingInput';
 
 import type { FC } from 'react';
 

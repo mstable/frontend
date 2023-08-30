@@ -1,1 +1,15 @@
-export type EventName = 'vault_page_view';
+export type EventName =
+  | 'vault_page_view'
+  | 'wallet_disconnect'
+  | 'wallet_switch'
+  | 'wallet_connect'
+  | 'approve_deposit'
+  | 'approve_withdraw'
+  | 'deposit'
+  | 'withdraw'
+  | 'percentage_button_click'
+  | 'trading_overview_more_info_expanded'
+  | 'chart_period_selected'
+  | 'vault_info_section_expanded'
+  | 'footer_link_clicked'
+  | 'open_app_settings';

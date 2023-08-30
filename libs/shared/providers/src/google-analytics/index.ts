@@ -8,6 +8,12 @@ import type { Dispatch, SetStateAction } from 'react';
 
 import type { EventName } from './types';
 
+const loggerStub = () => {
+  return;
+};
+
+export { WalletAnalyticsProvider as WalletGoogleAnalyticsProvider } from './WalletAnalyticsProvider';
+
 export const {
   Provider: GoogleAnalyticsProvider,
   useTrackedState: useGoogleAnalytics,
@@ -15,13 +21,12 @@ export const {
   ReturnType<typeof getAnalytics>,
   Dispatch<SetStateAction<ReturnType<typeof getAnalytics>>>,
   {
-    client: ReturnType<typeof initializeApp>;
+    client?: ReturnType<typeof initializeApp>;
   }
 >(({ client }) => {
-  const [firebaseAnalytics, setFirebaseAnalytics] = useState<
-    ReturnType<typeof getAnalytics>
-  >(() => getAnalytics(client));
-
+  const [firebaseAnalytics, setFirebaseAnalytics] = useState<ReturnType<
+    typeof getAnalytics
+  > | null>(() => (client ? getAnalytics(client) : null));
   return [firebaseAnalytics, setFirebaseAnalytics];
 });
 
@@ -29,14 +34,11 @@ export const useLogAnalyticsEvent = () => {
   const analytics = useGoogleAnalytics();
 
   return useCallback(
-    ({
-      event,
-      params,
-    }: {
-      event: EventName;
-      params?: { [key: string]: unknown };
-    }) => {
-      return logEvent(analytics, event, params);
+    (event: EventName, params?: { [key: string]: unknown }) => {
+      if (analytics) {
+        return logEvent(analytics, event, params);
+      }
+      return loggerStub();
     },
     [analytics],
   );

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { useLogAnalyticsEvent } from '@frontend/shared-providers';
 import { CollapsibleSection } from '@frontend/shared-ui';
 import {
   Card,
@@ -39,6 +40,7 @@ const collapsibleProps: Partial<CollapsibleSectionProps> = {
 
 export const Strategy = () => {
   const intl = useIntl();
+  const logEvent = useLogAnalyticsEvent();
   const { meta } = useVault();
   const [openingSectionIndex, setOpenningSectionIndex] = useState(-1);
 
@@ -105,20 +107,28 @@ export const Strategy = () => {
               borderRadius: 1,
             }}
           >
-            {collapseSections.map((s, i) => (
-              <CollapsibleSection
-                {...collapsibleProps}
-                key={s.title}
-                open={openingSectionIndex === i}
-                onToggle={() => {
-                  setOpenningSectionIndex((ci) => (ci === i ? -1 : i));
-                }}
-                title={s.title}
-                subtitle={s.subtitle}
-              >
-                {s.component}
-              </CollapsibleSection>
-            ))}
+            {collapseSections.map((s, i) => {
+              const isExpanded = openingSectionIndex === i;
+              return (
+                <CollapsibleSection
+                  {...collapsibleProps}
+                  key={s.title}
+                  open={isExpanded}
+                  onToggle={() => {
+                    if (!isExpanded) {
+                      logEvent('vault_info_section_expanded', {
+                        section: s.title,
+                      });
+                    }
+                    setOpenningSectionIndex((ci) => (ci === i ? -1 : i));
+                  }}
+                  title={s.title}
+                  subtitle={s.subtitle}
+                >
+                  {s.component}
+                </CollapsibleSection>
+              );
+            })}
           </Stack>
         </CardContent>
       </Card>

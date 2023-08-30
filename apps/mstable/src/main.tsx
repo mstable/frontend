@@ -18,6 +18,7 @@ import {
   ThemeProvider,
   WagmiProvider,
   WalletAnalyticsProvider,
+  WalletGoogleAnalyticsProvider,
 } from '@frontend/shared-providers';
 import { composeContexts } from '@frontend/shared-utils';
 import { Router } from '@tanstack/react-location';
@@ -59,6 +60,7 @@ root.render(
         },
       ],
       [WalletAnalyticsProvider],
+      [WalletGoogleAnalyticsProvider],
       [PricesProvider],
       [ModalsProvider],
       [SettingsProvider],
