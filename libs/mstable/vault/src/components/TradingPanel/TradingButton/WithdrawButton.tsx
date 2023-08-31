@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { usePoolDynamicContractData } from '@dhedge/core-ui-kit/hooks/pool';
 import {
   useSendTokenInput,
@@ -8,6 +10,7 @@ import {
   useWithdraw,
   useWithdrawAllowance,
 } from '@dhedge/core-ui-kit/hooks/trading/withdraw';
+import { useLogAnalyticsEvent } from '@frontend/shared-providers';
 import { Button } from '@mui/material';
 import { useIntl } from 'react-intl';
 
@@ -17,6 +20,7 @@ import { TradeButton } from './TradeButton';
 import type { FC } from 'react';
 
 const useWithdrawButton = () => {
+  const logEvent = useLogAnalyticsEvent();
   const { address, chainId } = useTradingPanelPoolConfig();
   const [sendToken] = useSendTokenInput();
 
@@ -28,9 +32,19 @@ const useWithdrawButton = () => {
   const tradingParams = useTradingParams();
   const withdraw = useWithdraw(tradingParams);
 
+  const handleApprove = useCallback(async () => {
+    logEvent('approve_withdraw', { symbol: sendToken.symbol });
+    return approve();
+  }, [approve, logEvent, sendToken.symbol]);
+
+  const handleWithdraw = useCallback(async () => {
+    logEvent('withdraw', { symbol: sendToken.symbol });
+    return withdraw();
+  }, [withdraw, logEvent, sendToken.symbol]);
+
   return {
-    withdraw,
-    approve,
+    handleWithdraw,
+    handleApprove,
     canSpend,
     cooldownActive,
     cooldownEndsInTime,
@@ -42,15 +56,17 @@ export const WithdrawButton: FC = () => {
   const intl = useIntl();
   const {
     canSpend,
-    approve,
+    handleApprove,
     sendToken,
-    withdraw,
+    handleWithdraw,
     cooldownActive,
     cooldownEndsInTime,
   } = useWithdrawButton();
 
   if (!canSpend) {
-    return <ApproveButton onApprove={approve} symbol={sendToken.symbol} />;
+    return (
+      <ApproveButton onApprove={handleApprove} symbol={sendToken.symbol} />
+    );
   }
 
   return cooldownActive ? (
@@ -65,6 +81,6 @@ export const WithdrawButton: FC = () => {
       )}
     </Button>
   ) : (
-    <TradeButton tradingHandler={withdraw} />
+    <TradeButton tradingHandler={handleWithdraw} />
   );
 };

@@ -1,5 +1,7 @@
 import { forwardRef, useEffect, useState } from 'react';
 
+import { useLogAnalyticsEvent } from '@frontend/shared-providers';
+import { PercentageButton, TokenIconRevamp } from '@frontend/shared-ui';
 import { removeInsignificantTrailingZeros } from '@frontend/shared-utils';
 import {
   Box,
@@ -16,8 +18,6 @@ import {
 import BigNumber from 'bignumber.js';
 import { range } from 'ramda';
 
-import { PercentageButton } from '../Buttons';
-import { TokenIconRevamp } from '../Icons';
 import { TradingTokenBalance } from './TradingTokenBalance';
 
 import type { TradingToken } from '@dhedge/core-ui-kit/types';
@@ -55,6 +55,7 @@ const useTradingInput = ({
   maxBalance,
   disabled,
 }: TradingInputProps) => {
+  const logEvent = useLogAnalyticsEvent();
   const [percentage, setPercentage] = useState(0);
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -72,6 +73,7 @@ const useTradingInput = ({
   };
 
   const handlePercentageChange = (newValue: number) => () => {
+    logEvent('percentage_button_click');
     setPercentage(newValue);
     if (onInputChange) {
       const amt =
@@ -171,7 +173,7 @@ export const TradingInput = forwardRef<HTMLInputElement, TradingInputProps>(
                     const token = tokenOptions.find(
                       ({ address, symbol }) =>
                         address === selectedTokenAddress &&
-                        symbol == selectedTokenSymbol,
+                        symbol === selectedTokenSymbol,
                     );
                     onTokenChange?.(token);
                   }}

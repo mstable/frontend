@@ -18,7 +18,14 @@ import { useSettings } from '../state';
 
 import type { ButtonProps } from '@mui/material';
 
-export const SettingsButton = (props: ButtonProps) => {
+interface SettingsButtonProps extends ButtonProps {
+  logSettingsMenuOpen?: () => void;
+}
+
+export const SettingsButton = ({
+  logSettingsMenuOpen,
+  ...props
+}: SettingsButtonProps) => {
   const [open, setOpen] = useState(false);
   const anchorEl = useRef(null);
   const { chain } = useNetwork();
@@ -32,6 +39,9 @@ export const SettingsButton = (props: ButtonProps) => {
         {...props}
         ref={anchorEl}
         onClick={() => {
+          if (!open) {
+            logSettingsMenuOpen?.();
+          }
           setOpen(not);
         }}
         variant="text"
