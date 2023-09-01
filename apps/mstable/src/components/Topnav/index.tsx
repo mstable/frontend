@@ -39,7 +39,7 @@ export const Topnav = () => {
         }}
       >
         {wide && (
-          <Typography variant="h3" sx={{ 'pointer-events': 'none' }}>
+          <Typography variant="h3" sx={{ pointerEvents: 'none' }}>
             Flatcoin
           </Typography>
         )}

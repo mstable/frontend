@@ -4,6 +4,7 @@ import { ErrorBoundary, ErrorCard } from '@frontend/shared-ui';
 import { Grid, Stack } from '@mui/material';
 
 import { Jumbo } from '../components/Jumbo';
+import { MobileBottomCard } from '../components/MobileBottomCard';
 import { Performance } from '../components/Performance';
 import { AnnouncedOrders } from '../components/Positions/AnnouncedOrders';
 import { LeveragePositions } from '../components/Positions/Leverage';
@@ -21,21 +22,14 @@ const FlatcoinContent: FC = () => {
 
   return (
     <Stack direction="column" alignItems="flex-start">
-      {/*<Button*/}
-      {/*  variant="text"*/}
-      {/*  size="small"*/}
-      {/*  onClick={() => {*/}
-      {/*    navigate({ to: '/' });*/}
-      {/*  }}*/}
-      {/*  sx={{ mb: 1 }}*/}
-      {/*>*/}
-      {/*  <Stack direction="row" alignItems="center" spacing={0.5}>*/}
-      {/*    <ArrowLeft width={16} height={16} />*/}
-      {/*    {intl.formatMessage({ defaultMessage: 'Explore', id: '7JlauX' })}*/}
-      {/*  </Stack>*/}
-      {/*</Button>*/}
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
+        <Grid
+          item
+          xs={12}
+          md={8}
+          order={{ xs: 2, md: 1 }}
+          mb={{ xs: 12, md: 0 }}
+        >
           <Stack direction="column" spacing={2}>
             <ErrorBoundary
               ErrorComponent={
@@ -64,22 +58,26 @@ const FlatcoinContent: FC = () => {
             >
               <Performance />
             </ErrorBoundary>
-            <ErrorBoundary
-              ErrorComponent={
-                <ErrorCard
-                  onMount={() => {
-                    track('error', {
-                      name: 'Unhandled Error: User Positions',
-                    });
-                  }}
-                />
-              }
-            >
-              <LeveragePositions />
-            </ErrorBoundary>
+            {!isMobile && (
+              <ErrorBoundary
+                ErrorComponent={
+                  <ErrorCard
+                    onMount={() => {
+                      track('error', {
+                        name: 'Unhandled Error: User Positions',
+                      });
+                    }}
+                  />
+                }
+              >
+                <LeveragePositions />
+              </ErrorBoundary>
+            )}
           </Stack>
         </Grid>
-        {!isMobile && (
+        {isMobile ? (
+          <MobileBottomCard />
+        ) : (
           <Grid item xs={12} md={4} order={{ xs: 1, md: 2 }}>
             <ErrorBoundary
               ErrorComponent={
