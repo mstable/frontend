@@ -9,6 +9,7 @@ import { AnnouncedOrders } from '../components/Positions/AnnouncedOrders';
 import { LeveragePositions } from '../components/Positions/Leverage';
 import { StablePosition } from '../components/Positions/Stable';
 import { TradingPanel } from '../components/TradingPanel';
+import { useOrderExecutionListener } from '../hooks/useOrderExecutionListener';
 import { FlatcoinProvider } from '../state';
 
 import type { FC } from 'react';
@@ -16,6 +17,7 @@ import type { FC } from 'react';
 const FlatcoinContent: FC = () => {
   const track = useTrack();
   const isMobile = useIsMobile();
+  useOrderExecutionListener();
 
   return (
     <Stack direction="column" alignItems="flex-start">
