@@ -4,7 +4,7 @@ import { formatNumberToLimitedDecimals } from '@frontend/shared-utils';
 import { Divider, Skeleton, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
-import { useFlatcoinType } from '../../hooks';
+import { useFlatcoinType, usePositionTypeNameMap } from '../../hooks';
 import { useFlatcoin } from '../../state';
 
 import type { StackProps } from '@mui/material';
@@ -147,7 +147,7 @@ const LeveragedEthValues = () => {
 
 export const Jumbo = (props: StackProps) => {
   const [type] = useFlatcoinType();
-  const { configs } = useFlatcoin();
+  const typeNameMap = usePositionTypeNameMap();
 
   return (
     <Stack
@@ -158,7 +158,7 @@ export const Jumbo = (props: StackProps) => {
       {...props}
     >
       <Typography variant="h1" pb={2}>
-        {configs?.[type].name}
+        {typeNameMap[type]}
       </Typography>
       <Stack
         direction={{ xs: 'column', md: 'row' }}

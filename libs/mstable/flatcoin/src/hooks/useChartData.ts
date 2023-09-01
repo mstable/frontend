@@ -139,12 +139,12 @@ export const useChartData = ({
       to,
     },
     {
-      enabled: type === 'leveragedeth',
+      enabled: type === 'leveraged',
       staleTime: 20_000,
     },
   );
 
-  const data = type === 'leveragedeth' ? prices : [];
+  const data = type === 'leveraged' ? prices : [];
 
   const series = useMemo<Serie[]>(
     () =>

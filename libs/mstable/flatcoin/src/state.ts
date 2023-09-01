@@ -22,7 +22,7 @@ import {
 } from './utils';
 
 import type { BigNumberish } from 'ethers';
-import type { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, PropsWithChildren, SetStateAction } from 'react';
 
 import type { FlatcoinState, PriceFeedData } from './types';
 const defaultFlatcoinChainId = SUPPORTED_FLATCOIN_CHAIN_IDS[0];
@@ -37,17 +37,12 @@ export const {
 } = createContainer<
   FlatcoinState,
   Dispatch<SetStateAction<FlatcoinState>>,
-  {
-    initialState: {
-      configs: FlatcoinState['configs'];
-    };
-  }
->(({ initialState }) => {
+  PropsWithChildren
+>(() => {
   const { chain } = useNetwork();
   const { address: walletAddress } = useAccount();
 
   const [state, setState] = useState<FlatcoinState>({
-    configs: initialState.configs,
     data: {
       apy: new Intl.NumberFormat('en-US', { style: 'percent' }).format(0.152),
       tvl: '',

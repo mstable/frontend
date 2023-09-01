@@ -1,9 +1,6 @@
-import { useMemo } from 'react';
-
 import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
-import { useIntl } from 'react-intl';
 
-import { useFlatcoinType } from '../../hooks';
+import { useFlatcoinType, usePositionTypeNameMap } from '../../hooks';
 import { useTradingType } from './hooks/useTradingType';
 import { FlatcoinTradingStateProvider } from './state';
 import { TradingButton } from './TradingButton';
@@ -16,7 +13,7 @@ import type { FC } from 'react';
 
 import type { PositionType } from '../../types';
 
-const TABS: PositionType[] = ['flatcoin', 'leveragedeth'];
+const TABS: PositionType[] = ['flatcoin', 'leveraged'];
 const TRADING_TAB_INDEX_MAP = TABS.reduce<Record<number, PositionType>>(
   (acc, type, index) => {
     acc[index] = type;
@@ -26,28 +23,16 @@ const TRADING_TAB_INDEX_MAP = TABS.reduce<Record<number, PositionType>>(
 );
 
 const useTradingPanel = () => {
-  const intl = useIntl();
   const [type, updateFlatcoinType] = useFlatcoinType();
   const [, updateTradingType] = useTradingType();
 
   const onTabChange = (index: number) => {
     const type = TRADING_TAB_INDEX_MAP[index];
     updateFlatcoinType(type);
-    type === 'leveragedeth' && updateTradingType('deposit');
+    type === 'leveraged' && updateTradingType('deposit');
   };
-  const tabNameMap: Record<PositionType, string> = useMemo(
-    () => ({
-      flatcoin: intl.formatMessage({
-        defaultMessage: 'Flatcoin',
-        id: 'Ew5cbe',
-      }),
-      leveragedeth: intl.formatMessage({
-        defaultMessage: 'Leveraged ETH',
-        id: 'xSqIpD',
-      }),
-    }),
-    [intl],
-  );
+
+  const tabNameMap = usePositionTypeNameMap();
 
   return {
     onTabChange,
@@ -75,7 +60,7 @@ export const TradingPanel: FC<CardProps> = (props) => {
             sx={{ marginTop: 2 }}
           >
             {TABS.map((tab) => (
-              <Tab key={tab} label={tabNameMap[tab]} />
+              <Tab key={tab} label={tabNameMap[tab]} sx={{ fontSize: 12 }} />
             ))}
           </Tabs>
           <Stack pt={2} spacing={2}>

@@ -31,7 +31,7 @@ export const routes: Route[] = [
       produce((prev) => {
         prev.type =
           typeof prev.type === 'string' &&
-          ['flatcoin', 'leveragedeth'].includes(prev.type)
+          ['flatcoin', 'leveraged'].includes(prev.type)
             ? prev.type
             : 'flatcoin';
       }),

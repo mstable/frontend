@@ -112,7 +112,7 @@ export const {
 
   // Set correct tokens on page type switch
   useEffect(() => {
-    const isLeveraged = type === 'leveragedeth';
+    const isLeveraged = type === 'leveraged';
     const { COLLATERAL, FLATCOIN } = getFlatcoinTokensByChain(flatcoinChainId);
     const collateral = {
       symbol: COLLATERAL.symbol,

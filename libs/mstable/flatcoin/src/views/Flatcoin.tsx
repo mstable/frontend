@@ -13,18 +13,6 @@ import { FlatcoinProvider } from '../state';
 
 import type { FC } from 'react';
 
-import type { PositionType } from '../types';
-
-// TODO: read from config constants
-const configs: Record<Lowercase<PositionType>, any> = {
-  flatcoin: {
-    name: 'Flatcoin',
-  },
-  leveragedeth: {
-    name: 'Leveraged ETH',
-  },
-};
-
 const FlatcoinContent: FC = () => {
   const track = useTrack();
   const isMobile = useIsMobile();
@@ -139,11 +127,7 @@ const FlatcoinContent: FC = () => {
 
 export const Flatcoin = () => {
   return (
-    <FlatcoinProvider
-      initialState={{
-        configs,
-      }}
-    >
+    <FlatcoinProvider>
       <FlatcoinContent />
     </FlatcoinProvider>
   );
