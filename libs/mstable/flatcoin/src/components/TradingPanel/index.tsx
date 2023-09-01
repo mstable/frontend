@@ -1,10 +1,6 @@
-import { useMemo } from 'react';
-
 import { Card, CardContent, Stack, Tab, Tabs } from '@mui/material';
 
-import { useFlatcoinType } from '../../hooks';
-import { useFlatcoin } from '../../state';
-import { POSITION_TYPE_TOKEN_KEY_MAP } from '../../utils';
+import { useFlatcoinType, usePositionTypeNameMap } from '../../hooks';
 import { useTradingType } from './hooks/useTradingType';
 import { FlatcoinTradingStateProvider } from './state';
 import { TradingButton } from './TradingButton';
@@ -29,7 +25,6 @@ const TRADING_TAB_INDEX_MAP = TABS.reduce<Record<number, PositionType>>(
 const useTradingPanel = () => {
   const [type, updateFlatcoinType] = useFlatcoinType();
   const [, updateTradingType] = useTradingType();
-  const { tokens } = useFlatcoin();
 
   const onTabChange = (index: number) => {
     const type = TRADING_TAB_INDEX_MAP[index];
@@ -37,17 +32,7 @@ const useTradingPanel = () => {
     type === 'leveraged' && updateTradingType('deposit');
   };
 
-  const tabNameMap = useMemo(
-    () =>
-      TABS.reduce(
-        (acc, type) => ({
-          ...acc,
-          [type]: tokens[POSITION_TYPE_TOKEN_KEY_MAP[type]].name,
-        }),
-        {},
-      ),
-    [tokens],
-  );
+  const tabNameMap = usePositionTypeNameMap();
 
   return {
     onTabChange,
@@ -75,7 +60,7 @@ export const TradingPanel: FC<CardProps> = (props) => {
             sx={{ marginTop: 2 }}
           >
             {TABS.map((tab) => (
-              <Tab key={tab} label={tabNameMap[tab]} />
+              <Tab key={tab} label={tabNameMap[tab]} sx={{ fontSize: 12 }} />
             ))}
           </Tabs>
           <Stack pt={2} spacing={2}>
