@@ -161,7 +161,7 @@ export const CloseLeveragePositionModal: FC<
                   <Stack direction="row" alignItems="center">
                     {marginDeposited}
                     <TokenIconRevamp
-                      sx={{ width: 12, height: 12, ml: 0.5 }}
+                      sx={{ width: 12, height: 12, mx: 0.5 }}
                       symbols={[collateral.symbol]}
                     />
                     {collateral.symbol}
@@ -186,9 +186,18 @@ export const CloseLeveragePositionModal: FC<
               <TradingOverviewItem
                 label="Est. Profit/Loss"
                 value={
-                  <Typography variant="value5" color={profitLossTextColor}>
-                    {profitLoss} {collateral.symbol}
-                  </Typography>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    color={profitLossTextColor}
+                  >
+                    {profitLoss}
+                    <TokenIconRevamp
+                      sx={{ width: 12, height: 12, mx: 0.5 }}
+                      symbols={[collateral.symbol]}
+                    />
+                    {collateral.symbol}
+                  </Stack>
                 }
                 subvalue={
                   <Typography variant="value5" color={profitLossTextColor}>
@@ -202,9 +211,14 @@ export const CloseLeveragePositionModal: FC<
               mt={2}
               label="Fees"
               value={
-                <>
-                  {keeperFee} {collateral.symbol}
-                </>
+                <Stack direction="row" alignItems="center">
+                  {keeperFee}
+                  <TokenIconRevamp
+                    sx={{ width: 12, height: 12, mx: 0.5 }}
+                    symbols={[collateral.symbol]}
+                  />
+                  {collateral.symbol}
+                </Stack>
               }
               subvalue={<>≈{keeperFeeInUsd}</>}
             />
@@ -212,9 +226,14 @@ export const CloseLeveragePositionModal: FC<
               mt={1}
               label="Est. Receive Amount"
               value={
-                <>
-                  {receiveAmount} {collateral.symbol}
-                </>
+                <Stack direction="row" alignItems="center">
+                  {receiveAmount}
+                  <TokenIconRevamp
+                    sx={{ width: 12, height: 12, mx: 0.5 }}
+                    symbols={[collateral.symbol]}
+                  />
+                  {collateral.symbol}
+                </Stack>
               }
               subvalue={<>≈{receiveAmountInUsd}</>}
             />
@@ -229,7 +248,7 @@ export const CloseLeveragePositionModal: FC<
             />
           ) : (
             <CloseLeveragePositionButton
-              position={position}
+              leveragePosition={position}
               sx={{ width: '100%' }}
             />
           )
