@@ -1,5 +1,4 @@
 import { SettingsButton } from '@frontend/mstable-settings';
-import { MStable, MStableShort } from '@frontend/shared-icons';
 import {
   OpenAccountModalButton,
   OpenNetworkModalButton,
@@ -8,20 +7,18 @@ import { RouterLink } from '@frontend/shared-ui';
 import {
   alpha,
   AppBar,
-  Button,
   Link,
   Stack,
+  Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useNavigate } from '@tanstack/react-location';
 import { useIntl } from 'react-intl';
 
 import { routes } from '../../routes';
 
 export const Topnav = () => {
   const intl = useIntl();
-  const navigate = useNavigate();
   const theme = useTheme();
   const wide = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -41,16 +38,11 @@ export const Topnav = () => {
           backdropFilter: 'blur(20px)',
         }}
       >
-        <Button
-          variant="text"
-          color="inherit"
-          onClick={() => {
-            navigate({ to: '/' });
-          }}
-          sx={{ ml: -2 }}
-        >
-          {wide ? <MStable sx={{ minWidth: 120 }} /> : <MStableShort />}
-        </Button>
+        {wide && (
+          <Typography variant="h3" sx={{ 'pointer-events': 'none' }}>
+            Flatcoin
+          </Typography>
+        )}
         <Stack
           flexGrow={1}
           direction="row"
