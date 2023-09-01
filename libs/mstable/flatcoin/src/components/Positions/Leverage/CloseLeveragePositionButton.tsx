@@ -16,9 +16,9 @@ import type { FC } from 'react';
 
 import type { LeveragedPosition } from '../../../types';
 
-interface Props {
-  position: LeveragedPosition;
-}
+type CloseLeveragePositionProps = StackProps & {
+  leveragePosition: LeveragedPosition;
+};
 
 const useCloseLeveragePositionButton = ({
   positionId,
@@ -55,13 +55,13 @@ const useCloseLeveragePositionButton = ({
   };
 };
 
-export const CloseLeveragePositionButton: FC<Props & StackProps> = ({
-  position,
+export const CloseLeveragePositionButton: FC<CloseLeveragePositionProps> = ({
+  leveragePosition,
   ...stackProps
 }) => {
   const intl = useIntl();
   const pushNotification = usePushNotification();
-  const { error, config } = useCloseLeveragePositionButton(position);
+  const { error, config } = useCloseLeveragePositionButton(leveragePosition);
 
   return (
     <TransactionActionButton
