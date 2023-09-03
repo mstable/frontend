@@ -13,7 +13,7 @@ export const Controls = (props: BoxProps) => {
   const navigate = useNavigate<FlatcoinRoute>();
 
   return (
-    <Box {...props} display="flex" justifyContent="flex-end" mb={3}>
+    <Box {...props} display="flex" justifyContent="flex-end">
       <ButtonGroup color="secondary" size="small">
         {Object.values(chartPeriods).map((c) => (
           <Button
