@@ -13,6 +13,7 @@ import {
 import {
   BigDecimal,
   formatNumberToLimitedDecimals,
+  getColorFromValue,
   isEqualAddresses,
 } from '@frontend/shared-utils';
 import { Button, Divider, Stack, Typography } from '@mui/material';
@@ -104,11 +105,7 @@ const useCloseLeveragePositionModal = ({
       style: 'decimal',
       maximumFractionDigits: DEFAULT_TOKEN_DECIMALS,
     }).format(profitLoss.simple),
-    profitLossTextColor: !profitLoss.exact.isZero()
-      ? profitLoss.exact.gt(0)
-        ? 'success.main'
-        : 'error.main'
-      : 'text.secondary',
+    profitLossTextColor: getColorFromValue({ value: profitLoss }),
     refetch,
   };
 };

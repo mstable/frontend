@@ -20,6 +20,8 @@ import type { FC } from 'react';
 
 import type { Order } from '../../types';
 
+const SHOW_ORDER_DELAY = 25000; // give 10 seconds for keeper to execute an order
+
 const useAnnouncedOrders = (order: Order | null) => {
   const { address: walletAddress } = useAccount();
   const { flatcoinChainId, tokens, keeperFee } = useFlatcoin();
@@ -34,17 +36,16 @@ const useAnnouncedOrders = (order: Order | null) => {
   const hasOrderExpired = orderExpirationDate
     ? orderExpirationDate < Date.now()
     : true;
+  const canOrderBeExecuted = order
+    ? Date.now() > +order.executableAtTime * 1000 + SHOW_ORDER_DELAY
+    : false;
   const { config, error } = usePrepareContractWrite({
     address: delayedOrderContract.address,
     abi: delayedOrderContract.abi,
     functionName: 'executeOrder',
     args: [walletAddress, priceData],
     chainId: flatcoinChainId,
-    enabled:
-      !!priceData &&
-      !!order &&
-      !hasOrderExpired &&
-      Date.now() > +order.executableAtTime * 1000,
+    enabled: !!priceData && !!order && !hasOrderExpired && canOrderBeExecuted,
     overrides: {
       value: '1', // the Pyth oracle will take 1 WEI of ETH to make the price update
     },
@@ -55,6 +56,7 @@ const useAnnouncedOrders = (order: Order | null) => {
     error,
     config,
     hasOrderExpired,
+    canOrderBeExecuted,
     orderExpirationDate: new Intl.DateTimeFormat('en-US', {
       timeStyle: 'medium',
     }).format(new Date(orderExpirationDate)),
@@ -71,12 +73,13 @@ export const AnnouncedOrders: FC<CardProps> = (props) => {
     error,
     config,
     hasOrderExpired,
+    canOrderBeExecuted,
     orderExpirationDate,
     feeSymbol,
     keeperFeeUsd,
   } = useAnnouncedOrders(announcedOrder);
 
-  if (!announcedOrder || hasOrderExpired) return null;
+  if (!announcedOrder || hasOrderExpired || !canOrderBeExecuted) return null;
 
   return (
     <Card {...props}>

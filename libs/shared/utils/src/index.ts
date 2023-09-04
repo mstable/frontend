@@ -12,4 +12,5 @@ export * from './random';
 export * from './tokens';
 export * from './transactionErrors';
 export * from './types';
+export * from './typography';
 export * from './web3';
