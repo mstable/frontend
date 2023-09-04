@@ -1,6 +1,6 @@
 import { useIsDhedgePool } from '@dhedge/core-ui-kit/hooks/pool';
-import { dHEDGEDappLink } from '@frontend/shared-constants';
-import { DHEDGEProtocol } from '@frontend/shared-icons';
+import { torosDappLink } from '@frontend/shared-constants';
+import { Toros } from '@frontend/shared-icons';
 import { AddressLabel, TokenIconRevamp } from '@frontend/shared-ui';
 import { Grid, Link, Stack, Typography } from '@mui/material';
 
@@ -51,17 +51,28 @@ export const TokenItem: FC<AssetItemProps> = ({
         {isDhedgePool && (
           <>
             <Typography variant="body2" gutterBottom>
-              {tokenName} is a dHEDGE vault. Visit dHEDGE to check its
-              underlying assets and strategy.
+              {tokenName} is a Toros vault. Visit Toros to check its underlying
+              assets and strategy.
             </Typography>
             <Link
-              href={`${dHEDGEDappLink}/vault/${tokenAddress}`}
+              href={`${torosDappLink}/vault/${tokenAddress}`}
               target="_blank"
               rel="noreferrer"
-              sx={{ cursor: 'pointer', verticalAlign: 'bottom', mt: 0.5 }}
+              sx={{
+                cursor: 'pointer',
+                verticalAlign: 'bottom',
+                mt: 0.5,
+                display: 'flex',
+                alignItems: 'center',
+                columnGap: 1,
+              }}
             >
-              View on
-              <DHEDGEProtocol sx={{ width: 90, height: 18, ml: 1 }} />
+              View on{' '}
+              <Toros
+                sx={{
+                  width: 50,
+                }}
+              />
             </Link>
           </>
         )}
