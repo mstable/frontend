@@ -6,6 +6,7 @@ import { Outlet } from '@tanstack/react-location';
 import { useEffectOnce } from 'react-use';
 
 import { registerCharts } from '../../clients';
+import { HotjarScript } from '../../scripts';
 import { GradientBackground } from '../Backgrounds';
 import { Footer } from '../Footer';
 import { Topnav } from '../Topnav';
@@ -31,6 +32,7 @@ export const App = () => {
         />
       }
     >
+      <HotjarScript />
       <Stack
         direction="column"
         sx={{

@@ -9,11 +9,13 @@ import {
   rbkLightTheme,
 } from '@frontend/mstable-theme';
 import {
+  GoogleAnalyticsProvider,
   I18nProvider,
   ModalsProvider,
   NotificationsProvider,
   ThemeProvider,
   WagmiProvider,
+  WalletGoogleAnalyticsProvider,
 } from '@frontend/shared-providers';
 import { composeContexts } from '@frontend/shared-utils';
 import { Router } from '@tanstack/react-location';
@@ -24,6 +26,7 @@ import { App } from './App';
 import en from './assets/lang/en.json';
 import {
   chains,
+  firebaseApp,
   reactLocationClient,
   reactQueryClient,
   wagmiClient,
@@ -40,6 +43,7 @@ root.render(
   composeContexts(
     [
       [StrictMode],
+      [GoogleAnalyticsProvider, { client: firebaseApp }],
       [QueryClientProvider, { client: reactQueryClient }],
       [I18nProvider, { messages: { en } }],
       [ThemeProvider, { themes: { light, dark } }],
@@ -53,6 +57,7 @@ root.render(
           rbkThemes: { dark: rbkDarkTheme, light: rbkLightTheme },
         },
       ],
+      [WalletGoogleAnalyticsProvider],
       [ModalsProvider],
       [SettingsProvider],
     ],

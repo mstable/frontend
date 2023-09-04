@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import {
   usePoolManagerLogicData,
   usePoolTokenPrice,
@@ -14,6 +16,7 @@ import {
   useShouldBeWhitelisted,
 } from '@dhedge/core-ui-kit/hooks/trading/deposit';
 import { useUserVaultBalance } from '@frontend/shared-hooks';
+import { useLogAnalyticsEvent } from '@frontend/shared-providers';
 import { ApproveButton } from '@frontend/shared-ui';
 import { Button } from '@mui/material';
 import BigNumber from 'bignumber.js';
@@ -24,6 +27,7 @@ import { TradeButton } from './TradeButton';
 import type { FC } from 'react';
 
 const useDepositButton = () => {
+  const logEvent = useLogAnalyticsEvent();
   const poolConfig = useTradingPanelPoolConfig();
   const [receiveToken] = useReceiveTokenInput();
   const [sendToken] = useSendTokenInput();
@@ -54,14 +58,24 @@ const useDepositButton = () => {
   const tradingParams = useTradingParams();
   const deposit = useDeposit(tradingParams);
 
+  const handleApprove = useCallback(async () => {
+    logEvent('approve_deposit', { symbol: sendToken.symbol });
+    return approve();
+  }, [approve, logEvent, sendToken.symbol]);
+
+  const handleDeposit = useCallback(async () => {
+    logEvent('deposit', { symbol: sendToken.symbol });
+    return deposit();
+  }, [deposit, logEvent, sendToken.symbol]);
+
   return {
     shouldBeWhitelisted,
     isAccountWhitelisted,
     poolConfig,
     isLowerThanMinDepositAmount,
     minDepositUSD,
-    deposit,
-    approve,
+    handleDeposit,
+    handleApprove,
     canSpend,
     sendToken,
   };
@@ -76,8 +90,8 @@ export const DepositButton: FC = () => {
     isLowerThanMinDepositAmount,
     minDepositUSD,
     canSpend,
-    deposit,
-    approve,
+    handleDeposit,
+    handleApprove,
     sendToken,
   } = useDepositButton();
 
@@ -116,8 +130,8 @@ export const DepositButton: FC = () => {
   }
 
   return canSpend ? (
-    <TradeButton tradingHandler={deposit} />
+    <TradeButton tradingHandler={handleDeposit} />
   ) : (
-    <ApproveButton onApprove={approve} symbol={sendToken.symbol} />
+    <ApproveButton onApprove={handleApprove} symbol={sendToken.symbol} />
   );
 };

@@ -1,7 +1,10 @@
+import { useCallback } from 'react';
+
 import { SettingsButton } from '@frontend/mstable-settings';
 import {
   OpenAccountModalButton,
   OpenNetworkModalButton,
+  useLogAnalyticsEvent,
 } from '@frontend/shared-providers';
 import { RouterLink } from '@frontend/shared-ui';
 import {
@@ -21,6 +24,11 @@ export const Topnav = () => {
   const intl = useIntl();
   const theme = useTheme();
   const wide = useMediaQuery(theme.breakpoints.up('sm'));
+  const logEvent = useLogAnalyticsEvent();
+
+  const logSettingsMenuOpen = useCallback(() => {
+    logEvent('open_app_settings');
+  }, [logEvent]);
 
   return (
     <AppBar position="sticky" color="transparent">
@@ -72,7 +80,10 @@ export const Topnav = () => {
           <OpenNetworkModalButton
             sx={{ height: 36, width: 36, pointerEvents: 'none' }}
           />
-          <SettingsButton sx={{ height: 36, width: 36 }} />
+          <SettingsButton
+            sx={{ height: 36, width: 36 }}
+            logSettingsMenuOpen={logSettingsMenuOpen}
+          />
         </Stack>
       </Stack>
     </AppBar>

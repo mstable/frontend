@@ -6,6 +6,7 @@ import {
   TWITTER,
 } from '@frontend/shared-constants';
 import { Discord, Email, Github, Twitter } from '@frontend/shared-icons';
+import { useLogAnalyticsEvent } from '@frontend/shared-providers';
 import { IconButton, Stack } from '@mui/material';
 import { MediumLogo } from 'phosphor-react';
 import { useIntl } from 'react-intl';
@@ -14,6 +15,7 @@ import type { StackProps } from '@mui/material';
 
 export const Footer = (props: StackProps) => {
   const intl = useIntl();
+  const logEvent = useLogAnalyticsEvent();
 
   const socialIcons = [
     {
@@ -64,6 +66,9 @@ export const Footer = (props: StackProps) => {
             href={social.href}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              logEvent('footer_link_clicked', { link: social.title });
+            }}
           >
             {social.icon}
           </IconButton>

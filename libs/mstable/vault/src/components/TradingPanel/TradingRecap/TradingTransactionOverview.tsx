@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import {
   usePoolFees,
@@ -15,6 +15,7 @@ import {
 } from '@dhedge/core-ui-kit/hooks/trading';
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import { RECOMMENDED_MIN_SLIPPAGE } from '@frontend/shared-constants';
+import { useLogAnalyticsEvent } from '@frontend/shared-providers';
 import { CollapsibleSection, TradingOverviewItem } from '@frontend/shared-ui';
 import { CircularProgress, Divider, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
@@ -25,6 +26,8 @@ import type { StackProps } from '@mui/material';
 import type { FC } from 'react';
 
 const useTradingTransactionOverview = () => {
+  const logEvent = useLogAnalyticsEvent();
+  const [isDisclosureOpen, setIsDisclosureOpen] = useState(false);
   const {
     meta: { minWithdrawalUsd },
     config: { address, chainId },
@@ -39,6 +42,13 @@ const useTradingTransactionOverview = () => {
   const maxSlippagePlaceholder = useMaxSlippagePlaceholder();
   const showMinRecommendedSlippage = !isDeposit && slippage !== 'auto';
 
+  const toggleDisclosureSection = useCallback(() => {
+    if (!isDisclosureOpen) {
+      logEvent('trading_overview_more_info_expanded');
+    }
+    setIsDisclosureOpen((open) => !open);
+  }, [logEvent, isDisclosureOpen]);
+
   return {
     maxSlippagePlaceholder: `${maxSlippagePlaceholder}%`,
     minReceivedText,
@@ -52,12 +62,13 @@ const useTradingTransactionOverview = () => {
     minDeposit: formatToUsd({ value: minDepositUSD, minimumFractionDigits: 0 }),
     lockTime,
     minWithdrawalUsd,
+    isDisclosureOpen,
+    toggleDisclosureSection,
   };
 };
 
 export const TradingTransactionOverview: FC<StackProps> = (props) => {
   const intl = useIntl();
-  const [isDisclosureOpen, setIsDisclosureOpen] = useState(false);
   const {
     maxSlippagePlaceholder,
     minReceivedText,
@@ -71,6 +82,8 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
     minDeposit,
     lockTime,
     minWithdrawalUsd,
+    toggleDisclosureSection,
+    isDisclosureOpen,
   } = useTradingTransactionOverview();
 
   return (
@@ -135,7 +148,7 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
           }}
           iconPosition="end"
           open={isDisclosureOpen}
-          onToggle={() => setIsDisclosureOpen((open) => !open)}
+          onToggle={toggleDisclosureSection}
         >
           <Stack direction="column" spacing={1}>
             <Divider sx={{ marginTop: 1 }} />
@@ -179,8 +192,8 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
           {intl.formatMessage(
             {
               defaultMessage:
-                'Due to high slippage on lower withdrawal amounts, please consider withdrawing a minimum of ${minWithdrawalUsd} or manually increasing the maximum slippage.',
-              id: 'QrqA2G',
+                'Due to possible high slippage on lower withdrawal amounts, please consider withdrawing a minimum of ${minWithdrawalUsd} or manually increasing the maximum slippage.',
+              id: 'Tp2Mnw',
             },
             { minWithdrawalUsd },
           )}

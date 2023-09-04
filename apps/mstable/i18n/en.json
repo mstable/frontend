@@ -14,9 +14,6 @@
   "DRXWXB": {
     "defaultMessage": "404"
   },
-  "EhET/Q": {
-    "defaultMessage": "<strong>Yield app</strong> by mStable"
-  },
   "Ew5cbe": {
     "defaultMessage": "Flatcoin"
   },
@@ -152,6 +149,9 @@
   "AA5h7P": {
     "defaultMessage": "Performance"
   },
+  "AeA4mw": {
+    "defaultMessage": "Minimum Received"
+  },
   "AlCWDq": {
     "defaultMessage": "Leveraged Positions"
   },
@@ -175,9 +175,6 @@
   },
   "MQ02gW": {
     "defaultMessage": "Skew"
-  },
-  "OkOAzx": {
-    "defaultMessage": "We recommend {slippage}%, but usually it will be < {slippage}%."
   },
   "PQiNnk": {
     "defaultMessage": "Open Interest"
@@ -244,9 +241,6 @@
   },
   "wqlXwW": {
     "defaultMessage": "Wrong Network"
-  },
-  "xSqIpD": {
-    "defaultMessage": "Leveraged ETH"
   },
   "+1GGs7": {
     "defaultMessage": "Claim CVX & CRV"
@@ -566,11 +560,14 @@
   "ObjU4O": {
     "defaultMessage": "Mining"
   },
-  "QrqA2G": {
-    "defaultMessage": "Due to high slippage on lower withdrawal amounts, please consider withdrawing a minimum of ${minWithdrawalUsd} or manually increasing the maximum slippage."
+  "OkOAzx": {
+    "defaultMessage": "We recommend {slippage}%, but usually it will be < {slippage}%."
   },
   "S0seuN": {
     "defaultMessage": "Recommended min slippage"
+  },
+  "Tp2Mnw": {
+    "defaultMessage": "Due to possible high slippage on lower withdrawal amounts, please consider withdrawing a minimum of ${minWithdrawalUsd} or manually increasing the maximum slippage."
   },
   "VyTtUL": {
     "defaultMessage": "The {symbol} Vault charges a {fee} entry fee."

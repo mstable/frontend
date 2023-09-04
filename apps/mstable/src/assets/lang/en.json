@@ -453,6 +453,12 @@
       "value": "Performance"
     }
   ],
+  "AeA4mw": [
+    {
+      "type": 0,
+      "value": "Minimum Received"
+    }
+  ],
   "AlCWDq": [
     {
       "type": 0,
@@ -561,22 +567,6 @@
     {
       "type": 0,
       "value": "LP Position"
-    }
-  ],
-  "EhET/Q": [
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "Yield app"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    },
-    {
-      "type": 0,
-      "value": " by mStable"
     }
   ],
   "EibIVS": [
@@ -905,20 +895,6 @@
       "value": "The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded."
     }
   ],
-  "QrqA2G": [
-    {
-      "type": 0,
-      "value": "Due to high slippage on lower withdrawal amounts, please consider withdrawing a minimum of $"
-    },
-    {
-      "type": 1,
-      "value": "minWithdrawalUsd"
-    },
-    {
-      "type": 0,
-      "value": " or manually increasing the maximum slippage."
-    }
-  ],
   "RnacAD": [
     {
       "type": 0,
@@ -953,6 +929,20 @@
     {
       "type": 0,
       "value": "Position Value"
+    }
+  ],
+  "Tp2Mnw": [
+    {
+      "type": 0,
+      "value": "Due to possible high slippage on lower withdrawal amounts, please consider withdrawing a minimum of $"
+    },
+    {
+      "type": 1,
+      "value": "minWithdrawalUsd"
+    },
+    {
+      "type": 0,
+      "value": " or manually increasing the maximum slippage."
     }
   ],
   "TvzL+L": [
@@ -1773,12 +1763,6 @@
     {
       "type": 0,
       "value": "Not Connected"
-    }
-  ],
-  "xSqIpD": [
-    {
-      "type": 0,
-      "value": "Leveraged ETH"
     }
   ],
   "xrKHS6": [
