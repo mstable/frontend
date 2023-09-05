@@ -2,7 +2,7 @@ import { useIsDhedgePool } from '@dhedge/core-ui-kit/hooks/pool';
 import { torosDappLink } from '@frontend/shared-constants';
 import { Toros } from '@frontend/shared-icons';
 import { AddressLabel, TokenIconRevamp } from '@frontend/shared-ui';
-import { Grid, Link, Stack, Typography } from '@mui/material';
+import { Grid, Link, Stack, Typography, useTheme } from '@mui/material';
 
 import type { ChainId } from '@dhedge/core-ui-kit/types';
 import type { FC } from 'react';
@@ -22,6 +22,8 @@ export const TokenItem: FC<AssetItemProps> = ({
 }) => {
   const { tokenAddress, tokenName, asset, percentage } = token;
   const isDhedgePool = useIsDhedgePool({ address: tokenAddress, chainId });
+  const theme = useTheme();
+
   return (
     <Grid item key={`${tokenAddress}-${tokenName}`} xs={6} zeroMinWidth>
       <Stack
@@ -71,6 +73,11 @@ export const TokenItem: FC<AssetItemProps> = ({
               <Toros
                 sx={{
                   width: 50,
+                  ...(theme.palette.mode === 'dark' && {
+                    image: {
+                      filter: 'invert(100%)',
+                    },
+                  }),
                 }}
               />
             </Link>
