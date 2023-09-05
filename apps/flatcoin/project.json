@@ -1,0 +1,99 @@
+{
+  "name": "flatcoin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/flatcoin/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "dependsOn": ["^build", "i18n-compile"],
+      "options": {
+        "outputPath": "dist/apps/flatcoin"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/flatcoin/src/environments/environment.ts",
+              "with": "apps/flatcoin/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "flatcoin:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "flatcoin:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "flatcoin:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nrwl/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "flatcoin:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "flatcoin:build:development"
+        },
+        "production": {
+          "buildTarget": "flatcoin:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/flatcoin/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "i18n-extract": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "yarn run formatjs extract 'apps/flatcoin/src/**/*.{ts,tsx}' --out-file i18n-extractions/apps-flatcoin.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+        ]
+      }
+    },
+    "i18n-compile": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["i18n-extract", "^i18n-extract"],
+      "options": {
+        "commands": [
+          "jq -rs 'reduce .[] as $item ({}; . * $item)' i18n-extractions/* > apps/flatcoin/i18n/en.json",
+          "yarn run formatjs compile apps/flatcoin/i18n/en.json --ast --out-file apps/flatcoin/src/assets/lang/en.json",
+          "yarn run nx format:write --files apps/flatcoin/src/assets/lang/*.json"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": ["flatcoin"]
+}

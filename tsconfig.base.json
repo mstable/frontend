@@ -17,6 +17,7 @@
     "strict": false,
     "noPropertyAccessFromIndexSignature": false,
     "paths": {
+      "@frontend/flatcoin-page": ["libs/flatcoin/page/src/index.ts"],
       "@frontend/lts-burn": ["libs/lts/burn/src/index.ts"],
       "@frontend/lts-constants": ["libs/lts/constants/src/index.ts"],
       "@frontend/lts-settings": ["libs/lts/settings/src/index.ts"],
