@@ -1,5 +1,5 @@
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
-import { DEFAULT_TOKEN_DECIMALS } from '@frontend/shared-constants';
+import { DEFAULT_TOKEN_DECIMALS } from '@frontend/flatcoin-constants';
 import { formatNumberToLimitedDecimals } from '@frontend/shared-utils';
 import { Card, CardContent, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';

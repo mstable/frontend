@@ -10,7 +10,7 @@ import {
   FlatcoinViewerABI,
 } from '../abis';
 
-import type { Contract } from '../types';
+import type { Contract } from '@frontend/shared-constants';
 
 export const flatcoinDelayedOrderBaseGoerli: Contract = {
   address: '0x951c39a3160ddA9B80b54b4A7e71FD0b1cD06554',
@@ -60,13 +60,3 @@ export const flatcoinViewerContractBaseGoerli: Contract = {
   abi: FlatcoinViewerABI,
   name: 'FlatcoinViewer',
 };
-
-export const contractsBaseGoerli: Contract[] = [
-  flatcoinDelayedOrderBaseGoerli,
-  flatcoinStableModuleBaseGoerli,
-  flatcoinKeeperFeeBaseGoerli,
-  flatcoinVaultBaseGoerli,
-  flatcoinLeveragedModuleBaseGoerli,
-  flatcoinOracleModuleBaseGoerli,
-  flatcoinViewerContractBaseGoerli,
-];

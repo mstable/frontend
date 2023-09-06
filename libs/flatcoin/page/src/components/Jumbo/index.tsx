@@ -1,4 +1,4 @@
-import { DEFAULT_TOKEN_DECIMALS } from '@frontend/shared-constants';
+import { DEFAULT_TOKEN_DECIMALS } from '@frontend/flatcoin-constants';
 import { ValueLabel } from '@frontend/shared-ui';
 import { formatNumberToLimitedDecimals } from '@frontend/shared-utils';
 import { Divider, Skeleton, Stack, Typography } from '@mui/material';

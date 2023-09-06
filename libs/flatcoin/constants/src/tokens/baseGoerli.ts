@@ -1,12 +1,10 @@
 import { erc20ABI } from 'wagmi';
 import { baseGoerli } from 'wagmi/chains';
 
-import { FlatcoinStableModuleABI } from '../abis/flatcoin/FlatcoinStableModuleABI';
-import { flatcoinStableModuleBaseGoerli } from '../contracts/baseGoerli';
+import { FlatcoinStableModuleABI } from '../abis';
+import { flatcoinStableModuleBaseGoerli } from '../contracts';
 
 import type { Address } from 'wagmi';
-
-import type { Token } from './types';
 
 export const flatcoinTokenBaseGoerli = {
   address: flatcoinStableModuleBaseGoerli.address,
@@ -25,8 +23,3 @@ export const flatcoinCollateralBaseGoerli = {
   chainId: baseGoerli.id,
   abi: erc20ABI,
 };
-
-export const toksBaseGoerli: Token[] = [
-  flatcoinTokenBaseGoerli,
-  flatcoinCollateralBaseGoerli,
-];

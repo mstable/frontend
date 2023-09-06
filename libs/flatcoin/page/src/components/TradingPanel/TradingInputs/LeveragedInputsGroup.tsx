@@ -1,6 +1,6 @@
-import { useAccount } from '@dhedge/core-ui-kit/hooks/web3';
 import { TradingInput } from '@frontend/shared-ui';
 import { Divider } from '@mui/material';
+import { useAccount } from 'wagmi';
 
 import { useFlatcoin } from '../../../state';
 import { useLeveragedTradeQuote } from '../hooks/useLeveragedTradeQuote';
@@ -8,7 +8,7 @@ import { useFlatcoinTradingState, useUpdateSendToken } from '../state';
 import { LeverageSettings } from './LeverageSettings';
 
 const useLeveragedInputsGroup = () => {
-  const { account } = useAccount();
+  const { address: account } = useAccount();
   const {
     tokens: { collateral },
   } = useFlatcoin();

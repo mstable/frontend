@@ -2,7 +2,7 @@ import { formatToUsd } from '@dhedge/core-ui-kit/utils';
 import {
   DEFAULT_MAX_FILL_PRICE_SLIPPAGE,
   DEFAULT_TOKEN_DECIMALS,
-} from '@frontend/shared-constants';
+} from '@frontend/flatcoin-constants';
 import { TradingOverviewItem } from '@frontend/shared-ui';
 
 import { useFlatcoin } from '../../../state';

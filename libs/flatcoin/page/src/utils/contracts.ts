@@ -5,7 +5,7 @@ import {
   flatcoinOracleModuleBaseGoerli,
   flatcoinVaultBaseGoerli,
   flatcoinViewerContractBaseGoerli,
-} from '@frontend/shared-constants';
+} from '@frontend/flatcoin-constants';
 import { baseGoerli } from 'wagmi/chains';
 
 export const getFlatcoinDelayedOrderContract = (chainId: number) => {

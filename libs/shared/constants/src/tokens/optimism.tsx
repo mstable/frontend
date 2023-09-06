@@ -2,8 +2,6 @@ import { MTA, Optimism, USDC } from '@frontend/shared-icons';
 import { erc20ABI } from 'wagmi';
 import { optimism } from 'wagmi/chains';
 
-import { ZERO_ADDRESS } from '../utils';
-
 import type { Token } from './types';
 
 export const toksOptimism: Token[] = [
@@ -30,14 +28,6 @@ export const toksOptimism: Token[] = [
     name: 'USD Coin',
     icon: USDC,
     decimals: 6,
-    chainId: optimism.id,
-    abi: erc20ABI,
-  },
-  {
-    address: ZERO_ADDRESS, // TODO: add
-    symbol: 'mStable',
-    name: 'Flatcoin',
-    decimals: 18,
     chainId: optimism.id,
     abi: erc20ABI,
   },

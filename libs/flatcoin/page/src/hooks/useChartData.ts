@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { DEFAULT_TOKEN_DECIMALS } from '@frontend/shared-constants';
+import { DEFAULT_TOKEN_DECIMALS } from '@frontend/flatcoin-constants';
 import { useGetTokenPriceHistory } from '@frontend/shared-providers';
 import { CHART_PERIOD, CHART_TYPE } from '@frontend/shared-types';
 import { isNilOrEmpty } from '@frontend/shared-utils';

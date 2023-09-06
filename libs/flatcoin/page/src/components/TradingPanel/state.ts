@@ -3,8 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import {
   DEFAULT_LEVERAGE_COEFF,
   DEFAULT_MAX_SLIPPAGE,
-  ZERO_ADDRESS,
-} from '@frontend/shared-constants';
+} from '@frontend/flatcoin-constants';
+import { ZERO_ADDRESS } from '@frontend/shared-constants';
 import { BigDecimal, isEqualAddresses } from '@frontend/shared-utils';
 import BigNumber from 'bignumber.js';
 import produce from 'immer';

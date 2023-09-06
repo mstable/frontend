@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { DEFAULT_MAX_FILL_PRICE_SLIPPAGE } from '@frontend/shared-constants';
+import { DEFAULT_MAX_FILL_PRICE_SLIPPAGE } from '@frontend/flatcoin-constants';
 import { usePushNotification } from '@frontend/shared-providers';
 import { TransactionActionButton } from '@frontend/shared-ui';
 import BigNumber from 'bignumber.js';

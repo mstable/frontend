@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import '@rainbow-me/rainbowkit/styles.css';
 
-import { SUPPORTED_FLATCOIN_CHAINS } from '@frontend/shared-constants';
+import { SUPPORTED_FLATCOIN_CHAINS } from '@frontend/flatcoin-constants';
 import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import {

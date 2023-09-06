@@ -1,10 +1,8 @@
 import { useState } from 'react';
 
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
-import {
-  DEFAULT_TOKEN_DECIMALS,
-  ZERO_ADDRESS,
-} from '@frontend/shared-constants';
+import { DEFAULT_TOKEN_DECIMALS } from '@frontend/flatcoin-constants';
+import { ZERO_ADDRESS } from '@frontend/shared-constants';
 import {
   Dialog,
   TokenIconRevamp,

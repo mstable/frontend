@@ -1,8 +1,8 @@
+import { SUPPORTED_FLATCOIN_CHAIN_IDS } from '@frontend/flatcoin-constants';
 import {
   flatcoinCollateralBaseGoerli,
   flatcoinTokenBaseGoerli,
-  SUPPORTED_FLATCOIN_CHAIN_IDS,
-} from '@frontend/shared-constants';
+} from '@frontend/flatcoin-constants';
 import { baseGoerli } from 'wagmi/chains';
 
 export * from './contracts';

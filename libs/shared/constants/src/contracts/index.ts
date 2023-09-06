@@ -1,13 +1,11 @@
-import { baseGoerli, mainnet, optimism } from 'wagmi/chains';
+import { mainnet, optimism } from 'wagmi/chains';
 
-import { contractsBaseGoerli } from './baseGoerli';
 import { contractsMainnet } from './mainnet';
 import { contractsOptimism } from './optimism';
 
 import type { Contract } from '../types';
 
 export const contracts = {
-  [baseGoerli.id]: contractsBaseGoerli,
   [mainnet.id]: contractsMainnet,
   [optimism.id]: contractsOptimism,
 };
@@ -23,6 +21,5 @@ export const cons: Record<number, Record<string, Contract>> = Object.entries(
   };
 }, {});
 
-export * from './baseGoerli';
 export * from './mainnet';
 export * from './optimism';

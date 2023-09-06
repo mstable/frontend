@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import {
   KEEPER_FEE_SLIPPAGE_COEFF,
   SUPPORTED_FLATCOIN_CHAIN_IDS,
-} from '@frontend/shared-constants';
+} from '@frontend/flatcoin-constants';
 import { BigDecimal } from '@frontend/shared-utils';
 import BigNumber from 'bignumber.js';
 import produce from 'immer';

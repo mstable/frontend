@@ -1,4 +1,4 @@
-import { DEFAULT_MAX_SLIPPAGE } from '@frontend/shared-constants';
+import { DEFAULT_MAX_SLIPPAGE } from '@frontend/flatcoin-constants';
 import { Input, Stack } from '@mui/material';
 
 import { useFlatcoinTradingState, useUpdateTradingSlippage } from '../state';
