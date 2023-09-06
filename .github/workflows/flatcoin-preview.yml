@@ -1,14 +1,12 @@
-name: Flatcoin Dev
+name: Flatcoin Preview
 
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
+  pull_request:
     paths:
       - 'apps/flatcoin/**'
       - 'libs/flatcoin/**'
       - 'libs/shared/**'
+      - 'package.json'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -19,15 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        name: Checkout [main]
-        with:
-          fetch-depth: 0
+        name: Checkout
 
       - uses: actions/setup-node@v3
         name: Setup node
         with:
           node-version: 18
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Install jq
         run: |
@@ -51,6 +47,5 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FLATCOIN_DEV }}'
-          expires: 30d
+          expires: 8d
           projectId: flatcoin-dev-d5050
-          channelId: live

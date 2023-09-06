@@ -1,6 +1,18 @@
 {
+  "8ywLSf": {
+    "defaultMessage": "Twitter"
+  },
   "Ew5cbe": {
     "defaultMessage": "Flatcoin"
+  },
+  "FvmV6q": {
+    "defaultMessage": "Discord"
+  },
+  "SOievI": {
+    "defaultMessage": "<strong>Flatcoin app</strong> by dHEDGE"
+  },
+  "Vn76qV": {
+    "defaultMessage": "Github"
   },
   "+k7bPd": {
     "defaultMessage": "The selected network is not supported by this application."
@@ -8,23 +20,14 @@
   "1XVJUl": {
     "defaultMessage": "Switch to {defaultChain}"
   },
-  "8ywLSf": {
-    "defaultMessage": "Twitter"
-  },
   "Bak2Yy": {
     "defaultMessage": "Select from supported list"
   },
   "DRXWXB": {
     "defaultMessage": "404"
   },
-  "FvmV6q": {
-    "defaultMessage": "Discord"
-  },
   "PmkP1H": {
     "defaultMessage": "Unsupported Network"
-  },
-  "Vn76qV": {
-    "defaultMessage": "Github"
   },
   "cyR7Kh": {
     "defaultMessage": "Back"

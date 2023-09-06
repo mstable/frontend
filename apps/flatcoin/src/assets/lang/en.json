@@ -919,6 +919,22 @@
       "value": "TVL"
     }
   ],
+  "SOievI": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Flatcoin app"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " by dHEDGE"
+    }
+  ],
   "SRo6uF": [
     {
       "type": 0,
