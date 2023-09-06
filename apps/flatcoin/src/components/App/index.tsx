@@ -9,6 +9,7 @@ import { Outlet } from '@tanstack/react-location';
 import { useEffectOnce } from 'react-use';
 
 import { registerCharts } from '../../clients';
+import { Footer } from '../Footer';
 import { Topnav } from '../Topnav';
 
 export const App = () => {
@@ -49,6 +50,7 @@ export const App = () => {
           <Box minHeight="80vh" pt={{ xs: 2, md: 5 }}>
             <Outlet />
           </Box>
+          <Footer my={4} />
         </GradientBackground>
       </Stack>
     </ErrorBoundary>
