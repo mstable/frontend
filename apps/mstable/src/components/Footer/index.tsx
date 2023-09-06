@@ -7,7 +7,7 @@ import {
 } from '@frontend/shared-constants';
 import { Discord, Email, Github, Twitter } from '@frontend/shared-icons';
 import { useLogAnalyticsEvent } from '@frontend/shared-providers';
-import { IconButton, Stack } from '@mui/material';
+import { IconButton, Stack, Typography } from '@mui/material';
 import { MediumLogo } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
@@ -52,6 +52,12 @@ export const Footer = (props: StackProps) => {
       spacing={1.5}
       {...props}
     >
+      <Typography>
+        {intl.formatMessage({
+          defaultMessage: '<strong>Yield app</strong> by mStable',
+          id: 'EhET/Q',
+        })}
+      </Typography>
       <Stack
         direction="row"
         flexGrow={1}

@@ -1,0 +1,782 @@
+{
+  "Ew5cbe": {
+    "defaultMessage": "Flatcoin"
+  },
+  "+k7bPd": {
+    "defaultMessage": "The selected network is not supported by this application."
+  },
+  "1XVJUl": {
+    "defaultMessage": "Switch to {defaultChain}"
+  },
+  "8ywLSf": {
+    "defaultMessage": "Twitter"
+  },
+  "Bak2Yy": {
+    "defaultMessage": "Select from supported list"
+  },
+  "DRXWXB": {
+    "defaultMessage": "404"
+  },
+  "FvmV6q": {
+    "defaultMessage": "Discord"
+  },
+  "PmkP1H": {
+    "defaultMessage": "Unsupported Network"
+  },
+  "Vn76qV": {
+    "defaultMessage": "Github"
+  },
+  "cyR7Kh": {
+    "defaultMessage": "Back"
+  },
+  "ovJ26C": {
+    "defaultMessage": "Medium"
+  },
+  "sy+pv5": {
+    "defaultMessage": "Email"
+  },
+  "+U6ozc": {
+    "defaultMessage": "Type"
+  },
+  "/54G9d": {
+    "defaultMessage": "Approving Token"
+  },
+  "0NMLMN": {
+    "defaultMessage": "My Position"
+  },
+  "0OPmis": {
+    "defaultMessage": "Approve Position Close"
+  },
+  "0fFawv": {
+    "defaultMessage": "Stable Position Value"
+  },
+  "1uz/I3": {
+    "defaultMessage": "1M"
+  },
+  "1v6yZm": {
+    "defaultMessage": "Announce Leverage Position Close"
+  },
+  "3xhnWF": {
+    "defaultMessage": "You Spend"
+  },
+  "6bJGds": {
+    "defaultMessage": "1W"
+  },
+  "8lLHeh": {
+    "defaultMessage": "1Y"
+  },
+  "90axO4": {
+    "defaultMessage": "Trade"
+  },
+  "AA5h7P": {
+    "defaultMessage": "Performance"
+  },
+  "AeA4mw": {
+    "defaultMessage": "Minimum Received"
+  },
+  "AlCWDq": {
+    "defaultMessage": "Leveraged Positions"
+  },
+  "CB1174": {
+    "defaultMessage": "Funding Rate"
+  },
+  "DUR59o": {
+    "defaultMessage": "Total Value Locked"
+  },
+  "Gh1Vm9": {
+    "defaultMessage": "You Receive"
+  },
+  "Gtmi1D": {
+    "defaultMessage": "Set As Infinite"
+  },
+  "IB0eky": {
+    "defaultMessage": "Annual percentage yield."
+  },
+  "ImPhdW": {
+    "defaultMessage": "Order expires at"
+  },
+  "LGv1C5": {
+    "defaultMessage": "Announced Orders"
+  },
+  "MLTKb6": {
+    "defaultMessage": "APY"
+  },
+  "MQ02gW": {
+    "defaultMessage": "Skew"
+  },
+  "NpWjvV": {
+    "defaultMessage": "Trading"
+  },
+  "PQiNnk": {
+    "defaultMessage": "Open Interest"
+  },
+  "Px2xWV": {
+    "defaultMessage": "Open Position"
+  },
+  "SKB/G9": {
+    "defaultMessage": "TVL"
+  },
+  "Ty3dr6": {
+    "defaultMessage": "Entry Price"
+  },
+  "WCaf5C": {
+    "defaultMessage": "Approve"
+  },
+  "X/RW9w": {
+    "defaultMessage": "Slippage Tolerance"
+  },
+  "XnpuKy": {
+    "defaultMessage": "Approve {symbol}"
+  },
+  "aTX7LJ": {
+    "defaultMessage": "1D"
+  },
+  "cg1VJ2": {
+    "defaultMessage": "Connect Wallet"
+  },
+  "d21Els": {
+    "defaultMessage": "Execute"
+  },
+  "dlRkGS": {
+    "defaultMessage": "Keeper fee"
+  },
+  "ehxGBh": {
+    "defaultMessage": "Token Price"
+  },
+  "inIeEz": {
+    "defaultMessage": "Margin Deposited"
+  },
+  "k3YWIR": {
+    "defaultMessage": "Max slippage"
+  },
+  "kaPKOB": {
+    "defaultMessage": "Insufficient balance"
+  },
+  "n9CFUs": {
+    "defaultMessage": "Token Approval"
+  },
+  "oNO7VY": {
+    "defaultMessage": "Flatcoin Withdraw"
+  },
+  "pbpdV6": {
+    "defaultMessage": "Leverage"
+  },
+  "qcHHVw": {
+    "defaultMessage": "Announce Leverage Position"
+  },
+  "rbrahO": {
+    "defaultMessage": "Close"
+  },
+  "rfzzi6": {
+    "defaultMessage": "Profit/Loss"
+  },
+  "sjr65W": {
+    "defaultMessage": "Execute Order"
+  },
+  "tw0ig8": {
+    "defaultMessage": "Executable at"
+  },
+  "wfUbwI": {
+    "defaultMessage": "Flatcoin Deposit"
+  },
+  "wqlXwW": {
+    "defaultMessage": "Wrong Network"
+  },
+  "7JlauX": {
+    "defaultMessage": "Explore"
+  },
+  "7ynb1z": {
+    "defaultMessage": "{value} GWEI"
+  },
+  "Am173P": {
+    "defaultMessage": "The current price of 1 token. Return is represented as an increase in token price value."
+  },
+  "Do29Mx": {
+    "defaultMessage": "P&L"
+  },
+  "H5+NAX": {
+    "defaultMessage": "Balance"
+  },
+  "Imiiiv": {
+    "defaultMessage": "No Data Available"
+  },
+  "LAazWH": {
+    "defaultMessage": "Account token balance"
+  },
+  "LiHQih": {
+    "defaultMessage": "Coming Soon"
+  },
+  "P1xtEU": {
+    "defaultMessage": "Earn diversified yield across DeFi."
+  },
+  "P8Xs51": {
+    "defaultMessage": "ROI"
+  },
+  "PxG1Yq": {
+    "defaultMessage": "Total Value Locked in vault"
+  },
+  "SRo6uF": {
+    "defaultMessage": "Meta Vaults"
+  },
+  "ULHfQE": {
+    "defaultMessage": "The current price of 1 share. Return is represented as a increase in share price value."
+  },
+  "WKCp0D": {
+    "defaultMessage": "Asset"
+  },
+  "YC/ZXg": {
+    "defaultMessage": "Share price"
+  },
+  "YZUa24": {
+    "defaultMessage": "Earn optimized, automated, and diversified yield across DeFi."
+  },
+  "g6UhRO": {
+    "defaultMessage": "Vault name"
+  },
+  "qNhf66": {
+    "defaultMessage": "Perf"
+  },
+  "s2zphO": {
+    "defaultMessage": "Vaults"
+  },
+  "yFvqzw": {
+    "defaultMessage": "Meta Harvester"
+  },
+  "zFNxtv": {
+    "defaultMessage": "Protocols"
+  },
+  "zKtTJT": {
+    "defaultMessage": "Return on investment since Vault inception."
+  },
+  "+1GGs7": {
+    "defaultMessage": "Claim CVX & CRV"
+  },
+  "/e4KBT": {
+    "defaultMessage": "1 Share = {ratio} {asset}"
+  },
+  "0WJNP/": {
+    "defaultMessage": "Return"
+  },
+  "0mHzVQ": {
+    "defaultMessage": "Fast - {value} GWEI"
+  },
+  "0oLj/t": {
+    "defaultMessage": "Expand"
+  },
+  "20X0BC": {
+    "defaultMessage": "Transaction Cancelled"
+  },
+  "2M9vCZ": {
+    "defaultMessage": "Projected APY (%)"
+  },
+  "3Dvp3q": {
+    "defaultMessage": "Vault contract and underlying vaults that are utilized."
+  },
+  "3QSP9N": {
+    "defaultMessage": "Visualize Strategy"
+  },
+  "3wMm/H": {
+    "defaultMessage": "You Deposit"
+  },
+  "4/JAsV": {
+    "defaultMessage": "The underlying vaults charge a {fee}% fee upon liquidation of the earned rewards."
+  },
+  "4tvRCp": {
+    "defaultMessage": "Start Again"
+  },
+  "5fjd4K": {
+    "defaultMessage": "{fee}%"
+  },
+  "65ThHj": {
+    "defaultMessage": "Protocols Involved"
+  },
+  "7d2ri8": {
+    "defaultMessage": "{value} Shares"
+  },
+  "7jeKkk": {
+    "defaultMessage": "Protocols that are used by this vault."
+  },
+  "9+Ddtu": {
+    "defaultMessage": "Next"
+  },
+  "93OUn6": {
+    "defaultMessage": "Profitable position after"
+  },
+  "9ALsvc": {
+    "defaultMessage": "Approval Cost"
+  },
+  "9RAHhM": {
+    "defaultMessage": "Strategy & Risks"
+  },
+  "AxDOiG": {
+    "defaultMessage": "Months"
+  },
+  "BnptNt": {
+    "defaultMessage": "Slow - {value} GWEI"
+  },
+  "BwwISd": {
+    "defaultMessage": "Vault"
+  },
+  "CGcoFj": {
+    "defaultMessage": "Yield Calculator"
+  },
+  "CiONZE": {
+    "defaultMessage": "Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position."
+  },
+  "EWa1Fv": {
+    "defaultMessage": "LP Position"
+  },
+  "FApc0Y": {
+    "defaultMessage": "Need more light on the strategy?"
+  },
+  "FaoPNm": {
+    "defaultMessage": "You Burn"
+  },
+  "IuFETn": {
+    "defaultMessage": "Duration"
+  },
+  "Jr5tMR": {
+    "defaultMessage": "Years"
+  },
+  "KYgRAc": {
+    "defaultMessage": "DEPOSIT"
+  },
+  "LDz7xI": {
+    "defaultMessage": "Assets that are used by this vault."
+  },
+  "MMRXim": {
+    "defaultMessage": "Make a Deposit"
+  },
+  "MgN8gK": {
+    "defaultMessage": "{days} Days"
+  },
+  "MoJx/h": {
+    "defaultMessage": "Total Value"
+  },
+  "MqZGhr": {
+    "defaultMessage": "Vault Performance"
+  },
+  "N+SKIs": {
+    "defaultMessage": "Net Value"
+  },
+  "OwO+Nr": {
+    "defaultMessage": "Mint"
+  },
+  "PXAur5": {
+    "defaultMessage": "Withdraw"
+  },
+  "Pk6qK4": {
+    "defaultMessage": "Fees that are charged by this vault."
+  },
+  "QS3Tk3": {
+    "defaultMessage": "The Meta Vault then allocates the deposits into different underlying. This Meta Vault uses 3CRV based Metapools and and stakes it on Convex. The strategy earns from the underlying Liquidity Position that earns a fee on every swap, but also from the liquidation of the CRV and CVX rewards. Everything is automated for the user and rewards are auto-compounded."
+  },
+  "TL3yAY": {
+    "defaultMessage": "Position Value"
+  },
+  "TvzL+L": {
+    "defaultMessage": "Share Price"
+  },
+  "UMrrVX": {
+    "defaultMessage": "TVL ({symbol})"
+  },
+  "VMhVlJ": {
+    "defaultMessage": "Operations are momentarily disabled"
+  },
+  "WKF4Gx": {
+    "defaultMessage": "Swap to Stablecoin"
+  },
+  "X1WPwl": {
+    "defaultMessage": "Nothing here yet, make your first deposit"
+  },
+  "XSdWHA": {
+    "defaultMessage": "Redeem"
+  },
+  "ZefNbE": {
+    "defaultMessage": "Average - {value} GWEI"
+  },
+  "ZwpbZp": {
+    "defaultMessage": "Contracts"
+  },
+  "aPi9xt": {
+    "defaultMessage": "Swap fees"
+  },
+  "aad9T5": {
+    "defaultMessage": "Start Tour"
+  },
+  "b+LlHJ": {
+    "defaultMessage": "Deposit Gas"
+  },
+  "bnF8kf": {
+    "defaultMessage": "Current Base Fee"
+  },
+  "bvmoAt": {
+    "defaultMessage": "The following protocols are used in the strategies and are therefore exposed to their risk:"
+  },
+  "bxTM3Z": {
+    "defaultMessage": "This Meta Vault accepts USDC. Anyone can deposit and receive vault shares."
+  },
+  "byXXyV": {
+    "defaultMessage": "Enter Amount"
+  },
+  "d1uESJ": {
+    "defaultMessage": "Assets"
+  },
+  "d8EqQY": {
+    "defaultMessage": "Days"
+  },
+  "dD8CJD": {
+    "defaultMessage": "Gas Fee Estimation"
+  },
+  "dIgBOz": {
+    "defaultMessage": "Deposit"
+  },
+  "djJp6c": {
+    "defaultMessage": "History"
+  },
+  "eO0C1d": {
+    "defaultMessage": "Gas Impact"
+  },
+  "erCS/d": {
+    "defaultMessage": "Gas fee estimation is based on the current gas price and average gas used"
+  },
+  "fJjSsb": {
+    "defaultMessage": "Performance Fee"
+  },
+  "fcBYFp": {
+    "defaultMessage": "{operationLabel} Cost"
+  },
+  "hRuz7F": {
+    "defaultMessage": "Withdrawal Gas"
+  },
+  "iYgKR9": {
+    "defaultMessage": "User deposits USDC"
+  },
+  "in6iXe": {
+    "defaultMessage": "Deposit/Withdraw"
+  },
+  "jHskc6": {
+    "defaultMessage": "Txn hash"
+  },
+  "k6yAtR": {
+    "defaultMessage": "How does the 3Pool Convex Meta Vault works?"
+  },
+  "kZcqo0": {
+    "defaultMessage": "%"
+  },
+  "kdIIDL": {
+    "defaultMessage": "User withdraws USDC"
+  },
+  "korbaG": {
+    "defaultMessage": "The following assets are used in this strategy and therefore are exposed (partially) to their risk:"
+  },
+  "lLuyem": {
+    "defaultMessage": "DAO"
+  },
+  "m+DGTj": {
+    "defaultMessage": "{operation}ing"
+  },
+  "mrwfXX": {
+    "defaultMessage": "Shares"
+  },
+  "p8bsw4": {
+    "defaultMessage": "Transaction Error"
+  },
+  "qEnyZU": {
+    "defaultMessage": "Meta Vault"
+  },
+  "qZbedW": {
+    "defaultMessage": "Fees"
+  },
+  "qm/wiV": {
+    "defaultMessage": "Start the tour and get more insight."
+  },
+  "rgdwQX": {
+    "defaultMessage": "Transaction Confirmed"
+  },
+  "tH0obk": {
+    "defaultMessage": "Return Projection"
+  },
+  "tTCSmN": {
+    "defaultMessage": "Liquidation Fee"
+  },
+  "tvpAhG": {
+    "defaultMessage": "The Meta Vault charges a {fee}% performance upon underlying asset appreciation."
+  },
+  "u7a5FI": {
+    "defaultMessage": "Visualize strategy"
+  },
+  "w1LBDB": {
+    "defaultMessage": "Sign Transaction"
+  },
+  "zRbVmO": {
+    "defaultMessage": "WITHDRAW"
+  },
+  "5ObBlW": {
+    "defaultMessage": "Dark Mode"
+  },
+  "yuiyES": {
+    "defaultMessage": "General Settings"
+  },
+  "/r/mPc": {
+    "defaultMessage": "Sending order to your wallet"
+  },
+  "1vtEYS": {
+    "defaultMessage": "Flexible min slippage value that is likely enough to process the transaction."
+  },
+  "2Dq322": {
+    "defaultMessage": "You can sell your {symbol} tokens in {cooldownEndsInTime}"
+  },
+  "2fed1y": {
+    "defaultMessage": "A deposit into a vault requires an approval transaction.<br></br><br></br>Set as infinite to avoid approving multiple times and save gas on subsequent deposits.<br></br><br></br>Deactiviting is safer, but would require approval on every subsequent deposit and hence results in higher gas cost."
+  },
+  "42xcXv": {
+    "defaultMessage": "Ensure that you understand the risks associated with high slippage and are comfortable proceeding with the trade."
+  },
+  "47GkyG": {
+    "defaultMessage": "Minimum deposit is ${minDepositUSD}"
+  },
+  "4cX/rf": {
+    "defaultMessage": "Management Fee"
+  },
+  "5gorcB": {
+    "defaultMessage": "Minimum received"
+  },
+  "9AgXoz": {
+    "defaultMessage": "Sell"
+  },
+  "EnCOBJ": {
+    "defaultMessage": "Buy"
+  },
+  "FGu/VK": {
+    "defaultMessage": "The following strategy pipeline is used in {symbol}"
+  },
+  "HOsSgX": {
+    "defaultMessage": "More info"
+  },
+  "IBFkFM": {
+    "defaultMessage": "You {operation}"
+  },
+  "MMvFMz": {
+    "defaultMessage": "{symbol} token is no longer active. Please withdraw from them."
+  },
+  "ObjU4O": {
+    "defaultMessage": "Mining"
+  },
+  "OkOAzx": {
+    "defaultMessage": "We recommend {slippage}%, but usually it will be < {slippage}%."
+  },
+  "S0seuN": {
+    "defaultMessage": "Recommended min slippage"
+  },
+  "Tp2Mnw": {
+    "defaultMessage": "Due to possible high slippage on lower withdrawal amounts, please consider withdrawing a minimum of ${minWithdrawalUsd} or manually increasing the maximum slippage."
+  },
+  "VyTtUL": {
+    "defaultMessage": "The {symbol} Vault charges a {fee} entry fee."
+  },
+  "X/I7ge": {
+    "defaultMessage": "You will receive no less than this amount."
+  },
+  "b1gVRq": {
+    "defaultMessage": "Minimum deposit in USD."
+  },
+  "eTGEXC": {
+    "defaultMessage": "Approve {slippage}% max slippage"
+  },
+  "epCeiH": {
+    "defaultMessage": "The {symbol} Vault doesn't charge exit fee."
+  },
+  "fhnmhR": {
+    "defaultMessage": "Vault strategy pipeline."
+  },
+  "hAz8Yo": {
+    "defaultMessage": "$"
+  },
+  "i0ofjL": {
+    "defaultMessage": "Entry fee"
+  },
+  "le9cwx": {
+    "defaultMessage": "Exit Fee"
+  },
+  "lubHZr": {
+    "defaultMessage": "Setting up transaction"
+  },
+  "obSWjR": {
+    "defaultMessage": "Please switch your wallet network to {name} to interact with {symbol} vault."
+  },
+  "pWv8jk": {
+    "defaultMessage": "Entry Fee"
+  },
+  "qzgBwU": {
+    "defaultMessage": "The {symbol} Vault charges a {fee} performance upon underlying asset appreciation."
+  },
+  "r2pety": {
+    "defaultMessage": "Please consider the following before confirming:"
+  },
+  "sHyaBT": {
+    "defaultMessage": "This pool is currently private."
+  },
+  "t3IytM": {
+    "defaultMessage": "Minimum deposit"
+  },
+  "tivZoE": {
+    "defaultMessage": "The {symbol} Vault charges a {fee} management fee."
+  },
+  "uBC8fe": {
+    "defaultMessage": "Entry fees are collected during deposit. The entry fee is distributed to all token holders to pay for rebalancing costs after new deposits."
+  },
+  "xrKHS6": {
+    "defaultMessage": "Success"
+  },
+  "yL//gV": {
+    "defaultMessage": "Be aware that the final amount of assets you receive may be different from the initially quoted value."
+  },
+  "yap3X0": {
+    "defaultMessage": "When the \"Auto\" option is selected, the app tests various slippage ranges by starting with lower values and gradually increasing until it reaches a point where the transaction is likely to succeed. <br></br> Alternatively, a custom slippage value can be set, but it is recommended to keep it within the range of 1-2%."
+  },
+  "zGHadw": {
+    "defaultMessage": "Strategy"
+  },
+  "2JVe1j": {
+    "defaultMessage": "Market Neutral"
+  },
+  "7CAm2s": {
+    "defaultMessage": "mStable is a protocol for yield aggregation and diversification."
+  },
+  "B4cMY/": {
+    "defaultMessage": "Super good looking"
+  },
+  "Bj2fLF": {
+    "defaultMessage": "Hot"
+  },
+  "D/hLNw": {
+    "defaultMessage": "The Strategy uses Curves 3CRV Pools and Factory pools. The strategy is exposed to the risk of the Curve smart contracts."
+  },
+  "EibIVS": {
+    "defaultMessage": "This Strategy uses USDC to deposit into the 3CRV-Pool on Curve. The 3CRV token is then deposited in various Curve meta pools and staked in Convex. The earned CVX and CRV tokens are periodically claimed, swapped, and compounded."
+  },
+  "LMK5Bl": {
+    "defaultMessage": "The Uniswap Protocol is an open-source protocol for providing liquidity and trading ERC20 tokens on Ethereum."
+  },
+  "MPUuRK": {
+    "defaultMessage": "The Strategy uses Meta Vault and Vault contracts and combines and wraps the underlying strategies into one contract."
+  },
+  "VlABxn": {
+    "defaultMessage": "Stablecoin Strategy"
+  },
+  "ePxmfo": {
+    "defaultMessage": "Aave is a decentralised non-custodial liquidity market protocol where users can participate as depositors or borrowers."
+  },
+  "f4vYF8": {
+    "defaultMessage": "The Strategy uses Convex to stake liquidity tokens from Curve to earn additional rewards. The strategy is exposed to the risk of the Convex smart contracts."
+  },
+  "fDjDFf": {
+    "defaultMessage": "This Strategy is super cool, I would even dare to say, HOT. Stay tune for more awesomeness!"
+  },
+  "il6pe+": {
+    "defaultMessage": "Yeah only mStable baby!"
+  },
+  "meocUp": {
+    "defaultMessage": "Convex is a platform that boosts rewards for CRV stakers and liquidity providers alike, all in a simple and easy to use interface."
+  },
+  "s47Z6j": {
+    "defaultMessage": "Diversified"
+  },
+  "vS/YSY": {
+    "defaultMessage": "Curve is an exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers, without an opportunity cost."
+  },
+  "+vVZ/G": {
+    "defaultMessage": "Connect"
+  },
+  "6GZbSi": {
+    "defaultMessage": "The selected network is not supported by the application."
+  },
+  "X0zKZO": {
+    "defaultMessage": "Connected User"
+  },
+  "qj1uhz": {
+    "defaultMessage": "Disconnect"
+  },
+  "+6JrYn": {
+    "defaultMessage": "Make sure your wallet is on Ethereum Mainnet network."
+  },
+  "/p1GSi": {
+    "defaultMessage": "Check connectivity"
+  },
+  "2zD+V+": {
+    "defaultMessage": "Wrong network selected"
+  },
+  "47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "5Jlmp5": {
+    "defaultMessage": "The contracts will always remain live and allow for withdrawals. However, it is recommended to withdraw remaining assets from the contracts since value accrual has been disabled."
+  },
+  "6OuLVd": {
+    "defaultMessage": "Tips"
+  },
+  "6z2ptx": {
+    "defaultMessage": "Want to use a testnet?"
+  },
+  "8XZjyW": {
+    "defaultMessage": "There was an error while loading this component, you can try to reload."
+  },
+  "9ghOJK": {
+    "defaultMessage": "Unhandled Error!"
+  },
+  "9lt7g1": {
+    "defaultMessage": "Discord support channel"
+  },
+  "Ar5obI": {
+    "defaultMessage": "No balance"
+  },
+  "EobEOB": {
+    "defaultMessage": "Please confirm to proceed"
+  },
+  "IdL95F": {
+    "defaultMessage": "Make sure you are on the right URL."
+  },
+  "MSTVqC": {
+    "defaultMessage": "Reload Page"
+  },
+  "N2IrpM": {
+    "defaultMessage": "Confirm"
+  },
+  "PWrOlv": {
+    "defaultMessage": "mStable has been acquired by dHEDGE. Following the outlined acquisition update, certain mStable products will be sunset."
+  },
+  "RnacAD": {
+    "defaultMessage": "Make sure your internet connection is working."
+  },
+  "STj9QY": {
+    "defaultMessage": "Oops, something went wrong."
+  },
+  "UkXeBW": {
+    "defaultMessage": "If the problem persists, you can contact us through our {support}."
+  },
+  "UlMgTq": {
+    "defaultMessage": "If the problem persists, contact us on our {support}."
+  },
+  "W87PYU": {
+    "defaultMessage": "View on {name}"
+  },
+  "XYEIBG": {
+    "defaultMessage": "App supports Goerli Testnet."
+  },
+  "YP4aoM": {
+    "defaultMessage": "Read the Announcement"
+  },
+  "p556q3": {
+    "defaultMessage": "Copied"
+  },
+  "smAgyB": {
+    "defaultMessage": "Share on"
+  },
+  "x8vY9w": {
+    "defaultMessage": "Not Connected"
+  },
+  "y1NA43": {
+    "defaultMessage": "Check URL"
+  }
+}
