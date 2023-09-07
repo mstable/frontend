@@ -1,3 +1,4 @@
+import { MHRVST_OPTIMISM } from '@frontend/shared-constants';
 import { Navigate } from '@tanstack/react-location';
 import { useMount } from 'react-use';
 
@@ -10,5 +11,5 @@ export const Home = () => {
     updateBkgColor(null);
   });
 
-  return <Navigate to={`/flatcoin`} />;
+  return <Navigate to={`/vault/${MHRVST_OPTIMISM.address}`} />;
 };

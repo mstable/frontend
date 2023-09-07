@@ -1,4 +1,5 @@
 export * from './AddressLabel';
+export * from './Backgrounds';
 export * from './Banners';
 export * from './Buttons';
 export * from './Cards';

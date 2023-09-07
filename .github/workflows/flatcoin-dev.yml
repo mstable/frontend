@@ -4,7 +4,11 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - feat/flatcoin-page
+      - main
+    paths:
+      - 'apps/flatcoin/**'
+      - 'libs/flatcoin/**'
+      - 'libs/shared/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -15,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        name: Checkout [feat/flatcoin-page]
+        name: Checkout [main]
         with:
           fetch-depth: 0
 
@@ -37,16 +41,16 @@ jobs:
         env:
           alchemyMain: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
           alchemyFallback: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
-        run: NX_ALCHEMY_MAIN_API_KEY=$alchemyMain NX_ALCHEMY_FALLBACK_API_KEY=$alchemyFallback yarn nx build mstable
+        run: NX_ALCHEMY_MAIN_API_KEY=$alchemyMain NX_ALCHEMY_FALLBACK_API_KEY=$alchemyFallback yarn nx build flatcoin
 
-      - name: Copy Firebase mStable to Firebase
-        run: cp firebase.mstable.json firebase.json
+      - name: Copy Firebase Flatcoin config to Firebase
+        run: cp firebase.flatcoin.json firebase.json
 
       - name: Firebase deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FRONTEND_7E17F }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FLATCOIN_DEV }}'
           expires: 30d
-          projectId: frontend-7e17f
-          channelId: flatcoin
+          projectId: flatcoin-dev-d5050
+          channelId: live

@@ -5,6 +5,7 @@
   "scripts": {
     "start": "nx serve mstable",
     "start:lts": "nx serve lts",
+    "start:flatcoin": "nx serve flatcoin",
     "build": "nx build mstable",
     "i18n:clear": "rimraf i18n-extractions",
     "codegen": "nx run mstable-data-access:codegen",

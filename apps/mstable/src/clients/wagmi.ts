@@ -1,17 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import '@rainbow-me/rainbowkit/styles.css';
 
-import { SUPPORTED_FLATCOIN_CHAINS } from '@frontend/shared-constants';
 import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import {
+  argentWallet,
   braveWallet,
   coinbaseWallet,
+  imTokenWallet,
   injectedWallet,
+  ledgerWallet,
   metaMaskWallet,
+  rainbowWallet,
+  walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets';
-import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc';
 import { configureChains, createClient } from 'wagmi';
+import { optimism } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 
 import type { Wallet } from '@rainbow-me/rainbowkit';
@@ -20,15 +24,10 @@ import type { Chain, Connector } from 'wagmi';
 const POLLING_INTERVAL = 15_000;
 
 export const { chains, provider } = configureChains(
-  SUPPORTED_FLATCOIN_CHAINS,
+  [optimism],
   [
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_MAIN_API_KEY'] }),
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_FALLBACK_API_KEY'] }),
-    jsonRpcProvider({
-      rpc: (chain) => ({
-        http: `https://goerli.base.org`,
-      }),
-    }),
   ],
   { pollingInterval: POLLING_INTERVAL },
 );
@@ -44,14 +43,13 @@ const gnosisSafeWallet = ({ chains }: { chains: Chain[] }): Wallet => ({
   }),
 });
 
-// TODO: some wallets were disabled for Base testnet, enable when migrating to Base Mainnet
 const connectors = connectorsForWallets([
   {
     groupName: 'Recommended',
     wallets: [
       metaMaskWallet({ chains, shimDisconnect: true }),
-      // ledgerWallet({ chains }),
-      // walletConnectWallet({ chains }),
+      ledgerWallet({ chains }),
+      walletConnectWallet({ chains }),
       coinbaseWallet({ appName: 'mStable', chains }),
     ],
   },
@@ -60,10 +58,10 @@ const connectors = connectorsForWallets([
     wallets: [
       injectedWallet({ chains, shimDisconnect: true }),
       gnosisSafeWallet({ chains }),
-      // rainbowWallet({ chains }),
+      rainbowWallet({ chains }),
       braveWallet({ chains, shimDisconnect: true }),
-      // argentWallet({ chains }),
-      // imTokenWallet({ chains }),
+      argentWallet({ chains }),
+      imTokenWallet({ chains }),
     ],
   },
 ]);

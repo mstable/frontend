@@ -1,0 +1,51 @@
+name: Flatcoin Preview
+
+on:
+  pull_request:
+    paths:
+      - 'apps/flatcoin/**'
+      - 'libs/flatcoin/**'
+      - 'libs/shared/**'
+      - 'package.json'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout
+
+      - uses: actions/setup-node@v3
+        name: Setup node
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq
+
+      - run: yarn install --frozen-lockfile
+        name: Install dependencies
+
+      - name: Build
+        env:
+          alchemyMain: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
+          alchemyFallback: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
+        run: NX_ALCHEMY_MAIN_API_KEY=$alchemyMain NX_ALCHEMY_FALLBACK_API_KEY=$alchemyFallback yarn nx build flatcoin
+
+      - name: Copy Firebase Flatcoin config to Firebase
+        run: cp firebase.flatcoin.json firebase.json
+
+      - name: Firebase deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FLATCOIN_DEV }}'
+          expires: 8d
+          projectId: flatcoin-dev-d5050

@@ -1,0 +1,24 @@
+{
+  "name": "flatcoin-page",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/flatcoin/page/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/flatcoin/page/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "i18n-extract": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "yarn run formatjs extract 'libs/flatcoin/page/src/**/*.{ts,tsx}' --out-file i18n-extractions/libs-flatcoin-page.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+        ]
+      }
+    }
+  }
+}
