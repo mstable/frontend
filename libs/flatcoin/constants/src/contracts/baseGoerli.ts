@@ -55,7 +55,7 @@ export const flatcoinOracleModuleBaseGoerli: Contract = {
 };
 
 export const flatcoinViewerContractBaseGoerli: Contract = {
-  address: '0xED1736BaF6fD90506ABb29b20AF59c6A62474eC7',
+  address: '0x52F7226C53cb2C366Bf02d5A2EDA3418d7EaBEAE',
   chainId: baseGoerli.id,
   abi: FlatcoinViewerABI,
   name: 'FlatcoinViewer',

@@ -47,5 +47,5 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FLATCOIN_DEV }}'
-          expires: 8d
+          expires: 14d
           projectId: flatcoin-dev-d5050
