@@ -43,13 +43,16 @@ const gnosisSafeWallet = ({ chains }: { chains: Chain[] }): Wallet => ({
   }),
 });
 
+// Wallet Connect projectId https://cloud.walletconnect.com/app/project?uuid=aa89105e-0365-4b96-a7b2-c3cd7afacc5b
+const projectId = '702366804c7fa1aa184b4fb22e21c58c';
+
 const connectors = connectorsForWallets([
   {
     groupName: 'Recommended',
     wallets: [
-      metaMaskWallet({ chains, shimDisconnect: true }),
-      ledgerWallet({ chains }),
-      walletConnectWallet({ chains }),
+      metaMaskWallet({ chains, shimDisconnect: true, projectId }),
+      ledgerWallet({ chains, projectId }),
+      walletConnectWallet({ chains, projectId }),
       coinbaseWallet({ appName: 'mStable', chains }),
     ],
   },
@@ -58,10 +61,10 @@ const connectors = connectorsForWallets([
     wallets: [
       injectedWallet({ chains, shimDisconnect: true }),
       gnosisSafeWallet({ chains }),
-      rainbowWallet({ chains }),
+      rainbowWallet({ chains, projectId }),
       braveWallet({ chains, shimDisconnect: true }),
-      argentWallet({ chains }),
-      imTokenWallet({ chains }),
+      argentWallet({ chains, projectId }),
+      imTokenWallet({ chains, projectId }),
     ],
   },
 ]);
