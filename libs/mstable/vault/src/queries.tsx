@@ -15,7 +15,9 @@ export const fundQueryDocument = `
       tokenPrice
       totalValue
       totalSupply
-      managerFeeNumerator
+      performanceFeeNumerator
+      streamingFeeNumerator
+      entryFeeNumerator
       blockTime
       riskFactor
       performanceMetrics {
