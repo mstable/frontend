@@ -62,7 +62,7 @@ export const Fees = (props: StackProps) => {
         )}
       </Stack>
       <Stack {...feeCardProps}>
-        <Typography {...rateChipProps}>{fees?.entryFee}</Typography>
+        <Typography {...rateChipProps}>0%</Typography>
         <Typography variant="h5" gutterBottom>
           {intl.formatMessage({
             defaultMessage: 'Exit Fee',

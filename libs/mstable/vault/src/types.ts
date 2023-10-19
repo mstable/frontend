@@ -17,7 +17,9 @@ export interface Fund {
   tokenPrice: string;
   totalValue: string;
   totalSupply: string;
-  managerFeeNumerator: string;
+  performanceFeeNumerator: string;
+  streamingFeeNumerator: string;
+  entryFeeNumerator: string;
   blockTime: string;
   riskFactor: number | null;
   performanceMetrics: PerformanceMetrics;
