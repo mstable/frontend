@@ -51,7 +51,7 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
           <Grid item xs={12} md={8} order={{ xs: 2, md: 1 }}>
             <Stack direction="column" spacing={2} pt={6}>
               <Grid container spacing={2}>
-                <Stack direction="row" spacing={4}>
+                <Stack direction="row" width="100%">
                   <TokenIconRevamp
                     symbols={[config.symbol]}
                     sx={{ height: 64, width: 64, mb: 2 }}
@@ -68,7 +68,7 @@ const VaultContent = ({ config, ...props }: VaultProps) => {
                       />
                     }
                   >
-                    <VaultJumbo pb={6} />
+                    <VaultJumbo ml={4} mr={2} mb={6} width="100%" />
                   </ErrorBoundary>
                 </Stack>
               </Grid>

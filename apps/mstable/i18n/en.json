@@ -29,6 +29,9 @@
   "cyR7Kh": {
     "defaultMessage": "Back"
   },
+  "hHYSuR": {
+    "defaultMessage": "Powered by <strong>dHedge</strong>"
+  },
   "ovJ26C": {
     "defaultMessage": "Medium"
   },
@@ -446,6 +449,9 @@
   "9AgXoz": {
     "defaultMessage": "Sell"
   },
+  "Ar5obI": {
+    "defaultMessage": "No balance"
+  },
   "C9fFq/": {
     "defaultMessage": "We recommend 1%, but usually it will be < 1%."
   },
@@ -466,6 +472,9 @@
   },
   "MMvFMz": {
     "defaultMessage": "{symbol} token is no longer active. Please withdraw from them."
+  },
+  "NoaYHf": {
+    "defaultMessage": "Analytics on <strong>dHedge</strong>"
   },
   "ObjU4O": {
     "defaultMessage": "Mining"
@@ -544,6 +553,9 @@
   },
   "wqlXwW": {
     "defaultMessage": "Wrong Network"
+  },
+  "x8vY9w": {
+    "defaultMessage": "Not Connected"
   },
   "xrKHS6": {
     "defaultMessage": "Success"
@@ -650,9 +662,6 @@
   "9lt7g1": {
     "defaultMessage": "Discord support channel"
   },
-  "Ar5obI": {
-    "defaultMessage": "No balance"
-  },
   "EobEOB": {
     "defaultMessage": "Please confirm to proceed"
   },
@@ -694,9 +703,6 @@
   },
   "smAgyB": {
     "defaultMessage": "Share on"
-  },
-  "x8vY9w": {
-    "defaultMessage": "Not Connected"
   },
   "y1NA43": {
     "defaultMessage": "Check URL"

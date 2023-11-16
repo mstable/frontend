@@ -739,6 +739,22 @@
       "value": "Confirm"
     }
   ],
+  "NoaYHf": [
+    {
+      "type": 0,
+      "value": "Analytics on "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "dHedge"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    }
+  ],
   "ObjU4O": [
     {
       "type": 0,
@@ -1247,6 +1263,22 @@
     {
       "type": 0,
       "value": "$"
+    }
+  ],
+  "hHYSuR": [
+    {
+      "type": 0,
+      "value": "Powered by "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "dHedge"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
     }
   ],
   "hRuz7F": [

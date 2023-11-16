@@ -6,3 +6,4 @@ export const TWITTER = 'https://twitter.com/mstable_';
 export const MEDIUM = 'https://medium.com/mstable';
 export const EMAIL = 'mailto:info@mstable.org';
 export const MSTABLE_LANDING_PAGE_URL = 'https://mstable.org/';
+export const DHEDGE = 'https://dhedge.org/';
