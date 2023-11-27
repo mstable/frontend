@@ -6,9 +6,9 @@ on:
     branches:
       - main
     paths:
-      - "apps/lts/**"
-      - "libs/lts/**"
-      - "libs/shared/**"
+      - 'apps/lts/**'
+      - 'libs/lts/**'
+      - 'libs/shared/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -30,7 +30,7 @@ jobs:
         name: Setup node
         with:
           node-version: 16
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Install jq
         run: |
@@ -46,13 +46,17 @@ jobs:
           alchemyFallback: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
         run: NX_ALCHEMY_MAIN_API_KEY=$alchemyMain NX_ALCHEMY_FALLBACK_API_KEY=$alchemyFallback yarn nx build lts
 
-      - name: Firebase deploy
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_FRONTEND_7E17F }}
-        run: |
-          yarn firebase use lts
-          yarn firebase hosting:channel:deploy dev -c ./firebase.lts.json --expires 30d
+      - name: Copy Firebase LTS to Firebase
+        run: cp firebase.lts.json firebase.json
 
+      - name: Firebase deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FRONTEND_7E17F }}'
+          expires: 30d
+          projectId: apps-lts
+          channelId: dev
 #      - name: Discord notification
 #        env:
 #          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
