@@ -1,6 +1,7 @@
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
+import { DHEDGE } from '@frontend/shared-constants';
 import { ValueLabel } from '@frontend/shared-ui';
-import { Divider, Skeleton, Stack, Typography } from '@mui/material';
+import { Divider, Link, Skeleton, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
 import { useVault } from '../../state';
@@ -10,19 +11,35 @@ import type { StackProps } from '@mui/material';
 
 export const VaultJumbo = (props: StackProps) => {
   const intl = useIntl();
-  const { fund } = useVault();
+  const { fund, config } = useVault();
+
+  const analyticsHref = `${DHEDGE}/vault/${config.address}`;
 
   return (
-    <Stack
-      direction="column"
-      alignItems="flex-start"
-      width={1}
-      height={1}
-      {...props}
-    >
-      <Typography variant="h1" pb={2}>
-        {fund?.name}
-      </Typography>
+    <Stack direction="column" alignItems="flex-start" {...props}>
+      <Stack
+        direction={{ xs: 'column', md: 'row' }}
+        alignItems={{ xs: 'flex-start', md: 'center' }}
+        width="100%"
+        justifyContent="space-between"
+        spacing={{ xs: 2, md: 4 }}
+        pb={2}
+      >
+        <Typography variant="h1">{fund?.name}</Typography>
+        <Link
+          href={analyticsHref}
+          underline="none"
+          target="_blank"
+          rel="noopener"
+        >
+          <Typography>
+            {intl.formatMessage({
+              defaultMessage: 'Analytics on <strong>dHEDGE</strong>',
+              id: 'pwg4Vp',
+            })}
+          </Typography>
+        </Link>
+      </Stack>
       <Stack
         direction={{ xs: 'column', md: 'row' }}
         columnGap={4}

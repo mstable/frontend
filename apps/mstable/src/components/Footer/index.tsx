@@ -1,4 +1,5 @@
 import {
+  DHEDGE,
   DISCORD,
   EMAIL,
   GITHUB,
@@ -7,7 +8,7 @@ import {
 } from '@frontend/shared-constants';
 import { Discord, Email, Github, Twitter } from '@frontend/shared-icons';
 import { useLogAnalyticsEvent } from '@frontend/shared-providers';
-import { IconButton, Stack, Typography } from '@mui/material';
+import { IconButton, Link, Stack, Typography } from '@mui/material';
 import { MediumLogo } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
@@ -52,12 +53,26 @@ export const Footer = (props: StackProps) => {
       spacing={1.5}
       {...props}
     >
-      <Typography>
-        {intl.formatMessage({
-          defaultMessage: '<strong>Yield app</strong> by mStable',
-          id: 'EhET/Q',
-        })}
-      </Typography>
+      <Stack
+        direction={{ xs: 'column', md: 'row' }}
+        alignItems="center"
+        spacing={1.5}
+      >
+        <Typography>
+          {intl.formatMessage({
+            defaultMessage: '<strong>Yield app</strong> by mStable',
+            id: 'EhET/Q',
+          })}
+        </Typography>
+        <Link href={DHEDGE} underline="none" target="_blank" rel="noopener">
+          <Typography>
+            {intl.formatMessage({
+              defaultMessage: 'Powered by <strong>dHEDGE</strong>',
+              id: 'Ez6tQm',
+            })}
+          </Typography>
+        </Link>
+      </Stack>
       <Stack
         direction="row"
         flexGrow={1}

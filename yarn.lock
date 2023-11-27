@@ -1983,10 +1983,10 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@dhedge/core-ui-kit@^0.3.6":
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/@dhedge/core-ui-kit/-/core-ui-kit-0.3.6.tgz#ad7ed2cac51eed78266b8aa2d9d0c159d565dd15"
-  integrity sha512-zMt+Xr4MHkqHhBjfNMst5TqbHHK2a/FMYfQwEFOBasSlxU6eD/j58nb1XJqScssCm7nnYz6ijX+6DaahMJRaig==
+"@dhedge/core-ui-kit@^0.3.10":
+  version "0.3.10"
+  resolved "https://registry.yarnpkg.com/@dhedge/core-ui-kit/-/core-ui-kit-0.3.10.tgz#bf58b9410f7545c7329d5531e26980f3f213e021"
+  integrity sha512-RvIfDqWWi2RWdeZrNxs93XNTzpLXWZdnqWylA1oLO/qRc1G52a9ZC0ThYup8UmlW020lJGJJ9oVHDVR1JDLSSw==
   dependencies:
     "@wagmi/chains" "^0.2.25"
     lodash.chunk "^4.2.0"
@@ -1995,10 +1995,10 @@
     lodash.noop "^3.0.1"
     lodash.uniqby "^4.7.0"
 
-"@dhedge/crypto-assets@^0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@dhedge/crypto-assets/-/crypto-assets-0.2.3.tgz#ee874281466074a5350159ca11e8d7fb8e95a45f"
-  integrity sha512-V/FYfYiQn698n0JvW6q/uTkRu5bg/j9wkkBiFTuJybXribtbD3RFv0v+kwfgu/k3szgZgQ9svFMACN8hj75c7A==
+"@dhedge/crypto-assets@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@dhedge/crypto-assets/-/crypto-assets-0.2.6.tgz#1be6de4b6bdb1616b2ae2038e36a9d89adc2e677"
+  integrity sha512-NaJx+u1+eppejH9Lll3+jg7EB8dwyDUnotMFKQYUskmK4ofmE7yglpBdgyMtIn8nSx7MmKIAAllnmzTIwuXgtw==
 
 "@discoveryjs/json-ext@^0.5.3", "@discoveryjs/json-ext@^0.5.7":
   version "0.5.7"
