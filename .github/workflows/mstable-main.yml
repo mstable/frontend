@@ -18,8 +18,8 @@ jobs:
       - uses: actions/setup-node@v3
         name: Setup node
         with:
-          node-version: 16
-          cache: "yarn"
+          node-version: 18
+          cache: 'yarn'
 
       - name: Install jq
         run: |
@@ -37,16 +37,20 @@ jobs:
           alchemyFallback: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
         run: NX_THE_GRAPH_MV_MAINNET_URL=$mainnet NX_THE_GRAPH_MV_GOERLI_URL=$goerli NX_ALCHEMY_MAIN_API_KEY=$alchemyMain NX_ALCHEMY_FALLBACK_API_KEY=$alchemyFallback yarn nx build mstable
 
+      - name: Copy Firebase mStable to Firebase
+        run: cp firebase.mstable.json firebase.json
+
       - name: Firebase deploy
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN_FRONTEND_7E17F }}
-        run: |
-          yarn firebase use mstable
-          yarn firebase deploy -c firebase.mstable.json --only hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FRONTEND_7E17F }}'
+          projectId: frontend-7e17f
+          channelId: live
 
       - name: Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "✅ New PROD version of mStable Vaults 🚀 Deploy url: https://yield.mstable.org"
+          args: '✅ New PROD version of mStable Vaults 🚀 Deploy url: https://yield.mstable.org'
