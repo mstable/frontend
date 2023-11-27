@@ -67,8 +67,8 @@ export const Footer = (props: StackProps) => {
         <Link href={DHEDGE} underline="none" target="_blank" rel="noopener">
           <Typography>
             {intl.formatMessage({
-              defaultMessage: 'Powered by <strong>dHedge</strong>',
-              id: 'hHYSuR',
+              defaultMessage: 'Powered by <strong>dHEDGE</strong>',
+              id: 'Ez6tQm',
             })}
           </Typography>
         </Link>

@@ -1,12 +1,24 @@
 {
+  "8ywLSf": {
+    "defaultMessage": "Twitter"
+  },
+  "Ew5cbe": {
+    "defaultMessage": "Flatcoin"
+  },
+  "FvmV6q": {
+    "defaultMessage": "Discord"
+  },
+  "SOievI": {
+    "defaultMessage": "<strong>Flatcoin app</strong> by dHEDGE"
+  },
+  "Vn76qV": {
+    "defaultMessage": "Github"
+  },
   "+k7bPd": {
     "defaultMessage": "The selected network is not supported by this application."
   },
   "1XVJUl": {
     "defaultMessage": "Switch to {defaultChain}"
-  },
-  "8ywLSf": {
-    "defaultMessage": "Twitter"
   },
   "Bak2Yy": {
     "defaultMessage": "Select from supported list"
@@ -17,26 +29,167 @@
   "EhET/Q": {
     "defaultMessage": "<strong>Yield app</strong> by mStable"
   },
-  "FvmV6q": {
-    "defaultMessage": "Discord"
+  "Ez6tQm": {
+    "defaultMessage": "Powered by <strong>dHEDGE</strong>"
   },
   "PmkP1H": {
     "defaultMessage": "Unsupported Network"
   },
-  "Vn76qV": {
-    "defaultMessage": "Github"
-  },
   "cyR7Kh": {
     "defaultMessage": "Back"
-  },
-  "hHYSuR": {
-    "defaultMessage": "Powered by <strong>dHedge</strong>"
   },
   "ovJ26C": {
     "defaultMessage": "Medium"
   },
   "sy+pv5": {
     "defaultMessage": "Email"
+  },
+  "+U6ozc": {
+    "defaultMessage": "Type"
+  },
+  "/54G9d": {
+    "defaultMessage": "Approving Token"
+  },
+  "0NMLMN": {
+    "defaultMessage": "My Position"
+  },
+  "0OPmis": {
+    "defaultMessage": "Approve Position Close"
+  },
+  "0fFawv": {
+    "defaultMessage": "Stable Position Value"
+  },
+  "1uz/I3": {
+    "defaultMessage": "1M"
+  },
+  "1v6yZm": {
+    "defaultMessage": "Announce Leverage Position Close"
+  },
+  "3xhnWF": {
+    "defaultMessage": "You Spend"
+  },
+  "6bJGds": {
+    "defaultMessage": "1W"
+  },
+  "8lLHeh": {
+    "defaultMessage": "1Y"
+  },
+  "90axO4": {
+    "defaultMessage": "Trade"
+  },
+  "AA5h7P": {
+    "defaultMessage": "Performance"
+  },
+  "AeA4mw": {
+    "defaultMessage": "Minimum Received"
+  },
+  "AlCWDq": {
+    "defaultMessage": "Leveraged Positions"
+  },
+  "CB1174": {
+    "defaultMessage": "Funding Rate"
+  },
+  "DUR59o": {
+    "defaultMessage": "Total Value Locked"
+  },
+  "Gh1Vm9": {
+    "defaultMessage": "You Receive"
+  },
+  "Gtmi1D": {
+    "defaultMessage": "Set As Infinite"
+  },
+  "IB0eky": {
+    "defaultMessage": "Annual percentage yield."
+  },
+  "ImPhdW": {
+    "defaultMessage": "Order expires at"
+  },
+  "LGv1C5": {
+    "defaultMessage": "Announced Orders"
+  },
+  "MLTKb6": {
+    "defaultMessage": "APY"
+  },
+  "MQ02gW": {
+    "defaultMessage": "Skew"
+  },
+  "NpWjvV": {
+    "defaultMessage": "Trading"
+  },
+  "PQiNnk": {
+    "defaultMessage": "Open Interest"
+  },
+  "Px2xWV": {
+    "defaultMessage": "Open Position"
+  },
+  "SKB/G9": {
+    "defaultMessage": "TVL"
+  },
+  "Ty3dr6": {
+    "defaultMessage": "Entry Price"
+  },
+  "WCaf5C": {
+    "defaultMessage": "Approve"
+  },
+  "X/RW9w": {
+    "defaultMessage": "Slippage Tolerance"
+  },
+  "XnpuKy": {
+    "defaultMessage": "Approve {symbol}"
+  },
+  "aTX7LJ": {
+    "defaultMessage": "1D"
+  },
+  "cg1VJ2": {
+    "defaultMessage": "Connect Wallet"
+  },
+  "d21Els": {
+    "defaultMessage": "Execute"
+  },
+  "dlRkGS": {
+    "defaultMessage": "Keeper fee"
+  },
+  "ehxGBh": {
+    "defaultMessage": "Token Price"
+  },
+  "inIeEz": {
+    "defaultMessage": "Margin Deposited"
+  },
+  "k3YWIR": {
+    "defaultMessage": "Max slippage"
+  },
+  "kaPKOB": {
+    "defaultMessage": "Insufficient balance"
+  },
+  "n9CFUs": {
+    "defaultMessage": "Token Approval"
+  },
+  "oNO7VY": {
+    "defaultMessage": "Flatcoin Withdraw"
+  },
+  "pbpdV6": {
+    "defaultMessage": "Leverage"
+  },
+  "qcHHVw": {
+    "defaultMessage": "Announce Leverage Position"
+  },
+  "rbrahO": {
+    "defaultMessage": "Close"
+  },
+  "rfzzi6": {
+    "defaultMessage": "Profit/Loss"
+  },
+  "sjr65W": {
+    "defaultMessage": "Execute Order"
+  },
+  "tw0ig8": {
+    "defaultMessage": "Executable at"
+  },
+  "wfUbwI": {
+    "defaultMessage": "Flatcoin Deposit"
+  },
+  "wqlXwW": {
+    "defaultMessage": "Wrong Network"
   },
   "7JlauX": {
     "defaultMessage": "Explore"
@@ -53,9 +206,6 @@
   "H5+NAX": {
     "defaultMessage": "Balance"
   },
-  "IB0eky": {
-    "defaultMessage": "Annual percentage yield."
-  },
   "Imiiiv": {
     "defaultMessage": "No Data Available"
   },
@@ -65,9 +215,6 @@
   "LiHQih": {
     "defaultMessage": "Coming Soon"
   },
-  "MLTKb6": {
-    "defaultMessage": "APY"
-  },
   "P1xtEU": {
     "defaultMessage": "Earn diversified yield across DeFi."
   },
@@ -76,9 +223,6 @@
   },
   "PxG1Yq": {
     "defaultMessage": "Total Value Locked in vault"
-  },
-  "SKB/G9": {
-    "defaultMessage": "TVL"
   },
   "SRo6uF": {
     "defaultMessage": "Meta Vaults"
@@ -95,17 +239,11 @@
   "YZUa24": {
     "defaultMessage": "Earn optimized, automated, and diversified yield across DeFi."
   },
-  "ehxGBh": {
-    "defaultMessage": "Token Price"
-  },
   "g6UhRO": {
     "defaultMessage": "Vault name"
   },
   "qNhf66": {
     "defaultMessage": "Perf"
-  },
-  "rfzzi6": {
-    "defaultMessage": "Profit/Loss"
   },
   "s2zphO": {
     "defaultMessage": "Vaults"
@@ -122,14 +260,8 @@
   "+1GGs7": {
     "defaultMessage": "Claim CVX & CRV"
   },
-  "/54G9d": {
-    "defaultMessage": "Approving Token"
-  },
   "/e4KBT": {
     "defaultMessage": "1 Share = {ratio} {asset}"
-  },
-  "0NMLMN": {
-    "defaultMessage": "My Position"
   },
   "0WJNP/": {
     "defaultMessage": "Return"
@@ -139,9 +271,6 @@
   },
   "0oLj/t": {
     "defaultMessage": "Expand"
-  },
-  "1uz/I3": {
-    "defaultMessage": "1M"
   },
   "20X0BC": {
     "defaultMessage": "Transaction Cancelled"
@@ -170,17 +299,11 @@
   "65ThHj": {
     "defaultMessage": "Protocols Involved"
   },
-  "6bJGds": {
-    "defaultMessage": "1W"
-  },
   "7d2ri8": {
     "defaultMessage": "{value} Shares"
   },
   "7jeKkk": {
     "defaultMessage": "Protocols that are used by this vault."
-  },
-  "8lLHeh": {
-    "defaultMessage": "1Y"
   },
   "9+Ddtu": {
     "defaultMessage": "Next"
@@ -209,9 +332,6 @@
   "CiONZE": {
     "defaultMessage": "Over time, the share price will increase. The amount that is earned is included in that increase. A user then can withdraw back USDC, skipping all the steps it would normally take to exit a Curve/Convex position."
   },
-  "DUR59o": {
-    "defaultMessage": "Total Value Locked"
-  },
   "EWa1Fv": {
     "defaultMessage": "LP Position"
   },
@@ -220,9 +340,6 @@
   },
   "FaoPNm": {
     "defaultMessage": "You Burn"
-  },
-  "Gh1Vm9": {
-    "defaultMessage": "You Receive"
   },
   "IuFETn": {
     "defaultMessage": "Duration"
@@ -275,9 +392,6 @@
   "VMhVlJ": {
     "defaultMessage": "Operations are momentarily disabled"
   },
-  "WCaf5C": {
-    "defaultMessage": "Approve"
-  },
   "WKF4Gx": {
     "defaultMessage": "Swap to Stablecoin"
   },
@@ -313,9 +427,6 @@
   },
   "byXXyV": {
     "defaultMessage": "Enter Amount"
-  },
-  "cg1VJ2": {
-    "defaultMessage": "Connect Wallet"
   },
   "d1uESJ": {
     "defaultMessage": "Assets"
@@ -362,9 +473,6 @@
   "kZcqo0": {
     "defaultMessage": "%"
   },
-  "kaPKOB": {
-    "defaultMessage": "Insufficient balance"
-  },
   "kdIIDL": {
     "defaultMessage": "User withdraws USDC"
   },
@@ -391,9 +499,6 @@
   },
   "qm/wiV": {
     "defaultMessage": "Start the tour and get more insight."
-  },
-  "rbrahO": {
-    "defaultMessage": "Close"
   },
   "rgdwQX": {
     "defaultMessage": "Transaction Confirmed"
@@ -461,9 +566,6 @@
   "FGu/VK": {
     "defaultMessage": "The following strategy pipeline is used in {symbol}"
   },
-  "Gtmi1D": {
-    "defaultMessage": "Set As Infinite"
-  },
   "HOsSgX": {
     "defaultMessage": "More info"
   },
@@ -472,9 +574,6 @@
   },
   "MMvFMz": {
     "defaultMessage": "{symbol} token is no longer active. Please withdraw from them."
-  },
-  "NoaYHf": {
-    "defaultMessage": "Analytics on <strong>dHedge</strong>"
   },
   "ObjU4O": {
     "defaultMessage": "Mining"
@@ -490,12 +589,6 @@
   },
   "X/I7ge": {
     "defaultMessage": "You will receive no less than this amount."
-  },
-  "X/RW9w": {
-    "defaultMessage": "Slippage Tolerance"
-  },
-  "XnpuKy": {
-    "defaultMessage": "Approve {symbol}"
   },
   "b1gVRq": {
     "defaultMessage": "Minimum deposit in USD."
@@ -515,23 +608,20 @@
   "i0ofjL": {
     "defaultMessage": "Entry fee"
   },
-  "k3YWIR": {
-    "defaultMessage": "Max slippage"
-  },
   "le9cwx": {
     "defaultMessage": "Exit Fee"
   },
   "lubHZr": {
     "defaultMessage": "Setting up transaction"
   },
-  "n9CFUs": {
-    "defaultMessage": "Token Approval"
-  },
   "obSWjR": {
     "defaultMessage": "Please switch your wallet network to {name} to interact with {symbol} vault."
   },
   "pWv8jk": {
     "defaultMessage": "Entry Fee"
+  },
+  "pwg4Vp": {
+    "defaultMessage": "Analytics on <strong>dHEDGE</strong>"
   },
   "qzgBwU": {
     "defaultMessage": "The {symbol} Vault charges a {fee} performance upon underlying asset appreciation."
@@ -550,9 +640,6 @@
   },
   "uBC8fe": {
     "defaultMessage": "Entry fees are collected during deposit. The entry fee is distributed to all token holders to pay for rebalancing costs after new deposits."
-  },
-  "wqlXwW": {
-    "defaultMessage": "Wrong Network"
   },
   "x8vY9w": {
     "defaultMessage": "Not Connected"
@@ -616,9 +703,6 @@
   },
   "vS/YSY": {
     "defaultMessage": "Curve is an exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers, without an opportunity cost."
-  },
-  "aTX7LJ": {
-    "defaultMessage": "1D"
   },
   "+vVZ/G": {
     "defaultMessage": "Connect"

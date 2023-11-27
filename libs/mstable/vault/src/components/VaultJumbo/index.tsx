@@ -34,8 +34,8 @@ export const VaultJumbo = (props: StackProps) => {
         >
           <Typography>
             {intl.formatMessage({
-              defaultMessage: 'Analytics on <strong>dHedge</strong>',
-              id: 'NoaYHf',
+              defaultMessage: 'Analytics on <strong>dHEDGE</strong>',
+              id: 'pwg4Vp',
             })}
           </Typography>
         </Link>

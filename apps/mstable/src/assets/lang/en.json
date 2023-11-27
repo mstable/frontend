@@ -11,6 +11,12 @@
       "value": "Make sure your wallet is on Ethereum Mainnet network."
     }
   ],
+  "+U6ozc": [
+    {
+      "type": 0,
+      "value": "Type"
+    }
+  ],
   "+k7bPd": [
     {
       "type": 0,
@@ -65,10 +71,22 @@
       "value": "My Position"
     }
   ],
+  "0OPmis": [
+    {
+      "type": 0,
+      "value": "Approve Position Close"
+    }
+  ],
   "0WJNP/": [
     {
       "type": 0,
       "value": "Return"
+    }
+  ],
+  "0fFawv": [
+    {
+      "type": 0,
+      "value": "Stable Position Value"
     }
   ],
   "0mHzVQ": [
@@ -105,6 +123,12 @@
     {
       "type": 0,
       "value": "1M"
+    }
+  ],
+  "1v6yZm": [
+    {
+      "type": 0,
+      "value": "Announce Leverage Position Close"
     }
   ],
   "1vtEYS": [
@@ -205,6 +229,12 @@
     {
       "type": 0,
       "value": "You Deposit"
+    }
+  ],
+  "3xhnWF": [
+    {
+      "type": 0,
+      "value": "You Spend"
     }
   ],
   "4/JAsV": [
@@ -375,6 +405,12 @@
       "value": "Next"
     }
   ],
+  "90axO4": [
+    {
+      "type": 0,
+      "value": "Trade"
+    }
+  ],
   "93OUn6": [
     {
       "type": 0,
@@ -409,6 +445,24 @@
     {
       "type": 0,
       "value": "Discord support channel"
+    }
+  ],
+  "AA5h7P": [
+    {
+      "type": 0,
+      "value": "Performance"
+    }
+  ],
+  "AeA4mw": [
+    {
+      "type": 0,
+      "value": "Minimum Received"
+    }
+  ],
+  "AlCWDq": [
+    {
+      "type": 0,
+      "value": "Leveraged Positions"
     }
   ],
   "Am173P": [
@@ -471,6 +525,12 @@
     {
       "type": 0,
       "value": "We recommend 1%, but usually it will be < 1%."
+    }
+  ],
+  "CB1174": [
+    {
+      "type": 0,
+      "value": "Funding Rate"
     }
   ],
   "CGcoFj": [
@@ -549,6 +609,28 @@
       "value": "Please confirm to proceed"
     }
   ],
+  "Ew5cbe": [
+    {
+      "type": 0,
+      "value": "Flatcoin"
+    }
+  ],
+  "Ez6tQm": [
+    {
+      "type": 0,
+      "value": "Powered by "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "dHEDGE"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    }
+  ],
   "FApc0Y": [
     {
       "type": 0,
@@ -623,6 +705,12 @@
       "value": "Make sure you are on the right URL."
     }
   ],
+  "ImPhdW": [
+    {
+      "type": 0,
+      "value": "Order expires at"
+    }
+  ],
   "Imiiiv": [
     {
       "type": 0,
@@ -657,6 +745,12 @@
     {
       "type": 0,
       "value": "Assets that are used by this vault."
+    }
+  ],
+  "LGv1C5": [
+    {
+      "type": 0,
+      "value": "Announced Orders"
     }
   ],
   "LMK5Bl": [
@@ -699,6 +793,12 @@
       "value": "The Strategy uses Meta Vault and Vault contracts and combines and wraps the underlying strategies into one contract."
     }
   ],
+  "MQ02gW": [
+    {
+      "type": 0,
+      "value": "Skew"
+    }
+  ],
   "MSTVqC": [
     {
       "type": 0,
@@ -739,20 +839,10 @@
       "value": "Confirm"
     }
   ],
-  "NoaYHf": [
+  "NpWjvV": [
     {
       "type": 0,
-      "value": "Analytics on "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "dHedge"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
+      "value": "Trading"
     }
   ],
   "ObjU4O": [
@@ -779,6 +869,12 @@
       "value": "ROI"
     }
   ],
+  "PQiNnk": [
+    {
+      "type": 0,
+      "value": "Open Interest"
+    }
+  ],
   "PWrOlv": [
     {
       "type": 0,
@@ -801,6 +897,12 @@
     {
       "type": 0,
       "value": "Unsupported Network"
+    }
+  ],
+  "Px2xWV": [
+    {
+      "type": 0,
+      "value": "Open Position"
     }
   ],
   "PxG1Yq": [
@@ -831,6 +933,22 @@
     {
       "type": 0,
       "value": "TVL"
+    }
+  ],
+  "SOievI": [
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "Flatcoin app"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    },
+    {
+      "type": 0,
+      "value": " by dHEDGE"
     }
   ],
   "SRo6uF": [
@@ -869,6 +987,12 @@
     {
       "type": 0,
       "value": "Share Price"
+    }
+  ],
+  "Ty3dr6": [
+    {
+      "type": 0,
+      "value": "Entry Price"
     }
   ],
   "ULHfQE": [
@@ -1143,6 +1267,12 @@
       "value": "Assets"
     }
   ],
+  "d21Els": [
+    {
+      "type": 0,
+      "value": "Execute"
+    }
+  ],
   "d8EqQY": [
     {
       "type": 0,
@@ -1165,6 +1295,12 @@
     {
       "type": 0,
       "value": "History"
+    }
+  ],
+  "dlRkGS": [
+    {
+      "type": 0,
+      "value": "Keeper fee"
     }
   ],
   "eO0C1d": [
@@ -1265,22 +1401,6 @@
       "value": "$"
     }
   ],
-  "hHYSuR": [
-    {
-      "type": 0,
-      "value": "Powered by "
-    },
-    {
-      "children": [
-        {
-          "type": 0,
-          "value": "dHedge"
-        }
-      ],
-      "type": 8,
-      "value": "strong"
-    }
-  ],
   "hRuz7F": [
     {
       "type": 0,
@@ -1309,6 +1429,12 @@
     {
       "type": 0,
       "value": "Deposit/Withdraw"
+    }
+  ],
+  "inIeEz": [
+    {
+      "type": 0,
+      "value": "Margin Deposited"
     }
   ],
   "jHskc6": [
@@ -1399,6 +1525,12 @@
       "value": "Token Approval"
     }
   ],
+  "oNO7VY": [
+    {
+      "type": 0,
+      "value": "Flatcoin Withdraw"
+    }
+  ],
   "obSWjR": [
     {
       "type": 0,
@@ -1445,6 +1577,28 @@
       "value": "Entry Fee"
     }
   ],
+  "pbpdV6": [
+    {
+      "type": 0,
+      "value": "Leverage"
+    }
+  ],
+  "pwg4Vp": [
+    {
+      "type": 0,
+      "value": "Analytics on "
+    },
+    {
+      "children": [
+        {
+          "type": 0,
+          "value": "dHEDGE"
+        }
+      ],
+      "type": 8,
+      "value": "strong"
+    }
+  ],
   "qEnyZU": [
     {
       "type": 0,
@@ -1461,6 +1615,12 @@
     {
       "type": 0,
       "value": "Fees"
+    }
+  ],
+  "qcHHVw": [
+    {
+      "type": 0,
+      "value": "Announce Leverage Position"
     }
   ],
   "qj1uhz": [
@@ -1539,6 +1699,12 @@
       "value": "This pool is currently private."
     }
   ],
+  "sjr65W": [
+    {
+      "type": 0,
+      "value": "Execute Order"
+    }
+  ],
   "smAgyB": [
     {
       "type": 0,
@@ -1605,6 +1771,12 @@
       "value": "% performance upon underlying asset appreciation."
     }
   ],
+  "tw0ig8": [
+    {
+      "type": 0,
+      "value": "Executable at"
+    }
+  ],
   "u7a5FI": [
     {
       "type": 0,
@@ -1627,6 +1799,12 @@
     {
       "type": 0,
       "value": "Sign Transaction"
+    }
+  ],
+  "wfUbwI": [
+    {
+      "type": 0,
+      "value": "Flatcoin Deposit"
     }
   ],
   "wqlXwW": [
