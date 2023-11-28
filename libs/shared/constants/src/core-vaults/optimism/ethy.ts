@@ -1,7 +1,7 @@
 import {
+  BRIDGED_USDC_OPTIMISM,
   optimism,
   SUSD_OPTIMISM,
-  USDC_OPTIMISM,
   WETH_OPTIMISM,
 } from '@dhedge/core-ui-kit/const';
 
@@ -21,7 +21,7 @@ export const ETHY_OPTIMISM: PoolConfig = {
       WETH_OPTIMISM,
       {
         ...SUSD_OPTIMISM,
-        intermediateToken: USDC_OPTIMISM,
+        intermediateToken: BRIDGED_USDC_OPTIMISM,
         method: 'withdrawSUSD',
       },
     ],

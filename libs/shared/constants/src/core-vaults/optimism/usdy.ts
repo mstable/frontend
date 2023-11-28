@@ -1,8 +1,8 @@
 import {
+  BRIDGED_USDC_OPTIMISM,
   DAI_OPTIMISM,
   optimism,
   SUSD_OPTIMISM,
-  USDC_OPTIMISM,
 } from '@dhedge/core-ui-kit/const';
 
 import type { PoolConfig } from '@dhedge/core-ui-kit/types';
@@ -18,10 +18,10 @@ export const USDY_OPTIMISM: PoolConfig = {
   },
   withdrawParams: {
     customTokens: [
-      USDC_OPTIMISM,
+      BRIDGED_USDC_OPTIMISM,
       {
         ...SUSD_OPTIMISM,
-        intermediateToken: USDC_OPTIMISM,
+        intermediateToken: BRIDGED_USDC_OPTIMISM,
         method: 'withdrawSUSD',
       },
       DAI_OPTIMISM,
