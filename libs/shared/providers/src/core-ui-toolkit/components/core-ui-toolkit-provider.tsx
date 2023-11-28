@@ -5,12 +5,8 @@ import type { FC, PropsWithChildren } from 'react';
 
 export const CoreUIToolkitProvider: FC<
   PropsWithChildren<TradingPanelContextConfig>
-> = ({ children, actions, poolConfigMap, poolAddress }) => (
-  <TradingPanelProvider
-    actions={actions}
-    poolAddress={poolAddress}
-    poolConfigMap={poolConfigMap}
-  >
+> = ({ children, actions, initialState }) => (
+  <TradingPanelProvider actions={actions} initialState={initialState}>
     {children}
   </TradingPanelProvider>
 );

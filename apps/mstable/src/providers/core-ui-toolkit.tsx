@@ -92,7 +92,7 @@ export const CoreUIToolkitProvider: FC = ({
 
   return (
     <ToolkitProvider
-      poolConfigMap={CORE_UI_TOOLKIT_POOL_CONFIG_MAP}
+      initialState={{ poolConfigMap: CORE_UI_TOOLKIT_POOL_CONFIG_MAP }}
       actions={getActions(pushNotification)}
     >
       {children}
