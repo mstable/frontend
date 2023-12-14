@@ -9,7 +9,6 @@ import {
   coinbaseWallet,
   imTokenWallet,
   injectedWallet,
-  ledgerWallet,
   metaMaskWallet,
   rainbowWallet,
   walletConnectWallet,
@@ -51,7 +50,7 @@ const connectors = connectorsForWallets([
     groupName: 'Recommended',
     wallets: [
       metaMaskWallet({ chains, shimDisconnect: true, projectId }),
-      ledgerWallet({ chains, projectId }),
+      // ledgerWallet({ chains, projectId }),
       walletConnectWallet({
         chains,
         projectId,
