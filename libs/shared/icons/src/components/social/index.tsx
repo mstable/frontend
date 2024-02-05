@@ -25,5 +25,5 @@ export const Medium = (props: SvgIconProps) => (
 );
 
 export const Twitter = (props: SvgIconProps) => (
-  <SvgIcon {...props} component={TwitterSvg} viewBox="0 0 24 24" />
+  <SvgIcon {...props} component={TwitterSvg} inheritViewBox />
 );
