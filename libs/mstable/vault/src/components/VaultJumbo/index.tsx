@@ -13,7 +13,7 @@ export const VaultJumbo = (props: StackProps) => {
   const intl = useIntl();
   const { fund, config } = useVault();
 
-  const analyticsHref = `${DHEDGE}/vault/${config.address}`;
+  const analyticsHref = `${DHEDGE}vault/${config.address}`;
 
   return (
     <Stack direction="column" alignItems="flex-start" {...props}>
