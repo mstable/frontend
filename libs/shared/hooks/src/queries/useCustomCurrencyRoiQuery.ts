@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { dHedgeApiEndpoint } from '@frontend/shared-constants';
+import { DHEDGE_API_ENDPOINT } from '@frontend/shared-constants';
 import { fetcher } from '@frontend/shared-utils';
 
 interface CustomCurrencyRoiVariables {
@@ -36,7 +36,7 @@ export const useCustomCurrencyRoiQuery = (
   useQuery<CustomCurrencyRoiQuery, Error>(
     ['getYieldPnl', variables.vaultAddress, variables.investorAddress],
     fetcher<CustomCurrencyRoiQuery, CustomCurrencyRoiVariables>(
-      dHedgeApiEndpoint,
+      DHEDGE_API_ENDPOINT,
       {},
       customCurrencyRoiQueryDocument,
       variables,

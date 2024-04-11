@@ -1,5 +1,5 @@
 import { useIsDhedgePool } from '@dhedge/core-ui-kit/hooks/pool';
-import { torosDappLink } from '@frontend/shared-constants';
+import { TOROS_DAPP_LINK } from '@frontend/shared-constants';
 import { Toros } from '@frontend/shared-icons';
 import { AddressLabel, TokenIconRevamp } from '@frontend/shared-ui';
 import { Grid, Link, Stack, Typography, useTheme } from '@mui/material';
@@ -57,7 +57,7 @@ export const TokenItem: FC<AssetItemProps> = ({
               assets and strategy.
             </Typography>
             <Link
-              href={`${torosDappLink}/vault/${tokenAddress}`}
+              href={`${TOROS_DAPP_LINK}/vault/${tokenAddress}`}
               target="_blank"
               rel="noreferrer"
               sx={{

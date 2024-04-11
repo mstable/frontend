@@ -1,4 +1,4 @@
-import { dHedgeApiEndpoint } from '@frontend/shared-constants';
+import { DHEDGE_API_ENDPOINT } from '@frontend/shared-constants';
 import { fetcher } from '@frontend/shared-utils';
 import { useQuery } from '@tanstack/react-query';
 
@@ -55,7 +55,7 @@ export const useFundQuery = (
   useQuery<FundQuery, Error>(
     ['fund', variables.address],
     fetcher<FundQuery, FundQueryVariables>(
-      dHedgeApiEndpoint,
+      DHEDGE_API_ENDPOINT,
       {},
       fundQueryDocument,
       variables,

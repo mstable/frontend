@@ -1,3 +1,4 @@
+import { TREASURY_YIELD_VAULT_LINK } from '@frontend/shared-constants';
 import { MotionStack } from '@frontend/shared-ui';
 import { Button, Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
@@ -35,7 +36,7 @@ export const WithdrawStep = (props: MotionStackProps) => {
       </Typography>
       <Stack direction="row" my={4} justifyContent="center" alignItems="center">
         <Button
-          href="https://app.dhedge.org/vault/0x0f6eae52ae1f94bc759ed72b201a2fdb14891485"
+          href={TREASURY_YIELD_VAULT_LINK}
           target="_blank"
           rel="noopener noreferrer"
         >

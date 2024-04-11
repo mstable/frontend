@@ -3,7 +3,7 @@ import type {
   TokenPriceHistoryQuery,
   TokenPriceHistoryQueryVariables,
 } from '@frontend/shared-types';
-import { dHedgeApiEndpoint } from '@frontend/shared-constants';
+import { DHEDGE_API_ENDPOINT } from '@frontend/shared-constants';
 import { fetcher } from '@frontend/shared-utils';
 
 export const tokenPriceHistoryQueryDocument = `
@@ -24,7 +24,7 @@ export const useTokenPriceHistoryQuery = (
   useQuery<TokenPriceHistoryQuery, Error>(
     ['tokenPriceHistory', variables.address, variables.period],
     fetcher<TokenPriceHistoryQuery, TokenPriceHistoryQueryVariables>(
-      dHedgeApiEndpoint,
+      DHEDGE_API_ENDPOINT,
       {},
       tokenPriceHistoryQueryDocument,
       variables,
