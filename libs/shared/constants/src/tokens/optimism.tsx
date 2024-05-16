@@ -2,6 +2,8 @@ import { MTA, Optimism, USDC } from '@frontend/shared-icons';
 import { erc20ABI } from 'wagmi';
 import { optimism } from 'wagmi/chains';
 
+import type { TradingToken } from '@dhedge/core-ui-kit/types';
+
 import type { Token } from './types';
 
 export const toksOptimism: Token[] = [
@@ -32,3 +34,10 @@ export const toksOptimism: Token[] = [
     abi: erc20ABI,
   },
 ];
+
+export const USDC_OPTIMISM: TradingToken = {
+  address: '0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85',
+  symbol: 'USDC',
+  decimals: 6,
+  value: '',
+};
