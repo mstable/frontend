@@ -14,6 +14,7 @@ import { toksPolygonMumbai } from './polygonMumbai';
 
 import type { Token } from './types';
 
+export * from './optimism';
 export * from './types';
 
 export const tokens = {

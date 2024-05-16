@@ -14,12 +14,18 @@ import {
   useMinReceiveText,
 } from '@dhedge/core-ui-kit/hooks/trading';
 import { formatToUsd } from '@dhedge/core-ui-kit/utils';
+import { INSUR_ACE_LINK, OPEN_COVER_LINK } from '@frontend/shared-constants';
 import { useLogAnalyticsEvent } from '@frontend/shared-providers';
-import { CollapsibleSection, InfoTooltip } from '@frontend/shared-ui';
+import {
+  CollapsibleSection,
+  InfoTooltip,
+  TokenIconRevamp,
+} from '@frontend/shared-ui';
 import {
   Box,
   CircularProgress,
   Divider,
+  Link,
   Stack,
   Typography,
 } from '@mui/material';
@@ -146,6 +152,30 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
         })}
         value={minReceivedText}
       />
+      {isDeposit && (
+        <OverviewItem
+          label="Insurance"
+          tooltipText="Deposits can be covered for certain types of hacks"
+          value={
+            <Stack direction="row" gap={1}>
+              <Link
+                href={OPEN_COVER_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <TokenIconRevamp symbols={['opencover']} />
+              </Link>
+              <Link
+                href={INSUR_ACE_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <TokenIconRevamp symbols={['insur']} />
+              </Link>
+            </Stack>
+          }
+        />
+      )}
       {showMinRecommendedSlippage && (
         <OverviewItem
           label={intl.formatMessage({

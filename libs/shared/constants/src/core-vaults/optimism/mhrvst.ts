@@ -1,4 +1,6 @@
-import { BRIDGED_USDC_OPTIMISM, optimism } from '@dhedge/core-ui-kit/const';
+import { optimism } from '@dhedge/core-ui-kit/const';
+
+import { USDC_OPTIMISM } from '../../tokens';
 
 import type { PoolConfig } from '@dhedge/core-ui-kit/types';
 
@@ -9,10 +11,10 @@ export const MHRVST_OPTIMISM: PoolConfig = {
   symbol: 'mHRVST',
   address: '0x9c6de13d4648a6789017641f6b1a025816e66228',
   depositParams: {
-    customTokens: [BRIDGED_USDC_OPTIMISM],
+    customTokens: [],
   },
   withdrawParams: {
-    customTokens: [BRIDGED_USDC_OPTIMISM],
+    customTokens: [USDC_OPTIMISM],
   },
 };
 
