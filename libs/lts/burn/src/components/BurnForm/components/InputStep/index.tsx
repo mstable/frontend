@@ -1,3 +1,7 @@
+import {
+  TREASURY_YIELD_VAULT_LINK,
+  VELODROME_DAPP_LINK,
+} from '@frontend/shared-constants';
 import { Warning } from '@frontend/shared-icons';
 import { OpenAccountModalButton } from '@frontend/shared-providers';
 import { MotionStack } from '@frontend/shared-ui';
@@ -39,7 +43,7 @@ export const InputStep = (props: MotionStackProps) => {
           {
             yield: (
               <Link
-                href="https://app.dhedge.org/vault/0x0f6eae52ae1f94bc759ed72b201a2fdb14891485"
+                href={TREASURY_YIELD_VAULT_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -91,7 +95,7 @@ export const InputStep = (props: MotionStackProps) => {
                     })}
                   </Typography>
                   <Button
-                    href="https://app.velodrome.finance/swap?from=0x929b939f8524c3be977af57a4a0ad3fb1e374b50&to=0x7f5c764cbc14f9669b88837ca1490cca17c31607"
+                    href={`${VELODROME_DAPP_LINK}/swap?from=0x929b939f8524c3be977af57a4a0ad3fb1e374b50&to=0x7f5c764cbc14f9669b88837ca1490cca17c31607`}
                     target="_blank"
                     rel="noopener noreferrer"
                     size="large"

@@ -1,4 +1,4 @@
-import { dHedgeApiEndpoint } from '@frontend/shared-constants';
+import { DHEDGE_API_ENDPOINT } from '@frontend/shared-constants';
 import { FundByInvestor } from '@frontend/shared-types';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Address } from '@dhedge/core-ui-kit/types';
@@ -30,7 +30,7 @@ export const useAllFundsByInvestorQuery = (
   useQuery<AllFundsByInvestorQuery, Error>(
     ['allFundsByInvestor', variables.address],
     fetcher<AllFundsByInvestorQuery, AllFundsByInvestorQueryVariables>(
-      dHedgeApiEndpoint,
+      DHEDGE_API_ENDPOINT,
       {},
       allFundsByInvestorQueryDocument,
       variables,
