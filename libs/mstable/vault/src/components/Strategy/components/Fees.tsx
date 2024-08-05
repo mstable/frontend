@@ -51,18 +51,9 @@ export const Fees = (props: StackProps) => {
             },
           )}
         </Typography>
-        {fees?.hasPoolEntryFee && (
-          <Typography sx={{ typography: 'subtitle2', paddingBottom: 1 }}>
-            {intl.formatMessage({
-              defaultMessage:
-                'Entry fees are collected during deposit. The entry fee is distributed to all token holders to pay for rebalancing costs after new deposits.',
-              id: 'uBC8fe',
-            })}
-          </Typography>
-        )}
       </Stack>
       <Stack {...feeCardProps}>
-        <Typography {...rateChipProps}>0%</Typography>
+        <Typography {...rateChipProps}>{fees?.exitFee}</Typography>
         <Typography variant="h5" gutterBottom>
           {intl.formatMessage({
             defaultMessage: 'Exit Fee',
@@ -72,11 +63,12 @@ export const Fees = (props: StackProps) => {
         <Typography sx={{ typography: 'subtitle2', paddingBottom: 1 }}>
           {intl.formatMessage(
             {
-              defaultMessage: `The {symbol} Vault doesn't charge exit fee.`,
-              id: 'epCeiH',
+              defaultMessage: `The {symbol} Vault charges a {fee} exit fee.`,
+              id: '0/F4cj',
             },
             {
               symbol: config.symbol,
+              fee: fees?.exitFee,
             },
           )}
         </Typography>

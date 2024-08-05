@@ -69,7 +69,10 @@ const useTradingTransactionOverview = () => {
   } = useVault();
   const [{ slippage, minSlippage, isMaxSlippageLoading }] =
     useTradingPanelSettings();
-  const { entryFee, hasPoolEntryFee } = usePoolFees({ address, chainId });
+  const { entryFee, hasPoolEntryFee, exitFee } = usePoolFees({
+    address,
+    chainId,
+  });
   const { minDepositUSD } = usePoolManagerLogicData(address, chainId);
   const lockTime = useTradingPanelLockTime();
   const isDeposit = useIsDepositTradingPanelType();
@@ -99,6 +102,7 @@ const useTradingTransactionOverview = () => {
     minWithdrawalUsd,
     isDisclosureOpen,
     toggleDisclosureSection,
+    exitFee,
   };
 };
 
@@ -119,6 +123,7 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
     minWithdrawalUsd,
     toggleDisclosureSection,
     isDisclosureOpen,
+    exitFee,
   } = useTradingTransactionOverview();
 
   return (
@@ -152,6 +157,7 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
         })}
         value={minReceivedText}
       />
+      {!isDeposit && <OverviewItem label="Exit Fee" value={exitFee} />}
       {isDeposit && (
         <OverviewItem
           label="Insurance"
