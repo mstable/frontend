@@ -1983,10 +1983,10 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@dhedge/core-ui-kit@^0.4.6":
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/@dhedge/core-ui-kit/-/core-ui-kit-0.4.6.tgz#7924edc15dee15c888ff0f2ff0f61ba2ef67e874"
-  integrity sha512-BiynKdaIjJqGZiQJ1h8Qn0dsD5ugJAGJJHsYpGxngG4qKIOX7gukbcFxYcMnbQDN90hWrew16MLQS932hfhD7Q==
+"@dhedge/core-ui-kit@^0.4.7":
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/@dhedge/core-ui-kit/-/core-ui-kit-0.4.7.tgz#87bad9f22eb24d017543fe0031d1b94e9284e5ec"
+  integrity sha512-xB7fH+ZJ9lkHHPwJMeijyZ7zPhedDiuxGCjWGpa1a9wS+79/LuH1BSAddOJ98a7jyikhVPaL6dfIvjVAMAgu9Q==
   dependencies:
     "@wagmi/chains" "^0.2.25"
     lodash.chunk "^4.2.0"
