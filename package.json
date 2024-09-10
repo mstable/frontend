@@ -5,7 +5,9 @@
   "scripts": {
     "start": "nx serve mstable",
     "start:lts": "nx serve lts",
+    "start:dhedge": "nx serve dhedge",
     "build": "nx build mstable",
+    "build:dhedge": "nx build dhedge",
     "i18n:clear": "rimraf i18n-extractions",
     "codegen": "nx run mstable-data-access:codegen",
     "lint": "nx lint",

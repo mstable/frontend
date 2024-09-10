@@ -17,6 +17,8 @@
     "strict": false,
     "noPropertyAccessFromIndexSignature": false,
     "paths": {
+      "@frontend/dhedge-theme": ["libs/dhedge/theme/src/index.ts"],
+      "@frontend/dhedge-withdraw": ["libs/dhedge/withdraw/src/index.ts"],
       "@frontend/lts-burn": ["libs/lts/burn/src/index.ts"],
       "@frontend/lts-constants": ["libs/lts/constants/src/index.ts"],
       "@frontend/lts-settings": ["libs/lts/settings/src/index.ts"],
