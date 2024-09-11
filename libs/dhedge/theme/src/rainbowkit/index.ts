@@ -22,7 +22,7 @@ export const rbkDarkTheme: Theme = mergeDeepRight(
   mergeDeepRight(dark, common),
   {
     colors: {
-      modalBackground: colors.darkBlue09,
+      modalBackground: colors.black700,
     },
   },
 );

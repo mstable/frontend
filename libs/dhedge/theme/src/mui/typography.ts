@@ -1,7 +1,10 @@
-import '@fontsource/plus-jakarta-sans';
-import '@fontsource/plus-jakarta-sans/variable.css';
-import '@fontsource/red-hat-mono';
-import '@fontsource/red-hat-mono/variable.css';
+import '@fontsource/vazir'; // tw-font-normal (400)
+import '@fontsource/vazir/500.css'; // tw-font-medium
+import '@fontsource/vazir/700.css'; // tw-font-bold
+import '@fontsource/inter'; // tw-font-normal (400)
+import '@fontsource/inter/500.css'; // tw-font-medium
+import '@fontsource/inter/600.css'; // tw-font-semibold
+import '@fontsource/inter/700.css'; // tw-font-bold
 
 import {
   fontFamilies,
@@ -28,43 +31,43 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
     letterSpacings,
 
     h1: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.heading,
       fontSize: 40,
       lineHeight: 1.25,
       fontWeight: fontWeights.extrabold,
     },
     h2: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.heading,
       fontSize: 32,
       lineHeight: 1.25,
       fontWeight: fontWeights.extrabold,
     },
     h3: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.heading,
       fontSize: 28,
       lineHeight: 1.25,
       fontWeight: fontWeights.extrabold,
     },
     h4: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.heading,
       fontSize: 24,
       lineHeight: 1.25,
       fontWeight: fontWeights.bold,
     },
     h5: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.heading,
       fontSize: 18,
       lineHeight: 1.25,
       fontWeight: fontWeights.bold,
     },
     subtitle1: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.heading,
       fontSize: 14,
       lineHeight: 1.2,
       fontWeight: fontWeights.medium,
     },
     subtitle2: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.heading,
       fontSize: 12,
       lineHeight: 1.2,
       fontWeight: fontWeights.medium,
@@ -74,47 +77,47 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
           : base.palette.grey[500],
     },
     body1: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.body,
       fontSize: 16,
       lineHeight: 1.625,
       fontWeight: fontWeights.medium,
     },
     body2: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.body,
       fontSize: 14,
       lineHeight: 1.625,
       fontWeight: fontWeights.medium,
     },
     buttonSmall: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.body,
       fontSize: 12,
       lineHeight: 1,
       textTransform: 'none',
       fontWeight: fontWeights.bold,
     },
     button: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.body,
       fontSize: 14,
       lineHeight: 1,
       textTransform: 'none',
       fontWeight: fontWeights.bold,
     },
     buttonMedium: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.body,
       fontSize: 14,
       lineHeight: 1,
       textTransform: 'none',
       fontWeight: fontWeights.bold,
     },
     buttonLarge: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.body,
       fontSize: 16,
       lineHeight: 1,
       textTransform: 'none',
       fontWeight: fontWeights.bold,
     },
     label1: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.body,
       fontSize: 14,
       lineHeight: 1.25,
       fontWeight: fontWeights.bold,
@@ -122,61 +125,61 @@ export const getTypographyOptions = (base?: ThemeOptions): ThemeOptions => ({
       letterSpacing: '5%',
     },
     label2: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.body,
       fontSize: 14,
       lineHeight: 1.25,
       fontWeight: fontWeights.bold,
       letterSpacing: '5%',
     },
     placeholder: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.body,
       fontSize: 14,
       lineHeight: 1.25,
       fontWeight: fontWeights.regular,
     },
     hint: {
-      fontFamily: fontFamilies.main,
+      fontFamily: fontFamilies.body,
       fontSize: 12,
       lineHeight: 1.25,
       fontWeight: fontWeights.semibold,
     },
     value1: {
-      fontFamily: fontFamilies.code,
+      fontFamily: fontFamilies.body,
       fontSize: 28,
       lineHeight: 1.25,
       letterSpacing: '-4%',
       fontWeight: fontWeights.semibold,
     },
     value2: {
-      fontFamily: fontFamilies.code,
+      fontFamily: fontFamilies.body,
       fontSize: 24,
       lineHeight: 1.25,
       letterSpacing: '-4%',
       fontWeight: fontWeights.semibold,
     },
     value3: {
-      fontFamily: fontFamilies.code,
+      fontFamily: fontFamilies.body,
       fontSize: 18,
       lineHeight: 1.25,
       letterSpacing: '-4%',
       fontWeight: fontWeights.semibold,
     },
     value4: {
-      fontFamily: fontFamilies.code,
+      fontFamily: fontFamilies.body,
       fontSize: 16,
       lineHeight: 1.25,
       letterSpacing: '-4%',
       fontWeight: fontWeights.semibold,
     },
     value5: {
-      fontFamily: fontFamilies.code,
+      fontFamily: fontFamilies.body,
       fontSize: 14,
       lineHeight: 1.25,
       letterSpacing: '-4%',
       fontWeight: fontWeights.semibold,
     },
     value6: {
-      fontFamily: fontFamilies.code,
+      fontFamily: fontFamilies.body,
       fontSize: 12,
       lineHeight: 1.25,
       letterSpacing: '-4%',

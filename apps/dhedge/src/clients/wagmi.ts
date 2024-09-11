@@ -1,20 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import '@rainbow-me/rainbowkit/styles.css';
 
 import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import {
-  argentWallet,
   braveWallet,
   coinbaseWallet,
-  imTokenWallet,
   injectedWallet,
   metaMaskWallet,
   rainbowWallet,
   walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 import { configureChains, createClient } from 'wagmi';
-import { mainnet, optimism, polygon } from 'wagmi/chains';
+import { mainnet } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 
 import type { Wallet } from '@rainbow-me/rainbowkit';
@@ -43,14 +40,13 @@ const gnosisSafeWallet = ({ chains }: { chains: Chain[] }): Wallet => ({
 });
 
 // Wallet Connect projectId https://cloud.walletconnect.com/app/project?uuid=aa89105e-0365-4b96-a7b2-c3cd7afacc5b
-const projectId = '702366804c7fa1aa184b4fb22e21c58c';
+const projectId = '9365fcb9504012eb2642ff20985f45e1';
 
 const connectors = connectorsForWallets([
   {
     groupName: 'Recommended',
     wallets: [
       metaMaskWallet({ chains, shimDisconnect: true, projectId }),
-      // ledgerWallet({ chains, projectId }),
       walletConnectWallet({ chains, projectId }),
       coinbaseWallet({ appName: 'mStable', chains }),
     ],
@@ -62,8 +58,6 @@ const connectors = connectorsForWallets([
       gnosisSafeWallet({ chains }),
       rainbowWallet({ chains, projectId }),
       braveWallet({ chains, shimDisconnect: true }),
-      argentWallet({ chains, projectId }),
-      imTokenWallet({ chains, projectId }),
     ],
   },
 ]);

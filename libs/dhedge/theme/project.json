@@ -20,20 +20,8 @@
         "outputPath": "dist/libs/dhedge/theme"
       },
       "configurations": {
-        "development": {
-          "mode": "development"
-        },
-        "production": {
-          "mode": "production"
-        }
-      }
-    },
-    "i18n-extract": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "yarn run formatjs extract 'libs/dhedge/theme/src/**/*.{ts,tsx}' --out-file i18n-extractions/libs-dhedge-theme.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
-        ]
+        "development": {},
+        "production": {}
       }
     }
   }

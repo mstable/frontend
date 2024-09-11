@@ -1,21 +1,13 @@
-import { MSTABLE_LANDING_PAGE_URL } from '@frontend/shared-constants';
+import { DHEDGE } from '@frontend/shared-constants';
 import {
   OpenAccountModalButton,
   OpenNetworkModalButton,
 } from '@frontend/shared-providers';
-import {
-  alpha,
-  AppBar,
-  Button,
-  Stack,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { alpha, AppBar, Button, IconButton, Stack } from '@mui/material';
+import { DhedgeLogo } from '@frontend/shared-icons';
+import { ThemeSwitchButton } from './ThemeSwitchButton';
 
 export const Topnav = () => {
-  const theme = useTheme();
-  const wide = useMediaQuery(theme.breakpoints.up('sm'));
-
   return (
     <AppBar position="sticky" color="transparent">
       <Stack
@@ -32,15 +24,14 @@ export const Topnav = () => {
           backdropFilter: 'blur(20px)',
         }}
       >
-        <Button
-          variant="text"
-          color="inherit"
-          href={MSTABLE_LANDING_PAGE_URL}
+        <IconButton
+          color="secondary"
+          href={DHEDGE}
+          target="_blank"
           rel="noopener noreferrer"
-          sx={{ ml: -2 }}
         >
-          Button
-        </Button>
+          <DhedgeLogo />
+        </IconButton>
         <Stack
           flexGrow={1}
           direction="row"
@@ -50,6 +41,7 @@ export const Topnav = () => {
         >
           <OpenAccountModalButton sx={{ maxWidth: 180, maxHeight: 36 }} />
           <OpenNetworkModalButton sx={{ height: 36, width: 36 }} />
+          <ThemeSwitchButton sx={{ height: 36, width: 36 }} />
         </Stack>
       </Stack>
     </AppBar>

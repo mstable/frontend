@@ -1,13 +1,10 @@
 import {
-  DISCORD,
-  EMAIL,
-  GITHUB,
-  MEDIUM,
-  TWITTER,
+  DHEDGE_DISCORD,
+  DHEDGE_GITHUB,
+  DHEDGE_TWITTER,
 } from '@frontend/shared-constants';
-import { Discord, Email, Github, Twitter } from '@frontend/shared-icons';
+import { Discord, Github, Twitter } from '@frontend/shared-icons';
 import { IconButton, Stack } from '@mui/material';
-import { MediumLogo } from 'phosphor-react';
 import { useIntl } from 'react-intl';
 
 import type { StackProps } from '@mui/material';
@@ -19,27 +16,17 @@ export const Footer = (props: StackProps) => {
     {
       title: intl.formatMessage({ defaultMessage: 'Github', id: 'Vn76qV' }),
       icon: <Github />,
-      href: GITHUB,
+      href: DHEDGE_GITHUB,
     },
     {
       title: intl.formatMessage({ defaultMessage: 'Discord', id: 'FvmV6q' }),
       icon: <Discord />,
-      href: DISCORD,
+      href: DHEDGE_DISCORD,
     },
     {
       title: intl.formatMessage({ defaultMessage: 'Twitter', id: '8ywLSf' }),
       icon: <Twitter />,
-      href: TWITTER,
-    },
-    {
-      title: intl.formatMessage({ defaultMessage: 'Medium', id: 'ovJ26C' }),
-      icon: <MediumLogo size={24} weight="fill" />,
-      href: MEDIUM,
-    },
-    {
-      title: intl.formatMessage({ defaultMessage: 'Email', id: 'sy+pv5' }),
-      icon: <Email />,
-      href: EMAIL,
+      href: DHEDGE_TWITTER,
     },
   ];
 
