@@ -22,6 +22,7 @@ import { setAutoFreeze } from 'immer';
 
 import { App } from './App';
 import { chains, firebaseApp, reactQueryClient, wagmiClient } from './clients';
+import { SettingsProvider } from './providers/SettingsProvider';
 
 // https://github.com/dai-shi/proxy-compare/pull/8
 setAutoFreeze(false);
@@ -48,6 +49,7 @@ root.render(
       ],
       [WalletGoogleAnalyticsProvider],
       [ModalsProvider],
+      [SettingsProvider],
     ],
     <App />,
   ),

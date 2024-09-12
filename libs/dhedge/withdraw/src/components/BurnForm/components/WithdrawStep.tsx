@@ -14,7 +14,7 @@ export const WithdrawStep = (props: MotionStackProps) => {
   return (
     <MotionStack {...props}>
       <Typography variant="h4" mb={4}>
-        Withdraw your {l2token.contract.name} tokens to stables
+        Withdraw your {l2token.contract.symbol} tokens to stables
       </Typography>
       <Typography mb={2}>
         Your {l2token.contract.name} tokens are earning yield and you can hold

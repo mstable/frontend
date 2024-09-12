@@ -42,7 +42,7 @@ export const Topnav = () => {
         >
           <OpenAccountModalButton sx={{ maxWidth: 180, maxHeight: 36 }} />
           <OpenNetworkModalButton sx={{ height: 36, width: 36 }} />
-          <ThemeSwitchButton sx={{ height: 36, width: 36 }} />
+          <ThemeSwitchButton />
         </Stack>
       </Stack>
     </AppBar>

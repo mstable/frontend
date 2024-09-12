@@ -1,20 +1,31 @@
-import { useToggleThemeMode } from '@frontend/shared-providers';
 import { IconButton, useTheme } from '@mui/material';
+import produce from 'immer';
 import { Moon, Sun } from 'phosphor-react';
 
-import type { ButtonProps } from '@mui/material';
+import { useSettings, useUpdateSettings } from '../providers/SettingsProvider';
+
 import type { FC } from 'react';
 
-export const ThemeSwitchButton: FC<ButtonProps> = (props) => {
+export const ThemeSwitchButton: FC = () => {
   const {
-    palette: { mode, warning },
+    palette: { warning },
   } = useTheme();
-  const isDarkMode = mode === 'dark';
-  const toggleThemeMode = useToggleThemeMode();
+  const { dark } = useSettings();
+
+  const updateSettings = useUpdateSettings();
 
   return (
-    <IconButton color="secondary" onClick={toggleThemeMode}>
-      {isDarkMode ? (
+    <IconButton
+      color="secondary"
+      onClick={() => {
+        updateSettings(
+          produce((state) => {
+            state.dark = !state.dark;
+          }),
+        );
+      }}
+    >
+      {dark ? (
         <Moon size={24} weight="fill" />
       ) : (
         <Sun size={24} color={warning.main} weight="fill" />

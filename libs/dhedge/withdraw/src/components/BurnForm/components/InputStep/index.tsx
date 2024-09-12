@@ -1,8 +1,10 @@
+import { DHEDGE_DAPP_LINK } from '@frontend/shared-constants';
 import { OpenAccountModalButton } from '@frontend/shared-providers';
 import { MotionStack } from '@frontend/shared-ui';
 import { Button, Stack, Typography } from '@mui/material';
 import { constants } from 'ethers';
-import { useAccount } from 'wagmi';
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
+import { mainnet } from 'wagmi/chains';
 
 import { useNeedsApproval } from '../../../../hooks/useNeedsApproval';
 import { useSetStep } from '../../hooks';
@@ -15,15 +17,26 @@ import type { MotionStackProps } from '@frontend/shared-ui';
 
 export const InputStep = (props: MotionStackProps) => {
   const { isConnected } = useAccount();
+  const { chain } = useNetwork();
+  const { switchNetwork } = useSwitchNetwork();
   const { l1token, l2token } = useTrackedState();
   const setStep = useSetStep();
   const needsApproval = useNeedsApproval();
+  const isL1Chain = chain.id === mainnet.id;
 
   return (
     <MotionStack alignItems="flex-start" {...props}>
       <Typography variant="h5" mb={1}>
         Redeem your dHEDGE V1 {l1token.contract.name ?? 'vault'} tokens to
-        receive {l2token.contract.name ?? ''} vault tokens
+        receive{' '}
+        <a
+          href={`${DHEDGE_DAPP_LINK}/vault/${l2token.contract.address}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {l2token.contract.name ?? ''}
+        </a>{' '}
+        vault tokens
       </Typography>
       <Typography variant="hint">
         After redeeming your vault tokens from Ethereum, please wait while the
@@ -32,10 +45,14 @@ export const InputStep = (props: MotionStackProps) => {
       <Stack width={1} justifyContent="center" alignItems="center" my={8}>
         <Stack width={3 / 4}>
           <TokenInputs mb={4} />
-          {isConnected ? (
+          {!isConnected ? (
+            <OpenAccountModalButton fullWidth size="large" />
+          ) : isL1Chain ? (
             <>{needsApproval ? <ApprovalButton /> : <SubmitButton />}</>
           ) : (
-            <OpenAccountModalButton fullWidth size="large" />
+            <Button onClick={() => switchNetwork(mainnet.id)} size="large">
+              Switch to {mainnet.name}
+            </Button>
           )}
         </Stack>
       </Stack>
