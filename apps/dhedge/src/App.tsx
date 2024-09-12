@@ -1,8 +1,8 @@
+import { Withdraw } from '@frontend/dhedge-withdraw';
 import { Stack } from '@mui/material';
 
 import { Footer } from './components/Footer';
 import { Topnav } from './components/Topnav';
-import { Withdraw } from '@frontend/dhedge-withdraw';
 
 export const App = () => {
   return (

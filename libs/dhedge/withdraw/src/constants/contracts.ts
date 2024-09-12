@@ -1,8 +1,9 @@
 import { arbitrum, mainnet } from 'wagmi/chains';
 
-import { Contract } from '@frontend/shared-constants';
-import { L2ComptrollerAbi } from './abis/L2ComptrollerAbi';
 import { L1ComptrollerAbi } from './abis/L1ComptrollerAbi';
+import { L2ComptrollerAbi } from './abis/L2ComptrollerAbi';
+
+import type { Contract } from '@frontend/shared-constants';
 
 export const l2ComptrollerContract: Contract = {
   address: '0xa30ee837aE10Acb36fF75eA4a720E1fAa1BA2293',

@@ -9,10 +9,11 @@ import {
   useWaitForTransaction,
 } from 'wagmi';
 
+import { l1ComptrollerContract } from '../../../../../constants';
+import { useNeedsApproval } from '../../../../../hooks/useNeedsApproval';
 import { useTrackedState } from '../../../state';
 
 import type { ButtonProps } from '@mui/material';
-import { l1ComptrollerContract } from '../../../../../constants';
 
 const buttonProps: ButtonProps = {
   size: 'large',
@@ -22,7 +23,8 @@ const buttonProps: ButtonProps = {
 export const ApprovalButton = (props: ButtonProps) => {
   const { chain } = useNetwork();
   const pushNotification = usePushNotification();
-  const { l1token, needsApproval, isError, refetch } = useTrackedState();
+  const { l1token, isError, refetch } = useTrackedState();
+  const needsApproval = useNeedsApproval();
 
   const { config } = usePrepareContractWrite({
     address: l1token.contract.address,

@@ -1,8 +1,10 @@
-import { arbitrum, mainnet } from 'wagmi/chains';
-import { Token } from '@frontend/shared-constants';
-import { PoolLogicAbi } from './abis/PoolLogicAbi';
 import { AddressZero } from '@dhedge/core-ui-kit/const';
 import { ERC20ABI } from '@mstable/metavaults-web';
+import { arbitrum, mainnet } from 'wagmi/chains';
+
+import { PoolLogicAbi } from './abis/PoolLogicAbi';
+
+import type { Token } from '@frontend/shared-constants';
 
 export const zeroMainnetToken: Token = {
   address: AddressZero,

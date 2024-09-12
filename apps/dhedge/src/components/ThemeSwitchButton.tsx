@@ -1,7 +1,9 @@
-import { FC } from 'react';
-import { ButtonProps, IconButton, useTheme } from '@mui/material';
 import { useToggleThemeMode } from '@frontend/shared-providers';
+import { IconButton, useTheme } from '@mui/material';
 import { Moon, Sun } from 'phosphor-react';
+
+import type { ButtonProps } from '@mui/material';
+import type { FC } from 'react';
 
 export const ThemeSwitchButton: FC<ButtonProps> = (props) => {
   const {

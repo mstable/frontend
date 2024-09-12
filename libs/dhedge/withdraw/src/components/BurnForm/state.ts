@@ -1,19 +1,21 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { useDebounce } from '@frontend/shared-hooks';
 import { BigDecimal } from '@frontend/shared-utils';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
 import { useAccount, useContractRead, useContractReads } from 'wagmi';
 
-import type { Token } from '@frontend/shared-constants';
-import type { BigNumberish } from 'ethers';
 import {
   dV1Token,
+  l1ComptrollerContract,
   l2ComptrollerContract,
   zeroMainnetToken,
 } from '../../constants';
-import { useDebounce } from '@frontend/shared-hooks';
 import { useL1VaultAddressWithBalance } from '../../hooks/useL1VaultAddressWithBalance';
+
+import type { Token } from '@frontend/shared-constants';
+import type { BigNumberish } from 'ethers';
 
 type InputProps = {
   contract: Token;
@@ -26,7 +28,7 @@ type StateProps = {
   step: number;
   isLoading: boolean;
   isError: boolean;
-  needsApproval: boolean;
+  allowance: BigDecimal;
   l1token: InputProps;
   l2token: InputProps;
   refetch: () => void;
@@ -40,7 +42,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
     step: 0,
     isLoading: true,
     isError: false,
-    needsApproval: true,
+    allowance: BigDecimal.ZERO,
     l1token: {
       amount: BigDecimal.ZERO,
       balance: BigDecimal.ZERO,
@@ -83,7 +85,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
         abi: state.l1token.contract.abi,
         functionName: 'allowance',
         chainId: state.l1token.contract.chainId,
-        args: [walletAddress, l2ComptrollerContract.address],
+        args: [walletAddress, l1ComptrollerContract.address],
       },
       {
         address: state.l1token.contract.address,
@@ -121,11 +123,9 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
       setState(
         produce((draft) => {
           draft.l1token.contract.name = data[0] as unknown as string;
-          draft.needsApproval = state.l1token.amount.exact.gt(
-            new BigDecimal(
-              data[1] as unknown as BigNumberish,
-              state.l1token.contract.decimals,
-            ).exact,
+          draft.allowance = new BigDecimal(
+            data[1] as unknown as BigNumberish,
+            state.l1token.contract.decimals,
           );
           draft.l1token.balance = new BigDecimal(
             data[2] as unknown as BigNumberish,
@@ -146,7 +146,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
         }),
       );
     }
-  }, [data, refetch]);
+  }, [data, refetch, state.l1token.contract.decimals]);
 
   const debouncedL1TokenAmount = useDebounce(
     state.l1token.amount.exact.toString(),
@@ -180,7 +180,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
         draft.l1token.balance = BigDecimal.ZERO;
         draft.l2token.balance = BigDecimal.ZERO;
         draft.l2token.balance = BigDecimal.ZERO;
-        draft.needsApproval = true;
+        draft.allowance = BigDecimal.ZERO;
         draft.isError = false;
       }),
     );

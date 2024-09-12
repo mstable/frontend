@@ -11,18 +11,6 @@
       "options": {
         "lintFilePatterns": ["libs/dhedge/withdraw/**/*.{ts,tsx,js,jsx}"]
       }
-    },
-    "build": {
-      "executor": "@nrwl/vite:build",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
-      "options": {
-        "outputPath": "dist/libs/dhedge/withdraw"
-      },
-      "configurations": {
-        "development": {},
-        "production": {}
-      }
     }
   }
 }

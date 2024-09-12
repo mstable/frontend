@@ -1,11 +1,8 @@
-import { useMemo } from 'react';
-
 import { usePushNotification } from '@frontend/shared-providers';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { Button, CircularProgress } from '@mui/material';
 import { constants } from 'ethers';
 import {
-  useAccount,
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
@@ -13,10 +10,11 @@ import {
 } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
+import { useNeedsApproval } from '../../../../../hooks/useNeedsApproval';
+import { useRedeemCallConfig } from '../../../../../hooks/useRedeemCallConfig';
 import { useTrackedState } from '../../../state';
 
 import type { ButtonProps } from '@mui/material';
-import { l1ComptrollerContract } from '../../../../../constants';
 
 export type SubmitButtonProps = {
   disabled?: boolean;
@@ -30,23 +28,10 @@ const buttonProps: ButtonProps = {
 export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
   const { chain } = useNetwork();
   const pushNotification = usePushNotification();
-  const { address: walletAddress } = useAccount();
-  const { l1token, isError, needsApproval, reset } = useTrackedState();
+  const { l1token, isError, reset } = useTrackedState();
+  const needsApproval = useNeedsApproval();
 
-  //TODO: implement
-  const config = useMemo(
-    () => ({
-      functionName: 'redeem',
-      args: [walletAddress, l1token.amount.exact],
-      enabled:
-        !isError && l1token.amount.exact.gt(constants.Zero) && !needsApproval,
-      address: l1ComptrollerContract.address,
-      abi: l1ComptrollerContract.abi,
-      chainId: l1ComptrollerContract.chainId,
-    }),
-    [walletAddress, l1token.amount.exact, isError, needsApproval],
-  );
-
+  const config = useRedeemCallConfig();
   const { data: submitConfig } = usePrepareContractWrite(config);
 
   const {

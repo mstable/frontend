@@ -3,9 +3,9 @@ import { MotionStack } from '@frontend/shared-ui';
 import { Button, Stack, Typography } from '@mui/material';
 
 import { useSetStep } from '../hooks';
+import { useTrackedState } from '../state';
 
 import type { MotionStackProps } from '@frontend/shared-ui';
-import { useTrackedState } from 'libs/dhedge/withdraw/src/components/BurnForm/state';
 
 export const WithdrawStep = (props: MotionStackProps) => {
   const setStep = useSetStep();
@@ -18,12 +18,8 @@ export const WithdrawStep = (props: MotionStackProps) => {
       </Typography>
       <Typography mb={2}>
         Your {l2token.contract.name} tokens are earning yield and you can hold
-        on to them.<br></br>Optionally you can go to dHEDGE app to withdraw your
+        on to them.<br></br>Optionally you can go to dHEDGE app to withdraw your{' '}
         {l2token.contract.symbol} tokens to stablecoins.
-      </Typography>
-      <Typography>
-        After burning your vault tokens from Ethereum, please wait while the
-        bridge issues your {l2token.contract.symbol} tokens.
       </Typography>
       <Stack direction="row" my={4} justifyContent="center" alignItems="center">
         <Button

@@ -1,10 +1,11 @@
 import { DHEDGE } from '@frontend/shared-constants';
+import { DhedgeLogo } from '@frontend/shared-icons';
 import {
   OpenAccountModalButton,
   OpenNetworkModalButton,
 } from '@frontend/shared-providers';
-import { alpha, AppBar, Button, IconButton, Stack } from '@mui/material';
-import { DhedgeLogo } from '@frontend/shared-icons';
+import { alpha, AppBar, IconButton, Stack } from '@mui/material';
+
 import { ThemeSwitchButton } from './ThemeSwitchButton';
 
 export const Topnav = () => {

@@ -1,8 +1,11 @@
-import { Address, useAccount, useContractReads } from 'wagmi';
-import { deprecatedL1Vaults } from '../constants';
-import { mainnet } from 'wagmi/chains';
-import { PoolLogicAbi } from '../constants/abis/PoolLogicAbi';
 import { AddressZero } from '@dhedge/core-ui-kit/const';
+import { useAccount, useContractReads } from 'wagmi';
+import { mainnet } from 'wagmi/chains';
+
+import { deprecatedL1Vaults } from '../constants';
+import { PoolLogicAbi } from '../constants/abis/PoolLogicAbi';
+
+import type { Address } from 'wagmi';
 
 export const useL1VaultAddressWithBalance = (): Address => {
   const { address: walletAddress } = useAccount();

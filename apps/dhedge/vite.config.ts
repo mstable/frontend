@@ -1,10 +1,10 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import viteTsConfigPaths from 'vite-tsconfig-paths';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
+import react from '@vitejs/plugin-react';
 import rollupNodePolyFill from 'rollup-plugin-node-polyfills';
+import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
+import viteTsConfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   cacheDir: '../../node_modules/.vite/dhedge',
