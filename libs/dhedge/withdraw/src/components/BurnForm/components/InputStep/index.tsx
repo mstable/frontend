@@ -4,8 +4,8 @@ import { MotionStack } from '@frontend/shared-ui';
 import { Button, Stack, Typography } from '@mui/material';
 import { constants } from 'ethers';
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
-import { mainnet } from 'wagmi/chains';
 
+import { l1Chain } from '../../../../constants';
 import { useNeedsApproval } from '../../../../hooks/useNeedsApproval';
 import { useSetStep } from '../../hooks';
 import { useTrackedState } from '../../state';
@@ -22,7 +22,7 @@ export const InputStep = (props: MotionStackProps) => {
   const { l1token, l2token } = useTrackedState();
   const setStep = useSetStep();
   const needsApproval = useNeedsApproval();
-  const isL1Chain = chain.id === mainnet.id;
+  const isL1Chain = chain?.id === l1Chain.id;
 
   return (
     <MotionStack alignItems="flex-start" {...props}>
@@ -50,8 +50,8 @@ export const InputStep = (props: MotionStackProps) => {
           ) : isL1Chain ? (
             <>{needsApproval ? <ApprovalButton /> : <SubmitButton />}</>
           ) : (
-            <Button onClick={() => switchNetwork(mainnet.id)} size="large">
-              Switch to {mainnet.name}
+            <Button onClick={() => switchNetwork(l1Chain.id)} size="large">
+              Switch to {l1Chain.name}
             </Button>
           )}
         </Stack>

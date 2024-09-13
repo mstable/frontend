@@ -1,53 +1,66 @@
+import { useMemo } from 'react';
+
 import { usePushNotification } from '@frontend/shared-providers';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
 import { Button, CircularProgress } from '@mui/material';
-import { constants } from 'ethers';
 import {
+  useAccount,
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
+  useSwitchNetwork,
   useWaitForTransaction,
 } from 'wagmi';
 
-import { l1Chain } from '../../../../../constants';
-import { useNeedsApproval } from '../../../../../hooks/useNeedsApproval';
-import { useRedeemCallConfig } from '../../../../../hooks/useRedeemCallConfig';
-import { useTrackedState } from '../../../state';
+import {
+  l1Chain,
+  l2Chain,
+  l2ComptrollerContract,
+  l2Token,
+} from '../../constants';
 
-import type { ButtonProps } from '@mui/material';
+import type { FC } from 'react';
+import type { Address } from 'wagmi';
 
-export type SubmitButtonProps = {
-  disabled?: boolean;
-};
+interface ClaimButtonProps {
+  tokenBurned: Address;
+}
 
-const buttonProps: ButtonProps = {
-  size: 'large',
-  fullWidth: true,
-};
-
-export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
+export const ClaimButton: FC<ClaimButtonProps> = ({ tokenBurned }) => {
+  const { address: walletAddress } = useAccount();
   const { chain } = useNetwork();
+  const { switchNetwork } = useSwitchNetwork();
   const pushNotification = usePushNotification();
-  const { l1token, isError, reset } = useTrackedState();
-  const needsApproval = useNeedsApproval();
+  const isL2Chain = chain?.id === l2Chain.id;
 
-  const config = useRedeemCallConfig();
-  const { data: submitConfig } = usePrepareContractWrite(config);
+  const config = useMemo(
+    () => ({
+      functionName: 'claimAll',
+      args: [tokenBurned, l2Token.address, walletAddress],
+      enabled: !!walletAddress && isL2Chain,
+      address: l2ComptrollerContract.address,
+      abi: l2ComptrollerContract.abi,
+      chainId: l2ComptrollerContract.chainId,
+    }),
+    [isL2Chain, tokenBurned, walletAddress],
+  );
+
+  const { data: claimConfig } = usePrepareContractWrite(config);
 
   const {
-    data: submitData,
-    write: submit,
+    data: claimData,
+    write: claim,
     isLoading: isWriteLoading,
     isSuccess: isWriteSuccess,
   } = useContractWrite({
-    ...submitConfig,
+    ...claimConfig,
     request: {
-      ...submitConfig?.request,
-      gasLimit: submitConfig?.request?.gasLimit?.mul(130).div(100),
+      ...claimConfig?.request,
+      gasLimit: claimConfig?.request?.gasLimit?.mul(130).div(100),
     },
     onSuccess: (data) => {
       pushNotification({
-        title: 'DHPT Redeem',
+        title: `Claim ${l2Token.symbol}`,
         content: (
           <ViewEtherscanLink
             hash={data?.hash}
@@ -67,8 +80,8 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
       });
     },
   });
-  const { isSuccess: isSubmitSuccess } = useWaitForTransaction({
-    hash: submitData?.hash,
+  const { isSuccess: isClaimSuccess } = useWaitForTransaction({
+    hash: claimData?.hash,
     onSuccess: ({ transactionHash }) => {
       pushNotification({
         title: 'Transaction Confirmed',
@@ -89,7 +102,7 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
         title: 'Transaction Error',
         content: (
           <ViewEtherscanLink
-            hash={submitData?.hash}
+            hash={claimData?.hash}
             blockExplorer={
               chain?.blockExplorers?.['etherscan'] ??
               l1Chain.blockExplorers.default
@@ -99,48 +112,27 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
         severity: 'error',
       });
     },
-    onSettled: reset,
   });
 
-  if (
-    !l1token.amount ||
-    needsApproval ||
-    l1token.amount.exact.eq(constants.Zero)
-  ) {
+  if (!isL2Chain) {
     return (
-      <Button {...buttonProps} disabled>
-        Redeem
+      <Button onClick={() => switchNetwork(l2ComptrollerContract.chainId)}>
+        Switch to {l2Chain.name}
       </Button>
     );
   }
 
   if (isWriteLoading) {
-    return (
-      <Button {...buttonProps} disabled>
-        Sign Transaction
-      </Button>
-    );
+    return <Button disabled>Sign Transaction</Button>;
   }
 
-  if (isWriteSuccess && !isSubmitSuccess) {
+  if (isWriteSuccess && !isClaimSuccess) {
     return (
-      <Button {...buttonProps} disabled>
+      <Button disabled>
         <CircularProgress size={20} />
       </Button>
     );
   }
 
-  if (isError) {
-    return (
-      <Button {...buttonProps} disabled>
-        Insufficient balance
-      </Button>
-    );
-  }
-
-  return (
-    <Button {...buttonProps} onClick={submit} disabled={disabled}>
-      Redeem
-    </Button>
-  );
+  return <Button onClick={claim}>Claim</Button>;
 };

@@ -7,10 +7,10 @@ import { createContainer } from 'react-tracked';
 import { useAccount, useContractRead, useContractReads } from 'wagmi';
 
 import {
-  dV1Token,
   l1ComptrollerContract,
   l2ComptrollerContract,
-  zeroMainnetToken,
+  l2Token,
+  zeroL1Token,
 } from '../../constants';
 import { useL1VaultAddressWithBalance } from '../../hooks/useL1VaultAddressWithBalance';
 
@@ -47,13 +47,13 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
       amount: BigDecimal.ZERO,
       balance: BigDecimal.ZERO,
       price: 0,
-      contract: zeroMainnetToken,
+      contract: zeroL1Token,
     },
     l2token: {
       amount: BigDecimal.ZERO,
       balance: BigDecimal.ZERO,
       price: 0,
-      contract: dV1Token,
+      contract: l2Token,
     },
     refetch: () => null,
     reset: () => null,
@@ -116,6 +116,7 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
       },
     ],
     watch: true,
+    enabled: isConnected,
   });
 
   useEffect(() => {
@@ -176,9 +177,8 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
     setState(
       produce((draft) => {
         draft.l1token.amount = BigDecimal.ZERO;
-        draft.l1token.amount = BigDecimal.ZERO;
+        draft.l2token.amount = BigDecimal.ZERO;
         draft.l1token.balance = BigDecimal.ZERO;
-        draft.l2token.balance = BigDecimal.ZERO;
         draft.l2token.balance = BigDecimal.ZERO;
         draft.allowance = BigDecimal.ZERO;
         draft.isError = false;

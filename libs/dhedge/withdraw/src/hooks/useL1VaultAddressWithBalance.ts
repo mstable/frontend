@@ -1,4 +1,4 @@
-import { AddressZero } from '@dhedge/core-ui-kit/const';
+import { ZERO_ADDRESS } from '@frontend/shared-constants';
 import { useAccount, useContractReads } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
@@ -9,6 +9,7 @@ import type { Address } from 'wagmi';
 
 export const useL1VaultAddressWithBalance = (): Address => {
   const { address: walletAddress } = useAccount();
+
   const { data } = useContractReads({
     contracts: deprecatedL1Vaults.map((address) => ({
       address,
@@ -17,11 +18,12 @@ export const useL1VaultAddressWithBalance = (): Address => {
       functionName: 'balanceOf',
       args: [walletAddress],
     })),
+    enabled: !!walletAddress,
   });
 
   const [addressWithBalance] = deprecatedL1Vaults.filter(
     (_, index) => !!data?.[index] && data[index].toString() !== '0',
   );
 
-  return addressWithBalance ?? AddressZero;
+  return addressWithBalance ?? ZERO_ADDRESS;
 };

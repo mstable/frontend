@@ -1,3 +1,5 @@
+import { arbitrum, mainnet } from 'wagmi/chains';
+
 import type { Address } from 'wagmi';
 
 export * from './tokens';
@@ -8,4 +10,6 @@ export const deprecatedL1Vaults: Address[] = [
 ];
 
 export const redeemFromL1Length = 164;
-export const redeemGasLimit = 800000;
+export const redeemGasLimit = 1000000;
+export const l1Chain = mainnet;
+export const l2Chain = arbitrum;

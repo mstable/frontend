@@ -17,7 +17,7 @@ import { alchemyProvider } from 'wagmi/providers/alchemy';
 import type { Wallet } from '@rainbow-me/rainbowkit';
 import type { Chain, Connector } from 'wagmi';
 
-const POLLING_INTERVAL = 15_000;
+const POLLING_INTERVAL = 20_000;
 
 export const { chains, provider } = configureChains(
   [mainnet, arbitrum],
