@@ -68,8 +68,6 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
     );
   }, [v1VaultAddress]);
 
-  console.log(state);
-
   const { data, isLoading, refetch } = useContractReads({
     contracts: [
       {

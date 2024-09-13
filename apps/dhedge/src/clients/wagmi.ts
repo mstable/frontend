@@ -7,6 +7,7 @@ import {
   coinbaseWallet,
   injectedWallet,
   metaMaskWallet,
+  rabbyWallet,
   rainbowWallet,
   walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets';
@@ -49,6 +50,7 @@ const connectors = connectorsForWallets([
       metaMaskWallet({ chains, shimDisconnect: true, projectId }),
       walletConnectWallet({ chains, projectId }),
       coinbaseWallet({ appName: 'mStable', chains }),
+      rabbyWallet({ chains }),
     ],
   },
   {
