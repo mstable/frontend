@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useDebounce } from '@frontend/shared-hooks';
 import { BigDecimal } from '@frontend/shared-utils';
 import produce from 'immer';
 import { createContainer } from 'react-tracked';
@@ -121,6 +120,10 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
 
   useEffect(() => {
     if (data) {
+      const l1TokenBalance = new BigDecimal(
+        data[2] as unknown as BigNumberish,
+        state.l1token.contract.decimals,
+      );
       setState(
         produce((draft) => {
           draft.l1token.contract.name = data[0] as unknown as string;
@@ -128,10 +131,8 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
             data[1] as unknown as BigNumberish,
             state.l1token.contract.decimals,
           );
-          draft.l1token.balance = new BigDecimal(
-            data[2] as unknown as BigNumberish,
-            state.l1token.contract.decimals,
-          );
+          draft.l1token.balance = l1TokenBalance;
+          draft.l1token.amount = l1TokenBalance;
           draft.l2token.balance = new BigDecimal(
             data[3] as unknown as BigNumberish,
             state.l1token.contract.decimals,
@@ -149,10 +150,6 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
     }
   }, [data, refetch, state.l1token.contract.decimals]);
 
-  const debouncedL1TokenAmount = useDebounce(
-    state.l1token.amount.exact.toString(),
-    500,
-  );
   useContractRead({
     address: l2ComptrollerContract.address,
     abi: l2ComptrollerContract.abi,
@@ -161,9 +158,9 @@ export const { Provider, useTrackedState, useUpdate } = createContainer(() => {
     args: [
       state.l1token.contract.address,
       state.l2token.contract.address,
-      debouncedL1TokenAmount,
+      state.l1token.amount.exact,
     ],
-    enabled: debouncedL1TokenAmount !== '0',
+    enabled: !state.l1token.amount.exact.isZero(),
     onSuccess: (data) => {
       setState(
         produce((draft) => {

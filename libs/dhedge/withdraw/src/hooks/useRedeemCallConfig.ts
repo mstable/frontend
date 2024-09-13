@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 
-import { constants } from 'ethers';
 import { useAccount } from 'wagmi';
 
 import { useTrackedState } from '../components/BurnForm/state';
@@ -41,8 +40,7 @@ export const useRedeemCallConfig = () => {
         encodedArbAdditionalData,
         { value: ethValue },
       ],
-      enabled:
-        !isError && l1token.amount.exact.gt(constants.Zero) && !needsApproval,
+      enabled: !isError && !l1token.amount.exact.isZero() && !needsApproval,
       address: l1ComptrollerContract.address,
       abi: l1ComptrollerContract.abi,
       chainId: l1ComptrollerContract.chainId,

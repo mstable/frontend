@@ -44,6 +44,11 @@ export const TokenInputs = (props: BoxProps) => {
             width: 1,
             padding: (theme) => theme.spacing(0.5, 2, 0.5, 2),
           },
+          input: {
+            InputProps: {
+              disabled: true,
+            },
+          },
         }}
       />
       <Stack
