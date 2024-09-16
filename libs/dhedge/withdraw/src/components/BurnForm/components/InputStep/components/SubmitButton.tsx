@@ -1,6 +1,6 @@
 import { usePushNotification } from '@frontend/shared-providers';
 import { ViewEtherscanLink } from '@frontend/shared-ui';
-import { Button, CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { constants } from 'ethers';
 import {
   useContractWrite,
@@ -32,7 +32,8 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
   const needsApproval = useNeedsApproval();
 
   const config = useRedeemCallConfig();
-  const { data: submitConfig } = usePrepareContractWrite(config);
+  const { data: submitConfig, error: estimateError } =
+    usePrepareContractWrite(config);
 
   const {
     data: submitData,
@@ -139,8 +140,24 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
   }
 
   return (
-    <Button {...buttonProps} onClick={submit} disabled={disabled}>
-      Redeem
-    </Button>
+    <>
+      <Button {...buttonProps} onClick={submit} disabled={disabled}>
+        Redeem
+      </Button>
+      {!!estimateError?.message?.includes(
+        'transfer amount exceeds balance',
+      ) && (
+        <Box>
+          <Typography
+            variant="hint"
+            mt={1}
+            color="warning.dark"
+            sx={{ position: 'absolute' }}
+          >
+            Not enough ETH balance
+          </Typography>
+        </Box>
+      )}
+    </>
   );
 };
