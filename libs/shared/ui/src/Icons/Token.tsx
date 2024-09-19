@@ -21,24 +21,14 @@ import {
 import { SvgIcon } from '@mui/material';
 import { CurrencyCircleDollar } from 'phosphor-react';
 
-import type { SupportedToken } from '@mstable/metavaults-web';
 import type { SvgIconProps } from '@mui/material';
 
-type AdditionalToken =
-  | 'eth'
-  | 'mvdai'
-  | 'mveth'
-  | 'mvfrax'
-  | 'mvmta'
-  | 'mvmusd'
-  | 'mvusdc';
-
 export type TokenIconProps = {
-  symbol?: SupportedToken | AdditionalToken | 'mvUSDC-3PCV' | string;
+  symbol?: string;
 } & SvgIconProps;
 
 export const supportedTokens: Partial<
-  Record<SupportedToken & AdditionalToken, (props: SvgIconProps) => JSX.Element>
+  Record<string, (props: SvgIconProps) => JSX.Element>
 > = {
   dai: DAI,
   eth: Ether,
@@ -52,7 +42,6 @@ export const supportedTokens: Partial<
   lusd: LUSD,
   frax: FRAX,
   busd: BUSD,
-  'mvusdc-3pcv': MvUSDC,
   mvdai: MvDAI,
   mveth: MvETH,
   mvfrax: MvFrax,

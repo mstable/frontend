@@ -4376,11 +4376,6 @@
     "@motionone/dom" "^10.16.2"
     tslib "^2.3.1"
 
-"@mstable/metavaults-web@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@mstable/metavaults-web/-/metavaults-web-0.0.6.tgz#3d1c2008c67a4f03170380daf22c601a950d34dd"
-  integrity sha512-aApguWNT3MFHjnl3d1adfhhwVzHIe2kgk+6pXCnTTPbwUfPqvo0iUeSslKqrYyb7GpLlO2QElKH0KeZOXuUwSA==
-
 "@mui/base@5.0.0-alpha.125":
   version "5.0.0-alpha.125"
   resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-alpha.125.tgz#6bb3df0760d87aa9186ed9add29b3ae96dee4aa8"
