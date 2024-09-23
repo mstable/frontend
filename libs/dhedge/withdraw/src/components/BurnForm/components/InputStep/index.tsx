@@ -43,7 +43,7 @@ export const InputStep = (props: MotionStackProps) => {
         bridge issues your {l2token.contract.symbol} tokens.
       </Typography>
       <Stack width={1} justifyContent="center" alignItems="center" my={8}>
-        <Stack width={3 / 4}>
+        <Stack width={{ xs: 'auto', lg: 3 / 4 }}>
           <TokenInputs mb={4} />
           {!isConnected ? (
             <OpenAccountModalButton fullWidth size="large" />

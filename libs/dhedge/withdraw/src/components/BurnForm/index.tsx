@@ -9,7 +9,7 @@ import { Provider, useTrackedState } from './state';
 import type { StackProps, SxProps, Theme } from '@mui/material';
 
 const cardSx: SxProps<Theme> = (theme) => ({
-  padding: 4,
+  padding: { xs: 2, lg: 4 },
   borderRadius: 2,
   border: `1px solid ${theme.palette.divider}`,
 });

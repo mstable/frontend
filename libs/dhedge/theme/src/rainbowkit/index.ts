@@ -10,7 +10,7 @@ const light = lightTheme();
 const dark = darkTheme();
 
 const common: RecursivePartial<Theme> = {
-  fonts: { body: 'Plus Jakarta Sans' },
+  fonts: { body: 'Inter' },
   colors: {
     accentColor: colors.blue02,
   },

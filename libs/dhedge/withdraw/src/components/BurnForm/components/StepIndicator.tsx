@@ -48,7 +48,7 @@ export const StepIndicator = (props: StackProps) => {
           position: 'absolute',
           content: '""',
           top: 20,
-          left: isMobile ? 0 : 70,
+          left: isMobile ? 15 : 70,
           height: 2,
           width: '70%',
           background:

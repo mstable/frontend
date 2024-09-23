@@ -93,7 +93,7 @@ export const TokenInputs = (props: BoxProps) => {
       <Stack
         justifyContent="center"
         alignItems="center"
-        p={1.5}
+        p={{ xs: 0.5, lg: 1.5 }}
         border={(theme) => `1px solid ${theme.palette.divider}`}
         borderRadius={1}
         bgcolor="divider"
@@ -105,7 +105,7 @@ export const TokenInputs = (props: BoxProps) => {
           svg: { color: 'text.primary' },
         }}
       >
-        <ArrowFatDown size={20} />
+        <ArrowFatDown size={18} />
       </Stack>
       <TokenInput
         amount={l2token.amount}
