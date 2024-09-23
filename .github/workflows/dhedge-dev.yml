@@ -1,0 +1,59 @@
+name: dHEDGE Dev
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/dhedge/**'
+      - 'libs/dhedge/**'
+      - 'libs/shared/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout [main]
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+        name: Setup node
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq
+
+      - run: yarn install --frozen-lockfile
+        name: Install dependencies
+
+      - name: Build
+        env:
+          alchemyMain: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
+          alchemyFallback: ${{ secrets.ALCHEMY_FALLBACK_API_KEY }}
+        run: NX_ALCHEMY_MAIN_API_KEY=$alchemyMain NX_ALCHEMY_FALLBACK_API_KEY=$alchemyFallback yarn nx build dhedge
+
+      - name: Copy Firebase dHEDGE to Firebase
+        run: cp firebase.dhedge.json firebase.json
+
+      - name: Firebase deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DHEDGE }}'
+          expires: 30d
+          projectId: dhedge-v1-withdraw
+          channelId: dev

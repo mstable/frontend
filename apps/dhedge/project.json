@@ -1,0 +1,99 @@
+{
+  "name": "dhedge",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/dhedge/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/dhedge",
+        "dependsOn": ["^build", "i18n-compile"]
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "dhedge:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "dhedge:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "dhedge:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nrwl/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "dhedge:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "dhedge:build:development"
+        },
+        "production": {
+          "buildTarget": "dhedge:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/apps/dhedge"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/apps/dhedge"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/dhedge/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "i18n-extract": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "yarn run formatjs extract 'apps/dhedge/src/**/*.{ts,tsx}' --out-file i18n-extractions/apps-dhedge.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+        ]
+      }
+    },
+    "i18n-clear": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["yarn rimraf i18n-extractions"]
+      }
+    },
+    "i18n-compile": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["i18n-clear", "i18n-extract", "^i18n-extract"],
+      "options": {
+        "commands": [
+          "jq -rs 'reduce .[] as $item ({}; . * $item)' i18n-extractions/* > apps/dhedge/i18n/en.json",
+          "yarn run formatjs compile apps/dhedge/i18n/en.json --ast --out-file apps/dhedge/src/assets/lang/en.json",
+          "yarn run nx format:write --files apps/dhedge/src/assets/lang/*.json"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": []
+}

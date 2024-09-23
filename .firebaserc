@@ -1,6 +1,7 @@
 {
   "projects": {
     "lts": "apps-lts",
-    "mstable": "frontend-7e17f"
+    "mstable": "frontend-7e17f",
+    "dhedge": "dhedge-v1-withdraw"
   }
 }

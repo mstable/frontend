@@ -7,3 +7,4 @@ export * from './components/social';
 export * from './components/tokens';
 export * from './components/wallets';
 export * from './components/ecosystem';
+export * from './components/dhedge';
