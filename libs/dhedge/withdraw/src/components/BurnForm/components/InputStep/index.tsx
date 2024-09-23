@@ -27,8 +27,15 @@ export const InputStep = (props: MotionStackProps) => {
   return (
     <MotionStack alignItems="flex-start" {...props}>
       <Typography variant="h5" mb={1}>
-        Redeem your dHEDGE V1 {l1token.contract.name ?? 'vault'} tokens to
-        receive{' '}
+        Redeem your dHEDGE V1{' '}
+        <a
+          href={`${DHEDGE_DAPP_LINK}/vault/${l1token.contract.address}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {l1token.contract.name ?? 'vault'}
+        </a>{' '}
+        tokens to receive{' '}
         <a
           href={`${DHEDGE_DAPP_LINK}/vault/${l2token.contract.address}`}
           target="_blank"
