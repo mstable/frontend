@@ -1,5 +1,5 @@
 import { ZERO_ADDRESS } from '@frontend/shared-constants';
-import { ERC20ABI } from '@mstable/metavaults-web';
+import { erc20ABI } from 'wagmi';
 import { arbitrum, mainnet } from 'wagmi/chains';
 
 import { PoolLogicAbi } from './abis/PoolLogicAbi';
@@ -11,7 +11,7 @@ export const zeroL1Token: Token = {
   symbol: 'DHPT',
   decimals: 18,
   chainId: mainnet.id,
-  abi: ERC20ABI,
+  abi: erc20ABI,
 };
 
 export const l2Token: Token = {
