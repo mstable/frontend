@@ -1,11 +1,11 @@
-import { DHEDGE_DAPP_LINK } from '@frontend/shared-constants';
+import { DHEDGE_DAPP_LINK, ZERO_ADDRESS } from '@frontend/shared-constants';
 import { OpenAccountModalButton } from '@frontend/shared-providers';
 import { MotionStack } from '@frontend/shared-ui';
 import { Button, Stack, Typography } from '@mui/material';
 import { constants } from 'ethers';
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
 
-import { l1Chain } from '../../../../constants';
+import { l1Chain, l2Chain } from '../../../../constants';
 import { useNeedsApproval } from '../../../../hooks/useNeedsApproval';
 import { useSetStep } from '../../hooks';
 import { useTrackedState } from '../../state';
@@ -27,14 +27,18 @@ export const InputStep = (props: MotionStackProps) => {
   return (
     <MotionStack alignItems="flex-start" {...props}>
       <Typography variant="h5" mb={1}>
-        Redeem your dHEDGE V1{' '}
-        <a
-          href={`${DHEDGE_DAPP_LINK}/vault/${l1token.contract.address}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {l1token.contract.name ?? 'vault'}
-        </a>{' '}
+        Redeem your V1{' '}
+        {l1token.contract.address === ZERO_ADDRESS ? (
+          'vault'
+        ) : (
+          <a
+            href={`${DHEDGE_DAPP_LINK}/vault/${l1token.contract.address}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {l1token.contract.name ?? 'vault'}
+          </a>
+        )}{' '}
         tokens to receive{' '}
         <a
           href={`${DHEDGE_DAPP_LINK}/vault/${l2token.contract.address}`}
@@ -49,6 +53,11 @@ export const InputStep = (props: MotionStackProps) => {
         After redeeming your vault tokens from Ethereum, please wait while the
         bridge issues your {l2token.contract.symbol} tokens.
       </Typography>
+      <Typography variant="hint" color="warning.dark">
+        Your {l2token.contract.symbol} tokens will be sent to the same{' '}
+        {l2Chain.name} address you used.
+      </Typography>
+
       <Stack width={1} justifyContent="center" alignItems="center" my={8}>
         <Stack width={{ xs: 'auto', lg: 3 / 4 }}>
           <TokenInputs mb={4} />
