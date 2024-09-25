@@ -7,6 +7,7 @@ export * from './contracts';
 
 export const deprecatedL1Vaults: Address[] = [
   '0x992ed71cad18d16608a14f52a1fb5b6a44bf821c',
+  '0x3805c0da806b64ba93a17120323d50f1d3d9420c',
   '0x907feb27f8cc5b003db7e62dfc2f9b01ce3fadd6',
   '0x391603b1c3b03a0133ad82e91692790e58f73570',
   '0x3a4851597f36f459b58e65c55c8f3a8710313fc7',
