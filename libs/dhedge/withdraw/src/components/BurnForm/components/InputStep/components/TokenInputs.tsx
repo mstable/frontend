@@ -1,14 +1,21 @@
 import { TokenInput } from '@frontend/shared-ui';
-import { Box, Button, Skeleton, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  type BoxProps,
+  Button,
+  Skeleton,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { ArrowFatDown } from 'phosphor-react';
 import { useAccount } from 'wagmi';
 
 import { useSetL1TokenAmount } from '../../../hooks';
 import { useTrackedState } from '../../../state';
 
-import type { BoxProps } from '@mui/material';
+import type { FC } from 'react';
 
-export const TokenInputs = (props: BoxProps) => {
+export const TokenInputs: FC<BoxProps> = (props) => {
   const { isConnected } = useAccount();
   const { l1token, l2token, isLoading, isError } = useTrackedState();
   const setL1Amount = useSetL1TokenAmount();
@@ -67,8 +74,8 @@ export const TokenInputs = (props: BoxProps) => {
             Intl.NumberFormat('en-US', {
               currency: 'USD',
               style: 'currency',
-              maximumSignificantDigits: 2,
-            }).format(l1token.price)
+              maximumFractionDigits: 2,
+            }).format(l1token.price * l1token.amount.simple)
           )}
         </Typography>
         {isConnected &&
@@ -139,7 +146,8 @@ export const TokenInputs = (props: BoxProps) => {
             Intl.NumberFormat('en-US', {
               currency: 'USD',
               style: 'currency',
-            }).format(l2token.price)
+              maximumFractionDigits: 2,
+            }).format(l2token.price * l2token.amount.simple)
           )}
         </Typography>
         {isConnected && (
