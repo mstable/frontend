@@ -31,19 +31,22 @@ export const useRedeemCallConfig = () => {
     });
     const ethValue = maxSubmissionCost.add(l2MaxFeePerGas.mul(redeemGasLimit));
     return {
-      functionName: 'redeem',
-      args: [
-        l1token.contract.address,
-        l2token.contract.address,
-        l1token.amount.exact,
-        walletAddress,
-        encodedArbAdditionalData,
-        { value: ethValue },
-      ],
-      enabled: !isError && !l1token.amount.exact.isZero() && !needsApproval,
-      address: l1ComptrollerContract.address,
-      abi: l1ComptrollerContract.abi,
-      chainId: l1ComptrollerContract.chainId,
+      config: {
+        functionName: 'redeem',
+        args: [
+          l1token.contract.address,
+          l2token.contract.address,
+          l1token.amount.exact,
+          walletAddress,
+          encodedArbAdditionalData,
+          { value: ethValue },
+        ],
+        enabled: !isError && !l1token.amount.exact.isZero() && !needsApproval,
+        address: l1ComptrollerContract.address,
+        abi: l1ComptrollerContract.abi,
+        chainId: l1ComptrollerContract.chainId,
+      },
+      zeroGasFeeParams: l1BaseFee.isZero() || l2MaxFeePerGas.isZero(),
     };
   }, [
     isError,
