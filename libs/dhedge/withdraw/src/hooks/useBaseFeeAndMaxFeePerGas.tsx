@@ -18,8 +18,8 @@ export const useBaseFeeAndMaxFeePerGas = ({ chainId }: { chainId: number }) => {
       }
 
       const block = await provider.getBlock(blockNumber);
-      // increase base fee by 15%
-      const baseFee = block.baseFeePerGas.mul(115).div(100);
+      // increase base fee by 20%
+      const baseFee = block.baseFeePerGas.mul(120).div(100);
 
       const priorityFeePerGas = ethers.utils.parseUnits('2', 'gwei');
 

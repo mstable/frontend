@@ -31,13 +31,13 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
   const { l1token, isError, reset } = useTrackedState();
   const needsApproval = useNeedsApproval();
 
-  const config = useRedeemCallConfig();
+  const { config, zeroGasFeeParams } = useRedeemCallConfig();
   const { data: submitConfig, error: estimateError } =
     usePrepareContractWrite(config);
 
   const {
     data: submitData,
-    write: submit,
+    write,
     isLoading: isWriteLoading,
     isSuccess: isWriteSuccess,
   } = useContractWrite({
@@ -102,6 +102,18 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
     },
     onSettled: reset,
   });
+
+  const submit = () => {
+    if (zeroGasFeeParams) {
+      pushNotification({
+        title: 'Transaction Cancelled',
+        content: 'Gas fee is 0. Please reload the page and try again.',
+        severity: 'info',
+      });
+      return;
+    }
+    write();
+  };
 
   if (
     !l1token.amount ||
