@@ -55,7 +55,7 @@ export const SubmitButton = ({ disabled }: SubmitButtonProps) => {
             chainId: l2Comptroller.chainId,
           }),
     }),
-    [chain?.id, isError, mta.amount.exact, walletAddress],
+    [chain?.id, isError, mta.amount.exact, needsApproval, walletAddress],
   );
 
   const { data: submitConfig } = usePrepareContractWrite(config);
