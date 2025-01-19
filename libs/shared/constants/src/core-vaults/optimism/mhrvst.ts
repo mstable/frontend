@@ -14,7 +14,7 @@ export const MHRVST_OPTIMISM: PoolConfig = {
     customTokens: [],
   },
   withdrawParams: {
-    customTokens: [USDC_OPTIMISM],
+    customTokens: [],
   },
 };
 
