@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useState } from 'react';
 
+import { MULTI_ASSET_TOKEN } from '@dhedge/core-ui-kit/const';
 import { useLogAnalyticsEvent } from '@frontend/shared-providers';
 import { PercentageButton, TokenIconRevamp } from '@frontend/shared-ui';
 import { removeInsignificantTrailingZeros } from '@frontend/shared-utils';
@@ -57,6 +58,8 @@ const useTradingInput = ({
 }: TradingInputProps) => {
   const logEvent = useLogAnalyticsEvent();
   const [percentage, setPercentage] = useState(0);
+  const isMultiAssetToken = token.symbol === MULTI_ASSET_TOKEN.symbol;
+  const tokenSymbol = isMultiAssetToken ? 'All Assets' : token.symbol;
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     if (evt.target.validity.valid) {
@@ -104,6 +107,8 @@ const useTradingInput = ({
       disabled && token.value && token.value !== '0'
         ? new BigNumber(token.value).toFixed(6)
         : token.value,
+    isMultiAssetToken,
+    tokenSymbol,
   };
 };
 
@@ -128,6 +133,8 @@ export const TradingInput = forwardRef<HTMLInputElement, TradingInputProps>(
       handlePercentageChange,
       percentage,
       inputTokenValue,
+      isMultiAssetToken,
+      tokenSymbol,
     } = useTradingInput(props);
 
     return (
@@ -145,7 +152,7 @@ export const TradingInput = forwardRef<HTMLInputElement, TradingInputProps>(
                   height={48}
                   sx={{ pt: '4px', pb: '5px' }}
                 />
-              ) : (
+              ) : isMultiAssetToken ? null : (
                 <InputBase
                   inputRef={ref}
                   value={inputTokenValue}
@@ -194,19 +201,21 @@ export const TradingInput = forwardRef<HTMLInputElement, TradingInputProps>(
                             color: 'text.primary',
                           }}
                         >
-                          <TokenIconRevamp
-                            symbols={[token.symbol]}
-                            sx={{
-                              maxWidth: 18,
-                              maxHeight: 18,
-                            }}
-                          />
+                          {!isMultiAssetToken && (
+                            <TokenIconRevamp
+                              symbols={[tokenSymbol]}
+                              sx={{
+                                maxWidth: 18,
+                                maxHeight: 18,
+                              }}
+                            />
+                          )}
                           <Typography
                             variant="buttonMedium"
                             color="inherit"
                             noWrap
                           >
-                            {token.symbol}
+                            {tokenSymbol}
                           </Typography>
                         </Stack>
                       </MenuItem>
@@ -227,15 +236,18 @@ export const TradingInput = forwardRef<HTMLInputElement, TradingInputProps>(
                     width: 120,
                   }}
                 >
-                  <TokenIconRevamp
-                    symbols={[token.symbol]}
-                    sx={{
-                      maxWidth: 18,
-                      maxHeight: 18,
-                    }}
-                  />
+                  {!isMultiAssetToken && (
+                    <TokenIconRevamp
+                      symbols={[tokenSymbol]}
+                      sx={{
+                        maxWidth: 18,
+                        maxHeight: 18,
+                      }}
+                    />
+                  )}
+
                   <Typography variant="buttonMedium" color="inherit" noWrap>
-                    {token.symbol}
+                    {tokenSymbol}
                   </Typography>
                 </Stack>
               )}

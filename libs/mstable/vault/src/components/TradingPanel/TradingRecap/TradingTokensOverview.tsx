@@ -1,3 +1,4 @@
+import { MULTI_ASSET_TOKEN } from '@dhedge/core-ui-kit/const';
 import { usePoolTokenPrice } from '@dhedge/core-ui-kit/hooks/pool';
 import {
   useIsDepositTradingPanelType,
@@ -81,17 +82,22 @@ const useTradingTokensOverview = () => {
   )
     ? poolTokenPrice
     : nonPoolAssetPrice;
+  const isMultiAssetWithdraw = receiveToken.symbol === MULTI_ASSET_TOKEN.symbol;
+  const sendTokenUsdValue = new BigNumber(sendToken.value || 0)
+    .multipliedBy(sendTokenPrice)
+    .toFixed();
 
   return {
     sendToken,
     receiveToken,
     isDeposit,
-    sendTokenUsdValue: new BigNumber(sendToken.value || 0)
-      .multipliedBy(sendTokenPrice)
-      .toFixed(),
-    receiveTokenUsdValue: new BigNumber(receiveToken.value || 0)
-      .multipliedBy(receiveTokenPrice)
-      .toFixed(),
+    sendTokenUsdValue,
+    receiveTokenUsdValue: isMultiAssetWithdraw
+      ? sendTokenUsdValue
+      : new BigNumber(receiveToken.value || 0)
+          .multipliedBy(receiveTokenPrice)
+          .toFixed(),
+    isMultiAssetWithdraw,
   };
 };
 
@@ -103,6 +109,7 @@ export const TradingTokensOverview: FC<StackProps> = (props) => {
     isDeposit,
     sendTokenUsdValue,
     receiveTokenUsdValue,
+    isMultiAssetWithdraw,
   } = useTradingTokensOverview();
 
   return (
@@ -143,6 +150,8 @@ export const TradingTokensOverview: FC<StackProps> = (props) => {
         <Typography variant="value5" color="text.secondary">
           {receiveToken.isLoading ? (
             <Skeleton width={100} />
+          ) : isMultiAssetWithdraw ? (
+            'All Assets'
           ) : (
             `≈${formatNumberToLimitedDecimals(
               receiveToken.value || 0,

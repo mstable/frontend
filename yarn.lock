@@ -1983,10 +1983,10 @@
     enabled "2.0.x"
     kuler "^2.0.0"
 
-"@dhedge/core-ui-kit@^0.4.7":
-  version "0.4.7"
-  resolved "https://registry.yarnpkg.com/@dhedge/core-ui-kit/-/core-ui-kit-0.4.7.tgz#87bad9f22eb24d017543fe0031d1b94e9284e5ec"
-  integrity sha512-xB7fH+ZJ9lkHHPwJMeijyZ7zPhedDiuxGCjWGpa1a9wS+79/LuH1BSAddOJ98a7jyikhVPaL6dfIvjVAMAgu9Q==
+"@dhedge/core-ui-kit@^0.4.8":
+  version "0.4.8"
+  resolved "https://registry.yarnpkg.com/@dhedge/core-ui-kit/-/core-ui-kit-0.4.8.tgz#024152d89826b17dc8ce1c727abf7220a6a3b74c"
+  integrity sha512-E4nLAR/f+cQts3mU2tzA5IAErNP3e7wrjt6xUmSpMM3DQhguVsiii8YXOowlRWUzFdRANXGaN1FsN8RDFGemzg==
   dependencies:
     "@wagmi/chains" "^0.2.25"
     lodash.chunk "^4.2.0"
@@ -10060,9 +10060,9 @@ camelcase@^6.2.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001400:
-  version "1.0.30001512"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001512.tgz"
-  integrity sha512-2S9nK0G/mE+jasCUsMPlARhRCts1ebcp2Ji8Y8PWi4NDE1iRdLCnEPHkEfeBrGC45L4isBx5ur3IQ6yTE2mRZw==
+  version "1.0.30001695"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001695.tgz"
+  integrity sha512-vHyLade6wTgI2u1ec3WQBxv+2BrTERV28UXQu9LO6lZ9pYeMk34vjXFLOxo1A4UBA8XTL4njRQZdno/yYaSmWw==
 
 capital-case@^1.0.4:
   version "1.0.4"

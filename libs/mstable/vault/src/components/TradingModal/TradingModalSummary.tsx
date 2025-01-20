@@ -1,3 +1,4 @@
+import { MULTI_ASSET_TOKEN } from '@dhedge/core-ui-kit/const';
 import { useTradingPanelModal } from '@dhedge/core-ui-kit/hooks/state';
 import { TokenIconRevamp } from '@frontend/shared-ui';
 import { Stack, Typography } from '@mui/material';
@@ -10,6 +11,8 @@ const formatter = new Intl.NumberFormat('en-US', {
 
 export const TradingModalSummary: FC = () => {
   const [{ action, receiveToken, sendToken }] = useTradingPanelModal();
+  const isMultiAssetReceiveToken =
+    receiveToken?.symbol === MULTI_ASSET_TOKEN.symbol;
 
   if (action === 'approve' && sendToken) {
     return (
@@ -43,19 +46,21 @@ export const TradingModalSummary: FC = () => {
           <Typography variant="value4">{sendToken.symbol}</Typography>
         </Stack>
       </Stack>
-      <Stack direction="row" alignItems="center">
-        <Typography variant="body2">Receive:</Typography>
-        <Stack ml="auto" direction="row" alignItems="center">
-          <Typography variant="value4">
-            {formatter.format(+receiveToken.value)}
-          </Typography>
-          <TokenIconRevamp
-            sx={{ height: 22, width: 22, mx: 0.5 }}
-            symbols={[receiveToken.symbol]}
-          />
-          <Typography variant="value4">{receiveToken.symbol}</Typography>
+      {!isMultiAssetReceiveToken && (
+        <Stack direction="row" alignItems="center">
+          <Typography variant="body2">Receive:</Typography>(
+          <Stack ml="auto" direction="row" alignItems="center">
+            <Typography variant="value4">
+              {formatter.format(+receiveToken.value)}
+            </Typography>
+            <TokenIconRevamp
+              sx={{ height: 22, width: 22, mx: 0.5 }}
+              symbols={[receiveToken.symbol]}
+            />
+            <Typography variant="value4">{receiveToken.symbol}</Typography>
+          </Stack>
         </Stack>
-      </Stack>
+      )}
     </Stack>
   );
 };

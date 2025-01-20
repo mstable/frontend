@@ -64,7 +64,6 @@ const useTradingTransactionOverview = () => {
   const logEvent = useLogAnalyticsEvent();
   const [isDisclosureOpen, setIsDisclosureOpen] = useState(false);
   const {
-    meta: { minWithdrawalUsd },
     config: { address, chainId },
   } = useVault();
   const [{ slippage, minSlippage, isMaxSlippageLoading }] =
@@ -99,7 +98,6 @@ const useTradingTransactionOverview = () => {
     hasMinDeposit: !!minDepositUSD && isDeposit,
     minDeposit: formatToUsd({ value: minDepositUSD, minimumFractionDigits: 0 }),
     lockTime,
-    minWithdrawalUsd,
     isDisclosureOpen,
     toggleDisclosureSection,
     exitFee,
@@ -120,7 +118,6 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
     hasMinDeposit,
     minDeposit,
     lockTime,
-    minWithdrawalUsd,
     toggleDisclosureSection,
     isDisclosureOpen,
     exitFee,
@@ -247,18 +244,6 @@ export const TradingTransactionOverview: FC<StackProps> = (props) => {
             </Typography>
           </Stack>
         </CollapsibleSection>
-      )}
-      {!isDeposit && minWithdrawalUsd && (
-        <Typography variant="hint" color="warning.dark">
-          {intl.formatMessage(
-            {
-              defaultMessage:
-                'Due to possible high slippage on lower withdrawal amounts, please consider withdrawing a minimum of ${minWithdrawalUsd} or manually increasing the maximum slippage.',
-              id: 'Tp2Mnw',
-            },
-            { minWithdrawalUsd },
-          )}
-        </Typography>
       )}
     </Stack>
   );
