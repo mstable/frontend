@@ -1,7 +1,5 @@
 import { optimism } from '@dhedge/core-ui-kit/const';
 
-import { USDC_OPTIMISM } from '../../tokens';
-
 import type { PoolConfig } from '@dhedge/core-ui-kit/types';
 
 import type { VaultConfig } from '../../types';
@@ -14,7 +12,7 @@ export const MHRVST_OPTIMISM: PoolConfig = {
     customTokens: [],
   },
   withdrawParams: {
-    customTokens: [USDC_OPTIMISM],
+    customTokens: [],
   },
 };
 
@@ -39,5 +37,4 @@ export const MHRVST_OPTIMISM_VAULT: VaultConfig = {
         'Continuously evaluates market conditions, rebalances the allocation of funds between sub-vaults, and adjusts strategies to optimize returns.',
     },
   ],
-  minWithdrawalUsd: 100,
 };
