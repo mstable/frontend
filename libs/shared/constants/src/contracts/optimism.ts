@@ -1,6 +1,6 @@
 import { optimism } from 'wagmi/chains';
 
-import { L2ComptrollerABI } from '../abis/L2ComptrollerABI';
+import { L2ComptrollerABI } from '../abis/burn/L2ComptrollerABI';
 import { PoolLogicABI } from '../abis/PoolLogicABI';
 import { VelodromeV1PoolABI } from '../abis/VelodromeV1PoolABI';
 

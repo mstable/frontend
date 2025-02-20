@@ -8,3 +8,6 @@ export * from './StakedTokenBPTABI';
 export * from './StakedTokenMTAABI';
 export * from './UniswapStakedContractABI';
 export * from './vmtaABI';
+export * from './burnV2/L2ComptrollerV2ABI';
+export * from './burnV2/L1ComptrollerV2ABI';
+export * from './PoolLogicABI';

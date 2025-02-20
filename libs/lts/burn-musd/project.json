@@ -1,0 +1,40 @@
+{
+  "name": "lts-burn-musd",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/lts/burn-musd/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/lts/burn-musd/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/libs/lts/burn-musd"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "i18n-extract": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "yarn run formatjs extract 'libs/lts/burn-musd/src/**/*.{ts,tsx}' --out-file i18n-extractions/libs-lts-burn-musd.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+        ]
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { mainnet } from 'wagmi/chains';
 
-import { L1ComptrollerABI } from '../abis/L1ComptrollerABI';
+import { L1ComptrollerABI } from '../abis/burn/L1ComptrollerABI';
 
 import type { Contract } from '../types';
 

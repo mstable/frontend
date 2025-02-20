@@ -1,15 +1,16 @@
 import { utils } from 'ethers';
 
-import { redeemFromL1Length, redeemGasLimit } from './constants';
-
 import type { BigNumber } from 'ethers';
 import type { Address } from 'wagmi';
 
 const { defaultAbiCoder } = utils;
 
+const REDEEM_FROM_L1_LENGTH = 164;
+export const REDEEM_V2_GAS_LIMIT = 1000000;
+
 // https://github.com/OffchainLabs/nitro-contracts/blob/fbbcef09c95f69decabaced3da683f987902f3e2/src/bridge/IInboxBase.sol#L57
 export const calculateMaxSubmissionCost = (baseFee: BigNumber) =>
-  baseFee.mul(1400 + 6 * redeemFromL1Length);
+  baseFee.mul(1400 + 6 * REDEEM_FROM_L1_LENGTH);
 
 /*
 struct ArbAdditionalData {
@@ -39,7 +40,7 @@ export const encodeArbAdditionalData = ({
         maxSubmissionCost,
         walletAddress,
         walletAddress,
-        redeemGasLimit,
+        REDEEM_V2_GAS_LIMIT,
         l2MaxFeePerGas,
       ],
     ],
