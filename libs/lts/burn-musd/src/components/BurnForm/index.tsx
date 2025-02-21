@@ -1,8 +1,9 @@
 import { Stack } from '@mui/material';
 import { AnimatePresence } from 'framer-motion';
 
-// import { InputStep } from './components/InputStep';
+import { InputStep } from './components/InputStep';
 import { StepIndicator } from './components/StepIndicator';
+import { WithdrawStep } from './components/WithdrawStep';
 import { Provider, useTrackedState } from './state';
 
 import type { StackProps, SxProps, Theme } from '@mui/material';
@@ -20,21 +21,21 @@ const BurnFormWrapped = (props: StackProps) => {
     <Stack alignItems="center" spacing={1} {...props}>
       <StepIndicator />
       <AnimatePresence>
-        {/*{step === 0 ? (*/}
-        {/*  <InputStep*/}
-        {/*    sx={cardSx}*/}
-        {/*    initial={{ opacity: 0 }}*/}
-        {/*    animate={{ opacity: 1 }}*/}
-        {/*    exit={{ opacity: 0 }}*/}
-        {/*  />*/}
-        {/*) : (*/}
-        {/*  <WithdrawStep*/}
-        {/*    sx={cardSx}*/}
-        {/*    initial={{ opacity: 0 }}*/}
-        {/*    animate={{ opacity: 1 }}*/}
-        {/*    exit={{ opacity: 0 }}*/}
-        {/*  />*/}
-        {/*)}*/}
+        {step === 0 ? (
+          <InputStep
+            sx={cardSx}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+        ) : (
+          <WithdrawStep
+            sx={cardSx}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+        )}
       </AnimatePresence>
     </Stack>
   );

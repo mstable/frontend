@@ -8,8 +8,8 @@ import {
 } from '@frontend/shared-utils';
 import { useAccount } from 'wagmi';
 
-import { useTrackedState } from '../components/BurnForm/state';
-import { l1ComptrollerContract } from '../constants';
+import { l1ComptrollerContract } from '../../../constants';
+import { useTrackedState } from '../state';
 import { useNeedsApproval } from './useNeedsApproval';
 
 export const useRedeemCallConfig = () => {
