@@ -17,13 +17,20 @@ import { configureChains, createClient } from 'wagmi';
 import { optimism } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 
-import type { Wallet } from '@rainbow-me/rainbowkit';
+import type { Chain as RainbowKitChain, Wallet } from '@rainbow-me/rainbowkit';
 import type { Chain, Connector } from 'wagmi';
+
+const optimismWithCustomIconUrl = {
+  ...optimism,
+  // https://www.rainbowkit.com/docs/custom-chains
+  iconUrl:
+    'https://firebasestorage.googleapis.com/v0/b/toros-leverage-bots.appspot.com/o/images%2Ficons%2Fnetworks%2Foptimism-network.png?alt=media&token=dc1a451a-1c89-4df3-b86f-9a3712068e4c',
+} as const satisfies RainbowKitChain;
 
 const POLLING_INTERVAL = 15_000;
 
 export const { chains, provider } = configureChains(
-  [optimism],
+  [optimismWithCustomIconUrl],
   [
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_MAIN_API_KEY'] }),
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_FALLBACK_API_KEY'] }),

@@ -24,7 +24,7 @@ export const Nightfall = (props: SvgIconProps) => (
   />
 );
 export const Optimism = (props: SvgIconProps) => (
-  <SvgIcon {...props} component={OptimismSvg} viewBox="0 0 500 500" />
+  <SvgIcon {...props} component={OptimismSvg} viewBox="0 0 48 48" />
 );
 export const Polygon = (props: SvgIconProps) => (
   <SvgIcon {...props} component={PolygonSvg} viewBox="0 0 100 100" />
