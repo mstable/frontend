@@ -1,6 +1,6 @@
-import type { HexAddress } from '@frontend/shared-utils';
+import type { Address } from 'wagmi';
 
-export const DEAD_ADDRESS: HexAddress =
+export const DEAD_ADDRESS: Address =
   '0x0000000000000000000000000000000000000001';
-export const ZERO_ADDRESS: HexAddress =
+export const ZERO_ADDRESS: Address =
   '0x0000000000000000000000000000000000000000';

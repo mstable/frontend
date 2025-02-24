@@ -12,3 +12,4 @@ export * from './random';
 export * from './tokens';
 export * from './types';
 export * from './web3';
+export * from './burnV2';

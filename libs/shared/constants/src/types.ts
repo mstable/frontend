@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { PoolConfig } from '@dhedge/core-ui-kit/types';
-import type { HexAddress } from '@frontend/shared-utils';
 import type { SvgIconProps } from '@mui/material';
 import type { ComponentType } from 'react';
+import type { Address } from 'wagmi';
 
 export type Contract = {
-  address: HexAddress;
+  address: Address;
   chainId: number;
   abi: any;
   name?: string;

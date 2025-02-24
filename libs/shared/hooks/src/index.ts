@@ -12,3 +12,4 @@ export {
   useUserVaultInvestmentInfo,
   useUserStakedVaults,
 } from './user';
+export { useBaseFeeAndMaxFeePerGas } from './web3/useBaseFeeAndMaxFeePerGas';

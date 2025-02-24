@@ -1,15 +1,15 @@
 import { Stack, Typography } from '@mui/material';
 
 import { l2Token } from '../../constants';
-import { useUnclaimedL2TokenAmount } from '../../hooks/useUnclaimedL2TokenAmount';
 import { ClaimButton } from './ClaimButton';
+import { useUnclaimedL2TokenAmount } from './useUnclaimedL2Tokens';
 
 import type { FC } from 'react';
 
 export const UnclaimedTokens: FC = () => {
-  const unclaimedL2Tokens = useUnclaimedL2TokenAmount();
+  const unclaimedL2TokenAmount = useUnclaimedL2TokenAmount();
 
-  if (!unclaimedL2Tokens.length) return null;
+  if (unclaimedL2TokenAmount.exact.isZero()) return null;
 
   return (
     <Stack alignItems="center">
@@ -23,14 +23,12 @@ export const UnclaimedTokens: FC = () => {
         <Typography variant="h5" mb={2}>
           You have unclaimed {l2Token.symbol} tokens
         </Typography>
-        {unclaimedL2Tokens.map(({ address, amount }) => (
-          <Stack key={address} direction="row" alignItems="center" spacing={2}>
-            <Typography variant="value2">
-              {amount.simpleRounded} {l2Token.symbol}
-            </Typography>
-            <ClaimButton tokenBurned={address}></ClaimButton>
-          </Stack>
-        ))}
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <Typography variant="value2">
+            {unclaimedL2TokenAmount.simpleRounded} {l2Token.symbol}
+          </Typography>
+          <ClaimButton />
+        </Stack>
       </Stack>
     </Stack>
   );

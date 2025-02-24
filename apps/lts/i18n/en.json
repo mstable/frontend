@@ -17,6 +17,9 @@
   "6T7RIi": {
     "defaultMessage": "BuyBack MTA"
   },
+  "GH3iro": {
+    "defaultMessage": "BuyBack mUSD"
+  },
   "PXAur5": {
     "defaultMessage": "Withdraw"
   },
@@ -196,6 +199,15 @@
   },
   "wqlXwW": {
     "defaultMessage": "Wrong Network"
+  },
+  "OWWJyo": {
+    "defaultMessage": "Your {symbol} tokens will be sent to the same {network} address you used."
+  },
+  "XW7Rd1": {
+    "defaultMessage": "After redeeming your vault tokens from Ethereum, please wait while the bridge issues your {symbol} tokens."
+  },
+  "xKRv/8": {
+    "defaultMessage": "Burn your mUSD and receive {symbol}"
   },
   "20X0BC": {
     "defaultMessage": "Transaction Cancelled"

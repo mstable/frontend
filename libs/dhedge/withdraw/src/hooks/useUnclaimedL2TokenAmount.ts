@@ -16,7 +16,7 @@ interface UnclaimedL2Tokens {
   amount: BigDecimal;
 }
 
-export const useUnclaimedL2Tokens = (): UnclaimedL2Tokens[] => {
+export const useUnclaimedL2TokenAmount = (): UnclaimedL2Tokens[] => {
   const { address: walletAddress } = useAccount();
 
   const { data } = useContractReads({
