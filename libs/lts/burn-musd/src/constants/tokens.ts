@@ -13,10 +13,10 @@ export const l1Token: Token = {
 };
 
 export const l2Token: Token = {
-  address: '0x',
-  symbol: 'TBD',
+  address: '0x01ef3fe6add9e33a04192f6806305de657f38359',
+  symbol: 'mUSDA',
   decimals: 18,
   chainId: arbitrum.id,
   abi: PoolLogicABI,
-  name: 'TBD',
+  name: 'mStable mUSD Assets',
 };

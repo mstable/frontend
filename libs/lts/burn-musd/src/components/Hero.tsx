@@ -1,3 +1,4 @@
+import { DHEDGE_DAPP_LINK } from '@frontend/shared-constants';
 import { Stack, Typography } from '@mui/material';
 import { useIntl } from 'react-intl';
 
@@ -11,13 +12,18 @@ export const Hero = (props: StackProps) => {
   return (
     <Stack justifyContent="center" alignItems="center" {...props}>
       <Typography variant="h1" py={4}>
-        {intl.formatMessage(
-          {
-            defaultMessage: 'Burn your mUSD and receive {symbol}',
-            id: 'xKRv/8',
-          },
-          { symbol: l2Token.symbol },
-        )}
+        {intl.formatMessage({
+          defaultMessage: 'Burn your mUSD and receive',
+          id: 'j5iKZ9',
+        })}{' '}
+        <a
+          href={`${DHEDGE_DAPP_LINK}/vault/${l2Token.address}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {l2Token.symbol}
+        </a>{' '}
+        vault tokens
       </Typography>
       <Typography variant="subtitle1">
         {intl.formatMessage(

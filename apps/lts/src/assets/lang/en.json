@@ -1278,6 +1278,12 @@
       "value": "Margin Deposited"
     }
   ],
+  "j5iKZ9": [
+    {
+      "type": 0,
+      "value": "Burn your mUSD and receive"
+    }
+  ],
   "jvo0vs": [
     {
       "type": 0,
@@ -1673,16 +1679,6 @@
     {
       "type": 0,
       "value": "Not Connected"
-    }
-  ],
-  "xKRv/8": [
-    {
-      "type": 0,
-      "value": "Burn your mUSD and receive "
-    },
-    {
-      "type": 1,
-      "value": "symbol"
     }
   ],
   "xfMpIF": [
