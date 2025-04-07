@@ -73,7 +73,6 @@
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@formatjs/cli": "^6.0.4",
-    "@graphprotocol/graph-cli": "^0.46.1",
     "@graphprotocol/graph-ts": "^0.29.3",
     "@graphql-codegen/add": "^4.0.1",
     "@graphql-codegen/cli": "^3.3.0",
