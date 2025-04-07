@@ -29,8 +29,8 @@ export const Hero = (props: StackProps) => {
         {intl.formatMessage(
           {
             defaultMessage:
-              'After redeeming your vault tokens from Ethereum, please wait while the bridge issues your {symbol} tokens.',
-            id: 'XW7Rd1',
+              'After redeeming mUSD tokens from Ethereum, please wait while the bridge issues your {symbol} tokens.',
+            id: 'FnFsx6',
           },
           { symbol: l2Token.symbol },
         )}
