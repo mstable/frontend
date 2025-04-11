@@ -41,7 +41,5 @@ export const deprecatedL1Vaults: Address[] = [
   '0x340e05bfbd985bb6d6ee490bf41fb7bfc54a2468',
 ];
 
-export const redeemFromL1Length = 164;
-export const redeemGasLimit = 1000000;
 export const l1Chain = mainnet;
 export const l2Chain = arbitrum;

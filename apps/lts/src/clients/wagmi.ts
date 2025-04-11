@@ -14,7 +14,7 @@ import {
   walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 import { configureChains, createClient } from 'wagmi';
-import { mainnet, optimism, polygon } from 'wagmi/chains';
+import { arbitrum, mainnet, optimism, polygon } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 
 import type { Chain as RainbowKitChain, Wallet } from '@rainbow-me/rainbowkit';
@@ -30,7 +30,7 @@ const optimismWithCustomIconUrl = {
 const POLLING_INTERVAL = 15_000;
 
 export const { chains, provider } = configureChains(
-  [mainnet, polygon, optimismWithCustomIconUrl],
+  [mainnet, polygon, optimismWithCustomIconUrl, arbitrum],
   [
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_MAIN_API_KEY'] }),
     alchemyProvider({ apiKey: process.env['NX_ALCHEMY_FALLBACK_API_KEY'] }),

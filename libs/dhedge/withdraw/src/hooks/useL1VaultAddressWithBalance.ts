@@ -1,9 +1,8 @@
-import { ZERO_ADDRESS } from '@frontend/shared-constants';
+import { PoolLogicABI, ZERO_ADDRESS } from '@frontend/shared-constants';
 import { useAccount, useContractReads } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
 import { deprecatedL1Vaults } from '../constants';
-import { PoolLogicAbi } from '../constants/abis/PoolLogicAbi';
 
 import type { Address } from 'wagmi';
 
@@ -14,7 +13,7 @@ export const useL1VaultAddressWithBalance = (): Address => {
     contracts: deprecatedL1Vaults.map((address) => ({
       address,
       chainId: mainnet.id,
-      abi: PoolLogicAbi,
+      abi: PoolLogicABI,
       functionName: 'balanceOf',
       args: [walletAddress],
     })),

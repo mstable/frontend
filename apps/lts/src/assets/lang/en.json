@@ -550,6 +550,12 @@
       "value": "Discord"
     }
   ],
+  "GH3iro": [
+    {
+      "type": 0,
+      "value": "BuyBack mUSD"
+    }
+  ],
   "Gh1Vm9": [
     {
       "type": 0,
@@ -694,6 +700,28 @@
     {
       "type": 0,
       "value": "Trading"
+    }
+  ],
+  "OWWJyo": [
+    {
+      "type": 0,
+      "value": "Your "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": " tokens will be sent to the same "
+    },
+    {
+      "type": 1,
+      "value": "network"
+    },
+    {
+      "type": 0,
+      "value": " address you used."
     }
   ],
   "ObjU4O": [
@@ -969,6 +997,20 @@
       "value": "Redeem"
     }
   ],
+  "XW7Rd1": [
+    {
+      "type": 0,
+      "value": "After redeeming your vault tokens from Ethereum, please wait while the bridge issues your "
+    },
+    {
+      "type": 1,
+      "value": "symbol"
+    },
+    {
+      "type": 0,
+      "value": " tokens."
+    }
+  ],
   "XYEIBG": [
     {
       "type": 0,
@@ -1234,6 +1276,12 @@
     {
       "type": 0,
       "value": "Margin Deposited"
+    }
+  ],
+  "j5iKZ9": [
+    {
+      "type": 0,
+      "value": "Burn your mUSD and receive"
     }
   ],
   "jvo0vs": [

@@ -1,4 +1,5 @@
 import { Burn } from '@frontend/lts-burn';
+import { BurnMusd } from '@frontend/lts-burn-musd';
 import { Withdraw } from '@frontend/lts-withdraw';
 import { defineMessage } from 'react-intl';
 
@@ -28,5 +29,13 @@ export const routes: Route<LTSRoute>[] = [
     },
     path: '/burn',
     element: <Burn />,
+  },
+  {
+    id: 'burn-musd',
+    meta: {
+      label: defineMessage({ defaultMessage: 'BuyBack mUSD', id: 'GH3iro' }),
+    },
+    path: '/burn-musd',
+    element: <BurnMusd />,
   },
 ];

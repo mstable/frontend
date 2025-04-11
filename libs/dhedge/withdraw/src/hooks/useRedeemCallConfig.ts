@@ -1,14 +1,15 @@
 import { useMemo } from 'react';
 
-import { useAccount } from 'wagmi';
-
-import { useTrackedState } from '../components/BurnForm/state';
-import { l1ComptrollerContract, redeemGasLimit } from '../constants';
+import { useBaseFeeAndMaxFeePerGas } from '@frontend/shared-hooks';
 import {
   calculateMaxSubmissionCost,
   encodeArbAdditionalData,
-} from '../helpers';
-import { useBaseFeeAndMaxFeePerGas } from './useBaseFeeAndMaxFeePerGas';
+  REDEEM_V2_GAS_LIMIT,
+} from '@frontend/shared-utils';
+import { useAccount } from 'wagmi';
+
+import { useTrackedState } from '../components/BurnForm/state';
+import { l1ComptrollerContract } from '../constants';
 import { useNeedsApproval } from './useNeedsApproval';
 
 export const useRedeemCallConfig = () => {
@@ -29,7 +30,9 @@ export const useRedeemCallConfig = () => {
       l2MaxFeePerGas,
       l1BaseFee,
     });
-    const ethValue = maxSubmissionCost.add(l2MaxFeePerGas.mul(redeemGasLimit));
+    const ethValue = maxSubmissionCost.add(
+      l2MaxFeePerGas.mul(REDEEM_V2_GAS_LIMIT),
+    );
     return {
       config: {
         functionName: 'redeem',

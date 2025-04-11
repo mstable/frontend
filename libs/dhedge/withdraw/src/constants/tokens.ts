@@ -1,8 +1,6 @@
-import { ZERO_ADDRESS } from '@frontend/shared-constants';
+import { PoolLogicABI, ZERO_ADDRESS } from '@frontend/shared-constants';
 import { erc20ABI } from 'wagmi';
 import { arbitrum, mainnet } from 'wagmi/chains';
-
-import { PoolLogicAbi } from './abis/PoolLogicAbi';
 
 import type { Token } from '@frontend/shared-constants';
 
@@ -19,6 +17,6 @@ export const l2Token: Token = {
   symbol: 'dV1',
   decimals: 18,
   chainId: arbitrum.id,
-  abi: PoolLogicAbi,
+  abi: PoolLogicABI,
   name: 'dHEDGE v1 Assets',
 };

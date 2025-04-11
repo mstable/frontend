@@ -1,13 +1,13 @@
 import { Stack, Typography } from '@mui/material';
 
 import { l2Token } from '../../constants';
-import { useUnclaimedL2Tokens } from '../../hooks/useUnclaimedL2Tokens';
+import { useUnclaimedL2TokenAmount } from '../../hooks/useUnclaimedL2TokenAmount';
 import { ClaimButton } from './ClaimButton';
 
 import type { FC } from 'react';
 
 export const UnclaimedTokens: FC = () => {
-  const unclaimedL2Tokens = useUnclaimedL2Tokens();
+  const unclaimedL2Tokens = useUnclaimedL2TokenAmount();
 
   if (!unclaimedL2Tokens.length) return null;
 

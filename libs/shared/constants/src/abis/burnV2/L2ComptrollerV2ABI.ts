@@ -1,4 +1,4 @@
-export const L2ComptrollerAbi = [
+export const L2ComptrollerV2ABI = [
   { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
   {
     inputs: [
