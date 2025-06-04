@@ -264,7 +264,7 @@ export const useContractPrepareConfig = (contract: LTSContract) => {
       return {
         ...config,
         functionName: 'redeem',
-        args: [contract.balance],
+        args: [contract.balance, walletAddress, walletAddress],
       };
     case 'pool':
       if (!isNilOrEmpty(preview)) {
