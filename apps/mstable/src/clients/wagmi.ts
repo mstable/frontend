@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import '@rainbow-me/rainbowkit/styles.css';
 
+import { getAlchemyRpcProvider } from '@frontend/shared-utils';
 import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import {
@@ -15,7 +16,6 @@ import {
 } from '@rainbow-me/rainbowkit/wallets';
 import { configureChains, createClient } from 'wagmi';
 import { optimism } from 'wagmi/chains';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
 
 import type { Chain as RainbowKitChain, Wallet } from '@rainbow-me/rainbowkit';
 import type { Chain, Connector } from 'wagmi';
@@ -32,8 +32,12 @@ const POLLING_INTERVAL = 15_000;
 export const { chains, provider } = configureChains(
   [optimismWithCustomIconUrl],
   [
-    alchemyProvider({ apiKey: process.env['NX_ALCHEMY_MAIN_API_KEY'] }),
-    alchemyProvider({ apiKey: process.env['NX_ALCHEMY_FALLBACK_API_KEY'] }),
+    getAlchemyRpcProvider({
+      apiKey: process.env['NX_ALCHEMY_MAIN_API_KEY'],
+    }) as any,
+    getAlchemyRpcProvider({
+      apiKey: process.env['NX_ALCHEMY_FALLBACK_API_KEY'],
+    }) as any,
   ],
   { pollingInterval: POLLING_INTERVAL },
 );

@@ -8,7 +8,8 @@ import { MotionStack } from '@frontend/shared-ui';
 import { Button, Link, Stack, Typography } from '@mui/material';
 import { constants } from 'ethers';
 import { useIntl } from 'react-intl';
-import { useAccount } from 'wagmi';
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
+import { mainnet, optimism } from 'wagmi/chains';
 
 import { mtaBuybackPrice } from '../../../../constants';
 import { useSetStep } from '../../hooks';
@@ -18,11 +19,18 @@ import { SubmitButton } from './components/SubmitButton';
 import { TokenInputs } from './components/TokenInputs';
 
 import type { MotionStackProps } from '@frontend/shared-ui';
+
+const SUPPORTED_CHAIN_IDS: number[] = [mainnet.id, optimism.id];
+
 export const InputStep = (props: MotionStackProps) => {
   const intl = useIntl();
   const { isConnected } = useAccount();
+  const { chain } = useNetwork();
+  const { switchNetwork } = useSwitchNetwork();
   const { mta, mty, needsApproval } = useTrackedState();
   const setStep = useSetStep();
+
+  const isSupportedChain = chain && SUPPORTED_CHAIN_IDS.includes(chain.id);
 
   return (
     <MotionStack alignItems="flex-start" {...props}>
@@ -76,7 +84,20 @@ export const InputStep = (props: MotionStackProps) => {
       <Stack width={1} justifyContent="center" alignItems="center" my={8}>
         <Stack width={3 / 4}>
           <TokenInputs mb={4} />
-          {isConnected ? (
+          {!isConnected ? (
+            <OpenAccountModalButton fullWidth size="large" />
+          ) : !isSupportedChain ? (
+            <Button
+              onClick={() => switchNetwork?.(mainnet.id)}
+              size="large"
+              fullWidth
+            >
+              {intl.formatMessage({
+                defaultMessage: 'Switch to Ethereum Mainnet',
+                id: 'Y+EF8/',
+              })}
+            </Button>
+          ) : (
             <>
               {mta.price > mtaBuybackPrice && (
                 <Stack spacing={2} alignItems="center" mb={2}>
@@ -110,8 +131,6 @@ export const InputStep = (props: MotionStackProps) => {
               )}
               {needsApproval ? <ApprovalButton /> : <SubmitButton />}
             </>
-          ) : (
-            <OpenAccountModalButton fullWidth size="large" />
           )}
         </Stack>
       </Stack>
