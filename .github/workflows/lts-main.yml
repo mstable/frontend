@@ -45,10 +45,3 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_APPS_LTS }}'
           projectId: apps-lts
           channelId: live
-
-      - name: Discord notification
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: Ilshidur/action-discord@0.3.2
-        with:
-          args: '✅ New PROD version of LTS 🚀 Deploy url: https://withdraw.mstable.org'

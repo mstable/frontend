@@ -57,9 +57,3 @@ jobs:
           expires: 30d
           projectId: frontend-7e17f
           channelId: dev
-#      - name: Discord notification
-#        env:
-#          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-#        uses: Ilshidur/action-discord@0.3.2
-#        with:
-#          args: "✨ New DEV version of mStable Vaults 🚀 Deploy url: https://frontend-7e17f--dev-zjlmsvmy.web.app/"

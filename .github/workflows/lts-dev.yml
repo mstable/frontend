@@ -57,9 +57,3 @@ jobs:
           expires: 30d
           projectId: apps-lts
           channelId: dev
-#      - name: Discord notification
-#        env:
-#          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-#        uses: Ilshidur/action-discord@0.3.2
-#        with:
-#          args: "✨ New DEV version of LTS 🚀 Deploy url: https://apps-lts--dev-vite2x32.web.app/"
